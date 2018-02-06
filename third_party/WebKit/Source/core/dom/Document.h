@@ -34,11 +34,13 @@
 #include <utility>
 
 #include "base/memory/scoped_refptr.h"
+#include "base/single_thread_task_runner.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "core/animation/WorkletAnimationController.h"
 #include "core/dom/ContainerNode.h"
+#include "core/dom/CreateElementFlags.h"
 #include "core/dom/DocumentEncodingData.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentLifecycle.h"
@@ -218,25 +220,6 @@ enum ShadowCascadeOrder {
   kShadowCascadeV1
 };
 
-enum CreateElementFlags {
-  kCreatedByParser = 1 << 0,
-  // Synchronous custom elements flag:
-  // https://dom.spec.whatwg.org/#concept-create-element
-  // TODO(kojii): Remove these flags, add an option not to queue upgrade, and
-  // let parser/DOM methods to upgrade synchronously when necessary.
-  kSynchronousCustomElements = 0 << 1,
-  kAsynchronousCustomElements = 1 << 1,
-
-  // Aliases by callers.
-  // Clone a node: https://dom.spec.whatwg.org/#concept-node-clone
-  kCreatedByCloneNode = kAsynchronousCustomElements,
-  kCreatedByImportNode = kCreatedByCloneNode,
-  // https://dom.spec.whatwg.org/#dom-document-createelement
-  kCreatedByCreateElement = kSynchronousCustomElements,
-  // https://html.spec.whatwg.org/#create-an-element-for-the-token
-  kCreatedByFragmentParser = kCreatedByParser | kAsynchronousCustomElements,
-};
-
 // Collect data about deferred loading of offscreen cross-origin documents. All
 // cross-origin documents log Created. Only those that would load log a reason.
 // We can then see the % of cross-origin documents that never have to load.
@@ -361,7 +344,16 @@ class CORE_EXPORT Document : public ContainerNode,
   Element* createElementNS(const AtomicString& namespace_uri,
                            const AtomicString& qualified_name,
                            ExceptionState&);
+  // Creates an element with autonomous custom element processing. If
+  // LocalName of the specified qualified name doesn't contain '-', this
+  // function is equivalent to CreateRawElement().
   Element* createElement(const QualifiedName&, CreateElementFlags);
+  // Creates an element without custom element processing.
+  Element* CreateRawElement(const QualifiedName&, CreateElementFlags);
+  // "create an element" defined in DOM standard.
+  Element* CreateElement(const QualifiedName&,
+                         bool is_v1,
+                         const AtomicString& is);
 
   Element* ElementFromPoint(double x, double y) const;
   HeapVector<Member<Element>> ElementsFromPoint(double x, double y) const;
@@ -1421,7 +1413,7 @@ class CORE_EXPORT Document : public ContainerNode,
   ukm::UkmRecorder* UkmRecorder();
   int64_t UkmSourceID() const;
 
-  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType) override;
 
   void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
 

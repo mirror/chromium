@@ -92,6 +92,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/network/public/interfaces/network_service_test.mojom.h"
@@ -1375,7 +1376,7 @@ ui::AXNodeData GetFocusedAccessibilityNodeInfo(WebContents* web_contents) {
 
 bool AccessibilityTreeContainsNodeWithName(BrowserAccessibility* node,
                                            const std::string& name) {
-  if (node->GetStringAttribute(ui::AX_ATTR_NAME) == name)
+  if (node->GetStringAttribute(ax::mojom::StringAttribute::kName) == name)
     return true;
   for (unsigned i = 0; i < node->PlatformChildCount(); i++) {
     if (AccessibilityTreeContainsNodeWithName(node->PlatformGetChild(i), name))
@@ -1403,8 +1404,8 @@ void WaitForAccessibilityTreeToContainNodeWithName(WebContents* web_contents,
   FrameTree* frame_tree = web_contents_impl->GetFrameTree();
   while (!main_frame_manager || !AccessibilityTreeContainsNodeWithName(
              main_frame_manager->GetRoot(), name)) {
-    AccessibilityNotificationWaiter accessibility_waiter(main_frame,
-                                                         ui::AX_EVENT_NONE);
+    AccessibilityNotificationWaiter accessibility_waiter(
+        main_frame, ax::mojom::Event::kNone);
     for (FrameTreeNode* node : frame_tree->Nodes()) {
       accessibility_waiter.ListenToAdditionalFrame(
           node->current_frame_host());
@@ -2393,14 +2394,14 @@ WebContents* GetEmbedderForGuest(content::WebContents* guest) {
 }
 
 bool IsNetworkServiceRunningInProcess() {
-  return base::FeatureList::IsEnabled(features::kNetworkService) &&
+  return base::FeatureList::IsEnabled(network::features::kNetworkService) &&
          (base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kSingleProcess) ||
           base::FeatureList::IsEnabled(features::kNetworkServiceInProcess));
 }
 
 void SimulateNetworkServiceCrash() {
-  CHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  CHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
   CHECK(!IsNetworkServiceRunningInProcess())
       << "Can't crash the network service if it's running in-process!";
   network::mojom::NetworkServiceTestPtr network_service_test;
@@ -2445,9 +2446,9 @@ int LoadBasicRequest(network::mojom::NetworkContext* network_context,
   return simple_loader->NetError();
 }
 
-std::map<std::string, base::WeakPtr<UtilityProcessHost>>*
-GetServiceManagerProcessGroups() {
-  return ServiceManagerContext::GetProcessGroupsForTesting();
+bool HasValidProcessForProcessGroup(const std::string& process_group_name) {
+  return ServiceManagerContext::HasValidProcessForProcessGroup(
+      process_group_name);
 }
 
 }  // namespace content

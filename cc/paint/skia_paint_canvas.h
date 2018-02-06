@@ -26,17 +26,18 @@ class PaintFlags;
 // and then playing back to an SkCanvas.
 class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
  public:
-  explicit SkiaPaintCanvas(
-      SkCanvas* canvas,
-      std::unique_ptr<ImageProvider> image_provider = nullptr);
+  explicit SkiaPaintCanvas(SkCanvas* canvas,
+                           ImageProvider* image_provider = nullptr);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap, const SkSurfaceProps& props);
   // If |target_color_space| is non-nullptr, then this will wrap |canvas| in a
   // SkColorSpaceXformCanvas.
   SkiaPaintCanvas(SkCanvas* canvas,
                   sk_sp<SkColorSpace> target_color_space,
-                  std::unique_ptr<ImageProvider> image_provider = nullptr);
+                  ImageProvider* image_provider = nullptr);
   ~SkiaPaintCanvas() override;
+
+  void reset_image_provider() { image_provider_ = nullptr; }
 
   SkMetaData& getMetaData() override;
   SkImageInfo imageInfo() const override;
@@ -132,7 +133,7 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
 
  private:
   // We always need skia shaders since the ops will be played on an SkCanvas.
-  static const bool kCreateSkiaShaders = true;
+  static const bool kCreateSkiaShaders;
 
   void WrapCanvasInColorSpaceXformCanvas(
       sk_sp<SkColorSpace> target_color_space);
@@ -140,7 +141,7 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
   SkCanvas* canvas_;
   std::unique_ptr<SkCanvas> owned_;
   std::unique_ptr<SkCanvas> color_space_xform_canvas_;
-  std::unique_ptr<ImageProvider> image_provider_;
+  ImageProvider* image_provider_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(SkiaPaintCanvas);
 };

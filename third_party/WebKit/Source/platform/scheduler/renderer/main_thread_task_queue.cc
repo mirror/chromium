@@ -38,12 +38,14 @@ const char* MainThreadTaskQueue::NameForQueueType(
       return "idle_tq";
     case MainThreadTaskQueue::QueueType::kTest:
       return "test_tq";
-    case MainThreadTaskQueue::QueueType::kFrameLoading_kControl:
+    case MainThreadTaskQueue::QueueType::kFrameLoadingControl:
       return "frame_loading_control_tq";
     case MainThreadTaskQueue::QueueType::kV8:
       return "v8_tq";
     case MainThreadTaskQueue::QueueType::kIPC:
       return "ipc_tq";
+    case MainThreadTaskQueue::QueueType::kInput:
+      return "input_tq";
     case MainThreadTaskQueue::QueueType::kOther:
       return "other_tq";
     case MainThreadTaskQueue::QueueType::kCount:
@@ -65,7 +67,7 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
     case QueueType::kIPC:
       return QueueClass::kNone;
     case QueueType::kFrameLoading:
-    case QueueType::kFrameLoading_kControl:
+    case QueueType::kFrameLoadingControl:
       return QueueClass::kLoading;
     case QueueType::kDefaultTimer:
     case QueueType::kUnthrottled:
@@ -75,6 +77,7 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
     case QueueType::kFrameUnpausable:
       return QueueClass::kTimer;
     case QueueType::kCompositor:
+    case QueueType::kInput:
       return QueueClass::kCompositor;
     case QueueType::kOther:
     case QueueType::kCount:
@@ -97,7 +100,7 @@ MainThreadTaskQueue::MainThreadTaskQueue(
       can_be_throttled_(params.can_be_throttled),
       can_be_paused_(params.can_be_paused),
       can_be_stopped_(params.can_be_stopped),
-      used_for_control_tasks_(params.used_for_control_tasks),
+      used_for_important_tasks_(params.used_for_important_tasks),
       renderer_scheduler_(renderer_scheduler),
       web_frame_scheduler_(nullptr) {
   if (GetTaskQueueImpl()) {

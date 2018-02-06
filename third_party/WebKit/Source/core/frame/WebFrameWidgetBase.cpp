@@ -170,7 +170,7 @@ void WebFrameWidgetBase::DragSourceEndedAt(
   WebMouseEvent fake_mouse_move(
       WebInputEvent::kMouseMove, point_in_root_frame, screen_point,
       WebPointerProperties::Button::kLeft, 0, WebInputEvent::kNoModifiers,
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   fake_mouse_move.SetFrameScale(1);
   ToCoreFrame(LocalRoot())
       ->GetEventHandler()
@@ -273,7 +273,13 @@ void WebFrameWidgetBase::DidLosePointerLock() {
 void WebFrameWidgetBase::RequestDecode(
     const PaintImage& image,
     base::OnceCallback<void(bool)> callback) {
-  View()->RequestDecode(image, std::move(callback));
+  // If we have a LayerTreeView, propagate the request, otherwise fail it since
+  // otherwise it would remain in a unresolved and unrejected state.
+  if (WebLayerTreeView* layer_tree_view = GetLayerTreeView()) {
+    layer_tree_view->RequestDecode(image, std::move(callback));
+  } else {
+    std::move(callback).Run(false);
+  }
 }
 
 void WebFrameWidgetBase::Trace(blink::Visitor* visitor) {

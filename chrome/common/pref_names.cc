@@ -189,11 +189,7 @@ const char kSupervisedUserWhitelists[] = "profile.managed.whitelists";
 const char kRlzPingDelaySeconds[] = "rlz_ping_delay";
 #endif  // BUILDFLAG(ENABLE_RLZ)
 
-// The application locale.
-// For OS_CHROMEOS we maintain the kApplicationLocale property in both local
-// state and the user's profile.  The global property determines the locale of
-// the login screen, while the user's profile determines their personal locale
-// preference.
+// Important: Refer to header file for how to use this.
 const char kApplicationLocale[] = "intl.app_locale";
 #if defined(OS_CHROMEOS)
 // Locale preference of device' owner.  ChromeOS device appears in this locale
@@ -1089,15 +1085,6 @@ const char kEnableDoNotTrack[] = "enable_do_not_track";
 // non-webkit-prefixed string.
 const char kEnableEncryptedMedia[] = "webkit.webprefs.encrypted_media_enabled";
 
-// GL_VENDOR string.
-const char kGLVendorString[] = "gl_vendor_string";
-
-// GL_RENDERER string.
-const char kGLRendererString[] = "gl_renderer_string";
-
-// GL_VERSION string.
-const char kGLVersionString[] = "gl_version_string";
-
 // Boolean that specifies whether to import the form data for autofill from the
 // default browser on first run.
 const char kImportAutofillFormData[] = "import_autofill_form_data";
@@ -1248,15 +1235,6 @@ const char kNotificationsVibrateEnabled[] = "notifications.vibrate_enabled";
 // permission, so any existing permissions must be migrated).
 const char kMigratedToSiteNotificationChannels[] =
     "notifications.migrated_to_channels";
-
-// Cached information about GPU driver.
-const char kGLExtensionsString[] = "gl_extensions_string";
-const char kGpuDriverInfoMaxSamples[] = "gpu_driver_info_max_samples";
-const char kGpuDriverInfoResetNotificationStrategy[] =
-    "gpu_driver_info_reset_notification_strategy";
-const char kGpuDriverInfoShaderVersion[] = "gpu_driver_info_shader_version";
-const char kGpuDriverInfoBuildFingerPrint[] =
-    "gpu_driver_info_build_finder_print";
 #endif
 
 // Maps from app ids to origin + Service Worker registration ID.
@@ -1411,6 +1389,13 @@ const char kOpenPdfDownloadInSystemReader[] =
     "download.open_pdf_in_system_reader";
 #endif
 
+#if defined(OS_ANDROID)
+// Boolean which specifies whether we should ask the user if we should download
+// a file (true) or just download it automatically, specifically for Android.
+// This is set to true as the prompt is intially shown to all Android users.
+const char kPromptForDownloadAndroid[] = "download.prompt_for_download_android";
+#endif
+
 // String which specifies where to save html files to by default.
 const char kSaveFileDefaultDirectory[] = "savefile.default_directory";
 
@@ -1446,10 +1431,6 @@ const char kExcludedSchemes[] = "protocol_handler.excluded_schemes";
 // Integer that specifies the index of the tab the user was on when they
 // last visited the options window.
 const char kOptionsWindowLastTabIndex[] = "options_window.last_tab_index";
-
-// Integer that specifies if the first run bubble should be shown.
-// This preference is only registered by the first-run procedure.
-const char kShowFirstRunBubbleOption[] = "show-first-run-bubble-option";
 
 // String containing the last known intranet redirect URL, if any.  See
 // intranet_redirect_detector.h for more information.
@@ -2546,6 +2527,11 @@ const char kIsolateOrigins[] = "site_isolation.isolate_origins";
 
 // Boolean that specifies opting into --site-per-process (full Site Isolation).
 const char kSitePerProcess[] = "site_isolation.site_per_process";
+
+// Boolean that specifies if the web driver flag is allowed to override policies
+// which prevent it from operating normally. (e.g. SitePerProcess.)
+const char kWebDriverOverridesIncompatiblePolicies[] =
+    "webdriver.override_incompatible_policy";
 
 #if defined(OS_WIN)
 // A boolean value, controlling whether third party software is allowed to

@@ -24,11 +24,11 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
+#include "net/base/proxy_server.h"
 #include "net/cert/cert_database.h"
 #include "net/http/http_server_properties.h"
 #include "net/http/http_stream_factory.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
 #include "net/quic/chromium/network_connection.h"
 #include "net/quic/chromium/quic_chromium_client_session.h"
 #include "net/quic/chromium/quic_clock_skew_detector.h"
@@ -82,9 +82,10 @@ enum QuicConnectionMigrationStatus {
   MIGRATION_STATUS_TOO_MANY_CHANGES,
   MIGRATION_STATUS_SUCCESS,
   MIGRATION_STATUS_NON_MIGRATABLE_STREAM,
-  MIGRATION_STATUS_DISABLED,
+  MIGRATION_STATUS_NOT_ENABLED,
   MIGRATION_STATUS_NO_ALTERNATE_NETWORK,
   MIGRATION_STATUS_ON_PATH_DEGRADING_DISABLED,
+  MIGRATION_STATUS_DISABLED_BY_CONFIG,
   MIGRATION_STATUS_MAX
 };
 
@@ -243,7 +244,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
       bool headers_include_h2_stream_dependency,
       const QuicTagVector& connection_options,
       const QuicTagVector& client_connection_options,
-      bool enable_token_binding);
+      bool enable_token_binding,
+      bool enable_socket_recv_optimization);
   ~QuicStreamFactory() override;
 
   // Returns true if there is an existing session for |server_id| or if the
@@ -576,6 +578,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   base::SequencedTaskRunner* task_runner_;
 
   const scoped_refptr<SSLConfigService> ssl_config_service_;
+
+  // If set to true, the stream factory will create UDP Sockets with
+  // experimental optimization enabled for receiving data.
+  bool enable_socket_recv_optimization_;
 
   base::WeakPtrFactory<QuicStreamFactory> weak_factory_;
 

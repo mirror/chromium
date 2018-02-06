@@ -260,6 +260,7 @@ class MockRemoteSuggestionsFetcher : public RemoteSuggestionsFetcher {
                     SnippetsAvailableCallback* callback));
   MOCK_CONST_METHOD0(GetLastStatusForDebugging, const std::string&());
   MOCK_CONST_METHOD0(GetLastJsonForDebugging, const std::string&());
+  MOCK_CONST_METHOD0(WasLastFetchAuthenticatedForDebugging, bool());
   MOCK_CONST_METHOD0(GetFetchUrlForDebugging, const GURL&());
 };
 
@@ -565,6 +566,19 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     provider->Fetch(category, known_suggestion_ids,
                     std::move(fetch_done_callback));
     std::move(snippets_callback).Run(status, std::move(fetched_categories));
+  }
+
+  RemoteSuggestionsFetcher::SnippetsAvailableCallback
+  FetchSuggestionsAndGetResponseCallback(
+      RemoteSuggestionsProviderImpl* provider,
+      bool interactive_request) {
+    RemoteSuggestionsFetcher::SnippetsAvailableCallback snippets_callback;
+    EXPECT_CALL(*mock_suggestions_fetcher(), FetchSnippets(_, _))
+        .WillOnce(MoveSecondArgumentPointeeTo(&snippets_callback))
+        .RetiresOnSaturation();
+    provider->FetchSuggestions(
+        interactive_request, RemoteSuggestionsProvider::FetchStatusCallback());
+    return snippets_callback;
   }
 
   RemoteSuggestionsFetcher::SnippetsAvailableCallback
@@ -2449,6 +2463,65 @@ TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenSignedOut) {
   EXPECT_CALL(*scheduler(), OnSuggestionsCleared());
   provider->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT,
                             RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN);
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       RestartsFetchWhenSignedInWhileFetching) {
+  auto provider =
+      MakeSuggestionsProviderWithoutInitializationWithStrictScheduler();
+  // Initiate the provider so that it is already READY.
+  EXPECT_CALL(*scheduler(), OnProviderActivated());
+  WaitForSuggestionsProviderInitialization(provider.get());
+
+  // Initiate the fetch.
+  RemoteSuggestionsFetcher::SnippetsAvailableCallback snippets_callback;
+  EXPECT_CALL(*mock_suggestions_fetcher(), FetchSnippets(_, _))
+      .WillOnce(MoveSecondArgumentPointeeTo(&snippets_callback))
+      .RetiresOnSaturation();
+  provider->FetchSuggestions(/*interactive_request=*/false,
+                             RemoteSuggestionsProvider::FetchStatusCallback());
+
+  // The scheduler should be notified of clearing the suggestions.
+  EXPECT_CALL(*scheduler(), OnSuggestionsCleared());
+  provider->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT,
+                            RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN);
+
+  // Once we signal the first fetch to be finished (calling snippets_callback
+  // below), a new fetch should get triggered.
+  EXPECT_CALL(*mock_suggestions_fetcher(), FetchSnippets(_, _)).Times(1);
+  std::move(snippets_callback)
+      .Run(Status::Success(), std::vector<FetchedCategory>());
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       IgnoresResultsWhenHistoryClearedWhileFetching) {
+  auto provider =
+      MakeSuggestionsProviderWithoutInitializationWithStrictScheduler();
+  // Initiate the provider so that it is already READY.
+  EXPECT_CALL(*scheduler(), OnProviderActivated());
+  WaitForSuggestionsProviderInitialization(provider.get());
+
+  // Initiate the fetch.
+  RemoteSuggestionsFetcher::SnippetsAvailableCallback snippets_callback =
+      FetchSuggestionsAndGetResponseCallback(provider.get(),
+                                             /*interactive_request=*/false);
+
+  // The scheduler should be notified of clearing the history.
+  EXPECT_CALL(*scheduler(), OnHistoryCleared());
+  provider->ClearHistory(GetDefaultCreationTime(), GetDefaultExpirationTime(),
+                         base::RepeatingCallback<bool(const GURL& url)>());
+
+  // Once the fetch finishes, the returned suggestions are ignored.
+  FetchedCategoryBuilder category_builder;
+  category_builder.SetCategory(articles_category());
+  category_builder.AddSuggestionViaBuilder(
+      RemoteSuggestionBuilder().AddId(base::StringPrintf("http://abc.com")));
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(category_builder.Build());
+  std::move(snippets_callback)
+      .Run(Status::Success(), std::move(fetched_categories));
+  EXPECT_THAT(observer().SuggestionsForCategory(articles_category()),
+              SizeIs(0));
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest,
@@ -4499,6 +4572,48 @@ TEST_F(RemoteSuggestionsProviderImplTest,
             observer().StatusForCategory(articles_category()));
   EXPECT_THAT(observer().SuggestionsForCategory(articles_category()),
               SizeIs(1));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldHandleCategoryDisabledBeforeTimeout) {
+  auto provider = MakeSuggestionsProvider(
+      /*use_mock_prefetched_pages_tracker=*/false,
+      /*use_fake_breaking_news_listener=*/false,
+      /*use_mock_remote_suggestions_status_service=*/false);
+  std::vector<FetchedCategory> fetched_categories;
+  const FetchedCategoryBuilder articles_category_builder =
+      FetchedCategoryBuilder()
+          .SetCategory(articles_category())
+          .AddSuggestionViaBuilder(
+              RemoteSuggestionBuilder().SetUrl("http://articles.com"));
+  fetched_categories.push_back(articles_category_builder.Build());
+  FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
+                        Status::Success(), std::move(fetched_categories));
+  fetched_categories.clear();
+
+  ASSERT_EQ(CategoryStatus::AVAILABLE,
+            observer().StatusForCategory(articles_category()));
+
+  // No need to finish the fetch, we ignore the response callback.
+  RefetchWhileDisplayingAndGetResponseCallback(provider.get());
+
+  FastForwardBy(
+      base::TimeDelta::FromSeconds(kTimeoutForRefetchWhileDisplayingSeconds) -
+      base::TimeDelta::FromMilliseconds(1));
+
+  // Before the timeout, the status is flipped to AVAILABLE_LOADING.
+  ASSERT_EQ(CategoryStatus::AVAILABLE_LOADING,
+            observer().StatusForCategory(articles_category()));
+
+  // Disable the provider; this will put the category into the
+  // CATEGORY_EXPLICITLY_DISABLED status.
+  provider->EnterState(RemoteSuggestionsProviderImpl::State::DISABLED);
+  ASSERT_EQ(CategoryStatus::CATEGORY_EXPLICITLY_DISABLED,
+            observer().StatusForCategory(articles_category()));
+
+  // Trigger the timeout. The provider should gracefully handle(i.e. not crash
+  // because of) the category being disabled in the interim.
+  FastForwardBy(base::TimeDelta::FromMilliseconds(2));
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest,

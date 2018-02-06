@@ -2659,9 +2659,6 @@ void TextureManager::DoCubeMapWorkaround(
     TextureRef* texture_ref,
     const char* function_name,
     const DoTexImageArguments& args) {
-  // This workaround code does not work with an unpack buffer bound.
-  ScopedResetPixelUnpackBuffer scoped_reset_pbo(state);
-
   std::vector<GLenum> undefined_faces;
   Texture* texture = texture_ref->texture();
   if (texture_state->force_cube_complete ||
@@ -2693,6 +2690,8 @@ void TextureManager::DoCubeMapWorkaround(
   DoTexImageArguments new_args = args;
   std::unique_ptr<char[]> zero(new char[args.pixels_size]);
   memset(zero.get(), 0, args.pixels_size);
+  // Need to clear PIXEL_UNPACK_BUFFER and UNPACK params for data uploading.
+  state->PushTextureUnpackState();
   for (GLenum face : undefined_faces) {
     new_args.target = face;
     new_args.pixels = zero.get();
@@ -2700,6 +2699,7 @@ void TextureManager::DoCubeMapWorkaround(
                function_name, texture_ref, new_args);
     texture->MarkLevelAsInternalWorkaround(face, args.level);
   }
+  state->RestoreUnpackState();
 }
 
 void TextureManager::ValidateAndDoTexImage(
@@ -2799,7 +2799,8 @@ void TextureManager::ValidateAndDoTexImage(
     }
   }
 
-  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer) {
+  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer &&
+      args.width && args.height && args.depth) {
     uint32_t buffer_size = static_cast<uint32_t>(buffer->size());
     if (buffer_size - args.pixels_size - ToGLuint(args.pixels) < args.padding) {
       // In ValidateTexImage(), we already made sure buffer size is no less
@@ -3028,7 +3029,8 @@ void TextureManager::ValidateAndDoTexSubImage(
     }
   }
 
-  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer) {
+  if (texture_state->unpack_alignment_workaround_with_unpack_buffer && buffer &&
+      args.width && args.height && args.depth) {
     uint32_t buffer_size = static_cast<uint32_t>(buffer->size());
     if (buffer_size - args.pixels_size - ToGLuint(args.pixels) < args.padding) {
       DoTexSubImageWithAlignmentWorkaround(texture_state, state, args);

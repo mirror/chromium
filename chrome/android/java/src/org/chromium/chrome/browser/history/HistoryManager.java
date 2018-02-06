@@ -118,8 +118,8 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
         mToolbar = (HistoryManagerToolbar) mSelectableListLayout.initializeToolbar(
                 R.layout.history_toolbar, mSelectionDelegate, R.string.menu_history, null,
                 R.id.normal_menu_group, R.id.selection_mode_menu_group,
-                FeatureUtilities.isChromeHomeEnabled() ? R.color.modern_toolbar_bg
-                                                       : R.color.modern_primary_color,
+                FeatureUtilities.isChromeModernDesignEnabled() ? R.color.modern_toolbar_bg
+                                                               : R.color.modern_primary_color,
                 this, true);
         mToolbar.setManager(this);
         mToolbar.initializeSearchView(this, R.string.history_manager_search, R.id.search_menu_id);
@@ -169,7 +169,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
             }});
 
         // 9. Listen to changes in sign in state.
-        SigninManager.get(mActivity).addSignInStateObserver(this);
+        SigninManager.get().addSignInStateObserver(this);
 
         // 10. Create PrefChangeRegistrar to receive notifications on preference changes.
         mPrefChangeRegistrar = new PrefChangeRegistrar();
@@ -268,7 +268,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
         mHistoryAdapter.onDestroyed();
         mLargeIconBridge.destroy();
         mLargeIconBridge = null;
-        SigninManager.get(mActivity).removeSignInStateObserver(this);
+        SigninManager.get().removeSignInStateObserver(this);
         mPrefChangeRegistrar.destroy();
     }
 

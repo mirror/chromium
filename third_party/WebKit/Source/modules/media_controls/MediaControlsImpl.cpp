@@ -81,6 +81,7 @@
 #include "modules/remoteplayback/RemotePlayback.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/text/PlatformLocale.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebSize.h"
 
@@ -595,7 +596,7 @@ void MediaControlsImpl::UpdateCSSClassFromState() {
   if (MediaElement().IsHTMLVideoElement() &&
       !VideoElement().HasAvailableVideoFrame() &&
       VideoElement().PosterImageURL().IsEmpty() &&
-      state != ControlsState::kScrubbing) {
+      state <= ControlsState::kLoadingMetadata) {
     builder.Append(" ");
     builder.Append(kShowDefaultPosterCSSClass);
   }
@@ -609,23 +610,27 @@ void MediaControlsImpl::UpdateCSSClassFromState() {
 }
 
 MediaControlsImpl::ControlsState MediaControlsImpl::State() const {
-  if (is_scrubbing_)
+  HTMLMediaElement::NetworkState network_state =
+      MediaElement().getNetworkState();
+  HTMLMediaElement::ReadyState ready_state = MediaElement().getReadyState();
+
+  if (is_scrubbing_ && ready_state != HTMLMediaElement::kHaveNothing)
     return ControlsState::kScrubbing;
 
-  switch (MediaElement().getNetworkState()) {
+  switch (network_state) {
     case HTMLMediaElement::kNetworkEmpty:
     case HTMLMediaElement::kNetworkNoSource:
       return ControlsState::kNoSource;
     case HTMLMediaElement::kNetworkLoading:
-      if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
+      if (ready_state == HTMLMediaElement::kHaveNothing)
         return ControlsState::kLoadingMetadata;
       if (!MediaElement().paused() &&
-          MediaElement().getReadyState() != HTMLMediaElement::kHaveEnoughData) {
+          ready_state != HTMLMediaElement::kHaveEnoughData) {
         return ControlsState::kBuffering;
       }
       break;
     case HTMLMediaElement::kNetworkIdle:
-      if (MediaElement().getReadyState() == HTMLMediaElement::kHaveNothing)
+      if (ready_state == HTMLMediaElement::kHaveNothing)
         return ControlsState::kNotLoaded;
       break;
   }
@@ -707,7 +712,7 @@ LayoutObject* MediaControlsImpl::ContainerLayoutObject() {
 void MediaControlsImpl::MaybeShow() {
   panel_->SetIsWanted(true);
   panel_->SetIsDisplayed(true);
-  if (overlay_play_button_)
+  if (overlay_play_button_ && !is_paused_for_scrubbing_)
     overlay_play_button_->UpdateDisplayType();
   // Only make the controls visible if they won't get hidden by OnTimeUpdate.
   if (MediaElement().paused() || !ShouldHideMediaControls())
@@ -875,6 +880,26 @@ void MediaControlsImpl::DisableShowingTextTracks() {
   }
 }
 
+String MediaControlsImpl::GetTextTrackLabel(TextTrack* track) const {
+  if (!track) {
+    return MediaElement().GetLocale().QueryString(
+        WebLocalizedString::kTextTracksOff);
+  }
+
+  String track_label = track->label();
+
+  if (track_label.IsEmpty())
+    track_label = track->language();
+
+  if (track_label.IsEmpty()) {
+    track_label = String(MediaElement().GetLocale().QueryString(
+        WebLocalizedString::kTextTracksNoLabel,
+        String::Number(track->TrackIndex() + 1)));
+  }
+
+  return track_label;
+}
+
 void MediaControlsImpl::RefreshCastButtonVisibility() {
   RefreshCastButtonVisibilityWithoutUpdate();
   BatchedControlUpdate batch(this);
@@ -955,9 +980,8 @@ void MediaControlsImpl::UpdateOverflowMenuWanted() const {
       std::make_pair(toggle_closed_captions_button_.Get(), false),
   };
 
-  // Get the size of the media controls.
-  WebSize controls_size =
-      MediaControlElementsHelper::GetSizeOrDefault(*this, WebSize(0, 0));
+  // Current size of the media controls.
+  WebSize controls_size = size_;
 
   // The video controls are more than one row so we need to allocate vertical
   // room and hide the overlay play button if there is not enough room.
@@ -1314,6 +1338,7 @@ void MediaControlsImpl::OnPause() {
 }
 
 void MediaControlsImpl::OnTextTracksAddedOrRemoved() {
+  toggle_closed_captions_button_->UpdateDisplayType();
   toggle_closed_captions_button_->SetIsWanted(
       MediaElement().HasClosedCaptions());
   BatchedControlUpdate batch(this);

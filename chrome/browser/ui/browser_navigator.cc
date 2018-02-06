@@ -145,10 +145,14 @@ std::pair<Browser*, int> GetBrowserAndTabForDisposition(
              browser_it != BrowserList::GetInstance()->end_last_active();
              ++browser_it) {
           Browser* browser = *browser_it;
-          // Only look at same profile (and anonymity level).
+          // When tab switching, only look at same profile and anonymity
+          // level. Allow SINGLETON to transition from incognito mode.
           if (browser->profile()->IsSameProfile(profile) &&
-              browser->profile()->GetProfileType() ==
-                  profile->GetProfileType()) {
+              (browser->profile()->GetProfileType() ==
+                   profile->GetProfileType() ||
+               (params.disposition == WindowOpenDisposition::SINGLETON_TAB &&
+                profile->GetProfileType() ==
+                    Profile::ProfileType::INCOGNITO_PROFILE))) {
             int index = GetIndexOfExistingTab(browser, params);
             if (index >= 0)
               return {browser, index};
@@ -157,7 +161,7 @@ std::pair<Browser*, int> GetBrowserAndTabForDisposition(
 #if defined(OS_ANDROID)
       }
 #endif
-    // fall through
+      FALLTHROUGH;
     case WindowOpenDisposition::CURRENT_TAB:
       if (params.browser)
         return {params.browser, -1};
@@ -256,7 +260,7 @@ void NormalizeDisposition(NavigateParams* params) {
       // automatically.
       if (params->window_action == NavigateParams::NO_ACTION)
         params->window_action = NavigateParams::SHOW_WINDOW;
-      // Fall-through.
+      FALLTHROUGH;
     }
     case WindowOpenDisposition::NEW_FOREGROUND_TAB:
     case WindowOpenDisposition::SINGLETON_TAB:
@@ -303,6 +307,7 @@ void LoadURLInContents(WebContents* target_contents,
   load_url_params.is_renderer_initiated = params->is_renderer_initiated;
   load_url_params.started_from_context_menu = params->started_from_context_menu;
   load_url_params.suggested_filename = params->suggested_filename;
+  load_url_params.has_user_gesture = params->user_gesture;
 
   if (params->uses_post) {
     load_url_params.load_type = NavigationController::LOAD_TYPE_HTTP_POST;

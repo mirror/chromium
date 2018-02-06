@@ -117,7 +117,7 @@ enum DownloadFileRenameMethodType { RENAME_AND_UNIQUIFY, RENAME_AND_ANNOTATE };
 // retries renames failed due to ACCESS_DENIED.
 class TestDownloadFileImpl : public DownloadFileImpl {
  public:
-  TestDownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
+  TestDownloadFileImpl(std::unique_ptr<download::DownloadSaveInfo> save_info,
                        const base::FilePath& default_downloads_directory,
                        std::unique_ptr<DownloadManager::InputStream> stream,
                        uint32_t download_id,
@@ -221,7 +221,8 @@ class DownloadFileTest : public testing::Test {
         .WillOnce(Invoke(this, &DownloadFileTest::RegisterCallback))
         .RetiresOnSaturation();
 
-    std::unique_ptr<DownloadSaveInfo> save_info(new DownloadSaveInfo());
+    std::unique_ptr<download::DownloadSaveInfo> save_info(
+        new download::DownloadSaveInfo());
     save_info->offset = offset;
     save_info->length = length;
 
@@ -437,13 +438,19 @@ class DownloadFileTest : public testing::Test {
 
   void VerifySourceStreamsStates(const SourceStreamTestData& data) {
     DCHECK(download_file_->source_streams_.find(data.offset) !=
-           download_file_->source_streams_.end());
+           download_file_->source_streams_.end())
+        << "Can't find stream at offset : " << data.offset;
     DownloadFileImpl::SourceStream* stream =
         download_file_->source_streams_[data.offset].get();
     DCHECK(stream);
     EXPECT_EQ(data.offset, stream->offset());
     EXPECT_EQ(data.bytes_written, stream->bytes_written());
     EXPECT_EQ(data.finished, stream->is_finished());
+  }
+
+  size_t source_streams_count() const {
+    DCHECK(download_file_);
+    return download_file_->source_streams_.size();
   }
 
   int64_t TotalBytesReceived() const {
@@ -901,7 +908,7 @@ TEST_F(DownloadFileTest, StreamNonEmptyError) {
 // Tests for concurrent streams handling, used for parallel download.
 //
 // Activate both streams at the same time.
-TEST_F(DownloadFileTest, MutipleStreamsWrite) {
+TEST_F(DownloadFileTest, MultipleStreamsWrite) {
   int64_t stream_0_length = GetBuffersLength(kTestData6, 2);
   int64_t stream_1_length = GetBuffersLength(kTestData7, 2);
 
@@ -920,7 +927,7 @@ TEST_F(DownloadFileTest, MutipleStreamsWrite) {
   download_file_->AddInputStream(
       std::make_unique<DownloadManager::InputStream>(
           std::unique_ptr<ByteStreamReader>(additional_streams_[0])),
-      stream_0_length, DownloadSaveInfo::kLengthFullContent);
+      stream_0_length, download::DownloadSaveInfo::kLengthFullContent);
   sink_callback_.Run();
   base::RunLoop().RunUntilIdle();
 
@@ -971,7 +978,8 @@ TEST_F(DownloadFileTest, MutipleStreamsLimitedLength) {
   download_file_->AddInputStream(
       std::make_unique<DownloadManager::InputStream>(
           std::unique_ptr<ByteStreamReader>(additional_streams_[1])),
-      stream_0_length + stream_1_length, DownloadSaveInfo::kLengthFullContent);
+      stream_0_length + stream_1_length,
+      download::DownloadSaveInfo::kLengthFullContent);
   sink_callback_.Run();
   base::RunLoop().RunUntilIdle();
 
@@ -992,11 +1000,12 @@ TEST_F(DownloadFileTest, MutipleStreamsLimitedLength) {
 }
 
 // Activate and deplete one stream, later add the second stream.
-TEST_F(DownloadFileTest, MutipleStreamsFirstStreamWriteAllData) {
+TEST_F(DownloadFileTest, MultipleStreamsFirstStreamWriteAllData) {
   int64_t stream_0_length = GetBuffersLength(kTestData8, 4);
 
-  ASSERT_TRUE(CreateDownloadFile(0, DownloadSaveInfo::kLengthFullContent, true,
-                                 DownloadItem::ReceivedSlices()));
+  ASSERT_TRUE(CreateDownloadFile(0,
+                                 download::DownloadSaveInfo::kLengthFullContent,
+                                 true, DownloadItem::ReceivedSlices()));
 
   PrepareStream(&input_stream_, 0, false, true, kTestData8, 4);
 
@@ -1013,14 +1022,13 @@ TEST_F(DownloadFileTest, MutipleStreamsFirstStreamWriteAllData) {
   download_file_->AddInputStream(
       std::make_unique<DownloadManager::InputStream>(
           std::unique_ptr<ByteStreamReader>(additional_streams_[0])),
-      stream_0_length - 1, DownloadSaveInfo::kLengthFullContent);
+      stream_0_length - 1, download::DownloadSaveInfo::kLengthFullContent);
   base::RunLoop().RunUntilIdle();
 
   SourceStreamTestData stream_data_0(0, stream_0_length, true);
-  SourceStreamTestData stream_data_1(stream_0_length - 1, 0, false);
   VerifySourceStreamsStates(stream_data_0);
-  VerifySourceStreamsStates(stream_data_1);
   EXPECT_EQ(stream_0_length, TotalBytesReceived());
+  EXPECT_EQ(1u, source_streams_count());
 
   DestroyDownloadFile(0);
 }
@@ -1054,7 +1062,7 @@ TEST_F(DownloadFileTest, SecondStreamStartingOffsetAlreadyWritten) {
   download_file_->AddInputStream(
       std::make_unique<DownloadManager::InputStream>(
           std::unique_ptr<ByteStreamReader>(additional_streams_[0])),
-      0, DownloadSaveInfo::kLengthFullContent);
+      0, download::DownloadSaveInfo::kLengthFullContent);
 
   // The stream should get terminated and reset the callback.
   EXPECT_TRUE(sink_callback_.is_null());

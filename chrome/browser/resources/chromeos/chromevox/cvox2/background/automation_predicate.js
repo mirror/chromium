@@ -162,7 +162,7 @@ AutomationPredicate.focused = function(node) {
  */
 AutomationPredicate.leaf = function(node) {
   return !node.firstChild || node.role == Role.BUTTON ||
-      node.role == Role.BUTTON_DROP_DOWN || node.role == Role.POP_UP_BUTTON ||
+      node.role == Role.POP_UP_BUTTON ||
       node.role == Role.SLIDER || node.role == Role.TEXT_FIELD ||
       node.state[State.INVISIBLE] || node.children.every(function(n) {
         return n.state[State.INVISIBLE];
@@ -338,7 +338,7 @@ AutomationPredicate.root = function(node) {
           (node.parent.root.role == Role.DESKTOP &&
            node.parent.role == Role.WEB_VIEW);
     default:
-      return false;
+      return !!node.modal;
   }
 };
 

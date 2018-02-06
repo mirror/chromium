@@ -53,9 +53,10 @@
       </div>
       <div class="footer layout vertical">
         <div class="overview-list-item flex layout horizontal center">
-          <hd-iron-icon class="overview-list-item-icon"
-              icon1x="sync-consent-32:googleg" icon2x="sync-consent-64:googleg">
-          </hd-iron-icon>
+          <img srcset="chrome://oobe/logo_24px-1x.svg 1x,
+                       chrome://oobe/logo_24px-2x.svg 2x"
+              class="overview-list-item-icon">
+          </img>
           <div class="overview-list-item-text flex layout vertical
               center-justified">
             <div class="overview-list-item-title">
@@ -86,7 +87,7 @@
       </div>
       <div class="bottom-buttons layout horizontal end-justified">
         <oobe-next-button on-tap="onSettingsSaveAndContinue_"
-          class="focus-on-show">
+          disabled="[[!userPrefsKnown_]]" class="focus-on-show">
         </oobe-next-button>
       </div>
     </oobe-dialog>
@@ -108,6 +109,7 @@
         <oobe-a11y-option checked="[[syncAllEnabled_]]"
             on-change="onSyncAllEnabledChanged_"
             label-for-aria="[[i18nDynamic(locale, 'syncConsentSyncAllOptionTitle')]]"
+            disabled="[[isManaged_]]"
             class="focus-on-show">
           <span class="title">
             [[i18nDynamic(locale, 'syncConsentSyncAllOptionTitle')]]
@@ -126,10 +128,9 @@
           [[i18nDynamic(locale, 'syncConsentSettingsStatusSyncAllOff')]]
         </div>
       </div>
-      <div class="bottom-buttons layout horizontal justified">
-        <oobe-back-button on-tap="onSettingsBack_">
-        </oobe-back-button>
-        <oobe-text-button inverse on-tap="onSettingsSaveAndContinue_">
+      <div class="bottom-buttons layout horizontal end-justified">
+        <oobe-text-button inverse on-tap="onSettingsSaveAndContinue_"
+            disabled="[[!userPrefsKnown_]]">
           <div>
             [[i18nDynamic(locale, 'syncConsentSettingsSaveAndContinue')]]
           </div>

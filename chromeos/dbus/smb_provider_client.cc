@@ -53,14 +53,14 @@ class SmbProviderClientImpl : public SmbProviderClient {
 
   void Mount(const base::FilePath& share_path,
              MountCallback callback) override {
-    smbprovider::MountOptions options;
+    smbprovider::MountOptionsProto options;
     options.set_path(share_path.value());
     CallMethod(smbprovider::kMountMethod, options,
                &SmbProviderClientImpl::HandleMountCallback, &callback);
   }
 
   void Unmount(int32_t mount_id, StatusCallback callback) override {
-    smbprovider::UnmountOptions options;
+    smbprovider::UnmountOptionsProto options;
     options.set_mount_id(mount_id);
     CallMethod(smbprovider::kUnmountMethod, options,
                &SmbProviderClientImpl::HandleUnmountCallback, &callback);
@@ -69,24 +69,24 @@ class SmbProviderClientImpl : public SmbProviderClient {
   void ReadDirectory(int32_t mount_id,
                      const base::FilePath& directory_path,
                      ReadDirectoryCallback callback) override {
-    smbprovider::ReadDirectoryOptions options;
+    smbprovider::ReadDirectoryOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_directory_path(directory_path.value());
     CallMethod(smbprovider::kReadDirectoryMethod, options,
                &SmbProviderClientImpl::HandleProtoCallback<
-                   smbprovider::DirectoryEntryList>,
+                   smbprovider::DirectoryEntryListProto>,
                &callback);
   }
 
   void GetMetadataEntry(int32_t mount_id,
                         const base::FilePath& entry_path,
                         GetMetdataEntryCallback callback) override {
-    smbprovider::GetMetadataEntryOptions options;
+    smbprovider::GetMetadataEntryOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_entry_path(entry_path.value());
     CallMethod(smbprovider::kGetMetadataEntryMethod, options,
                &SmbProviderClientImpl::HandleProtoCallback<
-                   smbprovider::DirectoryEntry>,
+                   smbprovider::DirectoryEntryProto>,
                &callback);
   }
 
@@ -94,7 +94,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
                 const base::FilePath& file_path,
                 bool writeable,
                 OpenFileCallback callback) override {
-    smbprovider::OpenFileOptions options;
+    smbprovider::OpenFileOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_file_path(file_path.value());
     options.set_writeable(writeable);
@@ -105,7 +105,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
   void CloseFile(int32_t mount_id,
                  int32_t file_id,
                  StatusCallback callback) override {
-    smbprovider::CloseFileOptions options;
+    smbprovider::CloseFileOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_file_id(file_id);
     CallMethod(smbprovider::kCloseFileMethod, options,
@@ -117,7 +117,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
                 int64_t offset,
                 int32_t length,
                 ReadFileCallback callback) override {
-    smbprovider::ReadFileOptions options;
+    smbprovider::ReadFileOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_file_id(file_id);
     options.set_offset(offset);
@@ -130,12 +130,55 @@ class SmbProviderClientImpl : public SmbProviderClient {
                    const base::FilePath& entry_path,
                    bool recursive,
                    StatusCallback callback) override {
-    smbprovider::DeleteEntryOptions options;
+    smbprovider::DeleteEntryOptionsProto options;
     options.set_mount_id(mount_id);
     options.set_entry_path(entry_path.value());
     options.set_recursive(recursive);
     CallMethod(smbprovider::kDeleteEntryMethod, options,
                &SmbProviderClientImpl::HandleDeleteEntryCallback, &callback);
+  }
+
+  void CreateFile(int32_t mount_id,
+                  const base::FilePath& file_path,
+                  StatusCallback callback) override {
+    smbprovider::CreateFileOptionsProto options;
+    options.set_mount_id(mount_id);
+    options.set_file_path(file_path.value());
+    CallMethod(smbprovider::kCreateFileMethod, options,
+               &SmbProviderClientImpl::HandleCreateFileCallback, &callback);
+  }
+
+  void Truncate(int32_t mount_id,
+                const base::FilePath& file_path,
+                int64_t length,
+                StatusCallback callback) override {
+    smbprovider::TruncateOptionsProto options;
+    options.set_mount_id(mount_id);
+    options.set_file_path(file_path.value());
+    options.set_length(length);
+    CallMethod(smbprovider::kTruncateMethod, options,
+               &SmbProviderClientImpl::HandleTruncateCallback, &callback);
+  }
+
+  void WriteFile(int32_t mount_id,
+                 int32_t file_id,
+                 int64_t offset,
+                 int32_t length,
+                 base::ScopedFD temp_fd,
+                 StatusCallback callback) override {
+    smbprovider::WriteFileOptionsProto options;
+    options.set_mount_id(mount_id);
+    options.set_file_id(file_id);
+    options.set_offset(offset);
+    options.set_length(length);
+
+    dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
+                                 smbprovider::kWriteFileMethod);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendProtoAsArrayOfBytes(options);
+    writer.AppendFileDescriptor(temp_fd.release());
+    CallMethod(&method_call, &SmbProviderClientImpl::HandleTruncateCallback,
+               &callback);
   }
 
  protected:
@@ -159,7 +202,17 @@ class SmbProviderClientImpl : public SmbProviderClient {
     dbus::MethodCall method_call(smbprovider::kSmbProviderInterface, name);
     dbus::MessageWriter writer(&method_call);
     writer.AppendProtoAsArrayOfBytes(protobuf);
-    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+    CallMethod(&method_call, handler, callback);
+  }
+
+  // Calls the method specified in |method_call|. |handler| is the member
+  // function in this class that receives the response and then passes the
+  // processed response to |callback|.
+  template <typename CallbackHandler, typename Callback>
+  void CallMethod(dbus::MethodCall* method_call,
+                  CallbackHandler handler,
+                  Callback callback) {
+    proxy_->CallMethod(method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
                        base::BindOnce(handler, weak_ptr_factory_.GetWeakPtr(),
                                       base::Passed(callback)));
   }
@@ -260,6 +313,39 @@ class SmbProviderClientImpl : public SmbProviderClient {
                                  dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "DeleteEntry: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for CreateFile.
+  void HandleCreateFileCallback(StatusCallback callback,
+                                dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "CreateFile: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for Truncate.
+  void HandleTruncateCallback(StatusCallback callback,
+                              dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "Truncate: failed to call smbprovider";
+      std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
+    }
+    dbus::MessageReader reader(response);
+    std::move(callback).Run(GetErrorFromReader(&reader));
+  }
+
+  // Handles D-Bus callback for WriteFile.
+  void HandleWriteFileCallback(StatusCallback callback,
+                               dbus::Response* response) {
+    if (!response) {
+      DLOG(ERROR) << "WriteFile: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);
     }
     dbus::MessageReader reader(response);

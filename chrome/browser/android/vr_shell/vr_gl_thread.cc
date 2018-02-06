@@ -46,7 +46,8 @@ base::WeakPtr<VrShellGl> VrGLThread::GetVrShellGl() {
 
 void VrGLThread::Init() {
   bool keyboard_enabled =
-      base::FeatureList::IsEnabled(features::kVrBrowserKeyboard);
+      base::FeatureList::IsEnabled(features::kVrBrowserKeyboard) &&
+      !ui_initial_state_.web_vr_autopresentation_expected;
   if (keyboard_enabled) {
     keyboard_delegate_ = GvrKeyboardDelegate::Create();
     text_input_delegate_ = std::make_unique<vr::TextInputDelegate>();
@@ -86,11 +87,29 @@ void VrGLThread::CleanUp() {
   vr_shell_gl_.reset();
 }
 
-void VrGLThread::ContentSurfaceChanged(jobject surface) {
+void VrGLThread::ContentSurfaceCreated(jobject surface,
+                                       gl::SurfaceTexture* texture) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VrShell::ContentSurfaceCreated, weak_vr_shell_,
+                                surface, base::Unretained(texture)));
+}
+
+void VrGLThread::ContentOverlaySurfaceCreated(jobject surface,
+                                              gl::SurfaceTexture* texture) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
+      base::BindOnce(&VrShell::ContentOverlaySurfaceCreated, weak_vr_shell_,
+                     surface, base::Unretained(texture)));
+}
+
+void VrGLThread::DialogSurfaceCreated(jobject surface,
+                                      gl::SurfaceTexture* texture) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::DialogSurfaceCreated, weak_vr_shell_,
+                            surface, base::Unretained(texture)));
 }
 
 void VrGLThread::GvrDelegateReady(
@@ -114,6 +133,21 @@ void VrGLThread::ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ProcessContentGesture, weak_vr_shell_,
                             base::Passed(std::move(event)), content_id));
+}
+
+void VrGLThread::OnWebInputEdited(const vr::TextInputInfo& info, bool commit) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&VrShell::OnWebInputEdited, weak_vr_shell_, info, commit));
+}
+
+void VrGLThread::ForwardDialogEvent(
+    std::unique_ptr<blink::WebInputEvent> event) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::ProcessDialogGesture, weak_vr_shell_,
+                            base::Passed(std::move(event))));
 }
 
 void VrGLThread::ForceExitVr() {
@@ -272,11 +306,11 @@ void VrGLThread::SetAudioCaptureEnabled(bool enabled) {
                             browser_ui_, enabled));
 }
 
-void VrGLThread::SetLocationAccess(bool enabled) {
+void VrGLThread::SetLocationAccessEnabled(bool enabled) {
   DCHECK(OnMainThread());
-  task_runner()->PostTask(FROM_HERE,
-                          base::Bind(&vr::BrowserUiInterface::SetLocationAccess,
-                                     browser_ui_, enabled));
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetLocationAccessEnabled,
+                            browser_ui_, enabled));
 }
 
 void VrGLThread::SetVideoCaptureEnabled(bool enabled) {
@@ -352,6 +386,39 @@ void VrGLThread::OnAssetsComponentReady() {
       FROM_HERE,
       base::BindRepeating(&vr::BrowserUiInterface::OnAssetsComponentReady,
                           browser_ui_));
+}
+
+void VrGLThread::ShowSoftInput(bool show) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindRepeating(&vr::BrowserUiInterface::ShowSoftInput,
+                                     browser_ui_, show));
+}
+
+void VrGLThread::UpdateWebInputSelectionIndices(int selection_start,
+                                                int selection_end) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindRepeating(
+                     &vr::BrowserUiInterface::UpdateWebInputSelectionIndices,
+                     browser_ui_, selection_start, selection_end));
+}
+
+void VrGLThread::UpdateWebInputCompositionIndices(int composition_start,
+                                                  int composition_end) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindRepeating(
+                     &vr::BrowserUiInterface::UpdateWebInputCompositionIndices,
+                     browser_ui_, composition_start, composition_end));
+}
+
+void VrGLThread::UpdateWebInputText(const base::string16& text) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindRepeating(&vr::BrowserUiInterface::UpdateWebInputText,
+                          browser_ui_, text));
 }
 
 bool VrGLThread::OnMainThread() const {

@@ -61,7 +61,6 @@
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-shared.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -132,7 +131,6 @@ class WebSpeechSynthesizerClient;
 class WebStorageNamespace;
 class WebSyncProvider;
 struct WebFloatPoint;
-class WebTaskRunner;
 class WebThemeEngine;
 class WebThread;
 struct WebThreadCreationParams;
@@ -470,7 +468,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual WebThread* CompositorThread() const { return 0; }
 
   // Returns an interface to the file task runner.
-  WebTaskRunner* FileTaskRunner() const;
+  base::SingleThreadTaskRunner* FileTaskRunner() const;
   scoped_refptr<base::SingleThreadTaskRunner> BaseFileTaskRunner() const;
 
   // Returns an interface to the IO task runner.
@@ -531,7 +529,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   struct GraphicsInfo {
     unsigned vendor_id = 0;
     unsigned device_id = 0;
-    unsigned process_crash_count = 0;
     unsigned reset_notification_strategy = 0;
     bool sandboxed = false;
     bool amd_switchable = false;
@@ -597,7 +594,8 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Creates a WebMediaRecorderHandler to record MediaStreams.
   // May return null if the functionality is not available or out of resources.
-  virtual std::unique_ptr<WebMediaRecorderHandler> CreateMediaRecorderHandler();
+  virtual std::unique_ptr<WebMediaRecorderHandler> CreateMediaRecorderHandler(
+      scoped_refptr<base::SingleThreadTaskRunner>);
 
   // May return null if WebRTC functionality is not available or out of
   // resources.
@@ -696,19 +694,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // |dom_key| values are based on the value defined in
   // ui/events/keycodes/dom3/dom_key_data.h.
   virtual bool IsDomKeyForModifier(int dom_key) { return false; }
-
-  // Quota -----------------------------------------------------------
-
-  // Queries the storage partition's storage usage and quota information.
-  // The callback will be called with the current usage and quota information
-  // for the partition. When an error occurs the callback is called with a
-  // status code other than kOk.
-  using QueryStorageUsageAndQuotaCallback =
-      base::OnceCallback<void(mojom::QuotaStatusCode, int64_t, int64_t)>;
-  virtual void QueryStorageUsageAndQuota(
-      const WebSecurityOrigin& storage_partition,
-      mojom::StorageType,
-      QueryStorageUsageAndQuotaCallback) {}
 
   // WebDatabase --------------------------------------------------------
 

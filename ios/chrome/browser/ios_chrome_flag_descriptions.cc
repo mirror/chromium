@@ -11,11 +11,6 @@
 
 namespace flag_descriptions {
 
-const char kBookmarkNewEditPageName[] = "Bookmark New Edit Page";
-const char kBookmarkNewEditPageDescription[] =
-    "When enabled, the new bookmark edit page and folder picker will be used "
-    "in the new bookmark UI.";
-
 const char kBrowserTaskScheduler[] = "Task Scheduler";
 const char kBrowserTaskSchedulerDescription[] =
     "Enables redirection of some task posting APIs to the task scheduler.";
@@ -38,6 +33,13 @@ const char kClippingTextfieldDescription[] =
 const char kContextualSearch[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";
+
+const char kContextMenuElementPostMessageName[] =
+    "Context Menu Element Post Message";
+const char kContextMenuElementPostMessageDescription[] =
+    "When enabled, the DOM element for the Context Menu is returned using a "
+    "webkit postMessage call instead of directly returned from the JavaScript "
+    "function.";
 
 const char kDragAndDropName[] = "Drag and Drop";
 const char kDragAndDropDescription[] = "Enable support for drag and drop.";

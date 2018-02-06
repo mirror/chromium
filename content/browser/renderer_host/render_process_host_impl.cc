@@ -86,7 +86,6 @@
 #include "content/browser/frame_host/render_frame_message_filter.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_client.h"
-#include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/histogram_controller.h"
@@ -101,18 +100,15 @@
 #include "content/browser/memory/memory_coordinator_impl.h"
 #include "content/browser/mime_registry_impl.h"
 #include "content/browser/mus_util.h"
-#include "content/browser/net/reporting_service_proxy.h"
 #include "content/browser/notifications/notification_message_filter.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/push_messaging/push_messaging_manager.h"
-#include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_host_impl.h"
 #include "content/browser/renderer_host/file_utilities_host_impl.h"
 #include "content/browser/renderer_host/media/audio_input_renderer_host.h"
 #include "content/browser/renderer_host/media/audio_renderer_host.h"
-#include "content/browser/renderer_host/media/media_stream_dispatcher_host.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/peer_connection_tracker_host.h"
 #include "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h"
@@ -153,7 +149,6 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
-#include "content/public/browser/quota_permission_context.h"
 #include "content/public/browser/render_process_host_factory.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/render_widget_host.h"
@@ -196,6 +191,7 @@
 #include "ppapi/features/features.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/constants.mojom.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
@@ -274,6 +270,10 @@
 #else
 #define IntToStringType base::IntToString
 #endif
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "content/browser/net/reporting_service_proxy.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace content {
 namespace {
@@ -1480,7 +1480,13 @@ bool RenderProcessHostImpl::Init() {
   channel_->Unpause(false /* flush */);
 
   // Call the embedder first so that their IPC filters have priority.
-  GetContentClient()->browser()->RenderProcessWillLaunch(this);
+  service_manager::mojom::ServiceRequest service_request;
+  GetContentClient()->browser()->RenderProcessWillLaunch(this,
+                                                         &service_request);
+  if (service_request.is_pending()) {
+    GetRendererInterface()->CreateEmbedderRendererService(
+        std::move(service_request));
+  }
 
 #if !defined(OS_MACOSX)
   // Intentionally delay the hang monitor creation after the first renderer
@@ -1911,23 +1917,13 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE}));
 
-#if BUILDFLAG(ENABLE_WEBRTC)
-  registry->AddInterface(
-      base::Bind(&RenderProcessHostImpl::CreateMediaStreamDispatcherHost,
-                 base::Unretained(this), media_stream_manager));
-#endif
-
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
-  registry->AddInterface(base::Bind(
-      QuotaDispatcherHost::Create, GetID(),
-      base::RetainedRef(storage_partition_impl_->GetQuotaManager()),
-      base::WrapRefCounted(
-          GetContentClient()->browser()->CreateQuotaPermissionContext())));
-
+#if BUILDFLAG(ENABLE_REPORTING)
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
   registry->AddInterface(base::BindRepeating(
       &AppCacheDispatcherHost::Create,
@@ -1946,7 +1942,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   associated_registry->AddInterface(base::Bind(
       &RenderProcessHostImpl::CreateRendererHost, base::Unretained(this)));
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     AddUIThreadInterface(
         registry.get(),
         base::Bind(&RenderProcessHostImpl::CreateURLLoaderFactory,
@@ -1998,7 +1994,7 @@ void RenderProcessHostImpl::GetAssociatedInterface(
 
 void RenderProcessHostImpl::GetBlobURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2054,7 +2050,7 @@ void RenderProcessHostImpl::CreateRendererHost(
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
     network::mojom::URLLoaderFactoryRequest request) {
-  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     NOTREACHED();
     return;
   }
@@ -2100,6 +2096,9 @@ void RenderProcessHostImpl::IncrementKeepAliveRefCount() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!is_keep_alive_ref_count_disabled_);
   ++keep_alive_ref_count_;
+  if (keep_alive_ref_count_ - 1 == 0) {
+    GetRendererInterface()->SetSchedulerKeepActive(true);
+  }
 }
 
 void RenderProcessHostImpl::DecrementKeepAliveRefCount() {
@@ -2107,8 +2106,10 @@ void RenderProcessHostImpl::DecrementKeepAliveRefCount() {
   DCHECK(!is_keep_alive_ref_count_disabled_);
   DCHECK_GT(keep_alive_ref_count_, 0U);
   --keep_alive_ref_count_;
-  if (keep_alive_ref_count_ == 0)
+  if (keep_alive_ref_count_ == 0) {
     Cleanup();
+    GetRendererInterface()->SetSchedulerKeepActive(false);
+  }
 }
 
 void RenderProcessHostImpl::DisableKeepAliveRefCount() {
@@ -2449,11 +2450,6 @@ static void AppendCompositorCommandLineFlags(base::CommandLine* command_line) {
   if (IsCompositorImageAnimationEnabled())
     command_line->AppendSwitch(switches::kEnableCompositorImageAnimations);
 
-  // Appending disable-gpu-feature switches due to software rendering list.
-  GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
-  DCHECK(gpu_data_manager);
-  gpu_data_manager->AppendRendererCommandLine(command_line);
-
   // Slimming Paint v2 implies layer lists in the renderer.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableSlimmingPaintV2)) {
@@ -2614,6 +2610,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kRegisterPepperPlugins,
     switches::kRendererStartupDialog,
     switches::kRootLayerScrolls,
+    switches::kSamplingHeapProfiler,
     switches::kShowPaintRects,
     switches::kStatsCollectionController,
     switches::kTestType,
@@ -2633,6 +2630,8 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kVModule,
     // Please keep these in alphabetical order. Compositor switches here should
     // also be added to chrome/browser/chromeos/login/chrome_restart_request.cc.
+    cc::switches::kAlwaysRequestPresentationTime,
+    cc::switches::kCheckDamageEarly,
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableThreadedAnimation,
     cc::switches::kEnableGpuBenchmarking,
@@ -2649,6 +2648,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     cc::switches::kBrowserControlsShowThreshold,
     cc::switches::kRunAllCompositorStagesBeforeDraw,
     switches::kEnableSurfaceSynchronization,
+    switches::kUseVizHitTest,
 
 #if BUILDFLAG(ENABLE_PLUGINS)
     switches::kEnablePepperTesting,
@@ -2936,6 +2936,7 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
 }
 
 void RenderProcessHostImpl::OnChannelError() {
+  UMA_HISTOGRAM_BOOLEAN("BrowserRenderProcessHost.OnChannelError", true);
   ProcessDied(true /* already_dead */, nullptr);
 }
 
@@ -4023,17 +4024,6 @@ RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
-void RenderProcessHostImpl::CreateMediaStreamDispatcherHost(
-    MediaStreamManager* media_stream_manager,
-    mojom::MediaStreamDispatcherHostRequest request) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!media_stream_dispatcher_host_) {
-    media_stream_dispatcher_host_.reset(
-        new MediaStreamDispatcherHost(GetID(), media_stream_manager));
-  }
-  media_stream_dispatcher_host_->BindRequest(std::move(request));
-}
-
 void RenderProcessHostImpl::OnRegisterAecDumpConsumer(int id) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,

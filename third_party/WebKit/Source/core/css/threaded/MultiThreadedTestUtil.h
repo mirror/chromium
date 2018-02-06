@@ -9,6 +9,7 @@
 
 #include <memory>
 
+#include "base/single_thread_task_runner.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
@@ -57,13 +58,13 @@ class MultiThreadedTest : public ::testing::Test {
     Vector<std::unique_ptr<WaitableEvent>> waits;
 
     for (int i = 0; i < num_threads_; ++i) {
-      threads.push_back(
-          WebThreadSupportingGC::Create(WebThreadCreationParams("")));
+      threads.push_back(WebThreadSupportingGC::Create(
+          WebThreadCreationParams(WebThreadType::kTestThread)));
       waits.push_back(std::make_unique<WaitableEvent>());
     }
 
     for (int i = 0; i < num_threads_; ++i) {
-      WebTaskRunner* task_runner =
+      base::SingleThreadTaskRunner* task_runner =
           threads[i]->PlatformThread().GetWebTaskRunner();
 
       PostCrossThreadTask(*task_runner, FROM_HERE,

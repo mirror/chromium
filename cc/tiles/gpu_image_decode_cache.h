@@ -136,8 +136,8 @@ class CC_EXPORT GpuImageDecodeCache
   void OnPurgeMemory() override;
 
   // Called by Decode / Upload tasks.
-  void DecodeImage(const DrawImage& image, TaskType task_type);
-  void UploadImage(const DrawImage& image);
+  void DecodeImageInTask(const DrawImage& image, TaskType task_type);
+  void UploadImageInTask(const DrawImage& image);
 
   // Called by Decode / Upload tasks when tasks are finished.
   void OnImageDecodeTaskCompleted(const DrawImage& image,
@@ -157,6 +157,7 @@ class CC_EXPORT GpuImageDecodeCache
   void SetImageDecodingFailedForTesting(const DrawImage& image);
   bool DiscardableIsLockedForTesting(const DrawImage& image);
   bool IsInInUseCacheForTesting(const DrawImage& image) const;
+  sk_sp<SkImage> GetSWImageDecodeForTesting(const DrawImage& image);
 
  private:
   enum class DecodedDataMode { kGpu, kCpu, kTransferCache };
@@ -213,6 +214,9 @@ class CC_EXPORT GpuImageDecodeCache
       return image_;
     }
 
+    // Test-only functions.
+    sk_sp<SkImage> ImageForTesting() const { return image_; }
+
     bool decode_failure = false;
     // Similar to |task|, but only is generated if there is no associated upload
     // generated for this task (ie, this is an out-of-raster request for decode.
@@ -250,9 +254,6 @@ class CC_EXPORT GpuImageDecodeCache
       return transfer_cache_id_;
     }
 
-    // True if the image is counting against our working set limits.
-    bool budgeted = false;
-
    private:
     // Used for internal DCHECKs only.
     enum class Mode {
@@ -283,13 +284,14 @@ class CC_EXPORT GpuImageDecodeCache
 
     bool IsGpuOrTransferCache() const;
     bool HasUploadedData() const;
+    void ValidateBudgeted() const;
 
     const DecodedDataMode mode;
     const size_t size;
     gfx::ColorSpace target_color_space;
     SkFilterQuality quality;
     int mip_level;
-    bool is_at_raster = false;
+    bool is_budgeted = false;
 
     // If true, this image is no longer in our |persistent_cache_| and will be
     // deleted as soon as its ref count reaches zero.

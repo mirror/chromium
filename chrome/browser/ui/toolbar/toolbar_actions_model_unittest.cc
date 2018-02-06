@@ -22,7 +22,6 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/browser/extensions/extension_util.h"
-#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/browser/extensions/unpacked_installer.h"
 #include "chrome/browser/profiles/profile.h"
@@ -46,6 +45,7 @@
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/value_builder.h"
+#include "extensions/test/test_extension_dir.h"
 
 namespace {
 
@@ -1418,4 +1418,27 @@ TEST_F(ToolbarActionsModelUnitTest, AddComponentActionBeforeInitialization) {
   toolbar_model->AddComponentAction(component_action_id());
   EXPECT_EQ(0u, toolbar_model->toolbar_items().size());
   EXPECT_FALSE(toolbar_model->HasComponentAction(component_action_id()));
+}
+
+// Test that user-script extensions show up on the toolbar.
+TEST_F(ToolbarActionsModelUnitTest, AddUserScriptExtension) {
+  Init();
+
+  scoped_refptr<const extensions::Extension> extension =
+      extensions::ExtensionBuilder("a")
+          .SetLocation(extensions::Manifest::INTERNAL)
+          .MergeManifest(extensions::DictionaryBuilder()
+                             .SetBoolean("converted_from_user_script", true)
+                             .Build())
+          .Build();
+
+  // We should start off without any actions.
+  EXPECT_EQ(0u, num_toolbar_items());
+  EXPECT_EQ(0u, toolbar_model()->visible_icon_count());
+
+  // Add the extension. It should be visible.
+  service()->AddExtension(extension.get());
+  EXPECT_EQ(1u, num_toolbar_items());
+  EXPECT_EQ(1u, toolbar_model()->visible_icon_count());
+  EXPECT_EQ(extension.get()->id(), GetActionIdAtIndex(0u));
 }

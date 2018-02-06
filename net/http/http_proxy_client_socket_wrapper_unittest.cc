@@ -133,7 +133,8 @@ class HttpProxyClientSocketWrapperTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
         client_headers_include_h2_stream_dependency_, connection_options_,
-        client_connection_options_, /*enable_token_binding=*/false));
+        client_connection_options_, /*enable_token_binding=*/false,
+        /*enable_socket_recv_optimization=*/false));
   }
 
   void PopulateConnectRequestIR(SpdyHeaderBlock* block) {
@@ -275,7 +276,7 @@ TEST_P(HttpProxyClientSocketWrapperTest, QuicProxy) {
       /*transport_params=*/nullptr, ssl_params, quic_version_, kUserAgent,
       endpoint_host_port_, &http_auth_cache_, http_auth_handler_factory_.get(),
       /*spdy_session_pool=*/nullptr, quic_stream_factory_.get(),
-      /*tunnel=*/true, net_log_));
+      /*is_trusted_proxy=*/false, /*tunnel=*/true, net_log_));
 
   TestCompletionCallback callback;
   client_socket_wrapper_->Connect(callback.callback());

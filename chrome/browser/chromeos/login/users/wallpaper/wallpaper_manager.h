@@ -19,8 +19,6 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "base/scoped_observer.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
@@ -29,19 +27,12 @@
 #include "components/user_manager/user_image/user_image.h"
 #include "components/wallpaper/wallpaper_export.h"
 #include "components/wallpaper/wallpaper_info.h"
-#include "ui/aura/window_observer.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/wm/public/activation_change_observer.h"
-#include "ui/wm/public/activation_client.h"
 
 namespace base {
 class CommandLine;
 class SequencedTaskRunner;
 }  // namespace base
-
-namespace user_manager {
-class UserImage;
-}  // namespace user_manager
 
 namespace chromeos {
 
@@ -52,10 +43,9 @@ void AssertCalledOnWallpaperSequence(base::SequencedTaskRunner* task_runner);
 // Name of wallpaper sequence token.
 extern const char kWallpaperSequenceTokenName[];
 
-class WallpaperManager : public wm::ActivationChangeObserver,
-                         public aura::WindowObserver {
+class WallpaperManager {
  public:
-  ~WallpaperManager() override;
+  ~WallpaperManager();
 
   // Expects there is no instance of WallpaperManager and create one.
   static void Initialize();
@@ -96,32 +86,8 @@ class WallpaperManager : public wm::ActivationChangeObserver,
   // Adds |this| as an observer to various settings.
   void AddObservers();
 
-  // Called when the policy-set wallpaper has been fetched.  Initiates decoding
-  // of the JPEG |data| with a callback to SetPolicyControlledWallpaper().
-  void OnPolicyFetched(const std::string& policy,
-                       const AccountId& account_id,
-                       std::unique_ptr<std::string> data);
-
   // A wrapper of |WallpaperController::IsPolicyControlled|.
   bool IsPolicyControlled(const AccountId& account_id) const;
-
-  // Called when a wallpaper policy has been set for |account_id|.  Blocks user
-  // from changing the wallpaper.
-  void OnPolicySet(const std::string& policy, const AccountId& account_id);
-
-  // Called when the wallpaper policy has been cleared for |account_id|.
-  void OnPolicyCleared(const std::string& policy, const AccountId& account_id);
-
-  // Opens the wallpaper picker window.
-  void OpenWallpaperPicker();
-
-  // wm::ActivationChangeObserver:
-  void OnWindowActivated(ActivationReason reason,
-                         aura::Window* gained_active,
-                         aura::Window* lost_active) override;
-
-  // aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override;
 
  private:
   friend class WallpaperManagerPolicyTest;
@@ -154,12 +120,6 @@ class WallpaperManager : public wm::ActivationChangeObserver,
   void SetDefaultWallpaperImpl(const AccountId& account_id,
                                bool show_wallpaper);
 
-  // Set wallpaper to |user_image| controlled by policy.  (Takes a UserImage
-  // because that's the callback interface provided by UserImageLoader.)
-  void SetPolicyControlledWallpaper(
-      const AccountId& account_id,
-      std::unique_ptr<user_manager::UserImage> user_image);
-
   // Returns the cached logged-in user wallpaper info, or a dummy value under
   // mash.
   wallpaper::WallpaperInfo* GetCachedWallpaperInfo();
@@ -178,10 +138,6 @@ class WallpaperManager : public wm::ActivationChangeObserver,
   bool should_cache_wallpaper_ = false;
 
   bool retry_download_if_failed_ = true;
-
-  ScopedObserver<wm::ActivationClient, wm::ActivationChangeObserver>
-      activation_client_observer_;
-  ScopedObserver<aura::Window, aura::WindowObserver> window_observer_;
 
   base::WeakPtrFactory<WallpaperManager> weak_factory_;
 

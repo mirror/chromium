@@ -112,7 +112,6 @@
 #include "content/renderer/net_info_helper.h"
 #include "content/renderer/notifications/notification_dispatcher.h"
 #include "content/renderer/p2p/socket_dispatcher.h"
-#include "content/renderer/quota_dispatcher.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process_impl.h"
 #include "content/renderer/render_view_impl.h"
@@ -704,7 +703,6 @@ void RenderThreadImpl::Init(
   AddFilter(notification_dispatcher_->GetFilter());
 
   resource_dispatcher_.reset(new ResourceDispatcher());
-  quota_dispatcher_.reset(new QuotaDispatcher(message_loop()->task_runner()));
   url_loader_throttle_provider_ =
       GetContentClient()->renderer()->CreateURLLoaderThrottleProvider(
           URLLoaderThrottleProviderType::kFrame);
@@ -791,8 +789,6 @@ void RenderThreadImpl::Init(
   AddFilter((new CacheStorageMessageFilter(thread_safe_sender()))->GetFilter());
 
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
-
-// Register exported services:
 
 #if defined(USE_AURA)
   if (IsRunningWithMus())
@@ -906,7 +902,26 @@ void RenderThreadImpl::Init(
 #if defined(OS_ANDROID)
   if (!command_line.HasSwitch(switches::kDisableAcceleratedVideoDecode) &&
       media::MediaCodecUtil::IsMediaCodecAvailable()) {
-    media::EnablePlatformDecoderSupport();
+    bool accelerated_video_decode_blacklisted = false;
+    if (!command_line.HasSwitch(switches::kIgnoreGpuBlacklist)) {
+      int32_t major_version = 0, minor_version = 0, bugfix_version = 0;
+      base::SysInfo::OperatingSystemVersionNumbers(
+          &major_version, &minor_version, &bugfix_version);
+      if (major_version < 5) {
+        // Currently accelerated video decode is only blacklisted on
+        // Android older than Lollipop.
+        scoped_refptr<gpu::GpuChannelHost> gpu_channel_host =
+            EstablishGpuChannelSync();
+        if (!gpu_channel_host ||
+            gpu_channel_host->gpu_feature_info().status_values
+                    [gpu::GPU_FEATURE_TYPE_ACCELERATED_VIDEO_DECODE] !=
+                gpu::kGpuFeatureStatusEnabled) {
+          accelerated_video_decode_blacklisted = true;
+        }
+      }
+    }
+    if (!accelerated_video_decode_blacklisted)
+      media::EnablePlatformDecoderSupport();
   }
 #endif
 
@@ -1009,7 +1024,6 @@ RenderThreadImpl::~RenderThreadImpl() {
 
 void RenderThreadImpl::Shutdown() {
   ChildThreadImpl::Shutdown();
-  quota_dispatcher_.reset();
   file_system_dispatcher_.reset();
   WebFileSystemImpl::DeleteThreadSpecificInstance();
   // In a multi-process mode, we immediately exit the renderer.
@@ -1460,7 +1474,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
           gpu_channel_host, GetGpuMemoryBufferManager(), limits,
           support_locking, support_gles2_interface, support_raster_interface,
           support_oop_rasterization, ui::command_buffer_metrics::MEDIA_CONTEXT,
-          kGpuStreamIdDefault, kGpuStreamPriorityDefault);
+          kGpuStreamIdMedia, kGpuStreamPriorityMedia);
   auto result = media_context_provider->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess)
     return nullptr;
@@ -1719,6 +1733,10 @@ bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
     return true;
   }
   return false;
+}
+
+void RenderThreadImpl::SetSchedulerKeepActive(bool keep_active) {
+  renderer_scheduler_->SetSchedulerKeepActive(keep_active);
 }
 
 void RenderThreadImpl::SetProcessBackgrounded(bool backgrounded) {
@@ -2156,6 +2174,12 @@ mojom::RenderMessageFilter* RenderThreadImpl::render_message_filter() {
 
 gpu::GpuChannelHost* RenderThreadImpl::GetGpuChannel() {
   return gpu_->GetGpuChannel().get();
+}
+
+void RenderThreadImpl::CreateEmbedderRendererService(
+    service_manager::mojom::ServiceRequest service_request) {
+  GetContentClient()->renderer()->CreateRendererService(
+      std::move(service_request));
 }
 
 void RenderThreadImpl::CreateView(mojom::CreateViewParamsPtr params) {

@@ -116,6 +116,7 @@ struct PaintPropertyTreeBuilderContext {
 
   Vector<PaintPropertyTreeBuilderFragmentContext, 1> fragments;
   const LayoutObject* container_for_absolute_position = nullptr;
+  const LayoutObject* container_for_fixed_position = nullptr;
 
   // True if a change has forced all properties in a subtree to be updated. This
   // can be set due to paint offset changes or when the structure of the
@@ -181,6 +182,7 @@ class ObjectPaintPropertyTreeBuilder {
   ALWAYS_INLINE void InitFragmentPaintProperties(FragmentData&,
                                                  bool needs_paint_properties);
   ALWAYS_INLINE void InitSingleFragmentFromParent(bool needs_paint_properties);
+  ALWAYS_INLINE bool ObjectTypeMightNeedPaintProperties();
   ALWAYS_INLINE void UpdateCompositedLayerPaginationOffset();
   ALWAYS_INLINE void UpdateFragments();
   ALWAYS_INLINE void UpdatePaintingLayer();

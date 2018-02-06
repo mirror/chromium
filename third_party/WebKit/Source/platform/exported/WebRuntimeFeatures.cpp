@@ -382,6 +382,10 @@ void WebRuntimeFeatures::EnableScrollAnchoring(bool enable) {
   RuntimeEnabledFeatures::SetScrollAnchoringEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableScrollAnchorSerialization(bool enable) {
+  RuntimeEnabledFeatures::SetScrollAnchorSerializationEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableServiceWorkerScriptStreaming(bool enable) {
   RuntimeEnabledFeatures::SetServiceWorkerScriptStreamingEnabled(enable);
 }
@@ -496,6 +500,14 @@ void WebRuntimeFeatures::EnablePWAFullCodeCache(bool enable) {
 
 void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
   RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableCodeCacheAfterExecute(bool enable) {
+  RuntimeEnabledFeatures::SetCodeCacheAfterExecuteEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableUnifiedTouchAdjustment(bool enable) {
+  RuntimeEnabledFeatures::SetUnifiedTouchAdjustmentEnabled(enable);
 }
 
 }  // namespace blink

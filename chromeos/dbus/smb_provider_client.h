@@ -23,14 +23,14 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
  public:
   using GetMetdataEntryCallback =
       base::OnceCallback<void(smbprovider::ErrorType error,
-                              const smbprovider::DirectoryEntry& entry)>;
+                              const smbprovider::DirectoryEntryProto& entry)>;
   using MountCallback =
       base::OnceCallback<void(smbprovider::ErrorType error, int32_t mount_id)>;
   using OpenFileCallback =
       base::OnceCallback<void(smbprovider::ErrorType error, int32_t file_id)>;
-  using ReadDirectoryCallback =
-      base::OnceCallback<void(smbprovider::ErrorType error,
-                              const smbprovider::DirectoryEntryList& entries)>;
+  using ReadDirectoryCallback = base::OnceCallback<void(
+      smbprovider::ErrorType error,
+      const smbprovider::DirectoryEntryListProto& entries)>;
   using StatusCallback = base::OnceCallback<void(smbprovider::ErrorType error)>;
   using ReadFileCallback = base::OnceCallback<void(smbprovider::ErrorType error,
                                                    const base::ScopedFD& fd)>;
@@ -95,6 +95,29 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
                            const base::FilePath& entry_path,
                            bool recursive,
                            StatusCallback callback) = 0;
+
+  // Calls CreateFile. Using the corresponding mount |mount_id|, this creates
+  // the file in the specified |file_path|.
+  virtual void CreateFile(int32_t mount_id,
+                          const base::FilePath& file_path,
+                          StatusCallback callback) = 0;
+
+  // Calls Truncate. Using the corresponding mount |mount_id|, this truncates
+  // the file in |file_path| to the desired |length|.
+  virtual void Truncate(int32_t mount_id,
+                        const base::FilePath& file_path,
+                        int64_t length,
+                        StatusCallback callback) = 0;
+
+  // Calls WriteFile. Using the corresponding mount |mount_id|, this writes to a
+  // file with handle |file_id| from |offset| and writes |length| bytes. The
+  // data to be written is contained in the file with handle |temp_fd|.
+  virtual void WriteFile(int32_t mount_id,
+                         int32_t file_id,
+                         int64_t offset,
+                         int32_t length,
+                         base::ScopedFD temp_fd,
+                         StatusCallback callback) = 0;
 
  protected:
   // Create() should be used instead.

@@ -58,7 +58,6 @@
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
-#include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/SnapCoordinator.h"
@@ -111,9 +110,9 @@ PaintLayerType LayoutBox::LayerTypeRequired() const {
   // hasAutoZIndex only returns true if the element is positioned or a flex-item
   // since position:static elements that are not flex-items get their z-index
   // coerced to auto.
-  if (IsPositioned() || CreatesGroup() || HasClipPath() ||
-      HasTransformRelatedProperty() || HasHiddenBackface() || HasReflection() ||
-      Style()->SpecifiesColumns() || Style()->IsStackingContext() ||
+  if (IsPositioned() || CreatesGroup() || HasTransformRelatedProperty() ||
+      HasHiddenBackface() || HasReflection() || Style()->SpecifiesColumns() ||
+      Style()->IsStackingContext() ||
       Style()->ShouldCompositeForCurrentAnimations() ||
       RootScrollerUtil::IsEffective(*this))
     return kNormalPaintLayer;
@@ -728,16 +727,15 @@ void LayoutBox::ScrollRectToVisibleRecursive(
 
   // If we are fixed-position and stick to the viewport, it is useless to
   // scroll the parent.
-  if (Style()->GetPosition() == EPosition::kFixed &&
-      ContainerForFixedPosition() == View()) {
+  if (Style()->GetPosition() == EPosition::kFixed && Container() == View())
     return;
-  }
 
   if (GetFrame()
           ->GetPage()
           ->GetAutoscrollController()
-          .SelectionAutoscrollInProgress())
+          .SelectionAutoscrollInProgress()) {
     parent_box = EnclosingScrollableBox();
+  }
 
   if (parent_box) {
     parent_box->ScrollRectToVisibleRecursive(new_rect, params);
@@ -1806,14 +1804,22 @@ void LayoutBox::PaintMask(const PaintInfo& paint_info,
 void LayoutBox::ImageChanged(WrappedImagePtr image,
                              CanDeferInvalidation defer,
                              const IntRect*) {
+  bool is_box_reflect_image =
+      (StyleRef().BoxReflect() && StyleRef().BoxReflect()->Mask().GetImage() &&
+       StyleRef().BoxReflect()->Mask().GetImage()->Data() == image);
+
+  if (is_box_reflect_image && HasLayer()) {
+    Layer()->SetFilterOnEffectNodeDirty();
+    SetNeedsPaintPropertyUpdate();
+  }
+
   // TODO(chrishtr): support PaintInvalidationReason::kDelayedFull for animated
   // border images.
   if ((StyleRef().BorderImage().GetImage() &&
        StyleRef().BorderImage().GetImage()->Data() == image) ||
       (StyleRef().MaskBoxImage().GetImage() &&
        StyleRef().MaskBoxImage().GetImage()->Data() == image) ||
-      (StyleRef().BoxReflect() && StyleRef().BoxReflect()->Mask().GetImage() &&
-       StyleRef().BoxReflect()->Mask().GetImage()->Data() == image)) {
+      is_box_reflect_image) {
     SetShouldDoFullPaintInvalidationWithoutGeometryChange(
         PaintInvalidationReason::kImage);
   } else {
@@ -2199,9 +2205,10 @@ LayoutSize LayoutBox::OffsetFromContainer(const LayoutObject* o) const {
   if (o->HasOverflowClip())
     offset -= ToLayoutBox(o)->ScrolledContentOffset();
 
-  if (Style()->GetPosition() == EPosition::kAbsolute &&
-      o->IsInFlowPositioned() && o->IsLayoutInline())
+  if (IsOutOfFlowPositioned() && o->IsLayoutInline() &&
+      o->CanContainOutOfFlowPositionedElement(Style()->GetPosition())) {
     offset += ToLayoutInline(o)->OffsetForInFlowPositionedInline(*this);
+  }
 
   return offset;
 }
@@ -2255,7 +2262,8 @@ void LayoutBox::PositionLineBox(InlineBox* box) {
 void LayoutBox::MoveWithEdgeOfInlineContainerIfNecessary(bool is_horizontal) {
   DCHECK(IsOutOfFlowPositioned());
   DCHECK(Container()->IsLayoutInline());
-  DCHECK(Container()->IsInFlowPositioned());
+  DCHECK(Container()->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
   // If this object is inside a relative positioned inline and its inline
   // position is an explicit offset from the edge of its container then it will
   // need to move if its inline container has changed width. We do not track if
@@ -2518,8 +2526,8 @@ bool LayoutBox::MapToVisualRectInAncestorSpaceInternal(
 
   const ComputedStyle& style_to_use = StyleRef();
   EPosition position = style_to_use.GetPosition();
-  if (position == EPosition::kAbsolute && container->IsInFlowPositioned() &&
-      container->IsLayoutInline()) {
+  if (IsOutOfFlowPositioned() && container->IsLayoutInline() &&
+      container->CanContainOutOfFlowPositionedElement(position)) {
     container_offset.Move(
         ToLayoutInline(container)->OffsetForInFlowPositionedInline(*this));
   } else if (style_to_use.HasInFlowPosition() && Layer()) {
@@ -3825,14 +3833,16 @@ LayoutUnit LayoutBox::ContainingBlockLogicalWidthForPositioned(
   // container rather than any anonymous block created to manage a block-flow
   // ancestor of ours in the rel-pos inline's inline flow.
   if (containing_block->IsAnonymousBlock() &&
-      containing_block->IsRelPositioned())
+      containing_block->IsRelPositioned()) {
     containing_block = ToLayoutBox(containing_block)->Continuation();
-  else if (containing_block->IsBox())
+  } else if (containing_block->IsBox()) {
     return std::max(LayoutUnit(),
                     ToLayoutBox(containing_block)->ClientLogicalWidth());
+  }
 
   DCHECK(containing_block->IsLayoutInline());
-  DCHECK(containing_block->IsInFlowPositioned());
+  DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
 
   const LayoutInline* flow = ToLayoutInline(containing_block);
   InlineFlowBox* first = flow->FirstLineBox();
@@ -3883,15 +3893,12 @@ LayoutUnit LayoutBox::ContainingBlockLogicalHeightForPositioned(
   if (HasOverrideContainingBlockLogicalHeight())
     return OverrideContainingBlockContentLogicalHeight();
 
-  if (containing_block->IsBox()) {
-    const LayoutBlock* cb = containing_block->IsLayoutBlock()
-                                ? ToLayoutBlock(containing_block)
-                                : containing_block->ContainingBlock();
-    return cb->ClientLogicalHeight();
-  }
+  if (containing_block->IsBox())
+    return ToLayoutBox(containing_block)->ClientLogicalHeight();
 
   DCHECK(containing_block->IsLayoutInline());
-  DCHECK(containing_block->IsInFlowPositioned());
+  DCHECK(containing_block->CanContainOutOfFlowPositionedElement(
+      Style()->GetPosition()));
 
   const LayoutInline* flow = ToLayoutInline(containing_block);
   InlineFlowBox* first = flow->FirstLineBox();

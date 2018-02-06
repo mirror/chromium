@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationManagerCompat;
 
 import com.google.ipc.invalidation.util.Preconditions;
 
@@ -105,7 +104,7 @@ public final class DownloadNotificationFactory {
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
 
                 builder.setOngoing(true)
-                        .setPriority(NotificationManagerCompat.IMPORTANCE_HIGH)
+                        .setPriority(Notification.PRIORITY_HIGH)
                         .setAutoCancel(false)
                         .setLargeIcon(downloadUpdate.getIcon())
                         .addAction(R.drawable.ic_pause_white_24dp,
@@ -153,8 +152,6 @@ public final class DownloadNotificationFactory {
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
                 cancelIntent = buildActionIntent(context, ACTION_DOWNLOAD_CANCEL,
                         downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
-                PendingIntent deleteIntent = buildPendingIntent(
-                        context, cancelIntent, downloadUpdate.getNotificationId());
 
                 builder.setAutoCancel(false)
                         .setLargeIcon(downloadUpdate.getIcon())
@@ -167,8 +164,12 @@ public final class DownloadNotificationFactory {
                                 context.getResources().getString(
                                         R.string.download_notification_cancel_button),
                                 buildPendingIntent(
-                                        context, cancelIntent, downloadUpdate.getNotificationId()))
-                        .setDeleteIntent(deleteIntent);
+                                        context, cancelIntent, downloadUpdate.getNotificationId()));
+
+                if (downloadUpdate.getIsTransient()) {
+                    builder.setDeleteIntent(buildPendingIntent(
+                            context, cancelIntent, downloadUpdate.getNotificationId()));
+                }
 
                 break;
 

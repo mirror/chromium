@@ -67,7 +67,6 @@ class InspectorTraceEvents;
 class CoreProbeSink;
 class IdlenessDetector;
 class InterfaceRegistry;
-class IntPoint;
 class IntSize;
 class LayoutView;
 class LocalDOMWindow;
@@ -160,6 +159,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
   SpellChecker& GetSpellChecker() const;
   FrameConsole& Console() const;
 
+  void IntrinsicSizingInfoChanged(const IntrinsicSizingInfo&);
+
   // This method is used to get the highest level LocalFrame in this
   // frame's in-process subtree.
   // FIXME: This is a temporary hack to support RemoteFrames, and callers
@@ -210,8 +211,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   PositionWithAffinityTemplate<EditingAlgorithm<NodeTraversal>>
   PositionForPoint(const LayoutPoint& frame_point);
   Document* DocumentAtPoint(const LayoutPoint&);
-  EphemeralRangeTemplate<EditingAlgorithm<NodeTraversal>> RangeForPoint(
-      const IntPoint& frame_point);
 
   bool ShouldReuseDefaultView(const KURL&) const;
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
@@ -220,7 +219,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Returns the frame scheduler, creating one if needed.
   WebFrameScheduler* FrameScheduler();
-  scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType);
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(TaskType);
   void ScheduleVisualUpdateUnlessThrottled();
 
   bool IsNavigationAllowed() const { return navigation_disable_count_ == 0; }

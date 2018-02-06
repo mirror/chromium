@@ -1376,12 +1376,6 @@
   },
   'cronet_test_instrumentation_apk': {
     'modifications': {
-      'Android Cronet ARMv6 Builder chromium.android.fyi': {
-        'swarming': {
-          'hard_timeout': 1200,
-          'shards': 2,
-        },
-      },
       'Android Cronet Builder (dbg) chromium.android.fyi': {
         'swarming': {
           'hard_timeout': 1200,
@@ -1425,6 +1419,15 @@
       # Audio Linux" at all, since they're supposed to be compiled out for
       # Chromecast.
     ],
+    'modifications': {
+      # chromium.fyi
+      'Fuchsia': {
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
+    },
   },
   'dbus_unittests': {
     'remove_from': [
@@ -2363,11 +2366,20 @@
           'hard_timeout': 120,
         },
       },
+
       # chromium.android.fyi
       'x64 Device Tester': {
         'swarming': {
           'hard_timeout': 0,
         },
+      },
+
+      # chromium.fyi
+      'Fuchsia': {
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
       },
     },
   },
@@ -2542,12 +2554,6 @@
         },
       },
     },
-  },
-  'mus_browser_tests': {
-    'remove_from': [
-      # chromium.memory
-      'Linux Chromium OS ASan LSan Tests (1)',
-    ]
   },
   'nacl_helper_nonsfi_unittests': {
     'remove_from': [
@@ -3154,18 +3160,6 @@
         ],
       },
       # chromium.android.fyi
-      'Android Cronet ARMv6 Builder': {
-        'args': [
-          '--platform',
-          'android-cronet',
-          '--perf-id',
-          'android_cronet_armv6_builder',
-          'cronet-armv6/sizes',
-        ],
-        'override_compile_targets': [
-          'cronet',
-        ],
-      },
       'Android Cronet KitKat Builder': {
         'args': [
           '--platform',
@@ -3208,6 +3202,15 @@
       'Cast Audio Linux',
       'Cast Linux',
     ],
+    'modifications': {
+      # chromium.fyi
+      'Fuchsia': {
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
+      },
+    },
   },
   'snapshot_unittests': {
     'remove_from': [
@@ -3251,6 +3254,14 @@
         'swarming': {
           'hard_timeout': 60,
         },
+      },
+
+      # chromium.fyi
+      'Fuchsia': {
+        'args': [
+          '--use-new-test-runner',
+          '-v',  # Useful for getting debug info and SCP throughput stats.
+        ],
       },
     },
   },
@@ -3791,6 +3802,11 @@
     },
     'modifications': {
       # chromium.fyi
+      'Dummy WebKit Mac10.13': {
+        'swarming': {
+          'shards': 6,
+        },
+      },
       'WebKit Linux layout_ng Dummy Builder': {
         'args': [
           '--additional-driver-flag=--enable-blink-features=LayoutNG',

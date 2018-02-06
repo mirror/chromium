@@ -212,22 +212,36 @@ void AutofillAgent::DidFinishDocumentLoad() {
 }
 
 void AutofillAgent::DidChangeScrollOffset() {
-  if (!focus_requires_scroll_ && is_popup_possibly_visible_ &&
-      element_.Focused()) {
-    FormData form;
-    FormFieldData field;
-    if (form_util::FindFormAndFieldForFormControlElement(element_, &form,
-                                                         &field)) {
-      GetAutofillDriver()->TextFieldDidScroll(
-          form, field,
-          render_frame()->GetRenderView()->ElementBoundsInWindow(element_));
-    }
+  if (!focus_requires_scroll_) {
+    // Post a task here since scroll offset may change during layout.
+    // (https://crbug.com/804886)
+    weak_ptr_factory_.InvalidateWeakPtrs();
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&AutofillAgent::DidChangeScrollOffsetImpl,
+                                  weak_ptr_factory_.GetWeakPtr(), element_));
+  } else if (!IsKeyboardAccessoryEnabled()) {
+    HidePopup();
   }
+}
 
-  if (IsKeyboardAccessoryEnabled())
+void AutofillAgent::DidChangeScrollOffsetImpl(
+    const WebFormControlElement& element) {
+  if (element != element_ || focus_requires_scroll_ ||
+      !is_popup_possibly_visible_ || !element_.Focused())
     return;
 
-  HidePopup();
+  FormData form;
+  FormFieldData field;
+  if (form_util::FindFormAndFieldForFormControlElement(element_, &form,
+                                                       &field)) {
+    GetAutofillDriver()->TextFieldDidScroll(
+        form, field,
+        render_frame()->GetRenderView()->ElementBoundsInWindow(element_));
+  }
+
+  // Ignore subsequent scroll offset changes.
+  if (!IsKeyboardAccessoryEnabled())
+    HidePopup();
 }
 
 void AutofillAgent::FocusedNodeChanged(const WebNode& node) {
@@ -672,8 +686,7 @@ void AutofillAgent::QueryAutofillSuggestions(
 void AutofillAgent::DoFillFieldWithValue(const base::string16& value,
                                          WebInputElement* node) {
   form_tracker_.set_ignore_text_changes(true);
-  node->SetAutofillValue(
-      blink::WebString::FromUTF16(value.substr(0, node->MaxLength())));
+  node->SetAutofillValue(blink::WebString::FromUTF16(value));
   password_autofill_agent_->UpdateStateForTextChange(*node);
   form_tracker_.set_ignore_text_changes(false);
 }
@@ -681,8 +694,7 @@ void AutofillAgent::DoFillFieldWithValue(const base::string16& value,
 void AutofillAgent::DoPreviewFieldWithValue(const base::string16& value,
                                             WebInputElement* node) {
   was_query_node_autofilled_ = element_.IsAutofilled();
-  node->SetSuggestedValue(
-      blink::WebString::FromUTF16(value.substr(0, node->MaxLength())));
+  node->SetSuggestedValue(blink::WebString::FromUTF16(value));
   node->SetAutofilled(true);
   form_util::PreviewSuggestion(node->SuggestedValue().Utf16(),
                                node->Value().Utf16(), node);

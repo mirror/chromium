@@ -69,7 +69,6 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   bool GpuAccessAllowed(std::string* reason) const override;
   void RequestCompleteGpuInfoIfNeeded() override;
   bool IsEssentialGpuInfoAvailable() const override;
-  bool IsCompleteGpuInfoAvailable() const override;
   void RequestVideoMemoryUsageStatsUpdate(
       const base::Callback<void(const gpu::VideoMemoryUsageStats& stats)>&
           callback) const override;
@@ -84,7 +83,6 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   void DisableHardwareAcceleration() override;
   bool HardwareAccelerationEnabled() const override;
   void GetDisabledExtensions(std::string* disabled_extensions) const override;
-  void SetGpuInfo(const gpu::GPUInfo& gpu_info) override;
 
   bool IsGpuFeatureInfoAvailable() const;
   gpu::GpuFeatureStatus GetFeatureStatus(gpu::GpuFeatureType feature) const;
@@ -103,10 +101,6 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   void UpdateGpuFeatureInfo(const gpu::GpuFeatureInfo& gpu_feature_info);
 
   gpu::GpuFeatureInfo GetGpuFeatureInfo() const;
-
-  // Insert disable-feature switches corresponding to preliminary gpu feature
-  // flags into the renderer process command line.
-  void AppendRendererCommandLine(base::CommandLine* command_line) const;
 
   // Insert switches into gpu process command line: kUseGL, etc.
   void AppendGpuCommandLine(base::CommandLine* command_line) const;

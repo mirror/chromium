@@ -48,10 +48,15 @@ class VrGLThread : public base::android::JavaHandlerThread,
   base::WeakPtr<VrShellGl> GetVrShellGl();
 
   // GlBrowserInterface implementation (GL calling to VrShell).
-  void ContentSurfaceChanged(jobject surface) override;
+  void ContentSurfaceCreated(jobject surface,
+                             gl::SurfaceTexture* texture) override;
+  void ContentOverlaySurfaceCreated(jobject surface,
+                                    gl::SurfaceTexture* texture) override;
   void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) override;
+  void DialogSurfaceCreated(jobject surface,
+                            gl::SurfaceTexture* texture) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
@@ -60,6 +65,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   // vr::ContentInputForwarder
   void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
                     int content_id) override;
+  void OnWebInputEdited(const vr::TextInputInfo& info, bool commit) override;
+  void ForwardDialogEvent(std::unique_ptr<blink::WebInputEvent> event) override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
@@ -89,7 +96,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetLocationAccessEnabled(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
@@ -98,6 +105,12 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
   void OnAssetsComponentReady() override;
+  void ShowSoftInput(bool show) override;
+  void UpdateWebInputSelectionIndices(int selection_start,
+                                      int selection_end) override;
+  void UpdateWebInputCompositionIndices(int composition_start,
+                                        int composition_end) override;
+  void UpdateWebInputText(const base::string16& text) override;
 
  protected:
   void Init() override;

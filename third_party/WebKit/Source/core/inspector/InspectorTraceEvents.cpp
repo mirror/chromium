@@ -335,18 +335,17 @@ String UrlForFrame(LocalFrame* frame) {
 const char* CompileOptionsString(v8::ScriptCompiler::CompileOptions options) {
   switch (options) {
     case v8::ScriptCompiler::kNoCompileOptions:
-      return "no";
+      return "code";
     case v8::ScriptCompiler::kProduceParserCache:
       return "parser";
     case v8::ScriptCompiler::kConsumeParserCache:
       return "parser";
-    case v8::ScriptCompiler::kProduceCodeCache:
-      return "code";
-    case v8::ScriptCompiler::kProduceFullCodeCache:
-      return "full code";
     case v8::ScriptCompiler::kConsumeCodeCache:
       return "code";
-    default:
+    case v8::ScriptCompiler::kEagerCompile:
+      return "full code";
+    case v8::ScriptCompiler::kProduceCodeCache:
+    case v8::ScriptCompiler::kProduceFullCodeCache:
       NOTREACHED();
   }
   NOTREACHED();
@@ -705,7 +704,7 @@ std::unique_ptr<TracedValue> InspectorSendRequestEvent::Data(
 
 namespace {
 void RecordTiming(const ResourceLoadTiming& timing, TracedValue* value) {
-  value->SetDouble("requestTime", timing.RequestTime());
+  value->SetDouble("requestTime", TimeTicksInSeconds(timing.RequestTime()));
   value->SetDouble("proxyStart",
                    timing.CalculateMillisecondDelta(timing.ProxyStart()));
   value->SetDouble("proxyEnd",
@@ -730,8 +729,8 @@ void RecordTiming(const ResourceLoadTiming& timing, TracedValue* value) {
                    timing.CalculateMillisecondDelta(timing.SendEnd()));
   value->SetDouble("receiveHeadersEnd", timing.CalculateMillisecondDelta(
                                             timing.ReceiveHeadersEnd()));
-  value->SetDouble("pushStart", timing.PushStart());
-  value->SetDouble("pushEnd", timing.PushEnd());
+  value->SetDouble("pushStart", TimeTicksInSeconds(timing.PushStart()));
+  value->SetDouble("pushEnd", TimeTicksInSeconds(timing.PushEnd()));
 }
 }  // namespace
 
@@ -1057,8 +1056,8 @@ InspectorCompileScriptEvent::V8CacheResult::ProduceResult::ProduceResult(
     int cache_size)
     : produce_options(produce_options), cache_size(cache_size) {
   DCHECK(produce_options == v8::ScriptCompiler::kProduceParserCache ||
-         produce_options == v8::ScriptCompiler::kProduceCodeCache ||
-         produce_options == v8::ScriptCompiler::kProduceFullCodeCache);
+         produce_options == v8::ScriptCompiler::kNoCompileOptions ||
+         produce_options == v8::ScriptCompiler::kEagerCompile);
 }
 
 InspectorCompileScriptEvent::V8CacheResult::ConsumeResult::ConsumeResult(

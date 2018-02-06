@@ -49,14 +49,7 @@ extern const CGFloat kIncognitoToolbarButtonTitleHighlightedColor;
 extern const CGFloat kBackButtonImageInset;
 extern const CGFloat kForwardButtonImageInset;
 extern const CGFloat kLeadingLocationBarButtonImageInset;
-
-// Priorities for the constraints between the buttons and their layout guide.
-// The constraint priorities for the different toolbars' buttons are not the
-// same to prevent conflicting constraints when a layout guide is changing the
-// button to which it is constrained (there might be a short time during which
-// it is constrained to both buttons).
-extern const UILayoutPriority kPrimaryToolbarButtonPriority;
-extern const UILayoutPriority kSecondaryToolbarButtonPriority;
+extern const CGFloat kCancelButtonHorizontalInset;
 
 // Maximum number of tabs displayed by the button containing the tab count.
 extern const NSInteger kShowTabStripButtonMaxTabCount;
@@ -64,12 +57,12 @@ extern const NSInteger kShowTabStripButtonMaxTabCount;
 // Animation constants.
 extern const LayoutOffset kToolbarButtonAnimationOffset;
 
-// Adaptive Toolbar styling.
-extern const CGFloat kAdaptiveToolbarBackgroundColor;
+// Adaptive toolbar position constants.
+extern const CGFloat kAdaptiveToolbarHorizontalMargin;
 
 // Adaptive Location bar constants.
 extern const CGFloat kAdaptiveLocationBarCornerRadius;
-extern const CGFloat kAdaptiveLocationBackgroundColor;
 extern const CGFloat kIcongnitoAdaptiveLocationBackgroundColor;
+extern const CGFloat kAdaptiveLocationBarBackgroundAlpha;
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_CLEAN_TOOLBAR_CONSTANTS_H_

@@ -22,7 +22,6 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.CallSuper;
-import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Menu;
@@ -72,7 +71,7 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager
         .ContextualSearchTabPromotionDelegate;
 import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
 import org.chromium.chrome.browser.device.DeviceClassManager;
-import org.chromium.chrome.browser.dom_distiller.DistilledPagePrefsView;
+import org.chromium.chrome.browser.dom_distiller.DomDistillerUIUtils;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.download.DownloadUtils;
@@ -1205,6 +1204,13 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         return mModalDialogManager;
     }
 
+    /**
+     * Sets the modal dialog mangaer.
+     */
+    public void setModalDialogManager(ModalDialogManager modalDialogManager) {
+        mModalDialogManager = modalDialogManager;
+    }
+
     protected Drawable getBackgroundDrawable() {
         return new ColorDrawable(
                 ApiCompatibilityUtils.getColor(getResources(), R.color.light_background_color));
@@ -1970,13 +1976,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             currentTab.setUseDesktopUserAgent(!usingDesktopUserAgent, reloadOnChange);
             RecordUserAction.record("MobileMenuRequestDesktopSite");
         } else if (id == R.id.reader_mode_prefs_id) {
-            if (currentTab.getWebContents() != null) {
-                RecordUserAction.record("DomDistiller_DistilledPagePrefsOpened");
-                AlertDialog.Builder builder =
-                        new AlertDialog.Builder(this, R.style.AlertDialogTheme);
-                builder.setView(DistilledPagePrefsView.create(this));
-                builder.show();
-            }
+            DomDistillerUIUtils.openSettings(currentTab.getWebContents());
         } else {
             return false;
         }
@@ -2224,6 +2224,13 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * enters fullscreen.
      */
     public boolean supportsFullscreenActivity() {
+        return false;
+    }
+
+    /**
+     * @return Whether this Activity supports modern design.
+     */
+    public boolean supportsModernDesign() {
         return false;
     }
 

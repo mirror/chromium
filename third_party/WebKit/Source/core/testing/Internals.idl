@@ -244,6 +244,8 @@ enum EffectiveConnectionType {
     void mediaPlayerPlayingRemotelyChanged(HTMLMediaElement mediaElement, boolean remote);
     void setMediaElementNetworkState(HTMLMediaElement element, long state);
     void setPersistent(HTMLVideoElement video, boolean persistent);
+    void forceStaleStateForMediaElement(HTMLMediaElement mediaElement);
+    bool isMediaElementSuspended(HTMLMediaElement mediaElement);
 
     void registerURLSchemeAsBypassingContentSecurityPolicy(DOMString scheme);
     void registerURLSchemeAsBypassingContentSecurityPolicy(DOMString scheme, sequence<DOMString> policyAreas);
@@ -328,8 +330,7 @@ enum EffectiveConnectionType {
     boolean ignoreLayoutWithPendingStylesheets(Document document);
 
     // These functions are for testing NetInfo. You must call clearNetworkConnectionInfoOverride() at the end.
-    [RaisesException] void setNetworkConnectionInfoOverride(boolean onLine, DOMString type, double downlinkMaxMbps);
-    [RaisesException] void setNetworkQualityInfoOverride(EffectiveConnectionType effective_type, unsigned long transport_rtt_msec, double downlink_throughput_mbps);
+    [RaisesException] void setNetworkConnectionInfoOverride(boolean onLine, DOMString type, EffectiveConnectionType effective_type, unsigned long http_rtt_msec, double downlink_max_mbps);
     void setSaveDataEnabled(boolean enabled);
     void clearNetworkConnectionInfoOverride();
 
@@ -399,7 +400,7 @@ enum EffectiveConnectionType {
     void crash();
 
     DOMString evaluateInInspectorOverlay(DOMString script);
-    
+
     void setIsLowEndDevice(boolean isLowEndDevice);
     boolean isLowEndDevice();
 

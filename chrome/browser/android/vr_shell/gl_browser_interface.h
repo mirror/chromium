@@ -10,9 +10,13 @@
 #include "base/android/jni_weak_ref.h"
 #include "chrome/browser/vr/assets_load_status.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
-#include "device/vr/vr_service.mojom.h"
+#include "device/vr/public/mojom/vr_service.mojom.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
 #include "ui/gfx/transform.h"
+
+namespace gl {
+class SurfaceTexture;
+}
 
 namespace vr_shell {
 
@@ -22,10 +26,15 @@ class GlBrowserInterface {
  public:
   virtual ~GlBrowserInterface() = default;
 
-  virtual void ContentSurfaceChanged(jobject surface) = 0;
+  virtual void ContentSurfaceCreated(jobject surface,
+                                     gl::SurfaceTexture* texture) = 0;
+  virtual void ContentOverlaySurfaceCreated(jobject surface,
+                                            gl::SurfaceTexture* texture) = 0;
   virtual void GvrDelegateReady(
       gvr::ViewerType viewer_type,
       device::mojom::VRDisplayFrameTransportOptionsPtr) = 0;
+  virtual void DialogSurfaceCreated(jobject surface,
+                                    gl::SurfaceTexture* texture) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;

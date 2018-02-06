@@ -34,6 +34,7 @@
 
 class ChromeChildProcessWatcher;
 class ChromeDeviceClient;
+class ChromeMetricsServicesManagerClient;
 class ChromeResourceDispatcherHostDelegate;
 class DevToolsAutoOpener;
 class RemoteDebuggingServer;
@@ -73,6 +74,9 @@ class BrowserProcessImpl : public BrowserProcess,
   explicit BrowserProcessImpl(
       base::SequencedTaskRunner* local_state_task_runner);
   ~BrowserProcessImpl() override;
+
+  // Called to complete initialization.
+  void Init();
 
   // Called before the browser threads are created.
   void PreCreateThreads(const base::CommandLine& command_line);
@@ -116,9 +120,6 @@ class BrowserProcessImpl : public BrowserProcess,
   policy::PolicyService* policy_service() override;
   IconManager* icon_manager() override;
   GpuModeManager* gpu_mode_manager() override;
-#if defined(OS_ANDROID)
-  GpuDriverInfoManager* gpu_driver_info_manager() override;
-#endif
   void CreateDevToolsHttpProtocolHandler(const std::string& ip,
                                          uint16_t port) override;
   void CreateDevToolsAutoOpener() override;
@@ -174,16 +175,13 @@ class BrowserProcessImpl : public BrowserProcess,
   void CreateWatchdogThread();
   void CreateProfileManager();
   void CreateLocalState();
-  void CreateViewedPageTracker();
   void CreateIconManager();
   void CreateIntranetRedirectDetector();
   void CreateNotificationPlatformBridge();
   void CreateNotificationUIManager();
-  void CreateStatusTrayManager();
   void CreatePrintPreviewDialogController();
   void CreateBackgroundPrintingManager();
   void CreateSafeBrowsingService();
-  void CreateSafeBrowsingDetectionService();
   void CreateSubresourceFilterRulesetService();
   void CreateOptimizationGuideService();
   void CreateStatusTray();
@@ -203,6 +201,10 @@ class BrowserProcessImpl : public BrowserProcess,
   // to make sure it keeps running.
   void Pin();
   void Unpin();
+
+  // |metrics_services_manager_| owns this.
+  ChromeMetricsServicesManagerClient* metrics_services_manager_client_ =
+      nullptr;
 
   std::unique_ptr<metrics_services_manager::MetricsServicesManager>
       metrics_services_manager_;
@@ -230,10 +232,6 @@ class BrowserProcessImpl : public BrowserProcess,
   bool created_icon_manager_ = false;
   std::unique_ptr<IconManager> icon_manager_;
 
-#if defined(OS_ANDROID)
-  std::unique_ptr<GpuDriverInfoManager> gpu_driver_info_manager_;
-#endif
-
   std::unique_ptr<GpuModeManager> gpu_mode_manager_;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -259,9 +257,11 @@ class BrowserProcessImpl : public BrowserProcess,
       background_printing_manager_;
 #endif
 
+#if !defined(OS_ANDROID)
   // Manager for desktop notification UI.
   bool created_notification_ui_manager_ = false;
   std::unique_ptr<NotificationUIManager> notification_ui_manager_;
+#endif
 
   std::unique_ptr<IntranetRedirectDetector> intranet_redirect_detector_;
 

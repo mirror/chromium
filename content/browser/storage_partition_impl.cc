@@ -10,6 +10,7 @@
 #include <set>
 #include <vector>
 
+#include "base/barrier_closure.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -26,8 +27,6 @@
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
-#include "content/network/network_context.h"
-#include "content/network/network_service_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -46,6 +45,9 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
+#include "services/network/network_context.h"
+#include "services/network/network_service.h"
+#include "services/network/public/cpp/features.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/blob/blob_registry_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -168,18 +170,21 @@ void OnLocalStorageUsageInfo(
     const std::vector<LocalStorageUsageInfo>& infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  base::RepeatingClosure barrier = base::BarrierClosure(infos.size(), callback);
   for (size_t i = 0; i < infos.size(); ++i) {
     if (!origin_matcher.is_null() &&
         !origin_matcher.Run(infos[i].origin, special_storage_policy.get())) {
+      barrier.Run();
       continue;
     }
 
     if (infos[i].last_modified >= delete_begin &&
         infos[i].last_modified <= delete_end) {
-      dom_storage_context->DeleteLocalStorage(infos[i].origin);
+      dom_storage_context->DeleteLocalStorage(infos[i].origin, barrier);
+    } else {
+      barrier.Run();
     }
   }
-  callback.Run();
 }
 
 void OnSessionStorageUsageInfo(
@@ -215,10 +220,12 @@ void ClearLocalStorageOnUIThread(
     bool can_delete = origin_matcher.is_null() ||
                       origin_matcher.Run(storage_origin,
                                          special_storage_policy.get());
-    if (can_delete)
-      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin);
-
-    callback.Run();
+    if (can_delete) {
+      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin,
+                                                               callback);
+    } else {
+      callback.Run();
+    }
     return;
   }
 
@@ -265,10 +272,9 @@ class StoragePartitionImpl::NetworkContextOwner {
                   scoped_refptr<net::URLRequestContextGetter> context_getter) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
-    network_context_ = std::make_unique<NetworkContext>(
-        static_cast<NetworkServiceImpl*>(GetNetworkServiceImpl()),
-        std::move(network_context_request),
-        context_getter_->GetURLRequestContext());
+    network_context_ = std::make_unique<network::NetworkContext>(
+        GetNetworkServiceImpl(), std::move(network_context_request),
+        context_getter_);
   }
 
  private:
@@ -392,6 +398,8 @@ struct StoragePartitionImpl::DataDeletionHelper {
         callback(std::move(callback)),
         task_count(0) {}
 
+  ~DataDeletionHelper() {}
+
   void IncrementTaskCountOnUI();
   void DecrementTaskCount();  // Callable on any thread.
 
@@ -452,6 +460,7 @@ StoragePartitionImpl::StoragePartitionImpl(
     : partition_path_(partition_path),
       special_storage_policy_(special_storage_policy),
       browser_context_(browser_context),
+      deletion_helpers_running_(0),
       weak_factory_(this) {}
 
 StoragePartitionImpl::~StoragePartitionImpl() {
@@ -585,7 +594,7 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   scoped_refptr<ChromeBlobStorageContext> blob_context =
       ChromeBlobStorageContext::GetFor(context);
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     BlobURLLoaderFactory::BlobContextGetter blob_getter =
         base::BindOnce(&BlobStorageContextGetter, blob_context);
     partition->blob_url_loader_factory_ =
@@ -623,7 +632,7 @@ StoragePartitionImpl::GetMediaURLRequestContext() {
 
 network::mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   // Create the NetworkContext as needed, when the network service is disabled.
-  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (!base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     if (network_context_)
       return network_context_.get();
     DCHECK(!network_context_owner_);
@@ -792,13 +801,25 @@ void StoragePartitionImpl::ClearDataImpl(
     base::OnceClosure callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DataDeletionHelper* helper = new DataDeletionHelper(
-      remove_mask, quota_storage_remove_mask, std::move(callback));
+      remove_mask, quota_storage_remove_mask,
+      base::BindOnce(&StoragePartitionImpl::DeletionHelperDone,
+                     weak_factory_.GetWeakPtr(), std::move(callback)));
   // |helper| deletes itself when done in
   // DataDeletionHelper::DecrementTaskCount().
+  deletion_helpers_running_++;
   helper->ClearDataOnUIThread(
       storage_origin, origin_matcher, cookie_matcher, GetPath(),
       GetURLRequestContext(), dom_storage_context_.get(), quota_manager_.get(),
       special_storage_policy_.get(), filesystem_context_.get(), begin, end);
+}
+
+void StoragePartitionImpl::DeletionHelperDone(base::OnceClosure callback) {
+  std::move(callback).Run();
+  deletion_helpers_running_--;
+  if (on_deletion_helpers_done_callback_ && deletion_helpers_running_ == 0) {
+    // Notify tests that storage partition is done with all deletion tasks.
+    std::move(on_deletion_helpers_done_callback_).Run();
+  }
 }
 
 void StoragePartitionImpl::
@@ -1085,6 +1106,14 @@ void StoragePartitionImpl::FlushNetworkInterfaceForTesting() {
   network_context_.FlushForTesting();
   if (url_loader_factory_for_browser_process_)
     url_loader_factory_for_browser_process_.FlushForTesting();
+}
+
+void StoragePartitionImpl::WaitForDeletionTasksForTesting() {
+  if (deletion_helpers_running_) {
+    base::RunLoop loop;
+    on_deletion_helpers_done_callback_ = loop.QuitClosure();
+    loop.Run();
+  }
 }
 
 BrowserContext* StoragePartitionImpl::browser_context() const {

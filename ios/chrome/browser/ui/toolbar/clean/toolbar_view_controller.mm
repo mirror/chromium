@@ -11,7 +11,10 @@
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_animator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
@@ -46,6 +49,11 @@
 @property(nonatomic, assign, getter=isLoading) BOOL loading;
 
 @property(nonatomic, strong) ToolbarView* view;
+
+// Whether the location bar inset its page margins to the safe area when it was
+// set.
+@property(nonatomic, assign) BOOL locationBarDidInsetLayoutMargins;
+
 @end
 
 @implementation ToolbarViewController
@@ -53,6 +61,8 @@
 @synthesize buttonFactory = _buttonFactory;
 @synthesize buttonUpdater = _buttonUpdater;
 @synthesize loading = _loading;
+@synthesize locationBarDidInsetLayoutMargins =
+    _locationBarDidInsetLayoutMargins;
 @synthesize voiceSearchEnabled = _voiceSearchEnabled;
 @synthesize omniboxFocuser = _omniboxFocuser;
 @synthesize dispatcher = _dispatcher;
@@ -284,11 +294,6 @@
   self.view = [[ToolbarView alloc] init];
   self.view.delegate = self;
   self.view.buttonFactory = self.buttonFactory;
-  if (@available(iOS 11, *)) {
-    self.view.topSafeAnchor = self.view.safeAreaLayoutGuide.topAnchor;
-  } else {
-    self.view.topSafeAnchor = self.topLayoutGuide.bottomAnchor;
-  }
   self.view.leadingMargin = [self leadingMargin];
 
   [self.view setUp];
@@ -303,7 +308,18 @@
 #pragma mark - Property accessors
 
 - (void)setLocationBarView:(UIView*)locationBarView {
+  // Don't inset |locationBarView|'s layout margins from the safe area because
+  // it's being added to a FullscreenUIElement that is expected to animate
+  // ouside of the safe area layout guide.
+  if (@available(iOS 11, *)) {
+    self.view.locationBarView.insetsLayoutMarginsFromSafeArea =
+        self.locationBarDidInsetLayoutMargins;
+    self.locationBarDidInsetLayoutMargins =
+        locationBarView.insetsLayoutMarginsFromSafeArea;
+  }
   self.view.locationBarView = locationBarView;
+  if (@available(iOS 11, *))
+    self.view.locationBarView.insetsLayoutMarginsFromSafeArea = NO;
 }
 
 - (ToolbarToolsMenuButton*)toolsMenuButton {
@@ -560,6 +576,22 @@
 
 - (void)finishFullscreenScrollWithAnimator:
     (FullscreenScrollEndAnimator*)animator {
+  [self addFullscreenAnimationsToAnimator:animator];
+}
+
+- (void)scrollFullscreenToTopWithAnimator:
+    (FullscreenScrollToTopAnimator*)animator {
+  [self addFullscreenAnimationsToAnimator:animator];
+}
+
+- (void)showToolbarForForgroundWithAnimator:
+    (FullscreenForegroundAnimator*)animator {
+  [self addFullscreenAnimationsToAnimator:animator];
+}
+
+#pragma mark - FullscreenUIElement helpers
+
+- (void)addFullscreenAnimationsToAnimator:(FullscreenAnimator*)animator {
   CGFloat finalProgress = animator.finalProgress;
   [animator addAnimations:^() {
     [self updateForFullscreenProgress:finalProgress];

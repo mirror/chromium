@@ -68,6 +68,9 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
       const FrameSinkId& frame_sink_id,
       mojom::CompositorFrameSinkRequest request,
       mojom::CompositorFrameSinkClientPtr client) override;
+  void DestroyCompositorFrameSink(
+      const FrameSinkId& frame_sink_id,
+      DestroyCompositorFrameSinkCallback callback) override;
   void RegisterFrameSinkHierarchy(
       const FrameSinkId& parent_frame_sink_id,
       const FrameSinkId& child_frame_sink_id) override;
@@ -133,13 +136,6 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void SwitchActiveAggregatedHitTestRegionList(const FrameSinkId& frame_sink_id,
                                                uint8_t active_handle_index);
 
-  // It is necessary to pass |frame_sink_id| by value because the id
-  // is owned by the GpuCompositorFrameSink in the map. When the sink is
-  // removed from the map, |frame_sink_id| would also be destroyed if it were a
-  // reference. But the map can continue to iterate and try to use it. Passing
-  // by value avoids this.
-  void DestroyCompositorFrameSink(FrameSinkId frame_sink_id);
-
   void SubmitHitTestRegionList(
       const SurfaceId& surface_id,
       uint64_t frame_index,
@@ -178,23 +174,6 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
     DISALLOW_COPY_AND_ASSIGN(FrameSinkSourceMapping);
   };
 
-  struct SinkAndSupport {
-    SinkAndSupport();
-    SinkAndSupport(SinkAndSupport&& other);
-    ~SinkAndSupport();
-    SinkAndSupport& operator=(SinkAndSupport&& other);
-
-    // CompositorFrameSinks owned here. This will be null if a
-    // CompositorFrameSinkSupport is owned externally.
-    std::unique_ptr<mojom::CompositorFrameSink> sink;
-
-    // This can be owned by |sink| or owned externally.
-    CompositorFrameSinkSupport* support = nullptr;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(SinkAndSupport);
-  };
-
   void RecursivelyAttachBeginFrameSource(const FrameSinkId& frame_sink_id,
                                          BeginFrameSource* source);
   void RecursivelyDetachBeginFrameSource(const FrameSinkId& frame_sink_id,
@@ -221,8 +200,13 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // Contains FrameSinkId hierarchy and BeginFrameSource mapping.
   base::flat_map<FrameSinkId, FrameSinkSourceMapping> frame_sink_source_map_;
 
-  // Contains (and maybe owns) the CompositorFrameSinkSupport.
-  base::flat_map<FrameSinkId, SinkAndSupport> compositor_frame_sinks_;
+  // CompositorFrameSinkSupports get added to this map on creation and removed
+  // on destruction.
+  base::flat_map<FrameSinkId, CompositorFrameSinkSupport*> support_map_;
+
+  // [Root]CompositorFrameSinkImpls are owned in this map.
+  base::flat_map<FrameSinkId, std::unique_ptr<mojom::CompositorFrameSink>>
+      sink_map_;
 
   PrimaryBeginFrameSource primary_source_;
 

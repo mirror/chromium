@@ -14,7 +14,6 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.style.LocaleSpan;
 import android.util.SparseArray;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
@@ -35,9 +34,8 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     private String mSystemLanguageTag;
     private BroadcastReceiver mBroadcastReceiver;
 
-    LollipopWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, String productVersion) {
-        super(context, containerView, webContents, productVersion);
+    LollipopWebContentsAccessibility(WebContents webContents) {
+        super(webContents);
     }
 
     @Override
@@ -161,7 +159,7 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (!isNativeInitialized()) return;
-        mContext.unregisterReceiver(mBroadcastReceiver);
+        mContext.getApplicationContext().unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
@@ -174,7 +172,7 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
         if (!isNativeInitialized()) return;
         try {
             IntentFilter filter = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
-            mContext.registerReceiver(mBroadcastReceiver, filter);
+            mContext.getApplicationContext().registerReceiver(mBroadcastReceiver, filter);
         } catch (ReceiverCallNotAllowedException e) {
             // WebView may be running inside a BroadcastReceiver, in which case registerReceiver is
             // not allowed.

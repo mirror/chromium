@@ -11,16 +11,17 @@
 #include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/optional.h"
+#include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
-#include "platform/WebTaskRunner.h"
 #include "public/platform/TaskType.h"
 
 namespace blink {
 namespace scheduler {
 class TaskQueue;
 
-class PLATFORM_EXPORT WebTaskRunnerImpl : public WebTaskRunner {
+// TODO(yutak): WebTaskRunner is no more; rename the class.
+class PLATFORM_EXPORT WebTaskRunnerImpl : public base::SingleThreadTaskRunner {
  public:
   static scoped_refptr<WebTaskRunnerImpl> Create(
       scoped_refptr<TaskQueue> task_queue,
@@ -28,9 +29,6 @@ class PLATFORM_EXPORT WebTaskRunnerImpl : public WebTaskRunner {
 
   // base::SingleThreadTaskRunner implementation:
   bool RunsTasksInCurrentSequence() const override;
-
-  // WebTaskRunner implementation:
-  double MonotonicallyIncreasingVirtualTimeSeconds() const override;
 
   TaskQueue* GetTaskQueue() const { return task_queue_.get(); }
 
@@ -46,8 +44,6 @@ class PLATFORM_EXPORT WebTaskRunnerImpl : public WebTaskRunner {
   WebTaskRunnerImpl(scoped_refptr<TaskQueue> task_queue,
                     base::Optional<TaskType> task_type);
   ~WebTaskRunnerImpl() override;
-
-  base::TimeTicks Now() const;
 
   scoped_refptr<TaskQueue> task_queue_;
   base::Optional<TaskType> task_type_;

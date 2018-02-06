@@ -71,6 +71,14 @@ def _ProcessCompileDatabaseForWindows(compile_db):
   return compile_db
 
 
+def GetNinjaPath():
+  ninja_executable = 'ninja.exe' if sys.platform == 'win32' else 'ninja'
+  return os.path.join(
+      os.path.dirname(os.path.realpath(__file__)),
+        '..', '..', '..', '..', 'third_party', 'depot_tools', ninja_executable)
+
+
+# FIXME: This really should be a build target, rather than generated at runtime.
 def GenerateWithNinja(path):
   """Generates a compile database using ninja.
 
@@ -84,7 +92,8 @@ def GenerateWithNinja(path):
 
   # First, generate the compile database.
   json_compile_db = subprocess.check_output([
-      'ninja', '-C', path, '-t', 'compdb', 'cc', 'cxx', 'objc', 'objcxx'])
+      GetNinjaPath(), '-C', path, '-t', 'compdb', 'cc', 'cxx', 'objc',
+      'objcxx'])
   compile_db = json.loads(json_compile_db)
 
   # TODO(dcheng): Ideally this would check target_os... but not sure there's an

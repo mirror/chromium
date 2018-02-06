@@ -295,6 +295,8 @@ component("ash") {
     "login/ui/note_action_launch_button.h",
     "login/ui/pin_keyboard_animation.cc",
     "login/ui/pin_keyboard_animation.h",
+    "login/ui/scrollable_users_list_view.cc",
+    "login/ui/scrollable_users_list_view.h",
     "login/ui/user_switch_flip_animation.cc",
     "login/ui/user_switch_flip_animation.h",
     "login_status.h",
@@ -584,6 +586,12 @@ component("ash") {
     "system/power/power_button_controller.h",
     "system/power/power_button_display_controller.cc",
     "system/power/power_button_display_controller.h",
+    "system/power/power_button_menu_item_view.cc",
+    "system/power/power_button_menu_item_view.h",
+    "system/power/power_button_menu_screen_view.cc",
+    "system/power/power_button_menu_screen_view.h",
+    "system/power/power_button_menu_view.cc",
+    "system/power/power_button_menu_view.h",
     "system/power/power_button_screenshot_controller.cc",
     "system/power/power_button_screenshot_controller.h",
     "system/power/power_event_observer.cc",
@@ -1083,7 +1091,6 @@ component("ash") {
     "//third_party/qcms",
     "//third_party/re2",
     "//ui/accessibility",
-    "//ui/accessibility:ax_gen",
     "//ui/app_list/presenter",
     "//ui/base",
     "//ui/base:ui_data_pack",
@@ -1106,7 +1113,6 @@ component("ash") {
     "//ui/keyboard",
     "//ui/keyboard:mojom",
     "//ui/message_center",
-    "//ui/message_center/public/cpp",
     "//ui/native_theme",
     "//ui/ozone",
     "//ui/platform_window",
@@ -1117,11 +1123,6 @@ component("ash") {
 
   data_deps = [
     "//ash/touch_hud/mus:touch_hud",
-  ]
-
-  # TODO(jamescook): Move to ash_unittests?
-  data = [
-    "display/test_data/",
   ]
 
   # Usage of content should be in ash_content_unittests.
@@ -1636,6 +1637,11 @@ test("ash_unittests") {
     "//testing/buildbot/filters:ash_unittests_filters",
   ]
 
+  data = [
+    # See DisplayColorManagerTest.
+    "display/test_data/",
+  ]
+
   # Usage of content should be in ash_with_content.
   assert_no_deps = [
     "//content/public/browser",
@@ -1808,10 +1814,6 @@ static_library("test_support_common") {
     "test/ash_test_suite.h",
     "test/ash_test_views_delegate.cc",
     "test/ash_test_views_delegate.h",
-
-    # TODO(jamescook): Rename to TestChildModalWindow and move to //ash/wm
-    "test/child_modal_window.cc",
-    "test/child_modal_window.h",
     "test/ui_controls_factory_ash.cc",
     "test/ui_controls_factory_ash.h",
     "test_media_client.cc",
@@ -1820,8 +1822,6 @@ static_library("test_support_common") {
     "test_screenshot_delegate.h",
     "test_shell_delegate.cc",
     "test_shell_delegate.h",
-    "wallpaper/test_wallpaper_delegate.cc",
-    "wallpaper/test_wallpaper_delegate.h",
     "wallpaper/wallpaper_controller_test_api.cc",
     "wallpaper/wallpaper_controller_test_api.h",
     "wm/cursor_manager_test_api.cc",
@@ -1830,6 +1830,8 @@ static_library("test_support_common") {
     "wm/lock_state_controller_test_api.h",
     "wm/test_activation_delegate.cc",
     "wm/test_activation_delegate.h",
+    "wm/test_child_modal_parent.cc",
+    "wm/test_child_modal_parent.h",
     "wm/test_overlay_delegate.cc",
     "wm/test_overlay_delegate.h",
     "wm/test_session_state_animator.cc",

@@ -435,11 +435,6 @@ void RecordMainFrameNavigationMetric(web::WebState* web_state) {
   return self;
 }
 
-- (instancetype)init {
-  NOTREACHED();
-  return nil;
-}
-
 - (BOOL)restoreSessionWindow:(SessionWindowIOS*)window {
   return [self restoreSessionWindow:window persistState:YES];
 }
@@ -783,7 +778,7 @@ void RecordMainFrameNavigationMetric(web::WebState* web_state) {
         webState->GetNavigationManager()->GetVisibleItem();
 
     if (!(visible_item &&
-          visible_item->GetVirtualURL() == GURL(kChromeUINewTabURL))) {
+          visible_item->GetVirtualURL() == kChromeUINewTabURL)) {
       PagePlaceholderTabHelper::FromWebState(webState)
           ->AddPlaceholderForNextNavigation();
     }

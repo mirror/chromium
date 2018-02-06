@@ -172,6 +172,7 @@ class CORE_EXPORT DocumentLoader
   HistoryItem* GetHistoryItem() const { return history_item_; }
 
   void StartLoading();
+  void StopLoading();
 
   DocumentLoadTiming& GetTiming() { return document_load_timing_; }
   const DocumentLoadTiming& GetTiming() const { return document_load_timing_; }
@@ -284,7 +285,7 @@ class CORE_EXPORT DocumentLoader
 
   bool MaybeCreateArchive();
 
-  void FinishedLoading(double finish_time);
+  void FinishedLoading(TimeTicks finish_time);
   void CancelLoadAfterCSPDenied(const ResourceResponse&);
 
   enum class HistoryNavigationType {
@@ -353,7 +354,7 @@ class CORE_EXPORT DocumentLoader
 
   DocumentLoadTiming document_load_timing_;
 
-  double time_of_last_data_received_;
+  TimeTicks time_of_last_data_received_;
 
   Member<ApplicationCacheHost> application_cache_host_;
 

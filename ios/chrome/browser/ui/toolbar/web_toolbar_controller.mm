@@ -227,12 +227,13 @@ using ios::material::TimingFunction;
 @synthesize animatingStop = _animatingStop;
 @synthesize animatingPrerender = _animatingPrerender;
 
-- (instancetype)
-initWithDelegate:(id<WebToolbarDelegate>)delegate
-       urlLoader:(id<UrlLoader>)urlLoader
-    browserState:(ios::ChromeBrowserState*)browserState
-      dispatcher:(id<ApplicationCommands, BrowserCommands, ToolbarCommands>)
-                     dispatcher {
+- (instancetype)initWithDelegate:(id<WebToolbarDelegate>)delegate
+                       urlLoader:(id<UrlLoader>)urlLoader
+                    browserState:(ios::ChromeBrowserState*)browserState
+                      dispatcher:(id<ApplicationCommands,
+                                     BrowserCommands,
+                                     OmniboxFocuser,
+                                     ToolbarCommands>)dispatcher {
   DCHECK(delegate);
   DCHECK(urlLoader);
   DCHECK(browserState);
@@ -654,7 +655,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab {
   web::WebState* webState = tab.webState;
   BOOL isCurrentTab = webState == [self.delegate currentWebState];
-  BOOL isNTP = webState->GetVisibleURL() == GURL(kChromeUINewTabURL);
+  BOOL isNTP = webState->GetVisibleURL() == kChromeUINewTabURL;
 
   // Don't do anything for a live non-ntp tab.
   if (isCurrentTab && !isNTP) {
@@ -962,7 +963,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   [self.delegate locationBarBeganEdit];
 }
 
-- (web::WebState*)getWebState {
+- (web::WebState*)webState {
   return [self.delegate currentWebState];
 }
 
@@ -1011,7 +1012,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   DCHECK(!IsIPadIdiom());
   // Hide the toolbar if the NTP is currently displayed.
   web::WebState* webState = [self.delegate currentWebState];
-  if (webState && (webState->GetVisibleURL() == GURL(kChromeUINewTabURL))) {
+  if (webState && (webState->GetVisibleURL() == kChromeUINewTabURL)) {
     [self.view setHidden:YES];
   }
 }
@@ -1026,6 +1027,11 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
 
 - (UIView*)popupAnchorView {
   return self.view;
+}
+
+- (UIView*)popupParentView {
+  NOTREACHED();
+  return nil;
 }
 
 #pragma mark -
@@ -1584,7 +1590,7 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
   // If app is on the regular New Tab Page, make this animation occur instantly
   // since this page has a fakebox to omnibox transition.
   web::WebState* webState = [self.delegate currentWebState];
-  if (webState && webState->GetVisibleURL() == GURL(kChromeUINewTabURL) &&
+  if (webState && webState->GetVisibleURL() == kChromeUINewTabURL &&
       !_incognito) {
     duration = 0.0;
   }
@@ -1940,6 +1946,12 @@ initWithDelegate:(id<WebToolbarDelegate>)delegate
       [self layoutClippingView];
     }
   }
+}
+
+#pragma mark - Toolbar
+
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  // This is a no-op, since this class implements LocationBarDelegate directly.
 }
 
 @end

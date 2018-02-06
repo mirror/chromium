@@ -17,9 +17,8 @@ _typemap_imports = [
   "//content/common/presentation/typemaps.gni",
   "//content/common/typemaps.gni",
   "//content/public/common/typemaps.gni",
-  "//device/bluetooth/public/interfaces/typemaps.gni",
-  "//device/gamepad/public/interfaces/typemaps.gni",
-  "//extensions/common/typemaps.gni",
+  "//device/bluetooth/public/mojom/typemaps.gni",
+  "//device/gamepad/public/mojom/typemaps.gni",
   "//gpu/ipc/common/typemaps.gni",
   "//media/capture/mojo/typemaps.gni",
   "//media/mojo/interfaces/typemaps.gni",
@@ -51,7 +50,7 @@ _typemap_imports = [
   "//ui/gfx/typemaps.gni",
   "//ui/latency/mojo/typemaps.gni",
   "//ui/ozone/public/interfaces/typemaps.gni",
-  "//ui/message_center/mojo/typemaps.gni",
+  "//ui/message_center/public/mojo/typemaps.gni",
   "//url/mojo/typemaps.gni",
 ]
 

@@ -11,9 +11,9 @@
 
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
+@protocol OmniboxFocuser;
 @class ToolbarButton;
 @class ToolbarButtonVisibilityConfiguration;
-@protocol ToolbarCommands;
 @class ToolbarTabGridButton;
 @class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
@@ -33,7 +33,7 @@
     ToolbarConfiguration* toolbarConfiguration;
 // Dispatcher used to initialize targets for the buttons.
 @property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
+    id<ApplicationCommands, BrowserCommands, OmniboxFocuser>
         dispatcher;
 // Configuration object for the visibility of the buttons.
 @property(nonatomic, strong)
@@ -70,6 +70,8 @@
 // LocationBar LeadingButton. Currently used for the incognito icon when the
 // Toolbar is expanded on incognito mode. It can return nil.
 - (ToolbarButton*)locationBarLeadingButton;
+// Button to cancel the edit of the location bar.
+- (UIButton*)cancelButton;
 
 // Returns images for Voice Search in an array representing the NORMAL/PRESSED
 // state

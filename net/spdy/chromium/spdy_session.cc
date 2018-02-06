@@ -27,7 +27,6 @@
 #include "base/values.h"
 #include "crypto/ec_private_key.h"
 #include "crypto/ec_signature_creator.h"
-#include "net/base/proxy_delegate.h"
 #include "net/cert/asn1_util.h"
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/ct_policy_status.h"
@@ -40,7 +39,6 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_server.h"
 #include "net/quic/chromium/quic_http_utils.h"
 #include "net/socket/socket.h"
 #include "net/socket/ssl_client_socket.h"
@@ -147,6 +145,8 @@ bool IsSpdySettingAtDefaultInitialValue(SpdySettingsIds setting_id,
     case SETTINGS_MAX_HEADER_LIST_SIZE:
       // There is no initial limit on the size of the header list.
       return false;
+    case SETTINGS_ENABLE_CONNECT_PROTOCOL:
+      return value == 0;
     default:
       // Undefined parameters have no initial value.
       return false;
@@ -597,7 +597,7 @@ int SpdyStreamRequest::StartRequest(SpdyStreamType type,
                                     const GURL& url,
                                     RequestPriority priority,
                                     const NetLogWithSource& net_log,
-                                    const CompletionCallback& callback) {
+                                    CompletionOnceCallback callback) {
   DCHECK(session);
   DCHECK(!session_);
   DCHECK(!stream_);
@@ -608,7 +608,7 @@ int SpdyStreamRequest::StartRequest(SpdyStreamType type,
   url_ = url;
   priority_ = priority;
   net_log_ = net_log;
-  callback_ = callback;
+  callback_ = std::move(callback);
 
   base::WeakPtr<SpdyStream> stream;
   int rv = session->TryCreateStream(weak_ptr_factory_.GetWeakPtr(), &stream);
@@ -644,21 +644,21 @@ void SpdyStreamRequest::OnRequestCompleteSuccess(
   DCHECK(session_);
   DCHECK(!stream_);
   DCHECK(!callback_.is_null());
-  CompletionCallback callback = callback_;
+  CompletionOnceCallback callback = std::move(callback_);
   Reset();
   DCHECK(stream);
   stream_ = stream;
-  callback.Run(OK);
+  std::move(callback).Run(OK);
 }
 
 void SpdyStreamRequest::OnRequestCompleteFailure(int rv) {
   DCHECK(session_);
   DCHECK(!stream_);
   DCHECK(!callback_.is_null());
-  CompletionCallback callback = callback_;
+  CompletionOnceCallback callback = std::move(callback_);
   Reset();
   DCHECK_NE(rv, OK);
-  callback.Run(rv);
+  std::move(callback).Run(rv);
 }
 
 void SpdyStreamRequest::Reset() {
@@ -691,7 +691,7 @@ bool SpdySession::CanPool(TransportSecurityState* transport_security_state,
     return false;
   }
 
-  if (!ssl_info.cert->VerifyNameMatch(new_hostname, false))
+  if (!ssl_info.cert->VerifyNameMatch(new_hostname))
     return false;
 
   SpdyString pinning_failure_log;
@@ -734,11 +734,11 @@ SpdySession::SpdySession(
     bool enable_sending_initial_data,
     bool enable_ping_based_connection_checking,
     bool support_ietf_format_quic_altsvc,
+    bool is_trusted_proxy,
     size_t session_max_recv_window_size,
     const SettingsMap& initial_settings,
     TimeFunc time_func,
     ServerPushDelegate* push_delegate,
-    ProxyDelegate* proxy_delegate,
     NetLog* net_log)
     : in_io_loop_(false),
       spdy_session_key_(spdy_session_key),
@@ -786,10 +786,11 @@ SpdySession::SpdySession(
       enable_ping_based_connection_checking_(
           enable_ping_based_connection_checking),
       support_ietf_format_quic_altsvc_(support_ietf_format_quic_altsvc),
+      is_trusted_proxy_(is_trusted_proxy),
+      support_websocket_(false),
       connection_at_risk_of_loss_time_(
           base::TimeDelta::FromSeconds(kDefaultConnectionAtRiskOfLossSeconds)),
       hung_interval_(base::TimeDelta::FromSeconds(kHungIntervalSeconds)),
-      proxy_delegate_(proxy_delegate),
       time_func_(time_func),
       weak_factory_(this) {
   net_log_.BeginEvent(
@@ -1634,9 +1635,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   // Cross-origin push validation.
   GURL associated_url(associated_it->second->GetUrlFromHeaders());
   if (associated_url.GetOrigin() != gurl.GetOrigin()) {
-    if (proxy_delegate_ &&
-        proxy_delegate_->IsTrustedSpdyProxy(
-            ProxyServer(ProxyServer::SCHEME_HTTPS, host_port_pair()))) {
+    if (is_trusted_proxy_) {
       if (!gurl.SchemeIs(url::kHttpScheme)) {
         EnqueueResetStreamFrame(
             stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
@@ -2230,6 +2229,16 @@ void SpdySession::HandleSetting(uint32_t id, uint32_t value) {
           NetLog::IntCallback("delta_window_size", delta_window_size));
       break;
     }
+    case SETTINGS_ENABLE_CONNECT_PROTOCOL:
+      if ((value != 0 && value != 1) || (support_websocket_ && value == 0)) {
+        DoDrainSession(ERR_SPDY_PROTOCOL_ERROR,
+                       "Invalid value for SETTINGS_ENABLE_CONNECT_PROTOCOL.");
+        return;
+      }
+      if (value == 1) {
+        support_websocket_ = true;
+      }
+      break;
   }
 }
 

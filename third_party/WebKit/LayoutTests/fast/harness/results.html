@@ -672,9 +672,12 @@ const Report = {
     html.forEach(result => {
       let key = result.key || "null";
       if (!(key in renderMap)) {
+        const number_of_items = html.filter(result => (result.key || "null") === key).length;
         let container =
             report.querySelector(`div[key="${key}"]`) ||
-            Report.createContainerForGroup(report, key, keyed_title, null_title);
+            Report.createContainerForGroup(report, key,
+                `${keyed_title} ${number_of_items}`,
+                `${null_title} ${number_of_items}`);
         renderMap[key] = {container: container, html: ""};
       }
       renderMap[key].html += result.html;
@@ -1260,8 +1263,7 @@ const GUI = {
   },
 
   printSummary: function (fullResults) {
-    if (fullResults.builder_name)
-      document.querySelector("#builder_name").innerText = fullResults.builder_name;
+    document.querySelector("#builder_name").innerText = fullResults.builder_name || document.lastModified;
     document.querySelector("#summary_passed").innerText = fullResults.num_passes;
     document.querySelector("#summary_regressions").innerText = fullResults.num_regressions;
     let failures = fullResults["num_failures_by_type"];

@@ -31,6 +31,8 @@
 #ifndef WebFrameWidgetImpl_h
 #define WebFrameWidgetImpl_h
 
+#include <memory>
+
 #include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/page/PageWidgetDelegate.h"
@@ -127,6 +129,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   // WebFrameWidgetBase overrides:
   bool ForSubframe() const override { return true; }
   void ScheduleAnimation() override;
+  void IntrinsicSizingInfoChanged(const IntrinsicSizingInfo&) override;
 
   WebWidgetClient* Client() const override { return client_; }
   void SetRootGraphicsLayer(GraphicsLayer*) override;
@@ -155,9 +158,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   friend class WebFrameWidget;  // For WebFrameWidget::create.
 
   explicit WebFrameWidgetImpl(WebWidgetClient*, WebLocalFrame*);
-
-  WebInputEventResult HandleInputEventInternal(
-      const WebCoalescedInputEvent&) override;
 
   // Perform a hit test for a point relative to the root frame of the page.
   HitTestResult HitTestResultForRootFramePos(
@@ -223,8 +223,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   // when there is no page focus?
   // Represents whether or not this object should process incoming IME events.
   bool ime_accept_events_;
-
-  static const WebInputEvent* current_input_event_;
 
   WebColor base_background_color_;
 

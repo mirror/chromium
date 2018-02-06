@@ -56,7 +56,6 @@
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_requester_info.h"
-#include "content/browser/loader/resource_scheduler.h"
 #include "content/browser/loader/stream_resource_handler.h"
 #include "content/browser/loader/throttling_resource_handler.h"
 #include "content/browser/loader/upload_data_stream_builder.h"
@@ -101,7 +100,6 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/log/net_log_with_source.h"
-#include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
@@ -109,11 +107,12 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "ppapi/features/features.h"
-#include "services/network/public/cpp/loader_util.h"
+#include "services/network/loader_util.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/cpp/resource_request_body.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "services/network/resource_scheduler.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
@@ -276,6 +275,32 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
 
 }  // namespace
 
+constexpr int ResourceDispatcherHostImpl::kMaxKeepaliveConnections;
+constexpr int ResourceDispatcherHostImpl::kMaxKeepaliveConnectionsPerProcess;
+
+class ResourceDispatcherHostImpl::ScheduledResourceRequestAdapter final
+    : public ResourceThrottle {
+ public:
+  explicit ScheduledResourceRequestAdapter(
+      std::unique_ptr<network::ResourceScheduler::ScheduledResourceRequest>
+          request)
+      : request_(std::move(request)) {
+    request_->set_resume_callback(base::BindOnce(
+        &ScheduledResourceRequestAdapter::Resume, base::Unretained(this)));
+  }
+  ~ScheduledResourceRequestAdapter() override {}
+
+  // ResourceThrottle implementation
+  void WillStartRequest(bool* defer) override {
+    request_->WillStartRequest(defer);
+  }
+  const char* GetNameForLogging() const override { return "ResourceScheduler"; }
+
+ private:
+  std::unique_ptr<network::ResourceScheduler::ScheduledResourceRequest>
+      request_;
+};
+
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo() {}
 ResourceDispatcherHostImpl::LoadInfo::LoadInfo(const LoadInfo& other) = default;
 ResourceDispatcherHostImpl::LoadInfo::~LoadInfo() {}
@@ -384,6 +409,10 @@ void ResourceDispatcherHostImpl::CancelRequestsForContext(
     if (loader->GetRequestInfo()->GetContext() == context) {
       loaders_to_cancel.push_back(std::move(i->second));
       IncrementOutstandingRequestsMemory(-1, *loader->GetRequestInfo());
+      if (loader->GetRequestInfo()->keepalive()) {
+        keepalive_statistics_recorder_.OnLoadFinished(
+            loader->GetRequestInfo()->GetChildID());
+      }
       pending_loaders_.erase(i++);
     } else {
       ++i;
@@ -567,7 +596,7 @@ bool ResourceDispatcherHostImpl::HandleExternalProtocol(ResourceLoader* loader,
 void ResourceDispatcherHostImpl::DidStartRequest(ResourceLoader* loader) {
   // Make sure we have the load state monitors running.
   if (!update_load_states_timer_->IsRunning() &&
-      scheduler_->HasLoadingClients()) {
+      scheduler_->DeprecatedHasLoadingClients()) {
     update_load_states_timer_->Start(
         FROM_HERE, TimeDelta::FromMilliseconds(kUpdateLoadStatesIntervalMsec),
         this, &ResourceDispatcherHostImpl::UpdateLoadInfo);
@@ -672,20 +701,16 @@ void ResourceDispatcherHostImpl::DidFinishLoading(ResourceLoader* loader) {
   RemovePendingRequest(info->GetChildID(), info->GetRequestID());
 }
 
-std::unique_ptr<net::ClientCertStore>
-    ResourceDispatcherHostImpl::CreateClientCertStore(ResourceLoader* loader) {
-  return delegate_->CreateClientCertStore(
-      loader->GetRequestInfo()->GetContext());
-}
-
 void ResourceDispatcherHostImpl::OnInit() {
-  scheduler_.reset(new ResourceScheduler(enable_resource_scheduler_));
+  scheduler_.reset(new network::ResourceScheduler(enable_resource_scheduler_));
 }
 
 void ResourceDispatcherHostImpl::OnShutdown() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
   is_shutdown_ = true;
+  keepalive_statistics_recorder_.Shutdown();
+
   pending_loaders_.clear();
 
   // Make sure we shutdown the timers now, otherwise by the time our destructor
@@ -1176,6 +1201,12 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     }
   }
 
+  if (request_data.keepalive) {
+    const auto& map = keepalive_statistics_recorder_.per_process_records();
+    if (child_id != 0 && map.find(child_id) == map.end())
+      keepalive_statistics_recorder_.Register(child_id);
+  }
+
   new_request->SetLoadFlags(load_flags);
 
   // Make extra info and read footer (contains request ID).
@@ -1358,8 +1389,9 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
 
   // TODO(ricea): Stop looking this up so much.
   ResourceRequestInfoImpl* info = ResourceRequestInfoImpl::ForRequest(request);
-  throttles.push_back(scheduler_->ScheduleRequest(child_id, route_id,
-                                                  info->IsAsync(), request));
+  throttles.push_back(std::make_unique<ScheduledResourceRequestAdapter>(
+      scheduler_->ScheduleRequest(child_id, route_id, info->IsAsync(),
+                                  request)));
 
   // Split the handler in two groups: the ones that need to execute
   // WillProcessResponse before mime sniffing and the others.
@@ -1511,7 +1543,7 @@ void ResourceDispatcherHostImpl::OnRenderViewHostDeleted(int child_id,
 void ResourceDispatcherHostImpl::OnRenderViewHostSetIsLoading(int child_id,
                                                               int route_id,
                                                               bool is_loading) {
-  scheduler_->OnLoadingStateChanged(child_id, route_id, !is_loading);
+  scheduler_->DeprecatedOnLoadingStateChanged(child_id, route_id, !is_loading);
 }
 
 void ResourceDispatcherHostImpl::MarkAsTransferredNavigation(
@@ -1534,6 +1566,9 @@ void ResourceDispatcherHostImpl::ResumeDeferredNavigation(
 void ResourceDispatcherHostImpl::CancelRequestsForProcess(int child_id) {
   CancelRequestsForRoute(
       GlobalFrameRoutingId(child_id, MSG_ROUTING_NONE /* cancel all */));
+  const auto& map = keepalive_statistics_recorder_.per_process_records();
+  if (map.find(child_id) != map.end())
+    keepalive_statistics_recorder_.Unregister(child_id);
   registered_temp_files_.erase(child_id);
 }
 
@@ -1646,6 +1681,9 @@ void ResourceDispatcherHostImpl::RemovePendingRequest(int child_id,
 void ResourceDispatcherHostImpl::RemovePendingLoader(
     const LoaderMap::iterator& iter) {
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
+
+  if (info->keepalive())
+    keepalive_statistics_recorder_.OnLoadFinished(info->GetChildID());
 
   // Remove the memory credit that we added when pushing the request onto
   // the pending list.
@@ -1929,7 +1967,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
       // If in the future this changes this should be updated to somehow get a
       // meaningful value.
       false,                                   // initiated_in_secure_context
-      info.begin_params->suggested_filename);  // suggested_filename
+      info.common_params.suggested_filename);  // suggested_filename
   extra_info->SetBlobHandles(std::move(blob_handles));
   extra_info->set_navigation_ui_data(std::move(navigation_ui_data));
 
@@ -2076,10 +2114,26 @@ void ResourceDispatcherHostImpl::BeginRequestInternal(
   // Add the memory estimate that starting this request will consume.
   info->set_memory_cost(CalculateApproximateMemoryCost(request.get()));
 
+  bool exhausted = false;
+
   // If enqueing/starting this request will exceed our per-process memory
   // bound, abort it right away.
   OustandingRequestsStats stats = IncrementOutstandingRequestsMemory(1, *info);
-  if (stats.memory_cost > max_outstanding_requests_cost_per_process_) {
+  if (stats.memory_cost > max_outstanding_requests_cost_per_process_)
+    exhausted = true;
+
+  // requests with keepalive set have additional limitations.
+  if (info->keepalive()) {
+    const auto& recorder = keepalive_statistics_recorder_;
+    if (recorder.num_inflight_requests() >= kMaxKeepaliveConnections)
+      exhausted = true;
+    if (recorder.NumInflightRequestsPerProcess(info->GetChildID()) >=
+        kMaxKeepaliveConnectionsPerProcess) {
+      exhausted = true;
+    }
+  }
+
+  if (exhausted) {
     // We call "CancelWithError()" as a way of setting the net::URLRequest's
     // status -- it has no effect beyond this, since the request hasn't started.
     request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
@@ -2100,8 +2154,9 @@ void ResourceDispatcherHostImpl::BeginRequestInternal(
     return;
   }
 
+  ResourceContext* resource_context = info->GetContext();
   std::unique_ptr<ResourceLoader> loader(new ResourceLoader(
-      std::move(request), std::move(handler), this));
+      std::move(request), std::move(handler), this, resource_context));
 
   GlobalFrameRoutingId id(info->GetChildID(), info->GetRenderFrameID());
   BlockedLoadersMap::const_iterator iter = blocked_loaders_map_.find(id);
@@ -2203,6 +2258,8 @@ void ResourceDispatcherHostImpl::StartLoading(
   ResourceLoader* loader_ptr = loader.get();
   DCHECK(pending_loaders_[info->GetGlobalRequestID()] == nullptr);
   pending_loaders_[info->GetGlobalRequestID()] = std::move(loader);
+  if (info->keepalive())
+    keepalive_statistics_recorder_.OnLoadStarted(info->GetChildID());
 
   loader_ptr->StartRequest();
 }
@@ -2301,7 +2358,7 @@ void ResourceDispatcherHostImpl::UpdateLoadInfo() {
   // will restart it as necessary.
   // Also stop the timer if there are no loading clients, to avoid waking up
   // unnecessarily when there is a long running (hanging get) request.
-  if (infos->empty() || !scheduler_->HasLoadingClients()) {
+  if (infos->empty() || !scheduler_->DeprecatedHasLoadingClients()) {
     update_load_states_timer_->Stop();
     return;
   }

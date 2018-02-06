@@ -155,11 +155,12 @@ declare_args() {
   # Linux or Fuchsia.
   # TODO(pcc): Enable lld on more architectures on Linux. E.g. we probably need
   # to fix some of crbug.com/742655 to enable it on ARM.
-  # TODO(pcc): Remove !is_msan once crbug.com/772559 is fixed.
-  use_lld = is_clang && !is_msan &&
+  use_lld = is_clang &&
             ((is_win && host_os != "win") || is_fuchsia ||
              (use_thin_lto && target_os != "chromeos") ||
-             (is_linux && current_cpu == "x64" && target_os != "chromeos"))
+             (is_linux && current_cpu == "x64" && target_os != "chromeos") ||
+             (is_android && (current_cpu != "arm" || arm_version >= 7) &&
+              current_cpu != "mipsel" && current_cpu != "mips64el"))
 }
 
 declare_args() {
@@ -167,8 +168,9 @@ declare_args() {
   use_gold =
       (!use_lld && !(is_chromecast && is_linux &&
                      (current_cpu == "arm" || current_cpu == "mipsel")) &&
-       (is_linux && (current_cpu == "x64" || current_cpu == "x86" ||
-                     current_cpu == "arm" || current_cpu == "mipsel"))) ||
+       (is_linux &&
+        (current_cpu == "x64" || current_cpu == "x86" || current_cpu == "arm" ||
+         current_cpu == "mipsel" || current_cpu == "mips64el"))) ||
       (is_android && (current_cpu == "x86" || current_cpu == "x64" ||
                       current_cpu == "arm" || current_cpu == "arm64"))
 }

@@ -26,6 +26,10 @@
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
 #include "ui/accessibility/ax_modes.h"
 
+namespace base {
+class UnguessableToken;
+}
+
 namespace blink {
 class AssociatedInterfaceProvider;
 class AssociatedInterfaceRegistry;
@@ -48,12 +52,17 @@ namespace url {
 class Origin;
 }
 
+namespace viz {
+class FrameSinkId;
+}
+
 namespace content {
 class ContextMenuClient;
 class PluginInstanceThrottler;
 class RenderAccessibility;
 class RenderFrameVisitor;
 class RenderView;
+class SharedURLLoaderFactory;
 struct ContextMenuParams;
 struct WebPluginInfo;
 struct WebPreferences;
@@ -100,6 +109,11 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // this process or a WebRemoteFrame placeholder for a frame in a different
   // process.
   static int GetRoutingIdForWebFrame(blink::WebFrame* web_frame);
+
+  static void OnSurfaceIdUpdated(int delegate_id,
+                                 viz::FrameSinkId frame_sink_id,
+                                 uint32_t parent_id,
+                                 base::UnguessableToken nonce);
 
   // Returns the RenderView associated with this frame.
   virtual RenderView* GetRenderView() = 0;
@@ -261,9 +275,7 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Set the accessibility mode to force creation of RenderAccessibility.
   virtual void SetAccessibilityModeForTest(ui::AXMode new_mode) = 0;
 
-  // Returns the URLLoaderFactory for the given GURL
-  virtual network::mojom::URLLoaderFactory* GetURLLoaderFactory(
-      const GURL& request_url) = 0;
+  virtual scoped_refptr<SharedURLLoaderFactory> GetURLLoaderFactory() = 0;
 
  protected:
   ~RenderFrame() override {}

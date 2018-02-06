@@ -508,8 +508,6 @@
     <dimen name="chrome_home_min_full_half_distance">160dp</dimen>
     <dimen name="chrome_home_progress_bar_height">4dp</dimen>
     <dimen name="chrome_home_incognito_ntp_bottom_margin">32dp</dimen>
-    <dimen name="chrome_home_promo_illustration_width">108dp</dimen>
-    <dimen name="chrome_home_promo_illustration_height">206dp</dimen>
 
     <!-- TextBubble dimensions -->
     <dimen name="text_bubble_margin">4dp</dimen>
@@ -523,7 +521,7 @@
     <!--  Miscellaneous dimensions -->
     <dimen name="action_bar_shadow_height">10dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
-    <dimen name="clear_text_button_end_padding">8dp</dimen>
+    <dimen name="clear_text_button_end_padding">4dp</dimen>
     <dimen name="sync_promo_view_padding">16dp</dimen>
     <dimen name="sad_tab_bullet_gap">12dp</dimen>
     <dimen name="sad_tab_bullet_leading_offset">1dp</dimen>
@@ -534,7 +532,7 @@
     <dimen name="context_menu_header_image_max_height">150dp</dimen>
     <dimen name="context_menu_max_width">500dp</dimen>
     <dimen name="context_menu_min_padding">20dp</dimen>
-    <dimen name="context_menu_image_top_margin">30dp</dimen>
+    <dimen name="context_menu_image_vertical_margin">30dp</dimen>
     <dimen name="context_menu_selectable_items_min_size">120dp</dimen>
 
     <!-- Divider Dimensions -->

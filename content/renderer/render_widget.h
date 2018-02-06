@@ -179,6 +179,8 @@ class CONTENT_EXPORT RenderWidget
   int32_t routing_id() const { return routing_id_; }
 
   CompositorDependencies* compositor_deps() const { return compositor_deps_; }
+
+  // This can return nullptr while the RenderWidget is closing.
   virtual blink::WebWidget* GetWebWidget() const;
 
   // Returns the current instance of WebInputMethodController which is to be
@@ -293,6 +295,8 @@ class CONTENT_EXPORT RenderWidget
 
   // blink::WebWidgetClient
   blink::WebLayerTreeView* InitializeLayerTreeView() override;
+  void IntrinsicSizingInfoChanged(
+      const blink::WebIntrinsicSizingInfo&) override;
   void DidMeaningfulLayout(blink::WebMeaningfulLayout layout_type) override;
   void DidChangeCursor(const blink::WebCursorInfo&) override;
   void AutoscrollStart(const blink::WebFloatPoint& point) override;
@@ -411,7 +415,7 @@ class CONTENT_EXPORT RenderWidget
   gfx::Point ConvertWindowPointToViewport(const gfx::Point& point);
 
   uint32_t GetContentSourceId();
-  void IncrementContentSourceId();
+  void DidNavigate();
 
   // MainThreadEventQueueClient overrides.
 
@@ -514,8 +518,13 @@ class CONTENT_EXPORT RenderWidget
   gfx::Size GetSizeForWebWidget() const;
   virtual void ResizeWebWidget();
 
-  // Close the underlying WebWidget.
+  // Close the underlying WebWidget and stop the compositor.
   virtual void Close();
+
+  // Just Close the WebWidget, in cases where the Close() will be deferred.
+  // It is safe to call this multiple times, which happens in the case of
+  // frame widgets beings closed, since subsequent calls are ignored.
+  void CloseWebWidget();
 
   // Used to force the size of a window when running layout tests.
   void SetWindowRectSynchronously(const gfx::Rect& new_window_rect);
@@ -528,6 +537,7 @@ class CONTENT_EXPORT RenderWidget
   void SetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
 
   // RenderWidget IPC message handlers
@@ -544,12 +554,14 @@ class CONTENT_EXPORT RenderWidget
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnableDeviceEmulation(const blink::WebDeviceEmulationParams& params);
   void OnDisableDeviceEmulation();
   virtual void OnWasHidden();
   virtual void OnWasShown(bool needs_repainting,
-                          const ui::LatencyInfo& latency_info);
+                          const ui::LatencyInfo& latency_info,
+                          const base::Optional<ResizeParams>& resize_params);
   void OnCreateVideoAck(int32_t video_id);
   void OnUpdateVideoAck(int32_t video_id);
   void OnRequestMoveAck();
@@ -616,6 +628,7 @@ class CONTENT_EXPORT RenderWidget
   bool next_paint_is_resize_ack() const;
   void set_next_paint_is_resize_ack();
   void set_next_paint_is_repaint_ack();
+  void reset_next_paint_is_resize_ack();
 
   // QueueMessage implementation extracted into a static method for easy
   // testing.
@@ -957,6 +970,11 @@ class CONTENT_EXPORT RenderWidget
   mojo::Binding<mojom::Widget> widget_binding_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  // Keep track of whether we committed after the latest resize that needs to be
+  // acked was received. This helps us make sure we don't ack a resize before
+  // it's committed.
+  bool did_commit_after_resize_ = false;
 
   base::WeakPtrFactory<RenderWidget> weak_ptr_factory_;
 

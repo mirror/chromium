@@ -91,21 +91,6 @@
           'cast_shell_apk',
         ],
       },
-      'Android Cronet ARMv6 Builder': {
-        'test_suites': {
-          'gtest_tests': 'cronet_gtests',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'device_os': 'KTU84P',
-              'device_type': 'hammerhead',
-            },
-          ],
-        },
-        'os_type': 'android',
-        'skip_merge_script': True,
-      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -327,21 +312,6 @@
   {
     'name': 'chromium.android.fyi',
     'machines': {
-      'Android Cronet ARMv6 Builder': {
-        'test_suites': {
-          'gtest_tests': 'cronet_gtests',
-          'scripts': 'cronet_scripts',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'device_os': 'KTU84P',
-              'device_type': 'hammerhead',
-            },
-          ],
-        },
-        'os_type': 'android',
-      },
       'Android Cronet Builder (dbg)': {
         'test_suites': {
           'gtest_tests': 'cronet_gtests',
@@ -699,7 +669,7 @@
           ],
         },
         'test_suites': {
-          'gtest_tests': 'chromium_android_clang_and_gl_gtests',
+          # TODO(crbug.com/807966): Re-enable tests once there are devices to run them on.
         },
       },
       'ToTAndroid64': {
@@ -768,7 +738,7 @@
       'ToTMac': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_clang_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'ToTMacASan': {
@@ -927,7 +897,7 @@
       'Chromium Mac 10.11': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_fyi_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
         'use_swarming': False,
       },
@@ -940,7 +910,7 @@
       'Chromium Mac 10.13': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_fyi_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Chromium Win 10 GCE Tests': {
@@ -963,6 +933,23 @@
           'gtest_tests': 'chromium_win_clang_gtests',
         },
       },
+      'Dummy WebKit Mac10.13': {
+        'swarming': {
+          'dimension_sets': [
+            {
+              # This matches the dimensions for "Chromium Mac10.13" in
+              # chromium_fyi.py.
+              'gpu': '8086:0a2e',
+              'os': 'Mac-10.13',
+            },
+          ],
+          'hard_timeout': 900,
+        },
+        'test_suites': {
+          'isolated_scripts': 'webkit_layout_tests_isolated_scripts',
+        },
+      },
+
       'Fuchsia': {
         'additional_compile_targets': [
           'gn_all',
@@ -1125,7 +1112,7 @@
               'device_type': 'bullhead',
             },
           ],
-          'hard_timeout': 960,
+          'hard_timeout': 1800,
         },
         'os_type': 'android',
         'test_suites': {
@@ -1179,7 +1166,7 @@
       'Out of Process Profiling Mac': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_fyi_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Out of Process Profiling Windows': {
@@ -1187,14 +1174,6 @@
           # TODO(kbr): it's weird that this has the most in common with the
           # clang testers' test suites.
           'gtest_tests': 'chromium_win_clang_gtests',
-        },
-      },
-      'Ozone Linux': {
-        'additional_compile_targets': [
-          'chrome',
-        ],
-        'test_suites': {
-          'gtest_tests': 'ozone_linux_gtests',
         },
       },
       'Site Isolation Android': {
@@ -1432,20 +1411,28 @@
       'Linux Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_linux_gtests',
-          'isolated_scripts': 'chromium_linux_isolated_scripts',
+          'isolated_scripts': 'chromium_linux_rel_isolated_scripts',
           'scripts': 'chromium_linux_scripts',
         },
       },
       'Linux Tests (dbg)(1)': {
         'test_suites': {
           'gtest_tests': 'chromium_linux_gtests',
-          'isolated_scripts': 'chromium_linux_isolated_scripts',
+          'isolated_scripts': 'chromium_linux_dbg_isolated_scripts',
         },
       },
       'Linux Tests (dbg)(1)(32)': {
         'test_suites': {
           'gtest_tests': 'chromium_linux_gtests',
-          'isolated_scripts': 'chromium_linux_isolated_scripts',
+          'isolated_scripts': 'chromium_linux_dbg_isolated_scripts',
+        },
+      },
+      'Ozone Linux': {
+        'additional_compile_targets': [
+          'chrome',
+        ],
+        'test_suites': {
+          'gtest_tests': 'ozone_linux_gtests',
         },
       },
     },
@@ -1561,32 +1548,32 @@
       'Mac10.10 Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Mac10.11 Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Mac10.12 Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Mac10.9 Tests': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
           'scripts': 'chromium_scripts',
         },
       },
       'Mac10.9 Tests (dbg)': {
         'test_suites': {
           'gtest_tests': 'chromium_mac_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_dbg_isolated_scripts',
         },
       },
     },
@@ -1598,6 +1585,10 @@
         'test_suites': {
           'gtest_tests': 'chromium_memory_linux_asan_gtests',
         },
+        'args': [
+          '--test-launcher-batch-limit=1',
+          '--test-launcher-print-test-stdio=always',
+        ],
       },
       'Linux ASan Tests (sandboxed)': {
         'test_suites': {
@@ -1673,7 +1664,7 @@
         # exceptions that Linux Tests doesn't also have.
         'test_suites': {
           'gtest_tests': 'chromium_linux_gtests',
-          'isolated_scripts': 'chromium_linux_isolated_scripts',
+          'isolated_scripts': 'chromium_linux_rel_isolated_scripts',
           'scripts': 'chromium_linux_scripts',
         },
       },
@@ -1732,20 +1723,6 @@
   {
     'name': 'chromium.webkit',
     'machines': {
-      'Dummy WebKit Mac10.13': {
-        'test_suites': {
-          'isolated_scripts': 'chromium_webkit_isolated_scripts',
-        },
-        'swarming': {
-          'dimension_sets': [
-            {
-              'gpu': '8086:0a2e',
-              'hidpi': '0',
-              'os': 'Mac-10.13',
-            },
-          ],
-        },
-      },
       'WebKit Linux Trusty': {
         'test_suites': {
           'isolated_scripts': 'chromium_webkit_isolated_scripts',
@@ -2007,7 +1984,7 @@
       'Win 7 Tests x64 (1)': {
         'test_suites': {
           'gtest_tests': 'chromium_win_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
         },
       },
       'Win10 Tests x64': {
@@ -2023,14 +2000,14 @@
       'Win7 Tests (1)': {
         'test_suites': {
           'gtest_tests': 'chromium_win_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_rel_isolated_scripts',
           'scripts': 'chromium_scripts',
         },
       },
       'Win7 Tests (dbg)(1)': {
         'test_suites': {
           'gtest_tests': 'chromium_win_gtests',
-          'isolated_scripts': 'chromium_isolated_scripts',
+          'isolated_scripts': 'chromium_dbg_isolated_scripts',
         },
       },
     },

@@ -23,6 +23,7 @@
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_box_view_delegate.h"
+#include "ui/app_list/views/search_result_base_view.h"
 #include "ui/app_list/views/search_result_page_view.h"
 #include "ui/base/ime/text_input_flags.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -79,8 +80,8 @@ constexpr SkColor kZeroQuerySearchboxColor =
     SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
 
 // Gets the box layout inset horizontal padding for the state of AppListModel.
-int GetBoxLayoutPaddingForState(AppListModel::State state) {
-  if (state == AppListModel::STATE_SEARCH_RESULTS)
+int GetBoxLayoutPaddingForState(ash::AppListState state) {
+  if (state == ash::AppListState::kStateSearchResults)
     return kPaddingSearchResult;
   return kPadding;
 }
@@ -172,12 +173,12 @@ class SearchBoxTextfield : public views::Textfield {
   }
 
   void OnFocus() override {
-    search_box_view_->SetSelected(true);
+    search_box_view_->OnOnSearchBoxFocusedChanged();
     Textfield::OnFocus();
   }
 
   void OnBlur() override {
-    search_box_view_->SetSelected(false);
+    search_box_view_->OnOnSearchBoxFocusedChanged();
     // Clear selection and set the caret to the end of the text.
     ClearSelection();
     Textfield::OnBlur();
@@ -445,11 +446,11 @@ void SearchBoxView::OnKeyEvent(ui::KeyEvent* event) {
   event->SetHandled();
 }
 
-ui::AXRole SearchBoxView::GetAccessibleWindowRole() const {
-  // Default role of root view is AX_ROLE_WINDOW which traps ChromeVox focus
-  // within the root view. Assign AX_ROLE_GROUP here to allow the focus to move
-  // from elements in search box to app list view.
-  return ui::AX_ROLE_GROUP;
+ax::mojom::Role SearchBoxView::GetAccessibleWindowRole() const {
+  // Default role of root view is ax::mojom::Role::kWindow which traps ChromeVox
+  // focus within the root view. Assign ax::mojom::Role::kGroup here to allow
+  // the focus to move from elements in search box to app list view.
+  return ax::mojom::Role::kGroup;
 }
 
 bool SearchBoxView::ShouldAdvanceFocusToTopLevelWidget() const {
@@ -470,8 +471,8 @@ void SearchBoxView::ButtonPressed(views::Button* sender,
 }
 
 void SearchBoxView::UpdateBackground(double progress,
-                                     AppListModel::State current_state,
-                                     AppListModel::State target_state) {
+                                     ash::AppListState current_state,
+                                     ash::AppListState target_state) {
   GetSearchBoxBackground()->set_corner_radius(gfx::Tween::LinearIntValueBetween(
       progress, GetSearchBoxBorderCornerRadiusForState(current_state),
       GetSearchBoxBorderCornerRadiusForState(target_state)));
@@ -482,8 +483,8 @@ void SearchBoxView::UpdateBackground(double progress,
 }
 
 void SearchBoxView::UpdateLayout(double progress,
-                                 AppListModel::State current_state,
-                                 AppListModel::State target_state) {
+                                 ash::AppListState current_state,
+                                 ash::AppListState target_state) {
   box_layout_->set_inside_border_insets(
       gfx::Insets(0, gfx::Tween::LinearIntValueBetween(
                          progress, GetBoxLayoutPaddingForState(current_state),
@@ -497,8 +498,8 @@ void SearchBoxView::OnTabletModeChanged(bool started) {
 }
 
 int SearchBoxView::GetSearchBoxBorderCornerRadiusForState(
-    AppListModel::State state) const {
-  if (state == AppListModel::STATE_SEARCH_RESULTS &&
+    ash::AppListState state) const {
+  if (state == ash::AppListState::kStateSearchResults &&
       !app_list_view_->is_in_drag()) {
     return kSearchBoxBorderCornerRadiusSearchResult;
   }
@@ -506,8 +507,8 @@ int SearchBoxView::GetSearchBoxBorderCornerRadiusForState(
 }
 
 SkColor SearchBoxView::GetBackgroundColorForState(
-    AppListModel::State state) const {
-  if (state == AppListModel::STATE_SEARCH_RESULTS)
+    ash::AppListState state) const {
+  if (state == ash::AppListState::kStateSearchResults)
     return kCardBackgroundColor;
   return background_color_;
 }
@@ -547,14 +548,7 @@ views::View* SearchBoxView::GetSelectedViewInContentsView() const {
   return static_cast<ContentsView*>(contents_view_)->GetSelectedView();
 }
 
-void SearchBoxView::SetSelected(bool selected) {
-  if (selected_ == selected)
-    return;
-  selected_ = selected;
-  if (selected) {
-    // Set the ChromeVox focus to the search box.
-    search_box_->NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
-  }
+void SearchBoxView::OnOnSearchBoxFocusedChanged() {
   UpdateSearchBoxBorder();
   Layout();
   SchedulePaint();
@@ -726,7 +720,7 @@ bool SearchBoxView::IsSearchBoxTrimmedQueryEmpty() const {
 }
 
 void SearchBoxView::UpdateSearchBoxBorder() {
-  if (selected() && !is_search_box_active()) {
+  if (search_box_->HasFocus() && !is_search_box_active()) {
     // Show a gray ring around search box to indicate that the search box is
     // selected. Do not show it when search box is active, because blinking
     // cursor already indicates that.

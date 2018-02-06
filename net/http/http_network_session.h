@@ -114,6 +114,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     SpdySessionPool::TimeFunc time_func;
     // Whether to enable HTTP/2 Alt-Svc entries.
     bool enable_http2_alternative_service;
+    // Whether to enable Websocket over HTTP/2.
+    bool enable_websocket_over_http2;
 
     // Enables QUIC support.
     bool enable_quic;
@@ -136,6 +138,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // Set of QUIC tags to send in the handshake's connection options that only
     // affect the client.
     QuicTagVector quic_client_connection_options;
+    // Enables experimental optimization for receiving data in UDPSocket.
+    bool quic_enable_socket_recv_optimization;
 
     // Active QUIC experiments
 

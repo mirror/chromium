@@ -218,15 +218,12 @@ class GLES2_IMPL_EXPORT GLES2Implementation
       uint32_t texture_id) override;
   bool ThreadsafeDiscardableTextureIsDeletedForTracing(
       uint32_t texture_id) override;
-  void CreateTransferCacheEntry(
-      const cc::ClientTransferCacheEntry& entry) override;
-  bool ThreadsafeLockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) override;
+  void* MapTransferCacheEntry(size_t serialized_size) override;
+  void UnmapAndCreateTransferCacheEntry(uint32_t type, uint32_t id) override;
+  bool ThreadsafeLockTransferCacheEntry(uint32_t type, uint32_t id) override;
   void UnlockTransferCacheEntries(
-      const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
-          entries) override;
-  void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
-                                uint32_t id) override;
+      const std::vector<std::pair<uint32_t, uint32_t>>& entries) override;
+  void DeleteTransferCacheEntry(uint32_t type, uint32_t id) override;
   unsigned int GetTransferBufferFreeSize() const override;
 
   // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
@@ -523,6 +520,7 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   void DeleteFramebuffersHelper(GLsizei n, const GLuint* framebuffers);
   void DeleteRenderbuffersHelper(GLsizei n, const GLuint* renderbuffers);
   void DeleteTexturesHelper(GLsizei n, const GLuint* textures);
+  void UnbindTexturesHelper(GLsizei n, const GLuint* textures);
   bool DeleteProgramHelper(GLuint program);
   bool DeleteShaderHelper(GLuint shader);
   void DeleteQueriesEXTHelper(GLsizei n, const GLuint* queries);
@@ -765,8 +763,13 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   GLuint bound_copy_write_buffer_;
   GLuint bound_pixel_pack_buffer_;
   GLuint bound_pixel_unpack_buffer_;
-  GLuint bound_transform_feedback_buffer_;
   GLuint bound_uniform_buffer_;
+  // We don't cache the currently bound transform feedback buffer, because
+  // it is part of the current transform feedback object. Caching the transform
+  // feedback object state correctly requires predicting if a call to
+  // glBeginTransformFeedback will succeed or fail, which in turn requires
+  // caching a whole bunch of other states such as the transform feedback
+  // varyings of the current program.
 
   // The currently bound pixel transfer buffers.
   GLuint bound_pixel_pack_transfer_buffer_id_;

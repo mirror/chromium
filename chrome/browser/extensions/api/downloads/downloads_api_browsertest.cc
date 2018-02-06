@@ -47,7 +47,6 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
-#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_download_http_response.h"
 #include "content/public/test/test_utils.h"
@@ -55,6 +54,7 @@
 #include "extensions/browser/notification_types.h"
 #include "net/base/data_url.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_slow_download_job.h"
 #include "net/url_request/url_request.h"
@@ -270,7 +270,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
 
     // Danger type for the download. Only use DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS
     // and DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT.
-    content::DownloadDangerType danger_type;
+    download::DownloadDangerType danger_type;
   };
 
   void LoadExtension(const char* name) {
@@ -329,10 +329,12 @@ class DownloadExtensionTest : public ExtensionApiTest {
     DownloadTestFileActivityObserver observer(current_browser()->profile());
     observer.EnableFileChooser(false);
 
-    first_download_ = std::make_unique<content::ControllableHttpResponse>(
-        embedded_test_server(), kFirstDownloadUrl);
-    second_download_ = std::make_unique<content::ControllableHttpResponse>(
-        embedded_test_server(), kSecondDownloadUrl);
+    first_download_ =
+        std::make_unique<net::test_server::ControllableHttpResponse>(
+            embedded_test_server(), kFirstDownloadUrl);
+    second_download_ =
+        std::make_unique<net::test_server::ControllableHttpResponse>(
+            embedded_test_server(), kSecondDownloadUrl);
 
     host_resolver()->AddRule("*", "127.0.0.1");
   }
@@ -477,7 +479,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
   }
 
   DownloadItem* CreateSlowTestDownload(
-      content::ControllableHttpResponse* response,
+      net::test_server::ControllableHttpResponse* response,
       const std::string& path) {
     if (!embedded_test_server()->Started())
       StartEmbeddedTestServer();
@@ -515,7 +517,8 @@ class DownloadExtensionTest : public ExtensionApiTest {
     FinishSlowDownloads(second_download_.get());
   }
 
-  void FinishSlowDownloads(content::ControllableHttpResponse* response) {
+  void FinishSlowDownloads(
+      net::test_server::ControllableHttpResponse* response) {
     std::unique_ptr<content::DownloadTestObserver> observer(
         CreateDownloadObserver(1));
     response->Done();
@@ -619,8 +622,8 @@ class DownloadExtensionTest : public ExtensionApiTest {
   Browser* current_browser_;
   std::unique_ptr<DownloadsEventsListener> events_listener_;
 
-  std::unique_ptr<content::ControllableHttpResponse> first_download_;
-  std::unique_ptr<content::ControllableHttpResponse> second_download_;
+  std::unique_ptr<net::test_server::ControllableHttpResponse> first_download_;
+  std::unique_ptr<net::test_server::ControllableHttpResponse> second_download_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadExtensionTest);
 };
@@ -1063,13 +1066,10 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_FileIcon_History) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("real.txt"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS },
-    { FILE_PATH_LITERAL("fake.txt"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS }
-  };
+      {FILE_PATH_LITERAL("real.txt"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS},
+      {FILE_PATH_LITERAL("fake.txt"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS}};
   DownloadManager::DownloadVector all_downloads;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),
                                      &all_downloads));
@@ -1144,13 +1144,10 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_SearchFilenameRegex) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("foobar"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS },
-    { FILE_PATH_LITERAL("baz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS }
-  };
+      {FILE_PATH_LITERAL("foobar"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS},
+      {FILE_PATH_LITERAL("baz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS}};
   DownloadManager::DownloadVector all_downloads;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),
                                      &all_downloads));
@@ -1223,13 +1220,10 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_SearchOrderBy) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("zzz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS },
-    { FILE_PATH_LITERAL("baz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS }
-  };
+      {FILE_PATH_LITERAL("zzz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS},
+      {FILE_PATH_LITERAL("baz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS}};
   DownloadManager::DownloadVector items;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),
                                      &items));
@@ -1256,13 +1250,10 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_SearchOrderByEmpty) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("zzz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS },
-    { FILE_PATH_LITERAL("baz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS }
-  };
+      {FILE_PATH_LITERAL("zzz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS},
+      {FILE_PATH_LITERAL("baz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS}};
   DownloadManager::DownloadVector items;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),
                                      &items));
@@ -1293,13 +1284,10 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_SearchDanger) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("zzz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT },
-    { FILE_PATH_LITERAL("baz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS }
-  };
+      {FILE_PATH_LITERAL("zzz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT},
+      {FILE_PATH_LITERAL("baz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS}};
   DownloadManager::DownloadVector items;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),
                                      &items));
@@ -1379,15 +1367,12 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
     DownloadExtensionTest_SearchPlural) {
   const HistoryDownloadInfo kHistoryInfo[] = {
-    { FILE_PATH_LITERAL("aaa"),
-      DownloadItem::CANCELLED,
-      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS },
-    { FILE_PATH_LITERAL("zzz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT },
-    { FILE_PATH_LITERAL("baz"),
-      DownloadItem::COMPLETE,
-      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT },
+      {FILE_PATH_LITERAL("aaa"), DownloadItem::CANCELLED,
+       download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS},
+      {FILE_PATH_LITERAL("zzz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT},
+      {FILE_PATH_LITERAL("baz"), DownloadItem::COMPLETE,
+       download::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT},
   };
   DownloadManager::DownloadVector items;
   ASSERT_TRUE(CreateHistoryDownloads(kHistoryInfo, arraysize(kHistoryInfo),

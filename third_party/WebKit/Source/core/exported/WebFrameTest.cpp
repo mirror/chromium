@@ -626,7 +626,13 @@ TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskWhileNotPaused) {
             *callback_helper.result());
 }
 
-TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskWhilePaused) {
+// Flaky on Android: crbug.com/804892.
+#if defined(OS_ANDROID)
+TEST_P(ParameterizedWebFrameTest, DISABLED_CallingPostPausableTaskWhilePaused)
+#else
+TEST_P(ParameterizedWebFrameTest, CallingPostPausableTaskWhilePaused)
+#endif
+{
   RegisterMockedHttpURLLoad("foo.html");
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -10898,7 +10904,8 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentLoadFinishTime) {
   DocumentLoader* loader = document->Loader();
 
   EXPECT_TRUE(loader);
-  EXPECT_EQ(loader->GetTiming().ResponseEnd(), resource->LoadFinishTime());
+  EXPECT_EQ(TimeTicksInSeconds(loader->GetTiming().ResponseEnd()),
+            resource->LoadFinishTime());
 }
 
 class CallbackOrderingWebFrameClient
@@ -11272,10 +11279,10 @@ TEST_P(ParameterizedWebFrameTest, LoadJavascriptURLInNewFrame) {
   helper.Initialize();
 
   std::string redirect_url = base_url_ + "foo.html";
+  KURL javascript_url = ToKURL("javascript:location='" + redirect_url + "'");
   URLTestHelpers::RegisterMockedURLLoad(ToKURL(redirect_url),
                                         testing::CoreTestDataPath("foo.html"));
-  WebURLRequest request(ToKURL("javascript:location='" + redirect_url + "'"));
-  helper.LocalMainFrame()->LoadRequest(request);
+  helper.LocalMainFrame()->LoadJavaScriptURL(javascript_url);
 
   // Normally, the result of the JS url replaces the existing contents on the
   // Document. However, if the JS triggers a navigation, the contents should
@@ -11584,7 +11591,7 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       WebFloatPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5),
       WebFloatPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5),
       WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   mouse_move_over_link_event.SetFrameScale(1);
   document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
       mouse_move_over_link_event, Vector<WebMouseEvent>());
@@ -11603,7 +11610,7 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       WebFloatPoint(div2_tag->OffsetLeft() + 5, div2_tag->OffsetTop() + 5),
       WebFloatPoint(div2_tag->OffsetLeft() + 5, div2_tag->OffsetTop() + 5),
       WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   mouse_move_event.SetFrameScale(1);
   document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
       mouse_move_event, Vector<WebMouseEvent>());

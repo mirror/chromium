@@ -48,14 +48,8 @@ bool IsMemoryDebuggingEnabled();
 // Whether the Clear Browsing Data counters and time selection UI is enabled.
 bool IsNewClearBrowsingDataUIEnabled();
 
-// Whether the page icon for downgraded HTTPS is enabled.
-bool IsPageIconForDowngradedHTTPSEnabled();
-
 // Whether startup crash is enabled.
 bool IsStartupCrashEnabled();
-
-// Whether viewing and copying passwords is enabled.
-bool IsViewCopyPasswordsEnabled();
 
 // Whether a new version of FeedbackKit is the preferred feedback UI provider.
 bool IsNewFeedbackKitEnabled();

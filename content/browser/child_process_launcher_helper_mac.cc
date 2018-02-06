@@ -80,6 +80,7 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     case service_manager::SANDBOX_TYPE_NACL_LOADER:
     case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:
     case service_manager::SANDBOX_TYPE_PROFILING:
+    case service_manager::SANDBOX_TYPE_GPU:
       v2_process = true;
       break;
     default:
@@ -135,9 +136,11 @@ bool ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
         break;
       case service_manager::SANDBOX_TYPE_GPU:
       case service_manager::SANDBOX_TYPE_NACL_LOADER:
-      case service_manager::SANDBOX_TYPE_PPAPI:
       case service_manager::SANDBOX_TYPE_RENDERER:
         SetupCommonSandboxParameters(seatbelt_exec_client_.get());
+        break;
+      case service_manager::SANDBOX_TYPE_PPAPI:
+        SetupPPAPISandboxParameters(seatbelt_exec_client_.get());
         break;
       case service_manager::SANDBOX_TYPE_UTILITY:
       case service_manager::SANDBOX_TYPE_PDF_COMPOSITOR:

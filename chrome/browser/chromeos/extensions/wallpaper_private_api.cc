@@ -26,6 +26,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -64,6 +65,8 @@ namespace save_thumbnail = wallpaper_private::SaveThumbnail;
 namespace get_offline_wallpaper_list =
     wallpaper_private::GetOfflineWallpaperList;
 namespace record_wallpaper_uma = wallpaper_private::RecordWallpaperUMA;
+namespace get_collections_info = wallpaper_private::GetCollectionsInfo;
+namespace get_images_info = wallpaper_private::GetImagesInfo;
 
 namespace {
 
@@ -206,6 +209,13 @@ ExtensionFunction::ResponseAction WallpaperPrivateGetStringsFunction::Run() {
   dict->SetBoolean("useNewWallpaperPicker",
                    base::CommandLine::ForCurrentProcess()->HasSwitch(
                        chromeos::switches::kNewWallpaperPicker));
+
+  bool show_backdrop_wallpapers = false;
+#if defined(GOOGLE_CHROME_BUILD)
+  show_backdrop_wallpapers = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kNewWallpaperPicker);
+#endif
+  dict->SetBoolean("showBackdropWallpapers", show_backdrop_wallpapers);
 
   return RespondNow(OneArgument(std::move(dict)));
 }
@@ -513,12 +523,12 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
       wallpaper_base::ToString(params->layout));
   wallpaper_api_util::RecordCustomWallpaperLayout(layout);
 
-  bool update_wallpaper =
+  bool show_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
   WallpaperControllerClient::Get()->SetCustomWallpaper(
-      account_id_, wallpaper_files_id_, params->file_name, layout,
-      wallpaper::CUSTOMIZED, image, update_wallpaper);
+      account_id_, wallpaper_files_id_, params->file_name, layout, image,
+      show_wallpaper);
   unsafe_wallpaper_decoder_ = NULL;
 
   Profile* profile = Profile::FromBrowserContext(browser_context());
@@ -808,4 +818,62 @@ WallpaperPrivateRecordWallpaperUMAFunction::Run() {
   UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Source", source,
                             wallpaper::WALLPAPER_TYPE_COUNT);
   return RespondNow(NoArguments());
+}
+
+WallpaperPrivateGetCollectionsInfoFunction::
+    WallpaperPrivateGetCollectionsInfoFunction() = default;
+
+WallpaperPrivateGetCollectionsInfoFunction::
+    ~WallpaperPrivateGetCollectionsInfoFunction() = default;
+
+ExtensionFunction::ResponseAction
+WallpaperPrivateGetCollectionsInfoFunction::Run() {
+  collection_info_fetcher_ =
+      std::make_unique<backdrop_wallpaper_handlers::CollectionInfoFetcher>();
+  collection_info_fetcher_->Start(base::BindOnce(
+      &WallpaperPrivateGetCollectionsInfoFunction::OnCollectionsInfoFetched,
+      this));
+  return RespondLater();
+}
+
+void WallpaperPrivateGetCollectionsInfoFunction::OnCollectionsInfoFetched(
+    bool success,
+    const std::vector<extensions::api::wallpaper_private::CollectionInfo>&
+        collections_info_list) {
+  if (!success) {
+    Respond(Error("Collection names are not available."));
+    return;
+  }
+  Respond(ArgumentList(
+      get_collections_info::Results::Create(collections_info_list)));
+}
+
+WallpaperPrivateGetImagesInfoFunction::WallpaperPrivateGetImagesInfoFunction() =
+    default;
+
+WallpaperPrivateGetImagesInfoFunction::
+    ~WallpaperPrivateGetImagesInfoFunction() = default;
+
+ExtensionFunction::ResponseAction WallpaperPrivateGetImagesInfoFunction::Run() {
+  std::unique_ptr<get_images_info::Params> params(
+      get_images_info::Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params);
+
+  image_info_fetcher_ =
+      std::make_unique<backdrop_wallpaper_handlers::ImageInfoFetcher>(
+          params->collection_id);
+  image_info_fetcher_->Start(base::BindOnce(
+      &WallpaperPrivateGetImagesInfoFunction::OnImagesInfoFetched, this));
+  return RespondLater();
+}
+
+void WallpaperPrivateGetImagesInfoFunction::OnImagesInfoFetched(
+    bool success,
+    const std::vector<extensions::api::wallpaper_private::ImageInfo>&
+        images_info_list) {
+  if (!success) {
+    Respond(Error("Images info is not available."));
+    return;
+  }
+  Respond(ArgumentList(get_images_info::Results::Create(images_info_list)));
 }

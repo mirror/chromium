@@ -8,7 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "device/ctap/ctap_request_command.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
@@ -26,8 +26,8 @@ CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::operator=(
 
 CTAPGetAssertionRequestParam::~CTAPGetAssertionRequestParam() = default;
 
-base::Optional<std::vector<uint8_t>>
-CTAPGetAssertionRequestParam::SerializeToCBOR() const {
+base::Optional<std::vector<uint8_t>> CTAPGetAssertionRequestParam::Encode()
+    const {
   cbor::CBORValue::MapValue cbor_map;
   cbor_map[cbor::CBORValue(1)] = cbor::CBORValue(rp_id_);
   cbor_map[cbor::CBORValue(2)] = cbor::CBORValue(client_data_hash_);
@@ -48,17 +48,37 @@ CTAPGetAssertionRequestParam::SerializeToCBOR() const {
     cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(*pin_protocol_);
   }
 
+  cbor::CBORValue::MapValue option_map;
+  option_map[cbor::CBORValue(kUserPresenceMapKey)] =
+      cbor::CBORValue(user_presence_required_);
+  option_map[cbor::CBORValue(kUserVerificationMapKey)] =
+      cbor::CBORValue(user_verification_required_);
+  cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(std::move(option_map));
+
   auto serialized_param =
       cbor::CBORWriter::Write(cbor::CBORValue(std::move(cbor_map)));
-  if (!serialized_param) {
+  if (!serialized_param)
     return base::nullopt;
-  }
 
   std::vector<uint8_t> cbor_request({base::strict_cast<uint8_t>(
       CTAPRequestCommand::kAuthenticatorGetAssertion)});
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
   return cbor_request;
+}
+
+CTAPGetAssertionRequestParam&
+CTAPGetAssertionRequestParam::SetUserVerificationRequired(
+    bool user_verification_required) {
+  user_verification_required_ = user_verification_required;
+  return *this;
+}
+
+CTAPGetAssertionRequestParam&
+CTAPGetAssertionRequestParam::SetUserPresenceRequired(
+    bool user_presence_required) {
+  user_presence_required_ = user_presence_required;
+  return *this;
 }
 
 CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetAllowList(

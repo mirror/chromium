@@ -146,6 +146,7 @@
 #include "core/html/HTMLScriptElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/HTMLTitleElement.h"
+#include "core/html/HTMLUnknownElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html/WindowNameCollection.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
@@ -211,6 +212,7 @@
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGScriptElement.h"
 #include "core/svg/SVGTitleElement.h"
+#include "core/svg/SVGUnknownElement.h"
 #include "core/svg/SVGUseElement.h"
 #include "core/svg_element_factory.h"
 #include "core/svg_names.h"
@@ -853,6 +855,38 @@ AtomicString Document::ConvertLocalName(const AtomicString& name) {
   return IsHTMLDocument() ? name.LowerASCII() : name;
 }
 
+// Just creates an element with specified qualified name without any
+// custom element processing.
+// This is a common code for step 5.2 and 7.2 of "create an element"
+// <https://dom.spec.whatwg.org/#concept-create-element>
+// Functions other than this one should not use HTMLElementFactory and
+// SVGElementFactory because they don't support prefixes correctly.
+Element* Document::CreateRawElement(const QualifiedName& qname,
+                                    CreateElementFlags flags) {
+  Element* element = nullptr;
+  if (qname.NamespaceURI() == HTMLNames::xhtmlNamespaceURI) {
+    element = HTMLElementFactory::CreateRawHTMLElement(qname.LocalName(), *this,
+                                                       flags);
+    if (!element)
+      element = HTMLUnknownElement::Create(qname, *this);
+    saw_elements_in_known_namespaces_ = true;
+  } else if (qname.NamespaceURI() == SVGNames::svgNamespaceURI) {
+    element =
+        SVGElementFactory::CreateRawSVGElement(qname.LocalName(), *this, flags);
+    if (!element)
+      element = SVGUnknownElement::Create(qname, *this);
+    saw_elements_in_known_namespaces_ = true;
+  } else {
+    element = Element::Create(qname, this);
+  }
+
+  if (element->prefix() != qname.Prefix())
+    element->SetTagNameForCreateElementNS(qname);
+  DCHECK(qname == element->TagQName());
+
+  return element;
+}
+
 // https://dom.spec.whatwg.org/#dom-document-createelement
 Element* Document::createElement(const AtomicString& name,
                                  ExceptionState& exception_state) {
@@ -872,8 +906,13 @@ Element* Document::createElement(const AtomicString& name,
           *this,
           QualifiedName(g_null_atom, local_name, HTMLNames::xhtmlNamespaceURI));
     }
-    return HTMLElementFactory::createHTMLElement(local_name, *this,
-                                                 kCreatedByCreateElement);
+    if (Element* element = HTMLElementFactory::CreateRawHTMLElement(
+            local_name, *this, kCreatedByCreateElement))
+      return element;
+    QualifiedName q_name(g_null_atom, local_name, HTMLNames::xhtmlNamespaceURI);
+    if (RegistrationContext() && V0CustomElement::IsValidName(local_name))
+      return RegistrationContext()->CreateCustomTagElement(*this, q_name);
+    return HTMLUnknownElement::Create(q_name, *this);
   }
   return Element::Create(QualifiedName(g_null_atom, name, g_null_atom), this);
 }
@@ -919,6 +958,10 @@ Element* Document::createElement(const AtomicString& local_name,
 
   // 2. localName converted to ASCII lowercase
   const AtomicString& converted_local_name = ConvertLocalName(local_name);
+  QualifiedName q_name(g_null_atom, converted_local_name,
+                       IsXHTMLDocument() || IsHTMLDocument()
+                           ? HTMLNames::xhtmlNamespaceURI
+                           : g_null_atom);
 
   bool is_v1 = string_or_options.IsDictionary() || !RegistrationContext();
   bool create_v1_builtin =
@@ -930,46 +973,10 @@ Element* Document::createElement(const AtomicString& local_name,
   // 3.
   const AtomicString& is =
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
-  const AtomicString& name = should_create_builtin ? is : converted_local_name;
 
-  // 4. Let definition be result of lookup up custom element definition
-  CustomElementDefinition* definition = nullptr;
-  if (is_v1) {
-    // Is the runtime flag enabled for customized builtin elements?
-    const CustomElementDescriptor desc =
-        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
-            ? CustomElementDescriptor(name, converted_local_name)
-            : CustomElementDescriptor(converted_local_name,
-                                      converted_local_name);
-    if (CustomElementRegistry* registry = CustomElement::Registry(*this))
-      definition = registry->DefinitionFor(desc);
-
-    // 5. If 'is' is non-null and definition is null, throw NotFoundError
-    // TODO(yurak): update when https://github.com/w3c/webcomponents/issues/608
-    //              is resolved
-    if (!definition && create_v1_builtin) {
-      exception_state.ThrowDOMException(kNotFoundError,
-                                        "Custom element definition not found.");
-      return nullptr;
-    }
-  }
-
-  // 7. Let element be the result of creating an element
-  Element* element;
-
-  if (definition) {
-    element = CustomElement::CreateCustomElementSync(
-        *this, converted_local_name, definition);
-  } else if (V0CustomElement::IsValidName(local_name) &&
-             RegistrationContext()) {
-    element = RegistrationContext()->CreateCustomTagElement(
-        *this,
-        QualifiedName(g_null_atom, converted_local_name, xhtmlNamespaceURI));
-  } else {
-    element = createElement(local_name, exception_state);
-    if (exception_state.HadException())
-      return nullptr;
-  }
+  // 5. Let element be the result of creating an element given ...
+  Element* element =
+      CreateElement(q_name, is_v1, should_create_builtin ? is : g_null_atom);
 
   // 8. If 'is' is non-null, set 'is' attribute
   if (!is.IsEmpty()) {
@@ -1013,9 +1020,6 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
       CreateQualifiedName(namespace_uri, qualified_name, exception_state));
   if (q_name == QualifiedName::Null())
     return nullptr;
-
-  if (CustomElement::ShouldCreateCustomElement(q_name))
-    return CustomElement::CreateCustomElementSync(*this, q_name);
   return createElement(q_name, kCreatedByCreateElement);
 }
 
@@ -1040,7 +1044,6 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   // 2.
   const AtomicString& is =
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
-  const AtomicString& name = should_create_builtin ? is : qualified_name;
 
   if (!IsValidElementName(this, qualified_name)) {
     exception_state.ThrowDOMException(
@@ -1049,37 +1052,11 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
     return nullptr;
   }
 
-  // 3. Let definition be result of lookup up custom element definition
-  CustomElementDefinition* definition = nullptr;
-  if (is_v1) {
-    const CustomElementDescriptor desc =
-        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
-            ? CustomElementDescriptor(name, qualified_name)
-            : CustomElementDescriptor(qualified_name, qualified_name);
-    if (CustomElementRegistry* registry = CustomElement::Registry(*this))
-      definition = registry->DefinitionFor(desc);
+  // 3. Let element be the result of creating an element
+  Element* element =
+      CreateElement(q_name, is_v1, should_create_builtin ? is : g_null_atom);
 
-    // 4. If 'is' is non-null and definition is null, throw NotFoundError
-    if (!definition && create_v1_builtin) {
-      exception_state.ThrowDOMException(kNotFoundError,
-                                        "Custom element definition not found.");
-      return nullptr;
-    }
-  }
-
-  // 5. Let element be the result of creating an element
-  Element* element;
-
-  if (CustomElement::ShouldCreateCustomElement(q_name) || create_v1_builtin) {
-    element = CustomElement::CreateCustomElementSync(*this, q_name, definition);
-  } else if (V0CustomElement::IsValidName(q_name.LocalName()) &&
-             RegistrationContext()) {
-    element = RegistrationContext()->CreateCustomTagElement(*this, q_name);
-  } else {
-    element = createElement(q_name, kCreatedByCreateElement);
-  }
-
-  // 6. If 'is' is non-null, set 'is' attribute
+  // 4. If 'is' is non-null, set 'is' attribute
   if (!is.IsEmpty()) {
     if (element->GetCustomElementState() != CustomElementState::kCustom) {
       V0CustomElementRegistrationContext::SetIsAttributeAndTypeExtension(
@@ -1089,6 +1066,43 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
     }
   }
 
+  return element;
+}
+
+// Entry point of "create an element".
+// https://dom.spec.whatwg.org/#concept-create-element
+// TODO(tkent): Add synchronous custom element flag.
+// TODO(tkent): Update or remove |is_v1| argument. At this moment, this
+// function is called only by createElement*() with string_or_options
+// argument. So we can determine v0 or v1 precisely.
+Element* Document::CreateElement(const QualifiedName& q_name,
+                                 bool is_v1,
+                                 const AtomicString& is) {
+  CustomElementDefinition* definition = nullptr;
+  if (is_v1 && q_name.NamespaceURI() == HTMLNames::xhtmlNamespaceURI) {
+    const CustomElementDescriptor desc(is.IsEmpty() ? q_name.LocalName() : is,
+                                       q_name.LocalName());
+    if (CustomElementRegistry* registry = CustomElement::Registry(*this))
+      definition = registry->DefinitionFor(desc);
+  }
+
+  // 5. Let element be the result of creating an element
+  Element* element;
+
+  if (definition) {
+    element = CustomElement::CreateCustomElementSync(*this, q_name, definition);
+  } else if (V0CustomElement::IsValidName(q_name.LocalName()) &&
+             RegistrationContext()) {
+    element = RegistrationContext()->CreateCustomTagElement(*this, q_name);
+  } else {
+    element = CreateRawElement(q_name, kCreatedByCreateElement);
+    // 7.3. If namespace is the HTML namespace, and either localName is
+    // a valid custom element name or is is non-null, then set result’s
+    // custom element state to "undefined".
+    if (q_name.NamespaceURI() == HTMLNames::xhtmlNamespaceURI &&
+        (CustomElement::IsValidName(q_name.LocalName()) || !is.IsEmpty()))
+      element->SetCustomElementState(CustomElementState::kUndefined);
+  }
   return element;
 }
 
@@ -1277,6 +1291,11 @@ Node* Document::importNode(Node* imported_node,
       }
       Element* new_element =
           createElement(old_element->TagQName(), kCreatedByImportNode);
+      const AtomicString& is = old_element->FastGetAttribute(HTMLNames::isAttr);
+      if (!is.IsNull() &&
+          !V0CustomElement::IsValidName(new_element->localName()))
+        V0CustomElementRegistrationContext::SetTypeExtension(new_element, is);
+      // TODO(tkent): Handle V1 custom built-in elements. crbug.com/807871
 
       new_element->CloneDataFromElement(*old_element);
 
@@ -1415,26 +1434,53 @@ bool Document::HasValidNamespaceForAttributes(const QualifiedName& q_name) {
 // FIXME: This should really be in a possible ElementFactory class
 Element* Document::createElement(const QualifiedName& q_name,
                                  CreateElementFlags flags) {
-  Element* e = nullptr;
+  Element* element = nullptr;
 
   // FIXME: Use registered namespaces and look up in a hash to find the right
   // factory.
-  if (q_name.NamespaceURI() == xhtmlNamespaceURI)
-    e = HTMLElementFactory::createHTMLElement(q_name.LocalName(), *this, flags);
-  else if (q_name.NamespaceURI() == SVGNames::svgNamespaceURI)
-    e = SVGElementFactory::createSVGElement(q_name.LocalName(), *this, flags);
+  const AtomicString& local_name = q_name.LocalName();
+  if (q_name.NamespaceURI() == xhtmlNamespaceURI) {
+    element =
+        HTMLElementFactory::CreateRawHTMLElement(local_name, *this, flags);
+    if (!element) {
+      // TODO(dominicc): When the HTML parser can pass an error
+      // reporting ExceptionState, and "v0" custom elements have been
+      // removed, consolidate custom element creation into one place.
+      if (CustomElement::ShouldCreateCustomElement(local_name)) {
+        if (flags & kAsynchronousCustomElements) {
+          element =
+              CustomElement::CreateCustomElementAsync(*this, q_name, flags);
+        } else {
+          element = CustomElement::CreateCustomElementSync(*this, q_name);
+        }
+      } else if (RegistrationContext() &&
+                 V0CustomElement::IsValidName(local_name)) {
+        element = RegistrationContext()->CreateCustomTagElement(*this, q_name);
+      } else {
+        element = HTMLUnknownElement::Create(q_name, *this);
+      }
+    }
+  } else if (q_name.NamespaceURI() == SVGNames::svgNamespaceURI) {
+    element = SVGElementFactory::CreateRawSVGElement(local_name, *this, flags);
+    if (!element) {
+      if (RegistrationContext() && V0CustomElement::IsValidName(local_name)) {
+        element = RegistrationContext()->CreateCustomTagElement(*this, q_name);
+      } else {
+        element = SVGUnknownElement::Create(q_name, *this);
+      }
+    }
+  }
 
-  if (e)
+  if (element)
     saw_elements_in_known_namespaces_ = true;
   else
-    e = Element::Create(q_name, this);
+    element = Element::Create(q_name, this);
 
-  if (e->prefix() != q_name.Prefix())
-    e->SetTagNameForCreateElementNS(q_name);
+  if (element->prefix() != q_name.Prefix())
+    element->SetTagNameForCreateElementNS(q_name);
+  DCHECK_EQ(q_name, element->TagQName());
 
-  DCHECK(q_name == e->TagQName());
-
-  return e;
+  return element;
 }
 
 String Document::readyState() const {
@@ -1461,16 +1507,16 @@ void Document::SetReadyState(DocumentReadyState ready_state) {
 
   switch (ready_state) {
     case kLoading:
-      if (!document_timing_.DomLoading()) {
+      if (document_timing_.DomLoading().is_null()) {
         document_timing_.MarkDomLoading();
       }
       break;
     case kInteractive:
-      if (!document_timing_.DomInteractive())
+      if (document_timing_.DomInteractive().is_null())
         document_timing_.MarkDomInteractive();
       break;
     case kComplete:
-      if (!document_timing_.DomComplete())
+      if (document_timing_.DomComplete().is_null())
         document_timing_.MarkDomComplete();
       break;
   }
@@ -2023,8 +2069,7 @@ void Document::PropagateStyleToViewport() {
   EOverflowAnchor overflow_anchor = EOverflowAnchor::kAuto;
   EOverflow overflow_x = EOverflow::kAuto;
   EOverflow overflow_y = EOverflow::kAuto;
-  bool column_gap_normal = true;
-  float column_gap = 0;
+  GapLength column_gap;
   if (overflow_style) {
     overflow_anchor = overflow_style->OverflowAnchor();
     overflow_x = overflow_style->OverflowX();
@@ -2040,10 +2085,7 @@ void Document::PropagateStyleToViewport() {
     // Column-gap is (ab)used by the current paged overflow implementation (in
     // lack of other ways to specify gaps between pages), so we have to
     // propagate it too.
-    if (!overflow_style->HasNormalColumnGap()) {
-      column_gap_normal = false;
-      column_gap = overflow_style->ColumnGap();
-    }
+    column_gap = overflow_style->ColumnGap();
   }
 
   ScrollSnapType snap_type = overflow_style->GetScrollSnapType();
@@ -2062,6 +2104,11 @@ void Document::PropagateStyleToViewport() {
             static_cast<OverscrollBehaviorType>(overscroll_behavior_y)));
   }
 
+  Length scroll_padding_top = overflow_style->ScrollPaddingTop();
+  Length scroll_padding_right = overflow_style->ScrollPaddingRight();
+  Length scroll_padding_bottom = overflow_style->ScrollPaddingBottom();
+  Length scroll_padding_left = overflow_style->ScrollPaddingLeft();
+
   scoped_refptr<ComputedStyle> viewport_style = GetLayoutView()->MutableStyle();
   if (viewport_style->GetWritingMode() != root_writing_mode ||
       viewport_style->Direction() != root_direction ||
@@ -2072,12 +2119,15 @@ void Document::PropagateStyleToViewport() {
       viewport_style->OverflowAnchor() != overflow_anchor ||
       viewport_style->OverflowX() != overflow_x ||
       viewport_style->OverflowY() != overflow_y ||
-      viewport_style->HasNormalColumnGap() != column_gap_normal ||
       viewport_style->ColumnGap() != column_gap ||
       viewport_style->GetScrollSnapType() != snap_type ||
       viewport_style->GetScrollBehavior() != scroll_behavior ||
       viewport_style->OverscrollBehaviorX() != overscroll_behavior_x ||
-      viewport_style->OverscrollBehaviorY() != overscroll_behavior_y) {
+      viewport_style->OverscrollBehaviorY() != overscroll_behavior_y ||
+      viewport_style->ScrollPaddingTop() != scroll_padding_top ||
+      viewport_style->ScrollPaddingRight() != scroll_padding_right ||
+      viewport_style->ScrollPaddingBottom() != scroll_padding_bottom ||
+      viewport_style->ScrollPaddingLeft() != scroll_padding_left) {
     scoped_refptr<ComputedStyle> new_style =
         ComputedStyle::Clone(*viewport_style);
     new_style->SetWritingMode(root_writing_mode);
@@ -2088,14 +2138,15 @@ void Document::PropagateStyleToViewport() {
     new_style->SetOverflowAnchor(overflow_anchor);
     new_style->SetOverflowX(overflow_x);
     new_style->SetOverflowY(overflow_y);
-    if (column_gap_normal)
-      new_style->SetHasNormalColumnGap();
-    else
-      new_style->SetColumnGap(column_gap);
+    new_style->SetColumnGap(column_gap);
     new_style->SetScrollSnapType(snap_type);
     new_style->SetScrollBehavior(scroll_behavior);
     new_style->SetOverscrollBehaviorX(overscroll_behavior_x);
     new_style->SetOverscrollBehaviorY(overscroll_behavior_y);
+    new_style->SetScrollPaddingTop(scroll_padding_top);
+    new_style->SetScrollPaddingRight(scroll_padding_right);
+    new_style->SetScrollPaddingBottom(scroll_padding_bottom);
+    new_style->SetScrollPaddingLeft(scroll_padding_left);
     GetLayoutView()->SetStyle(new_style);
     SetupFontBuilder(*new_style);
   }
@@ -2427,7 +2478,7 @@ void Document::LayoutUpdated() {
   // a paint for many seconds.
   if (IsRenderingReady() && body() &&
       !GetStyleEngine().HasPendingScriptBlockingSheets()) {
-    if (!document_timing_.FirstLayout())
+    if (document_timing_.FirstLayout().is_null())
       document_timing_.MarkFirstLayout();
   }
 
@@ -2787,9 +2838,6 @@ void Document::Shutdown() {
     imports_controller_->Dispose();
     ClearImportsController();
   }
-
-  timers_.SetTimerTaskRunner(
-      Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner());
 
   if (media_query_matcher_)
     media_query_matcher_->DocumentDetached();
@@ -3499,19 +3547,20 @@ void Document::DispatchUnloadEvents() {
           frame_->Loader().GetProvisionalDocumentLoader();
       load_event_progress_ = kUnloadEventInProgress;
       Event* unload_event(Event::Create(EventTypeNames::unload));
-      if (document_loader && !document_loader->GetTiming().UnloadEventStart() &&
-          !document_loader->GetTiming().UnloadEventEnd()) {
+      if (document_loader &&
+          document_loader->GetTiming().UnloadEventStart().is_null() &&
+          document_loader->GetTiming().UnloadEventEnd().is_null()) {
         DocumentLoadTiming& timing = document_loader->GetTiming();
-        DCHECK(timing.NavigationStart());
-        const double unload_event_start = CurrentTimeTicksInSeconds();
+        DCHECK(!timing.NavigationStart().is_null());
+        const TimeTicks unload_event_start = CurrentTimeTicks();
         timing.MarkUnloadEventStart(unload_event_start);
         frame_->DomWindow()->DispatchEvent(unload_event, this);
-        const double unload_event_end = CurrentTimeTicksInSeconds();
+        const TimeTicks unload_event_end = CurrentTimeTicks();
         DEFINE_STATIC_LOCAL(
             CustomCountHistogram, unload_histogram,
             ("DocumentEventTiming.UnloadDuration", 0, 10000000, 50));
-        unload_histogram.Count((unload_event_end - unload_event_start) *
-                               1000000.0);
+        unload_histogram.Count(
+            (unload_event_end - unload_event_start).InMicroseconds());
         timing.MarkUnloadEventEnd(unload_event_end);
       } else {
         frame_->DomWindow()->DispatchEvent(unload_event, frame_->GetDocument());
@@ -5792,10 +5841,10 @@ void Document::FinishedParsing() {
 
   // FIXME: DOMContentLoaded is dispatched synchronously, but this should be
   // dispatched in a queued task, see https://crbug.com/425790
-  if (!document_timing_.DomContentLoadedEventStart())
+  if (document_timing_.DomContentLoadedEventStart().is_null())
     document_timing_.MarkDomContentLoadedEventStart();
   DispatchEvent(Event::CreateBubble(EventTypeNames::DOMContentLoaded));
-  if (!document_timing_.DomContentLoadedEventEnd())
+  if (document_timing_.DomContentLoadedEventEnd().is_null())
     document_timing_.MarkDomContentLoadedEventEnd();
   SetParsingState(kFinishedParsing);
 
@@ -7226,7 +7275,8 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
+scoped_refptr<base::SingleThreadTaskRunner> Document::GetTaskRunner(
+    TaskType type) {
   DCHECK(IsMainThread());
 
   if (ContextDocument() && ContextDocument()->GetFrame())

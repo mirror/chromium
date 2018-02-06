@@ -26,6 +26,7 @@
 #include "components/exo/wm_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_delegate.h"
 #include "ui/base/hit_test.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
@@ -33,9 +34,6 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/shadow.h"
-#include "ui/wm/core/shadow_controller.h"
-#include "ui/wm/core/shadow_types.h"
 #include "ui/wm/core/window_util.h"
 
 namespace exo {
@@ -312,6 +310,11 @@ TEST_F(ShellSurfaceTest, SetMinimumSize) {
   surface->Attach(buffer.get());
   surface->Commit();
   EXPECT_EQ(size, shell_surface->GetMinimumSize());
+  EXPECT_EQ(size, shell_surface->GetWidget()->GetMinimumSize());
+  EXPECT_EQ(size, shell_surface->GetWidget()
+                      ->GetNativeWindow()
+                      ->delegate()
+                      ->GetMinimumSize());
 }
 
 TEST_F(ShellSurfaceTest, SetMaximumSize) {

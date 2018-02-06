@@ -28,10 +28,10 @@
 #include <memory>
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/single_thread_task_runner.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "platform/Histogram.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
 #include "platform/graphics/CanvasResource.h"
@@ -472,6 +472,10 @@ void Canvas2DLayerBridge::SetIsHidden(bool hidden) {
   }
 }
 
+void Canvas2DLayerBridge::DrawFullImage(const cc::PaintImage& image) {
+  Canvas()->drawImage(image, 0, 0);
+}
+
 bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
                                       const void* pixels,
                                       size_t row_bytes,
@@ -486,37 +490,9 @@ bool Canvas2DLayerBridge::WritePixels(const SkImageInfo& orig_info,
     FlushRecording();
   }
 
-  SkImageInfo tmp_info = SkImageInfo::Make(
-      orig_info.width(), orig_info.height(), ColorParams().GetSkColorType(),
-      kPremul_SkAlphaType, ColorParams().GetSkColorSpaceForSkSurfaces());
-  sk_sp<SkSurface> tmp_surface = SkSurface::MakeRaster(tmp_info, nullptr);
-  tmp_surface->getCanvas()->writePixels(orig_info, pixels, row_bytes, 0, 0);
-
-  PaintImageBuilder builder = PaintImageBuilder::WithDefault();
-  builder.set_image(tmp_surface->makeImageSnapshot());
-  builder.set_id(PaintImage::GetNextId());
-
-  PaintCanvas* canvas = GetOrCreateResourceProvider()->Canvas();
-  if (!canvas)
-    return false;
-
-  // Ignore clip and matrix
-  canvas->restoreToCount(0);
-
-  PaintFlags copy_paint;
-  copy_paint.setBlendMode(SkBlendMode::kSrc);
-
-  canvas->drawImage(builder.TakePaintImage(), x, y, &copy_paint);
-
-  canvas->save();  // intial save
-  if (resource_host_ && !is_deferral_enabled_) {
-    resource_host_->RestoreCanvasMatrixClipStack(canvas);
-  }
-
-  // We did not make a copy of the pixel data, so it needs to be consumed
-  // immediately
+  GetOrCreateResourceProvider()->WritePixels(orig_info, pixels, row_bytes, x,
+                                             y);
   DidDraw(FloatRect(x, y, orig_info.width(), orig_info.height()));
-  GetOrCreateResourceProvider()->FlushSkia();
 
   return true;
 }
@@ -545,6 +521,11 @@ void Canvas2DLayerBridge::FlushRecording() {
       sk_sp<PaintRecord> recording = recorder_->finishRecordingAsPicture();
       canvas->drawPicture(recording);
     }
+
+    // Rastering the recording would have locked images, since we've flushed
+    // all recorded ops, we should relase all locked images as well.
+    GetOrCreateResourceProvider()->ReleaseLockedImages();
+
     if (is_deferral_enabled_)
       StartRecording();
     have_recorded_draw_commands_ = false;

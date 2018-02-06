@@ -27,7 +27,7 @@
 #include "net/http/transport_security_state.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/socket_tag.h"
@@ -129,7 +129,8 @@ class SSLClientSocketPoolTest : public testing::Test {
                                       session_->http_auth_handler_factory(),
                                       session_->spdy_session_pool(),
                                       session_->quic_stream_factory(),
-                                      true)),
+                                      /*is_trusted_proxy=*/false,
+                                      /*tunnel=*/true)),
         http_proxy_socket_pool_(kMaxSockets,
                                 kMaxSocketsPerGroup,
                                 &transport_socket_pool_,

@@ -107,11 +107,6 @@ bool IsCurrentPageOffline(web::WebState* webState) {
   return self;
 }
 
-- (instancetype)init {
-  NOTREACHED();
-  return nil;
-}
-
 - (void)clearText {
   _omniboxView->ClearText();
 }
@@ -230,7 +225,6 @@ void LocationBarControllerImpl::OnChanged() {
       bool show_icon_for_state = security_state::ShouldAlwaysShowIcon(
           toolbarModel->GetSecurityLevel(false));
       bool page_has_downgraded_HTTPS =
-          experimental_flags::IsPageIconForDowngradedHTTPSEnabled() &&
           DoesCurrentPageHaveCertInfo(GetWebState());
       if (show_icon_for_state || page_has_downgraded_HTTPS || page_is_offline) {
         [location_bar_view_ setLeadingButtonHidden:NO];
@@ -328,7 +322,7 @@ ToolbarModel* LocationBarControllerImpl::GetToolbarModel() {
 }
 
 web::WebState* LocationBarControllerImpl::GetWebState() {
-  return [delegate_ getWebState];
+  return [delegate_ webState];
 }
 
 void LocationBarControllerImpl::InstallLocationIcon() {

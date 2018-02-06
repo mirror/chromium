@@ -43,7 +43,6 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -178,12 +177,6 @@ mojom::FetchCacheMode DetermineFrameCacheMode(Frame* frame,
                             ResourceType::kIsNotMainResource, load_type);
 }
 
-bool IsClientHintsAllowed(const KURL& url) {
-  return (url.ProtocolIs("http") || url.ProtocolIs("https")) &&
-         (SecurityOrigin::IsSecure(url) ||
-          SecurityOrigin::Create(url)->IsLocalhost());
-}
-
 }  // namespace
 
 struct FrameFetchContext::FrozenState final
@@ -300,7 +293,8 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
+scoped_refptr<base::SingleThreadTaskRunner>
+FrameFetchContext::GetLoadingTaskRunner() {
   if (IsDetached())
     return FetchContext::GetLoadingTaskRunner();
   return GetFrame()->GetTaskRunner(TaskType::kNetworking);
@@ -528,10 +522,10 @@ void FrameFetchContext::DispatchDidReceiveResponse(
                               ->Loader()
                               .GetProvisionalDocumentLoader()) {
     FrameClientHintsPreferencesContext hints_context(GetFrame());
-
-      document_loader_->GetClientHintsPreferences()
-          .UpdateFromAcceptClientHintsHeader(
-              response.HttpHeaderField(HTTPNames::Accept_CH), &hints_context);
+    document_loader_->GetClientHintsPreferences()
+        .UpdateFromAcceptClientHintsHeader(
+            response.HttpHeaderField(HTTPNames::Accept_CH), response.Url(),
+            &hints_context);
 
     // When response is received with a provisional docloader, the resource
     // haven't committed yet, and we cannot load resources, only preconnect.
@@ -548,8 +542,7 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   }
 
   if (response.IsLegacySymantecCert()) {
-    GetLocalFrameClient()->ReportLegacySymantecCert(
-        response.Url(), response.CertValidityStart());
+    GetLocalFrameClient()->ReportLegacySymantecCert(response.Url());
   }
 
   GetFrame()->Loader().Progress().IncrementProgress(identifier, response);
@@ -614,7 +607,8 @@ void FrameFetchContext::DispatchDidFinishLoading(
     InteractiveDetector* interactive_detector(
         InteractiveDetector::From(*document_));
     if (interactive_detector) {
-      interactive_detector->OnResourceLoadEnd(finish_time);
+      interactive_detector->OnResourceLoadEnd(
+          TimeTicksFromSeconds(finish_time));
     }
   }
 }
@@ -845,17 +839,22 @@ void FrameFetchContext::AddClientHintsIfNecessary(
     const FetchParameters::ResourceWidth& resource_width,
     ResourceRequest& request) {
   WebEnabledClientHints enabled_hints;
-  // Check if |url| is allowed to run JavaScript. If not, client hints are not
-  // attached to the requests that initiate on the render side.
-  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
-      IsClientHintsAllowed(request.Url()) && GetContentSettingsClient() &&
-      AllowScriptFromSource(request.Url())) {
-    // TODO(tbansal): crbug.com/735518 This code path is not executed for main
-    // frame navigations when browser side navigation is enabled. For main
-    // frame requests with browser side navigation enabled, the client hints
-    // should be attached by the browser process.
-    GetContentSettingsClient()->GetAllowedClientHintsFromSource(request.Url(),
-                                                                &enabled_hints);
+  if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled()) {
+    // If the feature is enabled, then client hints are allowed only on secure
+    // URLs.
+    if (!ClientHintsPreferences::IsClientHintsAllowed(request.Url()))
+      return;
+
+    // Check if |url| is allowed to run JavaScript. If not, client hints are not
+    // attached to the requests that initiate on the render side.
+    if (GetContentSettingsClient() && AllowScriptFromSource(request.Url())) {
+      // TODO(tbansal): crbug.com/735518 This code path is not executed for main
+      // frame navigations when browser side navigation is enabled. For main
+      // frame requests with browser side navigation enabled, the client hints
+      // should be attached by the browser process.
+      GetContentSettingsClient()->GetAllowedClientHintsFromSource(
+          request.Url(), &enabled_hints);
+    }
   }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kDeviceMemory,
@@ -1176,9 +1175,6 @@ bool FrameFetchContext::ShouldSendClientHint(
 
 void FrameFetchContext::ParseAndPersistClientHints(
     const ResourceResponse& response) {
-  if (!IsClientHintsAllowed(response.Url()))
-    return;
-
   ClientHintsPreferences hints_preferences;
   WebEnabledClientHints enabled_client_hints;
   TimeDelta persist_duration;
@@ -1200,7 +1196,7 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<WebTaskRunner> task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   DCHECK(!IsDetached());
   WrappedResourceRequest webreq(request);
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
@@ -1251,7 +1247,7 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 }
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
-  UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
+  CountDeprecation(WebFeature::kDataUriHasOctothorpe);
 }
 
 ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(

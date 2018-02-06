@@ -41,9 +41,9 @@
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
-#include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
+#include "content/browser/android/tap_disambiguator.h"
 #include "content/browser/android/text_suggestion_host_android.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
@@ -64,7 +64,6 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/ui_events_helper.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -76,6 +75,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ipc/ipc_message_macros.h"
@@ -398,10 +398,9 @@ void PrepareTextureCopyOutputResult(
     output_size_in_pixel = dst_size_in_pixel;
 
   std::unique_ptr<SkBitmap> bitmap(new SkBitmap);
-  if (!bitmap->tryAllocPixels(SkImageInfo::Make(output_size_in_pixel.width(),
-                                                output_size_in_pixel.height(),
-                                                color_type,
-                                                kOpaque_SkAlphaType))) {
+  if (!bitmap->tryAllocPixels(SkImageInfo::Make(
+          output_size_in_pixel.width(), output_size_in_pixel.height(),
+          color_type, kPremul_SkAlphaType))) {
     scoped_callback_runner.ReplaceClosure(
         base::Bind(callback, SkBitmap(), READBACK_BITMAP_ALLOCATION_FAILURE));
     return;
@@ -466,7 +465,7 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       is_in_vr_(false),
       content_view_core_(nullptr),
       ime_adapter_android_(nullptr),
-      popup_zoomer_(nullptr),
+      tap_disambiguator_(nullptr),
       selection_popup_controller_(nullptr),
       text_suggestion_host_(nullptr),
       background_color_(SK_ColorWHITE),
@@ -1139,10 +1138,10 @@ void RenderWidgetHostViewAndroid::CopyFromSurface(
 
 void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
     const gfx::Rect& rect_pixels, const SkBitmap& zoomed_bitmap) {
-  if (!popup_zoomer_)
+  if (!tap_disambiguator_)
     return;
 
-  popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
+  tap_disambiguator_->ShowPopup(rect_pixels, zoomed_bitmap);
 }
 
 std::unique_ptr<SyntheticGestureTarget>
@@ -1292,6 +1291,7 @@ void RenderWidgetHostViewAndroid::OnDidNotProduceFrame(
 
 void RenderWidgetHostViewAndroid::AcknowledgeBeginFrame(
     const viz::BeginFrameAck& ack) {
+  // AcknowledgeBeginFrame is not called for the synchronous compositor path.
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
 }
@@ -1462,12 +1462,23 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
+  gfx::SizeF root_layer_size_dip = frame_metadata.root_layer_size;
+  gfx::SizeF scrollable_viewport_size_dip =
+      frame_metadata.scrollable_viewport_size;
+  gfx::Vector2dF root_scroll_offset_dip = frame_metadata.root_scroll_offset;
+  if (IsUseZoomForDSFEnabled()) {
+    float pix_to_dip = 1 / dip_scale;
+    root_layer_size_dip.Scale(pix_to_dip);
+    scrollable_viewport_size_dip.Scale(pix_to_dip);
+    root_scroll_offset_dip.Scale(pix_to_dip);
+  }
+
   float to_pix = IsUseZoomForDSFEnabled() ? 1.f : dip_scale;
   float top_controls_pix = frame_metadata.top_controls_height * to_pix;
-  // |top_content_offset| is its CSS pixels * DSF if --use-zoom-for-dsf is
-  // enabled. Otherwise, it is in CSS pixels.
+  // |top_content_offset| is in physical pixels if --use-zoom-for-dsf is
+  // enabled. Otherwise, it is in DIPs.
   // Note that the height of browser control is not affected by page scale
-  // factor. Thus, |top_content_offset| in CSS pixels is also in DIP pixels.
+  // factor. Thus, |top_content_offset| in CSS pixels is also in DIPs.
   float top_content_offset = frame_metadata.top_controls_height *
                              frame_metadata.top_controls_shown_ratio;
   float top_shown_pix = top_content_offset * to_pix;
@@ -1495,7 +1506,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
         frame_metadata.page_scale_factor);
 
     // Set parameters for adaptive handle orientation.
-    gfx::SizeF viewport_size(frame_metadata.scrollable_viewport_size);
+    gfx::SizeF viewport_size(scrollable_viewport_size_dip);
     viewport_size.Scale(frame_metadata.page_scale_factor);
     gfx::RectF viewport_rect(0.0f, frame_metadata.top_controls_height *
                                        frame_metadata.top_controls_shown_ratio,
@@ -1507,11 +1518,10 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
                                        : frame_metadata.root_background_color);
 
   // ViewAndroid::content_offset() must be in CSS scale
-  float top_content_offset_css = IsUseZoomForDSFEnabled()
+  float top_content_offset_dip = IsUseZoomForDSFEnabled()
                                      ? top_content_offset / dip_scale
                                      : top_content_offset;
-  view_.UpdateFrameInfo(
-      {frame_metadata.scrollable_viewport_size, top_content_offset});
+  view_.UpdateFrameInfo({scrollable_viewport_size_dip, top_content_offset});
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
   if (top_changed) {
@@ -1536,11 +1546,11 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   // All offsets and sizes except |top_shown_pix| are in CSS pixels.
   content_view_core_->UpdateFrameInfo(
-      frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
+      root_scroll_offset_dip, frame_metadata.page_scale_factor,
       frame_metadata.min_page_scale_factor,
-      frame_metadata.max_page_scale_factor, frame_metadata.root_layer_size,
-      frame_metadata.scrollable_viewport_size, top_content_offset_css,
-      top_shown_pix, top_changed, is_mobile_optimized);
+      frame_metadata.max_page_scale_factor, root_layer_size_dip,
+      scrollable_viewport_size_dip, top_content_offset_dip, top_shown_pix,
+      top_changed, is_mobile_optimized);
 
   EvictFrameIfNecessary();
 }
@@ -1724,12 +1734,6 @@ void RenderWidgetHostViewAndroid::EvictDelegatedFrame() {
   DestroyDelegatedContent();
 }
 
-bool RenderWidgetHostViewAndroid::HasAcceleratedSurface(
-    const gfx::Size& desired_size) {
-  NOTREACHED();
-  return false;
-}
-
 // TODO(jrg): Find out the implications and answer correctly here,
 // as we are returning the WebView and not root window bounds.
 gfx::Rect RenderWidgetHostViewAndroid::GetBoundsInRootWindow() {
@@ -1771,10 +1775,23 @@ RenderWidgetHostViewAndroid::GetRenderViewHostDelegateView() const {
 InputEventAckState RenderWidgetHostViewAndroid::FilterInputEvent(
     const blink::WebInputEvent& input_event) {
   if (overscroll_controller_ &&
-      blink::WebInputEvent::IsGestureEventType(input_event.GetType()) &&
-      overscroll_controller_->WillHandleGestureEvent(
-          static_cast<const blink::WebGestureEvent&>(input_event))) {
-    return INPUT_EVENT_ACK_STATE_CONSUMED;
+      blink::WebInputEvent::IsGestureEventType(input_event.GetType())) {
+    blink::WebGestureEvent gesture_event =
+        static_cast<const blink::WebGestureEvent&>(input_event);
+    if (overscroll_controller_->WillHandleGestureEvent(gesture_event)) {
+      // Terminate an active fling when a GSU generated from the fling progress
+      // (GSU with inertial state) is consumed by the overscroll_controller_ and
+      // overscrolling mode is not |OVERSCROLL_NONE|. The early fling
+      // termination generates a GSE which completes the overscroll action.
+      if (gesture_event.GetType() ==
+              blink::WebInputEvent::kGestureScrollUpdate &&
+          gesture_event.data.scroll_update.inertial_phase ==
+              blink::WebGestureEvent::kMomentumPhase) {
+        host_->StopFling();
+      }
+
+      return INPUT_EVENT_ACK_STATE_CONSUMED;
+    }
   }
 
   if (content_view_core_ && content_view_core_->FilterInputEvent(input_event))
@@ -2187,8 +2204,8 @@ void RenderWidgetHostViewAndroid::OnGestureEvent(
 void RenderWidgetHostViewAndroid::OnSizeChanged() {
   if (ime_adapter_android_)
     ime_adapter_android_->UpdateAfterViewSizeChanged();
-  if (popup_zoomer_)
-    popup_zoomer_->HidePopup();
+  if (tap_disambiguator_)
+    tap_disambiguator_->HidePopup();
 }
 
 void RenderWidgetHostViewAndroid::OnPhysicalBackingSizeChanged() {

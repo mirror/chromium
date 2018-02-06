@@ -98,7 +98,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   void OnKeyEvent(ui::KeyEvent* evetn) override;
 
   // Overridden from views::WidgetDelegate:
-  ui::AXRole GetAccessibleWindowRole() const override;
+  ax::mojom::Role GetAccessibleWindowRole() const override;
   bool ShouldAdvanceFocusToTopLevelWidget() const override;
 
   // Overridden from views::ButtonListener:
@@ -107,22 +107,22 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   // Updates the search box's background corner radius and color based on the
   // state of AppListModel.
   void UpdateBackground(double progress,
-                        AppListModel::State current_state,
-                        AppListModel::State target_state);
+                        ash::AppListState current_state,
+                        ash::AppListState target_state);
 
   // Updates the search box's layout based on the state of AppListModel.
   void UpdateLayout(double progress,
-                    AppListModel::State current_state,
-                    AppListModel::State target_state);
+                    ash::AppListState current_state,
+                    ash::AppListState target_state);
 
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
 
   // Returns background border corner radius in the given state.
-  int GetSearchBoxBorderCornerRadiusForState(AppListModel::State state) const;
+  int GetSearchBoxBorderCornerRadiusForState(ash::AppListState state) const;
 
   // Returns background color for the given state.
-  SkColor GetBackgroundColorForState(AppListModel::State state) const;
+  SkColor GetBackgroundColorForState(ash::AppListState state) const;
 
   // Updates the opacity of the searchbox.
   void UpdateOpacity();
@@ -136,8 +136,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   // Returns selected view in contents view.
   views::View* GetSelectedViewInContentsView() const;
 
-  bool selected() { return selected_; }
-  void SetSelected(bool selected);
+  void OnOnSearchBoxFocusedChanged();
 
  private:
   // Updates model text and selection model with current Textfield info.
@@ -217,9 +216,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
   SkColor background_color_ = kSearchBoxBackgroundDefault;
   // The current search box color.
   SkColor search_box_color_ = kDefaultSearchboxColor;
-
-  // Whether the search box is selected.
-  bool selected_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxView);
 };

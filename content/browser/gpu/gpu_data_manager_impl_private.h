@@ -44,7 +44,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   bool GpuAccessAllowed(std::string* reason) const;
   void RequestCompleteGpuInfoIfNeeded();
   bool IsEssentialGpuInfoAvailable() const;
-  bool IsCompleteGpuInfoAvailable() const;
   bool IsGpuFeatureInfoAvailable() const;
   gpu::GpuFeatureStatus GetFeatureStatus(gpu::GpuFeatureType feature) const;
   void RequestVideoMemoryUsageStatsUpdate(
@@ -56,15 +55,12 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   void DisableHardwareAcceleration();
   bool HardwareAccelerationEnabled() const;
   void DisableSwiftShader();
-  void SetGpuInfo(const gpu::GPUInfo& gpu_info);
 
   void Initialize();
 
   void UpdateGpuInfo(const gpu::GPUInfo& gpu_info);
   void UpdateGpuFeatureInfo(const gpu::GpuFeatureInfo& gpu_feature_info);
   gpu::GpuFeatureInfo GetGpuFeatureInfo() const;
-
-  void AppendRendererCommandLine(base::CommandLine* command_line) const;
 
   void AppendGpuCommandLine(base::CommandLine* command_line) const;
 
@@ -163,6 +159,12 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
       const GURL& url, base::Time at_time) const;
   int64_t GetBlockAllDomainsDurationInMs() const;
 
+  // This is platform specific. At the moment:
+  //   1) on MacOSX, if GL strings are missing, this returns true;
+  //   2) on Windows, if DxDiagnostics are missing, this returns true;
+  //   3) all other platforms, this returns false.
+  bool NeedsCompleteGpuInfoCollection() const;
+
   bool complete_gpu_info_already_requested_;
 
   // Eventually |blacklisted_features_| should be folded in to this.
@@ -206,10 +208,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   // If one tries to call a member before initialization then it is defered
   // until Initialize() is completed.
   std::vector<base::Closure> post_init_tasks_;
-
-#if defined(OS_ANDROID)
-  bool blacklist_accelerated_video_decode_ = false;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(GpuDataManagerImplPrivate);
 };

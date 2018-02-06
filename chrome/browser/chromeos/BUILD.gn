@@ -40,6 +40,7 @@ source_set("chromeos") {
   deps = [
     # TODO(tbarzic): Cleanup this list.
     ":attestation_proto",
+    ":backdrop_wallpaper_proto",
     ":device_policy_remover_generated",
     ":user_activity_event_proto",
     "//apps",
@@ -92,6 +93,7 @@ source_set("chromeos") {
     "//components/keep_alive_registry",
     "//components/keyed_service/content",
     "//components/keyed_service/core",
+    "//components/language/core/common",
     "//components/login",
     "//components/metrics:serialization",
     "//components/metrics/leak_detector",
@@ -143,7 +145,7 @@ source_set("chromeos") {
     "//device/bluetooth",
     "//device/media_transfer_protocol",
     "//device/usb/public/cpp",
-    "//device/usb/public/interfaces",
+    "//device/usb/public/mojom",
     "//extensions/browser",
     "//extensions/browser/kiosk",
     "//gpu",
@@ -303,8 +305,6 @@ source_set("chromeos") {
     "arc/accessibility/arc_accessibility_helper_bridge.h",
     "arc/accessibility/ax_tree_source_arc.cc",
     "arc/accessibility/ax_tree_source_arc.h",
-    "arc/arc_auth_notification.cc",
-    "arc/arc_auth_notification.h",
     "arc/arc_migration_constants.h",
     "arc/arc_migration_guide_notification.cc",
     "arc/arc_migration_guide_notification.h",
@@ -425,6 +425,10 @@ source_set("chromeos") {
     "arc/process/arc_process.h",
     "arc/process/arc_process_service.cc",
     "arc/process/arc_process_service.h",
+    "arc/screen_capture/arc_screen_capture_bridge.cc",
+    "arc/screen_capture/arc_screen_capture_bridge.h",
+    "arc/screen_capture/arc_screen_capture_session.cc",
+    "arc/screen_capture/arc_screen_capture_session.h",
     "arc/tracing/arc_tracing_bridge.cc",
     "arc/tracing/arc_tracing_bridge.h",
     "arc/tts/arc_tts_service.cc",
@@ -1546,8 +1550,8 @@ source_set("chromeos") {
     "system_logs/single_debug_daemon_log_source.h",
     "system_logs/single_log_file_log_source.cc",
     "system_logs/single_log_file_log_source.h",
+    "system_logs/touch_log_source.cc",
     "system_logs/touch_log_source.h",
-    "system_logs/touch_log_source_ozone.cc",
     "tether/fake_tether_service.cc",
     "tether/fake_tether_service.h",
     "tether/tether_service.cc",
@@ -1575,6 +1579,8 @@ source_set("chromeos") {
     "upgrade_detector_chromeos.h",
 
     # Extension API implementations.
+    "extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.cc",
+    "extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h",
     "extensions/echo_private_api.cc",
     "extensions/echo_private_api.h",
     "extensions/file_manager/device_event_router.cc",
@@ -1630,8 +1636,6 @@ source_set("chromeos") {
     "extensions/wallpaper_api.h",
     "extensions/wallpaper_function_base.cc",
     "extensions/wallpaper_function_base.h",
-    "extensions/wallpaper_manager_util.cc",
-    "extensions/wallpaper_manager_util.h",
     "extensions/wallpaper_private_api.cc",
     "extensions/wallpaper_private_api.h",
   ]
@@ -1960,8 +1964,6 @@ source_set("unit_tests") {
     "printing/printers_sync_bridge_unittest.cc",
     "printing/specifics_translation_unittest.cc",
     "printing/synced_printers_manager_unittest.cc",
-    "printing/usb_printer_detector_unittest.cc",
-    "printing/zeroconf_printer_detector_unittest.cc",
     "profiles/profile_list_chromeos_unittest.cc",
     "proxy_config_service_impl_unittest.cc",
     "resource_reporter/resource_reporter_unittest.cc",
@@ -2095,6 +2097,13 @@ proto_library("user_activity_event_proto") {
   sources = [
     "power/ml/user_activity_event.proto",
   ]
+}
+
+proto_library("backdrop_wallpaper_proto") {
+  sources = [
+    "extensions/backdrop_wallpaper_handlers/backdrop_wallpaper.proto",
+  ]
+  generate_python = false
 }
 
 service_manifest("ash_pref_connector_manifest") {

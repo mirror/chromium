@@ -362,13 +362,13 @@ sk_sp<SkPicture> BrowserViewRenderer::CapturePicture(int width,
   SkCanvas* rec_canvas = recorder.beginRecording(width, height, NULL, 0);
   if (compositor_) {
     gfx::Vector2dF scroll_offset =
-        content::UseZoomForDSFEnabled()
+        content::IsUseZoomForDSFEnabled()
             ? gfx::ScaleVector2d(scroll_offset_dip_, dip_scale_)
             : scroll_offset_dip_;
     {
       // Reset scroll back to the origin, will go back to the old
       // value when scroll_reset is out of scope.
-      base::AutoReset<gfx::Vector2dF> scroll_reset(&scroll_offset,
+      base::AutoReset<gfx::Vector2dF> scroll_reset(&scroll_offset_dip_,
                                                    gfx::Vector2dF());
       compositor_->DidChangeRootLayerScrollOffset(
           gfx::ScrollOffset(scroll_offset));
@@ -556,7 +556,7 @@ void BrowserViewRenderer::SetActiveCompositorID(
     compositor_ = compositor;
     UpdateMemoryPolicy();
     gfx::Vector2dF scroll_offset =
-        content::UseZoomForDSFEnabled()
+        content::IsUseZoomForDSFEnabled()
             ? gfx::ScaleVector2d(scroll_offset_dip_, dip_scale_)
             : scroll_offset_dip_;
     compositor_->DidChangeRootLayerScrollOffset(
@@ -618,7 +618,8 @@ void BrowserViewRenderer::ScrollTo(const gfx::Vector2d& scroll_offset) {
 
   if (compositor_) {
     compositor_->DidChangeRootLayerScrollOffset(gfx::ScrollOffset(
-        content::UseZoomForDSFEnabled() ? scroll_offset : scroll_offset_dip_));
+        content::IsUseZoomForDSFEnabled() ? scroll_offset
+                                          : scroll_offset_dip_));
   }
 }
 
@@ -677,7 +678,7 @@ void BrowserViewRenderer::UpdateRootLayerState(
   gfx::Vector2dF total_scroll_offset_dip = total_scroll_offset;
   gfx::Vector2dF max_scroll_offset_dip = total_max_scroll_offset;
   gfx::SizeF scrollable_size_dip = scrollable_size;
-  if (content::UseZoomForDSFEnabled()) {
+  if (content::IsUseZoomForDSFEnabled()) {
     total_scroll_offset_dip.Scale(1 / dip_scale_);
     max_scroll_offset_dip.Scale(1 / dip_scale_);
     scrollable_size_dip.Scale(1 / dip_scale_);

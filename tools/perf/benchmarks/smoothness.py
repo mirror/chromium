@@ -14,26 +14,11 @@ from telemetry import story as story_module
 class _Smoothness(perf_benchmark.PerfBenchmark):
   """Base class for smoothness-based benchmarks."""
 
-  # Certain smoothness pages do not perform gesture scrolling, in turn yielding
-  # an empty first_gesture_scroll_update_latency result. Such empty results
-  # should be ignored, allowing aggregate metrics for that page set.
-  _PAGES_WITHOUT_SCROLL_GESTURE_BLACKLIST = [
-      'http://mobile-news.sandbox.google.com/news/pt0']
-
   test = smoothness.Smoothness
 
   @classmethod
   def Name(cls):
     return 'smoothness'
-
-  @classmethod
-  def ValueCanBeAddedPredicate(cls, value, is_first_result):
-    del is_first_result  # unused
-    if (value.name == 'first_gesture_scroll_update_latency' and
-        value.page.url in cls._PAGES_WITHOUT_SCROLL_GESTURE_BLACKLIST and
-        value.values is None):
-      return False
-    return True
 
 
 @benchmark.Owner(emails=['vmiura@chromium.org'])
@@ -161,15 +146,6 @@ class SmoothnessKeySilkCases(_Smoothness):
   @classmethod
   def Name(cls):
     return 'smoothness.key_silk_cases'
-
-  def CreateStorySet(self, options):
-    stories = super(SmoothnessKeySilkCases, self).CreateStorySet(options)
-    # Page26 (befamous) is too noisy to be useful; crbug.com/461127
-    to_remove = [story for story in stories
-                 if isinstance(story, page_sets.key_silk_cases.Page26)]
-    for story in to_remove:
-      stories.RemoveStory(story)
-    return stories
 
 
 @benchmark.Owner(emails=['vmiura@chromium.org'])

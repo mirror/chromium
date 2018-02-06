@@ -13,8 +13,8 @@
 #include "content/test/mock_permission_manager.h"
 #include "content/test/test_render_frame_host.h"
 #include "device/geolocation/geolocation_context.h"
-#include "device/geolocation/public/interfaces/geolocation.mojom.h"
-#include "device/geolocation/public/interfaces/geoposition.mojom.h"
+#include "services/device/public/interfaces/geolocation.mojom.h"
+#include "services/device/public/interfaces/geoposition.mojom.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
@@ -54,13 +54,6 @@ class TestPermissionManager : public MockPermissionManager {
     return request_id_;
   }
 
-  void CancelPermissionRequest(int request_id) override {
-    if (request_id != PermissionManager::kNoPendingOperation) {
-      EXPECT_EQ(request_id, request_id_);
-      cancel_callback_.Run();
-    }
-  }
-
   void SetRequestId(int request_id) { request_id_ = request_id; }
 
   void SetRequestCallback(
@@ -68,15 +61,10 @@ class TestPermissionManager : public MockPermissionManager {
     request_callback_ = request_callback;
   }
 
-  void SetCancelCallback(const base::Closure& cancel_callback) {
-    cancel_callback_ = cancel_callback;
-  }
-
  private:
   int request_id_;
 
   base::Callback<void(const PermissionCallback&)> request_callback_;
-  base::Closure cancel_callback_;
 };
 
 class GeolocationServiceTest : public RenderViewHostImplTestHarness {
@@ -313,7 +301,6 @@ TEST_F(GeolocationServiceTest, ServiceClosedBeforePermissionResponse) {
       base::Bind([](const PermissionCallback& callback) {}));
 
   base::RunLoop loop;
-  permission_manager()->SetCancelCallback(loop.QuitClosure());
   service_ptr()->reset();
 
   geolocation->QueryNextPosition(base::BindOnce([](GeopositionPtr geoposition) {
@@ -323,7 +310,7 @@ TEST_F(GeolocationServiceTest, ServiceClosedBeforePermissionResponse) {
   mock_geoposition->latitude = kMockLatitude;
   mock_geoposition->longitude = kMockLongitude;
   context()->SetOverride(std::move(mock_geoposition));
-  loop.Run();
+  loop.RunUntilIdle();
 }
 
 }  // namespace content

@@ -8,7 +8,6 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
-#import "ios/chrome/browser/ui/commands/toolbar_commands.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_visibility_configuration.h"
@@ -16,6 +15,7 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tab_grid_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
+#import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -304,7 +304,7 @@ const int styleCount = 2;
   contractButton.hidden = YES;
   [self configureButton:contractButton width:kToolbarButtonWidth];
   [contractButton addTarget:self.dispatcher
-                     action:@selector(contractToolbar)
+                     action:@selector(cancelOmniboxEdit)
            forControlEvents:UIControlEventTouchUpInside];
 
   contractButton.visibilityMask =
@@ -318,6 +318,10 @@ const int styleCount = 2;
                   imageForHighlightedState:NativeImage(IDR_IOS_OMNIBOX_SEARCH)
                      imageForDisabledState:nil];
   [self configureButton:omniboxButton width:kToolbarButtonWidth];
+  [omniboxButton addTarget:self.dispatcher
+                    action:@selector(focusOmnibox)
+          forControlEvents:UIControlEventTouchUpInside];
+
   omniboxButton.visibilityMask =
       self.visibilityConfiguration.omniboxButtonVisibility;
   return omniboxButton;
@@ -342,6 +346,24 @@ const int styleCount = 2;
       self.visibilityConfiguration.locationBarLeadingButtonVisibility;
 
   return locationBarLeadingButton;
+}
+
+- (UIButton*)cancelButton {
+  UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  [cancelButton setTitle:l10n_util::GetNSString(IDS_CANCEL)
+                forState:UIControlStateNormal];
+  [cancelButton setContentHuggingPriority:UILayoutPriorityDefaultHigh
+                                  forAxis:UILayoutConstraintAxisHorizontal];
+  [cancelButton
+      setContentCompressionResistancePriority:UILayoutPriorityRequired
+                                      forAxis:UILayoutConstraintAxisHorizontal];
+  cancelButton.contentEdgeInsets = UIEdgeInsetsMake(
+      0, kCancelButtonHorizontalInset, 0, kCancelButtonHorizontalInset);
+  cancelButton.hidden = YES;
+  [cancelButton addTarget:self.dispatcher
+                   action:@selector(cancelOmniboxEdit)
+         forControlEvents:UIControlEventTouchUpInside];
+  return cancelButton;
 }
 
 #pragma mark - Helpers

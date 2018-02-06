@@ -27,13 +27,11 @@
 #include "content/child/child_thread_impl.h"
 #include "content/child/scoped_child_process_reference.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "content/common/weak_wrapper_shared_url_loader_factory.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/service_worker_modes.h"
-#include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/ftp_directory_listing_response_delegate.h"
@@ -55,7 +53,7 @@
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/url_request/url_request_data_job.h"
-#include "services/network/public/cpp/loader_util.h"
+#include "services/network/loader_util.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/network/public/interfaces/url_loader.mojom.h"
@@ -362,9 +360,9 @@ StreamOverrideParameters::~StreamOverrideParameters() {
 
 WebURLLoaderFactoryImpl::WebURLLoaderFactoryImpl(
     base::WeakPtr<ResourceDispatcher> resource_dispatcher,
-    scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter)
+    scoped_refptr<SharedURLLoaderFactory> loader_factory)
     : resource_dispatcher_(std::move(resource_dispatcher)),
-      loader_factory_getter_(std::move(loader_factory_getter)) {}
+      loader_factory_(std::move(loader_factory)) {}
 
 WebURLLoaderFactoryImpl::~WebURLLoaderFactoryImpl() = default;
 
@@ -376,10 +374,9 @@ WebURLLoaderFactoryImpl::CreateTestOnlyFactory() {
 std::unique_ptr<blink::WebURLLoader> WebURLLoaderFactoryImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  if (!loader_factory_getter_) {
-    // In some tests like RenderViewTests loader_factory_getter_ is not
-    // available. These tests can still use data URLs to bypass the
-    // ResourceDispatcher.
+  if (!loader_factory_) {
+    // In some tests like RenderViewTests loader_factory_ is not available.
+    // These tests can still use data URLs to bypass the ResourceDispatcher.
     if (!task_runner)
       task_runner = base::ThreadTaskRunnerHandle::Get();
     return std::make_unique<WebURLLoaderImpl>(resource_dispatcher_.get(),
@@ -389,12 +386,8 @@ std::unique_ptr<blink::WebURLLoader> WebURLLoaderFactoryImpl::CreateURLLoader(
 
   DCHECK(task_runner);
   DCHECK(resource_dispatcher_);
-  // TODO(crbug.com/796425): Temporarily wrap the raw mojom::URLLoaderFactory
-  // pointer into SharedURLLoaderFactory.
   return std::make_unique<WebURLLoaderImpl>(
-      resource_dispatcher_.get(), std::move(task_runner),
-      base::MakeRefCounted<WeakWrapperSharedURLLoaderFactory>(
-          loader_factory_getter_->GetFactoryForURL(request.Url())));
+      resource_dispatcher_.get(), std::move(task_runner), loader_factory_);
 }
 
 // This inner class exists since the WebURLLoader may be deleted while inside a
@@ -859,8 +852,15 @@ void WebURLLoaderImpl::Context::OnReceivedResponse(
   }
 
   if (use_stream_on_response_) {
+    SharedMemoryDataConsumerHandle::BackpressureMode mode =
+        SharedMemoryDataConsumerHandle::kDoNotApplyBackpressure;
+    if (info.headers &&
+        info.headers->HasHeaderValue("Cache-Control", "no-store")) {
+      mode = SharedMemoryDataConsumerHandle::kApplyBackpressure;
+    }
+
     auto read_handle = std::make_unique<SharedMemoryDataConsumerHandle>(
-        base::BindOnce(&Context::CancelBodyStreaming, this),
+        mode, base::Bind(&Context::CancelBodyStreaming, this),
         &body_stream_writer_);
 
     // Here |body_stream_writer_| has an indirect reference to |this| and that
@@ -1166,7 +1166,6 @@ void WebURLLoaderImpl::PopulateURLResponse(
       net::IsCertStatusError(info.cert_status) &&
       !net::IsCertStatusMinorError(info.cert_status));
   response->SetIsLegacySymantecCert(info.is_legacy_symantec_cert);
-  response->SetCertValidityStart(info.cert_validity_start);
   response->SetAppCacheID(info.appcache_id);
   response->SetAppCacheManifestURL(info.appcache_manifest_url);
   response->SetWasCached(!info.load_timing.request_start_time.is_null() &&

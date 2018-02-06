@@ -63,7 +63,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SelectionTemplate.h"
-#include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -160,6 +159,7 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Time.h"
 #include "platform/wtf/dtoa.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
@@ -923,13 +923,13 @@ DOMRectReadOnly* Internals::absoluteCaretBounds(
 }
 
 String Internals::textAffinity() {
-  if (GetFrame()
-          ->GetPage()
-          ->GetFocusController()
-          .FocusedFrame()
-          ->Selection()
-          .GetSelectionInDOMTree()
-          .Affinity() == TextAffinity::kUpstream) {
+  if (GetFrame() && GetFrame()
+                            ->GetPage()
+                            ->GetFocusController()
+                            .FocusedFrame()
+                            ->Selection()
+                            .GetSelectionInDOMTree()
+                            .Affinity() == TextAffinity::kUpstream) {
     return "Upstream";
   }
   return "Downstream";
@@ -1395,13 +1395,13 @@ void Internals::setAutofilledValue(Element* element,
 
   if (auto* input = ToHTMLInputElementOrNull(*element)) {
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    input->setValue(value, kDispatchInputAndChangeEvent);
+    input->SetAutofillValue(value);
     input->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
   if (auto* textarea = ToHTMLTextAreaElementOrNull(*element)) {
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keydown));
-    textarea->setValue(value, kDispatchInputAndChangeEvent);
+    textarea->SetAutofillValue(value);
     textarea->DispatchScopedEvent(Event::CreateBubble(EventTypeNames::keyup));
   }
 
@@ -2537,6 +2537,20 @@ void Internals::setPersistent(HTMLVideoElement* video_element,
   video_element->OnBecamePersistentVideo(persistent);
 }
 
+void Internals::forceStaleStateForMediaElement(
+    HTMLMediaElement* media_element) {
+  DCHECK(media_element);
+  if (auto wmp = media_element->GetWebMediaPlayer())
+    wmp->ForceStaleStateForTesting();
+}
+
+bool Internals::isMediaElementSuspended(HTMLMediaElement* media_element) {
+  DCHECK(media_element);
+  if (auto wmp = media_element->GetWebMediaPlayer())
+    return wmp->IsSuspendedForTesting();
+  return false;
+}
+
 void Internals::registerURLSchemeAsBypassingContentSecurityPolicy(
     const String& scheme) {
   SchemeRegistry::RegisterURLSchemeAsBypassingContentSecurityPolicy(scheme);
@@ -3191,6 +3205,8 @@ bool Internals::ignoreLayoutWithPendingStylesheets(Document* document) {
 void Internals::setNetworkConnectionInfoOverride(
     bool on_line,
     const String& type,
+    const String& effective_type,
+    unsigned long http_rtt_msec,
     double downlink_max_mbps,
     ExceptionState& exception_state) {
   WebConnectionType webtype;
@@ -3220,14 +3236,6 @@ void Internals::setNetworkConnectionInfoOverride(
         ExceptionMessages::FailedToEnumerate("connection type", type));
     return;
   }
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(on_line, webtype,
-                                                             downlink_max_mbps);
-}
-
-void Internals::setNetworkQualityInfoOverride(const String& effective_type,
-                                              unsigned long transport_rtt_msec,
-                                              double downlink_throughput_mbps,
-                                              ExceptionState& exception_state) {
   WebEffectiveConnectionType web_effective_type =
       WebEffectiveConnectionType::kTypeUnknown;
   if (effective_type == "offline") {
@@ -3246,10 +3254,8 @@ void Internals::setNetworkQualityInfoOverride(const String& effective_type,
                             "effective connection type", effective_type));
     return;
   }
-
-  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
-      web_effective_type, transport_rtt_msec, downlink_throughput_mbps);
-
+  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(
+      on_line, webtype, web_effective_type, http_rtt_msec, downlink_max_mbps);
   GetFrame()->Client()->SetEffectiveConnectionTypeForTesting(
       web_effective_type);
 }
@@ -3468,7 +3474,7 @@ double Internals::monotonicTimeToZeroBasedDocumentTime(
     double platform_time,
     ExceptionState& exception_state) {
   return document_->Loader()->GetTiming().MonotonicTimeToZeroBasedDocumentTime(
-      platform_time);
+      TimeTicksFromSeconds(platform_time));
 }
 
 String Internals::getScrollAnimationState(Node* node) const {

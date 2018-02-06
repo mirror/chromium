@@ -31,7 +31,6 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "components/bookmarks/browser/base_bookmark_model_observer.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/favicon/ios/web_favicon_driver.h"
@@ -56,10 +55,12 @@
 #include "components/toolbar/toolbar_model_impl.h"
 #include "ios/chrome/app/tests_hook.h"
 #import "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h"
+#import "ios/chrome/browser/autofill/autofill_tab_helper.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
+#import "ios/chrome/browser/download/download_manager_tab_helper.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/favicon/favicon_loader.h"
@@ -139,6 +140,7 @@
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
 #import "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.h"
+#import "ios/chrome/browser/ui/download/download_manager_coordinator.h"
 #import "ios/chrome/browser/ui/download/legacy_download_manager_controller.h"
 #import "ios/chrome/browser/ui/download/pass_kit_coordinator.h"
 #import "ios/chrome/browser/ui/elements/activity_overlay_coordinator.h"
@@ -149,7 +151,9 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_foreground_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_to_top_animator.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 #import "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.h"
@@ -499,9 +503,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // YES if Voice Search should be started when the new tab animation is
   // finished.
   BOOL _startVoiceSearchAfterNewTabAnimation;
-
-  // YES if the user interacts with the location bar.
-  BOOL _locationBarHasFocus;
   // YES if a load was cancelled due to typing in the location bar.
   BOOL _locationBarEditCancelledLoad;
   // YES if waiting for a foreground tab due to expectNewForegroundTab.
@@ -600,6 +601,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
+
+  // Coordinator for the Download Manager UI.
+  DownloadManagerCoordinator* _downloadManagerCoordinator;
 
   // Coordinator for the language selection UI.
   LanguageSelectionCoordinator* _languageSelectionCoordinator;
@@ -706,6 +710,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
 // Vertical offset for fullscreen toolbar.
 @property(nonatomic, strong) NSLayoutConstraint* primaryToolbarOffsetConstraint;
+// Height constraint for toolbar.
+@property(nonatomic, strong) NSLayoutConstraint* primaryToolbarHeightConstraint;
 // Y-dimension offset for placement of the header.
 @property(nonatomic, readonly) CGFloat headerOffset;
 // Height of the header view for the tab model's current tab.
@@ -941,6 +947,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 @synthesize primaryToolbarCoordinator = _primaryToolbarCoordinator;
 @synthesize secondaryToolbarCoordinator = _secondaryToolbarCoordinator;
 @synthesize primaryToolbarOffsetConstraint = _primaryToolbarOffsetConstraint;
+@synthesize primaryToolbarHeightConstraint = _primaryToolbarHeightConstraint;
 @synthesize toolbarInterface = _toolbarInterface;
 @synthesize imageSaver = _imageSaver;
 // DialogPresenterDelegate property
@@ -984,6 +991,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     _snackbarCoordinator = [[SnackbarCoordinator alloc] init];
     _snackbarCoordinator.dispatcher = _dispatcher;
     [_snackbarCoordinator start];
+
+    _downloadManagerCoordinator =
+        [[DownloadManagerCoordinator alloc] initWithBaseViewController:self];
+    _downloadManagerCoordinator.presenter =
+        [[VerticalAnimationContainer alloc] init];
 
     _languageSelectionCoordinator =
         [[LanguageSelectionCoordinator alloc] initWithBaseViewController:self];
@@ -1109,8 +1121,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         [[SideSwipeController alloc] initWithTabModel:_model
                                          browserState:_browserState];
     [_sideSwipeController setSnapshotDelegate:self];
-    _sideSwipeController.toolbarInteractionHandler =
+    _sideSwipeController.primaryToolbarInteractionHandler =
         self.primaryToolbarCoordinator;
+    _sideSwipeController.secondaryToolbarSnapshotProvider =
+        self.secondaryToolbarCoordinator;
     [_sideSwipeController setSwipeDelegate:self];
     [_sideSwipeController setTabStripDelegate:self.tabStripCoordinator];
   }
@@ -1333,7 +1347,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)shieldWasTapped:(id)sender {
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [self.dispatcher cancelOmniboxEdit];
 }
 
 - (void)userEnteredTabSwitcher {
@@ -1420,7 +1434,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // Present voice search.
   [_voiceSearchBar prepareToPresentVoiceSearch];
   _voiceSearchController->StartRecognition(self, [_model currentTab]);
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [self.dispatcher cancelOmniboxEdit];
 }
 
 - (void)clearPresentedStateWithCompletion:(ProceduralBlock)completion
@@ -1429,7 +1443,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_bookmarkInteractionController dismissBookmarkModalControllerAnimated:NO];
   [_bookmarkInteractionController dismissSnackbar];
   if (dismissOmnibox) {
-    [self.primaryToolbarCoordinator cancelOmniboxEdit];
+    [self.dispatcher cancelOmniboxEdit];
   }
   [_dialogPresenter cancelAllDialogs];
   [self.dispatcher hidePageInfo];
@@ -1615,6 +1629,16 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (IsIPhoneX()) {
     [self setUpViewLayout:NO];
   }
+  // Update the toolbar height to account for the new top inset.
+  self.primaryToolbarHeightConstraint.constant =
+      [self primaryToolbarHeightWithInset];
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  // Update the toolbar height to account for |topLayoutGuide| changes.
+  self.primaryToolbarHeightConstraint.constant =
+      [self primaryToolbarHeightWithInset];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1816,8 +1840,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       // by the |completion| block below.
       UIView* launchScreenView = launchScreenController.view;
       launchScreenView.userInteractionEnabled = NO;
-      launchScreenView.frame = self.view.window.bounds;
-      [self.view.window addSubview:launchScreenView];
+      UIWindow* window = UIApplication.sharedApplication.keyWindow;
+      launchScreenView.frame = window.bounds;
+      [window addSubview:launchScreenView];
 
       // Replace the completion handler sent to the superclass with one which
       // removes |launchScreenView| and resets the status bar. If |completion|
@@ -1975,11 +2000,14 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [_toolbarCoordinator start];
   }
 
-  self.sideSwipeController.toolbarInteractionHandler =
+  self.sideSwipeController.primaryToolbarInteractionHandler =
       self.primaryToolbarCoordinator;
+  self.sideSwipeController.secondaryToolbarSnapshotProvider =
+      self.secondaryToolbarCoordinator;
 
-  [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
-                            forProtocol:@protocol(OmniboxFocuser)];
+  [_dispatcher
+      startDispatchingToTarget:self.primaryToolbarCoordinator.omniboxFocuser
+                   forProtocol:@protocol(OmniboxFocuser)];
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(FakeboxFocuser)];
   [self.legacyToolbarCoordinator setTabCount:[_model count]];
@@ -2008,6 +2036,31 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 }
 
+// The height of the primary toolbar with the top safe area inset included.
+- (CGFloat)primaryToolbarHeightWithInset {
+  UIView* primaryToolbar = self.primaryToolbarCoordinator.viewController.view;
+  CGFloat intrinsicHeight = primaryToolbar.intrinsicContentSize.height;
+  // If the primary toolbar is not the topmost header, it does not overlap with
+  // the unsafe area.
+  // TODO(crbug.com/806437): Update implementation such that this calculates the
+  // topmost header's height.
+  UIView* topmostHeader = [self.headerViews firstObject].view;
+  if (primaryToolbar != topmostHeader)
+    return intrinsicHeight;
+  // If the primary toolbar is topmost, subtract the height of the portion of
+  // the unsafe area.
+  CGFloat unsafeHeight = 0.0;
+  if (@available(iOS 11, *)) {
+    unsafeHeight = self.view.safeAreaInsets.top;
+  } else {
+    unsafeHeight = self.topLayoutGuide.length;
+  }
+  // The topmost header is laid out |headerOffset| from the top of |view|, so
+  // subtract that from the unsafe height.
+  unsafeHeight -= self.headerOffset;
+  return primaryToolbar.intrinsicContentSize.height + unsafeHeight;
+}
+
 - (void)addConstraintsToToolbar {
   NSLayoutYAxisAnchor* topAnchor;
   // On iPad, the toolbar is underneath the tab strip.
@@ -2020,11 +2073,19 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   [self.legacyToolbarCoordinator adjustToolbarHeight];
 
+  // Create a constraint for the vertical positioning of the toolbar.
+  UIView* primaryView = self.primaryToolbarCoordinator.viewController.view;
   self.primaryToolbarOffsetConstraint =
-      [self.primaryToolbarCoordinator.viewController.view.topAnchor
-          constraintEqualToAnchor:topAnchor];
+      [primaryView.topAnchor constraintEqualToAnchor:topAnchor];
+
+  // Create a constraint for the height of the toolbar to include the unsafe
+  // area height.
+  self.primaryToolbarHeightConstraint = [primaryView.heightAnchor
+      constraintEqualToConstant:[self primaryToolbarHeightWithInset]];
+
   [NSLayoutConstraint activateConstraints:@[
     self.primaryToolbarOffsetConstraint,
+    self.primaryToolbarHeightConstraint,
     [self.primaryToolbarCoordinator.viewController.view.leadingAnchor
         constraintEqualToAnchor:[self view].leadingAnchor],
     [self.primaryToolbarCoordinator.viewController.view.trailingAnchor
@@ -2169,7 +2230,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     if (self.secondaryToolbarCoordinator) {
       [[self view]
           insertSubview:self.secondaryToolbarCoordinator.viewController.view
-           aboveSubview:infoBarContainerView];
+           aboveSubview:self.primaryToolbarCoordinator.viewController.view];
     }
     AddNamedGuide(kOmniboxGuide, self.view);
     AddNamedGuide(kBackButtonGuide, self.view);
@@ -2194,12 +2255,14 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   contentFrame.origin.y = marginWithHeader;
   [_contentArea setFrame:contentFrame];
 
-  // Adjust the infobar container to be either at the bottom of the screen
-  // (iPhone) or on the lower toolbar edge (iPad).
-  CGRect infoBarFrame = contentFrame;
-  infoBarFrame.origin.y = CGRectGetMaxY(contentFrame);
-  infoBarFrame.size.height = 0;
-  [infoBarContainerView setFrame:infoBarFrame];
+  if (initialLayout) {
+    // Adjust the infobar container to be either at the bottom of the screen
+    // (iPhone) or on the lower toolbar edge (iPad).
+    CGRect infoBarFrame = contentFrame;
+    infoBarFrame.origin.y = CGRectGetMaxY(contentFrame);
+    infoBarFrame.size.height = 0;
+    [infoBarContainerView setFrame:infoBarFrame];
+  }
 
   // Attach the typing shield to the content area but have it hidden.
   [self.typingShield setFrame:[_contentArea frame]];
@@ -2269,7 +2332,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   Tab* tab = [_model currentTab];
   if (![tab navigationManager])
     return;
-  [self.toolbarInterface updateToolbarState];
+  [self.legacyToolbarCoordinator updateToolbarState];
   [self.legacyToolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
   if (_insertedTabWasPrerenderedTab && !_toolbarModelIOS->IsLoading())
@@ -2288,7 +2351,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     BOOL hideToolbar = NO;
     if (item) {
       GURL url = item->GetURL();
-      BOOL isNTP = url.GetOrigin() == GURL(kChromeUINewTabURL);
+      BOOL isNTP = url.GetOrigin() == kChromeUINewTabURL;
       hideToolbar = isNTP && !_isOffTheRecord &&
                     ![self.primaryToolbarCoordinator isOmniboxFirstResponder] &&
                     ![self.primaryToolbarCoordinator showingOmniboxPopup];
@@ -2841,6 +2904,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
     passwordTabHelper->SetPasswordControllerDelegate(self);
   }
 
+  if (AutofillTabHelper* autofillTabHelper =
+          AutofillTabHelper::FromWebState(tab.webState)) {
+    autofillTabHelper->SetBaseViewController(self);
+  }
+
   tab.dialogDelegate = self;
   tab.passKitDialogProvider = self;
   if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
@@ -2871,6 +2939,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   AppLauncherTabHelper::CreateForWebState(
       tab.webState, [[ExternalAppsLaunchPolicyDecider alloc] init],
       _appLauncherCoordinator);
+  DownloadManagerTabHelper::CreateForWebState(tab.webState,
+                                              _downloadManagerCoordinator);
 
   // The language detection helper accepts a callback from the translate
   // client, so must be created after it.
@@ -3794,7 +3864,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     NewTabPageController* pageController =
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
-                                          focuser:self.primaryToolbarCoordinator
+                                          focuser:self.dispatcher
                                      browserState:_browserState
                                   toolbarDelegate:self.toolbarInterface
                                          tabModel:_model
@@ -3922,14 +3992,45 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
+- (void)scrollFullscreenToTopWithAnimator:
+    (FullscreenScrollToTopAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    [self updateHeadersForFullscreenProgress:finalProgress];
+    [self updateFootersForFullscreenProgress:finalProgress];
+    [self updateContentViewTopPaddingForFullscreenProgress:finalProgress];
+    // Scroll the content to the top.
+    id<CRWWebViewProxy> webViewProxy = self.currentWebState->GetWebViewProxy();
+    CRWWebViewScrollViewProxy* scrollProxy = webViewProxy.scrollViewProxy;
+    CGPoint contentOffset = scrollProxy.contentOffset;
+    contentOffset.y = webViewProxy.shouldUseInsetForTopPadding
+                          ? -webViewProxy.topContentPadding
+                          : 0;
+    scrollProxy.contentOffset = contentOffset;
+  }];
+}
+
+- (void)showToolbarForForgroundWithAnimator:
+    (FullscreenForegroundAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    [self updateForFullscreenProgress:finalProgress];
+  }];
+}
+
 #pragma mark - FullscreenUIElement helpers
 
 // Translates the header views up and down according to |progress|, where a
 // progress of 1.0 fully shows the headers and a progress of 0.0 fully hides
 // them.
 - (void)updateHeadersForFullscreenProgress:(CGFloat)progress {
-  [self setFramesForHeaders:[self headerViews]
-                   atOffset:(1.0 - progress) * [self toolbarHeight]];
+  CGFloat toolbarHeightFullscreen = 0;
+  if (IsUIRefreshPhase1Enabled()) {
+    toolbarHeightFullscreen = kToolbarHeightFullscreen;
+  }
+  CGFloat offset = AlignValueToPixel(
+      (1.0 - progress) * ([self toolbarHeight] - toolbarHeightFullscreen));
+  [self setFramesForHeaders:[self headerViews] atOffset:offset];
 }
 
 // Translates the footer view up and down according to |progress|, where a
@@ -3941,8 +4042,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   UIView* footerView = [self footerView];
   DCHECK(footerView);
   CGRect frame = footerView.frame;
-  frame.origin.y = CGRectGetMaxY(footerView.superview.bounds) -
-                   progress * CGRectGetHeight(frame);
+  frame.origin.y =
+      AlignValueToPixel(CGRectGetMaxY(footerView.superview.bounds) -
+                        progress * CGRectGetHeight(frame));
   footerView.frame = frame;
 }
 
@@ -3952,7 +4054,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)updateContentViewTopPaddingForFullscreenProgress:(CGFloat)progress {
   if (self.currentWebState) {
     self.currentWebState->GetWebViewProxy().topContentPadding =
-        progress * [self toolbarHeight];
+        AlignValueToPixel(progress * [self toolbarHeight]);
   }
 }
 
@@ -4229,9 +4331,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 #pragma mark - WebToolbarDelegate (Public)
 
 - (void)locationBarDidBecomeFirstResponder {
-  if (_locationBarHasFocus)
-    return;  // TODO(crbug.com/244366): This should not be necessary.
-  _locationBarHasFocus = YES;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kLocationBarBecomesFirstResponderNotification
                     object:nil];
@@ -4247,12 +4346,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
   [[OmniboxGeolocationController sharedInstance]
       locationBarDidBecomeFirstResponder:_browserState];
+
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:YES];
 }
 
 - (void)locationBarDidResignFirstResponder {
-  if (!_locationBarHasFocus)
-    return;  // TODO(crbug.com/244366): This should not be necessary.
-  _locationBarHasFocus = NO;
   [self.sideSwipeController setEnabled:YES];
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kLocationBarResignsFirstResponderNotification
@@ -4284,6 +4382,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
                                                false /* check_for_repost */);
   }
+  [self.primaryToolbarCoordinator transitionToLocationBarFocusedState:NO];
 }
 
 - (void)locationBarBeganEdit {
@@ -4307,7 +4406,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   DCHECK(self.visible || self.dismissingModal);
 
   // Dismiss the omnibox (if open).
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [self.dispatcher cancelOmniboxEdit];
   // Dismiss the soft keyboard (if open).
   [[_model currentTab].webController dismissKeyboard];
   // Dismiss Find in Page focus.
@@ -4774,6 +4873,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
     [_languageSelectionCoordinator dismissLanguageSelector];
   }
   [self updateVoiceSearchBarVisibilityAnimated:NO];
+
+  self.currentWebState->GetWebViewProxy().scrollViewProxy.clipsToBounds = NO;
 
   [_paymentRequestManager setActiveWebState:newTab.webState];
 
@@ -5429,7 +5530,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)prepareForTabHistoryPresentation {
   DCHECK(self.visible || self.dismissingModal);
   [[self.tabModel currentTab].webController dismissKeyboard];
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [self.dispatcher cancelOmniboxEdit];
 }
 
 #pragma mark - CaptivePortalDetectorTabHelperDelegate
@@ -5449,7 +5550,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)prepareForPageInfoPresentation {
   // Dismiss the omnibox (if open).
-  [self.primaryToolbarCoordinator cancelOmniboxEdit];
+  [self.dispatcher cancelOmniboxEdit];
 }
 
 - (CGPoint)convertToPresentationCoordinatesForOrigin:(CGPoint)origin {

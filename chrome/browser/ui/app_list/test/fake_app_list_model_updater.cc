@@ -20,7 +20,7 @@ void FakeAppListModelUpdater::AddItemToFolder(
     std::unique_ptr<ChromeAppListItem> item,
     const std::string& folder_id) {
   ChromeAppListItem::TestApi test_api(item.get());
-  test_api.set_folder_id(folder_id);
+  test_api.SetFolderId(folder_id);
   items_.push_back(std::move(item));
 }
 
@@ -39,7 +39,7 @@ void FakeAppListModelUpdater::MoveItemToFolder(const std::string& id,
   size_t index;
   if (FindItemIndexForTest(id, &index)) {
     ChromeAppListItem::TestApi test_api(items_[index].get());
-    test_api.set_folder_id(folder_id);
+    test_api.SetFolderId(folder_id);
   }
 }
 
@@ -49,7 +49,7 @@ void FakeAppListModelUpdater::SetItemPosition(
   size_t index;
   if (FindItemIndexForTest(id, &index)) {
     ChromeAppListItem::TestApi test_api(items_[index].get());
-    test_api.set_position(new_position);
+    test_api.SetPosition(new_position);
   }
 }
 
@@ -83,25 +83,18 @@ bool FakeAppListModelUpdater::FindItemIndexForTest(const std::string& id,
   return false;
 }
 
-app_list::AppListFolderItem* FakeAppListModelUpdater::FindFolderItem(
+ChromeAppListItem* FakeAppListModelUpdater::FindFolderItem(
     const std::string& folder_id) {
-  return nullptr;
+  ChromeAppListItem* item = FindItem(folder_id);
+  return (item && item->is_folder()) ? item : nullptr;
 }
 
-bool FakeAppListModelUpdater::TabletMode() {
-  return false;
-}
-
-app_list::AppListViewState FakeAppListModelUpdater::StateFullscreen() {
-  return app_list::AppListViewState::CLOSED;
-}
-
-std::map<std::string, size_t>
-FakeAppListModelUpdater::GetIdToAppListIndexMap() {
-  std::map<std::string, size_t> id_to_app_list_index;
+void FakeAppListModelUpdater::GetIdToAppListIndexMap(
+    GetIdToAppListIndexMapCallback callback) {
+  std::unordered_map<std::string, size_t> id_to_app_list_index;
   for (size_t i = 0; i < items_.size(); ++i)
     id_to_app_list_index[items_[i]->id()] = i;
-  return id_to_app_list_index;
+  std::move(callback).Run(id_to_app_list_index);
 }
 
 size_t FakeAppListModelUpdater::BadgedItemCount() {

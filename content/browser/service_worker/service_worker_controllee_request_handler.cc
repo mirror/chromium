@@ -205,7 +205,7 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
 
   if (!context_ || !provider_host_) {
     // We can't do anything other than to fall back to network.
-    std::move(callback).Run(StartLoaderCallback());
+    std::move(callback).Run({});
     return;
   }
 
@@ -217,7 +217,7 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   // Fall back for the subsequent offline page interceptor to load the offline
   // snapshot of the page if required.
   if (ShouldFallbackToLoadOfflinePage(resource_request.headers)) {
-    std::move(callback).Run(StartLoaderCallback());
+    std::move(callback).Run({});
     return;
   }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
@@ -323,22 +323,9 @@ void ServiceWorkerControlleeRequestHandler::
   }
   DCHECK(registration.get());
 
-  base::Callback<WebContents*(void)> web_contents_getter;
-  if (IsBrowserSideNavigationEnabled()) {
-    web_contents_getter = provider_host_->web_contents_getter();
-  } else if (provider_host_->process_id() != -1 &&
-             provider_host_->frame_id() != -1) {
-    web_contents_getter = base::Bind(
-        [](int render_process_id, int render_frame_id) {
-          RenderFrameHost* rfh =
-              RenderFrameHost::FromID(render_process_id, render_frame_id);
-          return WebContents::FromRenderFrameHost(rfh);
-        },
-        provider_host_->process_id(), provider_host_->frame_id());
-  }
   if (!GetContentClient()->browser()->AllowServiceWorker(
           registration->pattern(), provider_host_->topmost_frame_url(),
-          resource_context_, web_contents_getter)) {
+          resource_context_, provider_host_->web_contents_getter())) {
     url_job_->FallbackToNetwork();
     TRACE_EVENT_ASYNC_END2(
         "ServiceWorker",
@@ -413,8 +400,7 @@ void ServiceWorkerControlleeRequestHandler::
   DCHECK_NE(active_version->fetch_handler_existence(),
             ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
   ServiceWorkerMetrics::CountControlledPageLoad(
-      active_version->site_for_uma(), stripped_url_, is_main_frame_load_,
-      url_job_->GetPageTransition(), url_job_->GetURLChainSize());
+      active_version->site_for_uma(), stripped_url_, is_main_frame_load_);
 
   bool is_forwarded =
       MaybeForwardToServiceWorker(url_job_.get(), active_version.get());
@@ -446,8 +432,7 @@ void ServiceWorkerControlleeRequestHandler::OnVersionStatusChanged(
   DCHECK_NE(version->fetch_handler_existence(),
             ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN);
   ServiceWorkerMetrics::CountControlledPageLoad(
-      version->site_for_uma(), stripped_url_, is_main_frame_load_,
-      url_job_->GetPageTransition(), url_job_->GetURLChainSize());
+      version->site_for_uma(), stripped_url_, is_main_frame_load_);
 
   provider_host_->AssociateRegistration(registration,
                                         false /* notify_controllerchange */);

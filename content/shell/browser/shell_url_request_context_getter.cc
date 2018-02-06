@@ -32,17 +32,21 @@
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/http/http_network_session.h"
-#include "net/proxy/proxy_config_service.h"
-#include "net/proxy/proxy_service.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
+#include "net/net_features.h"
+#include "net/proxy_resolution/proxy_config_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
-#include "services/network/public/cpp/network_features.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/network_switches.h"
 #include "url/url_constants.h"
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_policy.h"
+#include "net/reporting/reporting_service.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace content {
 
@@ -206,7 +210,7 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
     builder.SetInterceptors(std::move(request_interceptors_));
 
 #if BUILDFLAG(ENABLE_REPORTING)
-    if (base::FeatureList::IsEnabled(features::kReporting)) {
+    if (base::FeatureList::IsEnabled(network::features::kReporting)) {
       std::unique_ptr<net::ReportingPolicy> reporting_policy =
           std::make_unique<net::ReportingPolicy>();
       if (command_line.HasSwitch(switches::kRunLayoutTest))

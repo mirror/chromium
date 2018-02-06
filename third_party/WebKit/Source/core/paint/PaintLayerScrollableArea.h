@@ -281,6 +281,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
   IntSize MaximumScrollOffsetInt() const override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
+  LayoutRect VisibleScrollSnapportRect() const override;
   IntSize ContentsSize() const override;
   void ContentsResized() override;
   bool IsScrollable() const override;
@@ -433,7 +434,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
                                       const LayoutObject*,
                                       unsigned = 0) const final;
 
-  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTimerTaskRunner() const final;
 
   bool ShouldRebuildHorizontalScrollbarLayer() const {
     return rebuild_horizontal_scrollbar_layer_;

@@ -33,7 +33,6 @@
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
-#include "core/html_element_factory.h"
 #include "core/layout/LayoutObject.h"
 
 namespace blink {
@@ -317,28 +316,6 @@ Position LeadingCollapsibleWhitespacePosition(const Position& position,
   return prev;
 }
 
-// This assumes that it starts in editable content.
-Position TrailingWhitespacePosition(const Position& position,
-                                    WhitespacePositionOption option) {
-  DCHECK(!NeedsLayoutTreeUpdate(position));
-  DCHECK(IsEditablePosition(position)) << position;
-  if (position.IsNull())
-    return Position();
-
-  VisiblePosition visible_position = CreateVisiblePosition(position);
-  UChar character_after_visible_position = CharacterAfter(visible_position);
-  bool is_space =
-      option == kConsiderNonCollapsibleWhitespace
-          ? (IsSpaceOrNewline(character_after_visible_position) ||
-             character_after_visible_position == kNoBreakSpaceCharacter)
-          : IsCollapsibleWhitespace(character_after_visible_position);
-  // The space must not be in another paragraph and it must be editable.
-  if (is_space && !IsEndOfParagraph(visible_position) &&
-      NextPositionOf(visible_position, kCannotCrossEditingBoundary).IsNotNull())
-    return position;
-  return Position();
-}
-
 unsigned NumEnclosingMailBlockquotes(const Position& p) {
   unsigned num = 0;
   for (const Node* n = p.AnchorNode(); n; n = n->parentNode()) {
@@ -354,8 +331,9 @@ bool LineBreakExistsAtVisiblePosition(const VisiblePosition& visible_position) {
 }
 
 HTMLElement* CreateHTMLElement(Document& document, const QualifiedName& name) {
-  return HTMLElementFactory::createHTMLElement(name.LocalName(), document,
-                                               kCreatedByCloneNode);
+  DCHECK_EQ(name.NamespaceURI(), HTMLNames::xhtmlNamespaceURI)
+      << "Unexpected namespace: " << name;
+  return ToHTMLElement(document.createElement(name, kCreatedByCloneNode));
 }
 
 HTMLElement* EnclosingList(const Node* node) {

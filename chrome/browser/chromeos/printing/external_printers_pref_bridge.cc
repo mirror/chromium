@@ -40,9 +40,9 @@ std::vector<std::string> FromPrefs(const PrefService* prefs,
 void ExternalPrintersPrefBridge::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry,
     const ExternalPrinterPolicies& policies) {
-  // Default value for access mode is blacklist.
+  // Default value for access mode is AllAccess.
   registry->RegisterIntegerPref(policies.access_mode,
-                                ExternalPrinters::BLACKLIST_ONLY);
+                                ExternalPrinters::ALL_ACCESS);
   registry->RegisterListPref(policies.blacklist);
   registry->RegisterListPref(policies.whitelist);
 }
@@ -86,20 +86,23 @@ void ExternalPrintersPrefBridge::AccessModeUpdated() {
     return;
   }
 
-  auto* printers = ExternalPrintersFactory::Get()->GetForProfile(profile_);
+  base::WeakPtr<ExternalPrinters> printers =
+      ExternalPrintersFactory::Get()->GetForProfile(profile_);
   if (printers)
     printers->SetAccessMode(mode);
 }
 
 void ExternalPrintersPrefBridge::BlacklistUpdated() {
-  auto* printers = ExternalPrintersFactory::Get()->GetForProfile(profile_);
+  base::WeakPtr<ExternalPrinters> printers =
+      ExternalPrintersFactory::Get()->GetForProfile(profile_);
   if (printers)
     printers->SetBlacklist(
         FromPrefs(profile_->GetPrefs(), policies_.blacklist));
 }
 
 void ExternalPrintersPrefBridge::WhitelistUpdated() {
-  auto* printers = ExternalPrintersFactory::Get()->GetForProfile(profile_);
+  base::WeakPtr<ExternalPrinters> printers =
+      ExternalPrintersFactory::Get()->GetForProfile(profile_);
   if (printers)
     printers->SetWhitelist(
         FromPrefs(profile_->GetPrefs(), policies_.whitelist));

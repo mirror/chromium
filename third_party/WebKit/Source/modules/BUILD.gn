@@ -83,7 +83,6 @@ target("jumbo_" + modules_target_type, "modules") {
   deps = [
     ":make_modules_generated",
     ":module_names",
-    "//device/geolocation/public/interfaces:interfaces_blink",
     "//third_party/WebKit/Source/bindings/modules:generated",
     "//third_party/WebKit/Source/bindings/modules/v8:bindings_modules_impl",
     "//third_party/WebKit/Source/bindings/modules/v8:bindings_modules_origin_trial_features",
@@ -136,6 +135,7 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/WebKit/Source/modules/payments",
     "//third_party/WebKit/Source/modules/peerconnection",
     "//third_party/WebKit/Source/modules/permissions",
+    "//third_party/WebKit/Source/modules/picture_in_picture",
     "//third_party/WebKit/Source/modules/plugins",
     "//third_party/WebKit/Source/modules/presentation",
     "//third_party/WebKit/Source/modules/push_messaging",
@@ -169,10 +169,8 @@ target("jumbo_" + modules_target_type, "modules") {
     cflags = [ "/wd4334" ]  # Result of 32-bit shift implicitly converted to 64 bits.
   }
 
-  if (remove_webcore_debug_symbols) {
-    configs -= [ "//build/config/compiler:default_symbols" ]
-    configs += remove_webcore_symbols_config
-  }
+  configs -= [ "//build/config/compiler:default_symbols" ]
+  configs += blink_symbols_config
 }
 
 jumbo_source_set("modules_testing") {
@@ -269,6 +267,7 @@ jumbo_source_set("unit_tests") {
     "media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
     "media_controls/elements/MediaControlOverlayPlayButtonElementTest.cpp",
     "media_controls/elements/MediaControlTimelineElementTest.cpp",
+    "media_controls/elements/MediaControlToggleClosedCaptionsButtonElementTest.cpp",
     "mediastream/MediaConstraintsTest.cpp",
     "mediastream/MediaDevicesTest.cpp",
     "notifications/NotificationDataTest.cpp",
@@ -289,6 +288,7 @@ jumbo_source_set("unit_tests") {
     "payments/PaymentsValidatorsTest.cpp",
     "peerconnection/RTCDataChannelTest.cpp",
     "peerconnection/RTCPeerConnectionTest.cpp",
+    "picture_in_picture/PictureInPictureTest.cpp",
     "presentation/MockPresentationService.h",
     "presentation/MockWebPresentationClient.h",
     "presentation/PresentationAvailabilityStateTest.cpp",
@@ -297,7 +297,9 @@ jumbo_source_set("unit_tests") {
     "presentation/PresentationRequestTest.cpp",
     "push_messaging/PushManagerTest.cpp",
     "push_messaging/PushMessageDataTest.cpp",
+    "push_messaging/PushSubscriptionTest.cpp",
     "remoteplayback/RemotePlaybackTest.cpp",
+    "screen_orientation/ScreenOrientationDelegateTest.cpp",
     "serviceworkers/ServiceWorkerContainerTest.cpp",
     "serviceworkers/WebEmbeddedWorkerImplTest.cpp",
     "wake_lock/ScreenWakeLockTest.cpp",

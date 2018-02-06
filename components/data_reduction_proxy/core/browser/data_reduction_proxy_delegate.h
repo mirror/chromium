@@ -11,7 +11,7 @@
 #include "base/threading/thread_checker.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/proxy_delegate.h"
-#include "net/proxy/proxy_retry_info.h"
+#include "net/proxy_resolution/proxy_retry_info.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -55,7 +55,6 @@ class DataReductionProxyDelegate
                       const net::ProxyRetryInfoMap& proxy_retry_info,
                       net::ProxyInfo* result) override;
   void OnFallback(const net::ProxyServer& bad_proxy, int net_error) override;
-  bool IsTrustedSpdyProxy(const net::ProxyServer& proxy_server) override;
 
   void SetTickClockForTesting(base::TickClock* tick_clock);
 
@@ -81,10 +80,11 @@ class DataReductionProxyDelegate
   // NetworkChangeNotifier::IPAddressObserver:
   void OnIPAddressChanged() override;
 
-  bool GetAlternativeProxy(const GURL& url,
-                           const net::ProxyServer& resolved_proxy_server,
+  // Checks if the first proxy server in |result| supports QUIC and if so
+  // adds an alternative proxy configuration to |result|.
+  void GetAlternativeProxy(const GURL& url,
                            const net::ProxyRetryInfoMap& proxy_retry_info,
-                           net::ProxyServer* alternative_proxy_server) const;
+                           net::ProxyInfo* result) const;
 
   const DataReductionProxyConfig* config_;
   const DataReductionProxyConfigurator* configurator_;

@@ -2,7 +2,6 @@
 <title>Test autoplay muted behaviour in various system conditions.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <body></body>
 <script>
 var tests = [
@@ -84,9 +83,9 @@ function runTest(t, test) {
 
   internals.setSaveDataEnabled(test.conditions.dataSaver);
   if (test.conditions.cellular)
-    internals.setNetworkConnectionInfoOverride(true, 'cellular3g', 2.0);
+    internals.setNetworkConnectionInfoOverride(true, 'cellular3g', '4g', 100, 2.0);
   else
-    internals.setNetworkConnectionInfoOverride(true, 'wifi', 2.0);
+    internals.setNetworkConnectionInfoOverride(true, 'wifi', '4g', 100, 2.0);
   internals.settings.setForcePreloadNoneForMediaElements(test.conditions.lowEndDevice);
 
   // Generic required settings.
@@ -128,7 +127,7 @@ function runTest(t, test) {
     });
 
     media.muted = true;
-    media.src = findMediaFile('video', 'content/test');
+    media.src = 'content/test.ogv';
 
     if (type == 'attribute')
       media.autoplay = true;

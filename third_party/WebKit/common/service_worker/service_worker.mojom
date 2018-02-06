@@ -25,14 +25,40 @@ interface ServiceWorkerHost {
   GetClients(ServiceWorkerClientQueryOptions options)
     => (array<ServiceWorkerClientInfo> clients);
 
+  // Corresponds to Clients#get(id). Gets information of the service worker
+  // client with |client_uuid|.
+  GetClient(string client_uuid) => (ServiceWorkerClientInfo client);
+
+  // Corresponds to Clients#openWindow(url). Requests the browser to open a tab
+  // with |url|.
+  // On success, |client| contains service worker client information of the
+  // newly opened window and |error_msg| is null.
+  // Otherwise, |client| is null and |error_msg| describes the failure.
+  OpenNewTab(url.mojom.Url url)
+    => (ServiceWorkerClientInfo? client, string? error_msg);
+
+  // Corresponds to PaymentRequestEvent#openWindow(url).
+  // Spec: https://w3c.github.io/payment-handler/#openwindow-method
+  // Requests the browser to open a payment handler window with |url|.
+  // On success, |client| contains service worker client information of the
+  // newly opened window and |error_msg| is null.
+  // Otherwise, |client| is null and |error_msg| describes the failure.
+  OpenPaymentHandlerWindow(url.mojom.Url url)
+    => (ServiceWorkerClientInfo? client, string? error_msg);
+
   // TODO(leonhsl): Impl all methods.
-  // GetClient();
-  // OpenNewTab();
-  // OpenNewPopup();
   // PostMessageToClient();
   // FocusClient();
   // NavigateClient();
-  // SkipWaiting();
+
+  // Corresponds to ServiceWorkerGlobalScope#skipWaiting(). Allows this service
+  // worker to progress from the registration's waiting position to active even
+  // while service worker clients are using the registration.
+  // The callback is called with |success| true when the skipWaiting() promise
+  // should be resolved. If |success| is false, the operation failed fatally,
+  // but per spec the skipWaiting() promise should be left unresolved as it can
+  // never reject.
+  SkipWaiting() => (bool success);
 
   // Corresponds to Clients#claim(). Allows an active service worker to set
   // itself as the controller for all clients within its scope.

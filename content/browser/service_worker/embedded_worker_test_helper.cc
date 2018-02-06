@@ -283,6 +283,7 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
 
   void DispatchSyncEvent(const std::string& tag,
                          bool last_chance,
+                         base::TimeDelta timeout,
                          DispatchSyncEventCallback callback) override {
     NOTIMPLEMENTED();
   }
@@ -349,6 +350,10 @@ class EmbeddedWorkerTestHelper::MockRendererInterface : public mojom::Renderer {
   }
 
  private:
+  void CreateEmbedderRendererService(
+      service_manager::mojom::ServiceRequest service_request) override {
+    NOTREACHED();
+  }
   void CreateView(mojom::CreateViewParamsPtr) override { NOTREACHED(); }
   void CreateFrame(mojom::CreateFrameParamsPtr) override { NOTREACHED(); }
   void SetUpEmbeddedWorkerChannelForServiceWorker(
@@ -387,6 +392,7 @@ class EmbeddedWorkerTestHelper::MockRendererInterface : public mojom::Renderer {
   }
   void PurgePluginListCache(bool reload_pages) override { NOTREACHED(); }
   void SetProcessBackgrounded(bool backgrounded) override { NOTREACHED(); }
+  void SetSchedulerKeepActive(bool keep_active) override { NOTREACHED(); }
   void ProcessPurgeAndSuspend() override { NOTREACHED(); }
 
   base::WeakPtr<EmbeddedWorkerTestHelper> helper_;

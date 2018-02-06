@@ -147,7 +147,6 @@ GLES2Implementation::GLES2Implementation(
       bound_copy_write_buffer_(0),
       bound_pixel_pack_buffer_(0),
       bound_pixel_unpack_buffer_(0),
-      bound_transform_feedback_buffer_(0),
       bound_uniform_buffer_(0),
       bound_pixel_pack_transfer_buffer_id_(0),
       bound_pixel_unpack_transfer_buffer_id_(0),
@@ -1117,9 +1116,6 @@ bool GLES2Implementation::GetHelper(GLenum pname, GLint* params) {
     case GL_PIXEL_UNPACK_BUFFER_BINDING:
       *params = bound_pixel_unpack_buffer_;
       return true;
-    case GL_TRANSFORM_FEEDBACK_BUFFER_BINDING:
-      *params = bound_transform_feedback_buffer_;
-      return true;
     case GL_UNIFORM_BUFFER_BINDING:
       *params = bound_uniform_buffer_;
       return true;
@@ -1167,6 +1163,7 @@ bool GLES2Implementation::GetHelper(GLenum pname, GLint* params) {
     case GL_TRANSFORM_FEEDBACK_BINDING:
     case GL_TRANSFORM_FEEDBACK_ACTIVE:
     case GL_TRANSFORM_FEEDBACK_PAUSED:
+    case GL_TRANSFORM_FEEDBACK_BUFFER_BINDING:
     case GL_TRANSFORM_FEEDBACK_BUFFER_SIZE:
     case GL_TRANSFORM_FEEDBACK_BUFFER_START:
     case GL_UNIFORM_BUFFER_SIZE:
@@ -4330,12 +4327,6 @@ void GLES2Implementation::BindBufferHelper(
     case GL_PIXEL_UNPACK_TRANSFER_BUFFER_CHROMIUM:
       bound_pixel_unpack_transfer_buffer_id_ = buffer_id;
       break;
-    case GL_TRANSFORM_FEEDBACK_BUFFER:
-      if (bound_transform_feedback_buffer_ != buffer_id) {
-        bound_transform_feedback_buffer_ = buffer_id;
-        changed = true;
-      }
-      break;
     case GL_UNIFORM_BUFFER:
       if (bound_uniform_buffer_ != buffer_id) {
         bound_uniform_buffer_ = buffer_id;
@@ -4372,9 +4363,6 @@ void GLES2Implementation::BindBufferBaseHelper(
         SetGLError(GL_INVALID_VALUE,
                    "glBindBufferBase", "index out of range");
         return;
-      }
-      if (bound_transform_feedback_buffer_ != buffer_id) {
-        bound_transform_feedback_buffer_ = buffer_id;
       }
       break;
     case GL_UNIFORM_BUFFER:
@@ -4600,9 +4588,6 @@ void GLES2Implementation::DeleteBuffersHelper(
     if (buffers[ii] == bound_pixel_unpack_buffer_) {
       bound_pixel_unpack_buffer_ = 0;
     }
-    if (buffers[ii] == bound_transform_feedback_buffer_) {
-      bound_transform_feedback_buffer_ = 0;
-    }
     if (buffers[ii] == bound_uniform_buffer_) {
       bound_uniform_buffer_ = 0;
     }
@@ -4675,7 +4660,13 @@ void GLES2Implementation::DeleteTexturesHelper(
   }
   for (GLsizei ii = 0; ii < n; ++ii) {
     share_group_->discardable_texture_manager()->FreeTexture(textures[ii]);
+  }
+  UnbindTexturesHelper(n, textures);
+}
 
+void GLES2Implementation::UnbindTexturesHelper(GLsizei n,
+                                               const GLuint* textures) {
+  for (GLsizei ii = 0; ii < n; ++ii) {
     for (GLint tt = 0; tt < capabilities_.max_combined_texture_image_units;
          ++tt) {
       TextureUnit& unit = texture_units_[tt];
@@ -5178,8 +5169,27 @@ void GLES2Implementation::UnmapBufferSubDataCHROMIUM(const void* mem) {
 GLuint GLES2Implementation::GetBoundBufferHelper(GLenum target) {
   GLenum binding = GLES2Util::MapBufferTargetToBindingEnum(target);
   GLint id = 0;
-  bool cached = GetHelper(binding, &id);
-  DCHECK(cached);
+  if (target == GL_TRANSFORM_FEEDBACK_BUFFER) {
+    // GL_TRANSFORM_FEEDBACK_BUFFER is not cached locally, so we need to call
+    // the server here. We don't cache it because it's part of the transform
+    // feedback object state, which means that it's modified by things other
+    // than glBindBuffer calls, specifically glBindTransformFeedback, the
+    // success of which depends on a bunch of other states.
+    // TODO(jdarpinian): This is slow. We should audit callers of this function
+    //     to figure out if they really need this information, and skip this if
+    //     they don't.
+    auto* result = GetResultAs<cmds::GetIntegerv::Result*>();
+    DCHECK(result);
+    result->SetNumResults(0);
+    helper_->GetIntegerv(GL_TRANSFORM_FEEDBACK_BUFFER_BINDING, GetResultShmId(),
+                         GetResultShmOffset());
+    WaitForCmd();
+    DCHECK(result->GetNumResults() == 1);
+    result->CopyResult(&id);
+  } else {
+    bool cached = GetHelper(binding, &id);
+    DCHECK(cached);
+  }
   return static_cast<GLuint>(id);
 }
 
@@ -5700,7 +5710,7 @@ void GLES2Implementation::BeginQueryEXT(GLenum target, GLuint id) {
     case GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN:
       if (capabilities_.major_version >= 3)
         break;
-      // Fall through
+      FALLTHROUGH;
     default:
       SetGLError(
           GL_INVALID_ENUM, "glBeginQueryEXT", "unknown query target");
@@ -6148,27 +6158,28 @@ bool GLES2Implementation::ThreadsafeDiscardableTextureIsDeletedForTracing(
   return manager->TextureIsDeletedForTracing(texture_id);
 }
 
-void GLES2Implementation::CreateTransferCacheEntry(
-    const cc::ClientTransferCacheEntry& entry) {
-  transfer_cache_.CreateCacheEntry(helper_, mapped_memory_.get(), entry);
+void* GLES2Implementation::MapTransferCacheEntry(size_t serialized_size) {
+  return transfer_cache_.MapEntry(helper_, mapped_memory_.get(),
+                                  serialized_size);
 }
 
-bool GLES2Implementation::ThreadsafeLockTransferCacheEntry(
-    cc::TransferCacheEntryType type,
-    uint32_t id) {
-  return transfer_cache_.LockTransferCacheEntry(type, id);
+void GLES2Implementation::UnmapAndCreateTransferCacheEntry(uint32_t type,
+                                                           uint32_t id) {
+  transfer_cache_.UnmapAndCreateEntry(helper_, type, id);
+}
+
+bool GLES2Implementation::ThreadsafeLockTransferCacheEntry(uint32_t type,
+                                                           uint32_t id) {
+  return transfer_cache_.LockEntry(type, id);
 }
 
 void GLES2Implementation::UnlockTransferCacheEntries(
-    const std::vector<std::pair<cc::TransferCacheEntryType, uint32_t>>&
-        entries) {
-  transfer_cache_.UnlockTransferCacheEntries(helper_, entries);
+    const std::vector<std::pair<uint32_t, uint32_t>>& entries) {
+  transfer_cache_.UnlockEntries(helper_, entries);
 }
 
-void GLES2Implementation::DeleteTransferCacheEntry(
-    cc::TransferCacheEntryType type,
-    uint32_t id) {
-  transfer_cache_.DeleteTransferCacheEntry(helper_, type, id);
+void GLES2Implementation::DeleteTransferCacheEntry(uint32_t type, uint32_t id) {
+  transfer_cache_.DeleteEntry(helper_, type, id);
 }
 
 unsigned int GLES2Implementation::GetTransferBufferFreeSize() const {
@@ -6303,6 +6314,8 @@ bool CreateImageValidInternalFormat(GLenum internalformat,
       return capabilities.texture_format_etc1;
     case GL_R16_EXT:
       return capabilities.texture_norm16;
+    case GL_RGB10_A2_EXT:
+      return capabilities.image_xr30;
     case GL_RED:
     case GL_RG_EXT:
     case GL_RGB:
@@ -7140,6 +7153,14 @@ void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
                "Texture ID not initialized");
     return;
   }
+
+  // |should_unbind_texture| will be set to true if the texture has been fully
+  // unlocked. In this case, ensure the texture is unbound.
+  bool should_unbind_texture = false;
+  manager->UnlockTexture(texture_id, &should_unbind_texture);
+  if (should_unbind_texture)
+    UnbindTexturesHelper(1, &texture_id);
+
   helper_->UnlockDiscardableTextureCHROMIUM(texture_id);
 }
 

@@ -36,6 +36,7 @@
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "public/platform/WebFocusType.h"
 
@@ -755,6 +756,8 @@ class CORE_EXPORT Element : public ContainerNode {
   // sent at all.
   virtual bool IsDisabledFormControl() const { return false; }
 
+  virtual bool ShouldForceLegacyLayout() const { return false; }
+
   bool HasPendingResources() const {
     return HasElementFlag(kHasPendingResources);
   }
@@ -839,6 +842,9 @@ class CORE_EXPORT Element : public ContainerNode {
   EnsureResizeObserverData();
   void SetNeedsResizeObserverUpdate();
 
+  void WillBeginCustomizedScrollPhase(ScrollCustomization::ScrollDirection);
+  void DidEndCustomizedScrollPhase();
+
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
@@ -881,8 +887,7 @@ class CORE_EXPORT Element : public ContainerNode {
   // However, it must not retrieve layout information like position and size.
   // This method cannot be moved to LayoutObject because some focusable nodes
   // don't have layoutObjects. e.g., HTMLOptionElement.
-  // TODO(tkent): Rename this to isFocusableStyle.
-  virtual bool LayoutObjectIsFocusable() const;
+  virtual bool IsFocusableStyle() const;
 
   virtual bool ChildrenCanHaveStyle() const { return true; }
 

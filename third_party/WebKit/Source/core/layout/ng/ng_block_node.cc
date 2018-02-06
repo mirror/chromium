@@ -10,6 +10,7 @@
 #include "core/layout/LayoutTable.h"
 #include "core/layout/MinMaxSize.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_inline_node_legacy.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/legacy_layout_tree_walking.h"
@@ -186,10 +187,8 @@ scoped_refptr<NGLayoutResult> NGBlockNode::Layout(
     NGLayoutInputNode first_child = FirstChild();
     if (block_flow && first_child && first_child.IsInline()) {
       if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
-        // TODO(ikilpatrick): Move line-box creation logic from
-        // NGInlineNode::CopyFragmentDataToLayoutBox to NGBlockNode.
-        NGInlineNode node = ToNGInlineNode(first_child);
-        node.CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+        NGInlineNodeLegacy(ToNGInlineNode(first_child))
+            .CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
       } else {
         CopyFragmentDataToLayoutBoxForInlineChildren(
             ToNGPhysicalBoxFragment(*layout_result->PhysicalFragment()));
@@ -295,11 +294,16 @@ NGLayoutInputNode NGBlockNode::FirstChild() const {
   return NGBlockNode(ToLayoutBox(child));
 }
 
-bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGMixin())
-    return false;
+bool NGBlockNode::CanUseNewLayout(const LayoutBox& box) {
+  DCHECK(RuntimeEnabledFeatures::LayoutNGEnabled());
 
-  return RuntimeEnabledFeatures::LayoutNGEnabled();
+  // When the style has |ForceLegacyLayout|, it's usually not LayoutNGMixin,
+  // but anonymous block can be.
+  return box.IsLayoutNGMixin() && !box.StyleRef().ForceLegacyLayout();
+}
+
+bool NGBlockNode::CanUseNewLayout() const {
+  return CanUseNewLayout(*box_);
 }
 
 String NGBlockNode::ToString() const {
@@ -563,6 +567,7 @@ scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
   builder.SetIsOldLayoutRoot();
   builder.SetInlineSize(box_size.inline_size);
   builder.SetBlockSize(box_size.block_size);
+  builder.SetPadding(ComputePadding(constraint_space, box_->StyleRef()));
 
   // For now we copy the exclusion space straight through, this is incorrect
   // but needed as not all elements which participate in a BFC are switched

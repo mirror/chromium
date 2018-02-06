@@ -7,19 +7,19 @@
 
 #import <UIKit/UIKit.h>
 
-#include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 #import "ios/chrome/browser/ui/toolbar/public/fakebox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
-#include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
 
 @protocol ActivityServicePositioner;
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
+@protocol OmniboxFocuser;
 @class ToolbarButtonUpdater;
-@protocol ToolbarCommands;
 @protocol ToolbarCoordinatorDelegate;
 @protocol UrlLoader;
+@protocol VoiceSearchControllerDelegate;
+@protocol QRScannerResultLoading;
 class WebStateList;
 namespace ios {
 class ChromeBrowserState;
@@ -29,21 +29,19 @@ class WebState;
 }
 
 // Coordinator to run a toolbar -- a UI element housing controls.
-@interface ToolbarCoordinator : NSObject<OmniboxFocuser,
-                                         FakeboxFocuser,
-                                         QRScannerResultLoading,
-                                         ToolsMenuPresentationProvider,
-                                         VoiceSearchControllerDelegate>
+@interface ToolbarCoordinator
+    : NSObject<FakeboxFocuser, ToolsMenuPresentationProvider>
 
 // Weak reference to ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // The dispatcher for this view controller.
 @property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, ToolbarCommands>
+    id<ApplicationCommands, BrowserCommands, OmniboxFocuser>
         dispatcher;
 // The web state list this ToolbarCoordinator is handling.
 @property(nonatomic, assign) WebStateList* webStateList;
-// Delegate for this coordinator.
+// Delegate for this coordinator. Only used for plumbing to Location Bar
+// coordinator.
 // TODO(crbug.com/799446): Change this.
 @property(nonatomic, weak) id<ToolbarCoordinatorDelegate> delegate;
 // URL loader for the toolbar.
@@ -57,15 +55,22 @@ class WebState;
 // Returns the ActivityServicePositioner for this toolbar.
 - (id<ActivityServicePositioner>)activityServicePositioner;
 
+// Returns the OmniboxFocuser for this toolbar.
+- (id<OmniboxFocuser>)omniboxFocuser;
+// Returns the VoiceSearchControllerDelegate for this toolbar.
+- (id<VoiceSearchControllerDelegate>)voiceSearchControllerDelegate;
+// Returns the QRScannerResultLoading for this toolbar.
+- (id<QRScannerResultLoading>)QRScannerResultLoader;
+
 // Start this coordinator.
 - (void)start;
 // Stop this coordinator.
 - (void)stop;
 
-// TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
-// created.
-// Updates the visibility of the Omnibox text and Toolbar buttons.
-- (void)updateToolbarState;
+// Coordinates the location bar focusing/defocusing. For example, initiates
+// transition to the expanded location bar state of the view controller.
+- (void)transitionToLocationBarFocusedState:(BOOL)focused;
+
 // Updates the toolbar so it is in a state where a snapshot for |webState| can
 // be taken.
 - (void)updateToolbarForSideSwipeSnapshot:(web::WebState*)webState;

@@ -3,22 +3,22 @@
     {
       "name": "LayoutView #document",
       "bounds": [800, 600],
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "Scrolling Layer",
+      "bounds": [800, 600],
+      "drawsContent": false
+    },
+    {
+      "name": "Scrolling Contents Layer",
+      "bounds": [800, 600],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutSVGRect rect id='clipper'",
-          "rect": [0, 100, 300, 200],
-          "reason": "subtree"
-        },
-        {
           "object": "LayoutSVGRect rect id='masker'",
           "rect": [0, 0, 300, 100],
-          "reason": "subtree"
-        },
-        {
-          "object": "LayoutSVGRect rect id='clipper'",
-          "rect": [100, 0, 200, 300],
           "reason": "subtree"
         },
         {
@@ -35,6 +35,11 @@
           "object": "LayoutSVGContainer g",
           "rect": [50, 150, 100, 100],
           "reason": "geometry"
+        },
+        {
+          "object": "LayoutSVGRect rect id='clipper'",
+          "rect": [50, 150, 100, 100],
+          "reason": "subtree"
         }
       ]
     }

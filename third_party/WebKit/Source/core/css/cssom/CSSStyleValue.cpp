@@ -60,7 +60,7 @@ CSSStyleValue* CSSStyleValue::parse(const ExecutionContext* execution_context,
   return style_value_vector[0];
 }
 
-Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
+Optional<CSSStyleValueVector> CSSStyleValue::parseAll(
     const ExecutionContext* execution_context,
     const String& property_name,
     const String& value,
@@ -68,20 +68,14 @@ Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
   CSSStyleValueVector style_value_vector = ParseCSSStyleValue(
       execution_context, property_name, value, exception_state);
   if (style_value_vector.IsEmpty())
-    return nullptr;
+    return WTF::nullopt;
 
   return style_value_vector;
 }
 
-String CSSStyleValue::toString(ExceptionState& exception_state) const {
+String CSSStyleValue::toString() const {
   const CSSValue* result = ToCSSValue();
-  // TODO(crbug.com/803739): Remove this once all CSSStyleValues
-  // support toCSSValue().
-  if (!result) {
-    exception_state.ThrowTypeError(
-        "Some CSSMathValues can't be serialized yet. See crbug.com/803739");
-    return "";
-  }
+  DCHECK(result);
   return result->CssText();
 }
 

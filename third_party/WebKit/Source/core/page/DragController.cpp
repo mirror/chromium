@@ -130,7 +130,7 @@ static WebMouseEvent CreateMouseEvent(DragData* drag_data) {
                     drag_data->GlobalPosition().Y()),
       WebPointerProperties::Button::kLeft, 0,
       static_cast<WebInputEvent::Modifiers>(drag_data->GetModifiers()),
-      CurrentTimeTicks().InSeconds());
+      CurrentTimeTicksInSeconds());
   // TODO(dtapuska): Really we should chnage DragData to store the viewport
   // coordinates and scale.
   result.SetFrameScale(1);
@@ -1050,7 +1050,7 @@ static std::unique_ptr<DragImage> DragImageForImage(
   if (image->IsSVGImage()) {
     KURL url = element->GetDocument().CompleteURL(element->ImageSourceURL());
     svg_image = SVGImageForContainer::Create(
-        ToSVGImage(image), LayoutSize(image_element_size_in_pixels), 1, url);
+        ToSVGImage(image), FloatSize(image_element_size_in_pixels), 1, url);
     image = svg_image.get();
   }
 

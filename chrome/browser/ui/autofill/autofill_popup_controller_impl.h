@@ -16,7 +16,7 @@
 #include "chrome/browser/ui/autofill/autofill_popup_controller.h"
 #include "chrome/browser/ui/autofill/autofill_popup_layout_model.h"
 #include "chrome/browser/ui/autofill/popup_controller_common.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/native_theme/native_theme.h"
@@ -106,11 +106,9 @@ class AutofillPopupControllerImpl : public AutofillPopupController {
                                   base::string16* body) override;
   bool RemoveSuggestion(int list_index) override;
   ui::NativeTheme::ColorId GetBackgroundColorIDForRow(int index) const override;
+  void SetSelectedLine(base::Optional<int> selected_line) override;
   base::Optional<int> selected_line() const override;
   const AutofillPopupLayoutModel& layout_model() const override;
-
-  // Change which line is currently selected by the user.
-  void SetSelectedLine(base::Optional<int> selected_line);
 
   // Increase the selected line by 1, properly handling wrapping.
   void SelectNextLine();

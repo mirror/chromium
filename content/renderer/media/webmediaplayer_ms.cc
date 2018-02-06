@@ -502,7 +502,11 @@ void WebMediaPlayerMS::SetVolume(double volume) {
   delegate_->DidPlayerMutedStatusChange(delegate_id_, volume == 0.0);
 }
 
-void WebMediaPlayerMS::PictureInPicture() {}
+void WebMediaPlayerMS::EnterPictureInPicture() {
+  NOTIMPLEMENTED();
+  // TODO(apacible): Implement after video in surfaces is supported for
+  // WebMediaPlayerMS. See http://crbug/746182.
+}
 
 void WebMediaPlayerMS::SetSinkId(
     const blink::WebString& sink_id,
@@ -642,6 +646,11 @@ void WebMediaPlayerMS::Paint(blink::WebCanvas* canvas,
   const gfx::RectF dest_rect(rect.x, rect.y, rect.width, rect.height);
   video_renderer_.Paint(frame, canvas, dest_rect, flags, video_rotation_,
                         context_3d);
+}
+
+bool WebMediaPlayerMS::DidGetOpaqueResponseFromServiceWorker() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return false;
 }
 
 bool WebMediaPlayerMS::HasSingleSecurityOrigin() const {

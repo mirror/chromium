@@ -69,6 +69,7 @@ bool IsPreviewFieldTrialEnabled(PreviewsType type) {
     case PreviewsType::NOSCRIPT:
       return params::IsNoScriptPreviewsEnabled();
     case PreviewsType::NONE:
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }
@@ -421,6 +422,28 @@ TEST_F(PreviewsIODataTest, TestInitialization) {
   // After the outstanding posted tasks have run, |io_data_| should be fully
   // initialized.
   EXPECT_TRUE(io_data()->initialized());
+}
+
+TEST_F(PreviewsIODataTest, AllPreviewsDisabledByFeature) {
+  InitializeUIService();
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatures(
+      {features::kClientLoFi, features::kNoScriptPreviews},
+      {features::kPreviews} /* disable_features */);
+
+  network_quality_estimator()->set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_2G);
+
+  EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
+      *CreateHttpsRequest(), PreviewsType::LOFI,
+      previews::params::GetECTThresholdForPreview(
+          previews::PreviewsType::NOSCRIPT),
+      std::vector<std::string>()));
+  EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
+      *CreateHttpsRequest(), PreviewsType::NOSCRIPT,
+      previews::params::GetECTThresholdForPreview(
+          previews::PreviewsType::NOSCRIPT),
+      std::vector<std::string>()));
 }
 
 // Tests most of the reasons that a preview could be disallowed because of the

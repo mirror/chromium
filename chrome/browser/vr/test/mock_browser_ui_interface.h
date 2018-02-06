@@ -31,7 +31,7 @@ class MockBrowserUiInterface : public BrowserUiInterface {
   MOCK_METHOD1(SetScreenCaptureEnabled, void(bool enabled));
   MOCK_METHOD1(SetAudioCaptureEnabled, void(bool enabled));
   MOCK_METHOD1(SetBluetoothConnected, void(bool enabled));
-  MOCK_METHOD1(SetLocationAccess, void(bool enabled));
+  MOCK_METHOD1(SetLocationAccessEnabled, void(bool enabled));
   MOCK_METHOD2(SetExitVrPromptEnabled,
                void(bool enabled, UiUnsupportedMode reason));
   MOCK_METHOD1(SetSpeechRecognitionEnabled, void(bool enabled));
@@ -39,6 +39,11 @@ class MockBrowserUiInterface : public BrowserUiInterface {
   MOCK_METHOD1(OnSpeechRecognitionStateChanged, void(int new_state));
   void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions) {}
   MOCK_METHOD0(OnAssetsComponentReady, void());
+
+  MOCK_METHOD1(ShowSoftInput, void(bool));
+  MOCK_METHOD2(UpdateWebInputSelectionIndices, void(int, int));
+  MOCK_METHOD2(UpdateWebInputCompositionIndices, void(int, int));
+  MOCK_METHOD1(UpdateWebInputText, void(const base::string16&));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserUiInterface);

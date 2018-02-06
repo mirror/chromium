@@ -48,6 +48,7 @@
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/WebKit/public/platform/WebFloatPoint.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
+#include "third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/web/WebDeviceEmulationParams.h"
 #include "third_party/WebKit/public/web/WebMediaPlayerAction.h"
@@ -172,6 +173,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResizeParams)
   IPC_STRUCT_TRAITS_MEMBER(is_fullscreen_granted)
   IPC_STRUCT_TRAITS_MEMBER(display_mode)
   IPC_STRUCT_TRAITS_MEMBER(needs_resize_ack)
+  IPC_STRUCT_TRAITS_MEMBER(content_source_id)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::MenuItem)
@@ -344,12 +346,16 @@ IPC_MESSAGE_ROUTED1(ViewMsg_Resize, content::ResizeParams /* params */)
 
 // Tells the widget to use the provided viz::LocalSurfaceId to submit
 // CompositorFrames for autosize.
-IPC_MESSAGE_ROUTED5(ViewMsg_SetLocalSurfaceIdForAutoResize,
-                    uint64_t /* sequence_number */,
-                    gfx::Size /* min_size */,
-                    gfx::Size /* max_size */,
-                    content::ScreenInfo /* screen_info */,
-                    viz::LocalSurfaceId /* local_surface_id */)
+// TODO(fsamuel): Replace these parameters with ResizeParams eventually. After
+// surface sync is on by default everywhere, ResizeParams should be renamed to
+// SynchronizedVisualParams.
+IPC_MESSAGE_ROUTED(ViewMsg_SetLocalSurfaceIdForAutoResize,
+                   uint64_t /* sequence_number */,
+                   gfx::Size /* min_size */,
+                   gfx::Size /* max_size */,
+                   content::ScreenInfo /* screen_info */,
+                   uint32_t /* content_source_id */,
+                   viz::LocalSurfaceId /* local_surface_id */)
 
 // Enables device emulation. See WebDeviceEmulationParams for description.
 IPC_MESSAGE_ROUTED1(ViewMsg_EnableDeviceEmulation,
@@ -365,10 +371,12 @@ IPC_MESSAGE_ROUTED0(ViewMsg_WasHidden)
 // Tells the render view that it is no longer hidden (see WasHidden), and the
 // render view is expected to respond with a full repaint if needs_repainting
 // is true. If needs_repainting is false, then this message does not trigger a
-// message in response.
-IPC_MESSAGE_ROUTED2(ViewMsg_WasShown,
+// message in response. If any resizes happen while the widget was hidden, the
+// new ResizeParams will be provided in this message.
+IPC_MESSAGE_ROUTED3(ViewMsg_WasShown,
                     bool /* needs_repainting */,
-                    ui::LatencyInfo /* latency_info */)
+                    ui::LatencyInfo /* latency_info */,
+                    base::Optional<content::ResizeParams> /* resize_params */)
 
 // Tells the renderer to focus the first (last if reverse is true) focusable
 // node.
@@ -710,11 +718,6 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_FrameSwapMessages,
                     uint32_t /* frame_token */,
                     std::vector<IPC::Message> /* messages */)
 
-// Sent if the BeginFrame did not cause a SwapCompositorFrame (e.g. because no
-// updates were required or because it was aborted in the renderer).
-IPC_MESSAGE_ROUTED1(ViewHostMsg_DidNotProduceFrame,
-                    viz::BeginFrameAck /* ack */)
-
 // Send back a string to be recorded by UserMetrics.
 IPC_MESSAGE_CONTROL1(ViewHostMsg_UserMetricsRecordAction,
                      std::string /* action */)
@@ -731,6 +734,12 @@ IPC_MESSAGE_CONTROL1(ViewHostMsg_MediaLogEvents,
 IPC_MESSAGE_ROUTED2(ViewHostMsg_LockMouse,
                     bool /* user_gesture */,
                     bool /* privileged */)
+
+// Requests to tell the renderer for the containing frame of the current
+// renderer of a change in intrinsic sizing info parameters. This is only
+// used for SVG inside of <object>, and not for iframes.
+IPC_MESSAGE_ROUTED1(ViewHostMsg_IntrinsicSizingInfoChanged,
+                    blink::WebIntrinsicSizingInfo)
 
 // Requests to unlock the mouse. A ViewMsg_MouseLockLost message will be sent
 // whenever the mouse is unlocked (which may or may not be caused by

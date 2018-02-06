@@ -29,18 +29,17 @@ class TextInput : public UiElement {
   typedef base::RepeatingCallback<void(const TextInputInfo&)>
       OnInputCommittedCallback;
   TextInput(float font_height_meters,
-            OnFocusChangedCallback focus_changed_callback,
             OnInputEditedCallback input_edit_callback);
   ~TextInput() override;
 
+  void OnButtonDown(const gfx::PointF& position) override;
   void OnButtonUp(const gfx::PointF& position) override;
   void OnFocusChanged(bool focused) override;
   void OnInputEdited(const TextInputInfo& info) override;
   void OnInputCommitted(const TextInputInfo& info) override;
-
-  void RequestFocus();
-  void RequestUnfocus();
-  void UpdateInput(const TextInputInfo& info);
+  void RequestFocus() override;
+  void RequestUnfocus() override;
+  void UpdateInput(const TextInputInfo& info) override;
 
   void SetHintText(const base::string16& text);
   void SetTextColor(SkColor color);
@@ -61,17 +60,20 @@ class TextInput : public UiElement {
   Text* get_text_element() { return text_element_; }
   Rect* get_cursor_element() { return cursor_element_; }
 
+  TextInputInfo GetTextInputInfoForTest() const;
+
  private:
   void LayOutChildren() final;
   bool SetCursorBlinkState(const base::TimeTicks& time);
+  void ResetCursorBlinkCycle();
 
-  OnFocusChangedCallback focus_changed_callback_;
   OnInputEditedCallback input_edit_callback_;
   OnInputEditedCallback input_commit_callback_;
   TextInputDelegate* delegate_ = nullptr;
   TextInputInfo text_info_;
   bool focused_ = false;
   bool cursor_visible_ = false;
+  base::TimeTicks cursor_blink_start_ticks_;
 
   Text* hint_element_ = nullptr;
   Text* text_element_ = nullptr;

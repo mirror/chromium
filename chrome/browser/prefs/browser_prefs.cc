@@ -175,7 +175,6 @@
 #include "chrome/browser/android/oom_intervention/oom_intervention_decider.h"
 #include "chrome/browser/android/preferences/browser_prefs_android.h"
 #include "chrome/browser/geolocation/geolocation_permission_context_android.h"
-#include "chrome/browser/gpu/gpu_driver_info_manager_android.h"
 #include "chrome/browser/ntp_snippets/download_suggestions_provider.h"
 #include "components/cdm/browser/media_drm_storage_impl.h"
 #include "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h"
@@ -313,6 +312,9 @@ const char kStabilityLaunchedActivityCounts[] =
     "user_experience_metrics.stability.launched_activity_counts";
 const char kStabilityCrashedActivityCounts[] =
     "user_experience_metrics.stability.crashed_activity_counts";
+#else
+// Deprecated 1/2018.
+const char kShowFirstRunBubbleOption[] = "show-first-run-bubble-option";
 #endif  // defined(OS_ANDROID)
 
 // Deprecated 11/2017.
@@ -387,7 +389,6 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 
 #if defined(OS_ANDROID)
   ::android::RegisterPrefs(registry);
-  GpuDriverInfoManager::RegisterPrefs(registry);
   // Obsolete activity prefs. See MigrateObsoleteBrowserPrefs().
   registry->RegisterIntegerPref(kStabilityForegroundActivityType, 0);
   registry->RegisterIntegerPref(kStabilityLaunchedActivityFlags, 0);
@@ -402,6 +403,8 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   StartupBrowserCreator::RegisterLocalStatePrefs(registry);
   task_manager::TaskManagerInterface::RegisterPrefs(registry);
   UpgradeDetector::RegisterPrefs(registry);
+  // Obsolete. See MigrateObsoleteBrowserPrefs().
+  registry->RegisterIntegerPref(kShowFirstRunBubbleOption, 0);
 #if !defined(OS_CHROMEOS)
   RegisterDefaultBrowserPromptPrefs(registry);
 #endif  // !defined(OS_CHROMEOS)
@@ -705,6 +708,9 @@ void MigrateObsoleteBrowserPrefs(Profile* profile, PrefService* local_state) {
   local_state->ClearPref(kStabilityLaunchedActivityFlags);
   local_state->ClearPref(kStabilityLaunchedActivityCounts);
   local_state->ClearPref(kStabilityCrashedActivityCounts);
+#else
+  // Added 1/2018.
+  local_state->ClearPref(kShowFirstRunBubbleOption);
 #endif  // defined(OS_ANDROID)
 }
 

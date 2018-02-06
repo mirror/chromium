@@ -47,15 +47,6 @@
   [self.coordinators addObject:toolbarCoordinator];
 }
 
-#pragma mark - ToolbarCoordinating
-
-- (void)updateToolbarState {
-  for (id<ToolbarCoordinating> coordinator in self.coordinators) {
-    [coordinator updateToolbarState];
-  }
-  [self.toolsMenuCoordinator updateConfiguration];
-}
-
 #pragma mark - IncognitoViewControllerDelegate
 
 - (void)setToolbarBackgroundAlpha:(CGFloat)alpha {
@@ -65,12 +56,6 @@
 }
 
 #pragma mark - ToolbarCommands
-
-- (void)contractToolbar {
-  for (id<ToolbarCommands> coordinator in self.coordinators) {
-    [coordinator contractToolbar];
-  }
-}
 
 - (void)triggerToolsMenuButtonAnimation {
   for (id<ToolbarCommands> coordinator in self.coordinators) {

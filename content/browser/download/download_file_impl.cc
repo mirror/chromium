@@ -27,6 +27,7 @@
 #include "crypto/sha2.h"
 #include "mojo/public/c/system/types.h"
 #include "net/base/io_buffer.h"
+#include "services/network/public/cpp/features.h"
 
 namespace content {
 
@@ -118,7 +119,7 @@ void DownloadFileImpl::SourceStream::TruncateLengthWithWrittenDataBlock(
     return;
   }
 
-  if (length_ == DownloadSaveInfo::kLengthFullContent ||
+  if (length_ == download::DownloadSaveInfo::kLengthFullContent ||
       length_ > offset - offset_) {
     length_ = offset - offset_;
   }
@@ -141,9 +142,8 @@ void DownloadFileImpl::SourceStream::ClearDataReadyCallback() {
     stream_reader_->RegisterCallback(base::Closure());
 }
 
-DownloadInterruptReason DownloadFileImpl::SourceStream::GetCompletionStatus() {
-  if (stream_reader_)
-    return static_cast<DownloadInterruptReason>(stream_reader_->GetStatus());
+DownloadInterruptReason DownloadFileImpl::SourceStream::GetCompletionStatus()
+    const {
   return completion_status_;
 }
 
@@ -186,6 +186,9 @@ DownloadFileImpl::SourceStream::Read(scoped_refptr<net::IOBuffer>* data,
       case ByteStreamReader::STREAM_HAS_DATA:
         return HAS_DATA;
       case ByteStreamReader::STREAM_COMPLETE:
+        DownloadInterruptReason reason =
+            static_cast<DownloadInterruptReason>(stream_reader_->GetStatus());
+        OnResponseCompleted(reason);
         return COMPLETE;
     }
   }
@@ -193,7 +196,7 @@ DownloadFileImpl::SourceStream::Read(scoped_refptr<net::IOBuffer>* data,
 }
 
 DownloadFileImpl::DownloadFileImpl(
-    std::unique_ptr<DownloadSaveInfo> save_info,
+    std::unique_ptr<download::DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<DownloadManager::InputStream> stream,
     uint32_t download_id,
@@ -207,7 +210,7 @@ DownloadFileImpl::DownloadFileImpl(
 }
 
 DownloadFileImpl::DownloadFileImpl(
-    std::unique_ptr<DownloadSaveInfo> save_info,
+    std::unique_ptr<download::DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     uint32_t download_id,
     base::WeakPtr<DownloadDestinationObserver> observer)
@@ -289,6 +292,13 @@ void DownloadFileImpl::AddInputStream(
     int64_t length) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  // UI thread may not be notified about completion and detach download file,
+  // clear up the network request.
+  if (IsDownloadCompleted()) {
+    CancelRequest(offset);
+    return;
+  }
+
   source_streams_[offset] =
       std::make_unique<SourceStream>(offset, length, std::move(stream));
   OnSourceStreamAdded(source_streams_[offset].get());
@@ -344,7 +354,8 @@ bool DownloadFileImpl::CalculateBytesToWrite(SourceStream* source_stream,
     }
   }
 
-  if (source_stream->length() != DownloadSaveInfo::kLengthFullContent &&
+  if (source_stream->length() !=
+          download::DownloadSaveInfo::kLengthFullContent &&
       source_stream->bytes_written() +
               static_cast<int64_t>(bytes_available_to_write) >
           source_stream->length()) {
@@ -397,7 +408,8 @@ bool DownloadFileImpl::ShouldRetryFailedRename(DownloadInterruptReason reason) {
 DownloadInterruptReason DownloadFileImpl::HandleStreamCompletionStatus(
     SourceStream* source_stream) {
   DownloadInterruptReason reason = source_stream->GetCompletionStatus();
-  if (source_stream->length() == DownloadSaveInfo::kLengthFullContent &&
+  if (source_stream->length() ==
+          download::DownloadSaveInfo::kLengthFullContent &&
       !received_slices_.empty() &&
       (source_stream->offset() == received_slices_.back().offset +
                                       received_slices_.back().received_bytes) &&
@@ -525,7 +537,7 @@ void DownloadFileImpl::Resume() {
   DCHECK(is_paused_);
   is_paused_ = false;
 
-  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+  if (!base::FeatureList::IsEnabled(network::features::kNetworkService))
     return;
 
   for (auto& stream : source_streams_) {
@@ -539,7 +551,8 @@ void DownloadFileImpl::Resume() {
 void DownloadFileImpl::StreamActive(SourceStream* source_stream,
                                     MojoResult result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (base::FeatureList::IsEnabled(features::kNetworkService) && is_paused_)
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService) &&
+      is_paused_)
     return;
 
   base::TimeTicks start(base::TimeTicks::Now());
@@ -649,7 +662,8 @@ void DownloadFileImpl::NotifyObserver(SourceStream* source_stream,
     source_stream->set_finished(true);
     if (should_terminate)
       CancelRequest(source_stream->offset());
-    if (source_stream->length() == DownloadSaveInfo::kLengthFullContent) {
+    if (source_stream->length() ==
+        download::DownloadSaveInfo::kLengthFullContent) {
       SetPotentialFileLength(source_stream->offset() +
                              source_stream->bytes_written());
     }
@@ -776,50 +790,26 @@ void DownloadFileImpl::HandleStreamError(SourceStream* source_stream,
   source_stream->set_finished(true);
   num_active_streams_--;
 
+  // If previous stream has already written data at the starting offset of
+  // the error stream. The download can complete.
   bool can_recover_from_error = (source_stream->length() == kNoBytesToWrite);
 
+  // See if the previous stream can download the full content.
+  // If the current stream has written some data, length of all preceding
+  // streams will be truncated.
   if (IsSparseFile() && !can_recover_from_error) {
-    // If a neighboring stream request is available, check if it can help
-    // download all the data left by |source stream| or has already done so. We
-    // want to avoid the situation that a server always fail additional requests
-    // from the client thus causing the initial request and the download going
-    // nowhere.
-    // TODO(qinmin): make all streams half open so that they can recover
-    // failures from their neighbors.
     SourceStream* preceding_neighbor = FindPrecedingNeighbor(source_stream);
     while (preceding_neighbor) {
-      int64_t upper_range = source_stream->offset() + source_stream->length();
-      if ((!preceding_neighbor->is_finished() &&
-           (preceding_neighbor->length() ==
-                DownloadSaveInfo::kLengthFullContent ||
-            preceding_neighbor->offset() + preceding_neighbor->length() >=
-                upper_range)) ||
-          (preceding_neighbor->offset() + preceding_neighbor->bytes_written() >=
-           upper_range)) {
+      if (CanRecoverFromError(source_stream, preceding_neighbor)) {
         can_recover_from_error = true;
         break;
       }
+
       // If the neighbor cannot recover the error and it has already created
       // a slice, just interrupt the download.
       if (preceding_neighbor->bytes_written() > 0)
         break;
       preceding_neighbor = FindPrecedingNeighbor(preceding_neighbor);
-    }
-
-    if (can_recover_from_error) {
-      // Since the neighbor stream will download all data downloading from its
-      // offset to source_stream->offset(). Close all other streams in the
-      // middle.
-      for (auto& stream : source_streams_) {
-        if (stream.second->offset() < source_stream->offset() &&
-            stream.second->offset() > preceding_neighbor->offset()) {
-          DCHECK_EQ(stream.second->bytes_written(), 0);
-          stream.second->ClearDataReadyCallback();
-          stream.second->set_finished(true);
-          CancelRequest(stream.second->offset());
-          num_active_streams_--;
-        }
-      }
     }
   }
 
@@ -871,7 +861,8 @@ void DownloadFileImpl::DebugStates() const {
     DVLOG(1) << "Source stream, offset = " << stream.second->offset()
              << " , bytes_written = " << stream.second->bytes_written()
              << " , is_finished = " << stream.second->is_finished()
-             << " , length = " << stream.second->length();
+             << " , length = " << stream.second->length()
+             << ", index = " << stream.second->index();
   }
 
   DebugSlicesInfo(received_slices_);

@@ -11,7 +11,7 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "content/public/common/content_features.h"
+#include "services/network/public/cpp/features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -58,7 +58,7 @@ class ServiceWorkerTimeoutTimerTest : public testing::Test {
   }
 
   void EnableServicification() {
-    feature_list_.InitWithFeatures({features::kNetworkService}, {});
+    feature_list_.InitWithFeatures({network::features::kNetworkService}, {});
     ASSERT_TRUE(ServiceWorkerUtils::IsServicificationEnabled());
   }
 
@@ -131,6 +131,33 @@ TEST_F(ServiceWorkerTimeoutTimerTest, EventTimer) {
                                base::TimeDelta::FromSeconds(1));
 
   EXPECT_FALSE(event1.has_aborted());
+  EXPECT_TRUE(event2.has_aborted());
+}
+
+TEST_F(ServiceWorkerTimeoutTimerTest, CustomTimeouts) {
+  EnableServicification();
+
+  ServiceWorkerTimeoutTimer timer(base::BindRepeating(&base::DoNothing),
+                                  task_runner()->GetMockTickClock());
+  MockEvent event1, event2;
+  int event_id1 = timer.StartEventWithCustomTimeout(
+      event1.CreateAbortCallback(), ServiceWorkerTimeoutTimer::kUpdateInterval -
+                                        base::TimeDelta::FromSeconds(1));
+  int event_id2 = timer.StartEventWithCustomTimeout(
+      event2.CreateAbortCallback(),
+      ServiceWorkerTimeoutTimer::kUpdateInterval * 2 -
+          base::TimeDelta::FromSeconds(1));
+  event1.set_event_id(event_id1);
+  event2.set_event_id(event_id2);
+  task_runner()->FastForwardBy(ServiceWorkerTimeoutTimer::kUpdateInterval +
+                               base::TimeDelta::FromSeconds(1));
+
+  EXPECT_TRUE(event1.has_aborted());
+  EXPECT_FALSE(event2.has_aborted());
+  task_runner()->FastForwardBy(ServiceWorkerTimeoutTimer::kUpdateInterval +
+                               base::TimeDelta::FromSeconds(1));
+
+  EXPECT_TRUE(event1.has_aborted());
   EXPECT_TRUE(event2.has_aborted());
 }
 

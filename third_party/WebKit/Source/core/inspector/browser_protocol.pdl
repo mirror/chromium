@@ -1019,7 +1019,8 @@ experimental domain CSS
   # Enables the selector recording.
   command startRuleUsageTracking
 
-  # The list of rules with an indication of whether these were used
+  # Stop tracking rule usage and return the list of rules that were used since last call to 
+  # `takeCoverageDelta` (or since start of coverage instrumentation)
   command stopRuleUsageTracking
     returns
       array of RuleUsage ruleUsage
@@ -2764,14 +2765,14 @@ domain Input
       integer x
       # Y coordinate of the mouse pointer in DIP.
       integer y
-      # Time at which the event occurred.
-      TimeSinceEpoch timestamp
       # Mouse button.
       enum button
         none
         left
         middle
         right
+      # Time at which the event occurred (default: current time).
+      optional TimeSinceEpoch timestamp
       # X delta in DIP for mouse wheel event (default: 0).
       optional number deltaX
       # Y delta in DIP for mouse wheel event (default: 0).
@@ -2865,6 +2866,9 @@ experimental domain Inspector
 
   # Fired when debugging target has crashed
   event targetCrashed
+
+  # Fired when debugging target has reloaded after crash
+  event targetReloadedAfterCrash
 
 experimental domain LayerTree
   depends on DOM
@@ -3150,6 +3154,43 @@ experimental domain Memory
     parameters
       # Memory pressure level of the notification.
       PressureLevel level
+
+  # Start collecting native memory profile.
+  command startSampling
+    parameters
+      # Average number of bytes between samples.
+      optional integer samplingInterval
+      # Do not randomize intervals between samples.
+      optional boolean suppressRandomness
+
+  # Stop collecting native memory profile.
+  command stopSampling
+
+  # Retrieve native memory allocations profile collected since process startup.
+  command getAllTimeSamplingProfile
+    returns
+      SamplingProfile profile
+
+  # Retrieve native memory allocations profile collected since last
+  # `startSampling` call.
+  command getSamplingProfile
+    returns
+      SamplingProfile profile
+
+  # Heap profile sample.
+  type SamplingProfileNode extends object
+    properties
+      # Size of the sampled allocation.
+      number size
+      # Number of sampled allocations of that size.
+      number count
+      # Execution stack at the point of allocation.
+      array of string stack
+
+  # Array of heap profile samples.
+  type SamplingProfile extends object
+    properties
+      array of SamplingProfileNode samples
 
 # Network domain allows tracking network activities of the page. It exposes information about http,
 # file, data and other requests and responses, their headers, bodies, timing, etc.
@@ -4535,6 +4576,8 @@ domain Page
       optional string referrer
       # Intended transition type.
       optional TransitionType transitionType
+      # Frame id to navigate, if not specified navigates the top frame.
+      optional FrameId frameId
     returns
       # Frame id that has navigated (or failed to navigate)
       FrameId frameId
@@ -4590,6 +4633,9 @@ domain Page
       optional string headerTemplate
       # HTML template for the print footer. Should use the same format as the `headerTemplate`.
       optional string footerTemplate
+      # Whether or not to prefer page size as defined by css. Defaults to false,
+      # in which case the content will be scaled to fit the paper size.
+      optional boolean preferCSSPageSize
     returns
       # Base64-encoded pdf data.
       string data
@@ -5412,11 +5458,6 @@ domain Target
       optional SessionID sessionId
       # Deprecated.
       deprecated optional TargetID targetId
-
-  experimental command setAttachToFrames
-    parameters
-      # Whether to attach to frames.
-      boolean value
 
   # Controls whether to automatically attach to new targets which are considered to be related to
   # this one. When turned on, attaches to all existing related targets as well. When turned off,

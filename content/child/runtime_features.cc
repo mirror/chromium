@@ -17,6 +17,7 @@
 #include "content/public/common/content_switches.h"
 #include "media/base/media_switches.h"
 #include "services/device/public/cpp/device_features.h"
+#include "services/network/public/cpp/features.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_switches.h"
@@ -228,6 +229,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableUserActivationV2(
       base::FeatureList::IsEnabled(features::kUserActivationV2));
 
+  if (base::FeatureList::IsEnabled(features::kScrollAnchorSerialization))
+    WebRuntimeFeatures::EnableScrollAnchorSerialization(true);
+
   if (command_line.HasSwitch(switches::kEnableSlimmingPaintV175))
     WebRuntimeFeatures::EnableFeatureFromString("SlimmingPaintV175", true);
   if (command_line.HasSwitch(switches::kEnableSlimmingPaintV2))
@@ -294,7 +298,7 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
           features::kServiceWorkerScriptFullCodeCache));
 
   WebRuntimeFeatures::EnableNetworkService(
-      base::FeatureList::IsEnabled(features::kNetworkService));
+      base::FeatureList::IsEnabled(network::features::kNetworkService));
 
   if (base::FeatureList::IsEnabled(features::kGamepadExtensions))
     WebRuntimeFeatures::EnableGamepadExtensions(true);
@@ -318,7 +322,7 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (base::FeatureList::IsEnabled(features::kNotificationsWithMojo))
     WebRuntimeFeatures::EnableNotificationsWithMojo(true);
 
-  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS))
+  if (base::FeatureList::IsEnabled(network::features::kOutOfBlinkCORS))
     WebRuntimeFeatures::EnableOutOfBlinkCORS(true);
 
   if (base::FeatureList::IsEnabled(features::kOriginManifest))
@@ -392,6 +396,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       "FeaturePolicyForPermissions",
       base::FeatureList::IsEnabled(features::kUseFeaturePolicyForPermissions));
 
+  if (base::FeatureList::IsEnabled(features::kKeyboardLockAPI))
+    WebRuntimeFeatures::EnableFeatureFromString("KeyboardLock", true);
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :
@@ -420,6 +427,12 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnablePictureInPicture(
       base::FeatureList::IsEnabled(media::kPictureInPicture));
+
+  WebRuntimeFeatures::EnableCodeCacheAfterExecute(
+      base::FeatureList::IsEnabled(features::kCodeCacheAfterExecute));
+
+  if (base::FeatureList::IsEnabled(features::kUnifiedTouchAdjustment))
+    WebRuntimeFeatures::EnableUnifiedTouchAdjustment(true);
 };
 
 }  // namespace content

@@ -187,6 +187,24 @@ void RenderWidgetHostViewChildFrame::SetFrameSinkId(
 }
 #endif  // defined(USE_AURA)
 
+bool RenderWidgetHostViewChildFrame::OnMessageReceived(
+    const IPC::Message& msg) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(RenderWidgetHostViewChildFrame, msg)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_IntrinsicSizingInfoChanged,
+                        OnIntrinsicSizingInfoChanged)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+
+  return handled;
+}
+
+void RenderWidgetHostViewChildFrame::OnIntrinsicSizingInfoChanged(
+    blink::WebIntrinsicSizingInfo sizing_info) {
+  if (frame_connector_)
+    frame_connector_->SendIntrinsicSizingInfoToParent(sizing_info);
+}
+
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
     TouchSelectionControllerClientManager* manager) {
   // We get the manager via the observer callback instead of through the
@@ -254,16 +272,23 @@ bool RenderWidgetHostViewChildFrame::IsShowing() {
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
   gfx::Rect rect;
   if (frame_connector_) {
-    rect = frame_connector_->frame_rect_in_dip();
+    rect = frame_connector_->screen_space_rect_in_dip();
 
     RenderWidgetHostView* parent_view =
         frame_connector_->GetParentRenderWidgetHostView();
 
     // The parent_view can be null in tests when using a TestWebContents.
     if (parent_view) {
-      // Translate frame_rect by the parent's RenderWidgetHostView offset.
+      // Translate screen_space_rect by the parent's RenderWidgetHostView
+      // offset.
       rect.Offset(parent_view->GetViewBounds().OffsetFromOrigin());
     }
+    // TODO(fsamuel): GetViewBounds is a bit of a mess. It's used to determine
+    // the size of the renderer content and where to place context menus and so
+    // on. We want the location of the frame in screen coordinates to place
+    // popups but we want the size in local coordinates to produce the right-
+    // sized CompositorFrames.
+    rect.set_size(frame_connector_->local_frame_size_in_dip());
   }
   return rect;
 }
@@ -327,8 +352,10 @@ SkColor RenderWidgetHostViewChildFrame::background_color() const {
 }
 
 gfx::Size RenderWidgetHostViewChildFrame::GetPhysicalBackingSize() const {
+  // TODO(fsamuel): Consider renaming GetPhysicalBackingSize to
+  // GetCompositorViewportSize.
   if (frame_connector_)
-    return frame_connector_->frame_rect_in_pixels().size();
+    return frame_connector_->local_frame_size_in_pixels();
   return gfx::Size();
 }
 
@@ -562,9 +589,8 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
   current_surface_size_ = frame.size_in_pixels();
   current_surface_scale_factor_ = frame.device_scale_factor();
 
-  bool result = support_->SubmitCompositorFrame(
-      local_surface_id, std::move(frame), std::move(hit_test_region_list));
-  DCHECK(result);
+  support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                  std::move(hit_test_region_list));
   has_frame_ = true;
 
   if (last_received_local_surface_id_ != local_surface_id ||
@@ -870,11 +896,6 @@ void RenderWidgetHostViewChildFrame::SubmitSurfaceCopyRequest(
   support_->RequestCopyOfSurface(std::move(request));
 }
 
-bool RenderWidgetHostViewChildFrame::HasAcceleratedSurface(
-    const gfx::Size& desired_size) {
-  return false;
-}
-
 void RenderWidgetHostViewChildFrame::ReclaimResources(
     const std::vector<viz::ReturnedResource>& resources) {
   if (renderer_compositor_frame_sink_)
@@ -1091,6 +1112,13 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
 
   return static_cast<RenderWidgetHostViewChildFrame*>(parent_view)
       ->CanBecomeVisible();
+}
+
+void RenderWidgetHostViewChildFrame::DidNavigate() {
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 }
 
 }  // namespace content

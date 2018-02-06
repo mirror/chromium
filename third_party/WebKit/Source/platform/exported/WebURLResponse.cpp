@@ -236,10 +236,6 @@ void WebURLResponse::SetIsLegacySymantecCert(bool value) {
   resource_response_->SetIsLegacySymantecCert(value);
 }
 
-void WebURLResponse::SetCertValidityStart(base::Time expiration) {
-  resource_response_->SetCertValidityStart(expiration);
-}
-
 void WebURLResponse::SetSecurityStyle(WebSecurityStyle security_style) {
   resource_response_->SetSecurityStyle(
       static_cast<ResourceResponse::SecurityStyle>(security_style));
@@ -316,6 +312,11 @@ void WebURLResponse::SetWasFallbackRequiredByServiceWorker(bool value) {
 void WebURLResponse::SetResponseTypeViaServiceWorker(
     network::mojom::FetchResponseType value) {
   resource_response_->SetResponseTypeViaServiceWorker(value);
+}
+
+network::mojom::FetchResponseType WebURLResponse::ResponseTypeViaServiceWorker()
+    const {
+  return resource_response_->ResponseTypeViaServiceWorker();
 }
 
 void WebURLResponse::SetURLListViaServiceWorker(

@@ -12,7 +12,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_crx_util.h"
@@ -323,7 +322,7 @@ void DownloadCommands::ExecuteCommand(Command command) {
     // 4. User is not in incognito mode.
 #if defined(FULL_SAFE_BROWSING)
       if (download_item_->GetDangerType() ==
-              content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT &&
+              download::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT &&
           !download_item_->GetURL().is_empty() &&
           !download_item_->GetBrowserContext()->IsOffTheRecord()) {
         safe_browsing::SafeBrowsingService* sb_service =

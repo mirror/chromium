@@ -194,6 +194,7 @@
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -386,16 +387,38 @@ class ChromePrintContext : public PrintContext {
     context.ConcatCTM(transform);
     context.ClipRect(page_rect);
 
+    auto* frame_view = GetFrame()->View();
+    DCHECK(frame_view);
+    PropertyTreeState property_tree_state = PropertyTreeState::Root();
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+        property_tree_state = *frame_view->GetLayoutView()
+                                   ->FirstFragment()
+                                   .LocalBorderBoxProperties();
+      } else {
+        property_tree_state = frame_view->PreContentClipProperties();
+      }
+    }
+
     PaintRecordBuilder builder(&context.Canvas()->getMetaData(), &context);
-    GetFrame()->View()->PaintContents(builder.Context(),
-                                      kGlobalPaintNormalPhase, page_rect);
+
+    frame_view->PaintContents(builder.Context(), kGlobalPaintNormalPhase,
+                              page_rect);
     {
+      Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
+      if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+        scoped_paint_chunk_properties.emplace(
+            builder.Context().GetPaintController(), property_tree_state,
+            builder, DisplayItem::kPrintedContentDestinationLocations);
+      }
+
       DrawingRecorder line_boundary_recorder(
           builder.Context(), builder,
           DisplayItem::kPrintedContentDestinationLocations);
       OutputLinkedDestinations(builder.Context(), page_rect);
     }
-    context.DrawRecord(builder.EndRecording());
+
+    context.DrawRecord(builder.EndRecording(property_tree_state));
 
     context.Restore();
 
@@ -594,10 +617,11 @@ void WebLocalFrameImpl::SetScrollOffset(const WebSize& offset) {
   }
 }
 
-WebSize WebLocalFrameImpl::ContentsSize() const {
-  if (LocalFrameView* view = GetFrameView())
-    return view->ContentsSize();
-  return WebSize();
+WebSize WebLocalFrameImpl::DocumentSize() const {
+  if (!GetFrameView() || !GetFrameView()->GetLayoutView())
+    return WebSize();
+
+  return GetFrameView()->GetLayoutView()->DocumentRect().Size();
 }
 
 bool WebLocalFrameImpl::HasVisibleContent() const {
@@ -614,7 +638,7 @@ bool WebLocalFrameImpl::HasVisibleContent() const {
 
 WebRect WebLocalFrameImpl::VisibleContentRect() const {
   if (LocalFrameView* view = GetFrameView())
-    return view->VisibleContentRect();
+    return view->LayoutViewportScrollableArea()->VisibleContentRect();
   return WebRect();
 }
 
@@ -1012,14 +1036,8 @@ size_t WebLocalFrameImpl::CharacterIndexForPoint(
   LayoutPoint point = GetFrame()->View()->ViewportToContents(point_in_viewport);
   HitTestResult result = GetFrame()->GetEventHandler().HitTestResultAtPoint(
       point, HitTestRequest::kReadOnly | HitTestRequest::kActive);
-  const EphemeralRange range =
-      GetFrame()->RangeForPoint(result.RoundedPointInInnerNodeFrame());
-  if (range.IsNull())
-    return kNotFound;
-  Element* editable =
-      GetFrame()->Selection().RootEditableElementOrDocumentElement();
-  DCHECK(editable);
-  return PlainTextRange::Create(*editable, range).Start();
+  return GetFrame()->Selection().CharacterIndexForPoint(
+      result.RoundedPointInInnerNodeFrame());
 }
 
 bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
@@ -1922,44 +1940,6 @@ void WebLocalFrameImpl::SetInputEventsScaleForEmulation(
   }
 }
 
-void WebLocalFrameImpl::LoadJavaScriptURL(const KURL& url) {
-  DCHECK(GetFrame());
-  // This is copied from ScriptController::executeScriptIfJavaScriptURL.
-  // Unfortunately, we cannot just use that method since it is private, and
-  // it also doesn't quite behave as we require it to for bookmarklets. The
-  // key difference is that we need to suppress loading the string result
-  // from evaluating the JS URL if executing the JS URL resulted in a
-  // location change. We also allow a JS URL to be loaded even if scripts on
-  // the page are otherwise disabled.
-
-  Document* owner_document = GetFrame()->GetDocument();
-
-  if (!owner_document || !GetFrame()->GetPage())
-    return;
-
-  // Protect privileged pages against bookmarklets and other javascript
-  // manipulations.
-  if (SchemeRegistry::ShouldTreatURLSchemeAsNotAllowingJavascriptURLs(
-          owner_document->Url().Protocol()))
-    return;
-
-  String script = DecodeURLEscapeSequences(
-      url.GetString().Substring(strlen("javascript:")));
-  std::unique_ptr<UserGestureIndicator> gesture_indicator =
-      Frame::NotifyUserActivation(GetFrame(), UserGestureToken::kNewGesture);
-  v8::HandleScope handle_scope(ToIsolate(GetFrame()));
-  v8::Local<v8::Value> result =
-      GetFrame()->GetScriptController().ExecuteScriptInMainWorldAndReturnValue(
-          ScriptSourceCode(script, ScriptSourceLocationType::kJavascriptUrl));
-  if (result.IsEmpty() || !result->IsString())
-    return;
-  String script_result = ToCoreString(v8::Local<v8::String>::Cast(result));
-  if (!GetFrame()->GetNavigationScheduler().LocationChangePending()) {
-    GetFrame()->Loader().ReplaceDocumentWhileExecutingJavaScriptURL(
-        script_result, owner_document);
-  }
-}
-
 HitTestResult WebLocalFrameImpl::HitTestResultForVisualViewportPos(
     const IntPoint& pos_in_viewport) {
   IntPoint root_frame_point(
@@ -2035,13 +2015,8 @@ void WebLocalFrameImpl::Load(
     const base::UnguessableToken& devtools_navigation_token) {
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
+  DCHECK(!request.Url().ProtocolIs("javascript"));
   const ResourceRequest& resource_request = request.ToResourceRequest();
-
-  if (resource_request.Url().ProtocolIs("javascript") &&
-      web_frame_load_type == WebFrameLoadType::kStandard) {
-    LoadJavaScriptURL(resource_request.Url());
-    return;
-  }
 
   if (text_finder_)
     text_finder_->ClearActiveFindMatch();
@@ -2055,6 +2030,45 @@ void WebLocalFrameImpl::Load(
   GetFrame()->Loader().Load(
       frame_request, static_cast<FrameLoadType>(web_frame_load_type),
       history_item, static_cast<HistoryLoadType>(web_history_load_type));
+}
+
+void WebLocalFrameImpl::LoadJavaScriptURL(const WebURL& url) {
+  DCHECK(GetFrame());
+  // This is copied from ScriptController::executeScriptIfJavaScriptURL.
+  // Unfortunately, we cannot just use that method since it is private, and
+  // it also doesn't quite behave as we require it to for bookmarklets. The
+  // key difference is that we need to suppress loading the string result
+  // from evaluating the JS URL if executing the JS URL resulted in a
+  // location change. We also allow a JS URL to be loaded even if scripts on
+  // the page are otherwise disabled.
+
+  Document* owner_document = GetFrame()->GetDocument();
+
+  if (!owner_document || !GetFrame()->GetPage())
+    return;
+
+  // Protect privileged pages against bookmarklets and other javascript
+  // manipulations.
+  if (SchemeRegistry::ShouldTreatURLSchemeAsNotAllowingJavascriptURLs(
+          owner_document->Url().Protocol()))
+    return;
+
+  String script = DecodeURLEscapeSequences(
+      static_cast<const KURL&>(url).GetString().Substring(
+          strlen("javascript:")));
+  std::unique_ptr<UserGestureIndicator> gesture_indicator =
+      Frame::NotifyUserActivation(GetFrame(), UserGestureToken::kNewGesture);
+  v8::HandleScope handle_scope(ToIsolate(GetFrame()));
+  v8::Local<v8::Value> result =
+      GetFrame()->GetScriptController().ExecuteScriptInMainWorldAndReturnValue(
+          ScriptSourceCode(script, ScriptSourceLocationType::kJavascriptUrl));
+  if (result.IsEmpty() || !result->IsString())
+    return;
+  String script_result = ToCoreString(v8::Local<v8::String>::Cast(result));
+  if (!GetFrame()->GetNavigationScheduler().LocationChangePending()) {
+    GetFrame()->Loader().ReplaceDocumentWhileExecutingJavaScriptURL(
+        script_result, owner_document);
+  }
 }
 
 void WebLocalFrameImpl::LoadData(const WebData& data,
@@ -2084,7 +2098,8 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
     // When replacing a failed back/forward provisional navigation with an error
     // page, retain the HistoryItem for the failed provisional navigation
     // and reuse it for the error page navigation.
-    if (provisional_document_loader->LoadType() == kFrameLoadTypeBackForward) {
+    if (provisional_document_loader->LoadType() == kFrameLoadTypeBackForward &&
+        provisional_document_loader->GetHistoryItem()) {
       history_item = provisional_document_loader->GetHistoryItem();
       web_frame_load_type = WebFrameLoadType::kBackForward;
     }
@@ -2141,20 +2156,16 @@ void WebLocalFrameImpl::ReportContentSecurityPolicyViolation(
   for (const WebString& end_point : violation.report_endpoints)
     report_endpoints.push_back(end_point);
   document->GetContentSecurityPolicy()->ReportViolation(
-      violation.directive, /* directiveText */
-      ContentSecurityPolicy::GetDirectiveType(
-          violation.effective_directive), /* effectiveType */
-      violation.console_message,          /* consoleMessage */
-      violation.blocked_url,              /* blockedUrl */
-      report_endpoints,                   /* reportEndpoints */
-      false,                              /* don't use the reporting api yet*/
-      violation.header,                   /* header */
+      violation.directive,
+      ContentSecurityPolicy::GetDirectiveType(violation.effective_directive),
+      violation.console_message, violation.blocked_url, report_endpoints,
+      violation.use_reporting_api, violation.header,
       static_cast<ContentSecurityPolicyHeaderType>(violation.disposition),
-      ContentSecurityPolicy::ViolationType::kURLViolation, /* ViolationType */
-      std::move(source_location), nullptr,                 /* LocalFrame */
+      ContentSecurityPolicy::ViolationType::kURLViolation,
+      std::move(source_location), nullptr /* LocalFrame */,
       violation.after_redirect ? RedirectStatus::kFollowedRedirect
                                : RedirectStatus::kNoRedirect,
-      nullptr); /* Element */
+      nullptr /* Element */);
 }
 
 bool WebLocalFrameImpl::IsLoading() const {
@@ -2183,8 +2194,7 @@ void WebLocalFrameImpl::SetCommittedFirstRealLoad() {
 }
 
 void WebLocalFrameImpl::SetHasReceivedUserGesture() {
-  if (GetFrame())
-    GetFrame()->UpdateUserActivationInFrameTree();
+  Frame::NotifyUserActivation(GetFrame(), UserGestureToken::kNewGesture);
 }
 
 void WebLocalFrameImpl::BlinkFeatureUsageReport(const std::set<int>& features) {
@@ -2535,6 +2545,10 @@ WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
   return &input_method_controller_;
 }
 
+// TODO(editing-dev): We should move |CreateMarkupInRect()| to
+// "core/editing/serializers/Serialization.cpp".
+static String CreateMarkupInRect(LocalFrame*, const IntPoint&, const IntPoint&);
+
 void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
                                              WebString& clip_text,
                                              WebString& clip_html) {
@@ -2544,27 +2558,36 @@ void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
   WebPoint start_point(rect_in_viewport.x, rect_in_viewport.y);
   WebPoint end_point(rect_in_viewport.x + rect_in_viewport.width,
                      rect_in_viewport.y + rect_in_viewport.height);
+  clip_html = CreateMarkupInRect(
+      GetFrame(), GetFrame()->View()->ViewportToContents(start_point),
+      GetFrame()->View()->ViewportToContents(end_point));
+}
+
+// TODO(editing-dev): We should move |CreateMarkupInRect()| to
+// "core/editing/serializers/Serialization.cpp".
+static String CreateMarkupInRect(LocalFrame* frame,
+                                 const IntPoint& start_point,
+                                 const IntPoint& end_point) {
   VisiblePosition start_visible_position =
-      VisiblePositionForViewportPoint(start_point);
+      VisiblePositionForContentsPoint(start_point, frame);
   VisiblePosition end_visible_position =
-      VisiblePositionForViewportPoint(end_point);
+      VisiblePositionForContentsPoint(end_point, frame);
 
   Position start_position = start_visible_position.DeepEquivalent();
   Position end_position = end_visible_position.DeepEquivalent();
 
   // document() will return null if -webkit-user-select is set to none.
   if (!start_position.GetDocument() || !end_position.GetDocument())
-    return;
+    return String();
 
   if (start_position.CompareTo(end_position) <= 0) {
-    clip_html =
-        CreateMarkup(start_position, end_position, kAnnotateForInterchange,
-                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
-  } else {
-    clip_html =
-        CreateMarkup(end_position, start_position, kAnnotateForInterchange,
-                     ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
+    return CreateMarkup(start_position, end_position, kAnnotateForInterchange,
+                        ConvertBlocksToInlines::kNotConvert,
+                        kResolveNonLocalURLs);
   }
+  return CreateMarkup(end_position, start_position, kAnnotateForInterchange,
+                      ConvertBlocksToInlines::kNotConvert,
+                      kResolveNonLocalURLs);
 }
 
 void WebLocalFrameImpl::AdvanceFocusInForm(WebFocusType focus_type) {

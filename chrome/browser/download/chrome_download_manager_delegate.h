@@ -17,17 +17,22 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
+#include "build/build_config.h"
 #include "chrome/browser/download/download_path_reservation_tracker.h"
 #include "chrome/browser/download/download_target_determiner_delegate.h"
 #include "chrome/browser/download/download_target_info.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
-#include "content/public/browser/download_danger_type.h"
+#include "components/download/public/common/download_danger_type.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/features/features.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/download/download_location_dialog_bridge.h"
+#endif
 
 class DownloadPrefs;
 class Profile;
@@ -178,7 +183,7 @@ class ChromeDownloadManagerDelegate
 
   // Return true if the downloaded file should be blocked based on the current
   // download restriction pref and |danger_type|.
-  bool ShouldBlockFile(content::DownloadDangerType danger_type) const;
+  bool ShouldBlockFile(download::DownloadDangerType danger_type) const;
 
   void MaybeSendDangerousDownloadOpenedReport(content::DownloadItem* download,
                                               bool show_download_in_folder);
@@ -191,6 +196,10 @@ class ChromeDownloadManagerDelegate
   Profile* profile_;
 
   std::unique_ptr<download::InProgressCache> download_metadata_cache_;
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<DownloadLocationDialogBridge> location_dialog_bridge_;
+#endif
 
   // Incremented by one for each download, the first available download id is
   // assigned from history database or 1 when history database fails to

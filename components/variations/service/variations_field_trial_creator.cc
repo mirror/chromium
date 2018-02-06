@@ -33,6 +33,7 @@
 #include "ui/base/device_form_factor.h"
 
 namespace variations {
+namespace {
 
 // Maximum age permitted for a variations seed, in days.
 const int kMaxVariationsSeedAgeDays = 30;
@@ -99,11 +100,25 @@ base::Time GetReferenceDateForExpiryChecks(PrefService* local_state) {
 }
 
 // Wrapper around channel checking, used to enable channel mocking for
-// testing. If the current browser channel is not UNKNOWN, this will return
-// that channel value. Otherwise, if the fake channel flag is provided, this
-// will return the fake channel. Failing that, this will return the UNKNOWN
-// channel.
+// testing. If a fake channel flag is provided, it will take precedence.
+// Otherwise, this will return the current browser channel (which could be
+// UNKNOWN).
 Study::Channel GetChannelForVariations(version_info::Channel product_channel) {
+  const std::string forced_channel =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kFakeVariationsChannel);
+  if (!forced_channel.empty()) {
+    if (forced_channel == "stable")
+      return Study::STABLE;
+    if (forced_channel == "beta")
+      return Study::BETA;
+    if (forced_channel == "dev")
+      return Study::DEV;
+    if (forced_channel == "canary")
+      return Study::CANARY;
+    DVLOG(1) << "Invalid channel provided: " << forced_channel;
+  }
+
   switch (product_channel) {
     case version_info::Channel::CANARY:
       return Study::CANARY;
@@ -114,20 +129,9 @@ Study::Channel GetChannelForVariations(version_info::Channel product_channel) {
     case version_info::Channel::STABLE:
       return Study::STABLE;
     case version_info::Channel::UNKNOWN:
-      break;
+      return Study::UNKNOWN;
   }
-  const std::string forced_channel =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kFakeVariationsChannel);
-  if (forced_channel == "stable")
-    return Study::STABLE;
-  if (forced_channel == "beta")
-    return Study::BETA;
-  if (forced_channel == "dev")
-    return Study::DEV;
-  if (forced_channel == "canary")
-    return Study::CANARY;
-  DVLOG(1) << "Invalid channel provided: " << forced_channel;
+  NOTREACHED();
   return Study::UNKNOWN;
 }
 
@@ -137,6 +141,14 @@ void RecordCreateTrialsSeedExpiry(VariationsSeedExpiry expiry_check_result) {
                             expiry_check_result,
                             VARIATIONS_SEED_EXPIRY_ENUM_SIZE);
 }
+
+// Records the loaded seed's age to an UMA histogram.
+void RecordSeedFreshness(base::TimeDelta seed_age) {
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.SeedFreshness", seed_age.InMinutes(),
+                              1, base::TimeDelta::FromDays(30).InMinutes(), 50);
+}
+
+}  // namespace
 
 VariationsFieldTrialCreator::VariationsFieldTrialCreator(
     PrefService* local_state,
@@ -179,10 +191,16 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
       GetClientFilterableStateForVersion(current_version);
 
   VariationsSeed seed;
+  bool run_in_safe_mode = safe_seed_manager->ShouldRunInSafeMode() &&
+                          LoadSafeSeed(&seed, client_filterable_state.get());
+
   std::string seed_data;
   std::string base64_seed_signature;
-  if (!LoadSeed(&seed, &seed_data, &base64_seed_signature))
+  if (!run_in_safe_mode && !LoadSeed(&seed, &seed_data, &base64_seed_signature))
     return false;
+
+  UMA_HISTOGRAM_BOOLEAN("Variations.SafeMode.FellBackToSafeMode2",
+                        run_in_safe_mode);
 
   // Note that passing |&ui_string_overrider_| via base::Unretained below is
   // safe because the callback is executed synchronously. It is not possible to
@@ -195,9 +213,14 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
       low_entropy_provider.get(), feature_list);
 
   // Store into the |safe_seed_manager| the combined server and client data used
-  // to create the field trials.
-  safe_seed_manager->SetActiveSeedState(seed_data, base64_seed_signature,
-                                        std::move(client_filterable_state));
+  // to create the field trials. But, as an optimization, skip this step when
+  // running in safe mode – once running in safe mode, there can never be a need
+  // to save the active state to the safe seed prefs.
+  if (!run_in_safe_mode) {
+    safe_seed_manager->SetActiveSeedState(seed_data, base64_seed_signature,
+                                          std::move(client_filterable_state),
+                                          seed_store_.GetLastFetchTime());
+  }
 
   UMA_HISTOGRAM_TIMES("Variations.SeedProcessingTime",
                       base::TimeTicks::Now() - start_time);
@@ -316,12 +339,6 @@ void VariationsFieldTrialCreator::StorePermanentCountry(
                      new_list_value);
 }
 
-void VariationsFieldTrialCreator::RecordLastFetchTime() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  local_state()->SetTime(prefs::kVariationsLastFetchTime, base::Time::Now());
-}
-
 void VariationsFieldTrialCreator::OverrideVariationsPlatform(
     Study::Platform platform_override) {
   has_platform_override_ = true;
@@ -331,15 +348,14 @@ void VariationsFieldTrialCreator::OverrideVariationsPlatform(
 bool VariationsFieldTrialCreator::LoadSeed(VariationsSeed* seed,
                                            std::string* seed_data,
                                            std::string* base64_signature) {
-  if (!LoadSeedFromStore(seed, seed_data, base64_signature))
+  if (!GetSeedStore()->LoadSeed(seed, seed_data, base64_signature))
     return false;
 
-  const base::Time last_fetch_time =
-      local_state()->GetTime(prefs::kVariationsLastFetchTime);
+  const base::Time last_fetch_time = seed_store_.GetLastFetchTime();
   if (last_fetch_time.is_null()) {
     // If the last fetch time is missing and we have a seed, then this must be
     // the first run of Chrome. Store the current time as the last fetch time.
-    RecordLastFetchTime();
+    seed_store_.RecordLastFetchTime();
     RecordCreateTrialsSeedExpiry(VARIATIONS_SEED_EXPIRY_FETCH_TIME_MISSING);
     return true;
   }
@@ -353,16 +369,25 @@ bool VariationsFieldTrialCreator::LoadSeed(VariationsSeed* seed,
 
   // Record that a suitably fresh seed was loaded.
   RecordCreateTrialsSeedExpiry(VARIATIONS_SEED_EXPIRY_NOT_EXPIRED);
-  UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.SeedFreshness", seed_age.InMinutes(),
-                              1, base::TimeDelta::FromDays(30).InMinutes(), 50);
+  RecordSeedFreshness(seed_age);
   return true;
 }
 
-bool VariationsFieldTrialCreator::LoadSeedFromStore(
+bool VariationsFieldTrialCreator::LoadSafeSeed(
     VariationsSeed* seed,
-    std::string* seed_data,
-    std::string* base64_signature) {
-  return seed_store_.LoadSeed(seed, seed_data, base64_signature);
+    ClientFilterableState* client_state) {
+  base::Time safe_seed_fetch_time;
+  if (!GetSeedStore()->LoadSafeSeed(seed, client_state, &safe_seed_fetch_time))
+    return false;
+
+  // Record the safe seed's age. Note, however, that the safe seed fetch time
+  // pref was added about a milestone later than most of the other safe seed
+  // prefs, so it might be absent. If it's absent, don't attempt to guess what
+  // value to record; just skip recording the metric.
+  if (!safe_seed_fetch_time.is_null())
+    RecordSeedFreshness(base::Time::Now() - safe_seed_fetch_time);
+
+  return true;
 }
 
 bool VariationsFieldTrialCreator::SetupFieldTrials(
@@ -436,5 +461,9 @@ bool VariationsFieldTrialCreator::SetupFieldTrials(
 
   return has_seed;
 }
+
+VariationsSeedStore* VariationsFieldTrialCreator::GetSeedStore() {
+  return &seed_store_;
+};
 
 }  // namespace variations

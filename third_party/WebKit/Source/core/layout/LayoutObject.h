@@ -1002,10 +1002,18 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // (point 3 above).
   LayoutObject* Container(AncestorSkipInfo* = nullptr) const;
   // Finds the container as if this object is fixed-position.
-  LayoutBlock* ContainerForFixedPosition(AncestorSkipInfo* = nullptr) const;
+  LayoutBlock* ContainingBlockForFixedPosition(
+      AncestorSkipInfo* = nullptr) const;
   // Finds the containing block as if this object is absolute-position.
   LayoutBlock* ContainingBlockForAbsolutePosition(
       AncestorSkipInfo* = nullptr) const;
+
+  bool CanContainOutOfFlowPositionedElement(EPosition position) const {
+    DCHECK(position == EPosition::kAbsolute || position == EPosition::kFixed);
+    return (position == EPosition::kAbsolute &&
+            CanContainAbsolutePositionObjects()) ||
+           (position == EPosition::kFixed && CanContainFixedPositionObjects());
+  }
 
   virtual LayoutObject* HoverAncestor() const { return Parent(); }
 
@@ -1315,6 +1323,11 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   IntRect AbsoluteBoundingBoxRect(MapCoordinatesFlags = 0) const;
   // FIXME: This function should go away eventually
   IntRect AbsoluteBoundingBoxRectIgnoringTransforms() const;
+  // These two handles inline anchors without content as well.
+  LayoutRect AbsoluteBoundingBoxRectHandlingEmptyAnchor() const;
+  // This returns an IntRect expanded from
+  // AbsoluteBoundingBoxRectHandlingEmptyAnchor by ScrollMargin.
+  LayoutRect AbsoluteBoundingBoxRectForScrollIntoView() const;
 
   // Build an array of quads in absolute coords for line boxes
   virtual void AbsoluteQuads(Vector<FloatQuad>&,
@@ -1593,8 +1606,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                                  TransformationMatrix&) const;
 
   bool CreatesGroup() const {
-    return IsTransparent() || HasMask() || HasFilterInducingProperty() ||
-           Style()->HasBlendMode();
+    return IsTransparent() || HasMask() || HasClipPath() ||
+           HasFilterInducingProperty() || Style()->HasBlendMode();
   }
 
   // Collects rectangles that the outline of this object would be drawing along
@@ -1734,6 +1747,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   void SetNeedsOverflowRecalcAfterStyleChange();
 
+  void InvalidateClipPathCache();
+
   // Painters can use const methods only, except for these explicitly declared
   // methods.
   class CORE_EXPORT MutableForPainting {
@@ -1791,6 +1806,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     void SetPartialInvalidationRect(const LayoutRect& r) {
       layout_object_.SetPartialInvalidationRect(r);
     }
+
+    void InvalidateClipPathCache() { layout_object_.InvalidateClipPathCache(); }
 
 #if DCHECK_IS_ON()
     // Same as setNeedsPaintPropertyUpdate() but does not mark ancestors as
@@ -2137,6 +2154,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   inline void InvalidateContainerPreferredLogicalWidths();
 
   LayoutObject* ContainerForAbsolutePosition(AncestorSkipInfo* = nullptr) const;
+  LayoutObject* ContainerForFixedPosition(AncestorSkipInfo* = nullptr) const;
 
   const LayoutBoxModelObject* EnclosingCompositedContainer() const;
 
@@ -2148,6 +2166,13 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   void RemoveShapeImageClient(ShapeValue*);
   void RemoveCursorImageClient(const CursorList*);
+
+  // These are helper functions for AbsoluteBoudingBoxRectHandlingEmptyAnchor()
+  // and AbsoluteBoundingBoxRectForScrollIntoView().
+  enum class ExpandScrollMargin { kExpand, kIgnore };
+  LayoutRect AbsoluteBoundingBoxRectHelper(ExpandScrollMargin) const;
+  bool GetUpperLeftCorner(ExpandScrollMargin, FloatPoint&) const;
+  bool GetLowerRightCorner(ExpandScrollMargin, FloatPoint&) const;
 
 #if DCHECK_IS_ON()
   void CheckBlockPositionedObjectsNeedLayout();

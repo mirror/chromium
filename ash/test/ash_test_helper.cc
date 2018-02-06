@@ -26,7 +26,6 @@
 #include "ash/window_manager_service.h"
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
-#include "base/test/sequenced_worker_pool_owner.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -139,7 +138,7 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
 
     if (!chromeos::DBusThreadManager::IsInitialized()) {
       chromeos::DBusThreadManager::Initialize(
-          chromeos::DBusThreadManager::PROCESS_ASH);
+          chromeos::DBusThreadManager::kShared);
       dbus_thread_manager_initialized_ = true;
     }
 
@@ -175,6 +174,12 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
       std::unique_ptr<aura::InputStateLookup>());
 
   Shell* shell = Shell::Get();
+
+  // Cursor is visible by default in tests.
+  // CursorManager is null on MASH.
+  if (shell->cursor_manager())
+    shell->cursor_manager()->ShowCursor();
+
   if (provide_local_state) {
     auto pref_service = std::make_unique<TestingPrefServiceSimple>();
     Shell::RegisterLocalStatePrefs(pref_service->registry());

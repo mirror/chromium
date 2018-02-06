@@ -41,7 +41,6 @@
 #include "cc/base/switches.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "content/common/content_constants_internal.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/common/drag_messages.h"
 #include "content/common/frame_messages.h"
@@ -60,6 +59,7 @@
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/three_d_api_types.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/common/web_preferences.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
@@ -1045,7 +1045,11 @@ void RenderViewImpl::RemoveObserver(RenderViewObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-blink::WebView* RenderViewImpl::webview() const {
+blink::WebView* RenderViewImpl::webview() {
+  return webview_;
+}
+
+const blink::WebView* RenderViewImpl::webview() const {
   return webview_;
 }
 
@@ -1207,8 +1211,10 @@ void RenderViewImpl::OnUpdateTargetURLAck() {
 
 void RenderViewImpl::OnSetHistoryOffsetAndLength(int history_offset,
                                                  int history_length) {
-  DCHECK_GE(history_offset, -1);
-  DCHECK_GE(history_length, 0);
+  // -1 <= history_offset < history_length <= kMaxSessionHistoryEntries(50).
+  DCHECK_LE(-1, history_offset);
+  DCHECK_LT(history_offset, history_length);
+  DCHECK_LE(history_length, kMaxSessionHistoryEntries);
 
   history_list_offset_ = history_offset;
   history_list_length_ = history_length;
@@ -1634,7 +1640,7 @@ int RenderViewImpl::HistoryForwardListCount() {
 
 // blink::WebWidgetClient ----------------------------------------------------
 
-void RenderViewImpl::DidFocus() {
+void RenderViewImpl::DidFocus(blink::WebLocalFrame* calling_frame) {
   // TODO(jcivelli): when https://bugs.webkit.org/show_bug.cgi?id=33389 is fixed
   //                 we won't have to test for user gesture anymore and we can
   //                 move that code back to render_widget.cc
@@ -1647,6 +1653,12 @@ void RenderViewImpl::DidFocus() {
   if (is_processing_user_gesture &&
       !RenderThreadImpl::current()->layout_test_mode()) {
     Send(new ViewHostMsg_Focus(GetRoutingID()));
+
+    // Tattle on the frame that called |window.focus()|.
+    RenderFrameImpl* calling_render_frame =
+        RenderFrameImpl::FromWebFrame(calling_frame);
+    if (calling_render_frame)
+      calling_render_frame->FrameDidCallFocus();
   }
 }
 
@@ -1819,8 +1831,8 @@ bool RenderViewImpl::Send(IPC::Message* message) {
   return RenderWidget::Send(message);
 }
 
-RenderWidget* RenderViewImpl::GetWidget() const {
-  return const_cast<RenderWidget*>(static_cast<const RenderWidget*>(this));
+RenderWidget* RenderViewImpl::GetWidget() {
+  return this;
 }
 
 RenderFrameImpl* RenderViewImpl::GetMainRenderFrame() {
@@ -1961,12 +1973,13 @@ void RenderViewImpl::OnSetLocalSurfaceIdForAutoResize(
     const gfx::Size& min_size,
     const gfx::Size& max_size,
     const content::ScreenInfo& screen_info,
+    uint32_t content_source_id,
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
 
   SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
-                                 local_surface_id);
+                                 content_source_id, local_surface_id);
 
   if (IsUseZoomForDSFEnabled()) {
     webview()->EnableAutoResizeMode(
@@ -2069,6 +2082,7 @@ void RenderViewImpl::ResizeWebWidget() {
 
 void RenderViewImpl::OnResize(const ResizeParams& params) {
   TRACE_EVENT0("renderer", "RenderViewImpl::OnResize");
+
   if (webview()) {
     webview()->HidePopups();
     if (send_preferred_size_changes_ &&
@@ -2088,7 +2102,15 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
   top_controls_height_ = params.top_controls_height;
   bottom_controls_height_ = params.bottom_controls_height;
 
-  RenderWidget::OnResize(params);
+  if (device_scale_factor_for_testing_) {
+    ResizeParams p(params);
+    p.screen_info.device_scale_factor = *device_scale_factor_for_testing_;
+    p.physical_backing_size =
+        gfx::ScaleToCeiledSize(p.new_size, p.screen_info.device_scale_factor);
+    RenderWidget::OnResize(p);
+  } else {
+    RenderWidget::OnResize(params);
+  }
 
   if (params.scroll_focused_node_into_view)
     webview()->ScrollFocusedEditableElementIntoView();
@@ -2351,6 +2373,7 @@ bool RenderViewImpl::DidTapMultipleTargets(
                          -zoom_rect.y() * device_scale_factor_);
 
         DCHECK(webview_->IsAcceleratedCompositingActive());
+        webview_->UpdateAllLifecyclePhases();
         webview_->PaintIgnoringCompositing(&canvas, zoom_rect);
       }
 
@@ -2415,6 +2438,8 @@ void RenderViewImpl::SetFocusAndActivateForTesting(bool enable) {
 }
 
 void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
+  device_scale_factor_for_testing_ = factor;
+
   ResizeParams params;
   params.screen_info = screen_info_;
   params.screen_info.device_scale_factor = factor;
@@ -2425,6 +2450,7 @@ void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
   params.top_controls_height = 0.f;
   params.is_fullscreen_granted = is_fullscreen_granted();
   params.display_mode = display_mode_;
+  params.content_source_id = GetContentSourceId();
   OnResize(params);
 }
 

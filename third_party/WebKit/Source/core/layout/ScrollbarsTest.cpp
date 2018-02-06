@@ -49,37 +49,34 @@ class ScrollbarsTest : public ::testing::WithParamInterface<bool>,
     WebMouseEvent event(
         WebInputEvent::kMouseMove, WebFloatPoint(x, y), WebFloatPoint(x, y),
         WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
-        CurrentTimeTicks().InSeconds());
+        CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseMoveEvent(event, Vector<WebMouseEvent>());
   }
 
   void HandleMousePressEvent(int x, int y) {
-    WebMouseEvent event(WebInputEvent::kMouseDown, WebFloatPoint(x, y),
-                        WebFloatPoint(x, y),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseDown, WebFloatPoint(x, y), WebFloatPoint(x, y),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMousePressEvent(event);
   }
 
   void HandleMouseReleaseEvent(int x, int y) {
-    WebMouseEvent event(WebInputEvent::kMouseUp, WebFloatPoint(x, y),
-                        WebFloatPoint(x, y),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseUp, WebFloatPoint(x, y), WebFloatPoint(x, y),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseReleaseEvent(event);
   }
 
   void HandleMouseLeaveEvent() {
-    WebMouseEvent event(WebInputEvent::kMouseMove, WebFloatPoint(1, 1),
-                        WebFloatPoint(1, 1),
-                        WebPointerProperties::Button::kLeft, 0,
-                        WebInputEvent::Modifiers::kLeftButtonDown,
-                        CurrentTimeTicks().InSeconds());
+    WebMouseEvent event(
+        WebInputEvent::kMouseMove, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+        WebPointerProperties::Button::kLeft, 0,
+        WebInputEvent::Modifiers::kLeftButtonDown, CurrentTimeTicksInSeconds());
     event.SetFrameScale(1);
     EventHandler().HandleMouseLeaveEvent(event);
   }
@@ -417,7 +414,7 @@ TEST_P(ScrollbarsTest, scrollbarIsNotHandlingTouchpadScroll) {
   DCHECK(scrollable_area->VerticalScrollbar());
   WebGestureEvent scroll_begin(WebInputEvent::kGestureScrollBegin,
                                WebInputEvent::kNoModifiers,
-                               CurrentTimeTicks().InSeconds());
+                               CurrentTimeTicksInSeconds());
   scroll_begin.x = scroll_begin.global_x =
       scrollable->OffsetLeft() + scrollable->OffsetWidth() - 2;
   scroll_begin.y = scroll_begin.global_y = scrollable->OffsetTop();
@@ -1657,6 +1654,55 @@ TEST_P(ScrollbarsTest, TallAndWidePercentageBodyShouldHaveScrollbars) {
   auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
   EXPECT_TRUE(layout_viewport->VerticalScrollbar());
   EXPECT_TRUE(layout_viewport->HorizontalScrollbar());
+}
+
+TEST_P(ScrollbarsTest, MouseOverIFrameScrollbar) {
+  WebView().Resize(WebSize(800, 600));
+
+  SimRequest main_resource("https://example.com/test.html", "text/html");
+  SimRequest frame_resource("https://example.com/iframe.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  main_resource.Complete(R"HTML(
+    <!DOCTYPE html>
+    <style>
+    body {
+      margin: 0;
+    }
+    iframe {
+      width: 200px;
+      height: 200px;
+    }
+    </style>
+    <iframe id='iframe' src='iframe.html'>
+    </iframe>
+  )HTML");
+
+  frame_resource.Complete(R"HTML(
+  <!DOCTYPE html>
+  <style>
+  body {
+    margin: 0;
+    height :500px;
+  }
+  </style>
+  )HTML");
+  Compositor().BeginFrame();
+
+  Document& document = GetDocument();
+  Element* iframe = document.getElementById("iframe");
+  DCHECK(iframe);
+
+  // Ensure hittest has scrollbar.
+  HitTestResult hit_test_result = HitTest(196, 10);
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_TRUE(hit_test_result.GetScrollbar()->Enabled());
+
+  // Mouse over scrollbar.
+  HandleMouseMoveEvent(196, 5);
+
+  // IFRAME hover.
+  EXPECT_EQ(document.HoverElement(), iframe);
 }
 
 class ScrollbarTrackMarginsTest : public ScrollbarsTest {

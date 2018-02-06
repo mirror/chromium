@@ -854,6 +854,7 @@ html element script
 html element section
 html element select
     property add
+    property autocomplete
     property autofocus
     property checkValidity
     property disabled
@@ -951,6 +952,7 @@ html element td
 html element template
     property content
 html element textarea
+    property autocomplete
     property autofocus
     property checkValidity
     property cols
@@ -1069,6 +1071,7 @@ html element video
     property currentTime
     property defaultMuted
     property defaultPlaybackRate
+    property disablePictureInPicture
     property disableRemotePlayback
     property duration
     property ended
@@ -1081,6 +1084,7 @@ html element video
     property muted
     property networkState
     property onencrypted
+    property onenterpictureinpicture
     property onwaitingforkey
     property pause
     property paused
@@ -1091,6 +1095,7 @@ html element video
     property preload
     property readyState
     property remote
+    property requestPictureInPicture
     property seekable
     property seeking
     property setMediaKeys

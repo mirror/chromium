@@ -329,6 +329,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
                          DispatchPushEventCallback callback) override;
   void DispatchSyncEvent(const std::string& tag,
                          bool last_chance,
+                         base::TimeDelta timeout,
                          DispatchSyncEventCallback callback) override;
   void DispatchAbortPaymentEvent(
       int payment_request_id,
@@ -358,12 +359,6 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       const std::string& notification_id,
       const PlatformNotificationData& notification_data);
 
-  void OnDidGetClient(int request_id,
-                      const blink::mojom::ServiceWorkerClientInfo& client);
-  void OnOpenWindowResponse(
-      int request_id,
-      const blink::mojom::ServiceWorkerClientInfo& client);
-  void OnOpenWindowError(int request_id, const std::string& message);
   void OnFocusClientResponse(
       int request_id,
       const blink::mojom::ServiceWorkerClientInfo& client);
@@ -371,7 +366,6 @@ class CONTENT_EXPORT ServiceWorkerContextClient
       int request_id,
       const blink::mojom::ServiceWorkerClientInfo& client);
   void OnNavigateClientError(int request_id, const GURL& url);
-  void OnDidSkipWaiting(int request_id);
   // Called to resolve the FetchEvent.preloadResponse promise.
   void OnNavigationPreloadResponse(
       int fetch_event_id,

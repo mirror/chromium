@@ -12,15 +12,13 @@
 -InitiallyRestored/AcceleratorCommandsPlatformAppFullscreenBrowserTest.*
 
 # ChromeVoxPanel directly calls into ash to set panel height.
--AccessibilityFeatureaApiTestInstantiatePermission/AccessibilityFeaturesApiTest.*
+# http://crbug.com/628655
 -AccessibilityManagerTest.*
--ChromeOSInfoPrivateTest.*
--PolicyPrefsTest.*
--PolicyProvidedTrustRootsPublicSessionTest.*
--PolicyTest.*
+-PolicyTest.ScreenMagnifierTypeFull
+-PolicyTest.ScreenMagnifierTypeNone
+-PolicyTest.UnifiedDesktopEnabledByDefault
 -UserTypeInstantiation/AccessibilityManagerUserTypeTest.*
--VolumeControllerSoundsTest.*
--WizardControllerTest.*
+-WizardControllerTest.*ChromeVox
 
 # Login constructs ash::FocusRingController and KeyboardDrivenOobeKeyHandler,
 # both of which use ash::Shell.
@@ -66,9 +64,12 @@
 -CaptivePortalWindowTest.*
 -SimpleWebViewDialogTest.*
 
-# Need pixel copy support. http://crbug.com/754864
+# Need pixel copy support. http://crbug.com/754864 http://crbug.com/754872
+-ArcAccessibilityHelperBridgeBrowserTest.*
+-CastStreamingApiTest.*
 -CastStreamingApiTestWithPixelOutput.*
 -TabCaptureApiPixelTest.*
+-TabCaptureApiTest.*
 
 # RefCounted check failed: CalledOnValidSequence() from SchedulerWorkerDelegate::OnMainExit
 -CheckSystemTokenAvailability/EnterprisePlatformKeysTest.*
@@ -164,7 +165,8 @@
 # desktop_window_tree_host_mus.cc(796) Check failed: !window->GetRootWindow() || this->window() == window->GetRootWindow().
 -LoginFeedbackTest.*
 
-# Missing magnification manager and ChromeVoxPanel crashes.
+# Missing magnification manager and also RefCounted check failed:
+# CalledOnValidSequence() from SchedulerWorkerDelegate::OnMainExit
 -LoginScreenDefaultPolicyInSessionBrowsertest.*
 -LoginScreenDefaultPolicyLoginScreenBrowsertest.*
 

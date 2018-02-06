@@ -38,20 +38,14 @@ const CGFloat kIncognitoToolbarButtonTitleHighlightedColor = 0x888a8c;
 const CGFloat kBackButtonImageInset = -9;
 const CGFloat kForwardButtonImageInset = -7;
 const CGFloat kLeadingLocationBarButtonImageInset = 15;
-
-// The priority is not UILayoutPriorityHigh as it should be
-// UILayoutPriorityRequired aside from the very small time interval during
-// which they are conflicting. Also, it allows to have potentially more
-// priorities.
-const UILayoutPriority kPrimaryToolbarButtonPriority = UILayoutPriorityRequired;
-const UILayoutPriority kSecondaryToolbarButtonPriority =
-    kPrimaryToolbarButtonPriority - 1;
+const CGFloat kCancelButtonHorizontalInset = 8;
 
 const NSInteger kShowTabStripButtonMaxTabCount = 99;
 
 const LayoutOffset kToolbarButtonAnimationOffset = -10.0;
 
-const CGFloat kAdaptiveToolbarBackgroundColor = 0xE4E4E4;
-const CGFloat kAdaptiveLocationBarCornerRadius = 12;
-const CGFloat kAdaptiveLocationBackgroundColor = 0xCCCCCC;
+const CGFloat kAdaptiveToolbarHorizontalMargin = 8;
+
+const CGFloat kAdaptiveLocationBarCornerRadius = 11;
 const CGFloat kIcongnitoAdaptiveLocationBackgroundColor = 0x6A6A6A;
+const CGFloat kAdaptiveLocationBarBackgroundAlpha = 0.12;

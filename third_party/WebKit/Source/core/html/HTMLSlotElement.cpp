@@ -112,16 +112,8 @@ const HeapVector<Member<Node>>& HTMLSlotElement::AssignedNodes() const {
 
 namespace {
 
-const HTMLSlotElement* ToHTMLSlotElementIfSupportsAssignmentOrNull(
-    const Node& node) {
-  if (auto* slot = ToHTMLSlotElementOrNull(node)) {
-    if (slot->SupportsAssignment())
-      return slot;
-  }
-  return nullptr;
-}
-
-HeapVector<Member<Node>> FlattenedAssignedNodes(const HTMLSlotElement& slot) {
+HeapVector<Member<Node>> CollectFlattenedAssignedNodes(
+    const HTMLSlotElement& slot) {
   DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(slot.SupportsAssignment());
 
@@ -133,7 +125,7 @@ HeapVector<Member<Node>> FlattenedAssignedNodes(const HTMLSlotElement& slot) {
       if (!child.IsSlotable())
         continue;
       if (auto* slot = ToHTMLSlotElementIfSupportsAssignmentOrNull(child))
-        nodes.AppendVector(FlattenedAssignedNodes(*slot));
+        nodes.AppendVector(CollectFlattenedAssignedNodes(*slot));
       else
         nodes.push_back(child);
     }
@@ -141,7 +133,7 @@ HeapVector<Member<Node>> FlattenedAssignedNodes(const HTMLSlotElement& slot) {
     for (auto& node : assigned_nodes) {
       DCHECK(node->IsSlotable());
       if (auto* slot = ToHTMLSlotElementIfSupportsAssignmentOrNull(*node))
-        nodes.AppendVector(FlattenedAssignedNodes(*slot));
+        nodes.AppendVector(CollectFlattenedAssignedNodes(*slot));
       else
         nodes.push_back(node);
     }
@@ -151,22 +143,28 @@ HeapVector<Member<Node>> FlattenedAssignedNodes(const HTMLSlotElement& slot) {
 
 }  // namespace
 
-const HeapVector<Member<Node>> HTMLSlotElement::AssignedNodesForBinding(
-    const AssignedNodesOptions& options) {
+const HeapVector<Member<Node>> HTMLSlotElement::FlattenedAssignedNodes() {
   if (!SupportsAssignment()) {
     DCHECK(assigned_nodes_.IsEmpty());
     return assigned_nodes_;
   }
-  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()) {
-    if (options.hasFlatten() && options.flatten()) {
-      return FlattenedAssignedNodes(*this);
-    }
-    return AssignedNodes();
-  }
-
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    return CollectFlattenedAssignedNodes(*this);
   UpdateDistribution();
+  return GetDistributedNodes();
+}
+
+const HeapVector<Member<Node>> HTMLSlotElement::AssignedNodesForBinding(
+    const AssignedNodesOptions& options) {
   if (options.hasFlatten() && options.flatten())
-    return GetDistributedNodes();
+    return FlattenedAssignedNodes();
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    return AssignedNodes();
+  if (!SupportsAssignment()) {
+    DCHECK(assigned_nodes_.IsEmpty());
+    return assigned_nodes_;
+  }
+  UpdateDistribution();
   return assigned_nodes_;
 }
 
@@ -190,6 +188,7 @@ const HeapVector<Member<Element>> HTMLSlotElement::AssignedElementsForBinding(
 }
 
 const HeapVector<Member<Node>>& HTMLSlotElement::GetDistributedNodes() {
+  DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(!NeedsDistributionRecalc());
   DCHECK(SupportsAssignment() || distributed_nodes_.IsEmpty());
   return distributed_nodes_;
@@ -203,11 +202,12 @@ void HTMLSlotElement::AppendAssignedNode(Node& host_child) {
 void HTMLSlotElement::ResolveDistributedNodes() {
   for (auto& node : assigned_nodes_) {
     DCHECK(node->IsSlotable());
-    if (IsHTMLSlotElement(*node) &&
-        ToHTMLSlotElement(*node).SupportsAssignment())
-      AppendDistributedNodesFrom(ToHTMLSlotElement(*node));
-    else
+    if (HTMLSlotElement* slot =
+            ToHTMLSlotElementIfSupportsAssignmentOrNull(*node)) {
+      AppendDistributedNodesFrom(*slot);
+    } else {
       AppendDistributedNode(*node);
+    }
 
     if (IsChildOfV1ShadowHost())
       ParentElementShadow()->SetNeedsDistributionRecalc();
@@ -254,7 +254,6 @@ Node* HTMLSlotElement::AssignedNodeNextTo(const Node& node) const {
   DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
-  // TODO(crbug.com/776656): Assert that assigned_nodes_ is up-to-date.
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
   size_t index = assigned_nodes_.Find(&node);
   DCHECK(index != WTF::kNotFound);
@@ -267,7 +266,6 @@ Node* HTMLSlotElement::AssignedNodePreviousTo(const Node& node) const {
   DCHECK(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   ContainingShadowRoot()->GetSlotAssignment().ResolveAssignmentNg();
-  // TODO(crbug.com/776656): Assert that assigned_nodes_ is up-to-date.
   // TODO(crbug.com/776656): Use {node -> index} map to avoid O(N) lookup
   size_t index = assigned_nodes_.Find(&node);
   DCHECK(index != WTF::kNotFound);
@@ -277,6 +275,7 @@ Node* HTMLSlotElement::AssignedNodePreviousTo(const Node& node) const {
 }
 
 Node* HTMLSlotElement::DistributedNodeNextTo(const Node& node) const {
+  DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   const auto& it = distributed_indices_.find(&node);
   if (it == distributed_indices_.end())
@@ -288,6 +287,7 @@ Node* HTMLSlotElement::DistributedNodeNextTo(const Node& node) const {
 }
 
 Node* HTMLSlotElement::DistributedNodePreviousTo(const Node& node) const {
+  DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
   DCHECK(SupportsAssignment());
   const auto& it = distributed_indices_.find(&node);
   if (it == distributed_indices_.end())
@@ -317,11 +317,15 @@ void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
   }
 }
 
+// TODO(hayato): Rename this function once we enable IncrementalShadowDOM
+// by default because this function doesn't consider fallback elements in case
+// of IncementalShadowDOM.
 const HeapVector<Member<Node>>&
 HTMLSlotElement::ChildrenInFlatTreeIfAssignmentIsSupported() {
-  return RuntimeEnabledFeatures::IncrementalShadowDOMEnabled()
-             ? AssignedNodes()
-             : distributed_nodes_;
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled())
+    return AssignedNodes();
+  DCHECK(!NeedsDistributionRecalc());
+  return distributed_nodes_;
 }
 
 void HTMLSlotElement::DetachLayoutTree(const AttachContext& context) {

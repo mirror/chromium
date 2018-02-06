@@ -14,27 +14,21 @@ CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathInvert : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathMax : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathMin : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathNegate : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathProduct : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathSum : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathValue : CSSNumericValue
 CONSOLE MESSAGE: line 147:     getter operator
 CONSOLE MESSAGE: line 147:     method constructor
@@ -45,6 +39,10 @@ CONSOLE MESSAGE: line 147:     setter matrix
 CONSOLE MESSAGE: line 147: interface CSSNumericArray
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     method entries
+CONSOLE MESSAGE: line 147:     method forEach
+CONSOLE MESSAGE: line 147:     method keys
+CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSNumericValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     method add
 CONSOLE MESSAGE: line 147:     method constructor
@@ -56,6 +54,7 @@ CONSOLE MESSAGE: line 147:     method mul
 CONSOLE MESSAGE: line 147:     method sub
 CONSOLE MESSAGE: line 147:     method to
 CONSOLE MESSAGE: line 147:     method toSum
+CONSOLE MESSAGE: line 147:     method type
 CONSOLE MESSAGE: line 147: interface CSSPerspective : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
@@ -69,7 +68,7 @@ CONSOLE MESSAGE: line 147:     setter y
 CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter state
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSRotate : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -110,7 +109,7 @@ CONSOLE MESSAGE: line 147:     method forEach
 CONSOLE MESSAGE: line 147:     method keys
 CONSOLE MESSAGE: line 147:     method toMatrix
 CONSOLE MESSAGE: line 147:     method values
-CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSTranslate : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
 CONSOLE MESSAGE: line 147:     getter z
@@ -138,7 +137,6 @@ CONSOLE MESSAGE: line 147: interface CSSVariableReferenceValue
 CONSOLE MESSAGE: line 147:     getter fallback
 CONSOLE MESSAGE: line 147:     getter variable
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter fallback
 CONSOLE MESSAGE: line 147:     setter variable
 CONSOLE MESSAGE: line 147: interface CountQueuingStrategy
 CONSOLE MESSAGE: line 147:     method constructor
@@ -262,7 +260,6 @@ CONSOLE MESSAGE: line 147: interface StylePropertyMap : StylePropertyMapReadOnly
 CONSOLE MESSAGE: line 147:     method append
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method delete
-CONSOLE MESSAGE: line 147:     method set
 CONSOLE MESSAGE: line 147:     method update
 CONSOLE MESSAGE: line 147: interface StylePropertyMapReadOnly
 CONSOLE MESSAGE: line 147:     method constructor
@@ -305,27 +302,21 @@ CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathInvert : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathMax : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathMin : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathNegate : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter value
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter value
 CONSOLE MESSAGE: line 147: interface CSSMathProduct : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathSum : CSSMathValue
 CONSOLE MESSAGE: line 147:     getter values
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter values
 CONSOLE MESSAGE: line 147: interface CSSMathValue : CSSNumericValue
 CONSOLE MESSAGE: line 147:     getter operator
 CONSOLE MESSAGE: line 147:     method constructor
@@ -336,6 +327,10 @@ CONSOLE MESSAGE: line 147:     setter matrix
 CONSOLE MESSAGE: line 147: interface CSSNumericArray
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
+CONSOLE MESSAGE: line 147:     method entries
+CONSOLE MESSAGE: line 147:     method forEach
+CONSOLE MESSAGE: line 147:     method keys
+CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSNumericValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     method add
 CONSOLE MESSAGE: line 147:     method constructor
@@ -347,6 +342,7 @@ CONSOLE MESSAGE: line 147:     method mul
 CONSOLE MESSAGE: line 147:     method sub
 CONSOLE MESSAGE: line 147:     method to
 CONSOLE MESSAGE: line 147:     method toSum
+CONSOLE MESSAGE: line 147:     method type
 CONSOLE MESSAGE: line 147: interface CSSPerspective : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter length
 CONSOLE MESSAGE: line 147:     method constructor
@@ -360,7 +356,7 @@ CONSOLE MESSAGE: line 147:     setter y
 CONSOLE MESSAGE: line 147: interface CSSResourceValue : CSSStyleValue
 CONSOLE MESSAGE: line 147:     getter state
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface CSSRotation : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSRotate : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter angle
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
@@ -401,7 +397,7 @@ CONSOLE MESSAGE: line 147:     method forEach
 CONSOLE MESSAGE: line 147:     method keys
 CONSOLE MESSAGE: line 147:     method toMatrix
 CONSOLE MESSAGE: line 147:     method values
-CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
+CONSOLE MESSAGE: line 147: interface CSSTranslate : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
 CONSOLE MESSAGE: line 147:     getter y
 CONSOLE MESSAGE: line 147:     getter z
@@ -429,7 +425,6 @@ CONSOLE MESSAGE: line 147: interface CSSVariableReferenceValue
 CONSOLE MESSAGE: line 147:     getter fallback
 CONSOLE MESSAGE: line 147:     getter variable
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     setter fallback
 CONSOLE MESSAGE: line 147:     setter variable
 CONSOLE MESSAGE: line 147: interface CountQueuingStrategy
 CONSOLE MESSAGE: line 147:     method constructor
@@ -553,7 +548,6 @@ CONSOLE MESSAGE: line 147: interface StylePropertyMap : StylePropertyMapReadOnly
 CONSOLE MESSAGE: line 147:     method append
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method delete
-CONSOLE MESSAGE: line 147:     method set
 CONSOLE MESSAGE: line 147:     method update
 CONSOLE MESSAGE: line 147: interface StylePropertyMapReadOnly
 CONSOLE MESSAGE: line 147:     method constructor

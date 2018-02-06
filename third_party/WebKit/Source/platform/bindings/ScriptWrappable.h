@@ -64,6 +64,8 @@ class PLATFORM_EXPORT ScriptWrappable
 
   bool IsScriptWrappable() const override { return true; }
 
+  const char* NameInHeapSnapshot() const override;
+
   template <typename T>
   T* ToImpl() {
     // All ScriptWrappables are managed by the Blink GC heap; check that
@@ -139,8 +141,7 @@ class PLATFORM_EXPORT ScriptWrappable
   }
 
   bool SetReturnValue(v8::ReturnValue<v8::Value> return_value) {
-    v8::Isolate* isolate = return_value.GetIsolate();
-    return_value.Set(main_world_wrapper_.Get().Get(isolate));
+    return_value.Set(main_world_wrapper_.Get());
     return ContainsWrapper();
   }
 

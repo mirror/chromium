@@ -42,9 +42,7 @@
 #include "core/dom/events/Event.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
-#include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
-#include "core/editing/VisiblePosition.h"
 #include "core/editing/ime/InputMethodController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
@@ -58,6 +56,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/PluginDocument.h"
@@ -456,6 +455,21 @@ LayoutView* LocalFrame::ContentLayoutObject() const {
   return GetDocument() ? GetDocument()->GetLayoutView() : nullptr;
 }
 
+void LocalFrame::IntrinsicSizingInfoChanged(
+    const IntrinsicSizingInfo& sizing_info) {
+  if (!Owner())
+    return;
+  // Notify the owner. For remote frame owners, notify via
+  // an IPC to the parent renderer; otherwise notify directly.
+  if (Owner()->IsRemote()) {
+    WebLocalFrameImpl::FromFrame(this)
+        ->FrameWidget()
+        ->IntrinsicSizingInfoChanged(sizing_info);
+  } else {
+    Owner()->IntrinsicSizingInfoChanged();
+  }
+}
+
 void LocalFrame::DidChangeVisibilityState() {
   if (GetDocument())
     GetDocument()->DidChangeVisibilityState();
@@ -715,33 +729,6 @@ Document* LocalFrame::DocumentAtPoint(const LayoutPoint& point_in_root_frame) {
   return result.InnerNode() ? &result.InnerNode()->GetDocument() : nullptr;
 }
 
-EphemeralRange LocalFrame::RangeForPoint(const IntPoint& frame_point) {
-  const PositionWithAffinity position_with_affinity =
-      PositionForPoint(frame_point);
-  if (position_with_affinity.IsNull())
-    return EphemeralRange();
-
-  VisiblePosition position = CreateVisiblePosition(position_with_affinity);
-  VisiblePosition previous = PreviousPositionOf(position);
-  if (previous.IsNotNull()) {
-    const EphemeralRange previous_character_range =
-        MakeRange(previous, position);
-    IntRect rect = GetEditor().FirstRectForRange(previous_character_range);
-    if (rect.Contains(frame_point))
-      return EphemeralRange(previous_character_range);
-  }
-
-  VisiblePosition next = NextPositionOf(position);
-  const EphemeralRange next_character_range = MakeRange(position, next);
-  if (next_character_range.IsNotNull()) {
-    IntRect rect = GetEditor().FirstRectForRange(next_character_range);
-    if (rect.Contains(frame_point))
-      return EphemeralRange(next_character_range);
-  }
-
-  return EphemeralRange();
-}
-
 bool LocalFrame::ShouldReuseDefaultView(const KURL& url) const {
   // Secure transitions can only happen when navigating from the initial empty
   // document.
@@ -831,7 +818,8 @@ WebFrameScheduler* LocalFrame::FrameScheduler() {
   return frame_scheduler_.get();
 }
 
-scoped_refptr<WebTaskRunner> LocalFrame::GetTaskRunner(TaskType type) {
+scoped_refptr<base::SingleThreadTaskRunner> LocalFrame::GetTaskRunner(
+    TaskType type) {
   DCHECK(IsMainThread());
   return frame_scheduler_->GetTaskRunner(type);
 }
@@ -884,11 +872,14 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
     if (is_allowed_navigation)
       framebust_params |= kAllowedBit;
     framebust_histogram.Count(framebust_params);
-    if (has_user_gesture || is_allowed_navigation)
+    if (has_user_gesture || is_allowed_navigation ||
+        target_frame.GetSecurityContext()->GetSecurityOrigin()->CanAccess(
+            SecurityOrigin::Create(destination_url).get())) {
       return true;
+    }
     // Frame-busting used to be generally allowed in most situations, but may
     // now blocked if the document initiating the navigation has never received
-    // a user gesture.
+    // a user gesture and the navigation isn't same-origin with the target.
     if (!RuntimeEnabledFeatures::
             FramebustingNeedsSameOriginOrUserGestureEnabled()) {
       String target_frame_description =
@@ -1199,8 +1190,10 @@ void LocalFrame::ForceSynchronousDocumentInstall(
       });
   GetDocument()->Parser()->Finish();
 
-  // Upon loading of the page, log PageVisits in UseCounter.
-  if (GetPage())
+  // Upon loading of SVGIamges, log PageVisits in UseCounter.
+  // Do not track PageVisits for inspector, web page popups, and validation
+  // message overlays (the other callers of this method).
+  if (GetPage() && GetDocument()->IsSVGDocument())
     GetPage()->GetUseCounter().DidCommitLoad(this);
 }
 

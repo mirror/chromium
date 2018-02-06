@@ -48,12 +48,12 @@
 #include "crypto/hmac.h"
 #include "crypto/symmetric_key.h"
 #include "net/base/host_port_pair.h"
+#include "net/base/proxy_server.h"
 #include "net/cert/pem_tokenizer.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util_nss.h"
-#include "net/proxy/proxy_bypass_rules.h"
-#include "net/proxy/proxy_config.h"
-#include "net/proxy/proxy_server.h"
+#include "net/proxy_resolution/proxy_bypass_rules.h"
+#include "net/proxy_resolution/proxy_config.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
@@ -359,6 +359,13 @@ class OncMaskValues : public Mapper {
       bool* found_unknown_field,
       bool* error) override {
     if (FieldIsCredential(object_signature, field_name)) {
+      // If it's the password field and the substitution string is used, don't
+      // mask it.
+      if (&object_signature == &kEAPSignature && field_name == eap::kPassword &&
+          onc_value.GetString() == substitutes::kPasswordField) {
+        return Mapper::MapField(field_name, object_signature, onc_value,
+                                found_unknown_field, error);
+      }
       return std::unique_ptr<base::Value>(new base::Value(mask_));
     } else {
       return Mapper::MapField(field_name, object_signature, onc_value,

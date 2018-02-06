@@ -1466,7 +1466,7 @@ CSSValue* ComputedStyleUtils::CreateTimingFunctionValue(
         }
         return CSSIdentifierValue::Create(value_id);
       }
-      return CSSCubicBezierTimingFunctionValue::Create(
+      return cssvalue::CSSCubicBezierTimingFunctionValue::Create(
           bezier_timing_function->X1(), bezier_timing_function->Y1(),
           bezier_timing_function->X2(), bezier_timing_function->Y2());
     }
@@ -1481,7 +1481,7 @@ CSSValue* ComputedStyleUtils::CreateTimingFunctionValue(
              position == StepsTimingFunction::StepPosition::END);
 
       if (steps > 1)
-        return CSSStepsTimingFunctionValue::Create(steps, position);
+        return cssvalue::CSSStepsTimingFunctionValue::Create(steps, position);
       CSSValueID value_id = position == StepsTimingFunction::StepPosition::START
                                 ? CSSValueStepStart
                                 : CSSValueStepEnd;
@@ -1492,7 +1492,7 @@ CSSValue* ComputedStyleUtils::CreateTimingFunctionValue(
       const FramesTimingFunction* frames_timing_function =
           ToFramesTimingFunction(timing_function);
       int frames = frames_timing_function->NumberOfFrames();
-      return CSSFramesTimingFunctionValue::Create(frames);
+      return cssvalue::CSSFramesTimingFunctionValue::Create(frames);
     }
 
     default:
@@ -2274,6 +2274,40 @@ CSSValue* ComputedStyleUtils::ValuesForFontVariantProperty(
       NOTREACHED();
       return nullptr;
   }
+}
+
+// Returns up to two values for 'scroll-customization' property. The values
+// correspond to the customization values for 'x' and 'y' axes.
+CSSValue* ComputedStyleUtils::ScrollCustomizationFlagsToCSSValue(
+    ScrollCustomization::ScrollDirection scroll_customization) {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (scroll_customization == ScrollCustomization::kScrollDirectionAuto) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
+  } else if (scroll_customization ==
+             ScrollCustomization::kScrollDirectionNone) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueNone));
+  } else {
+    if ((scroll_customization & ScrollCustomization::kScrollDirectionPanX) ==
+        ScrollCustomization::kScrollDirectionPanX)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanX));
+    else if (scroll_customization &
+             ScrollCustomization::kScrollDirectionPanLeft)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanLeft));
+    else if (scroll_customization &
+             ScrollCustomization::kScrollDirectionPanRight)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanRight));
+    if ((scroll_customization & ScrollCustomization::kScrollDirectionPanY) ==
+        ScrollCustomization::kScrollDirectionPanY)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanY));
+    else if (scroll_customization & ScrollCustomization::kScrollDirectionPanUp)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanUp));
+    else if (scroll_customization &
+             ScrollCustomization::kScrollDirectionPanDown)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanDown));
+  }
+
+  DCHECK(list->length());
+  return list;
 }
 
 }  // namespace blink

@@ -27,12 +27,12 @@ static_library("vr_android") {
     "gvr_util.h",
     "mailbox_to_surface_bridge.cc",
     "mailbox_to_surface_bridge.h",
-    "vr_compositor.cc",
-    "vr_compositor.h",
     "vr_controller.cc",
     "vr_controller.h",
     "vr_core_info.cc",
     "vr_core_info.h",
+    "vr_dialog.cc",
+    "vr_dialog.h",
     "vr_gl_thread.cc",
     "vr_gl_thread.h",
     "vr_metrics_util.cc",
@@ -71,7 +71,7 @@ static_library("vr_android") {
   ]
 
   public_deps = [
-    "//device/vr:mojo_bindings",
+    "//device/vr/public/mojom",
   ]
 
   libs = [

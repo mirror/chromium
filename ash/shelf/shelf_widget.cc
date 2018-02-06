@@ -368,18 +368,20 @@ void ShelfWidget::WillDeleteShelfLayoutManager() {
 }
 
 void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
-  // Do not show widget in UNKNOWN state - it might be called before shelf was
-  // initialized.
-  if (!IsUsingViewsShelf() || state == session_manager::SessionState::UNKNOWN) {
+  // Do not show shelf widget:
+  // * when views based shelf is disabled
+  // * in UNKNOWN state - it might be called before shelf was initialized
+  // * on secondary screens in states other than ACTIVE
+  bool using_views_shelf = IsUsingViewsShelf();
+  bool unknown_state = state == session_manager::SessionState::UNKNOWN;
+  bool hide_on_secondary_screen = shelf_->ShouldHideOnSecondaryDisplay(state);
+  if (!using_views_shelf || unknown_state || hide_on_secondary_screen) {
     HideIfShown();
   } else {
     switch (state) {
       case session_manager::SessionState::ACTIVE:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(true);
-        // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
-        // in PostCreateShelf() when view-based shelf on login screen is
-        // supported.
         break;
       case session_manager::SessionState::LOCKED:
       case session_manager::SessionState::LOGIN_SECONDARY:

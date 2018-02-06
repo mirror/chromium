@@ -358,16 +358,19 @@ PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link, LinkTarget* target) {
 PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
                                                   LinkTarget* target) {
   if (!target)
-    return DOCLINK_AREA;
+    return NONSELECTABLE_AREA;
 
-  target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  int page_index = FPDFDest_GetDestPageIndex(engine_->doc(), destination);
+  if (page_index < 0)
+    return NONSELECTABLE_AREA;
+
+  target->page = page_index;
 
   base::Optional<std::pair<float, float>> xy = GetPageXYTarget(destination);
   if (!xy)
     return DOCLINK_AREA;
 
   target->y_in_pixels = TransformPageToScreenXY(xy.value()).second;
-
   return DOCLINK_AREA;
 }
 

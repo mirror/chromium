@@ -93,7 +93,9 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
   if (compositor_)
     compositor_->SetLatencyInfo(latency_info);
 
-  WasResized();
+  // Use the default deadline to synchronize web content with browser UI.
+  // TODO(fsamuel): Investigate if there is a better deadline to use here.
+  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
 bool DelegatedFrameHost::HasSavedFrame() {
@@ -286,7 +288,7 @@ void DelegatedFrameHost::OnAggregatedSurfaceDamage(
   AttemptFrameSubscriberCapture(damage_rect);
 }
 
-void DelegatedFrameHost::WasResized() {
+void DelegatedFrameHost::WasResized(const cc::DeadlinePolicy& deadline_policy) {
   const viz::SurfaceId* primary_surface_id =
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
   gfx::Size new_size_in_dip = client_->DelegatedFrameHostDesiredSizeInDIP();
@@ -299,7 +301,8 @@ void DelegatedFrameHost::WasResized() {
 
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_id, current_frame_size_in_dip_, GetGutterColor());
+        surface_id, current_frame_size_in_dip_, GetGutterColor(),
+        deadline_policy);
     if (compositor_ && !base::CommandLine::ForCurrentProcess()->HasSwitch(
                            switches::kDisableResizeLock)) {
       compositor_->OnChildResizing();
@@ -496,21 +499,15 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     root_pass->damage_rect = gfx::Rect(frame_size);
   }
 
-  if (frame_size.IsEmpty()) {
-    DCHECK(frame.resource_list.empty());
-    EvictDelegatedFrame();
-  } else {
-    frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
-                                       skipped_latency_info_list_.begin(),
-                                       skipped_latency_info_list_.end());
-    skipped_latency_info_list_.clear();
+  frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
+                                     skipped_latency_info_list_.begin(),
+                                     skipped_latency_info_list_.end());
+  skipped_latency_info_list_.clear();
 
-    // If surface synchronization is off, then OnFirstSurfaceActivation will be
-    // called in the same call stack.
-    bool result = support_->SubmitCompositorFrame(
-        local_surface_id, std::move(frame), std::move(hit_test_region_list));
-    DCHECK(result);
-  }
+  // If surface synchronization is off, then OnFirstSurfaceActivation will be
+  // called in the same call stack.
+  support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                  std::move(hit_test_region_list));
 }
 
 void DelegatedFrameHost::ClearDelegatedFrame() {
@@ -555,8 +552,33 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
   gfx::Size frame_size_in_dip = gfx::ConvertSizeToDIP(
       surface_info.device_scale_factor(), surface_info.size_in_pixels());
-
   if (enable_surface_synchronization_) {
+    // If this is the first Surface created after navigation, notify |client_|.
+    // If the Surface was created before navigation, drop it.
+    uint32_t parent_sequence_number =
+        surface_info.id().local_surface_id().parent_sequence_number();
+    uint32_t latest_parent_sequence_number =
+        client_->GetLocalSurfaceId().parent_sequence_number();
+    // If |latest_parent_sequence_number| is less than
+    // |first_parent_sequence_number_after_navigation_|, then the parent id has
+    // wrapped around. Make sure that case is covered.
+    if (parent_sequence_number >=
+            first_parent_sequence_number_after_navigation_ ||
+        (latest_parent_sequence_number <
+             first_parent_sequence_number_after_navigation_ &&
+         parent_sequence_number <= latest_parent_sequence_number)) {
+      if (!received_frame_after_navigation_) {
+        received_frame_after_navigation_ = true;
+        client_->DidReceiveFirstFrameAfterNavigation();
+      }
+    } else {
+      ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+      viz::HostFrameSinkManager* host_frame_sink_manager =
+          factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
+      host_frame_sink_manager->DropTemporaryReference(surface_info.id());
+      return;
+    }
+
     // If there's no primary surface, then we don't wish to display content at
     // this time (e.g. the view is hidden) and so we don't need a fallback
     // surface either. Since we won't use the fallback surface, we drop the
@@ -570,7 +592,8 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     }
   } else {
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
-        surface_info.id(), frame_size_in_dip, GetGutterColor());
+        surface_info.id(), frame_size_in_dip, GetGutterColor(),
+        cc::DeadlinePolicy::UseDefaultDeadline());
   }
 
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
@@ -585,6 +608,9 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
 
     UpdateGutters();
   }
+
+  // This is used by macOS' unique resize path.
+  client_->OnFirstSurfaceActivation(surface_info);
 
   frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   // Note: the frame may have been evicted immediately.
@@ -943,6 +969,12 @@ void DelegatedFrameHost::ResetCompositorFrameSinkSupport() {
   if (compositor_)
     compositor_->RemoveFrameSink(frame_sink_id_);
   support_.reset();
+}
+
+void DelegatedFrameHost::DidNavigate() {
+  first_parent_sequence_number_after_navigation_ =
+      client_->GetLocalSurfaceId().parent_sequence_number();
+  received_frame_after_navigation_ = false;
 }
 
 }  // namespace content

@@ -7,11 +7,6 @@
 
 namespace flag_descriptions {
 
-// Title and description for the flag to enable the new bookmark edit page in
-// the new bookmark UI.
-extern const char kBookmarkNewEditPageName[];
-extern const char kBookmarkNewEditPageDescription[];
-
 // Title and description for the flag to control redirection to the task
 // scheduler.
 extern const char kBrowserTaskScheduler[];
@@ -32,6 +27,11 @@ extern const char kClippingTextfieldDescription[];
 // Title and description for the flag to enable Contextual Search.
 extern const char kContextualSearch[];
 extern const char kContextualSearchDescription[];
+
+// Title and description for the flag to enable returning the DOM element for
+// context menu using webkit postMessage API.
+extern const char kContextMenuElementPostMessageName[];
+extern const char kContextMenuElementPostMessageDescription[];
 
 // Title and description for the flag to enable drag and drop.
 extern const char kDragAndDropName[];

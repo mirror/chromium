@@ -176,24 +176,21 @@ bool FindFormInputElement(
       continue;
     }
 
-    // Check for a non-unique match.
     if (found_input) {
-      // For change password form keep only the first password field entry.
-      if (does_password_field_has_ambigous_or_empty_name) {
+      if (ambiguous_or_empty_names) {
+        // In case of ambigous or empty names, there might be multiple
+        // appropriate inputs. Check if the current input is better than
+        // previously found one.
         if (!form_util::IsWebElementVisible((*result)[field_name])) {
           // If a previously chosen field was invisible then take the current
           // one.
           (*result)[field_name] = input_element;
         }
-        continue;
       }
-
-      found_input = false;
-      break;
+    } else {
+      (*result)[field_name] = input_element;
+      found_input = true;
     }
-
-    (*result)[field_name] = input_element;
-    found_input = true;
   }
 
   // A required element was not found. This is not the right form.
@@ -1051,7 +1048,7 @@ void PasswordAutofillAgent::FireSubmissionIfFormDisappear(
   }
 
   provisionally_saved_form_.SetSubmissionIndicatorEvent(event);
-  GetPasswordManagerDriver()->InPageNavigation(password_form);
+  GetPasswordManagerDriver()->SameDocumentNavigation(password_form);
   provisionally_saved_form_.Reset();
 }
 
@@ -1229,7 +1226,7 @@ void PasswordAutofillAgent::OnFrameDetached() {
     DCHECK(FrameCanAccessPasswordManager());
     provisionally_saved_form_.SetSubmissionIndicatorEvent(
         PasswordForm::SubmissionIndicatorEvent::FRAME_DETACHED);
-    GetPasswordManagerDriver()->InPageNavigation(
+    GetPasswordManagerDriver()->SameDocumentNavigation(
         provisionally_saved_form_.password_form());
   }
   FrameClosing();

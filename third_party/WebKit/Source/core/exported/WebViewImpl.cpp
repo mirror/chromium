@@ -53,6 +53,7 @@
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/serializers/HTMLInterchange.h"
 #include "core/editing/serializers/Serialization.h"
+#include "core/events/CurrentInputEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/UIEventWithKeyState.h"
 #include "core/events/WebInputEventConversion.h"
@@ -221,12 +222,6 @@ namespace blink {
 const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
-
-const WebInputEvent* WebViewImpl::current_input_event_ = nullptr;
-
-const WebInputEvent* WebViewImpl::CurrentInputEvent() {
-  return current_input_event_;
-}
 
 // Used to defer all page activity in cases where the embedder wishes to run
 // a nested event loop. Using a stack enables nesting of message loop
@@ -1147,7 +1142,7 @@ WebRect WebViewImpl::WidenRectWithinPageBounds(const WebRect& source,
     // only because all of the callers don't support OOPIFs and exit early if
     // the main frame is not local.
     DCHECK(MainFrame()->IsWebLocalFrame());
-    max_size = MainFrame()->ToWebLocalFrame()->ContentsSize();
+    max_size = MainFrame()->ToWebLocalFrame()->DocumentSize();
     scroll_offset = MainFrame()->ToWebLocalFrame()->GetScrollOffset();
   }
   int left_margin = target_margin;
@@ -1984,11 +1979,6 @@ WebInputEventResult WebViewImpl::DispatchBufferedTouchEvents() {
 
 WebInputEventResult WebViewImpl::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event) {
-  return HandleInputEventIncludingTouch(coalesced_event);
-}
-
-WebInputEventResult WebViewImpl::HandleInputEventInternal(
-    const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
   // TODO(dcheng): The fact that this is getting called when there is no local
   // main frame is problematic and probably indicates a bug in the input event
@@ -2020,8 +2010,8 @@ WebInputEventResult WebViewImpl::HandleInputEventInternal(
   if (WebFrameWidgetBase::IgnoreInputEvents())
     return WebInputEventResult::kNotHandled;
 
-  AutoReset<const WebInputEvent*> current_event_change(&current_input_event_,
-                                                       &input_event);
+  AutoReset<const WebInputEvent*> current_event_change(
+      &CurrentInputEvent::current_input_event_, &input_event);
   UIEventWithKeyState::ClearNewTabModifierSetFromIsolatedWorld();
 
   bool is_pointer_locked = false;
@@ -2049,7 +2039,7 @@ WebInputEventResult WebViewImpl::HandleInputEventInternal(
         InteractiveDetector::From(main_frame_document));
     if (interactive_detector) {
       interactive_detector->OnInvalidatingInputEvent(
-          input_event.TimeStampSeconds());
+          TimeTicksFromSeconds(input_event.TimeStampSeconds()));
     }
   }
 
@@ -2473,7 +2463,7 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
     LayoutObject* layout_object = element->GetLayoutObject();
     if (!layout_object)
       return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox(),
+    layout_object->ScrollRectToVisible(element->BoundingBoxForScrollIntoView(),
                                        WebScrollIntoViewParams());
     return true;
   }
@@ -3029,6 +3019,13 @@ WebSize WebViewImpl::ContentsPreferredMinimumSize() {
   int width_scaled = document->GetLayoutView()
                          ->MinPreferredLogicalWidth()
                          .Round();  // Already accounts for zoom.
+  if (Scrollbar* scrollbar =
+          MainFrameImpl()->GetFrameView()->VerticalScrollbar()) {
+    DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+    // For RLS, this occurs in LayoutBlock::ComputeIntrinsicLogicalWidths.
+    if (!scrollbar->IsOverlayScrollbar())
+      width_scaled += scrollbar->ScrollbarThickness();
+  }
   int height_scaled =
       document->documentElement()->GetLayoutBox()->ScrollHeight().Round();
   return IntSize(width_scaled, height_scaled);
@@ -3268,11 +3265,6 @@ WebInputMethodController* WebViewImpl::GetActiveWebInputMethodController()
   WebLocalFrameImpl* local_frame =
       WebLocalFrameImpl::FromFrame(FocusedLocalFrameInWidget());
   return local_frame ? local_frame->GetInputMethodController() : nullptr;
-}
-
-void WebViewImpl::RequestDecode(const PaintImage& image,
-                                base::OnceCallback<void(bool)> callback) {
-  layer_tree_view_->RequestDecode(image, std::move(callback));
 }
 
 Color WebViewImpl::BaseBackgroundColor() const {

@@ -19,6 +19,7 @@
 #include "gpu/config/gpu_util.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "gpu/ipc/service/switches.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_features.h"
 #include "ui/gl/gl_implementation.h"
@@ -28,6 +29,7 @@
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
 #endif
 
 #if defined(OS_WIN)
@@ -118,11 +120,7 @@ bool GpuInit::InitializeAndStartSandbox(
   if (gpu_info) {
     gpu_info_ = *gpu_info;
   } else if (!PopGPUInfoCache(&gpu_info_)) {
-    // Get vendor_id, device_id, driver_version from browser process through
-    // commandline switches.
-    // TODO(zmo): Collect basic GPU info (without a context) here instead of
-    // passing from browser process.
-    GetGpuInfoFromCommandLine(*command_line, &gpu_info_);
+    CollectBasicGraphicsInfo(command_line, &gpu_info_);
   }
 
   // Set keys for crash logging based on preliminary gpu info, in case we
@@ -209,6 +207,7 @@ bool GpuInit::InitializeAndStartSandbox(
   // may also have started at this point.
   ui::OzonePlatform::InitParams params;
   params.single_process = false;
+  params.using_mojo = command_line->HasSwitch(switches::kEnableDrmMojo);
   ui::OzonePlatform::InitializeForGPU(params);
 #endif
 
@@ -312,6 +311,9 @@ bool GpuInit::InitializeAndStartSandbox(
       gles2::PassthroughCommandDecoderSupported();
 
   init_successful_ = true;
+#if defined(USE_OZONE)
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
+#endif
   return true;
 }
 
@@ -324,7 +326,10 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
 #if defined(USE_OZONE)
   ui::OzonePlatform::InitParams params;
   params.single_process = true;
+  params.using_mojo = switches::IsMusHostingViz() ||
+                      command_line->HasSwitch(switches::kEnableDrmMojo);
   ui::OzonePlatform::InitializeForGPU(params);
+  ui::OzonePlatform::GetInstance()->AfterSandboxEntry();
 #endif
 
   if (gpu_info) {
@@ -332,8 +337,7 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
   } else {
 #if !defined(OS_ANDROID)
     if (!PopGPUInfoCache(&gpu_info_)) {
-      // TODO(zmo): Collect basic GPU info here instead.
-      gpu::GetGpuInfoFromCommandLine(*command_line, &gpu_info_);
+      CollectBasicGraphicsInfo(command_line, &gpu_info_);
     }
 #endif
   }
@@ -343,7 +347,7 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
   } else {
 #if !defined(OS_ANDROID)
     if (!PopGpuFeatureInfoCache(&gpu_feature_info_)) {
-      gpu_feature_info_ = gpu::ComputeGpuFeatureInfo(
+      gpu_feature_info_ = ComputeGpuFeatureInfo(
           gpu_info_, gpu_preferences.ignore_gpu_blacklist,
           gpu_preferences.disable_gpu_driver_bug_workarounds,
           gpu_preferences.log_gpu_control_list_decisions, command_line,
@@ -351,8 +355,8 @@ void GpuInit::InitializeInProcess(base::CommandLine* command_line,
     }
 #endif
   }
-  if (gpu::SwitchableGPUsSupported(gpu_info_, *command_line)) {
-    gpu::InitializeSwitchableGPUs(
+  if (SwitchableGPUsSupported(gpu_info_, *command_line)) {
+    InitializeSwitchableGPUs(
         gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
   }
 

@@ -159,7 +159,7 @@ public class BookmarkAddEditFolderActivity extends SynchronousInitializationActi
 
         mParentTextView.setText(mModel.getBookmarkTitle(mParentId));
 
-        if (!FeatureUtilities.isChromeHomeEnabled()) {
+        if (!FeatureUtilities.isChromeModernDesignEnabled()) {
             findViewById(R.id.shadow).setVisibility(View.VISIBLE);
             toolbar.setTitleTextAppearance(toolbar.getContext(), R.style.BlackHeadline2);
             toolbar.setBackgroundColor(
@@ -187,9 +187,9 @@ public class BookmarkAddEditFolderActivity extends SynchronousInitializationActi
                     .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         } else {
             mDeleteButton = menu.add(R.string.bookmark_action_bar_delete)
-                    .setIcon(TintedDrawable.constructTintedDrawable(
-                            getResources(), R.drawable.btn_trash))
-                    .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                                    .setIcon(TintedDrawable.constructTintedDrawable(
+                                            getResources(), R.drawable.ic_delete_white_24dp))
+                                    .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         }
 
         return super.onCreateOptionsMenu(menu);

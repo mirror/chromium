@@ -22,6 +22,7 @@
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/platform/api/quic_aligned.h"
 #include "net/quic/platform/api/quic_bug_tracker.h"
+#include "net/quic/platform/api/quic_fallthrough.h"
 #include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
@@ -417,7 +418,8 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
         }
         break;
       case MTU_DISCOVERY_FRAME:
-      // MTU discovery frames are serialized as ping frames.
+        // MTU discovery frames are serialized as ping frames.
+        QUIC_FALLTHROUGH_INTENDED;
       case PING_FRAME:
         // Ping has no payload.
         break;
@@ -1386,9 +1388,7 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
     return false;
   }
 
-  if (GetQuicReloadableFlag(quic_strict_ack_handling) &&
-      first_block_length == 0) {
-    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_strict_ack_handling);
+  if (first_block_length == 0) {
     // For non-empty ACKs, the first block length must be non-zero.
     if (largest_acked != 0 || num_ack_blocks != 0) {
       set_detailed_error(
@@ -1884,7 +1884,8 @@ size_t QuicFramer::ComputeFrameLength(
       return GetStopWaitingFrameSize(version_.transport_version,
                                      packet_number_length);
     case MTU_DISCOVERY_FRAME:
-    // MTU discovery frames are serialized as ping frames.
+      // MTU discovery frames are serialized as ping frames.
+      QUIC_FALLTHROUGH_INTENDED;
     case PING_FRAME:
       // Ping has no payload.
       return kQuicFrameTypeSize;

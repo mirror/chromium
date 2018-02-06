@@ -71,8 +71,8 @@ class ImageBitmapOptions;
 class IntSize;
 
 class
-    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
-typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext
+    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrXRPresentationContext;
+typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContextOrXRPresentationContext
     RenderingContext;
 
 class CORE_EXPORT HTMLCanvasElement final
@@ -198,6 +198,10 @@ class CORE_EXPORT HTMLCanvasElement final
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(WebLayer*) override;
   void UnregisterContentsLayer(WebLayer*) override;
+  void OnSurfaceIdUpdated(uint32_t frame_client_id,
+                          uint32_t frame_sink_id,
+                          uint32_t parent_id,
+                          base::UnguessableToken nonce) override;
 
   // CanvasResourceHost implementation
   void NotifySurfaceInvalid() override;
@@ -205,7 +209,8 @@ class CORE_EXPORT HTMLCanvasElement final
   void SetNeedsCompositingUpdate() override;
   void UpdateMemoryUsage() override;
 
-  void DisableAcceleration();
+  void DisableAcceleration(std::unique_ptr<Canvas2DLayerBridge>
+                               unaccelerated_bridge_used_for_testing = nullptr);
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override;
@@ -217,7 +222,7 @@ class CORE_EXPORT HTMLCanvasElement final
   // OffscreenCanvasPlaceholder implementation.
   void SetPlaceholderFrame(scoped_refptr<StaticBitmapImage>,
                            base::WeakPtr<OffscreenCanvasFrameDispatcher>,
-                           scoped_refptr<WebTaskRunner>,
+                           scoped_refptr<base::SingleThreadTaskRunner>,
                            unsigned resource_id) override;
   virtual void Trace(blink::Visitor*);
 
@@ -225,8 +230,7 @@ class CORE_EXPORT HTMLCanvasElement final
 
   void CreateImageBufferUsingSurfaceForTesting(
       std::unique_ptr<Canvas2DLayerBridge>,
-      const IntSize&,
-      bool is_resource_provider_needed = true);
+      const IntSize&);
 
   static void RegisterRenderingContextFactory(
       std::unique_ptr<CanvasRenderingContextFactory>);
@@ -312,7 +316,7 @@ class CORE_EXPORT HTMLCanvasElement final
   std::unique_ptr<Canvas2DLayerBridge> CreateAccelerated2dBuffer(
       int* msaa_sample_count);
   std::unique_ptr<Canvas2DLayerBridge> CreateUnaccelerated2dBuffer();
-  void CreateResourceProviderInternal(std::unique_ptr<Canvas2DLayerBridge>);
+  void CreateImageBufferInternal(std::unique_ptr<Canvas2DLayerBridge>);
 
   void SetSurfaceSize(const IntSize&);
 
@@ -325,6 +329,10 @@ class CORE_EXPORT HTMLCanvasElement final
   String ToDataURLInternal(const String& mime_type,
                            const double& quality,
                            SourceDrawingBuffer) const;
+
+  // Returns true if the canvas' context type is inherited from
+  // ImageBitmapRenderingContextBase.
+  bool HasImageBitmapContext() const;
 
   HeapHashSet<WeakMember<CanvasDrawListener>> listeners_;
 

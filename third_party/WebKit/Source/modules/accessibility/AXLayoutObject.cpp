@@ -660,6 +660,10 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   if (RoleValue() == kTimeRole)
     return false;
 
+  if (RoleValue() == kProgressIndicatorRole) {
+    return false;
+  }
+
   // if this element has aria attributes on it, it should not be ignored.
   if (SupportsARIAAttributes())
     return false;
@@ -715,7 +719,11 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   if (IsGenericFocusableElement() && node->hasChildren())
     return false;
 
+  // Positioned elements and scrollable containers are important for
+  // determining bounding boxes.
   if (IsScrollableContainer())
+    return false;
+  if (layout_object_->IsPositioned())
     return false;
 
   // Ignore layout objects that are block flows with inline children. These
@@ -1359,6 +1367,10 @@ bool AXLayoutObject::AriaHasPopup() const {
          RoleValue() == kTextFieldWithComboBoxRole;
 }
 
+// TODO : Aria-dropeffect and aria-grabbed are deprecated in aria 1.1
+// Also those properties are expected to be replaced by a new feature in
+// a future version of WAI-ARIA. After that we will re-implement them
+// following new spec.
 bool AXLayoutObject::SupportsARIADragging() const {
   const AtomicString& grabbed = GetAttribute(aria_grabbedAttr);
   return EqualIgnoringASCIICase(grabbed, "true") ||
@@ -1786,14 +1798,10 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   VisiblePosition visible_start = selection.VisibleStart();
   Position start = visible_start.ToParentAnchoredPosition();
   TextAffinity start_affinity = visible_start.Affinity();
-  VisiblePosition visible_end = selection.VisibleEnd();
-  Position end = visible_end.ToParentAnchoredPosition();
-  TextAffinity end_affinity = visible_end.Affinity();
-
   Node* anchor_node = start.AnchorNode();
   DCHECK(anchor_node);
-
   AXLayoutObject* anchor_object = nullptr;
+
   // Find the closest node that has a corresponding AXObject.
   // This is because some nodes may be aria hidden or might not even have
   // a layout object if they are part of the shadow DOM.
@@ -1807,10 +1815,20 @@ AXObject::AXRange AXLayoutObject::Selection() const {
     else
       anchor_node = anchor_node->parentNode();
   }
+  if (!anchor_object)
+    return AXRange();
+  int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
+  DCHECK_GE(anchor_offset, 0);
+  if (selection.IsCaret()) {
+    return AXRange(anchor_object, anchor_offset, start_affinity, anchor_object,
+                   anchor_offset, start_affinity);
+  }
 
+  VisiblePosition visible_end = selection.VisibleEnd();
+  Position end = visible_end.ToParentAnchoredPosition();
+  TextAffinity end_affinity = visible_end.Affinity();
   Node* focus_node = end.AnchorNode();
   DCHECK(focus_node);
-
   AXLayoutObject* focus_object = nullptr;
   while (focus_node) {
     focus_object = GetUnignoredObjectFromNode(*focus_node);
@@ -1822,12 +1840,8 @@ AXObject::AXRange AXLayoutObject::Selection() const {
     else
       focus_node = focus_node->parentNode();
   }
-
-  if (!anchor_object || !focus_object)
+  if (!focus_object)
     return AXRange();
-
-  int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
-  DCHECK_GE(anchor_offset, 0);
   int focus_offset = focus_object->IndexForVisiblePosition(visible_end);
   DCHECK_GE(focus_offset, 0);
   return AXRange(anchor_object, anchor_offset, start_affinity, focus_object,
@@ -2140,6 +2154,7 @@ void AXLayoutObject::HandleAriaExpandedChanged() {
     bool found_parent = false;
 
     switch (container_parent->RoleValue()) {
+      case kLayoutTableRole:
       case kTreeRole:
       case kTreeGridRole:
       case kGridRole:

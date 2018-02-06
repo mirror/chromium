@@ -641,6 +641,7 @@ void LayoutInline::AddChildToContinuation(LayoutObject* new_child,
 void LayoutInline::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) const {
   if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    // Inline box with self painting layer is painted in this code path.
     if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
       if (NGPaintFragment* block_flow_fragment = block_flow->PaintFragment()) {
         block_flow_fragment->PaintInlineBoxForDescendants(paint_info,
@@ -848,6 +849,14 @@ void LayoutInline::AbsoluteQuadsForSelf(Vector<FloatQuad>& quads,
 }
 
 LayoutPoint LayoutInline::FirstLineBoxTopLeft() const {
+  if (const NGPhysicalBoxFragment* box_fragment =
+          EnclosingBlockFlowFragmentOf(*this)) {
+    const auto& fragments =
+        NGInlineFragmentTraversal::SelfFragmentsOf(*box_fragment, this);
+    if (fragments.IsEmpty())
+      return LayoutPoint();
+    return fragments.front().offset_to_container_box.ToLayoutPoint();
+  }
   if (InlineBox* first_box = FirstLineBoxIncludingCulling())
     return first_box->Location();
   return LayoutPoint();
@@ -1323,7 +1332,7 @@ LayoutSize LayoutInline::OffsetFromContainer(
 }
 
 PaintLayerType LayoutInline::LayerTypeRequired() const {
-  return IsInFlowPositioned() || CreatesGroup() || HasClipPath() ||
+  return IsInFlowPositioned() || CreatesGroup() ||
                  Style()->ShouldCompositeForCurrentAnimations() ||
                  Style()->ContainsPaint()
              ? kNormalPaintLayer
@@ -1617,6 +1626,14 @@ void LayoutInline::InvalidateDisplayItemClients(
 
   for (InlineFlowBox* box = FirstLineBox(); box; box = box->NextLineBox())
     paint_invalidator.InvalidateDisplayItemClient(*box, invalidation_reason);
+}
+
+void LayoutInline::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
+                                      TransformState& transform_state,
+                                      MapCoordinatesFlags mode) const {
+  if (CanContainFixedPositionObjects())
+    mode &= ~kIsFixed;
+  LayoutBoxModelObject::MapLocalToAncestor(ancestor, transform_state, mode);
 }
 
 // TODO(loonybear): Not to just dump 0, 0 as the x and y here

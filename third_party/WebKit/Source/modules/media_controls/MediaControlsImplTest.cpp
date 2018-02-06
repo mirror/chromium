@@ -179,9 +179,12 @@ static void AdvanceClock(double seconds) {
 }
 
 class MediaControlsImplTest : public PageTestBase,
-                              private ScopedMediaCastOverlayButtonForTest {
+                              private ScopedMediaCastOverlayButtonForTest,
+                              private ScopedPictureInPictureForTest {
  public:
-  MediaControlsImplTest() : ScopedMediaCastOverlayButtonForTest(true) {}
+  MediaControlsImplTest()
+      : ScopedMediaCastOverlayButtonForTest(true),
+        ScopedPictureInPictureForTest(true) {}
 
  protected:
   virtual void SetUp() {
@@ -494,6 +497,25 @@ TEST_F(MediaControlsImplTest, CastOverlayDisabledMediaControlsDisabled) {
 
   GetDocument().GetSettings()->SetMediaControlsEnabled(true);
   EXPECT_FALSE(IsElementVisible(*cast_overlay_button));
+}
+
+TEST_F(MediaControlsImplTest, PictureInPictureButtonDisplayed) {
+  ScopedPictureInPictureForTest pip(true);
+  EnsureSizing();
+
+  Element* picture_in_picture_button = GetElementByShadowPseudoId(
+      MediaControls(), "-internal-media-controls-picture-in-picture-button");
+  ASSERT_NE(nullptr, picture_in_picture_button);
+
+  // By default, the button is not visible until the video is fully set up.
+  EXPECT_FALSE(IsElementVisible(*picture_in_picture_button));
+
+  // Set up for the video.
+  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  testing::RunPendingTasks();
+
+  MediaControls().MaybeShow();
+  EXPECT_TRUE(IsElementVisible(*picture_in_picture_button));
 }
 
 TEST_F(MediaControlsImplTest, KeepControlsVisibleIfOverflowListVisible) {

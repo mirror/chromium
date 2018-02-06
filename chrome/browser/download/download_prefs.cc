@@ -22,6 +22,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
+#include "chrome/browser/download/download_core_service_factory.h"
+#include "chrome/browser/download/download_core_service_impl.h"
 #include "chrome/browser/download/download_target_determiner.h"
 #include "chrome/browser/download/trusted_sources_manager.h"
 #include "chrome/browser/profiles/profile.h"
@@ -154,6 +156,9 @@ DownloadPrefs::DownloadPrefs(Profile* profile) : profile_(profile) {
   }
 
   prompt_for_download_.Init(prefs::kPromptForDownload, prefs);
+#if defined(OS_ANDROID)
+  prompt_for_download_android_.Init(prefs::kPromptForDownloadAndroid, prefs);
+#endif
   download_path_.Init(prefs::kDownloadDefaultDirectory, prefs);
   save_file_path_.Init(prefs::kSaveFileDefaultDirectory, prefs);
   save_file_type_.Init(prefs::kSaveFileType, prefs);
@@ -222,6 +227,9 @@ void DownloadPrefs::RegisterProfilePrefs(
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_MACOSX)
   registry->RegisterBooleanPref(prefs::kOpenPdfDownloadInSystemReader, false);
 #endif
+#if defined(OS_ANDROID)
+  registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroid, false);
+#endif
 }
 
 base::FilePath DownloadPrefs::GetDefaultDownloadDirectoryForProfile() const {
@@ -240,9 +248,14 @@ const base::FilePath& DownloadPrefs::GetDefaultDownloadDirectory() {
 // static
 DownloadPrefs* DownloadPrefs::FromDownloadManager(
     DownloadManager* download_manager) {
+  DCHECK(download_manager->GetBrowserContext());
+  DownloadCoreService* service =
+      DownloadCoreServiceFactory::GetForBrowserContext(
+          download_manager->GetBrowserContext());
+  DCHECK(service);
   ChromeDownloadManagerDelegate* delegate =
-      static_cast<ChromeDownloadManagerDelegate*>(
-          download_manager->GetDelegate());
+      service->GetDownloadManagerDelegate();
+  DCHECK(delegate);
   return delegate->download_prefs();
 }
 
@@ -294,6 +307,12 @@ bool DownloadPrefs::PromptForDownload() const {
   // If the DownloadDirectory policy is set, then |prompt_for_download_| should
   // always be false.
   DCHECK(!download_path_.IsManaged() || !prompt_for_download_.GetValue());
+
+// Return the Android prompt for download only.
+#if defined(OS_ANDROID)
+  return *prompt_for_download_android_;
+#endif
+
   return *prompt_for_download_;
 }
 

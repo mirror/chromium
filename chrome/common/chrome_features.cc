@@ -28,9 +28,21 @@ const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
 const base::Feature kAppleScriptExecuteJavaScriptMenuItem{
     "AppleScriptExecuteJavaScriptMenuItem", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables the "this OS is obsolete" infobar on Mac 10.9.
+// TODO(ellyjones): Remove this after the last 10.9 release.
+const base::Feature kShow10_9ObsoleteInfobar{"Show109ObsoleteInfobar",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the fullscreen toolbar to reveal itself if it's hidden.
 const base::Feature kFullscreenToolbarReveal{"FullscreenToolbarReveal",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if BUILDFLAG(MAC_VIEWS_BROWSER)
+// Causes Views browser builds to use Views browser windows by default rather
+// than Cocoa browser windows.
+const base::Feature kViewsBrowserWindows{"ViewsBrowserWindows",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 // Use toolkit-views for profile chooser menu.
 const base::Feature kViewsProfileChooser{"ViewsProfileChooser",
@@ -71,7 +83,7 @@ const base::Feature kAssetDownloadSuggestionsFeature{
 // Enables the built-in DNS resolver.
 const base::Feature kAsyncDns {
   "AsyncDns",
-#if defined(OS_CHROMEOS) || defined(OS_MACOSX) || defined(OS_ANDROID)
+#if defined(OS_CHROMEOS) || defined(OS_MACOSX)
       base::FEATURE_ENABLED_BY_DEFAULT
 #else
       base::FEATURE_DISABLED_BY_DEFAULT
@@ -133,9 +145,6 @@ const base::Feature kTabMetricsLogging{"TabMetricsLogging",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
-// Enables Basic/Advanced tabs in ClearBrowsingData.
-const base::Feature kTabsInCbd{"TabsInCBD", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // If enabled, we'll only take thumbnails of unknown URLs (i.e. URLs that are
 // not (yet) part of TopSites) if they have an interesting transition type, i.e.
 // one that qualifies for inclusion in TopSites.
@@ -174,12 +183,6 @@ const base::Feature kContentFullscreen{"ContentFullscreen",
 // asynchronous Clipboard web API.
 const base::Feature kClipboardContentSetting{"ClipboardContentSetting",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
-
-#if defined(OS_ANDROID)
-// Experiment to extract structured metadata for app indexing.
-const base::Feature kCopylessPaste{"CopylessPaste",
-                                   base::FEATURE_ENABLED_BY_DEFAULT};
-#endif
 
 #if defined(OS_CHROMEOS)
 // Enable project Crostini, Linux VMs on Chrome OS.
@@ -395,7 +398,7 @@ const base::Feature kNetworkPrediction{"NetworkPrediction",
 #if defined(OS_POSIX)
 // Enables NTLMv2, which implicitly disables NTLMv1.
 const base::Feature kNtlmV2Enabled{"NtlmV2Enabled",
-                                   base::FEATURE_DISABLED_BY_DEFAULT};
+                                   base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
 // If enabled, the list of content suggestions on the New Tab page will contain
@@ -543,6 +546,10 @@ const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
 // Enable TopSites to source and sort its site data using site engagement.
 const base::Feature kTopSitesFromSiteEngagement{
     "TopSitesFromSiteEngagement", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Improved and unified consent for privacy-related features.
+const base::Feature kUnifiedConsent{"UnifiedConsent",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables using the local NTP if Google is the default search engine.
 const base::Feature kUseGoogleLocalNtp{"UseGoogleLocalNtp",

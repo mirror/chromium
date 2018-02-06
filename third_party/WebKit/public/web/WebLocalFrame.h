@@ -197,6 +197,9 @@ class WebLocalFrame : public WebFrame {
       bool is_client_redirect,
       const base::UnguessableToken& devtools_navigation_token) = 0;
 
+  // Loads a JavaScript URL in the frame.
+  virtual void LoadJavaScriptURL(const WebURL&) = 0;
+
   // This method is short-hand for calling LoadData, where mime_type is
   // "text/html" and text_encoding is "UTF-8".
   virtual void LoadHTMLString(const WebData& html,
@@ -277,10 +280,6 @@ class WebLocalFrame : public WebFrame {
   // in this frame. Used to propagate state when this frame has navigated
   // cross process.
   virtual void SetCommittedFirstRealLoad() = 0;
-
-  // Mark this frame's document as having received a user gesture, based on
-  // one of its descendants having processed a user gesture.
-  virtual void SetHasReceivedUserGesture() = 0;
 
   // Reports a list of unique blink::WebFeature values representing
   // Blink features used, performed or encountered by the browser during the
@@ -785,8 +784,8 @@ class WebLocalFrame : public WebFrame {
   // If set to false, do not draw scrollbars on this frame's view.
   virtual void SetCanHaveScrollbars(bool) = 0;
 
-  // The size of the contents area.
-  virtual WebSize ContentsSize() const = 0;
+  // The size of the document in this frame.
+  virtual WebSize DocumentSize() const = 0;
 
   // Returns true if the contents (minus scrollbars) has non-zero area.
   virtual bool HasVisibleContent() const = 0;

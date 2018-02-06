@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
 #define CHROME_BROWSER_VR_MODEL_COLOR_SCHEME_H_
 
+#include "base/version.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace vr {
@@ -43,6 +44,7 @@ struct ColorScheme {
   };
 
   static const ColorScheme& GetColorScheme(Mode mode);
+  static void UpdateForComponent(const base::Version& component_version);
 
   ColorScheme();
   ColorScheme(const ColorScheme& other);
@@ -119,6 +121,11 @@ struct ColorScheme {
   ButtonColors snackbar_button_colors;
 
   SkColor controller_label_callout;
+  SkColor controller_button;
+  SkColor controller_button_down;
+
+  SkColor reposition_label;
+  SkColor reposition_label_background;
 
   // These are used for blending between colors that are available only in
   // shaders. They are, as you might expect, one for a given mode, but zero

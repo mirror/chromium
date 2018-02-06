@@ -22,6 +22,7 @@ import org.chromium.base.CollectionUtil;
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.FileUtils;
 import org.chromium.base.ObserverList;
+import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
@@ -212,6 +213,7 @@ public class DownloadManagerUi
     public DownloadManagerUi(Activity activity, boolean isOffTheRecord,
             ComponentName parentComponent, boolean isSeparateActivity,
             SnackbarManager snackbarManager) {
+        TraceEvent.startAsync("DownloadManagerUi shown", hashCode());
         mActivity = activity;
         ChromeApplication application = (ChromeApplication) activity.getApplication();
         mBackendProvider = sProviderForTests == null
@@ -249,8 +251,8 @@ public class DownloadManagerUi
         mToolbar = (DownloadManagerToolbar) mSelectableListLayout.initializeToolbar(
                 R.layout.download_manager_toolbar, mBackendProvider.getSelectionDelegate(), 0, null,
                 R.id.normal_menu_group, R.id.selection_mode_menu_group,
-                FeatureUtilities.isChromeHomeEnabled() ? R.color.modern_toolbar_bg
-                                                       : R.color.modern_primary_color,
+                FeatureUtilities.isChromeModernDesignEnabled() ? R.color.modern_toolbar_bg
+                                                               : R.color.modern_primary_color,
                 this, true);
         mToolbar.setManager(this);
         mToolbar.initializeFilterSpinner(mFilterAdapter);
@@ -302,6 +304,7 @@ public class DownloadManagerUi
         mBackendProvider.destroy();
 
         mSelectableListLayout.onDestroyed();
+        TraceEvent.finishAsync("DownloadManagerUi shown", hashCode());
     }
 
     /**
@@ -424,7 +427,7 @@ public class DownloadManagerUi
     }
 
     /** Called when the filter has been changed by the user. */
-    void onFilterChanged(int filter) {
+    void onFilterChanged(@DownloadFilter.Type int filter) {
         mBackendProvider.getSelectionDelegate().clearSelection();
         mToolbar.hideSearchView();
 

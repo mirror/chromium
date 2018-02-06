@@ -78,6 +78,8 @@ class PixelExpectations(GpuTestExpectations):
               ['mac', 'linux', 'win', 'android'], bug=735228)
     self.Flaky('Pixel_OffscreenCanvasTransferAfterStyleResize',
               ['mac', 'linux', 'win', 'android'], bug=735171)
+    self.Flaky('Pixel_OffscreenCanvasTransferToImageBitmap',
+              ['linux', 'android'], bug=807742)
 
     self.Flaky('Pixel_OffscreenCanvasWebGLSoftwareCompositingWorker',
         ['mac', ('nvidia', 0xfe9), 'debug'], bug=751328)
@@ -106,3 +108,10 @@ class PixelExpectations(GpuTestExpectations):
     self.Fail('Pixel_Video_VP9', ['win', 'intel'], bug=602688)
     self.Fail('Pixel_DirectComposition_Video_VP9', ['win', 'intel'],
         bug=602688)
+
+    # TODO(zmo): temporarily suppress these two tests until new
+    # reference images with new names are generated.
+    self.Fail('Pixel_Canvas2DRedBox_NoGpuProcess',
+              ['linux', 'mac', 'win'], bug=744658)
+    self.Fail('Pixel_CSS3DBlueBox_NoGpuProcess',
+              ['linux', 'mac', 'win'], bug=744658)

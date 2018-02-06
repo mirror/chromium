@@ -31,8 +31,8 @@
 #include "content/browser/wake_lock/wake_lock_context_host.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/grit/content_resources.h"
-#include "content/network/network_service_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/child_process_data.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/gpu_service_registry.h"
 #include "content/public/browser/network_service_instance.h"
@@ -43,6 +43,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "device/geolocation/geolocation_provider.h"
+#include "media/media_features.h"
 #include "media/mojo/features.h"
 #include "media/mojo/interfaces/constants.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -55,6 +56,8 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/metrics/metrics_mojo_service.h"
 #include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/network/network_service.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/interfaces/network_service_test.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
@@ -69,7 +72,6 @@
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/service_manager.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
-#include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 #include "services/viz/public/interfaces/constants.mojom.h"
 #include "ui/base/ui_base_switches_util.h"
@@ -319,7 +321,7 @@ std::unique_ptr<service_manager::Service> CreateNetworkService() {
   auto registry = std::make_unique<service_manager::BinderRegistry>();
   registry->AddInterface(base::BindRepeating(
       [](network::mojom::NetworkServiceTestRequest request) {}));
-  return std::make_unique<NetworkServiceImpl>(std::move(registry));
+  return std::make_unique<network::NetworkService>(std::move(registry));
 }
 
 }  // namespace
@@ -546,7 +548,7 @@ ServiceManagerContext::ServiceManagerContext() {
       base::ASCIIToUTF16("Data Decoder Service");
 
   bool network_service_enabled =
-      base::FeatureList::IsEnabled(features::kNetworkService);
+      base::FeatureList::IsEnabled(network::features::kNetworkService);
   bool network_service_in_process =
       base::FeatureList::IsEnabled(features::kNetworkServiceInProcess) ||
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -569,7 +571,7 @@ ServiceManagerContext::ServiceManagerContext() {
     GetNetworkService();
   }
 
-  if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+  if (features::IsVideoCaptureServiceEnabledForOutOfProcess()) {
     out_of_process_services[video_capture::mojom::kServiceName] =
         base::ASCIIToUTF16("Video Capture Service");
   }
@@ -579,7 +581,7 @@ ServiceManagerContext::ServiceManagerContext() {
       base::ASCIIToUTF16("Media Service");
 #endif
 
-#if BUILDFLAG(ENABLE_STANDALONE_CDM_SERVICE)
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   out_of_process_services[media::mojom::kCdmServiceName] =
       base::ASCIIToUTF16("Content Decryption Module Service");
 #endif
@@ -641,10 +643,12 @@ service_manager::Connector* ServiceManagerContext::GetConnectorForIOThread() {
 }
 
 // static
-std::map<std::string, base::WeakPtr<UtilityProcessHost>>*
-ServiceManagerContext::GetProcessGroupsForTesting() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return &g_active_process_groups.Get();
+bool ServiceManagerContext::HasValidProcessForProcessGroup(
+    const std::string& process_group_name) {
+  auto iter = g_active_process_groups.Get().find(process_group_name);
+  if (iter == g_active_process_groups.Get().end() || !iter->second)
+    return false;
+  return iter->second->GetData().handle != base::kNullProcessHandle;
 }
 
 }  // namespace content

@@ -18,7 +18,6 @@
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/resource_request_info_impl.h"
-#include "content/browser/loader/resource_scheduler.h"
 #include "content/public/browser/global_request_id.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/bindings/message.h"
@@ -27,6 +26,7 @@
 #include "net/url_request/redirect_info.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
+#include "services/network/resource_scheduler.h"
 
 namespace content {
 namespace {
@@ -405,11 +405,11 @@ void MojoAsyncResourceHandler::SetPriority(net::RequestPriority priority,
 }
 
 void MojoAsyncResourceHandler::PauseReadingBodyFromNet() {
-  NOTREACHED();
+  ResourceHandler::PauseReadingBodyFromNet();
 }
 
 void MojoAsyncResourceHandler::ResumeReadingBodyFromNet() {
-  NOTREACHED();
+  ResourceHandler::ResumeReadingBodyFromNet();
 }
 
 void MojoAsyncResourceHandler::OnWritableForTesting() {
@@ -605,12 +605,12 @@ void MojoAsyncResourceHandler::ReportBadMessage(const std::string& error) {
   mojo::ReportBadMessage(error);
 }
 
-std::unique_ptr<UploadProgressTracker>
+std::unique_ptr<network::UploadProgressTracker>
 MojoAsyncResourceHandler::CreateUploadProgressTracker(
     const base::Location& from_here,
-    UploadProgressTracker::UploadProgressReportCallback callback) {
-  return std::make_unique<UploadProgressTracker>(from_here, std::move(callback),
-                                                 request());
+    network::UploadProgressTracker::UploadProgressReportCallback callback) {
+  return std::make_unique<network::UploadProgressTracker>(
+      from_here, std::move(callback), request());
 }
 
 void MojoAsyncResourceHandler::OnTransfer(

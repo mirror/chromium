@@ -199,11 +199,16 @@ if (enable_mojom_typemapping) {
 #       If |true|, no variant sources will be generated for the target. Defaults
 #       to |false|.
 #
-#   allow_native_structs (optional)
-#       If set to |true| (the default), mojoms in this target may apply the
-#       [Native] attribute to struct declarations, causing that mojom struct to
-#       be serialized and deserialized using a legacy IPC::ParamTraits
-#       specialization.
+#   disallow_native_types (optional)
+#       If set to |true|, mojoms in this target may not apply the [Native]
+#       attribute to struct or enum declarations. This avoids emitting code
+#       which depends on legacy IPC serialization. Default is |false|, meaning
+#       [Native] types are allowed.
+#
+#   disallow_interfaces (optional)
+#       If set to |true|, mojoms in this target may not define interfaces.
+#       Generates bindings with a smaller set of dependencies. Defaults to
+#       |false|.
 #
 #   scramble_message_ids (optional)
 #       If set to |true| (the default), generated mojom interfaces will use
@@ -226,6 +231,12 @@ if (enable_mojom_typemapping) {
 #       FOO_BAR_EXPORT to all public symbol definitions; the meaning of the
 #       EXPORT macro depends on whether the corresponding IMPL macro is defined,
 #       per standard practice with Chromium component exports.
+#
+#   enabled_features (optional)
+#       Definitions in a mojom file can be guarded by an EnableIf attribute. If
+#       the value specified by the attribute does not match any items in the
+#       list of enabled_features, the definition will be disabled, with no code
+#       emitted for it.
 #
 # The following parameters are used to support the component build. They are
 # needed so that bindings which are linked with a component can use the same
@@ -258,6 +269,11 @@ if (enable_mojom_typemapping) {
 #   overridden_deps_blink (optional)
 #   component_deps_blink (optional)
 #       These two parameters are the blink variants of the previous two.
+#
+# check_includes_blink (optional)
+#     Overrides the check_includes variable for the blink variant.
+#     If check_includes_blink is not defined, the check_includes variable
+#     retains its original value.
 template("mojom") {
   assert(
       defined(invoker.sources) || defined(invoker.deps) ||
@@ -290,6 +306,11 @@ template("mojom") {
     assert(defined(invoker.component_deps_blink))
   }
 
+  require_full_cpp_deps =
+      !defined(invoker.disallow_native_types) ||
+      !invoker.disallow_native_types || !defined(invoker.disallow_interfaces) ||
+      !invoker.disallow_interfaces
+
   all_deps = []
   if (defined(invoker.deps)) {
     all_deps += invoker.deps
@@ -313,6 +334,48 @@ template("mojom") {
       name = get_label_info(d, "label_no_toolchain")
       toolchain = get_label_info(d, "toolchain")
       deps += [ "${name}__is_mojom(${toolchain})" ]
+    }
+  }
+
+  if (defined(invoker.sources)) {
+    parser_target_name = "${target_name}__parser"
+    action_foreach(parser_target_name) {
+      script = mojom_generator_script
+      sources = invoker.sources
+      outputs = [
+        "{{source_gen_dir}}/{{source_name_part}}.p",
+      ]
+      args = [
+        "parse",
+        "{{source}}",
+        "-o",
+        rebase_path(root_gen_dir, root_build_dir),
+        "-d",
+        rebase_path("//", root_build_dir),
+      ]
+      if (defined(invoker.enabled_features)) {
+        foreach(enabled_feature, invoker.enabled_features) {
+          args += [
+            "--enable_feature",
+            enabled_feature,
+          ]
+        }
+      }
+    }
+  }
+
+  parsed_target_name = "${target_name}__parsed"
+  group(parsed_target_name) {
+    public_deps = []
+    if (defined(invoker.sources)) {
+      public_deps += [ ":$parser_target_name" ]
+    }
+    foreach(d, all_deps) {
+      # Resolve the name, so that a target //mojo/something becomes
+      # //mojo/something:something and we can append the parsed
+      # suffix to get the mojom dependency name.
+      full_name = get_label_info("$d", "label_no_toolchain")
+      public_deps += [ "${full_name}__parsed" ]
     }
   }
 
@@ -351,8 +414,13 @@ template("mojom") {
       }
     }
 
-    if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
-      common_generator_args += [ "--allow_native_structs" ]
+    if (defined(invoker.disallow_native_types) &&
+        invoker.disallow_native_types) {
+      common_generator_args += [ "--disallow_native_types" ]
+    }
+
+    if (defined(invoker.disallow_interfaces) && invoker.disallow_interfaces) {
+      common_generator_args += [ "--disallow_interfaces" ]
     }
 
     if (defined(invoker.import_dirs)) {
@@ -416,6 +484,7 @@ template("mojom") {
       inputs = mojom_generator_sources
       sources = invoker.sources
       deps = [
+        ":$parsed_target_name",
         "//mojo/public/tools/bindings:precompile_templates",
       ]
       outputs = generator_shared_cpp_outputs
@@ -424,13 +493,6 @@ template("mojom") {
         "--generate_non_variant_code",
         "-g",
         "c++",
-      ]
-      depfile = "{{source_gen_dir}}/${generator_shared_target_name}_{{source_name_part}}.d"
-      args += [
-        "--depfile",
-        depfile,
-        "--depfile_target",
-        "{{source_gen_dir}}/{{source_name_part}}.mojom-shared-internal.h",
       ]
 
       if (defined(shared_component_export_macro)) {
@@ -476,9 +538,15 @@ template("mojom") {
           process_file_template(invoker.sources, generator_shared_cpp_outputs)
       deps += [ ":$generator_shared_target_name" ]
     }
-    public_deps = [
-      "//mojo/public/cpp/bindings",
-    ]
+    if (require_full_cpp_deps) {
+      public_deps = [
+        "//mojo/public/cpp/bindings",
+      ]
+    } else {
+      public_deps = [
+        "//mojo/public/cpp/bindings:bindings_base",
+      ]
+    }
     foreach(d, all_deps) {
       # Resolve the name, so that a target //mojo/something becomes
       # //mojo/something:something and we can append shared_cpp_sources_suffix
@@ -641,6 +709,7 @@ template("mojom") {
         inputs = mojom_generator_sources
         sources = invoker.sources
         deps = [
+          ":$parsed_target_name",
           ":$type_mappings_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
@@ -665,14 +734,6 @@ template("mojom") {
             bindings_configuration.variant,
           ]
         }
-        depfile =
-            "{{source_gen_dir}}/${generator_target_name}_{{source_name_part}}.d"
-        args += [
-          "--depfile",
-          depfile,
-          "--depfile_target",
-          "{{source_gen_dir}}/{{source_name_part}}.mojom${variant_dash_suffix}.cc",
-        ]
 
         args += [
           "--typemap",
@@ -821,8 +882,13 @@ template("mojom") {
       public_deps = [
         ":$shared_cpp_library_target_name",
         "//base",
-        "//mojo/public/cpp/bindings",
       ]
+      if (require_full_cpp_deps) {
+        public_deps += [ "//mojo/public/cpp/bindings" ]
+      } else {
+        public_deps += [ "//mojo/public/cpp/bindings:bindings_base" ]
+      }
+
       if (enabled_sources != []) {
         public_deps += [ ":$generator_target_name" ]
       }
@@ -851,7 +917,13 @@ template("mojom") {
           }
           public_deps += invoker.component_deps_blink
         }
+        if (defined(invoker.check_includes_blink)) {
+          check_includes = invoker.check_includes_blink
+        }
       } else {
+        if (defined(invoker.check_includes_blink)) {
+          not_needed(invoker, [ "check_includes_blink" ])
+        }
         if (defined(invoker.overridden_deps)) {
           foreach(d, invoker.overridden_deps) {
             # Resolve the name, so that a target //mojo/something becomes
@@ -923,6 +995,9 @@ template("mojom") {
           "//mojo/public/java:system_java",
         ]
 
+        # Disable warnings/checks on these generated files.
+        chromium_code = false
+
         foreach(d, all_deps) {
           # Resolve the name, so that a target //mojo/something becomes
           # //mojo/something:something and we can append "_java" to get the java
@@ -949,6 +1024,7 @@ template("mojom") {
           sources += invoker.sources
         }
         deps = [
+          ":$parsed_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
         outputs = generator_js_outputs

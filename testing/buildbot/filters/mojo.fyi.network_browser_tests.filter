@@ -13,16 +13,6 @@
 -BrowsingDataRemoverBrowserTest.CookieDeletion
 -ChromeSecurityExploitBrowserTest.CreateFilesystemURLInExtensionOrigin
 -ChromeSitePerProcessTest.LaunchExternalProtocolFromSubframe
--ContentFaviconDriverTest.ReloadBypassingCache
--CredentialManagerBrowserTest.CreatePublicKeyCredentialAlgorithmNotSupported
--CredentialManagerBrowserTest.CreatePublicKeyCredentialInvalidRp
--CredentialManagerBrowserTest.MojoConnectionRecreatedAfterNavigation
--CredentialManagerBrowserTest.StoreInUnloadHandler_CrossSite_OnDemandMojoPipe
--CredentialManagerBrowserTest.StoreInUnloadHandler_CrossSite_PreestablishedPipe
--CredentialManagerBrowserTest.StoreInUnloadHandler_SameSite_OnDemandMojoPipe
--CredentialManagerBrowserTest.StoreInUnloadHandler_SameSite_PreestablishedPipe
--CredentialManagerBrowserTest.StoreSavesPSLMatchedCredential
--CredentialManagerBrowserTest.UpdatingPSLMatchedCredentialCreatesSecondEntry
 # DeclarativeContentApiTest.EnabledForSplitIncognito is flaky.
 -DeclarativeContentApiTest.EnabledForSplitIncognito
 -DeclarativeContentApiTest.UninstallWhileActivePageAction
@@ -122,14 +112,6 @@
 -SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages
 -SecurityStateTabHelperTest.PasswordSecurityLevelDowngradedOnFilesystemUrl
 -SiteDetailsBrowserTest.PlatformAppsNotIsolated
--SSLUICaptivePortalListResourceBundleTest.Enabled/0
--SSLUICaptivePortalListResourceBundleTest.Enabled/1
--SSLUICaptivePortalListResourceBundleTest.Enabled_AuthorityInvalid/0
--SSLUICaptivePortalListResourceBundleTest.Enabled_AuthorityInvalid/1
--SSLUICaptivePortalListResourceBundleTest.Enabled_DynamicUpdate/0
--SSLUICaptivePortalListResourceBundleTest.Enabled_DynamicUpdate/1
--SSLUICaptivePortalListResourceBundleTest.Enabled_NameMismatchAndWeakKey/0
--SSLUICaptivePortalListResourceBundleTest.Enabled_NameMismatchAndWeakKey/1
 -SSLUITest.SHA1IsDefaultDisabled/0
 -SSLUITest.SHA1IsDefaultDisabled/1
 -SSLUITest.CommonNameIsDefaultDisabled/0
@@ -192,7 +174,6 @@
 -DevToolsSanityTest.TestNetworkPushTime
 -DnsProbeBrowserTest.NxdomainProbeResultWithWorkingCorrections
 -DnsProbeBrowserTest.NxdomainProbeResultWithWorkingSlowCorrections
--DnsProbeBrowserTest.OtherErrorWithCorrectionsFailure
 -DnsProbeBrowserTest.OtherErrorWithCorrectionsSuccess
 -DownloadExtensionTest.DownloadExtensionTest_Download_FileSystemURL
 -LoadImageBrowserTest.LoadImage
@@ -204,6 +185,7 @@
 -PolicyTest.ForceGoogleSafeSearch
 -ProfileBrowserTest.SendHPKPReport
 -ProfileBrowserTest.SendHPKPReportServerHangs
+-SecurityIndicatorTest.CheckIndicatorText
 
 # Need to add SetRequireCTDelegateForTesting to NetworkContext.
 -SymantecMessageSSLUITest.ManySubresources
@@ -275,9 +257,6 @@
 
 # http://crbug.com/783996
 # Add support for TLS client auth.
--PrerenderBrowserTest.PrerenderSSLClientCertIframe
--PrerenderBrowserTest.PrerenderSSLClientCertSubresource
--PrerenderBrowserTest.PrerenderSSLClientCertTopLevel
 -SSLUITestWithClientCert.TestWSSClientCert
 
 # http://crbug.com/721414
@@ -471,6 +450,13 @@
 -ExtensionRequestLimitingThrottleBrowserTest.ThrottleRequest_RedirectCached
 -ExtensionRequestLimitingThrottleCommandLineBrowserTest.ThrottleRequestDisabled
 
+# Redirect responses using NavigationThrottle or by hooking
+# NavigationURLLoaderNetworkService::URLLoaderRequestController
+# instead of net::URLRequestInterceptor.
+-NewTabPageInterceptorTest.204Interception
+-NewTabPageInterceptorTest.404Interception
+-NewTabPageInterceptorTest.FailedRequestInterception
+
 # This requires that InterceptNetworkTransactions works
 -ErrorPageNavigationCorrectionsFailTest.StaleCacheStatusFailedCorrections
 
@@ -588,6 +574,10 @@
 -ChromeResourceDispatcherHostDelegateBrowserTest.ThrottlesAddedExactlyOnceToLargeSniffedDownloads
 -ChromeResourceDispatcherHostDelegateBrowserTest.ThrottlesAddedExactlyOnceToTinySniffedDownloads
 -ChromeResourceDispatcherHostDelegateBrowserTest.MirrorRequestHeader
+# These tests rely on using a delegate to ResourceDispatcherHost.
+-ContentFaviconDriverTest.ReloadBypassingCache
+-ContentFaviconDriverTest.MixedContentSecureFaviconAllowed
+
 
 # Failing NoStatePrefetch tests
 # https://crbug.com/792776
@@ -599,8 +589,8 @@
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookieCrossDomain/1
 
 # Depends on captive portal component making requests through URLLoader instead of
-# URLLoaderFetcher, which is blocked on moving content/network to services/network
-# so that it can be used on ios. https://crbug.com/753658
+# URLLoaderFetcher, which is blocked on services/network efforts so that it can
+# be used on ios. https://crbug.com/753658
 # TODO(jam): started converting to use interceptor but then blocked on above, see
 # https://chromium-review.googlesource.com/c/chromium/src/+/823222
 -CaptivePortalBrowserTest.AbortLoad
@@ -697,3 +687,4 @@
 -DeclarativeContentApiTest.EnabledForSpanningIncognito
 -DeclarativeContentApiTest.EnabledForSpanningIncognito
 -SetIconAPITest.Overview
+

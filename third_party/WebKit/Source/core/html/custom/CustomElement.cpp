@@ -103,23 +103,14 @@ HTMLElement* CustomElement::CreateCustomElementSync(
   return CreateCustomElementSync(document, tag_name, definition);
 }
 
-HTMLElement* CustomElement::CreateCustomElementSync(
-    Document& document,
-    const AtomicString& local_name,
-    CustomElementDefinition* definition) {
-  return CreateCustomElementSync(
-      document,
-      QualifiedName(g_null_atom, local_name, HTMLNames::xhtmlNamespaceURI),
-      definition);
-}
-
 // https://dom.spec.whatwg.org/#concept-create-element
 HTMLElement* CustomElement::CreateCustomElementSync(
     Document& document,
     const QualifiedName& tag_name,
     CustomElementDefinition* definition) {
   DCHECK(ShouldCreateCustomElement(tag_name) ||
-         ShouldCreateCustomizedBuiltinElement(tag_name));
+         ShouldCreateCustomizedBuiltinElement(tag_name))
+      << tag_name;
   HTMLElement* element;
 
   if (definition && definition->Descriptor().IsAutonomous()) {
@@ -138,7 +129,8 @@ HTMLElement* CustomElement::CreateCustomElementSync(
 
 HTMLElement* CustomElement::CreateCustomElementAsync(
     Document& document,
-    const QualifiedName& tag_name) {
+    const QualifiedName& tag_name,
+    CreateElementFlags flags) {
   DCHECK(ShouldCreateCustomElement(tag_name));
 
   // To create an element:
@@ -148,7 +140,7 @@ HTMLElement* CustomElement::CreateCustomElementAsync(
   if (CustomElementDefinition* definition = DefinitionFor(
           document,
           CustomElementDescriptor(tag_name.LocalName(), tag_name.LocalName())))
-    return definition->CreateElementAsync(document, tag_name);
+    return definition->CreateElementAsync(document, tag_name, flags);
 
   return CreateUndefinedElement(document, tag_name);
 }
@@ -168,8 +160,8 @@ HTMLElement* CustomElement::CreateUndefinedElement(
     SECURITY_DCHECK(v0element->IsHTMLElement());
     element = ToHTMLElement(v0element);
   } else if (should_create_builtin) {
-    element = HTMLElementFactory::createHTMLElement(
-        tag_name.LocalName(), document, kCreatedByCreateElement);
+    element = ToHTMLElement(
+        document.CreateRawElement(tag_name, kCreatedByCreateElement));
   } else {
     element = HTMLElement::Create(tag_name, document);
   }
@@ -257,8 +249,11 @@ void CustomElement::TryToUpgrade(Element* element) {
   CustomElementRegistry* registry = CustomElement::Registry(*element);
   if (!registry)
     return;
-  if (CustomElementDefinition* definition = registry->DefinitionFor(
-          CustomElementDescriptor(element->localName(), element->localName())))
+  const AtomicString& is_value = element->FastGetAttribute(HTMLNames::isAttr);
+  if (CustomElementDefinition* definition =
+          registry->DefinitionFor(CustomElementDescriptor(
+              is_value.IsNull() ? element->localName() : is_value,
+              element->localName())))
     definition->EnqueueUpgradeReaction(element);
   else
     registry->AddCandidate(element);

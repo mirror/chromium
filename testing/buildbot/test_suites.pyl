@@ -327,6 +327,18 @@
     },
   },
 
+  'chromedriver_py_tests_isolated_scripts': {
+    'chromedriver_py_tests': {
+      "args": [
+        # TODO(johnchen@chromium.org): As the initial step of adding
+        # ChromeDriver tests to commit queue, the following filter is used to
+        # enable a single test case as a smoke test. Many more test cases will
+        # be enabled in the future.
+        "--filter=__main__.ChromeDriverTest.testLoadUrl",
+      ],
+    },
+  },
+
   'chromium_android_asan_gtests': {
     # TODO(kbr): reduce duplication among these tests, and with other
     # test suites.
@@ -756,6 +768,7 @@
         'shards': 4,
       },
     },
+    'views_perftests': {},
     'webkit_layout_tests': {
       'isolate_name': 'webkit_layout_tests_exparchive',
       'merge': {
@@ -1075,6 +1088,7 @@
     'mus_content_browsertests': {
       'args': [
         '--mus',
+        '--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter',
       ],
       'swarming': {
         'shards': 2,
@@ -1774,7 +1788,13 @@
     'vr_platform_specific_non_clang_win_chromium_gtests',
   ],
 
-  'chromium_isolated_scripts': [
+  'chromium_dbg_isolated_scripts': [
+    'desktop_chromium_isolated_scripts',
+    'telemetry_perf_unittests_isolated_scripts',
+  ],
+
+  'chromium_rel_isolated_scripts': [
+    'chromedriver_py_tests_isolated_scripts',
     'desktop_chromium_isolated_scripts',
     'telemetry_perf_unittests_isolated_scripts',
   ],
@@ -1939,7 +1959,14 @@
     'viz_gtests',
   ],
 
-  'chromium_linux_isolated_scripts': [
+  'chromium_linux_dbg_isolated_scripts': [
+    'desktop_chromium_isolated_scripts',
+    'linux_specific_chromium_isolated_scripts',
+    'telemetry_perf_unittests_isolated_scripts',
+  ],
+
+  'chromium_linux_rel_isolated_scripts': [
+    'chromedriver_py_tests_isolated_scripts',
     'desktop_chromium_isolated_scripts',
     'linux_specific_chromium_isolated_scripts',
     'telemetry_perf_unittests_isolated_scripts',
@@ -1981,6 +2008,7 @@
     'non_clang_mac_win_chromium_gtests',
     'non_clang_win_chromium_gtests',
     'non_linux_chromium_gtests',
+    'viz_fyi_gtests',
   ],
 
   'chromium_mac_gtests': [

@@ -31,6 +31,7 @@
 #include "core/frame/WebFrameWidgetImpl.h"
 
 #include <memory>
+#include <utility>
 
 #include "build/build_config.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -41,6 +42,7 @@
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/ime/InputMethodController.h"
+#include "core/events/CurrentInputEvent.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebPagePopupImpl.h"
@@ -379,8 +381,6 @@ WebHitTestResult WebFrameWidgetImpl::HitTestResultAt(const WebPoint& point) {
   return CoreHitTestResultAt(point);
 }
 
-const WebInputEvent* WebFrameWidgetImpl::current_input_event_ = nullptr;
-
 WebInputEventResult WebFrameWidgetImpl::DispatchBufferedTouchEvents() {
   if (doing_drag_and_drop_)
     return WebInputEventResult::kHandledSuppressed;
@@ -401,11 +401,6 @@ WebInputEventResult WebFrameWidgetImpl::DispatchBufferedTouchEvents() {
 }
 
 WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
-    const WebCoalescedInputEvent& coalesced_event) {
-  return HandleInputEventIncludingTouch(coalesced_event);
-}
-
-WebInputEventResult WebFrameWidgetImpl::HandleInputEventInternal(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
   TRACE_EVENT1("input", "WebFrameWidgetImpl::handleInputEvent", "type",
@@ -434,8 +429,8 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEventInternal(
 
   // FIXME: pass event to m_localRoot's WebDevToolsAgentImpl once available.
 
-  AutoReset<const WebInputEvent*> current_event_change(&current_input_event_,
-                                                       &input_event);
+  AutoReset<const WebInputEvent*> current_event_change(
+      &CurrentInputEvent::current_input_event_, &input_event);
 
   DCHECK(client_);
   if (client_->IsPointerLocked() &&
@@ -531,6 +526,16 @@ void WebFrameWidgetImpl::ScheduleAnimation() {
   }
   DCHECK(client_);
   client_->ScheduleAnimation();
+}
+
+void WebFrameWidgetImpl::IntrinsicSizingInfoChanged(
+    const IntrinsicSizingInfo& sizing_info) {
+  WebIntrinsicSizingInfo web_sizing_info;
+  web_sizing_info.size = sizing_info.size;
+  web_sizing_info.aspect_ratio = sizing_info.aspect_ratio;
+  web_sizing_info.has_width = sizing_info.has_width;
+  web_sizing_info.has_height = sizing_info.has_height;
+  client_->IntrinsicSizingInfoChanged(web_sizing_info);
 }
 
 CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
@@ -854,8 +859,10 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
       // same popup.
       view_impl->SetLastHiddenPagePopup(view_impl->GetPagePopup());
       View()->HidePopups();
+      FALLTHROUGH;
     case WebInputEvent::kGestureTapCancel:
       View()->SetLastHiddenPagePopup(nullptr);
+      break;
     case WebInputEvent::kGestureShowPress:
     case WebInputEvent::kGestureDoubleTap:
       break;

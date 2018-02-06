@@ -4,6 +4,7 @@
 
 import("//android_webview/system_webview_apk_tmpl.gni")
 import("//android_webview/webview_repack_locales.gni")
+import("//android_webview/variables.gni")
 import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
 import("//build/config/locales.gni")
@@ -20,9 +21,6 @@ if (enable_resource_whitelist_generation) {
   system_webview_pak_whitelist =
       "$target_gen_dir/system_webview_pak_whitelist.txt"
 }
-
-system_webview_android_manifest =
-    "$target_gen_dir/system_webview_apk/AndroidManifest.xml"
 
 group("android_webview") {
   if (public_android_sdk) {
@@ -415,6 +413,8 @@ if (android_64bit_target_cpu) {
     if (use_lld) {
       configs += [ "//build/config/android:lld_pack_relocations" ]
     }
+    public_configs = extra_chrome_shared_library_configs
+    deps += extra_chrome_shared_library_deps
   }
 }
 
@@ -617,6 +617,8 @@ source_set("common") {
     "browser/surfaces_instance.cc",
     "browser/surfaces_instance.h",
     "browser/token_binding_manager_bridge.cc",
+    "browser/tracing/aw_trace_event_args_whitelist.cc",
+    "browser/tracing/aw_trace_event_args_whitelist.h",
     "browser/tracing/aw_tracing_controller.cc",
     "browser/tracing/aw_tracing_controller.h",
     "browser/tracing/aw_tracing_delegate.cc",
@@ -688,6 +690,7 @@ source_set("common") {
     "//components/cdm/renderer",
     "//components/crash/content/app",
     "//components/crash/content/browser",
+    "//components/download/public/common:public",
     "//components/google/core/browser",
     "//components/keyed_service/content",
     "//components/metrics",
@@ -729,7 +732,6 @@ source_set("common") {
     "//content/public/common:service_names",
     "//crypto",
     "//gin",
-    "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/service",
     "//gpu/ipc:gl_in_process_context",

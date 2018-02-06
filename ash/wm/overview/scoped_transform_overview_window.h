@@ -12,8 +12,11 @@
 #include "ash/wm/overview/overview_animation_type.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/compositor/layer_animation_observer.h"
 #include "ui/events/event_handler.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/transform.h"
 
@@ -23,6 +26,10 @@ class Window;
 
 namespace gfx {
 class Rect;
+}
+
+namespace ui {
+class Layer;
 }
 
 namespace views {
@@ -42,10 +49,24 @@ class WindowSelectorItem;
 // class allows transforming the windows with a helper to determine the best
 // fit in certain bounds. The window's state is restored when this object is
 // destroyed.
-class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
+class ASH_EXPORT ScopedTransformOverviewWindow
+    : public ui::EventHandler,
+      public ui::ImplicitAnimationObserver {
  public:
-  class OverviewContentMask;
-  using ShapeRects = std::vector<gfx::Rect>;
+  // Overview windows have certain properties if their aspect ratio exceedes a
+  // threshold. This enum keeps track of which category the window falls into,
+  // based on its aspect ratio.
+  enum class GridWindowFillMode {
+    kNormal = 0,
+    kLetterBoxed,
+    kPillarBoxed,
+  };
+
+  // Windows whose aspect ratio surpass this (width twice as large as height or
+  // vice versa) will be classified as too wide or too tall and will be handled
+  // slightly differently in overview mode.
+  static constexpr float kExtremeWindowRatioThreshold = 2.f;
+
   using ScopedAnimationSettings =
       std::vector<std::unique_ptr<ScopedOverviewAnimationSettings>>;
 
@@ -55,15 +76,6 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
                             const gfx::Size& target,
                             int top_view_inset,
                             int title_height);
-
-  // Returns |rect| having been shrunk to fit within |bounds| (preserving the
-  // aspect ratio). Takes into account a window header that is |top_view_inset|
-  // tall in the original window getting replaced by a window caption that is
-  // |title_height| tall in the transformed window.
-  static gfx::Rect ShrinkRectToFitPreservingAspectRatio(const gfx::Rect& rect,
-                                                        const gfx::Rect& bounds,
-                                                        int top_view_inset,
-                                                        int title_height);
 
   // Returns the transform turning |src_rect| into |dst_rect|.
   static gfx::Transform GetTransformForRect(const gfx::Rect& src_rect,
@@ -132,7 +144,23 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // Creates/Deletes a mirror window for minimized windows.
   void UpdateMirrorWindowForMinimizedState();
 
+  // Returns |rect| having been shrunk to fit within |bounds| (preserving the
+  // aspect ratio). Takes into account a window header that is |top_view_inset|
+  // tall in the original window getting replaced by a window caption that is
+  // |title_height| tall in the transformed window. If |type_| is not normal,
+  // write |window_selector_bounds_|, which would differ than the return bounds.
+  gfx::Rect ShrinkRectToFitPreservingAspectRatio(const gfx::Rect& rect,
+                                                 const gfx::Rect& bounds,
+                                                 int top_view_inset,
+                                                 int title_height);
+
   aura::Window* window() const { return window_; }
+
+  GridWindowFillMode type() const { return type_; }
+
+  base::Optional<gfx::Rect> window_selector_bounds() const {
+    return window_selector_bounds_;
+  }
 
   // Closes the transient root of the window managed by |this|.
   void Close();
@@ -148,13 +176,21 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // does not exist.
   aura::Window* GetOverviewWindowForMinimizedState() const;
 
+  // Called via WindowSelectorItem from WindowGrid when |window_|'s bounds
+  // change. Must be called before PositionWindows in WindowGrid.
+  void UpdateWindowDimensionsType();
+
   // ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
 
+  // ui::ImplicitAnimationObserver:
+  void OnImplicitAnimationsCompleted() override;
+
  private:
   friend class WindowSelectorTest;
   class LayerCachingAndFilteringObserver;
+  class WindowMask;
 
   // Closes the window managed by |this|.
   void CloseWidget();
@@ -182,6 +218,13 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // The original opacity of the window before entering overview mode.
   float original_opacity_;
 
+  // Specifies how the window is laid out in the grid.
+  GridWindowFillMode type_ = GridWindowFillMode::kNormal;
+
+  // Empty if window is of type normal. Contains the bounds the window selector
+  // item should be if the window is too wide or too tall.
+  base::Optional<gfx::Rect> window_selector_bounds_;
+
   // A widget that holds the content for the minimized window.
   std::unique_ptr<views::Widget> minimized_widget_;
 
@@ -190,6 +233,13 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
   // the layer has not been destroyed.
   std::vector<std::unique_ptr<LayerCachingAndFilteringObserver>>
       cached_and_filtered_layer_observers_;
+
+  // A mask to be applied on |window_|. This will give |window_| rounded edges
+  // while in overview.
+  std::unique_ptr<WindowMask> mask_;
+
+  // The original mask layer of the window before entering overview mode.
+  ui::Layer* original_mask_layer_ = nullptr;
 
   ::wm::ShadowElevation original_shadow_elevation_;
 

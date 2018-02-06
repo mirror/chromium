@@ -27,12 +27,12 @@
 #include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/devtools/protocol/emulation_handler.h"
 #include "content/browser/frame_host/navigation_request.h"
+#include "content/browser/frame_host/navigator.h"
 #include "content/browser/manifest/manifest_manager_host.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -48,6 +48,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/gfx/codec/jpeg_codec.h"
@@ -148,7 +149,7 @@ std::vector<PageHandler*> PageHandler::ForAgentHost(
       host, Page::Metainfo::domainName);
 }
 
-void PageHandler::SetRenderer(RenderProcessHost* process_host,
+void PageHandler::SetRenderer(int process_host_id,
                               RenderFrameHostImpl* frame_host) {
   if (host_ == frame_host)
     return;
@@ -286,6 +287,7 @@ Response PageHandler::Disable() {
   }
 
   download_manager_delegate_ = nullptr;
+  navigate_callbacks_.clear();
   return Response::FallThrough();
 }
 
@@ -300,35 +302,30 @@ Response PageHandler::Crash() {
   return Response::FallThrough();
 }
 
-void PageHandler::Reload(Maybe<bool> bypassCache,
-                         Maybe<std::string> script_to_evaluate_on_load,
-                         std::unique_ptr<ReloadCallback> callback) {
+Response PageHandler::Reload(Maybe<bool> bypassCache,
+                             Maybe<std::string> script_to_evaluate_on_load) {
   WebContentsImpl* web_contents = GetWebContents();
-  if (!web_contents) {
-    callback->sendFailure(Response::InternalError());
-    return;
-  }
+  if (!web_contents)
+    return Response::InternalError();
   if (web_contents->IsCrashed() ||
       web_contents->GetURL().scheme() == url::kDataScheme ||
       (web_contents->GetController().GetVisibleEntry() &&
-       web_contents->GetController().GetVisibleEntry()->IsViewSourceMode()) ||
-      !script_to_evaluate_on_load.isJust()) {
-    if (reload_callback_)
-      reload_callback_->sendSuccess();
-    reload_callback_ = std::move(callback);
+       web_contents->GetController().GetVisibleEntry()->IsViewSourceMode())) {
     web_contents->GetController().Reload(bypassCache.fromMaybe(false)
                                              ? ReloadType::BYPASSING_CACHE
                                              : ReloadType::NORMAL,
-                                         true);
+                                         false);
+    return Response::OK();
   } else {
     // Handle reload in renderer except for crashed and view source mode.
-    callback->fallThrough();
+    return Response::FallThrough();
   }
 }
 
 void PageHandler::Navigate(const std::string& url,
                            Maybe<std::string> referrer,
                            Maybe<std::string> maybe_transition_type,
+                           Maybe<std::string> frame_id,
                            std::unique_ptr<NavigateCallback> callback) {
   GURL gurl(url);
   if (!gurl.is_valid()) {
@@ -336,8 +333,7 @@ void PageHandler::Navigate(const std::string& url,
     return;
   }
 
-  WebContentsImpl* web_contents = GetWebContents();
-  if (!web_contents) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -370,50 +366,64 @@ void PageHandler::Navigate(const std::string& url,
   else
     type = ui::PAGE_TRANSITION_TYPED;
 
-  web_contents->GetController().LoadURL(
-      gurl,
-      Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
-      type, std::string());
-  std::string frame_id =
-      web_contents->GetMainFrame()->GetDevToolsFrameToken().ToString();
-  if (navigate_callback_) {
-    std::string error_string = net::ErrorToString(net::ERR_ABORTED);
-    navigate_callback_->sendSuccess(frame_id, Maybe<std::string>(),
-                                    Maybe<std::string>(error_string));
+  FrameTreeNode* frame_tree_node = nullptr;
+  std::string out_frame_id = frame_id.fromMaybe(
+      host_->frame_tree_node()->devtools_frame_token().ToString());
+  FrameTreeNode* root = host_->frame_tree_node();
+  if (root->devtools_frame_token().ToString() == out_frame_id) {
+    frame_tree_node = root;
+  } else {
+    for (FrameTreeNode* node : root->frame_tree()->SubtreeNodes(root)) {
+      if (node->devtools_frame_token().ToString() == out_frame_id) {
+        frame_tree_node = node;
+        break;
+      }
+    }
   }
-  if (web_contents->GetMainFrame()->frame_tree_node()->navigation_request())
-    navigate_callback_ = std::move(callback);
-  else
-    callback->sendSuccess(frame_id, Maybe<std::string>(), Maybe<std::string>());
+
+  if (!frame_tree_node) {
+    callback->sendFailure(Response::Error("No frame with given id found"));
+    return;
+  }
+
+  NavigationController::LoadURLParams params(gurl);
+  params.referrer =
+      Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault);
+  params.transition_type = type;
+  params.frame_tree_node_id = frame_tree_node->frame_tree_node_id();
+  frame_tree_node->navigator()->GetController()->LoadURLWithParams(params);
+
+  base::UnguessableToken frame_token = frame_tree_node->devtools_frame_token();
+  auto navigate_callback = navigate_callbacks_.find(frame_token);
+  if (navigate_callback != navigate_callbacks_.end()) {
+    std::string error_string = net::ErrorToString(net::ERR_ABORTED);
+    navigate_callback->second->sendSuccess(out_frame_id, Maybe<std::string>(),
+                                           Maybe<std::string>(error_string));
+  }
+  if (frame_tree_node->navigation_request()) {
+    navigate_callbacks_[frame_token] = std::move(callback);
+  } else {
+    callback->sendSuccess(out_frame_id, Maybe<std::string>(),
+                          Maybe<std::string>());
+  }
 }
 
 void PageHandler::NavigationReset(NavigationRequest* navigation_request) {
-  WebContentsImpl* web_contents = GetWebContents();
-  if (reload_callback_) {
-    if (!web_contents)
-      reload_callback_->sendFailure(Response::InternalError());
-    else
-      reload_callback_->sendSuccess();
-    reload_callback_.reset();
-  }
-  if (!navigate_callback_)
+  auto navigate_callback = navigate_callbacks_.find(
+      navigation_request->frame_tree_node()->devtools_frame_token());
+  if (navigate_callback == navigate_callbacks_.end())
     return;
-  if (!web_contents) {
-    navigate_callback_->sendFailure(Response::InternalError());
-    return;
-  }
-
   std::string frame_id =
-      web_contents->GetMainFrame()->GetDevToolsFrameToken().ToString();
+      navigation_request->frame_tree_node()->devtools_frame_token().ToString();
   bool success = navigation_request->net_error() != net::OK;
   std::string error_string =
       net::ErrorToString(navigation_request->net_error());
-  navigate_callback_->sendSuccess(
+  navigate_callback->second->sendSuccess(
       frame_id,
       Maybe<std::string>(
           navigation_request->devtools_navigation_token().ToString()),
       success ? Maybe<std::string>(error_string) : Maybe<std::string>());
-  navigate_callback_.reset();
+  navigate_callbacks_.erase(navigate_callback);
 }
 
 static const char* TransitionTypeName(ui::PageTransition type) {
@@ -621,6 +631,7 @@ void PageHandler::PrintToPDF(Maybe<bool> landscape,
                              Maybe<bool> ignore_invalid_page_ranges,
                              Maybe<String> header_template,
                              Maybe<String> footer_template,
+                             Maybe<bool> prefer_css_page_size,
                              std::unique_ptr<PrintToPDFCallback> callback) {
   callback->sendFailure(Response::Error("PrintToPDF is not implemented"));
   return;
@@ -631,6 +642,9 @@ Response PageHandler::StartScreencast(Maybe<std::string> format,
                                       Maybe<int> max_width,
                                       Maybe<int> max_height,
                                       Maybe<int> every_nth_frame) {
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
   RenderWidgetHostImpl* widget_host =
       host_ ? host_->GetRenderWidgetHost() : nullptr;
   if (!widget_host)
@@ -772,9 +786,10 @@ void PageHandler::GetAppManifest(
 }
 
 WebContentsImpl* PageHandler::GetWebContents() {
-  return host_ ?
-      static_cast<WebContentsImpl*>(WebContents::FromRenderFrameHost(host_)) :
-      nullptr;
+  return host_ && !host_->frame_tree_node()->parent()
+             ? static_cast<WebContentsImpl*>(
+                   WebContents::FromRenderFrameHost(host_))
+             : nullptr;
 }
 
 void PageHandler::NotifyScreencastVisibility(bool visible) {

@@ -31,13 +31,13 @@
 #ifndef WebLocalFrameImpl_h
 #define WebLocalFrameImpl_h
 
+#include "base/single_thread_task_runner.h"
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
 #include "core/exported/WebInputMethodControllerImpl.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebFrameWidgetBase.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Compiler.h"
@@ -52,7 +52,6 @@ namespace blink {
 
 class ChromePrintContext;
 class IntSize;
-class KURL;
 class LocalFrameClient;
 class ScrollableArea;
 class SharedWorkerRepositoryClientImpl;
@@ -92,7 +91,7 @@ class CORE_EXPORT WebLocalFrameImpl final
       WebSharedWorkerRepositoryClient*) override;
   WebSize GetScrollOffset() const override;
   void SetScrollOffset(const WebSize&) override;
-  WebSize ContentsSize() const override;
+  WebSize DocumentSize() const override;
   bool HasVisibleContent() const override;
   WebRect VisibleContentRect() const override;
   WebView* View() const override;
@@ -260,6 +259,7 @@ class CORE_EXPORT WebLocalFrameImpl final
             WebHistoryLoadType,
             bool is_client_redirect,
             const base::UnguessableToken& devtools_navigation_token) override;
+  void LoadJavaScriptURL(const WebURL&) override;
   void LoadData(const WebData&,
                 const WebString& mime_type,
                 const WebString& text_encoding,
@@ -442,8 +442,6 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebLocalFrame* ToWebLocalFrame() override;
   bool IsWebRemoteFrame() const override;
   WebRemoteFrame* ToWebRemoteFrame() override;
-
-  void LoadJavaScriptURL(const KURL&);
 
   HitTestResult HitTestResultForVisualViewportPos(const IntPoint&);
 

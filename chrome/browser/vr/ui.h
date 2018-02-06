@@ -84,7 +84,7 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetScreenCaptureEnabled(bool enabled) override;
   void SetAudioCaptureEnabled(bool enabled) override;
   void SetBluetoothConnected(bool enabled) override;
-  void SetLocationAccess(bool enabled) override;
+  void SetLocationAccessEnabled(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
@@ -97,10 +97,35 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
                       const base::Version& component_version);
 
   void OnAssetsLoading();
+  // TODO(ymalik): We expose this to stop sending VSync to the WebVR page until
+  // the splash screen has been visible for its minimum duration. The visibility
+  // logic currently lives in the UI, and it'd be much cleaner if the UI didn't
+  // have to worry about this, and if it were told to hide the splash screen
+  // like other WebVR phases (e.g. OnWebVrFrameAvailable below).
+  bool CanSendWebVrVSync();
+
+  void ShowSoftInput(bool show) override;
+  void UpdateWebInputSelectionIndices(int selection_start,
+                                      int selection_end) override;
+  void UpdateWebInputCompositionIndices(int composition_start,
+                                        int composition_end) override;
+  void UpdateWebInputText(const base::string16& text) override;
+
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate,
+                             int width,
+                             int height);
+  void SetAlertDialogSize(int width, int height);
   bool ShouldRenderWebVr();
-  void OnGlInitialized(unsigned int content_texture_id,
-                       UiElementRenderer::TextureLocation content_location,
-                       bool use_ganesh);
+
+  void OnGlInitialized(
+      unsigned int content_texture_id,
+      UiElementRenderer::TextureLocation content_location,
+      unsigned int content_overlay_texture_id,
+      UiElementRenderer::TextureLocation content_overlay_location,
+      unsigned int ui_texture_id,
+      bool use_ganesh);
+
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);

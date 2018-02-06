@@ -76,6 +76,8 @@ class PasswordManagerBrowserTestWarning
   PasswordManagerBrowserTestWarning() {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
+    PasswordManagerBrowserTestBase::SetUpCommandLine(command_line);
+
     // We need to set the feature state before the render process is created,
     // in order for it to inherit the feature state from the browser process.
     // SetUp() runs too early, and SetUpOnMainThread() runs too late.
@@ -296,7 +298,7 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
 }
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
-                       PromptForSubmitWithInPageNavigation) {
+                       PromptForSubmitWithSameDocumentNavigation) {
   NavigateToFile("/password/password_navigate_before_submit.html");
 
   // Fill a form and submit through a <input type="submit"> button. Nothing
@@ -536,7 +538,7 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
 
 IN_PROC_BROWSER_TEST_F(
     PasswordManagerBrowserTestBase,
-    NoPromptForFailedLoginFromMainFrameWithMultiFramesInPage) {
+    NoPromptForFailedLoginFromMainFrameWithMultiFramesSameDocument) {
   NavigateToFile("/password/multi_frames.html");
 
   // Make sure that we don't prompt to save the password for a failed login
@@ -556,7 +558,7 @@ IN_PROC_BROWSER_TEST_F(
 
 IN_PROC_BROWSER_TEST_F(
     PasswordManagerBrowserTestBase,
-    NoPromptForFailedLoginFromSubFrameWithMultiFramesInPage) {
+    NoPromptForFailedLoginFromSubFrameWithMultiFramesSameDocument) {
   NavigateToFile("/password/multi_frames.html");
 
   // Make sure that we don't prompt to save the password for a failed login
@@ -2955,8 +2957,17 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
                       "mypassword");
 }
 
+
+// Flaky on Linux. http://crbug.com/804398
+#if defined(OS_LINUX)
+#define MAYBE_InternalsPage_Renderer DISABLED_InternalsPage_Renderer
+#else
+#define MAYBE_InternalsPage_Renderer InternalsPage_Renderer
+#endif
+
 // Check that the internals page contains logs from the renderer.
-IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, InternalsPage_Renderer) {
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
+    MAYBE_InternalsPage_Renderer) {
   // Open the internals page.
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GURL("chrome://password-manager-internals"),
@@ -3613,6 +3624,7 @@ class SitePerProcessPasswordManagerBrowserTest
   SitePerProcessPasswordManagerBrowserTest() {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
+    PasswordManagerBrowserTestBase::SetUpCommandLine(command_line);
     content::IsolateAllSitesForTesting(command_line);
   }
 

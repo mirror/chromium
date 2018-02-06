@@ -270,8 +270,17 @@ AbortCallback SmbFileSystem::CreateDirectory(
 AbortCallback SmbFileSystem::CreateFile(
     const base::FilePath& file_path,
     const storage::AsyncFileUtil::StatusCallback& callback) {
-  NOTIMPLEMENTED();
+  GetSmbProviderClient()->CreateFile(
+      GetMountId(), file_path,
+      base::BindOnce(&SmbFileSystem::HandleRequestCreateFileCallback,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
   return CreateAbortCallback();
+}
+
+void SmbFileSystem::HandleRequestCreateFileCallback(
+    const storage::AsyncFileUtil::StatusCallback& callback,
+    smbprovider::ErrorType error) const {
+  callback.Run(TranslateError(error));
 }
 
 AbortCallback SmbFileSystem::DeleteEntry(
@@ -311,7 +320,10 @@ AbortCallback SmbFileSystem::Truncate(
     const base::FilePath& file_path,
     int64_t length,
     const storage::AsyncFileUtil::StatusCallback& callback) {
-  NOTIMPLEMENTED();
+  GetSmbProviderClient()->Truncate(
+      GetMountId(), file_path, length,
+      base::BindOnce(&SmbFileSystem::HandleRequestTruncateCallback,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
   return CreateAbortCallback();
 }
 
@@ -402,9 +414,9 @@ void SmbFileSystem::Configure(
 void SmbFileSystem::HandleRequestReadDirectoryCallback(
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback,
     smbprovider::ErrorType error,
-    const smbprovider::DirectoryEntryList& entries) const {
+    const smbprovider::DirectoryEntryListProto& entries) const {
   storage::AsyncFileUtil::EntryList entry_list;
-  for (const smbprovider::DirectoryEntry& entry : entries.entries()) {
+  for (const smbprovider::DirectoryEntryProto& entry : entries.entries()) {
     entry_list.emplace_back(entry.name(), MapEntryType(entry.is_directory()));
   }
   // TODO(allenvic): Implement has_more (crbug.com/796246).
@@ -415,7 +427,7 @@ void SmbFileSystem::HandleRequestGetMetadataEntryCallback(
     ProvidedFileSystemInterface::MetadataFieldMask fields,
     const ProvidedFileSystemInterface::GetMetadataCallback& callback,
     smbprovider::ErrorType error,
-    const smbprovider::DirectoryEntry& entry) const {
+    const smbprovider::DirectoryEntryProto& entry) const {
   if (error != smbprovider::ERROR_OK) {
     callback.Run(std::unique_ptr<file_system_provider::EntryMetadata>(),
                  TranslateError(error));
@@ -482,6 +494,12 @@ void SmbFileSystem::HandleRequestReadFileCallback(
     total_read += bytes_read;
   }
   callback.Run(total_read, false /* has_more */, base::File::FILE_OK);
+}
+
+void SmbFileSystem::HandleRequestTruncateCallback(
+    const storage::AsyncFileUtil::StatusCallback& callback,
+    smbprovider::ErrorType error) const {
+  callback.Run(TranslateError(error));
 }
 
 base::WeakPtr<file_system_provider::ProvidedFileSystemInterface>

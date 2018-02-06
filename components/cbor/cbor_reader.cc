@@ -5,6 +5,7 @@
 #include "components/cbor/cbor_reader.h"
 
 #include <math.h>
+
 #include <utility>
 
 #include "base/numerics/checked_math.h"
@@ -35,7 +36,7 @@ const char kUnknownAdditionalInfo[] =
 const char kIncompleteCBORData[] =
     "Prematurely terminated CBOR data byte array.";
 const char kIncorrectMapKeyType[] =
-    "Map keys other than utf-8 encoded strings are not allowed.";
+    "Specified map key type is not supported by the current implementation.";
 const char kTooMuchNesting[] = "Too much nesting.";
 const char kInvalidUTF8[] = "String encoding other than utf8 are not allowed.";
 const char kExtraneousData[] = "Trailing data bytes are not allowed.";
@@ -54,15 +55,16 @@ const char kOutOfRangeIntegerValue[] =
 
 }  // namespace
 
-CBORReader::CBORReader(Bytes::const_iterator it, Bytes::const_iterator end)
+CBORReader::CBORReader(base::span<const uint8_t>::const_iterator it,
+                       const base::span<const uint8_t>::const_iterator end)
     : it_(it), end_(end), error_code_(DecoderError::CBOR_NO_ERROR) {}
 CBORReader::~CBORReader() {}
 
 // static
-base::Optional<CBORValue> CBORReader::Read(const Bytes& data,
+base::Optional<CBORValue> CBORReader::Read(base::span<uint8_t const> data,
                                            DecoderError* error_code_out,
                                            int max_nesting_level) {
-  CBORReader reader(data.begin(), data.end());
+  CBORReader reader(data.cbegin(), data.cend());
   base::Optional<CBORValue> decoded_cbor = reader.DecodeCBOR(max_nesting_level);
 
   if (decoded_cbor)
@@ -212,7 +214,7 @@ base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
     return base::nullopt;
   }
 
-  Bytes cbor_byte_string(it_, it_ + num_bytes);
+  std::vector<uint8_t> cbor_byte_string(it_, it_ + num_bytes);
   it_ += num_bytes;
 
   return CBORValue(std::move(cbor_byte_string));
@@ -239,11 +241,15 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
 
-    // Only CBOR maps with integer or string type keys are allowed.
-    if (key.value().type() != CBORValue::Type::STRING &&
-        key.value().type() != CBORValue::Type::UNSIGNED) {
-      error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
-      return base::nullopt;
+    switch (key.value().type()) {
+      case CBORValue::Type::UNSIGNED:
+      case CBORValue::Type::NEGATIVE:
+      case CBORValue::Type::STRING:
+      case CBORValue::Type::BYTE_STRING:
+        break;
+      default:
+        error_code_ = DecoderError::INCORRECT_MAP_KEY_TYPE;
+        return base::nullopt;
     }
     if (!CheckDuplicateKey(key.value(), &cbor_map) ||
         !CheckOutOfOrderKey(key.value(), &cbor_map)) {

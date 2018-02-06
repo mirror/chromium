@@ -11,14 +11,12 @@
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
 #include "chrome/browser/content_settings/content_settings_mock_observer.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/mock_settings_observer.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/content_settings_details.h"
@@ -33,7 +31,6 @@
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/static_cookie_policy.h"
-#include "ppapi/features/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -1576,10 +1573,6 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsForOneTypeWithPredicate) {
 }
 
 TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
-  base::test::ScopedFeatureList feature_list;
-  // Enable kTabsInCbd to activate last_modified timestmap recording.
-  feature_list.InitAndEnableFeature(features::kTabsInCbd);
-
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
 
@@ -1635,9 +1628,6 @@ TEST_F(HostContentSettingsMapTest, ClearSettingsWithTimePredicate) {
 }
 
 TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(features::kTabsInCbd);
-
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
 
@@ -1677,10 +1667,6 @@ TEST_F(HostContentSettingsMapTest, GetSettingLastModified) {
 }
 
 TEST_F(HostContentSettingsMapTest, LastModifiedMultipleModifiableProviders) {
-  base::test::ScopedFeatureList feature_list;
-  // Enable kTabsInCbd to activate last_modified timestamp recording.
-  feature_list.InitAndEnableFeature(features::kTabsInCbd);
-
   TestingProfile profile;
   auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
   GURL url("https://www.google.com/");
@@ -1737,28 +1723,6 @@ TEST_F(HostContentSettingsMapTest, LastModifiedMultipleModifiableProviders) {
   weak_other_provider->RemoveObserver(map);
 }
 
-TEST_F(HostContentSettingsMapTest, LastModifiedIsNotRecordedWhenDisabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndDisableFeature(features::kTabsInCbd);
-
-  TestingProfile profile;
-  auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
-  ContentSettingsForOneType host_settings;
-
-  GURL url("https://www.google.com/");
-  ContentSettingsPattern pattern =
-      ContentSettingsPattern::FromURLNoWildcard(url);
-
-  // Add setting for url.
-  map->SetContentSettingDefaultScope(url, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
-                                     std::string(), CONTENT_SETTING_BLOCK);
-
-  base::Time t = map->GetSettingLastModifiedDate(
-      pattern, ContentSettingsPattern::Wildcard(),
-      CONTENT_SETTINGS_TYPE_POPUPS);
-  EXPECT_EQ(base::Time(), t);
-}
-
 TEST_F(HostContentSettingsMapTest, CanSetNarrowestSetting) {
   TestingProfile profile;
   const auto* map = HostContentSettingsMapFactory::GetForProfile(&profile);
@@ -1773,3 +1737,68 @@ TEST_F(HostContentSettingsMapTest, CanSetNarrowestSetting) {
       invalid_url, invalid_url,
       CONTENT_SETTINGS_TYPE_POPUPS));
 }
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+// Test that existing Flash preferences should get copied into the
+// |CONTENT_SETTINGS_TYPE_PLUGINS_DATA| setting on the creation of a new
+// |HostContentSettingsMap|.
+TEST_F(HostContentSettingsMapTest, PluginDataMigration) {
+  TestingProfile profile;
+  // Set a website-specific Flash preference and a pattern exception.
+  std::unique_ptr<base::Value> value = base::JSONReader::Read(
+      "{\"https://urlwithflashchanged.com:443,*\":{\"setting\":1}, "
+      "\"[*.]patternurl.com:443,*\":{\"setting\":1}}");
+  profile.GetPrefs()->Set(GetPrefName(CONTENT_SETTINGS_TYPE_PLUGINS), *value);
+
+  HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(&profile);
+
+  // Check it was copied successfully.
+  const GURL url1("https://urlwithflashchanged.com");
+  EXPECT_NE(nullptr, map->GetWebsiteSetting(url1, url1,
+                                            CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                            std::string(), nullptr));
+  // Check other urls were not affected.
+  const GURL url2("https://urlwithflashdefault.com");
+  EXPECT_EQ(nullptr, map->GetWebsiteSetting(url2, url2,
+                                            CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                            std::string(), nullptr));
+  // Check patterns are also unaffected.
+  const GURL pattern("[*.]patternurl.com");
+  EXPECT_EQ(nullptr, map->GetWebsiteSetting(pattern, pattern,
+                                            CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                            std::string(), nullptr));
+}
+
+// If there are existing |CONTENT_SETTINGS_TYPE_PLUGINS_DATA| preferences
+// stored, check we skip the migration.
+TEST_F(HostContentSettingsMapTest, PluginDataMigrated) {
+  TestingProfile profile;
+  // Set a website-specific Flash preference and another preference indicating
+  // that the Flash setting has changed for a different website.
+  std::unique_ptr<base::Value> value = base::JSONReader::Read(
+      "{\"https://unmigratedurl.com:443,*\":{\"setting\":1}}");
+  profile.GetPrefs()->Set(GetPrefName(CONTENT_SETTINGS_TYPE_PLUGINS), *value);
+  value = base::JSONReader::Read(
+      "{\"https://"
+      "example.com:443,*\":{\"setting\":{\"flashPreviouslyChanged\":true}}}");
+  profile.GetPrefs()->Set(GetPrefName(CONTENT_SETTINGS_TYPE_PLUGINS_DATA),
+                          *value);
+
+  HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(&profile);
+
+  // Check it was copied successfully.
+  const GURL flash_data_url("https://example.com");
+  EXPECT_NE(nullptr, map->GetWebsiteSetting(flash_data_url, flash_data_url,
+                                            CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                            std::string(), nullptr));
+  // Check the migration code was not run (i.e. the other Flash preference set
+  // above was not migrated). Theoretically this should never happen, but this
+  // scenario is useful for testing.
+  const GURL unmigrated_url("https://unmigratedurl.com");
+  EXPECT_EQ(nullptr, map->GetWebsiteSetting(unmigrated_url, unmigrated_url,
+                                            CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                                            std::string(), nullptr));
+}
+#endif

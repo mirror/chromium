@@ -30,6 +30,10 @@ constexpr in_place_t in_place = {};
 // http://en.cppreference.com/w/cpp/utility/optional/nullopt
 constexpr nullopt_t nullopt(0);
 
+// Forward declaration, which is refered by following helpers.
+template <typename T>
+class Optional;
+
 namespace internal {
 
 template <typename T, bool = std::is_trivially_destructible<T>::value>
@@ -40,7 +44,7 @@ struct OptionalStorageBase {
 
   template <class... Args>
   constexpr explicit OptionalStorageBase(in_place_t, Args&&... args)
-      : is_null_(false), value_(std::forward<Args>(args)...) {}
+      : is_populated_(true), value_(std::forward<Args>(args)...) {}
 
   // When T is not trivially destructible we must call its
   // destructor before deallocating its memory.
@@ -54,18 +58,18 @@ struct OptionalStorageBase {
   // necessary for this case at the moment. Please see also the destructor
   // comment in "is_trivially_destructible = true" specialization below.
   ~OptionalStorageBase() {
-    if (!is_null_)
+    if (is_populated_)
       value_.~T();
   }
 
   template <class... Args>
   void Init(Args&&... args) {
-    DCHECK(is_null_);
+    DCHECK(!is_populated_);
     ::new (&value_) T(std::forward<Args>(args)...);
-    is_null_ = false;
+    is_populated_ = true;
   }
 
-  bool is_null_ = true;
+  bool is_populated_ = false;
   union {
     // |empty_| exists so that the union will always be initialized, even when
     // it doesn't contain a value. Union members must be initialized for the
@@ -83,7 +87,7 @@ struct OptionalStorageBase<T, true /* trivially destructible */> {
 
   template <class... Args>
   constexpr explicit OptionalStorageBase(in_place_t, Args&&... args)
-      : is_null_(false), value_(std::forward<Args>(args)...) {}
+      : is_populated_(true), value_(std::forward<Args>(args)...) {}
 
   // When T is trivially destructible (i.e. its destructor does nothing) there
   // is no need to call it. Implicitly defined destructor is trivial, because
@@ -101,12 +105,12 @@ struct OptionalStorageBase<T, true /* trivially destructible */> {
 
   template <class... Args>
   void Init(Args&&... args) {
-    DCHECK(is_null_);
+    DCHECK(!is_populated_);
     ::new (&value_) T(std::forward<Args>(args)...);
-    is_null_ = false;
+    is_populated_ = true;
   }
 
-  bool is_null_ = true;
+  bool is_populated_ = false;
   union {
     // |empty_| exists so that the union will always be initialized, even when
     // it doesn't contain a value. Union members must be initialized for the
@@ -132,7 +136,7 @@ struct OptionalStorage : OptionalStorageBase<T> {
 
   // Accessing the members of template base class requires explicit
   // declaration.
-  using OptionalStorageBase<T>::is_null_;
+  using OptionalStorageBase<T>::is_populated_;
   using OptionalStorageBase<T>::value_;
   using OptionalStorageBase<T>::Init;
 
@@ -144,12 +148,12 @@ struct OptionalStorage : OptionalStorageBase<T> {
   OptionalStorage() = default;
 
   OptionalStorage(const OptionalStorage& other) {
-    if (!other.is_null_)
+    if (other.is_populated_)
       Init(other.value_);
   }
 
   OptionalStorage(OptionalStorage&& other) {
-    if (!other.is_null_)
+    if (other.is_populated_)
       Init(std::move(other.value_));
   }
 };
@@ -159,7 +163,7 @@ struct OptionalStorage<T,
                        true /* trivially copy constructible */,
                        false /* trivially move constructible */>
     : OptionalStorageBase<T> {
-  using OptionalStorageBase<T>::is_null_;
+  using OptionalStorageBase<T>::is_populated_;
   using OptionalStorageBase<T>::value_;
   using OptionalStorageBase<T>::Init;
   using OptionalStorageBase<T>::OptionalStorageBase;
@@ -168,7 +172,7 @@ struct OptionalStorage<T,
   OptionalStorage(const OptionalStorage& other) = default;
 
   OptionalStorage(OptionalStorage&& other) {
-    if (!other.is_null_)
+    if (other.is_populated_)
       Init(std::move(other.value_));
   }
 };
@@ -178,7 +182,7 @@ struct OptionalStorage<T,
                        false /* trivially copy constructible */,
                        true /* trivially move constructible */>
     : OptionalStorageBase<T> {
-  using OptionalStorageBase<T>::is_null_;
+  using OptionalStorageBase<T>::is_populated_;
   using OptionalStorageBase<T>::value_;
   using OptionalStorageBase<T>::Init;
   using OptionalStorageBase<T>::OptionalStorageBase;
@@ -187,7 +191,7 @@ struct OptionalStorage<T,
   OptionalStorage(OptionalStorage&& other) = default;
 
   OptionalStorage(const OptionalStorage& other) {
-    if (!other.is_null_)
+    if (other.is_populated_)
       Init(other.value_);
   }
 };
@@ -219,10 +223,23 @@ class OptionalBase {
   constexpr explicit OptionalBase(in_place_t, Args&&... args)
       : storage_(in_place, std::forward<Args>(args)...) {}
 
+  // Implementation of converting constructors.
+  template <typename U>
+  explicit OptionalBase(const OptionalBase<U>& other) {
+    if (other.storage_.is_populated_)
+      storage_.Init(other.storage_.value_);
+  }
+
+  template <typename U>
+  explicit OptionalBase(OptionalBase<U>&& other) {
+    if (other.storage_.is_populated_)
+      storage_.Init(std::move(other.storage_.value_));
+  }
+
   ~OptionalBase() = default;
 
   OptionalBase& operator=(const OptionalBase& other) {
-    if (other.storage_.is_null_) {
+    if (!other.storage_.is_populated_) {
       FreeIfNeeded();
       return *this;
     }
@@ -232,7 +249,7 @@ class OptionalBase {
   }
 
   OptionalBase& operator=(OptionalBase&& other) {
-    if (other.storage_.is_null_) {
+    if (!other.storage_.is_populated_) {
       FreeIfNeeded();
       return *this;
     }
@@ -242,28 +259,99 @@ class OptionalBase {
   }
 
   void InitOrAssign(const T& value) {
-    if (storage_.is_null_)
+    if (!storage_.is_populated_)
       storage_.Init(value);
     else
       storage_.value_ = value;
   }
 
   void InitOrAssign(T&& value) {
-    if (storage_.is_null_)
+    if (!storage_.is_populated_)
       storage_.Init(std::move(value));
     else
       storage_.value_ = std::move(value);
   }
 
   void FreeIfNeeded() {
-    if (storage_.is_null_)
+    if (!storage_.is_populated_)
       return;
     storage_.value_.~T();
-    storage_.is_null_ = true;
+    storage_.is_populated_ = false;
   }
+
+  // For implementing conversion, allow access to other typed OptionalBase
+  // class.
+  template <typename U>
+  friend class OptionalBase;
 
   OptionalStorage<T> storage_;
 };
+
+// The following {Copy,Move}{Constructible,Assignable} structs are helpers to
+// implement constructor/assign-operator overloading. Specifically, if T is
+// is not movable but copyable, Optional<T>'s move constructor should not
+// participate in overload resolution. This inheritance trick implements that.
+template <bool is_copy_constructible>
+struct CopyConstructible {};
+
+template <>
+struct CopyConstructible<false> {
+  constexpr CopyConstructible() = default;
+  constexpr CopyConstructible(const CopyConstructible&) = delete;
+  constexpr CopyConstructible(CopyConstructible&&) = default;
+  CopyConstructible& operator=(const CopyConstructible&) = default;
+  CopyConstructible& operator=(CopyConstructible&&) = default;
+};
+
+template <bool is_move_constructible>
+struct MoveConstructible {};
+
+template <>
+struct MoveConstructible<false> {
+  constexpr MoveConstructible() = default;
+  constexpr MoveConstructible(const MoveConstructible&) = default;
+  constexpr MoveConstructible(MoveConstructible&&) = delete;
+  MoveConstructible& operator=(const MoveConstructible&) = default;
+  MoveConstructible& operator=(MoveConstructible&&) = default;
+};
+
+template <bool is_copy_assignable>
+struct CopyAssignable {};
+
+template <>
+struct CopyAssignable<false> {
+  constexpr CopyAssignable() = default;
+  constexpr CopyAssignable(const CopyAssignable&) = default;
+  constexpr CopyAssignable(CopyAssignable&&) = default;
+  CopyAssignable& operator=(const CopyAssignable&) = delete;
+  CopyAssignable& operator=(CopyAssignable&&) = default;
+};
+
+template <bool is_move_assignable>
+struct MoveAssignable {};
+
+template <>
+struct MoveAssignable<false> {
+  constexpr MoveAssignable() = default;
+  constexpr MoveAssignable(const MoveAssignable&) = default;
+  constexpr MoveAssignable(MoveAssignable&&) = default;
+  MoveAssignable& operator=(const MoveAssignable&) = default;
+  MoveAssignable& operator=(MoveAssignable&&) = delete;
+};
+
+// Helper to conditionally enable converting constructors.
+template <typename T, typename U>
+struct IsConvertibleFromOptional
+    : std::integral_constant<
+          bool,
+          std::is_constructible<T, Optional<U>&>::value ||
+              std::is_constructible<T, const Optional<U>&>::value ||
+              std::is_constructible<T, Optional<U>&&>::value ||
+              std::is_constructible<T, const Optional<U>&&>::value ||
+              std::is_convertible<Optional<U>&, T>::value ||
+              std::is_convertible<const Optional<U>&, T>::value ||
+              std::is_convertible<Optional<U>&&, T>::value ||
+              std::is_convertible<const Optional<U>&&, T>::value> {};
 
 }  // namespace internal
 
@@ -279,17 +367,63 @@ class OptionalBase {
 // - No exceptions are thrown, because they are banned from Chromium.
 // - All the non-members are in the 'base' namespace instead of 'std'.
 template <typename T>
-class Optional : public internal::OptionalBase<T> {
+class Optional
+    : public internal::OptionalBase<T>,
+      public internal::CopyConstructible<std::is_copy_constructible<T>::value>,
+      public internal::MoveConstructible<std::is_move_constructible<T>::value>,
+      public internal::CopyAssignable<std::is_copy_constructible<T>::value &&
+                                      std::is_copy_assignable<T>::value>,
+      public internal::MoveAssignable<std::is_move_constructible<T>::value &&
+                                      std::is_move_assignable<T>::value> {
  public:
   using value_type = T;
 
   // Defer default/copy/move constructor implementation to OptionalBase.
-  // TODO(hidehiko): Implement conditional enabling.
   constexpr Optional() = default;
   constexpr Optional(const Optional& other) = default;
   constexpr Optional(Optional&& other) = default;
 
-  constexpr Optional(nullopt_t) {}
+  constexpr Optional(nullopt_t) {}  // NOLINT(runtime/explicit)
+
+  // Converting copy constructor. "explicit" only if
+  // std::is_convertible<const U&, T>::value is false. It is implemented by
+  // declaring two almost same constructors, but that condition in enable_if_t
+  // is different, so that either one is chosen, thanks to SFINAE.
+  template <
+      typename U,
+      std::enable_if_t<std::is_constructible<T, const U&>::value &&
+                           !internal::IsConvertibleFromOptional<T, U>::value &&
+                           std::is_convertible<const U&, T>::value,
+                       bool> = false>
+  Optional(const Optional<U>& other) : internal::OptionalBase<T>(other) {}
+
+  template <
+      typename U,
+      std::enable_if_t<std::is_constructible<T, const U&>::value &&
+                           !internal::IsConvertibleFromOptional<T, U>::value &&
+                           !std::is_convertible<const U&, T>::value,
+                       bool> = false>
+  explicit Optional(const Optional<U>& other)
+      : internal::OptionalBase<T>(other) {}
+
+  // Converting move constructor. Similar to converting copy constructor,
+  // declaring two (explicit and non-explicit) constructors.
+  template <
+      typename U,
+      std::enable_if_t<std::is_constructible<T, U&&>::value &&
+                           !internal::IsConvertibleFromOptional<T, U>::value &&
+                           std::is_convertible<U&&, T>::value,
+                       bool> = false>
+  Optional(Optional<U>&& other) : internal::OptionalBase<T>(std::move(other)) {}
+
+  template <
+      typename U,
+      std::enable_if_t<std::is_constructible<T, U&&>::value &&
+                           !internal::IsConvertibleFromOptional<T, U>::value &&
+                           !std::is_convertible<U&&, T>::value,
+                       bool> = false>
+  explicit Optional(Optional<U>&& other)
+      : internal::OptionalBase<T>(std::move(other)) {}
 
   constexpr Optional(const T& value)
       : internal::OptionalBase<T>(in_place, value) {}
@@ -315,7 +449,6 @@ class Optional : public internal::OptionalBase<T> {
   ~Optional() = default;
 
   // Defer copy-/move- assign operator implementation to OptionalBase.
-  // TOOD(hidehiko): Implement conditional enabling.
   Optional& operator=(const Optional& other) = default;
   Optional& operator=(Optional&& other) = default;
 
@@ -333,12 +466,12 @@ class Optional : public internal::OptionalBase<T> {
   }
 
   constexpr const T* operator->() const {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return &value();
   }
 
   constexpr T* operator->() {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return &value();
   }
 
@@ -350,27 +483,27 @@ class Optional : public internal::OptionalBase<T> {
 
   constexpr T&& operator*() && { return std::move(value()); }
 
-  constexpr explicit operator bool() const { return !storage_.is_null_; }
+  constexpr explicit operator bool() const { return storage_.is_populated_; }
 
-  constexpr bool has_value() const { return !storage_.is_null_; }
+  constexpr bool has_value() const { return storage_.is_populated_; }
 
   constexpr T& value() & {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return storage_.value_;
   }
 
   constexpr const T& value() const & {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return storage_.value_;
   }
 
   constexpr T&& value() && {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return std::move(storage_.value_);
   }
 
   constexpr const T&& value() const && {
-    DCHECK(!storage_.is_null_);
+    DCHECK(storage_.is_populated_);
     return std::move(storage_.value_);
   }
 
@@ -381,8 +514,9 @@ class Optional : public internal::OptionalBase<T> {
     //               "T must be copy constructible");
     static_assert(std::is_convertible<U, T>::value,
                   "U must be convertible to T");
-    return storage_.is_null_ ? static_cast<T>(std::forward<U>(default_value))
-                             : value();
+    return storage_.is_populated_
+               ? value()
+               : static_cast<T>(std::forward<U>(default_value));
   }
 
   template <class U>
@@ -392,26 +526,27 @@ class Optional : public internal::OptionalBase<T> {
     //               "T must be move constructible");
     static_assert(std::is_convertible<U, T>::value,
                   "U must be convertible to T");
-    return storage_.is_null_ ? static_cast<T>(std::forward<U>(default_value))
-                             : std::move(value());
+    return storage_.is_populated_
+               ? std::move(value())
+               : static_cast<T>(std::forward<U>(default_value));
   }
 
   void swap(Optional& other) {
-    if (storage_.is_null_ && other.storage_.is_null_)
+    if (!storage_.is_populated_ && !other.storage_.is_populated_)
       return;
 
-    if (storage_.is_null_ != other.storage_.is_null_) {
-      if (storage_.is_null_) {
-        storage_.Init(std::move(other.storage_.value_));
-        other.FreeIfNeeded();
-      } else {
+    if (storage_.is_populated_ != other.storage_.is_populated_) {
+      if (storage_.is_populated_) {
         other.storage_.Init(std::move(storage_.value_));
         FreeIfNeeded();
+      } else {
+        storage_.Init(std::move(other.storage_.value_));
+        other.FreeIfNeeded();
       }
       return;
     }
 
-    DCHECK(!storage_.is_null_ && !other.storage_.is_null_);
+    DCHECK(storage_.is_populated_ && other.storage_.is_populated_);
     using std::swap;
     swap(**this, *other);
   }

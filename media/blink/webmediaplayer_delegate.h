@@ -5,12 +5,18 @@
 #ifndef MEDIA_BLINK_WEBMEDIAPLAYER_DELEGATE_H_
 #define MEDIA_BLINK_WEBMEDIAPLAYER_DELEGATE_H_
 
+namespace base {
+class UnguessableToken;
+}
 namespace blink {
 class WebMediaPlayer;
 }
 namespace gfx {
 class Size;
 }
+namespace viz {
+class FrameSinkId;
+}  // namespace viz
 namespace media {
 
 enum class MediaContentType;
@@ -98,6 +104,14 @@ class WebMediaPlayerDelegate {
 
   // Notify that the muted status of the media player has changed.
   virtual void DidPlayerMutedStatusChange(int delegate_id, bool muted) = 0;
+
+  // Update the relevant FrameSinkId and SurfaceId information to the picture
+  // in picture controller to route the intended video to the picture in
+  // picture window.
+  virtual void ShowPictureInPicture(int delegate_id,
+                                    viz::FrameSinkId frame_sink_id,
+                                    uint32_t parent_id,
+                                    base::UnguessableToken nonce) = 0;
 
   // Notify that playback is stopped. This will drop wake locks and remove any
   // external controls.

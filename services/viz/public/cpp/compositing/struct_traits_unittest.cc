@@ -51,7 +51,6 @@
 #include "services/viz/public/interfaces/compositing/transferable_resource.mojom.h"
 #include "skia/public/interfaces/bitmap_skbitmap_struct_traits.h"
 #include "skia/public/interfaces/blur_image_filter_tile_mode_struct_traits.h"
-#include "skia/public/interfaces/image_filter_struct_traits.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkString.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
@@ -385,17 +384,13 @@ TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
 }
 
 TEST_F(StructTraitsTest, ResourceSettings) {
-  constexpr size_t kArbitrarySize = 32;
   constexpr bool kArbitraryBool = true;
   ResourceSettings input;
-  input.texture_id_allocation_chunk_size = kArbitrarySize;
   input.use_gpu_memory_buffer_resources = kArbitraryBool;
 
   ResourceSettings output;
   SerializeAndDeserialize<mojom::ResourceSettings>(input, &output);
 
-  EXPECT_EQ(input.texture_id_allocation_chunk_size,
-            output.texture_id_allocation_chunk_size);
   EXPECT_EQ(input.use_gpu_memory_buffer_resources,
             output.use_gpu_memory_buffer_resources);
 }
@@ -655,7 +650,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   activation_dependencies.push_back(id2);
   uint32_t frame_token = 0xdeadbeef;
   uint64_t begin_frame_ack_sequence_number = 0xdeadbeef;
-  uint32_t deadline_in_frames = 4u;
+  FrameDeadline frame_deadline(4u, true);
 
   CompositorFrameMetadata input;
   input.device_scale_factor = device_scale_factor;
@@ -679,7 +674,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   input.latency_info = latency_infos;
   input.referenced_surfaces = referenced_surfaces;
   input.activation_dependencies = activation_dependencies;
-  input.deadline_in_frames = deadline_in_frames;
+  input.deadline = frame_deadline;
   input.frame_token = frame_token;
   input.begin_frame_ack.sequence_number = begin_frame_ack_sequence_number;
 
@@ -716,7 +711,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
             output.activation_dependencies.size());
   for (uint32_t i = 0; i < activation_dependencies.size(); ++i)
     EXPECT_EQ(activation_dependencies[i], output.activation_dependencies[i]);
-  EXPECT_EQ(deadline_in_frames, output.deadline_in_frames);
+  EXPECT_EQ(frame_deadline, output.deadline);
   EXPECT_EQ(frame_token, output.frame_token);
   EXPECT_EQ(begin_frame_ack_sequence_number,
             output.begin_frame_ack.sequence_number);

@@ -546,6 +546,118 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Download.Started">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download begins. It has one Download.Ended and none to
+    multiple Download.Interrupted/Download.Resumed events associated with it.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="DownloadSource">
+    <summary>
+      The source of the download, expressed as an enum defined in DownloadEntry.
+    </summary>
+  </metric>
+  <metric name="FileType">
+    <summary>
+      The type of file that is downloaded, expressed as an enum defined in
+      DownloadContentType.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Completed">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download completes. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="ResultingFileSize">
+    <summary>
+      The size of the file that is downloaded, expressed in kilobytes with
+      exponentially growing buckets.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download finished and when it
+      began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Interrupted">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download is interrupted. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="ChangeInFileSize">
+    <summary>
+      The difference in the size of the file that is downloaded compared to the
+      initial reported size, expressed in kilobytes with exponentially growing
+      buckets.
+    </summary>
+  </metric>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="Reason">
+    <summary>
+      The reason the download was interrupted, expressed as an enum defined in
+      DownloadInterruptReason.
+    </summary>
+  </metric>
+  <metric name="ResultingFileSize">
+    <summary>
+      The size of the file that is downloaded, expressed in kilobytes with
+      exponentially growing buckets.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download interrupted and when
+      it began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
+<event name="Download.Resumed">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Metrics taken when a download is resumed. Its parent event is
+    Download.Started.
+  </summary>
+  <metric name="DownloadId">
+    <summary>
+      The id of the download that is used to associate separate events.
+    </summary>
+  </metric>
+  <metric name="Mode">
+    <summary>
+      The mode by which the download was resumed, expressed as an enum defined
+      in ResumeMode.
+    </summary>
+  </metric>
+  <metric name="TimeSinceStart">
+    <summary>
+      The difference in the time between when the download resumed and when it
+      began, expressed in miliseconds.
+    </summary>
+  </metric>
+</event>
+
 <event name="Event.ScrollUpdate.Touch">
   <owner>nzolghadr@chromium.org</owner>
   <summary>
@@ -1386,6 +1498,15 @@ be describing additional metrics about the same event.
       start to the time the load event is fired, for main frame documents.
     </summary>
   </metric>
+  <metric name="Experimental.NavigationToInteractive">
+    <summary>
+      Measures Time to Interactive, a metric based on main thread and network
+      heuristics to approximate the point in time when the page feels
+      interactive to the user. See https://goo.gl/TFw6xz for detailed
+      explanation. This histogram uses First Meaningful Paint as the lower bound
+      for quiescent windows. The unit of time is ms.
+    </summary>
+  </metric>
   <metric name="Experimental.PaintTiming.NavigationToFirstMeaningfulPaint">
     <summary>
       Measures the time in milliseconds from navigation timing's navigation
@@ -1763,6 +1884,50 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Permission">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Metrics for when a user's permission actions. Currently we only log when a
+    permission prompt is resolved. Grouped (microphone+camera) permission
+    prompts are reported separately.
+  </summary>
+  <metric name="Action">
+    <summary>
+      An enum of type PermissionAction. One of GRANTED, DENIED, DISMISSED or
+      IGNORED.
+    </summary>
+  </metric>
+  <metric name="Gesture">
+    <summary>
+      An enum of type PermissionRequestGestureType, whether the prompt was
+      initiated by a user gesture.
+    </summary>
+  </metric>
+  <metric name="PermissionType">
+    <summary>
+      An enum of type ContentSettingsType.
+    </summary>
+  </metric>
+  <metric name="PriorDismissals">
+    <summary>
+      The number of dismissed prompts for the given (origin, permission) pair,
+      capped at 10 dismissals.
+    </summary>
+  </metric>
+  <metric name="PriorIgnores">
+    <summary>
+      The number of ignored prompts for the given (origin, permission) pair,
+      capped at 10 ignores.
+    </summary>
+  </metric>
+  <metric name="Source">
+    <summary>
+      An enum of type PermissionSourceUI. The UI surface for this action.
+      Currently we only record when this is PROMPT.
+    </summary>
+  </metric>
+</event>
+
 <event name="Plugins.FlashInstance">
   <owner>tommycli@chromium.org</owner>
   <summary>
@@ -2080,10 +2245,22 @@ be describing additional metrics about the same event.
     Collects information about a browser or app window to associate with the
     TabManager.TabMetrics entries for tabs in that window.
   </summary>
+  <metric name="IsActive">
+    <summary>
+      Whether the window is the active (frontmost) window.
+    </summary>
+  </metric>
   <metric name="ShowState">
     <summary>
       Enumeration of the window show state, such as fullscreen or minimized.
       Values are enumerated in metrics::WindowMetricsEvent::ShowState.
+    </summary>
+  </metric>
+  <metric name="TabCount">
+    <summary>
+      Number of tabs in the tab strip. Rounded down to the nearest exponential
+      bucket (with a bucket spacing factor of 1.5). Will be 1 for windows with
+      only one top-level WebContents, such as app windows.
     </summary>
   </metric>
   <metric name="Type">

@@ -21,6 +21,7 @@ class WebLayer;
 class WebRemoteFrameClient;
 class WebString;
 class WebView;
+struct WebIntrinsicSizingInfo;
 struct WebRect;
 struct WebResourceTimingInfo;
 struct WebScrollIntoViewParams;
@@ -109,7 +110,6 @@ class WebRemoteFrame : public WebFrame {
   // owner.
   virtual void WillEnterFullscreen() = 0;
 
-  virtual void SetHasReceivedUserGesture() = 0;
   virtual void SetHasReceivedUserGestureBeforeNavigation(bool value) = 0;
 
   // Scrolls the given rectangle into view. This kicks off the recursive scroll
@@ -119,6 +119,8 @@ class WebRemoteFrame : public WebFrame {
   // used to properly chain the recursive scrolling between the two processes.
   virtual void ScrollRectToVisible(const WebRect&,
                                    const WebScrollIntoViewParams&) = 0;
+
+  virtual void IntrinsicSizingInfoChanged(const WebIntrinsicSizingInfo&) = 0;
 
  protected:
   explicit WebRemoteFrame(WebTreeScopeType scope) : WebFrame(scope) {}

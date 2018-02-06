@@ -39,16 +39,14 @@ if (is_android) {
       # Android SDK release. Currently, only "o_mr1" is publicly supported.
       android_sdk_release = default_android_sdk_release
     }
+  }
 
-    # This is the result of profiling Chromium. Blindly applying it to arbitrary
-    # downstream projects and hoping it'll grant a speedup seems fragile. (Not
-    # to mention that it resides in a Chromium-specific directory.)
-    if (build_with_chromium) {
-      # The default AFDO profile used by public builds. Value may differ in
-      # internal builds.
-      clang_default_afdo_profile =
-          rebase_path("//chrome/android/profiles/chrome-profile-3309-text.prof")
-    }
+  # This is the result of profiling Chromium. Blindly applying it to arbitrary
+  # downstream projects and hoping it'll grant a speedup seems fragile. (Not
+  # to mention that it resides in a Chromium-specific directory.)
+  if (build_with_chromium) {
+    clang_default_afdo_profile =
+        rebase_path("//chrome/android/profiles/afdo.prof")
   }
 
   if (!defined(extra_chrome_shared_library_configs)) {
@@ -190,6 +188,11 @@ if (is_android) {
     # When true, updates all android_aar_prebuilt() .info files during gn gen.
     # Refer to android_aar_prebuilt() for more details.
     update_android_aar_prebuilts = false
+
+    # When true, uses the third party libraries from //third_party/android_deps
+    # over the ones in other places. (instead of the support library from
+    # android_tools for example)
+    enable_android_deps_repository = false
   }
 
   # We need a second declare_args block to make sure we are using the overridden

@@ -130,7 +130,6 @@ bool BrowserPlugin::OnMessageReceived(const IPC::Message& message) {
 #if defined(USE_AURA)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetMusEmbedToken, OnSetMusEmbedToken)
 #endif
-    IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetTooltipText, OnSetTooltipText)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_ShouldAcceptTouchEvents,
                         OnShouldAcceptTouchEvents)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetChildFrameSurface,
@@ -204,8 +203,7 @@ void BrowserPlugin::Attach() {
     blink::WebAXObject ax_element = blink::WebAXObject::FromWebNode(element);
     if (!ax_element.IsDetached()) {
       render_frame->render_accessibility()->HandleAXEvent(
-          ax_element,
-          ui::AX_EVENT_CHILDREN_CHANGED);
+          ax_element, ax::mojom::Event::kChildrenChanged);
     }
   }
 
@@ -361,12 +359,6 @@ void BrowserPlugin::OnSetMusEmbedToken(
   }
 }
 #endif
-
-void BrowserPlugin::OnSetTooltipText(int instance_id,
-                                     const base::string16& tooltip_text) {
-  // Show tooltip text by setting the BrowserPlugin's |title| attribute.
-  UpdateDOMAttribute("title", tooltip_text);
-}
 
 void BrowserPlugin::OnShouldAcceptTouchEvents(int browser_plugin_instance_id,
                                               bool accept) {

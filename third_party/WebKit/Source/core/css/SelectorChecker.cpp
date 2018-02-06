@@ -338,7 +338,7 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     case CSSSelector::kShadowDeepAsDescendant:
       Deprecation::CountDeprecation(context.element->GetDocument(),
                                     WebFeature::kCSSDeepCombinator);
-    // fall through
+      FALLTHROUGH;
     case CSSSelector::kDescendant:
       if (context.selector->RelationIsAffectedByPseudoContent()) {
         for (Element* element = context.element; element;
@@ -504,6 +504,8 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     }
 
     case CSSSelector::kShadowSlot: {
+      if (ToHTMLSlotElementIfSupportsAssignmentOrNull(*context.element))
+        return kSelectorFailsCompletely;
       const HTMLSlotElement* slot = FindSlotElementInScope(context);
       if (!slot)
         return kSelectorFailsCompletely;
@@ -881,17 +883,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoMatches: {
       if (!RuntimeEnabledFeatures::CSSMatchesEnabled())
         return false;
-      UseCounter::Count(context.element->GetDocument(),
-                        WebFeature::kCSSSelectorPseudoMatches);
-      SelectorCheckingContext sub_context(context);
-      sub_context.is_sub_selector = true;
-      DCHECK(selector.SelectorList());
-      for (sub_context.selector = selector.SelectorList()->First();
-           sub_context.selector; sub_context.selector = CSSSelectorList::Next(
-                                     *sub_context.selector)) {
-        if (Match(sub_context))
-          return true;
-      }
+      NOTREACHED();
     } break;
     case CSSSelector::kPseudoAny: {
       SelectorCheckingContext sub_context(context);
@@ -914,7 +906,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoWebkitAnyLink:
       UseCounter::Count(context.element->GetDocument(),
                         WebFeature::kCSSSelectorPseudoWebkitAnyLink);
-    // Fall through
+      FALLTHROUGH;
     case CSSSelector::kPseudoLink:
       return element.IsLink();
     case CSSSelector::kPseudoVisited:

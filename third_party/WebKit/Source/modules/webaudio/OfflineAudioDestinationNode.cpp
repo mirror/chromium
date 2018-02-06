@@ -150,7 +150,7 @@ void OfflineAudioDestinationHandler::InitializeOfflineRenderThread(
     worklet_backing_thread_ = Context()->audioWorklet()->GetBackingThread();
   } else {
     render_thread_ = Platform::Current()->CreateThread(
-        WebThreadCreationParams("offline audio renderer"));
+        WebThreadCreationParams(WebThreadType::kOfflineAudioRenderThread));
   }
 
   render_target_ = render_target;
@@ -197,9 +197,8 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
     // data. Detect that condition by trying to take the cross-thread
     // persistent lock which is held while a GC runs. If the lock is
     // already held, simply delay rendering until the next quantum.
-    CrossThreadPersistentRegion::LockScope gc_lock(
-        ProcessHeap::GetCrossThreadPersistentRegion(), true);
-    if (!gc_lock.HasLock()) {
+    bool has_lock = ProcessHeap::CrossThreadPersistentMutex().TryLock();
+    if (!has_lock) {
       // To ensure that the rendering step eventually happens, repost.
       GetRenderingThread()->GetWebTaskRunner()->PostTask(
           FROM_HERE,
@@ -212,6 +211,7 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
     destinations.ReserveInitialCapacity(number_of_channels);
     for (unsigned i = 0; i < number_of_channels; ++i)
       destinations.push_back(render_target_->getChannelData(i).View()->Data());
+    ProcessHeap::CrossThreadPersistentMutex().unlock();
   }
 
   // If there is more to process and there is no suspension at the moment,
@@ -360,18 +360,17 @@ bool OfflineAudioDestinationHandler::RenderIfNotSuspended(
 WebThread* OfflineAudioDestinationHandler::GetRenderingThread() {
   DCHECK(IsInitialized());
 
-  // Use Experimental AudioWorkletThread only when AudioWorklet is enabled, and
-  // the worklet thread and the global scope are ready.
-  if (Context()->audioWorklet() && Context()->audioWorklet()->IsReady()) {
-    DCHECK(!render_thread_ && worklet_backing_thread_);
+  if (worklet_backing_thread_) {
     return worklet_backing_thread_;
   }
 
-  DCHECK(render_thread_ && !worklet_backing_thread_);
+  DCHECK(render_thread_);
   return render_thread_.get();
 }
 
 void OfflineAudioDestinationHandler::RestartRendering() {
+  DCHECK(IsMainThread());
+
   // If the worklet thread is not assigned yet, that means the context has
   // started without a valid WorkletGlobalScope. Assign the worklet thread,
   // and it will be picked up when the GetRenderingThread() is called next.

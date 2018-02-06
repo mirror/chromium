@@ -6,6 +6,7 @@
 #define WorkerFetchContext_h
 
 #include <memory>
+#include "base/single_thread_task_runner.h"
 #include "core/CoreExport.h"
 #include "core/loader/BaseFetchContext.h"
 #include "platform/wtf/Forward.h"
@@ -15,7 +16,6 @@ namespace blink {
 
 class ResourceFetcher;
 class SubresourceFilter;
-class WebTaskRunner;
 class WebURLLoader;
 class WebURLLoaderFactory;
 class WebWorkerFetchContext;
@@ -67,7 +67,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   const SecurityOrigin* GetSecurityOrigin() const override;
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&,
-      scoped_refptr<WebTaskRunner>) override;
+      scoped_refptr<base::SingleThreadTaskRunner>) override;
   void PrepareRequest(ResourceRequest&, RedirectType) override;
   bool IsControlledByServiceWorker() const override;
   int ApplicationCacheHostID() const override;
@@ -103,8 +103,7 @@ class WorkerFetchContext final : public BaseFetchContext {
                                const ClientHintsPreferences&,
                                const FetchParameters::ResourceWidth&,
                                ResourceRequest&) override;
-  void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
-  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetLoadingTaskRunner() override;
 
   void Trace(blink::Visitor*) override;
 
@@ -112,12 +111,14 @@ class WorkerFetchContext final : public BaseFetchContext {
   WorkerFetchContext(WorkerOrWorkletGlobalScope&,
                      std::unique_ptr<WebWorkerFetchContext>);
 
+  void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&);
+
   Member<WorkerOrWorkletGlobalScope> global_scope_;
   std::unique_ptr<WebWorkerFetchContext> web_context_;
   std::unique_ptr<WebURLLoaderFactory> url_loader_factory_;
   Member<SubresourceFilter> subresource_filter_;
   Member<ResourceFetcher> resource_fetcher_;
-  scoped_refptr<WebTaskRunner> loading_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner_;
 
   // The value of |save_data_enabled_| is read once per frame from
   // NetworkStateNotifier, which is guarded by a mutex lock, and cached locally

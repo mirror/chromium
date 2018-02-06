@@ -17,6 +17,7 @@
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/android_vsync_helper.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
+#include "chrome/browser/android/vr_shell/vr_dialog.h"
 #include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/controller_mesh.h"
@@ -25,7 +26,7 @@
 #include "chrome/browser/vr/sliding_average.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
-#include "device/vr/vr_service.mojom.h"
+#include "device/vr/public/mojom/vr_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
@@ -103,11 +104,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void SetWebVrMode(bool enabled);
   void CreateOrResizeWebVRSurface(const gfx::Size& size);
-  void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
-  void ContentPhysicalBoundsChanged(int width, int height);
+  void BufferBoundsChanged(const gfx::Size& content_buffer_size,
+                           const gfx::Size& overlay_buffer_size);
   void UIBoundsChanged(int width, int height);
-  void UIPhysicalBoundsChanged(int width, int height);
+
   base::WeakPtr<VrShellGl> GetWeakPtr();
 
   void SetControllerMesh(std::unique_ptr<vr::ControllerMesh> mesh);
@@ -125,6 +126,13 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnAssetsLoaded(vr::AssetsLoadStatus status,
                       std::unique_ptr<vr::Assets> assets,
                       const base::Version& component_version);
+
+  void EnableAlertDialog(vr::ContentInputForwarder* input_forwarder,
+                         int width,
+                         int height);
+  void DisableAlertDialog();
+
+  void SetAlertDialogSize(int width, int height);
 
  private:
   void GvrInit(gvr_context* gvr_api);
@@ -159,6 +167,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
       const gfx::Vector3dF& controller_direction);
 
   void OnContentFrameAvailable();
+  void OnContentOverlayFrameAvailable();
+  void OnUiFrameAvailable();
   void OnWebVRFrameAvailable();
   void ScheduleOrCancelWebVrFrameTimeout();
   void OnWebVrTimeoutImminent();
@@ -199,9 +209,12 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::SurfaceTexture> content_surface_texture_;
+  scoped_refptr<gl::SurfaceTexture> content_overlay_surface_texture_;
+  scoped_refptr<gl::SurfaceTexture> ui_surface_texture_;
   scoped_refptr<gl::SurfaceTexture> webvr_surface_texture_;
-
   std::unique_ptr<gl::ScopedJavaSurface> content_surface_;
+  std::unique_ptr<gl::ScopedJavaSurface> ui_surface_;
+  std::unique_ptr<gl::ScopedJavaSurface> content_overlay_surface_;
 
   std::unique_ptr<gvr::GvrApi> gvr_api_;
   std::unique_ptr<gvr::BufferViewportList> buffer_viewport_list_;
@@ -233,7 +246,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
 
-  gfx::Size content_tex_physical_size_ = {0, 0};
+  gfx::Size content_tex_buffer_size_ = {0, 0};
   gfx::Size webvr_surface_size_ = {0, 0};
 
   std::vector<base::TimeTicks> webvr_time_pose_;
@@ -317,6 +330,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   gfx::Transform last_used_head_pose_;
 
   vr::ControllerModel controller_model_;
+
+  std::unique_ptr<VrDialog> vr_dialog_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

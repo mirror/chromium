@@ -820,8 +820,14 @@ class PeerConnectionUMAObserver : public webrtc::UMAObserver {
         UMA_HISTOGRAM_EXACT_LINEAR("WebRTC.PeerConnection.IceRegatheringReason",
                                    counter, counter_max);
         break;
+      case webrtc::kEnumCounterKeyProtocol:
+        UMA_HISTOGRAM_ENUMERATION(
+            "WebRTC.PeerConnection.KeyProtocol",
+            static_cast<webrtc::KeyExchangeProtocolType>(counter),
+            webrtc::kEnumCounterKeyProtocolMax);
+        break;
       default:
-        // The default clause is expected to reach when new enum types are
+        // The default clause is expected to be reached when new enum types are
         // added.
         break;
     }
@@ -1116,6 +1122,8 @@ class RTCPeerConnectionHandler::WebRtcSetRemoteDescriptionObserverImpl
     // associated with multiple tracks (multiple receivers).
     for (auto& receiver_state : states.receiver_states) {
       for (auto& stream_ref : receiver_state.stream_refs) {
+        CHECK(stream_ref);
+        CHECK(stream_ref->adapter().is_initialized());
         CHECK(!stream_ref->adapter().web_stream().IsNull());
         CHECK(stream_ref->adapter().webrtc_stream());
         auto* stream_state =
@@ -1300,10 +1308,12 @@ RTCPeerConnectionHandler::RTCPeerConnectionHandler(
       is_closed_(false),
       dependency_factory_(dependency_factory),
       track_adapter_map_(
-          new WebRtcMediaStreamTrackAdapterMap(dependency_factory_)),
+          new WebRtcMediaStreamTrackAdapterMap(dependency_factory_,
+                                               task_runner)),
       stream_adapter_map_(new WebRtcMediaStreamAdapterMap(dependency_factory_,
+                                                          task_runner,
                                                           track_adapter_map_)),
-      task_runner_(task_runner),
+      task_runner_(std::move(task_runner)),
       weak_factory_(this) {
   CHECK(client_);
   GetPeerConnectionHandlers()->insert(this);
@@ -1347,6 +1357,9 @@ bool RTCPeerConnectionHandler::Initialize(
   configuration_.set_prerenderer_smoothing(
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableRTCSmoothnessAlgorithm));
+
+  configuration_.set_experiment_cpu_load_estimator(
+      base::FeatureList::IsEnabled(media::kNewEncodeCpuLoadEstimator));
 
   // Copy all the relevant constraints into |config|.
   CopyConstraintsIntoRtcConfiguration(options, &configuration_);
@@ -1785,7 +1798,12 @@ void RTCPeerConnectionHandler::RemoveStream(
       break;
     }
   }
-  DCHECK(webrtc_stream.get());
+  // If the stream was added using addTrack() we might not find it here. When
+  // addStream() and removeStream() is implemented on top of addTrack() and
+  // removeTrack() this won't be a problem and this code will go away.
+  // https://crbug.com/738929
+  if (!webrtc_stream)
+    return;
   // TODO(tommi): Make this async (PostTaskAndReply).
   native_peer_connection_->RemoveStream(webrtc_stream.get());
 

@@ -29,6 +29,8 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/domain_reliability/service_factory.h"
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
+#include "chrome/browser/download/download_core_service_factory.h"
+#include "chrome/browser/download/download_core_service_impl.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/language/url_language_histogram_factory.h"
@@ -81,10 +83,7 @@
 #include "content/public/test/test_utils.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_transaction_factory.h"
-#include "net/reporting/reporting_browsing_data_remover.h"
-#include "net/reporting/reporting_policy.h"
-#include "net/reporting/reporting_service.h"
-#include "net/url_request/network_error_logging_delegate.h"
+#include "net/net_features.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -93,9 +92,9 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/search_permissions/search_permissions_service.h"
 #include "chrome/browser/android/webapps/webapp_registry.h"
-#else
+#else  // !defined(OS_ANDROID)
 #include "content/public/browser/host_zoom_map.h"
-#endif
+#endif  // !defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
@@ -103,15 +102,24 @@
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/scoped_user_manager.h"
-#endif
+#endif  // defined(OS_CHROMEOS)
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/mock_extension_special_storage_policy.h"
-#endif
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/browsing_data/mock_browsing_data_flash_lso_helper.h"
-#endif
+#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
+#include "chrome/browser/plugins/plugin_utils.h"
+#endif  // BUILDFLAG(ENABLE_PLUGINS)
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_browsing_data_remover.h"
+#include "net/reporting/reporting_policy.h"
+#include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 using content::BrowsingDataFilterBuilder;
 using domain_reliability::CLEAR_BEACONS;
@@ -736,6 +744,36 @@ class RemovePluginDataTester {
 
   DISALLOW_COPY_AND_ASSIGN(RemovePluginDataTester);
 };
+
+// Waits until a change is observed in content settings.
+class FlashContentSettingsChangeWaiter : public content_settings::Observer {
+ public:
+  explicit FlashContentSettingsChangeWaiter(Profile* profile)
+      : profile_(profile) {
+    HostContentSettingsMapFactory::GetForProfile(profile)->AddObserver(this);
+  }
+  ~FlashContentSettingsChangeWaiter() override {
+    HostContentSettingsMapFactory::GetForProfile(profile_)->RemoveObserver(
+        this);
+  }
+
+  // content_settings::Observer:
+  void OnContentSettingChanged(const ContentSettingsPattern& primary_pattern,
+                               const ContentSettingsPattern& secondary_pattern,
+                               ContentSettingsType content_type,
+                               std::string resource_identifier) override {
+    if (content_type == CONTENT_SETTINGS_TYPE_PLUGINS)
+      run_loop_.Quit();
+  }
+
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  Profile* profile_;
+  base::RunLoop run_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(FlashContentSettingsChangeWaiter);
+};
 #endif
 
 // Custom matcher to test the equivalence of two URL filters. Since those are
@@ -806,25 +844,31 @@ base::Time AnHourAgo() {
 class RemoveDownloadsTester {
  public:
   explicit RemoveDownloadsTester(TestingProfile* testing_profile)
-      : download_manager_(new content::MockDownloadManager()),
-        chrome_download_manager_delegate_(testing_profile) {
+      : download_manager_(new content::MockDownloadManager()) {
     content::BrowserContext::SetDownloadManagerForTesting(
         testing_profile, base::WrapUnique(download_manager_));
-    EXPECT_EQ(download_manager_,
-              content::BrowserContext::GetDownloadManager(testing_profile));
+    std::unique_ptr<ChromeDownloadManagerDelegate> delegate =
+        std::make_unique<ChromeDownloadManagerDelegate>(testing_profile);
+    chrome_download_manager_delegate_ = delegate.get();
+    service_ =
+        DownloadCoreServiceFactory::GetForBrowserContext(testing_profile);
+    service_->SetDownloadManagerDelegateForTesting(std::move(delegate));
 
-    EXPECT_CALL(*download_manager_, GetDelegate())
-        .WillOnce(Return(&chrome_download_manager_delegate_));
+    EXPECT_CALL(*download_manager_, GetBrowserContext())
+        .WillRepeatedly(Return(testing_profile));
     EXPECT_CALL(*download_manager_, Shutdown());
   }
 
-  ~RemoveDownloadsTester() { chrome_download_manager_delegate_.Shutdown(); }
+  ~RemoveDownloadsTester() {
+    service_->SetDownloadManagerDelegateForTesting(nullptr);
+  }
 
   content::MockDownloadManager* download_manager() { return download_manager_; }
 
  private:
+  DownloadCoreService* service_;
   content::MockDownloadManager* download_manager_;  // Owned by testing profile.
-  ChromeDownloadManagerDelegate chrome_download_manager_delegate_;
+  ChromeDownloadManagerDelegate* chrome_download_manager_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoveDownloadsTester);
 };
@@ -918,6 +962,7 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
   DISALLOW_COPY_AND_ASSIGN(RemoveAutofillTester);
 };
 
+#if BUILDFLAG(ENABLE_REPORTING)
 class MockReportingService : public net::ReportingService {
  public:
   MockReportingService() = default;
@@ -1079,6 +1124,7 @@ class ClearNetworkErrorLoggingTester {
 
   DISALLOW_COPY_AND_ASSIGN(ClearNetworkErrorLoggingTester);
 };
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 // Implementation of the TestingProfile that provides an SSLHostStateDelegate
 // which is required for the tests.
@@ -1754,7 +1800,6 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest,
 // ChromeDownloadManagerDelegate is correctly created and shut down.
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveDownloads) {
   RemoveDownloadsTester tester(GetProfile());
-
   EXPECT_CALL(
       *tester.download_manager(), RemoveDownloadsByURLAndTime(_, _, _));
 
@@ -2104,8 +2149,6 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveAllClientHints) {
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveZoomLevel) {
   content::HostZoomMap* zoom_map =
       content::HostZoomMap::GetDefaultForBrowserContext(GetProfile());
-  zoom_map->SetStoreLastModified(true);
-
   EXPECT_EQ(0u, zoom_map->GetAllZoomLevels().size());
 
   base::SimpleTestClock test_clock;
@@ -2387,6 +2430,54 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearPermissionPromptCounts) {
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
+// Check the |CONTENT_SETTINGS_TYPE_PLUGINS_DATA| content setting is cleared
+// with browsing data.
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearFlashPreviouslyChanged) {
+  ChromePluginServiceFilter::GetInstance()->RegisterResourceContext(
+      GetProfile(), GetProfile()->GetResourceContext());
+
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetProfile());
+
+  // PLUGINS_DATA gets cleared with history OR site usage data.
+  for (ChromeBrowsingDataRemoverDelegate::DataType data_type :
+       {ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_USAGE_DATA,
+        ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY}) {
+    FlashContentSettingsChangeWaiter waiter(GetProfile());
+    host_content_settings_map->SetContentSettingDefaultScope(
+        kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS, std::string(),
+        CONTENT_SETTING_ALLOW);
+    host_content_settings_map->SetContentSettingDefaultScope(
+        kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS, std::string(),
+        CONTENT_SETTING_BLOCK);
+    waiter.Wait();
+
+    // Check that as a result, the PLUGINS_DATA prefs were populated.
+    EXPECT_NE(nullptr,
+              host_content_settings_map->GetWebsiteSetting(
+                  kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                  std::string(), nullptr));
+    EXPECT_NE(nullptr,
+              host_content_settings_map->GetWebsiteSetting(
+                  kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                  std::string(), nullptr));
+
+    std::unique_ptr<BrowsingDataFilterBuilder> filter(
+        BrowsingDataFilterBuilder::Create(
+            BrowsingDataFilterBuilder::BLACKLIST));
+    BlockUntilOriginDataRemoved(AnHourAgo(), base::Time::Max(), data_type,
+                                std::move(filter));
+    EXPECT_EQ(nullptr,
+              host_content_settings_map->GetWebsiteSetting(
+                  kOrigin1, kOrigin1, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                  std::string(), nullptr));
+    EXPECT_EQ(nullptr,
+              host_content_settings_map->GetWebsiteSetting(
+                  kOrigin2, kOrigin2, CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
+                  std::string(), nullptr));
+  }
+}
+
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemovePluginData) {
   RemovePluginDataTester tester(GetProfile());
 
@@ -2583,6 +2674,7 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, OriginTypeMasksNoPolicy) {
 #endif
 }
 
+#if BUILDFLAG(ENABLE_REPORTING)
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, ReportingCache_NoService) {
   ClearReportingCacheTester tester(GetProfile(), false);
 
@@ -2785,6 +2877,7 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, NetworkErrorLogging_History) {
   EXPECT_TRUE(ProbablySameFilters(BrowsingDataFilterBuilder::BuildNoopFilter(),
                                   origin_filter));
 }
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 // Test that all WebsiteSettings are getting deleted by creating a
 // value for each of them and removing data.

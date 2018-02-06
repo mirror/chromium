@@ -13,27 +13,36 @@
 #include "base/task_scheduler/post_task.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/export/password_csv_writer.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
 
 namespace {
 
-std::vector<std::unique_ptr<autofill::PasswordForm>> CopyOf(
-    const std::vector<std::unique_ptr<autofill::PasswordForm>>& password_list) {
-  std::vector<std::unique_ptr<autofill::PasswordForm>> ret_val;
-  for (const auto& form : password_list) {
-    ret_val.push_back(std::make_unique<autofill::PasswordForm>(*form));
-  }
-  return ret_val;
+// A wrapper for |write_function|, which can be bound and keep a copy of its
+// data on the closure.
+bool Write(int (*write_function)(const base::FilePath& filename,
+                                 const char* data,
+                                 int size),
+           const base::FilePath& destination,
+           const std::string& serialised) {
+  int written =
+      write_function(destination, serialised.c_str(), serialised.size());
+  return written == static_cast<int>(serialised.size());
 }
 
 }  // namespace
 
 namespace password_manager {
 
+using metrics_util::ExportPasswordsResult;
+
 PasswordManagerExporter::PasswordManagerExporter(
     password_manager::CredentialProviderInterface*
-        credential_provider_interface)
+        credential_provider_interface,
+    ProgressCallback on_progress)
     : credential_provider_interface_(credential_provider_interface),
+      on_progress_(std::move(on_progress)),
+      last_progress_status_(ExportProgressStatus::NOT_STARTED),
       write_function_(&base::WriteFile),
       task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::TaskPriority::USER_VISIBLE, base::MayBlock()})),
@@ -42,15 +51,38 @@ PasswordManagerExporter::PasswordManagerExporter(
 PasswordManagerExporter::~PasswordManagerExporter() {}
 
 void PasswordManagerExporter::PreparePasswordsForExport() {
-  password_list_ = credential_provider_interface_->GetAllPasswords();
+  export_preparation_started_ = base::Time::Now();
 
-  if (IsReadyForExport())
-    Export();
+  std::vector<std::unique_ptr<autofill::PasswordForm>> password_list =
+      credential_provider_interface_->GetAllPasswords();
+  size_t password_list_size = password_list.size();
+
+  base::PostTaskAndReplyWithResult(
+      task_runner_.get(), FROM_HERE,
+      base::BindOnce(&password_manager::PasswordCSVWriter::SerializePasswords,
+                     base::Passed(std::move(password_list))),
+      base::BindOnce(&PasswordManagerExporter::SetSerialisedPasswordList,
+                     weak_factory_.GetWeakPtr(), password_list_size));
 }
 
 void PasswordManagerExporter::SetDestination(
     const base::FilePath& destination) {
   destination_ = destination;
+
+  if (IsReadyForExport())
+    Export();
+
+  OnProgress(ExportProgressStatus::IN_PROGRESS, std::string());
+}
+
+void PasswordManagerExporter::SetSerialisedPasswordList(
+    size_t count,
+    const std::string& serialised) {
+  serialised_password_list_ = serialised;
+  password_count_ = count;
+
+  UMA_HISTOGRAM_MEDIUM_TIMES("PasswordManager.TimeReadingExportedPasswords",
+                             base::Time::Now() - export_preparation_started_);
 
   if (IsReadyForExport())
     Export();
@@ -61,7 +93,19 @@ void PasswordManagerExporter::Cancel() {
   weak_factory_.InvalidateWeakPtrs();
 
   destination_.clear();
-  password_list_.clear();
+  serialised_password_list_.clear();
+  password_count_ = 0;
+
+  OnProgress(ExportProgressStatus::FAILED_CANCELLED, std::string());
+
+  UMA_HISTOGRAM_ENUMERATION("PasswordManager.ExportPasswordsToCSVResult",
+                            ExportPasswordsResult::USER_ABORTED,
+                            ExportPasswordsResult::COUNT);
+}
+
+password_manager::ExportProgressStatus
+PasswordManagerExporter::GetProgressStatus() {
+  return last_progress_status_;
 }
 
 void PasswordManagerExporter::SetWriteForTesting(
@@ -72,29 +116,51 @@ void PasswordManagerExporter::SetWriteForTesting(
 }
 
 bool PasswordManagerExporter::IsReadyForExport() {
-  return !destination_.empty() && !password_list_.empty();
+  return !destination_.empty() && !serialised_password_list_.empty();
 }
 
 void PasswordManagerExporter::Export() {
-  UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
-                       password_list_.size());
-
+  base::FilePath destination_copy_(destination_);
   base::PostTaskAndReplyWithResult(
       task_runner_.get(), FROM_HERE,
-      base::BindOnce(&password_manager::PasswordCSVWriter::SerializePasswords,
-                     base::Passed(CopyOf(password_list_))),
-      base::BindOnce(&PasswordManagerExporter::OnPasswordsSerialised,
-                     weak_factory_.GetWeakPtr(),
-                     base::Passed(std::move(destination_))));
+      base::BindOnce(::Write, write_function_, std::move(destination_copy_),
+                     std::move(serialised_password_list_)),
+      base::BindOnce(&PasswordManagerExporter::OnPasswordsExported,
+                     weak_factory_.GetWeakPtr(), std::move(destination_),
+                     password_count_));
 
-  password_list_.clear();
   destination_.clear();
+  serialised_password_list_.clear();
+  password_count_ = 0;
 }
 
-void PasswordManagerExporter::OnPasswordsSerialised(
-    base::FilePath destination,
-    const std::string& serialised) {
-  write_function_(destination, serialised.c_str(), serialised.size());
+void PasswordManagerExporter::OnPasswordsExported(
+    const base::FilePath& destination,
+    int count,
+    bool success) {
+  if (success) {
+    OnProgress(ExportProgressStatus::SUCCEEDED, std::string());
+
+    UMA_HISTOGRAM_ENUMERATION("PasswordManager.ExportPasswordsToCSVResult",
+                              ExportPasswordsResult::SUCCESS,
+                              ExportPasswordsResult::COUNT);
+    UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
+                         count);
+  } else {
+    OnProgress(ExportProgressStatus::FAILED_WRITE_FAILED,
+               destination.DirName().BaseName().AsUTF8Unsafe());
+
+    UMA_HISTOGRAM_ENUMERATION("PasswordManager.ExportPasswordsToCSVResult",
+                              ExportPasswordsResult::WRITE_FAILED,
+                              ExportPasswordsResult::COUNT);
+  }
+}
+
+void PasswordManagerExporter::OnProgress(
+    password_manager::ExportProgressStatus status,
+    const std::string& folder) {
+  last_progress_status_ = status;
+  on_progress_.Run(status, folder);
 }
 
 }  // namespace password_manager

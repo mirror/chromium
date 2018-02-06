@@ -52,6 +52,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
+#include "content/public/common/zygote_features.h"
 #include "gin/v8_initializer.h"
 #include "media/base/media.h"
 #include "media/media_features.h"
@@ -86,6 +87,7 @@
 #endif
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
 #include "content/zygote/zygote_main.h"
+#include "sandbox/linux/services/libc_interceptor.h"
 #endif
 
 #endif  // OS_POSIX
@@ -169,7 +171,6 @@ void InitializeFieldTrialAndFeatureList(
 }
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
-
 void LoadV8SnapshotFile() {
 #if defined(USE_V8_CONTEXT_SNAPSHOT)
   static constexpr gin::V8Initializer::V8SnapshotFileType kSnapshotType =
@@ -196,6 +197,7 @@ void LoadV8SnapshotFile() {
     return;
   }
 #endif  // OS_POSIX && !OS_MACOSX
+
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER)
   gin::V8Initializer::LoadV8Snapshot(kSnapshotType);
 #endif  // !CHROME_MULTIPLE_DLL_BROWSER
@@ -299,19 +301,18 @@ struct MainFunction {
   int (*function)(const MainFunctionParams&);
 };
 
-#if defined(OS_LINUX)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
 // On platforms that use the zygote, we have a special subset of
 // subprocesses that are launched via the zygote.  This function
 // fills in some process-launching bits around ZygoteMain().
 // Returns the exit code of the subprocess.
-int RunZygote(const MainFunctionParams& main_function_params,
-              ContentMainDelegate* delegate) {
+int RunZygote(ContentMainDelegate* delegate) {
   static const MainFunction kMainFunctions[] = {
-    { switches::kRendererProcess,    RendererMain },
+    {switches::kRendererProcess, RendererMain},
+    {switches::kUtilityProcess, UtilityMain},
 #if BUILDFLAG(ENABLE_PLUGINS)
-    { switches::kPpapiPluginProcess, PpapiPluginMain },
+    {switches::kPpapiPluginProcess, PpapiPluginMain},
 #endif
-    { switches::kUtilityProcess,     UtilityMain },
   };
 
   std::vector<std::unique_ptr<ZygoteForkDelegate>> zygote_fork_delegates;
@@ -321,10 +322,11 @@ int RunZygote(const MainFunctionParams& main_function_params,
   }
 
   // This function call can return multiple times, once per fork().
-  if (!ZygoteMain(main_function_params, std::move(zygote_fork_delegates)))
+  if (!ZygoteMain(std::move(zygote_fork_delegates)))
     return 1;
 
-  if (delegate) delegate->ZygoteForked();
+  if (delegate)
+    delegate->ZygoteForked();
 
   // Zygote::HandleForkRequest may have reallocated the command
   // line so update it here with the new version.
@@ -343,7 +345,7 @@ int RunZygote(const MainFunctionParams& main_function_params,
   service_manager::SandboxType sandbox_type =
       service_manager::SandboxTypeFromCommandLine(command_line);
   if (sandbox_type == service_manager::SANDBOX_TYPE_PROFILING)
-    content::DisableLocaltimeOverride();
+    sandbox::SetUseLocaltimeOverride(false);
 
   for (size_t i = 0; i < arraysize(kMainFunctions); ++i) {
     if (process_type == kMainFunctions[i].name)
@@ -356,7 +358,7 @@ int RunZygote(const MainFunctionParams& main_function_params,
   NOTREACHED() << "Unknown zygote process type: " << process_type;
   return 1;
 }
-#endif  // defined(OS_LINUX)
+#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
 
 static void RegisterMainThreadFactories() {
 #if !defined(CHROME_MULTIPLE_DLL_BROWSER) && !defined(CHROME_MULTIPLE_DLL_CHILD)
@@ -422,13 +424,12 @@ int RunNamedProcessTypeMain(
     }
   }
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
-    !defined(OS_FUCHSIA)
+#if BUILDFLAG(USE_ZYGOTE_HANDLE)
   // Zygote startup is special -- see RunZygote comments above
   // for why we don't use ZygoteMain directly.
   if (process_type == switches::kZygoteProcess)
-    return RunZygote(main_function_params, delegate);
-#endif
+    return RunZygote(delegate);
+#endif  // BUILDFLAG(USE_ZYGOTE_HANDLE)
 
   // If it's a process we don't know about, the embedder should know.
   if (delegate)

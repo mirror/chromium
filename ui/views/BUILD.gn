@@ -464,7 +464,7 @@ jumbo_component("views") {
     ":views_vector_icons",
     "//base",
     "//components/vector_icons",
-    "//ui/accessibility:ax_gen",
+    "//ui/accessibility:ax_enums_mojo",
     "//ui/base",
     "//ui/base/ime",
     "//ui/compositor",
@@ -1190,5 +1190,10 @@ test("views_perftests") {
     "//cc/base:base",
     "//testing/perf",
     "//ui/resources:ui_test_pak",
+  ]
+
+  data_deps = [
+    "//ui/resources:ui_test_pak_data",
+    "//testing:run_gtest_perf_test",
   ]
 }

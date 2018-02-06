@@ -13,13 +13,13 @@
 #include "base/run_loop.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_list.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/message_center/ui_controller.h"
 #include "ui/message_center/views/message_view.h"
 #include "ui/message_center/views/message_view_context_menu_controller.h"
@@ -141,11 +141,16 @@ void MessagePopupCollection::UpdateWidgets() {
   // If a new notification is found, collapse all existing notifications
   // beforehand.
   if (has_new_toasts) {
-    for (auto* toast : toasts_) {
-      if (toast->message_view()->IsMouseHovered() ||
-          toast->message_view()->manually_expanded_or_collapsed())
+    for (Toasts::const_iterator iter = toasts_.begin();
+         iter != toasts_.end();) {
+      // SetExpanded() may fire PreferredSizeChanged(), which may end up
+      // removing the toast in OnNotificationUpdated(). So we have to increment
+      // the iterator in a way that is safe even if the current iterator is
+      // invalidated during the loop.
+      MessageView* view = (*iter++)->message_view();
+      if (view->IsMouseHovered() || view->manually_expanded_or_collapsed())
         continue;
-      toast->message_view()->SetExpanded(false);
+      view->SetExpanded(false);
     }
   }
 
@@ -214,11 +219,11 @@ void MessagePopupCollection::UpdateWidgets() {
 
     if (views::ViewsDelegate::GetInstance()) {
       views::ViewsDelegate::GetInstance()->NotifyAccessibilityEvent(
-          toast, ui::AX_EVENT_ALERT);
+          toast, ax::mojom::Event::kAlert);
     }
 
-    message_center_->DisplayedNotification(
-        notification.id(), message_center::DISPLAY_SOURCE_POPUP);
+    message_center_->DisplayedNotification(notification.id(),
+                                           DISPLAY_SOURCE_POPUP);
   }
 }
 

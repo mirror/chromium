@@ -19,6 +19,7 @@ class BaseAudioContext;
 class CrossThreadAudioParamInfo;
 class ExceptionState;
 class MessagePort;
+class ScriptState;
 
 enum class AudioWorkletProcessorState {
   kPending,
@@ -86,7 +87,7 @@ class AudioWorkletHandler final : public AudioHandler {
   HashMap<String, std::unique_ptr<AudioFloatArray>> param_value_map_;
 
   // A reference to the main thread task runner.
-  scoped_refptr<WebTaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 };
 
 class AudioWorkletNode final : public AudioNode,
@@ -95,7 +96,8 @@ class AudioWorkletNode final : public AudioNode,
   USING_GARBAGE_COLLECTED_MIXIN(AudioWorkletNode);
 
  public:
-  static AudioWorkletNode* Create(BaseAudioContext*,
+  static AudioWorkletNode* Create(ScriptState*,
+                                  BaseAudioContext*,
                                   const String& name,
                                   const AudioWorkletNodeOptions&,
                                   ExceptionState&);

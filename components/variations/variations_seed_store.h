@@ -33,9 +33,10 @@ class VariationsSeedStore {
   // raw pref values into |seed_data| and |base64_signature|. If there is a
   // problem with loading, clears the seed pref value and returns false. If
   // successful, fills the the outparams with the loaded data and returns true.
-  bool LoadSeed(VariationsSeed* seed,
-                std::string* seed_data,
-                std::string* base64_seed_signature) WARN_UNUSED_RESULT;
+  // Virtual for testing.
+  virtual bool LoadSeed(VariationsSeed* seed,
+                        std::string* seed_data,
+                        std::string* base64_seed_signature) WARN_UNUSED_RESULT;
 
   // Stores the given seed |data| (serialized protobuf) to local state, along
   // with a base64-encoded digital signature for seed and the date when it was
@@ -58,13 +59,16 @@ class VariationsSeedStore {
                      VariationsSeed* parsed_seed) WARN_UNUSED_RESULT;
 
   // Loads the safe variations seed data from local state into |seed| and
-  // updates any relevant fields in |client_state|. Returns true iff the safe
-  // seed was read successfully from prefs. If the safe seed could not be
-  // loaded, it is guaranteed that no fields in |client_state| are modified.
+  // updates any relevant fields in |client_state| and stores the
+  // |seed_fetch_time|. Returns true iff the safe seed was read successfully
+  // from prefs. If the safe seed could not be loaded, it is guaranteed that no
+  // fields in |client_state| are modified.
   // Side-effect: Upon any failure to read or validate the safe seed, clears all
   // of the safe seed pref values. This occurs iff the method returns false.
-  bool LoadSafeSeed(VariationsSeed* seed,
-                    ClientFilterableState* client_state) WARN_UNUSED_RESULT;
+  // Virtual for testing.
+  virtual bool LoadSafeSeed(VariationsSeed* seed,
+                            ClientFilterableState* client_state,
+                            base::Time* seed_fetch_time) WARN_UNUSED_RESULT;
 
   // Stores the given |seed_data| (a serialized protobuf) to local state as a
   // safe seed, along with a base64-encoded digital signature for seed and any
@@ -73,7 +77,17 @@ class VariationsSeedStore {
   // Virtual for testing.
   virtual bool StoreSafeSeed(const std::string& seed_data,
                              const std::string& base64_seed_signature,
-                             const ClientFilterableState& client_state);
+                             const ClientFilterableState& client_state,
+                             base::Time seed_fetch_time);
+
+  // Loads the last fetch time (for the latest seed) that was persisted to the
+  // store.
+  base::Time GetLastFetchTime() const;
+
+  // Records the current time as the last time at which a seed was fetched
+  // successfully. Also updates the safe seed's fetch time if the latest and
+  // safe seeds are identical.
+  void RecordLastFetchTime();
 
   // Updates |kVariationsSeedDate| and logs when previous date was from a
   // different day.
@@ -94,7 +108,6 @@ class VariationsSeedStore {
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
   PrefService* local_state() { return local_state_; }
-
   const PrefService* local_state() const { return local_state_; }
 
  protected:

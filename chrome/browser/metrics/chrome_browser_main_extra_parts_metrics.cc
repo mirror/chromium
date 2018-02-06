@@ -16,7 +16,6 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/about_flags.h"
@@ -219,6 +218,9 @@ void RecordStartupMetrics() {
                             base::win::VERSION_WIN_LAST);
   UMA_HISTOGRAM_BOOLEAN("Windows.InCompatibilityMode",
                         os_info.version() != os_info.Kernel32Version());
+
+  UMA_HISTOGRAM_BOOLEAN("Windows.HasHighResolutionTimeTicks",
+                        base::TimeTicks::IsHighResolution());
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)

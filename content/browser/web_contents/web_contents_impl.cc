@@ -3368,7 +3368,7 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
       params->add_request_header(key_value.first, key_value.second);
     }
   }
-  params->set_download_source(DownloadSource::WEB_CONTENTS_API);
+  params->set_download_source(download::DownloadSource::WEB_CONTENTS_API);
   BrowserContext::GetDownloadManager(GetBrowserContext())
       ->DownloadUrl(std::move(params));
 }
@@ -3415,10 +3415,18 @@ void WebContentsImpl::LoadStateChanged(
     const net::LoadStateWithParam& load_state,
     uint64_t upload_position,
     uint64_t upload_size) {
+  base::string16 host = url_formatter::IDNToUnicode(url.host());
+  // Drop no-op updates.
+  if (load_state_.state == load_state.state &&
+      load_state_.param == load_state.param &&
+      upload_position_ == upload_position && upload_size_ == upload_size &&
+      load_state_host_ == host) {
+    return;
+  }
   load_state_ = load_state;
   upload_position_ = upload_position;
   upload_size_ = upload_size;
-  load_state_host_ = url_formatter::IDNToUnicode(url.host());
+  load_state_host_ = host;
   if (load_state_.state == net::LOAD_STATE_READING_RESPONSE)
     SetNotWaitingForResponse();
   if (IsLoading()) {
@@ -3903,7 +3911,9 @@ void WebContentsImpl::DidRunInsecureContent(const GURL& security_origin,
 }
 
 void WebContentsImpl::PassiveInsecureContentFound(const GURL& resource_url) {
-  GetDelegate()->PassiveInsecureContentFound(resource_url);
+  if (delegate_) {
+    delegate_->PassiveInsecureContentFound(resource_url);
+  }
 }
 
 bool WebContentsImpl::ShouldAllowRunningInsecureContent(
@@ -3911,8 +3921,12 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
     bool allowed_per_prefs,
     const url::Origin& origin,
     const GURL& resource_url) {
-  return GetDelegate()->ShouldAllowRunningInsecureContent(
-      web_contents, allowed_per_prefs, origin, resource_url);
+  if (delegate_) {
+    return delegate_->ShouldAllowRunningInsecureContent(
+        web_contents, allowed_per_prefs, origin, resource_url);
+  }
+
+  return allowed_per_prefs;
 }
 
 void WebContentsImpl::ViewSource(RenderFrameHostImpl* frame) {
@@ -5298,6 +5312,13 @@ void WebContentsImpl::SetFocusedFrame(FrameTreeNode* node,
   }
 }
 
+void WebContentsImpl::DidCallFocus() {
+  // Any explicit focusing of another window while this WebContents is in
+  // fullscreen can be used to confuse the user, so drop fullscreen.
+  if (IsFullscreenForCurrentTab())
+    ExitFullscreen(true);
+}
+
 RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
   WebContentsImpl* contents = this;
   FrameTreeNode* focused_node = contents->frame_tree_.GetFocusedFrame();
@@ -5413,30 +5434,27 @@ void WebContentsImpl::OnIgnoredUIEvent() {
 
 void WebContentsImpl::RendererUnresponsive(
     RenderWidgetHostImpl* render_widget_host) {
-  for (auto& observer : observers_)
-    observer.OnRendererUnresponsive(render_widget_host);
+  RenderProcessHost* hung_process = render_widget_host->GetProcess();
 
-  // Don't show hung renderer dialog for a swapped out RVH.
-  if (render_widget_host != GetRenderViewHost()->GetWidget())
-    return;
+  for (auto& observer : observers_)
+    observer.OnRendererUnresponsive(hung_process);
 
   if (ShouldIgnoreUnresponsiveRenderer())
     return;
 
-  if (!GetRenderViewHost() || !GetRenderViewHost()->IsRenderViewLive())
+  if (!render_widget_host->renderer_initialized())
     return;
 
   if (delegate_)
-    delegate_->RendererUnresponsive(this);
+    delegate_->RendererUnresponsive(this, hung_process);
 }
 
 void WebContentsImpl::RendererResponsive(
     RenderWidgetHostImpl* render_widget_host) {
-  if (render_widget_host != GetRenderViewHost()->GetWidget())
-    return;
+  RenderProcessHost* hung_process = render_widget_host->GetProcess();
 
   if (delegate_)
-    delegate_->RendererResponsive(this);
+    delegate_->RendererResponsive(this, hung_process);
 }
 
 void WebContentsImpl::BeforeUnloadFiredFromRenderManager(

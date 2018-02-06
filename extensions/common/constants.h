@@ -46,9 +46,6 @@ extern const char kInstallDirectoryName[];
 // validation before finalizing install.
 extern const char kTempExtensionName[];
 
-// The file to write our decoded images to, relative to the extension_path.
-extern const char kDecodedImagesFilename[];
-
 // The file to write our decoded message catalogs to, relative to the
 // extension_path.
 extern const char kDecodedMessageCatalogsFilename[];
@@ -239,6 +236,9 @@ extern const char* const kHangoutsExtensionIds[6];
 
 // Error message when enterprise policy blocks scripting of webpage.
 extern const char kPolicyBlockedScripting[];
+
+// The default block size for hashing used in content verification.
+extern const int kContentVerificationDefaultBlockSize;
 
 }  // namespace extension_misc
 

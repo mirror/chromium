@@ -140,7 +140,6 @@ LocalFrame* Geolocation::GetFrame() const {
 }
 
 void Geolocation::ContextDestroyed(ExecutionContext*) {
-  geolocation_service_.reset();
   CancelAllRequests();
   StopUpdating();
   last_position_ = nullptr;
@@ -295,6 +294,10 @@ void Geolocation::RequestTimedOut(GeoNotifier* notifier) {
 
   if (!HasListeners())
     StopUpdating();
+}
+
+bool Geolocation::DoesOwnNotifier(GeoNotifier* notifier) const {
+  return one_shots_.Contains(notifier) || watchers_.Contains(notifier);
 }
 
 bool Geolocation::HaveSuitableCachedPosition(const PositionOptions& options) {
@@ -484,10 +487,12 @@ void Geolocation::UpdateGeolocationConnection() {
   if (geolocation_)
     return;
 
+  InterfaceInvalidator* invalidator =
+      GetExecutionContext()->GetInterfaceInvalidator();
   GetFrame()->GetInterfaceProvider().GetInterface(
-      mojo::MakeRequest(&geolocation_service_));
+      MakeRequest(&geolocation_service_, invalidator));
   geolocation_service_->CreateGeolocation(
-      mojo::MakeRequest(&geolocation_),
+      MakeRequest(&geolocation_, invalidator),
       Frame::HasTransientUserActivation(GetFrame()));
 
   geolocation_.set_connection_error_handler(WTF::Bind(
@@ -518,6 +523,11 @@ void Geolocation::OnPositionUpdated(
 
 void Geolocation::PageVisibilityChanged() {
   UpdateGeolocationConnection();
+}
+
+bool Geolocation::HasPendingActivity() const {
+  return !one_shots_.IsEmpty() || !one_shots_being_invoked_.IsEmpty() ||
+         !watchers_.IsEmpty() || !watchers_being_invoked_.IsEmpty();
 }
 
 void Geolocation::OnGeolocationConnectionError() {

@@ -28,6 +28,7 @@
 #include "content/public/browser/touch_selection_controller_client_manager.h"
 #include "content/public/common/input_event_ack_state.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -67,6 +68,10 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // remotely, it can be set here.
   void SetFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 #endif  // defined(USE_AURA)
+
+  bool OnMessageReceived(const IPC::Message& msg) override;
+
+  void OnIntrinsicSizingInfoChanged(blink::WebIntrinsicSizingInfo);
 
   // This functions registers single-use callbacks that want to be notified when
   // the next frame is swapped. The callback is triggered by
@@ -117,7 +122,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
                          int error_code) override;
   void Destroy() override;
   void SetTooltipText(const base::string16& tooltip_text) override;
-  bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
   void DidCreateNewRendererCompositorFrameSink(
@@ -153,6 +157,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       const gfx::PointF& point,
       RenderWidgetHostViewBase* target_view,
       gfx::PointF* transformed_point) override;
+  void DidNavigate() override;
   gfx::PointF TransformRootPointToViewCoordSpace(
       const gfx::PointF& point) override;
   TouchSelectionControllerClientManager*

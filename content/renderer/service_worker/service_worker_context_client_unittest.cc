@@ -15,7 +15,6 @@
 #include "base/time/time.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "content/public/common/content_features.h"
 #include "content/renderer/service_worker/embedded_worker_instance_client_impl.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_timeout_timer.h"
@@ -23,6 +22,7 @@
 #include "ipc/ipc_sync_message_filter.h"
 #include "ipc/ipc_test_sink.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
@@ -218,15 +218,14 @@ class ServiceWorkerContextClientTest : public testing::Test {
 
   void TearDown() override {
     ServiceWorkerContextClient::ResetThreadSpecificInstanceForTesting();
-    ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
-        sender_, main_task_runner())
+    ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(sender_)
         ->AllowReinstantiationForTesting();
     // Unregister this thread from worker threads.
     WorkerThreadRegistry::Instance()->WillStopCurrentWorkerThread();
   }
 
   void EnableServicification() {
-    feature_list_.InitWithFeatures({features::kNetworkService}, {});
+    feature_list_.InitWithFeatures({network::features::kNetworkService}, {});
     ASSERT_TRUE(ServiceWorkerUtils::IsServicificationEnabled());
   }
 
@@ -243,12 +242,7 @@ class ServiceWorkerContextClientTest : public testing::Test {
     info->registration->host_ptr_info = host_ptr.PassInterface();
     info->registration->request =
         mojo::MakeRequestAssociatedWithDedicatedPipe(out_ptr);
-
-    info->registration->installing =
-        blink::mojom::ServiceWorkerObjectInfo::New();
     info->registration->registration_id = 100;  // dummy
-    info->registration->waiting = blink::mojom::ServiceWorkerObjectInfo::New();
-    info->registration->active = blink::mojom::ServiceWorkerObjectInfo::New();
     return info;
   }
 
@@ -282,11 +276,6 @@ class ServiceWorkerContextClientTest : public testing::Test {
   }
 
  private:
-  scoped_refptr<base::SingleThreadTaskRunner> main_task_runner() {
-    // Use this thread as the main thread.
-    return task_runner_;
-  }
-
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner() {
     // Use this thread as the IO thread.
     return task_runner_;

@@ -42,6 +42,7 @@
 #include "chrome/browser/extensions/browsertest_util.h"
 #include "chrome/browser/interstitials/security_interstitial_page_test_utils.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_io_data.h"
 #include "chrome/browser/ssl/bad_clock_blocking_page.h"
 #include "chrome/browser/ssl/captive_portal_blocking_page.h"
 #include "chrome/browser/ssl/cert_report_helper.h"
@@ -111,7 +112,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/web_preferences.h"
@@ -134,6 +134,8 @@
 #include "net/cert/x509_util.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/http/http_response_headers.h"
+#include "net/ssl/client_cert_identity_test_util.h"
+#include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_info.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -146,6 +148,8 @@
 #include "net/url_request/url_request_filter.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/network/public/cpp/features.h"
+#include "services/network/public/cpp/network_switches.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -442,7 +446,7 @@ void SetHSTSForHostName(Profile* profile) {
   std::string hostname = kHstsTestHostName;
   const base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
   bool include_subdomains = false;
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     mojo::ScopedAllowSyncCallForTesting allow_sync_call;
     content::StoragePartition* partition =
         content::BrowserContext::GetDefaultStoragePartition(profile);
@@ -1120,8 +1124,8 @@ class SSLUITestIgnoreCertErrorsBySPKIHTTPS : public SSLUITest {
         https_server_mismatched_.GetCertificate().get());
     // Browser will ignore certificate errors for chains matching one of the
     // public keys from the list.
-    command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
-                                    whitelist_flag);
+    command_line->AppendSwitchASCII(
+        network::switches::kIgnoreCertificateErrorsSPKIList, whitelist_flag);
   }
 };
 
@@ -1139,8 +1143,8 @@ class SSLUITestIgnoreCertErrorsBySPKIWSS : public SSLUITest {
         MakeCertSPKIFingerprint(wss_server_expired_.GetCertificate().get());
     // Browser will ignore certificate errors for chains matching one of the
     // public keys from the list.
-    command_line->AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
-                                    whitelist_flag);
+    command_line->AppendSwitchASCII(
+        network::switches::kIgnoreCertificateErrorsSPKIList, whitelist_flag);
   }
 };
 
@@ -1904,26 +1908,23 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, SHA1PrefsCanEnable) {
       browser()->tab_strip_model()->GetActiveWebContents(), AuthState::NONE);
 }
 
-IN_PROC_BROWSER_TEST_P(SSLUITest, CommonNameIsDefaultDisabled) {
-  bool net::SSLConfig::*member =
-      &net::SSLConfig::common_name_fallback_local_anchors_enabled;
-
-  ASSERT_NO_FATAL_FAILURE(
-      CheckSSLConfig(browser()->profile()->GetRequestContext(), member, false));
-
-  ASSERT_TRUE(https_server_common_name_only_.Start());
-  ui_test_utils::NavigateToURL(
-      browser(), https_server_common_name_only_.GetURL("/ssl/google.html"));
-
-  CheckAuthenticationBrokenState(
-      browser()->tab_strip_model()->GetActiveWebContents(),
-      net::CERT_STATUS_COMMON_NAME_INVALID, AuthState::SHOWING_INTERSTITIAL);
-}
-
+// By default, trust in Symantec's Legacy PKI should be disabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, SymantecEnforcementIsNotDisabled) {
   bool net::SSLConfig::*member = &net::SSLConfig::symantec_enforcement_disabled;
   ASSERT_NO_FATAL_FAILURE(
       CheckSSLConfig(browser()->profile()->GetRequestContext(), member, false));
+}
+
+// Enables support for Symantec's Legacy PKI via policy, and then ensures that
+// the SSLConfig is configured to trust the Legacy PKI.
+IN_PROC_BROWSER_TEST_P(SSLUITest, SymantecPrefsCanEnable) {
+  bool net::SSLConfig::*member = &net::SSLConfig::symantec_enforcement_disabled;
+
+  ASSERT_NO_FATAL_FAILURE(
+      EnablePolicy(policy::key::kEnableSymantecLegacyInfrastructure,
+                   ssl_config::prefs::kCertEnableSymantecLegacyInfrastructure));
+  ASSERT_NO_FATAL_FAILURE(
+      CheckSSLConfig(browser()->profile()->GetRequestContext(), member, true));
 }
 
 // Visit a HTTP page which request WSS connection to a server providing invalid
@@ -2203,6 +2204,76 @@ IN_PROC_BROWSER_TEST_F(SSLUITestWithClientCert, TestWSSClientCert) {
   EXPECT_TRUE(base::LowerCaseEqualsASCII(result, "pass"));
 }
 #endif  // defined(USE_NSS_CERTS)
+
+// A stub ClientCertStore that returns a FakeClientCertIdentity.
+class ClientCertStoreStub : public net::ClientCertStore {
+ public:
+  explicit ClientCertStoreStub(net::ClientCertIdentityList list)
+      : list_(std::move(list)) {}
+
+  ~ClientCertStoreStub() override {}
+
+  // net::ClientCertStore:
+  void GetClientCerts(const net::SSLCertRequestInfo& cert_request_info,
+                      const ClientCertListCallback& callback) override {
+    callback.Run(std::move(list_));
+  }
+
+ private:
+  net::ClientCertIdentityList list_;
+};
+
+std::unique_ptr<net::ClientCertStore> CreateCertStore() {
+  base::FilePath certs_dir = net::GetTestCertsDirectory();
+
+  net::ClientCertIdentityList cert_identity_list;
+
+  {
+    base::ScopedAllowBlockingForTesting allow_blocking;
+
+    std::unique_ptr<net::FakeClientCertIdentity> cert_identity =
+        net::FakeClientCertIdentity::CreateFromCertAndKeyFiles(
+            certs_dir, "client_1.pem", "client_1.pk8");
+    EXPECT_TRUE(cert_identity.get());
+    if (cert_identity)
+      cert_identity_list.push_back(std::move(cert_identity));
+  }
+
+  return std::unique_ptr<net::ClientCertStore>(
+      new ClientCertStoreStub(std::move(cert_identity_list)));
+}
+
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestBrowserUseClientCertStore) {
+  // Make the browser use the ClientCertStoreStub instead of the regular one.
+  ProfileIOData::FromResourceContext(browser()->profile()->GetResourceContext())
+      ->set_client_cert_store_factory_for_testing(base::Bind(&CreateCertStore));
+
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  net::SSLServerConfig ssl_config;
+  ssl_config.client_cert_type =
+      net::SSLServerConfig::ClientCertType::REQUIRE_CLIENT_CERT;
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
+  https_server.ServeFilesFromSourceDirectory("chrome/test/data");
+  ASSERT_TRUE(https_server.Start());
+  GURL https_url =
+      https_server.GetURL("/ssl/browser_use_client_cert_store.html");
+
+  // Add an entry into AutoSelectCertificateForUrls policy for automatic client
+  // cert selection.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  Profile* profile = Profile::FromBrowserContext(tab->GetBrowserContext());
+  DCHECK(profile);
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  HostContentSettingsMapFactory::GetForProfile(profile)
+      ->SetWebsiteSettingDefaultScope(
+          https_url, GURL(), CONTENT_SETTINGS_TYPE_AUTO_SELECT_CERTIFICATE,
+          std::string(), std::move(dict));
+
+  // Visit a HTTPS page which requires client certs.
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(browser(),
+                                                            https_url, 1);
+  EXPECT_EQ("pass", tab->GetLastCommittedURL().ref());
+}
 
 // Open a page with a HTTPS error in a tab with no prior navigation (through a
 // link with a blank target).  This is to test that the lack of navigation entry
@@ -5841,12 +5912,6 @@ class SSLUICaptivePortalListResourceBundleTest
     }
   }
 
-  void SetUp() override {
-    CertVerifierBrowserTest::SetUp();
-    SSLErrorHandler::ResetConfigForTesting();
-    SetUpCertVerifier(0, net::OK, std::string());
-  }
-
   void TearDown() override {
     SSLErrorHandler::ResetConfigForTesting();
     CertVerifierBrowserTest::TearDown();
@@ -6777,13 +6842,12 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
   }
 
  protected:
-  void SetUpCertVerifier(bool use_chrome_66_date) {
+  void SetUpCertVerifier() {
     net::CertVerifyResult verify_result;
     {
       base::ScopedAllowBlockingForTesting allow_blocking;
       verify_result.verified_cert = net::CreateCertificateChainFromFile(
-          net::GetTestCertsDirectory(),
-          use_chrome_66_date ? "pre_june_2016.pem" : "post_june_2016.pem",
+          net::GetTestCertsDirectory(), "post_june_2016.pem",
           net::X509Certificate::FORMAT_AUTO);
     }
     ASSERT_TRUE(verify_result.verified_cert);
@@ -6811,31 +6875,10 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SymantecMessageSSLUITest);
 };
 
-// Tests that the Symantec console message is properly overridden for pre-June
-// 2016 certificates.
-IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PreJune2016) {
-  ASSERT_NO_FATAL_FAILURE(
-      SetUpCertVerifier(true /* use Chrome 66 distrust date */));
-  ASSERT_TRUE(https_server()->Start());
-  GURL url(https_server()->GetURL("/ssl/google.html"));
-  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  content::ConsoleObserverDelegate console_observer(
-      tab,
-      base::StringPrintf(
-          "*The SSL certificate used to load resources from https://%s:%s*",
-          url.host().c_str(), url.port().c_str()));
-  tab->SetDelegate(&console_observer);
-  ui_test_utils::NavigateToURL(browser(), url);
-  console_observer.Wait();
-  EXPECT_TRUE(
-      base::MatchPattern(console_observer.message(), "*distrusted in M66*"));
-}
-
 // Tests that the Symantec console message is properly overridden for post-June
 // 2016 certificates.
 IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
-  ASSERT_NO_FATAL_FAILURE(
-      SetUpCertVerifier(false /* use Chrome 66 distrust date */));
+  ASSERT_NO_FATAL_FAILURE(SetUpCertVerifier());
   ASSERT_TRUE(https_server()->Start());
   GURL url(https_server()->GetURL("/ssl/google.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -6855,8 +6898,7 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
 // out after many subresource loads.
 IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, ManySubresources) {
   content::SetupCrossSiteRedirector(https_server());
-  ASSERT_NO_FATAL_FAILURE(
-      SetUpCertVerifier(false /* use Chrome 66 distrust date */));
+  ASSERT_NO_FATAL_FAILURE(SetUpCertVerifier());
   ASSERT_TRUE(https_server()->Start());
   GURL url(https_server()->GetURL("/ssl/page_with_many_subresources.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -6882,7 +6924,7 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, ManySubresources) {
   }
 }
 
-// Checks that SimpleURLLoader, which uses content/network/url_loader.cc, goes
+// Checks that SimpleURLLoader, which uses services/network/url_loader.cc, goes
 // through the new NetworkServiceClient interface to deliver cert error
 // notifications to the browser which then overrides the certificate error.
 IN_PROC_BROWSER_TEST_F(SSLUITestBase, SimpleURLLoaderCertError) {

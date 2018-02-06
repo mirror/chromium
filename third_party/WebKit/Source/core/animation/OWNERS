@@ -1,11 +1,9 @@
 flackr@chromium.org
+smcgruer@chromium.org
 
 # Legacy owners:
 alancutter@chromium.org
-dstockwell@chromium.org
 ericwilligers@chromium.org
-shans@chromium.org
-timloh@chromium.org
 
 per-file Compositor*=loyso@chromium.org
 

@@ -86,8 +86,8 @@
 #include "net/base/load_timing_info.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
-#include "net/ssl/client_cert_store.h"
 #include "net/url_request/url_request.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/resource_response.h"
 #include "third_party/protobuf/src/google/protobuf/repeated_field.h"
 
@@ -414,6 +414,27 @@ void NotifyUIThreadOfRequestComplete(
   }
 }
 
+void LogCommittedPreviewsDecision(
+    ProfileIOData* io_data,
+    const GURL& url,
+    previews::PreviewsUserData* previews_user_data) {
+  previews::PreviewsIOData* previews_io_data = io_data->previews_io_data();
+  if (previews_io_data && previews_user_data) {
+    std::vector<previews::PreviewsEligibilityReason> passed_reasons;
+    if (previews_user_data->cache_control_no_transform_directive()) {
+      previews_io_data->LogPreviewDecisionMade(
+          previews::PreviewsEligibilityReason::CACHE_CONTROL_NO_TRANSFORM, url,
+          base::Time::Now(), previews::PreviewsType::UNSPECIFIED,
+          std::move(passed_reasons), previews_user_data->page_id());
+    } else {
+      previews_io_data->LogPreviewDecisionMade(
+          previews::PreviewsEligibilityReason::COMMITTED, url,
+          base::Time::Now(), previews_user_data->committed_previews_type(),
+          std::move(passed_reasons), previews_user_data->page_id());
+    }
+  }
+}
+
 }  // namespace
 
 ChromeResourceDispatcherHostDelegate::ChromeResourceDispatcherHostDelegate()
@@ -677,7 +698,7 @@ void ChromeResourceDispatcherHostDelegate::AppendStandardResourceThrottles(
     // TODO(jam): remove this throttle once http://crbug.com/740130 is fixed and
     // PrerendererURLLoaderThrottle can be used for frame requests in the
     // network-service-disabled mode.
-    if (!base::FeatureList::IsEnabled(features::kNetworkService) &&
+    if (!base::FeatureList::IsEnabled(network::features::kNetworkService) &&
         content::IsResourceTypeFrame(info->GetResourceType())) {
       throttles->push_back(
           base::MakeUnique<prerender::PrerenderResourceThrottle>(request));
@@ -828,11 +849,11 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     // url), are not set here.
     previews::PreviewsType committed_type =
         previews::GetMainFramePreviewsType(committed_state);
-    if (committed_type != previews::PreviewsType::NONE) {
-      previews::PreviewsUserData* previews_user_data =
-          previews::PreviewsUserData::GetData(*request);
-      if (previews_user_data)
-        previews_user_data->SetCommittedPreviewsType(committed_type);
+    previews::PreviewsUserData* previews_user_data =
+        previews::PreviewsUserData::GetData(*request);
+    if (previews_user_data) {
+      previews_user_data->SetCommittedPreviewsType(committed_type);
+      LogCommittedPreviewsDecision(io_data, request->url(), previews_user_data);
     }
   }
 
@@ -997,13 +1018,6 @@ ChromeResourceDispatcherHostDelegate::GetNavigationData(
     data->set_previews_user_data(previews_user_data->DeepCopy());
 
   return data;
-}
-
-std::unique_ptr<net::ClientCertStore>
-ChromeResourceDispatcherHostDelegate::CreateClientCertStore(
-    content::ResourceContext* resource_context) {
-  return ProfileIOData::FromResourceContext(resource_context)->
-      CreateClientCertStore();
 }
 
 // static

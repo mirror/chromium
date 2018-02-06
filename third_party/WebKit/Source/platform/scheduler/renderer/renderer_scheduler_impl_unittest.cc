@@ -13,12 +13,13 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "build/build_config.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/test/ordered_simple_task_runner.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/scheduler/base/real_time_domain.h"
+#include "platform/scheduler/child/features.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
@@ -263,6 +264,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
   RendererSchedulerImplTest()
       : fake_task_(TaskQueue::PostedTask(base::Bind([] {}), FROM_HERE),
                    base::TimeTicks()) {
+    feature_list_.InitAndEnableFeature(kHighPriorityInput);
     clock_.Advance(base::TimeDelta::FromMicroseconds(5000));
   }
 
@@ -297,10 +299,11 @@ class RendererSchedulerImplTest : public ::testing::Test {
     }
     default_task_runner_ = scheduler_->DefaultTaskQueue();
     compositor_task_runner_ = scheduler_->CompositorTaskQueue();
+    input_task_runner_ = scheduler_->InputTaskQueue();
     loading_task_runner_ = scheduler_->NewLoadingTaskQueue(
         MainThreadTaskQueue::QueueType::kFrameLoading);
     loading_control_task_runner_ = scheduler_->NewLoadingTaskQueue(
-        MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+        MainThreadTaskQueue::QueueType::kFrameLoadingControl);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
     timer_task_runner_ = scheduler_->TimerTaskQueue();
     v8_task_runner_ = scheduler_->V8TaskQueue();
@@ -606,6 +609,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
   // task identifier specifies the task type:
   // - 'D': Default task
   // - 'C': Compositor task
+  // - 'P': Input task
   // - 'L': Loading task
   // - 'M': Loading Control task
   // - 'I': Idle task
@@ -624,6 +628,10 @@ class RendererSchedulerImplTest : public ::testing::Test {
           break;
         case 'C':
           compositor_task_runner_->PostTask(
+              FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
+          break;
+        case 'P':
+          input_task_runner_->PostTask(
               FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
           break;
         case 'L':
@@ -710,6 +718,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
     return scheduler->ThrottleableTaskQueue();
   }
 
+  base::test::ScopedFeatureList feature_list_;
   base::SimpleTestTickClock clock_;
   TaskQueue::Task fake_task_;
   scoped_refptr<MainThreadTaskQueue> fake_queue_;
@@ -720,6 +729,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
   std::unique_ptr<RendererSchedulerImplForTest> scheduler_;
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> input_task_runner_;
   scoped_refptr<TaskQueue> loading_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> loading_control_task_runner_;
   scoped_refptr<SingleThreadIdleTaskRunner> idle_task_runner_;
@@ -744,10 +754,11 @@ TEST_F(RendererSchedulerImplTest, TestPostDefaultTask) {
 
 TEST_F(RendererSchedulerImplTest, TestPostDefaultAndCompositor) {
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "D1 C1");
+  PostTestTasks(&run_order, "D1 C1 P1");
   RunUntilIdle();
   EXPECT_THAT(run_order, ::testing::Contains("D1"));
   EXPECT_THAT(run_order, ::testing::Contains("C1"));
+  EXPECT_THAT(run_order, ::testing::Contains("P1"));
 }
 
 TEST_F(RendererSchedulerImplTest, TestRentrantTask) {
@@ -882,12 +893,14 @@ TEST_F(RendererSchedulerImplTest, TestDelayedEndIdlePeriodCanceled) {
 
 TEST_F(RendererSchedulerImplTest, TestDefaultPolicy) {
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "L1 I1 D1 C1 D2 C2");
+  PostTestTasks(&run_order, "L1 I1 D1 P1 C1 D2 P2 C2");
 
   EnableIdleTasks();
   RunUntilIdle();
+  // High-priority input is enabled and input tasks are processed first.
   EXPECT_THAT(run_order,
-              ::testing::ElementsAre(std::string("L1"), std::string("D1"),
+              ::testing::ElementsAre(std::string("P1"), std::string("P2"),
+                                     std::string("L1"), std::string("D1"),
                                      std::string("C1"), std::string("D2"),
                                      std::string("C2"), std::string("I1")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::kNone, CurrentUseCase());
@@ -897,14 +910,16 @@ TEST_F(RendererSchedulerImplTest, TestDefaultPolicyWithSlowCompositor) {
   RunSlowCompositorTask();
 
   std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "L1 I1 D1 C1 D2 C2");
+  PostTestTasks(&run_order, "L1 I1 D1 C1 P1 D2 C2");
 
   EnableIdleTasks();
   RunUntilIdle();
+  // Even with slow compositor input tasks are handled first.
   EXPECT_THAT(run_order,
-              ::testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                     std::string("C1"), std::string("D2"),
-                                     std::string("C2"), std::string("I1")));
+              ::testing::ElementsAre(std::string("P1"), std::string("L1"),
+                                     std::string("D1"), std::string("C1"),
+                                     std::string("D2"), std::string("C2"),
+                                     std::string("I1")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::kNone, CurrentUseCase());
 }
 
@@ -2608,6 +2623,72 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedLoadingSuspension) {
   EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("L6")));
 }
 
+TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedRendererKeepActive) {
+  ScopedStopLoadingInBackgroundForTest stop_loading_enabler(true);
+  scheduler_->SetStoppingWhenBackgroundedEnabled(true);
+  scheduler_->SetSchedulerKeepActive(true);
+  std::vector<std::string> run_order;
+  PostTestTasks(&run_order, "L1 T1");
+
+  base::TimeTicks now;
+
+  // Keep-alive should prevent suspension of task queues.
+  // Though this has no effect until requisite time has elapsed.
+  scheduler_->SetRendererBackgrounded(true);
+  now += base::TimeDelta::FromMilliseconds(1100);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L1"), std::string("T1")));
+
+  run_order.clear();
+  PostTestTasks(&run_order, "L2 T2");
+
+  now += base::TimeDelta::FromSeconds(1);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L2"), std::string("T2")));
+
+  // Advance the time until after the scheduled timer queue suspension.
+  now = base::TimeTicks() + delay_for_background_tab_stopping() +
+        base::TimeDelta::FromMilliseconds(10);
+  run_order.clear();
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Keep-alive signal prevents suspension of task queues.
+  PostTestTasks(&run_order, "L3 T3 V1");
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L3"), std::string("T3"),
+                                     std::string("V1")));
+
+  run_order.clear();
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Setting Keep-alive to false triggers task queue suspension.
+  scheduler_->SetSchedulerKeepActive(false);
+  PostTestTasks(&run_order, "L4 T4");
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  ASSERT_TRUE(run_order.empty());
+
+  // Setting Keep-alive to true, undoes suspension.
+  scheduler_->SetSchedulerKeepActive(true);
+  now += base::TimeDelta::FromSeconds(10);
+  clock_.SetNowTicks(now);
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              ::testing::ElementsAre(std::string("L4"), std::string("T4")));
+}
+
 TEST_F(RendererSchedulerImplTest,
        ExpensiveLoadingTasksNotBlockedTillFirstBeginMainFrame) {
   std::vector<std::string> run_order;
@@ -3764,7 +3845,7 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
       scheduler_->NewLoadingTaskQueue(
           MainThreadTaskQueue::QueueType::kFrameLoading);
   scoped_refptr<TaskQueue> loading_control_tq = scheduler_->NewLoadingTaskQueue(
-      MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+      MainThreadTaskQueue::QueueType::kFrameLoadingControl);
   scoped_refptr<MainThreadTaskQueue> timer_tq = scheduler_->NewTimerTaskQueue(
       MainThreadTaskQueue::QueueType::kFrameThrottleable);
   scoped_refptr<MainThreadTaskQueue> unthrottled_tq =
@@ -3890,7 +3971,7 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
   scheduler_->TimerTaskQueue()->PostTask(FROM_HERE, base::Bind(NullTask));
 
   loading_task_runner_->PostDelayedTask(FROM_HERE, base::BindOnce(NullTask),
-                                        TimeDelta::FromMilliseconds(10));
+                                        base::TimeDelta::FromMilliseconds(10));
 
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> value =
       scheduler_->AsValue(base::TimeTicks());

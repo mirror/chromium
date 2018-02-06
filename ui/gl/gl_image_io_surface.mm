@@ -39,6 +39,7 @@ bool ValidInternalFormat(unsigned internalformat) {
     case GL_RG:
     case GL_BGRA_EXT:
     case GL_RGB:
+    case GL_RGB10_A2_EXT:
     case GL_RGB_YCBCR_420V_CHROMIUM:
     case GL_RGB_YCBCR_422_CHROMIUM:
     case GL_RGBA:
@@ -219,6 +220,10 @@ bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
                                   gfx::BufferFormat format) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!io_surface_);
+  if (!io_surface) {
+    LOG(ERROR) << "Invalid IOSurface";
+    return false;
+  }
 
   if (!ValidInternalFormat(internalformat_)) {
     LOG(ERROR) << "Invalid internalformat: "

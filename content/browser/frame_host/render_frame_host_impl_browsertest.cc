@@ -22,11 +22,9 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
-#include "content/public/common/content_features.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
-#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
@@ -34,8 +32,10 @@
 #include "content/test/frame_host_test_interface.mojom.h"
 #include "content/test/test_content_browser_client.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
+#include "services/network/public/cpp/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 
@@ -531,7 +531,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
                        StreamHandleReleasedOnRendererCrash) {
   // Disable this test when the |stream_handle_| is not used.
   if (!IsBrowserSideNavigationEnabled() ||
-      base::FeatureList::IsEnabled(features::kNetworkService) ||
+      base::FeatureList::IsEnabled(network::features::kNetworkService) ||
       IsNavigationMojoResponseEnabled()) {
     return;
   }
@@ -719,7 +719,8 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
 IN_PROC_BROWSER_TEST_F(
     ContentBrowserTest,
     AbortedRendererInitiatedNavigationDoNotCancelPendingXHR) {
-  ControllableHttpResponse xhr_response(embedded_test_server(), "/xhr_request");
+  net::test_server::ControllableHttpResponse xhr_response(
+      embedded_test_server(), "/xhr_request");
   EXPECT_TRUE(embedded_test_server()->Start());
 
   GURL main_url(embedded_test_server()->GetURL("/title1.html"));
@@ -771,8 +772,8 @@ IN_PROC_BROWSER_TEST_F(
 // See https://crbug.com/766149.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
                        BrowserInitiatedJavascriptUrlDoNotPreventLoading) {
-  ControllableHttpResponse main_document_response(embedded_test_server(),
-                                                  "/main_document");
+  net::test_server::ControllableHttpResponse main_document_response(
+      embedded_test_server(), "/main_document");
   EXPECT_TRUE(embedded_test_server()->Start());
 
   GURL main_document_url(embedded_test_server()->GetURL("/main_document"));
@@ -831,7 +832,8 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
 IN_PROC_BROWSER_TEST_F(
     ContentBrowserTest,
     SameDocumentBrowserInitiatedNavigationWhileDocumentIsLoading) {
-  ControllableHttpResponse response(embedded_test_server(), "/main_document");
+  net::test_server::ControllableHttpResponse response(embedded_test_server(),
+                                                      "/main_document");
   EXPECT_TRUE(embedded_test_server()->Start());
 
   // 1) Load a new document. It reaches the ReadyToCommit stage and then is slow

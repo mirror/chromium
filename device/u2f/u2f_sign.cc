@@ -6,18 +6,18 @@
 
 #include <utility>
 
-#include "device/u2f/u2f_discovery.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace device {
 
 U2fSign::U2fSign(std::string relying_party_id,
-                 std::vector<U2fDiscovery*> discoveries,
+                 service_manager::Connector* connector,
+                 const base::flat_set<U2fTransportProtocol>& protocols,
                  const std::vector<std::vector<uint8_t>>& registered_keys,
                  const std::vector<uint8_t>& challenge_hash,
                  const std::vector<uint8_t>& app_param,
                  SignResponseCallback completion_callback)
-    : U2fRequest(std::move(relying_party_id), std::move(discoveries)),
+    : U2fRequest(std::move(relying_party_id), connector, protocols),
       registered_keys_(registered_keys),
       challenge_hash_(challenge_hash),
       app_param_(app_param),
@@ -29,13 +29,14 @@ U2fSign::~U2fSign() = default;
 // static
 std::unique_ptr<U2fRequest> U2fSign::TrySign(
     std::string relying_party_id,
-    std::vector<U2fDiscovery*> discoveries,
+    service_manager::Connector* connector,
+    const base::flat_set<U2fTransportProtocol>& protocols,
     const std::vector<std::vector<uint8_t>>& registered_keys,
     const std::vector<uint8_t>& challenge_hash,
     const std::vector<uint8_t>& app_param,
     SignResponseCallback completion_callback) {
   std::unique_ptr<U2fRequest> request = std::make_unique<U2fSign>(
-      std::move(relying_party_id), std::move(discoveries), registered_keys,
+      std::move(relying_party_id), connector, protocols, registered_keys,
       challenge_hash, app_param, std::move(completion_callback));
   request->Start();
 
@@ -49,6 +50,7 @@ void U2fSign::TryDevice() {
     // Send registration (Fake enroll) if no keys were provided
     current_device_->Register(
         U2fRequest::GetBogusAppParam(), U2fRequest::GetBogusChallenge(),
+        false /* no individual attestation */,
         base::Bind(&U2fSign::OnTryDevice, weak_factory_.GetWeakPtr(),
                    registered_keys_.cend()));
     return;
@@ -101,6 +103,7 @@ void U2fSign::OnTryDevice(std::vector<std::vector<uint8_t>>::const_iterator it,
         // (Fake enroll) request to device.
         current_device_->Register(
             U2fRequest::GetBogusAppParam(), U2fRequest::GetBogusChallenge(),
+            false /* no individual attestation */,
             base::Bind(&U2fSign::OnTryDevice, weak_factory_.GetWeakPtr(),
                        registered_keys_.cend()));
       }

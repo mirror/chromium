@@ -33,6 +33,11 @@
 #include "media/gpu/vaapi/vaapi_wrapper.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
+#endif
+
 namespace {
 
 std::unique_ptr<base::Thread> CreateAndStartCompositorThread() {
@@ -112,6 +117,11 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
     // Initialize GpuInit before starting the IO or compositor threads.
     gpu_init_ = std::make_unique<gpu::GpuInit>();
     gpu_init_->set_sandbox_helper(this);
+
+#if defined(USE_OZONE)
+    command_line->AppendSwitch(switches::kEnableDrmMojo);
+#endif
+
     // TODO(crbug.com/609317): Use InitializeAndStartSandbox() when gpu-mus is
     // split into a separate process.
     gpu_init_->InitializeInProcess(command_line, gpu_preferences);
@@ -135,10 +145,28 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
 
 VizMainImpl::~VizMainImpl() {
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+
+  // The compositor holds on to some resources from gpu service. So destroy the
+  // compositor first, before destroying the gpu service. However, before the
+  // compositor is destroyed, close the binding, so that the gpu service doesn't
+  // need to process commands from the host as it is shutting down.
+  binding_.Close();
+  associated_binding_.Close();
+
+  if (compositor_thread_) {
+    // Destroy all objects owned on the compositor thread before shutting down
+    // the thread. All RootCompositorFrameSinks must be destroyed before now,
+    // otherwise the compositor thread will deadlock waiting for a response from
+    // the blocked GPU thread.
+    compositor_thread_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&VizMainImpl::TearDownOnCompositorThread,
+                                  base::Unretained(this)));
+    compositor_thread_.reset();
+    compositor_thread_task_runner_ = nullptr;
+  }
+
   if (ukm_recorder_)
     ukm::DelegatingUkmRecorder::Get()->RemoveDelegate(ukm_recorder_.get());
-  if (io_thread_)
-    io_thread_->Stop();
 }
 
 void VizMainImpl::SetLogMessagesForHost(LogMessages log_messages) {
@@ -151,37 +179,6 @@ void VizMainImpl::Bind(mojom::VizMainRequest request) {
 
 void VizMainImpl::BindAssociated(mojom::VizMainAssociatedRequest request) {
   associated_binding_.Bind(std::move(request));
-}
-
-void VizMainImpl::TearDown() {
-  DCHECK(!gpu_thread_task_runner_->BelongsToCurrentThread());
-  DCHECK(!compositor_thread_task_runner_->BelongsToCurrentThread());
-  // The compositor holds on to some resources from gpu service. So destroy the
-  // compositor first, before destroying the gpu service. However, before the
-  // compositor is destroyed, close the binding, so that the gpu service doesn't
-  // need to process commands from the compositor as it is shutting down.
-  base::WaitableEvent binding_wait(
-      base::WaitableEvent::ResetPolicy::MANUAL,
-      base::WaitableEvent::InitialState::NOT_SIGNALED);
-  gpu_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VizMainImpl::CloseVizMainBindingOnGpuThread,
-                            base::Unretained(this), &binding_wait));
-  binding_wait.Wait();
-
-  base::WaitableEvent compositor_wait(
-      base::WaitableEvent::ResetPolicy::MANUAL,
-      base::WaitableEvent::InitialState::NOT_SIGNALED);
-  compositor_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VizMainImpl::TearDownOnCompositorThread,
-                            base::Unretained(this), &compositor_wait));
-  compositor_wait.Wait();
-
-  base::WaitableEvent gpu_wait(base::WaitableEvent::ResetPolicy::MANUAL,
-                               base::WaitableEvent::InitialState::NOT_SIGNALED);
-  gpu_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VizMainImpl::TearDownOnGpuThread,
-                            base::Unretained(this), &gpu_wait));
-  gpu_wait.Wait();
 }
 
 void VizMainImpl::CreateGpuService(
@@ -282,24 +279,10 @@ void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
                                         nullptr, std::move(client));
 }
 
-void VizMainImpl::CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait) {
-  binding_.Close();
-  wait->Signal();
-}
-
-void VizMainImpl::TearDownOnCompositorThread(base::WaitableEvent* wait) {
+void VizMainImpl::TearDownOnCompositorThread() {
   compositing_mode_reporter_.reset();
   frame_sink_manager_.reset();
   display_provider_.reset();
-  wait->Signal();
-}
-
-void VizMainImpl::TearDownOnGpuThread(base::WaitableEvent* wait) {
-  gpu_command_service_ = nullptr;
-  gpu_service_.reset();
-  gpu_memory_buffer_factory_.reset();
-  gpu_init_.reset();
-  wait->Signal();
 }
 
 void VizMainImpl::PreSandboxStartup() {

@@ -39,7 +39,7 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
   void Seek(double seconds) override {}
   void SetRate(double) override {}
   void SetVolume(double) override {}
-  void PictureInPicture() override {}
+  void EnterPictureInPicture() override {}
   blink::WebTimeRanges Buffered() const override {
     return blink::WebTimeRanges();
   }
@@ -64,6 +64,7 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
   }
 
   bool DidLoadingProgress() override { return true; }
+  bool DidGetOpaqueResponseFromServiceWorker() const override { return false; }
   bool HasSingleSecurityOrigin() const override { return true; }
   bool DidPassCORSAccessCheck() const override { return true; }
   double MediaTimeForTimeValue(double timeValue) const override { return 0.0; }

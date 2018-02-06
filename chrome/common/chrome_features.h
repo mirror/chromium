@@ -10,11 +10,13 @@
 
 #include "base/feature_list.h"
 #include "build/build_config.h"
+#include "build/buildflag.h"
 #include "chrome/common/features.h"
 #include "device/vr/features/features.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "ui/base/ui_features.h"
 
 namespace features {
 
@@ -29,6 +31,10 @@ extern const base::Feature kAllowAutoplayUnmutedInWebappManifestScope;
 
 #if defined(OS_MACOSX)
 extern const base::Feature kAppleScriptExecuteJavaScriptMenuItem;
+extern const base::Feature kShow10_9ObsoleteInfobar;
+#if BUILDFLAG(MAC_VIEWS_BROWSER)
+extern const base::Feature kViewsBrowserWindows;
+#endif
 extern const base::Feature kViewsProfileChooser;
 extern const base::Feature kViewsTaskManager;
 #endif  // defined(OS_MACOSX)
@@ -87,10 +93,6 @@ extern const base::Feature kClipboardContentSetting;
 
 #if defined(OS_MACOSX)
 extern const base::Feature kContentFullscreen;
-#endif
-
-#if defined(OS_ANDROID)
-extern const base::Feature kCopylessPaste;
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -289,9 +291,9 @@ extern const base::Feature kSyzyasanDeferredFree;
 extern const base::Feature kTabMetricsLogging;
 #endif
 
-extern const base::Feature kTabsInCbd;
-
 extern const base::Feature kTopSitesFromSiteEngagement;
+
+extern const base::Feature kUnifiedConsent;
 
 extern const base::Feature kUseGoogleLocalNtp;
 

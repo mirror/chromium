@@ -126,7 +126,7 @@ class WebMediaPlayer {
   virtual void Seek(double seconds) = 0;
   virtual void SetRate(double) = 0;
   virtual void SetVolume(double) = 0;
-  virtual void PictureInPicture() = 0;
+  virtual void EnterPictureInPicture() = 0;
 
   virtual void RequestRemotePlayback() {}
   virtual void RequestRemotePlaybackControl() {}
@@ -177,6 +177,7 @@ class WebMediaPlayer {
 
   virtual bool DidLoadingProgress() = 0;
 
+  virtual bool DidGetOpaqueResponseFromServiceWorker() const = 0;
   virtual bool HasSingleSecurityOrigin() const = 0;
   virtual bool DidPassCORSAccessCheck() const = 0;
 
@@ -324,6 +325,10 @@ class WebMediaPlayer {
   // Callback called whenever the media element display type changes. By
   // default, the display type is `kInline`.
   virtual void OnDisplayTypeChanged(DisplayType) {}
+
+  // Test helper methods for exercising media suspension.
+  virtual void ForceStaleStateForTesting() {}
+  virtual bool IsSuspendedForTesting() { return false; }
 };
 
 }  // namespace blink

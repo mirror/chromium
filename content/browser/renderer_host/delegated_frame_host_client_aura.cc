@@ -76,6 +76,9 @@ viz::LocalSurfaceId DelegatedFrameHostClientAura::GetLocalSurfaceId() const {
   return render_widget_host_view_->GetLocalSurfaceId();
 }
 
+void DelegatedFrameHostClientAura::OnFirstSurfaceActivation(
+    const viz::SurfaceInfo& surface_info) {}
+
 void DelegatedFrameHostClientAura::OnBeginFrame(base::TimeTicks frame_time) {
   render_widget_host_view_->OnBeginFrame(frame_time);
 }
@@ -99,6 +102,10 @@ void DelegatedFrameHostClientAura::CompositorResizeLockEnded() {
   auto* window_host = render_widget_host_view_->window_->GetHost();
   window_host->dispatcher()->ReleasePointerMoves();
   render_widget_host_view_->host_->WasResized();
+}
+
+void DelegatedFrameHostClientAura::DidReceiveFirstFrameAfterNavigation() {
+  render_widget_host_view_->host_->DidReceiveFirstFrameAfterNavigation();
 }
 
 }  // namespace content

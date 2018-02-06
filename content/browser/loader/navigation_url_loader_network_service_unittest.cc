@@ -12,13 +12,10 @@
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_params.mojom.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
-#include "content/network/network_context.h"
-#include "content/network/url_loader.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/storage_partition.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_browser_context.h"
@@ -27,26 +24,38 @@
 #include "net/base/load_flags.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_builder.h"
+#include "services/network/public/cpp/features.h"
+#include "services/network/url_loader.h"
+#include "services/network/url_request_context_owner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 
 namespace content {
 
 namespace {
+
 class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
  public:
   explicit TestURLLoaderRequestHandler(
       base::Optional<network::ResourceRequest>* most_recent_resource_request)
-      : most_recent_resource_request_(most_recent_resource_request),
-        context_(NetworkContext::CreateForTesting()) {}
+      : most_recent_resource_request_(most_recent_resource_request) {
+    net::URLRequestContextBuilder context_builder;
+    context_builder.set_proxy_resolution_service(
+        net::ProxyResolutionService::CreateDirect());
+    context_ =
+        new network::NetworkURLRequestContextGetter(context_builder.Build());
+  }
+
   ~TestURLLoaderRequestHandler() override {}
 
   void MaybeCreateLoader(const network::ResourceRequest& resource_request,
                          ResourceContext* resource_context,
                          LoaderCallback callback) override {
     std::move(callback).Run(
-        base::Bind(&TestURLLoaderRequestHandler::StartLoader,
-                   base::Unretained(this), resource_request));
+        base::BindOnce(&TestURLLoaderRequestHandler::StartLoader,
+                       base::Unretained(this), resource_request));
   }
 
   void StartLoader(network::ResourceRequest resource_request,
@@ -54,23 +63,24 @@ class TestURLLoaderRequestHandler : public URLLoaderRequestHandler {
                    network::mojom::URLLoaderClientPtr client) {
     *most_recent_resource_request_ = resource_request;
     // The URLLoader will delete itself upon completion.
-    new URLLoader(context_.get(), std::move(request), 0 /* options */,
-                  resource_request, false /* report_raw_headers */,
-                  std::move(client), TRAFFIC_ANNOTATION_FOR_TESTS,
-                  0 /* process_id */);
+    new network::URLLoader(
+        context_, nullptr, std::move(request), 0 /* options */,
+        resource_request, false /* report_raw_headers */, std::move(client),
+        TRAFFIC_ANNOTATION_FOR_TESTS, 0 /* process_id */, nullptr);
   }
 
   bool MaybeCreateLoaderForResponse(
       const network::ResourceResponseHead& response,
       network::mojom::URLLoaderPtr* loader,
-      network::mojom::URLLoaderClientRequest* client_request) override {
+      network::mojom::URLLoaderClientRequest* client_request,
+      ThrottlingURLLoader* url_loader) override {
     return false;
   }
 
  private:
   base::Optional<network::ResourceRequest>*
       most_recent_resource_request_;  // NOT OWNED.
-  std::unique_ptr<NetworkContext> context_;
+  scoped_refptr<network::NetworkURLRequestContextGetter> context_;
 };
 
 }  // namespace
@@ -79,7 +89,7 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
  public:
   NavigationURLLoaderNetworkServiceTest()
       : thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP) {
-    feature_list_.InitAndEnableFeature(features::kNetworkService);
+    feature_list_.InitAndEnableFeature(network::features::kNetworkService);
 
     // Because the network service is enabled we need a ServiceManagerConnection
     // or BrowserContext::GetDefaultStoragePartition will segfault when
@@ -113,8 +123,7 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
             blink::WebMixedContentContextType::kBlockable,
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */,
-            url::Origin::Create(url), GURL() /* client_side_redirect_url */,
-            base::nullopt /* suggested_filename */);
+            url::Origin::Create(url), GURL() /* client_side_redirect_url */);
 
     CommonNavigationParams common_params;
     common_params.url = url;

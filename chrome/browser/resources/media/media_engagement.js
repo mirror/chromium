@@ -19,6 +19,7 @@ var engagementTableBody = null;
 var sortReverse = true;
 var sortKey = 'totalScore';
 var configTableBody = null;
+var showNoPlaybacks = false;
 
 /**
  * Creates a single row in the engagement table.
@@ -108,7 +109,7 @@ function renderConfigTable(config) {
   configTableBody.innerHTML = '';
 
   configTableBody.appendChild(
-      createConfigRow('Min Visits', config.scoreMinVisits));
+      createConfigRow('Min Sessions', config.scoreMinVisits));
   configTableBody.appendChild(
       createConfigRow('Lower Threshold', config.highScoreLowerThreshold));
   configTableBody.appendChild(
@@ -121,7 +122,8 @@ function renderConfigTable(config) {
 function renderTable() {
   clearTable();
   sortInfo();
-  info.forEach(rowInfo => engagementTableBody.appendChild(createRow(rowInfo)));
+  info.filter(rowInfo => (showNoPlaybacks || rowInfo.mediaPlaybacks > 0))
+      .forEach(rowInfo => engagementTableBody.appendChild(createRow(rowInfo)));
 }
 
 /**
@@ -173,5 +175,27 @@ document.addEventListener('DOMContentLoaded', function() {
       renderTable();
     });
   }
+
+  // Add handler to 'copy all to clipboard' button
+  var copyAllToClipboardButton = $('copy-all-to-clipboard');
+  copyAllToClipboardButton.addEventListener('click', (e) => {
+    // Make sure nothing is selected
+    window.getSelection().removeAllRanges();
+
+    document.execCommand('selectAll');
+    document.execCommand('copy');
+
+    // And deselect everything at the end.
+    window.getSelection().removeAllRanges();
+  });
+
+  // Add handler to 'show no playbacks' checkbox
+  var showNoPlaybacksCheckbox = $('show-no-playbacks');
+  showNoPlaybacksCheckbox.addEventListener('change', (e) => {
+    showNoPlaybacks = e.target.checked;
+    renderTable();
+  });
+
 });
+
 })();

@@ -182,31 +182,6 @@
     "args": ["--enable-threaded-compositing"]
   },
   {
-    "prefix": "rootlayerscrolls",
-    "base": "scrollingcoordinator",
-    "args": ["--root-layer-scrolls"]
-  },
-  {
-    "prefix": "rootlayerscrolls",
-    "base": "fast/scrolling",
-    "args": ["--root-layer-scrolls"]
-  },
-  {
-    "prefix": "rootlayerscrolls",
-    "base": "rootscroller",
-    "args": ["--root-layer-scrolls"]
-  },
-  {
-    "prefix": "rootlayerscrolls",
-    "base": "fast/history/scroll-restoration",
-    "args": ["--root-layer-scrolls"]
-  },
-  {
-    "prefix": "rootlayerscrolls",
-    "base": "scrollbars",
-    "args": ["--root-layer-scrolls"]
-  },
-  {
     "prefix": "scroll_customization",
     "base": "fast/scroll-behavior",
     "args": ["--enable-blink-features=ScrollCustomization"]
@@ -280,43 +255,43 @@
   {
     "prefix": "spv175",
     "base": "compositing",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "paint",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "fast/borders",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "fast/multicol",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "fast/pagination",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "fragmentation",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
     "prefix": "spv175",
     "base": "printing",
-    "args": ["--enable-slimming-paint-v175", "--root-layer-scrolls"],
+    "args": ["--enable-slimming-paint-v175"],
     "references_use_default_args": true
   },
   {
@@ -390,26 +365,6 @@
     "prefix": "pwa-full-code-cache",
     "base": "http/tests/devtools/service-workers/",
     "args": ["--enable-features=PWAFullCodeCache"]
-  },
-  {
-    "prefix": "service-worker-script-streaming",
-    "base": "external/wpt/service-workers",
-    "args": ["--enable-features=ServiceWorkerScriptStreaming"]
-  },
-  {
-    "prefix": "service-worker-script-streaming",
-    "base": "http/tests/serviceworker",
-    "args": ["--enable-features=ServiceWorkerScriptStreaming"]
-  },
-  {
-    "prefix": "service-worker-script-streaming",
-    "base": "http/tests/fetch/serviceworker",
-    "args": ["--enable-features=ServiceWorkerScriptStreaming"]
-  },
-  {
-    "prefix": "service-worker-script-streaming",
-    "base": "http/tests/fetch/serviceworker-proxied",
-    "args": ["--enable-features=ServiceWorkerScriptStreaming"]
   },
   {
     "prefix": "layout_ng",
@@ -494,6 +449,11 @@
     "args": ["--enable-blink-features=FeaturePolicy,FeaturePolicyExperimentalFeatures"]
   },
   {
+    "prefix": "feature-policy-experimental-features",
+    "base": "external/wpt/feature-policy/experimental-features",
+    "args": ["--enable-blink-features=FeaturePolicy,FeaturePolicyExperimentalFeatures"]
+  },
+  {
     "prefix": "mojo-localstorage",
     "base": "external/wpt/webstorage",
     "args": ["--disable-mojo-local-storage"]
@@ -574,6 +534,12 @@
     "args": ["--force-presentation-receiver-for-testing"]
   },
   {
+    "prefix": "sharedarraybuffer",
+    "base": "external/wpt/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers",
+    "args": ["--js-flags=--harmony-sharedarraybuffer",
+             "--enable-blink-features=SharedArrayBuffer"]
+  },
+  {
     "prefix": "longtask-v2",
     "base": "http/tests/performance-timing/longtask-v2",
     "args": ["--enable-blink-features=LongTaskV2"]
@@ -637,5 +603,20 @@
     "prefix": "unified-autoplay",
     "base": "external/wpt/feature-policy",
     "args": ["--autoplay-policy=document-user-activation-required"]
+  },
+  {
+    "prefix": "htxg",
+    "base": "http/tests/loading/htxg/",
+    "args": ["--enable-features=SignedHTTPExchange"]
+  },
+  {
+    "prefix": "htxg-with-network-service",
+    "base": "http/tests/loading/htxg/",
+    "args": ["--enable-features=SignedHTTPExchange,NetworkService"]
+  },
+  {
+    "prefix": "sampling-heap-profiler",
+    "base": "inspector-protocol/memory",
+    "args": ["--sampling-heap-profiler"]
   }
 ]

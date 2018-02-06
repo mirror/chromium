@@ -185,13 +185,13 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
   void HandleRequestReadDirectoryCallback(
       const storage::AsyncFileUtil::ReadDirectoryCallback& callback,
       smbprovider::ErrorType error,
-      const smbprovider::DirectoryEntryList& entries) const;
+      const smbprovider::DirectoryEntryListProto& entries) const;
 
   void HandleRequestGetMetadataEntryCallback(
       ProvidedFileSystemInterface::MetadataFieldMask fields,
       const ProvidedFileSystemInterface::GetMetadataCallback& callback,
       smbprovider::ErrorType error,
-      const smbprovider::DirectoryEntry& entry) const;
+      const smbprovider::DirectoryEntryProto& entry) const;
 
   void HandleRequestOpenFileCallback(const OpenFileCallback& callback,
                                      smbprovider::ErrorType error,
@@ -202,6 +202,14 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
       smbprovider::ErrorType error) const;
 
   void HandleRequestDeleteEntryCallback(
+      const storage::AsyncFileUtil::StatusCallback& callback,
+      smbprovider::ErrorType error) const;
+
+  void HandleRequestCreateFileCallback(
+      const storage::AsyncFileUtil::StatusCallback& callback,
+      smbprovider::ErrorType error) const;
+
+  void HandleRequestTruncateCallback(
       const storage::AsyncFileUtil::StatusCallback& callback,
       smbprovider::ErrorType error) const;
 

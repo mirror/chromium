@@ -16,6 +16,8 @@
 
 namespace app_list {
 
+class SearchResultBaseView;
+
 // The search results page for the app list.
 class APP_LIST_EXPORT SearchResultPageView
     : public AppListPage,
@@ -38,10 +40,10 @@ class APP_LIST_EXPORT SearchResultPageView
   gfx::Size CalculatePreferredSize() const override;
 
   // AppListPage overrides:
-  gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;
+  gfx::Rect GetPageBoundsForState(ash::AppListState state) const override;
   void OnAnimationUpdated(double progress,
-                          AppListModel::State from_state,
-                          AppListModel::State to_state) override;
+                          ash::AppListState from_state,
+                          ash::AppListState to_state) override;
   gfx::Rect GetSearchBoxBounds() const override;
 
   // Overridden from SearchResultContainerView::Delegate :
@@ -49,7 +51,7 @@ class APP_LIST_EXPORT SearchResultPageView
 
   views::View* contents_view() { return contents_view_; }
 
-  views::View* first_result_view() const { return first_result_view_; }
+  SearchResultBaseView* first_result_view() const { return first_result_view_; }
 
  private:
   // Separator between SearchResultContainerView.
@@ -68,7 +70,7 @@ class APP_LIST_EXPORT SearchResultPageView
   views::View* const contents_view_;
 
   // The first search result's view or nullptr if there's no search result.
-  views::View* first_result_view_ = nullptr;
+  SearchResultBaseView* first_result_view_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultPageView);
 };

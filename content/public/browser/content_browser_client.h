@@ -25,8 +25,8 @@
 #include "content/public/common/resource_type.h"
 #include "content/public/common/socket_permission_request.h"
 #include "content/public/common/window_container_type.mojom.h"
-#include "device/usb/public/interfaces/chooser_service.mojom.h"
-#include "device/usb/public/interfaces/device_manager.mojom.h"
+#include "device/usb/public/mojom/chooser_service.mojom.h"
+#include "device/usb/public/mojom/device_manager.mojom.h"
 #include "media/media_features.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "net/base/mime_util.h"
@@ -34,6 +34,7 @@
 #include "services/network/public/interfaces/network_service.mojom.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -85,6 +86,7 @@ struct BindSourceInfo;
 namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
+class ClientCertStore;
 class CookieOptions;
 class HttpRequestHeaders;
 class NetLog;
@@ -212,7 +214,13 @@ class CONTENT_EXPORT ContentBrowserClient {
   // Notifies that a render process will be created. This is called before
   // the content layer adds its own BrowserMessageFilters, so that the
   // embedder's IPC filters have priority.
-  virtual void RenderProcessWillLaunch(RenderProcessHost* host) {}
+  //
+  // If the client provides a service request, the content layer will ask the
+  // corresponding embedder renderer-side component to bind it to an
+  // implementation at the appropriate moment during initialization.
+  virtual void RenderProcessWillLaunch(
+      RenderProcessHost* host,
+      service_manager::mojom::ServiceRequest* service_request) {}
 
   // Notifies that a BrowserChildProcessHost has been created.
   virtual void BrowserChildProcessHostCreated(BrowserChildProcessHost* host) {}
@@ -354,6 +362,11 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual bool IsFileAccessAllowed(const base::FilePath& path,
                                    const base::FilePath& absolute_path,
                                    const base::FilePath& profile_path);
+
+  // Indicates whether to force the MIME sniffer to sniff file URLs for HTML.
+  // By default, disabled. May be called on either the UI or IO threads.
+  // See https://crbug.com/777737
+  virtual bool ForceSniffingFileUrlsForHtml();
 
   // Allows the embedder to pass extra command line flags.
   // switches::kProcessType will already be set at this point.
@@ -1028,6 +1041,21 @@ class CONTENT_EXPORT ContentBrowserClient {
   // If false, a task scheduler has been created by the embedder, and browser
   // main loop should skip creating a second one.
   virtual bool ShouldCreateTaskScheduler();
+
+  // Returns true if the given Webauthn[1] RP ID[2] is permitted to receive
+  // individual attestation certificates. This a) triggers a signal to the
+  // security key that returning individual attestation certificates is
+  // permitted and b) skips any permission prompt for attestation.
+  //
+  // [1] https://www.w3.org/TR/webauthn/
+  // [2] https://www.w3.org/TR/webauthn/#relying-party-identifier
+  virtual bool ShouldPermitIndividualAttestationForWebauthnRPID(
+      content::BrowserContext* browser_context,
+      const std::string& rp_id);
+
+  // Get platform ClientCertStore. May return nullptr.
+  virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
+      ResourceContext* resource_context);
 };
 
 }  // namespace content

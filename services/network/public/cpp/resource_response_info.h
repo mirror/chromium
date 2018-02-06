@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "base/component_export.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -26,7 +27,7 @@ namespace network {
 
 // NOTE: when modifying this structure, also update ResourceResponse::DeepCopy
 // in resource_response.cc.
-struct ResourceResponseInfo {
+struct COMPONENT_EXPORT(NETWORK_CPP_BASE) ResourceResponseInfo {
   ResourceResponseInfo();
   ResourceResponseInfo(const ResourceResponseInfo& other);
   ~ResourceResponseInfo();
@@ -52,9 +53,6 @@ struct ResourceResponseInfo {
   // True if the resource was loaded with an otherwise-valid legacy Symantec
   // certificate which will be distrusted in future.
   bool is_legacy_symantec_cert;
-
-  // The time at which the certificate (if any) of the resource expires.
-  base::Time cert_validity_start;
 
   // Content length if available. -1 if not available
   int64_t content_length;

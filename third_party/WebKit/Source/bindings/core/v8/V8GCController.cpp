@@ -46,7 +46,7 @@
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "platform/Histogram.h"
-#include "platform/bindings/ScriptWrappableVisitor.h"
+#include "platform/bindings/ScriptWrappableMarkingVisitor.h"
 #include "platform/bindings/WrapperTypeInfo.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/allocator/Partitions.h"
@@ -237,7 +237,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableMarkingVisitor,
     current_parent_ = PersistentForWrappable(traceable);
 
     TracePrologue();
-    traceable->GetWrapperTypeInfo()->TraceWrappers(this, traceable);
+    traceable->TraceWrappers(this);
     AdvanceTracing(
         0,
         v8::EmbedderHeapTracer::AdvanceTracingActions(
@@ -494,8 +494,8 @@ class DOMWrapperTracer : public v8::PersistentHandleVisitor {
     const v8::Persistent<v8::Object>& wrapper =
         v8::Persistent<v8::Object>::Cast(*value);
 
-    if (ScriptWrappable* script_wrappable = ToScriptWrappable(wrapper))
-      ToWrapperTypeInfo(wrapper)->Trace(visitor_, script_wrappable);
+    ScriptWrappable* script_wrappable = ToScriptWrappable(wrapper);
+    visitor_->Trace(script_wrappable);
   }
 
  private:

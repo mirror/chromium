@@ -138,11 +138,6 @@
         '|content/browser/renderer_host/delegated' \
         '|content/common/gpu/client/' \
     },
-    'auto_bisect': {
-      'filepath': 'tools/run-bisect-perf-regression.py'\
-                  '|tools/run-perf-test.cfg'\
-                  '|tools/auto_bisect/'
-    },
     'autofill': {
       'filepath': 'chrome/android/java/src/org/chromium/chrome/browser/autofill/|'\
                   'chrome/browser/autofill/|'\
@@ -723,9 +718,6 @@
       'filepath': 'chrome/browser/loader|' \
                   'content/browser/loader|' \
                   'content/child/*loader',
-    },
-    'content_network' : {
-      'filepath': 'content/network/',
     },
     'content_renderer': {
       'filepath': 'content/renderer/',
@@ -1327,6 +1319,9 @@
                   'rlz/lib/machine_id.h|'\
                   'rlz/win/lib/machine_id_win.cc',
     },
+    'runtime_enabled_features': {
+      'filepath' : 'third_party/WebKit/Source/platform/runtime_enabled_features.json5'
+    },
     'safe_browsing': {
       'filepath': 'chrome/(browser|common|renderer)/safe_browsing/|'\
                   'components/safe_browsing/',
@@ -1367,6 +1362,9 @@
                   '|chrome/browser/chromeos/smb_client'\
                   '|chromeos/dbus/fake_smb_provider_client'\
                   '|chromeos/dbus/smb_provider_client',
+    },
+    'source_idls': {
+      'filepath': 'third_party/Webkit/Source/(core|modules|platform)/.*\.idl',
     },
     'spellcheck': {
       'filepath': 'chrome/browser/spellchecker/'\
@@ -1676,7 +1674,6 @@
                         'jbauman+watch@chromium.org',
                         'kalyan.kondapally@intel.com',
                         'piman+watch@chromium.org'],
-    'auto_bisect': ['auto-bisect-reviews@chromium.org'],
     'autofill': ['rouslan+autofill@chromium.org',
                  'vabr+watchlistautofill@chromium.org',
                  'mathp+autofillwatch@chromium.org',
@@ -1963,10 +1960,6 @@
                           'ortuno+watch@chromium.org'],
     'content_loader': ['loading-reviews@chromium.org',
                        'rdsmith+watch@chromium.org'],
-    'content_network': ['asanka@chromium.org',
-                        'rdsmith+watch@chromium.org',
-                        'kinuko@chromium.org',
-                        'yzshen+watch@chromium.org'],
     'content_renderer': ['mlamouri+watch-content@chromium.org'],
     'content_shell': ['jochen+watch@chromium.org',
                       'mlamouri+watch-content@chromium.org',
@@ -2013,7 +2006,8 @@
     'extension': ['chromium-apps-reviews@chromium.org',
                   'extensions-reviews@chromium.org'],
     'feature_policy': ['loonybear@chromium.org',
-                       'iclelland+watch@chromium.org'],
+                       'iclelland+watch@chromium.org',
+		       'jmedley@chromium.org'],
     'fileapi': ['kinuko+fileapi@chromium.org',
                 'nhiroki@chromium.org',
                 'tzik@chromium.org'],
@@ -2214,6 +2208,7 @@
     'remoting': ['chromoting-reviews@chromium.org'],
     'rlz_id': ['gab+watch@chromium.org',
                'robertshield+watch@chromium.org'],
+    'runtime_enabled_features': ['jmedley@chromium.org'],
     'safe_browsing': ['timvolodine@chromium.org',
                       'vakh+watch@chromium.org'],
     'safe_browsing_db': ['timvolodine@chromium.org',
@@ -2236,6 +2231,7 @@
                       'creis+watch@chromium.org',
                       'nasko+codewatch@chromium.org'],
     'smb': ['cros-enterprise-lax+smbwatch@chromium.org'],
+    'source_idls': ['jmedley@chromium.org'],
     'spellcheck': ['groby+spellwatch@chromium.org',
                    'rlp+watch@chromium.org',
                    'rouslan+spell@chromium.org',

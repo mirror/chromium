@@ -20,6 +20,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
+#include "net/base/completion_once_callback.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_states.h"
@@ -85,7 +86,6 @@ const SpdyStreamId kLastStreamId = 0x7fffffff;
 
 struct LoadTimingInfo;
 class NetLog;
-class ProxyDelegate;
 class SpdyStream;
 class SSLInfo;
 class TransportSecurityState;
@@ -182,7 +182,7 @@ class NET_EXPORT_PRIVATE SpdyStreamRequest {
                    const GURL& url,
                    RequestPriority priority,
                    const NetLogWithSource& net_log,
-                   const CompletionCallback& callback);
+                   CompletionOnceCallback callback);
 
   // Cancels any pending stream creation request. May be called
   // repeatedly.
@@ -223,7 +223,7 @@ class NET_EXPORT_PRIVATE SpdyStreamRequest {
   GURL url_;
   RequestPriority priority_;
   NetLogWithSource net_log_;
-  CompletionCallback callback_;
+  CompletionOnceCallback callback_;
 
   base::WeakPtrFactory<SpdyStreamRequest> weak_ptr_factory_;
 
@@ -257,11 +257,11 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
               bool enable_sending_initial_data,
               bool enable_ping_based_connection_checking,
               bool support_ietf_format_quic_altsvc,
+              bool is_trusted_proxy,
               size_t session_max_recv_window_size,
               const SettingsMap& initial_settings,
               TimeFunc time_func,
               ServerPushDelegate* push_delegate,
-              ProxyDelegate* proxy_delegate,
               NetLog* net_log);
 
   ~SpdySession() override;
@@ -455,6 +455,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   bool is_active() const {
     return !active_streams_.empty() || !created_streams_.empty();
   }
+
+  // True if the server supports WebSocket protocol.
+  bool support_websocket() const { return support_websocket_; }
 
   // Returns true if no stream in the session can send data due to
   // session flow control.
@@ -1043,6 +1046,15 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // If true, alt-svc headers advertising QUIC in IETF format will be supported.
   bool support_ietf_format_quic_altsvc_;
 
+  // If true, this session is being made to a trusted SPDY/HTTP2 proxy that is
+  // allowed to push cross-origin resources.
+  const bool is_trusted_proxy_;
+
+  // True if the server has advertised WebSocket support via
+  // SETTINGS_ENABLE_CONNECT_PROTOCOL, see
+  // https://tools.ietf.org/html/draft-ietf-httpbis-h2-websockets-00.
+  bool support_websocket_;
+
   // |connection_at_risk_of_loss_time_| is an optimization to avoid sending
   // wasteful preface pings (when we just got some data).
   //
@@ -1064,11 +1076,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // to build a new connection, and see if that completes before we (finally)
   // get a PING response (http://crbug.com/127812).
   base::TimeDelta hung_interval_;
-
-  // The |proxy_delegate_| verifies that a given proxy is a trusted SPDY proxy,
-  // which is allowed to push resources from origins that are different from
-  // those of their associated streams. May be nullptr.
-  ProxyDelegate* proxy_delegate_;
 
   TimeFunc time_func_;
 

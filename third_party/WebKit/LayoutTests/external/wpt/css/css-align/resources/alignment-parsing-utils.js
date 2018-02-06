@@ -1,12 +1,5 @@
-var selfPositionValues = [ "start", "end", "self-start", "self-end", "left", "right", "center", "flex-start", "flex-end"];
-var contentPositionValues = [ "start", "end", "left", "right", "center", "flex-start", "flex-end"];
-var distributionValues = [ "stretch", "space-around", "space-between", "space-evenly"];
-var baselineValues = [ "baseline", "first baseline", "last baseline"];
-var overflowValues = [ "safe flex-end", "unsafe start", "safe end", "unsafe self-start", "safe center"];
-var legacyValues = [ "legacy left", "legacy center", "legacy right", "left legacy", "center legacy", "right legacy", "legacy"];
-
-var selfPositionClasses = {"Start":"start", "End":"end", "SelfStart":"self-start", "SelfEnd":"self-end", "Left":"left", "Right":"right", "Center":"center", "FlexStart":"flex-start", "FlexEnd":"flex-end"};
-var contentPositionClasses = {"Start":"start", "End":"end", "Left":"left", "Right":"right", "Center":"center", "FlexStart":"flex-start", "FlexEnd":"flex-end"};
+var selfPositionClasses = {"Start":"start", "End":"end", "SelfStart":"self-start", "SelfEnd":"self-end", "Center":"center", "FlexStart":"flex-start", "FlexEnd":"flex-end"};
+var contentPositionClasses = {"Start":"start", "End":"end", "Center":"center", "FlexStart":"flex-start", "FlexEnd":"flex-end"};
 var distributionClasses = {"Stretch":"stretch", "SpaceAround":"space-around", "SpaceBetween":"space-between", "SpaceEvenly":"space-evenly"};
 var baselineClasses = {"Baseline":"baseline", "FirstBaseline":"first baseline", "LastBaseline":"last baseline"};
 var overflowClasses = {"SafeFlexEnd":"safe flex-end", "UnsafeEnd":"unsafe end", "SafeEnd":"safe end", "UnsafeFlexStart":"unsafe flex-start", "SafeCenter":"safe center"};
@@ -24,26 +17,27 @@ var invalidDistributionValues = ["space-between left", "space-around center", "s
                                  "space-between safe", "space-between stretch", "stretch start",
                                  "stretch baseline", "first baseline space-around"];
 
-function checkPlaceShorhand(shorthand, alignValue, justifyValue)
+function checkPlaceShorhand(shorthand, shorthandValue, alignValue, justifyValue)
 {
     var div = document.createElement("div");
-    var specifiedValue = (alignValue + " " + justifyValue).trim();
-    div.style[shorthand] = specifiedValue;
+    div.style[shorthand] = shorthandValue;
     document.body.appendChild(div);
 
-    if (alignValue === justifyValue)
-        specifiedValue = alignValue;
-
-    var resolvedValue = getComputedStyle(div).getPropertyValue(shorthand);
     if (alignValue === "first baseline")
         alignValue = "baseline";
     if (justifyValue === "first baseline")
         justifyValue = "baseline";
     if (justifyValue === "")
         justifyValue = alignValue;
-    var expectedResolvedValue = (alignValue + " " + justifyValue).trim()
 
-    assert_equals(div.style[shorthand], specifiedValue, shorthand + " specified value");
+    let specifiedValue = (alignValue + " " + justifyValue).trim();
+    if (alignValue === justifyValue)
+        specifiedValue = alignValue;
+
+    var resolvedValue = getComputedStyle(div).getPropertyValue(shorthand);
+    var expectedResolvedValue = (alignValue + " " + justifyValue).trim();
+
+    assert_equals(div.style[shorthand], specifiedValue, shorthandValue + " specified value");
     // FIXME: We need https://github.com/w3c/csswg-drafts/issues/1041 to clarify which
     // value is expected for the shorthand's 'resolved value".
     assert_in_array(resolvedValue, ["", expectedResolvedValue], shorthand + " resolved value");
@@ -54,6 +48,10 @@ function checkPlaceShorhandLonghands(shorthand, alignLonghand, justifyLonghand, 
     var div = document.createElement("div");
     div.setAttribute("style", shorthand + ": " + alignValue + " " + justifyValue);
     document.body.appendChild(div);
+    if (alignValue === "first baseline")
+        alignValue = "baseline";
+    if (justifyValue === "first baseline")
+        justifyValue = "baseline";
     if (justifyValue === "")
         justifyValue = alignValue;
     assert_equals(div.style[alignLonghand],
@@ -85,8 +83,8 @@ function checkValues(element, property, propertyID, value, computedValue)
 function checkBadValues(element, property, propertyID, value)
 {
     var elementID = element.id || "element";
-    var initialValue = eval("window.getComputedStyle(" + elementID + " , '').getPropertyValue('" + propertyID + "')");
     element.style[property] = "";
+    var initialValue = eval("window.getComputedStyle(" + elementID + " , '').getPropertyValue('" + propertyID + "')");
     element.style[property] = value;
     checkValues(element, property, propertyID, "", initialValue);
 }

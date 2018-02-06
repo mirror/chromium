@@ -9,6 +9,7 @@
 #include "base/values.h"
 #include "content/browser/devtools/devtools_manager.h"
 #include "content/browser/devtools/devtools_session.h"
+#include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/public/browser/devtools_agent_host_client.h"
 #include "content/public/browser/navigation_throttle.h"
 
@@ -164,8 +165,8 @@ NavigationThrottle::ThrottleCheckResult
 TargetHandler::Throttle::WillProcessResponse() {
   if (!target_handler_)
     return PROCEED;
-  agent_host_ =
-      target_handler_->auto_attacher_.AutoAttachToFrame(navigation_handle());
+  agent_host_ = target_handler_->auto_attacher_.AutoAttachToFrame(
+      static_cast<NavigationHandleImpl*>(navigation_handle()));
   if (!agent_host_.get())
     return PROCEED;
   target_handler_->auto_attached_sessions_[agent_host_.get()]->SetThrottle(
@@ -185,12 +186,13 @@ void TargetHandler::Throttle::Clear() {
   }
 }
 
-TargetHandler::TargetHandler()
+TargetHandler::TargetHandler(bool browser_only)
     : DevToolsDomainHandler(Target::Metainfo::domainName),
       auto_attacher_(
           base::Bind(&TargetHandler::AutoAttach, base::Unretained(this)),
           base::Bind(&TargetHandler::AutoDetach, base::Unretained(this))),
       discover_(false),
+      browser_only_(browser_only),
       weak_factory_(this) {}
 
 TargetHandler::~TargetHandler() {
@@ -208,7 +210,7 @@ void TargetHandler::Wire(UberDispatcher* dispatcher) {
   Target::Dispatcher::wire(dispatcher, this);
 }
 
-void TargetHandler::SetRenderer(RenderProcessHost* process_host,
+void TargetHandler::SetRenderer(int process_host_id,
                                 RenderFrameHostImpl* frame_host) {
   auto_attacher_.SetRenderFrameHost(frame_host);
 }
@@ -223,10 +225,6 @@ Response TargetHandler::Disable() {
 
 void TargetHandler::DidCommitNavigation() {
   auto_attacher_.UpdateServiceWorkers();
-}
-
-void TargetHandler::RenderFrameHostChanged() {
-  auto_attacher_.UpdateFrames();
 }
 
 std::unique_ptr<NavigationThrottle> TargetHandler::CreateThrottleForNavigation(
@@ -262,6 +260,7 @@ Response TargetHandler::FindSession(Maybe<std::string> session_id,
                                     Session** session,
                                     bool fall_through) {
   *session = nullptr;
+  fall_through &= !browser_only_;
   if (session_id.isJust()) {
     auto it = attached_sessions_.find(session_id.fromJust());
     if (it == attached_sessions_.end()) {
@@ -312,14 +311,7 @@ Response TargetHandler::SetAutoAttach(
   auto_attacher_.SetAutoAttach(auto_attach, wait_for_debugger_on_start);
   if (!auto_attacher_.ShouldThrottleFramesNavigation())
     ClearThrottles();
-  return Response::FallThrough();
-}
-
-Response TargetHandler::SetAttachToFrames(bool value) {
-  auto_attacher_.SetAttachToFrames(value);
-  if (!auto_attacher_.ShouldThrottleFramesNavigation())
-    ClearThrottles();
-  return Response::OK();
+  return browser_only_ ? Response::OK() : Response::FallThrough();
 }
 
 Response TargetHandler::SetRemoteLocations(

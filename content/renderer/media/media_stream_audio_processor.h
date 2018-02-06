@@ -107,11 +107,8 @@ class CONTENT_EXPORT MediaStreamAudioProcessor
 
   // AecDumpMessageFilter::AecDumpDelegate implementation.
   // Called on the main render thread.
-  // TODO(grunell): Remove OnAec3Enable when clients have changed to enable
-  // before creating streams.
   void OnAecDumpFile(const IPC::PlatformFileForTransit& file_handle) override;
   void OnDisableAecDump() override;
-  void OnAec3Enable(bool enable) override;
   void OnIpcClosing() override;
 
   // Returns true if MediaStreamAudioProcessor would modify the audio signal,
@@ -122,6 +119,10 @@ class CONTENT_EXPORT MediaStreamAudioProcessor
 
  protected:
   ~MediaStreamAudioProcessor() override;
+
+  // True if AEC3 is used, false if it's not or no AEC is used at all. Used for
+  // verification in tests.
+  bool using_aec3_ = false;
 
  private:
   friend class MediaStreamAudioProcessorTest;
@@ -179,28 +180,17 @@ class CONTENT_EXPORT MediaStreamAudioProcessor
 
   // Module to handle processing and format conversion.
   std::unique_ptr<webrtc::AudioProcessing> audio_processing_;
-  bool has_echo_cancellation_;
-  // When this variable is not set, the use of AEC3 is governed by the Finch
-  // experiment and/or WebRTC's own default. When set to true/false, Finch and
-  // WebRTC defaults will be overridden, and AEC3/AEC2 (respectively) will be
-  // used.
-  base::Optional<bool> override_aec3_;
 
   // FIFO to provide 10 ms capture chunks.
   std::unique_ptr<MediaStreamAudioFifo> capture_fifo_;
   // Receives processing output.
   std::unique_ptr<MediaStreamAudioBus> output_bus_;
 
-  // FIFO to provide 10 ms render chunks when the AEC is enabled.
-  std::unique_ptr<MediaStreamAudioFifo> render_fifo_;
-
   // These are mutated on the main render thread in OnCaptureFormatChanged().
   // The caller guarantees this does not run concurrently with accesses on the
   // capture audio thread.
   media::AudioParameters input_format_;
   media::AudioParameters output_format_;
-  // Only used on the render audio thread.
-  media::AudioParameters render_format_;
 
   // Raw pointer to the WebRtcPlayoutDataSource, which is valid for the
   // lifetime of RenderThread.
@@ -228,6 +218,10 @@ class CONTENT_EXPORT MediaStreamAudioProcessor
 
   // Flag to avoid executing Stop() more than once.
   bool stopped_;
+
+  // Counters to avoid excessively logging errors in OnPlayoutData.
+  size_t unsupported_buffer_size_log_count_ = 0;
+  size_t apm_playout_error_code_log_count_ = 0;
 
   // Object for logging UMA stats for echo information when the AEC is enabled.
   // Accessed on the main render thread.

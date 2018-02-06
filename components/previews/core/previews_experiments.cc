@@ -143,11 +143,16 @@ net::EffectiveConnectionType GetECTThresholdForPreview(
       return net::EFFECTIVE_CONNECTION_TYPE_LAST;  // Trigger irrespective of
                                                    // ECT.
     case PreviewsType::NONE:
+    case PreviewsType::UNSPECIFIED:
     case PreviewsType::LAST:
       break;
   }
   NOTREACHED();
   return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
+}
+
+bool ArePreviewsAllowed() {
+  return base::FeatureList::IsEnabled(features::kPreviews);
 }
 
 bool IsOfflinePreviewsEnabled() {
@@ -223,6 +228,8 @@ std::string GetStringNameForType(PreviewsType type) {
   // The returned string is used to record histograms for the new preview type.
   // Also add the string to Previews.Types histogram suffix in histograms.xml.
   switch (type) {
+    case PreviewsType::NONE:
+      return "None";
     case PreviewsType::OFFLINE:
       return "Offline";
     case PreviewsType::LOFI:
@@ -233,7 +240,8 @@ std::string GetStringNameForType(PreviewsType type) {
       return "AMPRedirection";
     case PreviewsType::NOSCRIPT:
       return "NoScript";
-    case PreviewsType::NONE:
+    case PreviewsType::UNSPECIFIED:
+      return "Unspecified";
     case PreviewsType::LAST:
       break;
   }

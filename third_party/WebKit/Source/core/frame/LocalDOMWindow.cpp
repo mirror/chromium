@@ -1111,7 +1111,7 @@ ScriptPromise LocalDOMWindow::getComputedAccessibleNode(
   DCHECK(element);
   ComputedAccessibleNode* computed_accessible_node =
       element->GetComputedAccessibleNode();
-  return computed_accessible_node->ComputePromiseProperty(script_state);
+  return computed_accessible_node->ComputeAccessibleProperties(script_state);
 }
 
 CSSRuleList* LocalDOMWindow::getMatchedCSSRules(
@@ -1451,9 +1451,10 @@ void LocalDOMWindow::WarnUnusedPreloads(TimerBase* base) {
 
 void LocalDOMWindow::DispatchLoadEvent() {
   Event* load_event(Event::Create(EventTypeNames::load));
-  if (GetFrame() && GetFrame()->Loader().GetDocumentLoader() &&
-      !GetFrame()->Loader().GetDocumentLoader()->GetTiming().LoadEventStart()) {
-    DocumentLoader* document_loader = GetFrame()->Loader().GetDocumentLoader();
+  DocumentLoader* document_loader =
+      GetFrame() ? GetFrame()->Loader().GetDocumentLoader() : nullptr;
+  if (document_loader &&
+      document_loader->GetTiming().LoadEventStart().is_null()) {
     DocumentLoadTiming& timing = document_loader->GetTiming();
     timing.MarkLoadEventStart();
     DispatchEvent(load_event, document());

@@ -64,7 +64,7 @@ class TestRenderFrameHost::NavigationInterceptor
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
       network::mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
-      base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories,
       mojom::ControllerServiceWorkerInfoPtr controller_service_worker,
       const base::UnguessableToken& devtools_navigation_token) override {
     frame_host_->GetProcess()->set_did_frame_commit_navigation(true);
@@ -81,8 +81,14 @@ class TestRenderFrameHost::NavigationInterceptor
       bool has_stale_copy_in_cache,
       int32_t error_code,
       const base::Optional<std::string>& error_page_content,
-      base::Optional<content::URLLoaderFactoryBundle>
-          subresource_loader_factories) override {}
+      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loader_factories)
+      override {}
+
+  void UpdateSubresourceLoaderFactories(
+      std::unique_ptr<URLLoaderFactoryBundleInfo> subresource_loaders)
+      override{};
+
+  void HandleRendererDebugURL(const GURL& url) override {}
 
  private:
   TestRenderFrameHost* const frame_host_;
@@ -501,8 +507,7 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
             blink::WebMixedContentContextType::kBlockable,
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */, url::Origin(),
-            GURL() /* client_side_redirect_url */,
-            base::nullopt /* suggested_filename */);
+            GURL() /* client_side_redirect_url */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);

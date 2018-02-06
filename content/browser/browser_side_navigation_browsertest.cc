@@ -16,6 +16,7 @@
 #include "content/common/frame_messages.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_types.h"
+#include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -23,7 +24,6 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
-#include "content/public/test/controllable_http_response.h"
 #include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/shell/browser/shell.h"
@@ -33,11 +33,29 @@
 #include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/controllable_http_response.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_failed_job.h"
+#include "services/network/public/cpp/features.h"
 #include "url/gurl.h"
 
 namespace content {
+
+namespace {
+
+class RequestBlockingResourceDispatcherHostDelegate
+    : public ResourceDispatcherHostDelegate {
+ public:
+  // ResourceDispatcherHostDelegate implementation:
+  bool ShouldBeginRequest(const std::string& method,
+                          const GURL& url,
+                          ResourceType resource_type,
+                          ResourceContext* resource_context) override {
+    return false;
+  }
+};
+
+}  // namespace
 
 // Test with BrowserSideNavigation enabled (aka PlzNavigate).
 // If you don't need a custom embedded test server, please use the next class
@@ -461,7 +479,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
       base::TimeTicks::Now() /* navigation_start */, "GET",
       nullptr /* post_data */, base::Optional<SourceLocation>(),
       CSPDisposition::CHECK, false /* started_from_context_menu */,
-      false /* has_user_gesture */);
+      false /* has_user_gesture */, base::nullopt /* suggested_filename */);
   mojom::BeginNavigationParamsPtr begin_params =
       mojom::BeginNavigationParams::New(
           std::string() /* headers */, net::LOAD_NORMAL,
@@ -469,8 +487,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
           blink::WebMixedContentContextType::kBlockable,
           false /* is_form_submission */, GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */,
-          url::Origin::Create(data_url), GURL() /* client_side_redirect_url */,
-          base::nullopt /* suggested_filename */);
+          url::Origin::Create(data_url), GURL() /* client_side_redirect_url */);
 
   // Receiving the invalid IPC message should lead to renderer process
   // termination.
@@ -519,6 +536,55 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, BackFollowedByReload) {
   EXPECT_EQ(url2, shell()->web_contents()->GetLastCommittedURL());
 }
 
+// Test that a navigation response can be entirely fetched, even after the
+// NavigationURLLoader has been deleted.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       FetchResponseAfterNavigationURLLoaderDeleted) {
+  net::test_server::ControllableHttpResponse response(embedded_test_server(),
+                                                      "/main_document");
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load a new document.
+  GURL url(embedded_test_server()->GetURL("/main_document"));
+  TestNavigationManager navigation_manager(shell()->web_contents(), url);
+  shell()->LoadURL(url);
+
+  // The navigation starts.
+  EXPECT_TRUE(navigation_manager.WaitForRequestStart());
+  navigation_manager.ResumeNavigation();
+
+  // A NavigationRequest exists at this point.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetMainFrame()
+                            ->frame_tree_node();
+  EXPECT_TRUE(root->navigation_request());
+
+  // The response's headers are received.
+  response.WaitForRequest();
+  response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "...");
+  EXPECT_TRUE(navigation_manager.WaitForResponse());
+  navigation_manager.ResumeNavigation();
+
+  // The renderer commits the navigation and the browser deletes its
+  // NavigationRequest.
+  navigation_manager.WaitForNavigationFinished();
+  EXPECT_FALSE(root->navigation_request());
+
+  // The NavigationURLLoader has been deleted by now. Check that the renderer
+  // can still receive more bytes.
+  DOMMessageQueue dom_message_queue(WebContents::FromRenderFrameHost(
+      shell()->web_contents()->GetMainFrame()));
+  response.Send(
+      "<script>window.domAutomationController.send('done');</script>");
+  std::string done;
+  EXPECT_TRUE(dom_message_queue.WaitForMessage(&done));
+  EXPECT_EQ("\"done\"", done);
+}
+
 // Navigation are started in the browser process. After the headers are
 // received, the URLLoaderClient is transfered from the browser process to the
 // renderer process. This test ensures that when the the URLLoader is deleted
@@ -530,10 +596,11 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
   // NetworkService, it is not used so the request is not canceled.
   // TODO(arthursonzogni): Find a way to cancel a request from the browser
   // with the NetworkService.
-  if (base::FeatureList::IsEnabled(features::kNetworkService))
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService))
     return;
 
-  ControllableHttpResponse response(embedded_test_server(), "/main_document");
+  net::test_server::ControllableHttpResponse response(embedded_test_server(),
+                                                      "/main_document");
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // 1) Load a new document. Commit the navigation but do not send the full
@@ -797,6 +864,92 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
       shell(), "window.domAutomationController.send(location.hash);",
       &reference_fragment));
   EXPECT_EQ("#foo", reference_fragment);
+}
+
+// Regression test for https://crbug.com/796561.
+// 1) Start on a document with history.length == 1.
+// 2) Create an iframe and call history.pushState at the same time.
+// 3) history.back() must work.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       IframeAndPushStateSimultaneously) {
+  GURL main_url = embedded_test_server()->GetURL("/simple_page.html");
+  GURL iframe_url = embedded_test_server()->GetURL("/hello.html");
+
+  // 1) Start on a new document such that history.length == 1.
+  {
+    EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+    int history_length;
+    EXPECT_TRUE(ExecuteScriptAndExtractInt(
+        shell(), "window.domAutomationController.send(history.length)",
+        &history_length));
+    EXPECT_EQ(1, history_length);
+  }
+
+  // 2) Create an iframe and call history.pushState at the same time.
+  {
+    TestNavigationManager iframe_navigation(shell()->web_contents(),
+                                            iframe_url);
+    ExecuteScriptAsync(shell(),
+                       "let iframe = document.createElement('iframe');"
+                       "iframe.src = '/hello.html';"
+                       "document.body.appendChild(iframe);");
+    EXPECT_TRUE(iframe_navigation.WaitForRequestStart());
+
+    // The iframe navigation is paused. In the meantime, a pushState navigation
+    // begins and ends.
+    TestNavigationManager push_state_navigation(shell()->web_contents(),
+                                                main_url);
+    ExecuteScriptAsync(shell(), "window.history.pushState({}, null);");
+    push_state_navigation.WaitForNavigationFinished();
+
+    // The iframe navigation is resumed.
+    iframe_navigation.WaitForNavigationFinished();
+  }
+
+  // 3) history.back() must work.
+  {
+    TestNavigationObserver navigation_observer(shell()->web_contents());
+    EXPECT_TRUE(ExecuteScript(shell()->web_contents(), "history.back();"));
+    navigation_observer.Wait();
+  }
+}
+
+// Requests not allowed by a ResourceDispatcherHostDelegate must be aborted.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       RequestBlockedByResourceDispatcherHostDelegate) {
+  // The Network Service doesn't use a ResourceDispatcherHost. A request can't
+  // be canceled by a ResourceDispatcherHostDelegate.
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService))
+    return;
+
+  // Add a ResourceDispatcherHost blocking every requests.
+  RequestBlockingResourceDispatcherHostDelegate delegate;
+  base::RunLoop loop;
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          [](base::OnceClosure resume,
+             ResourceDispatcherHostDelegate* delegate) {
+            ResourceDispatcherHost::Get()->SetDelegate(delegate);
+            std::move(resume).Run();
+          },
+          loop.QuitClosure(), &delegate));
+  loop.Run();
+
+  // Navigate somewhere. The navigation will be aborted.
+  GURL simple_url(embedded_test_server()->GetURL("/simple_page.html"));
+  TestNavigationManager manager(shell()->web_contents(), simple_url);
+  NavigationHandleObserver handle_observer(shell()->web_contents(), simple_url);
+  shell()->LoadURL(simple_url);
+
+  EXPECT_TRUE(manager.WaitForRequestStart());
+  EXPECT_FALSE(manager.WaitForResponse());
+  manager.WaitForNavigationFinished();
+
+  EXPECT_FALSE(handle_observer.has_committed());
+  EXPECT_TRUE(handle_observer.is_error());
+  EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
 }
 
 }  // namespace content

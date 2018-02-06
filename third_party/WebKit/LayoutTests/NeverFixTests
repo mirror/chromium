@@ -151,10 +151,6 @@ crbug.com/246571 external/wpt/css/css-values/attr-px-valid.html [ WontFix ]
 # Failing WPT using ch unit in vertical orientation
 crbug.com/759914 external/wpt/css/css-values/ch-unit-002.html [ WontFix ]
 
-# Media queries do not support calc() for internal CSS length values
-crbug.com/421909 external/wpt/css/css-values/calc-in-media-queries-001.html [ WontFix ]
-crbug.com/421909 external/wpt/css/css-values/calc-in-media-queries-002.html [ WontFix ]
-
 # CSS2 tests that rely on undefined behaviors (height of line-height: normal).
 external/wpt/css/CSS2/linebox/inline-formatting-context-002.xht [ WontFix ]
 [ Linux Win ] external/wpt/css/CSS2/linebox/inline-formatting-context-003.xht [ WontFix ]
@@ -1813,16 +1809,6 @@ external/wpt/css/css-color/lch-005.html [ WontFix ]
 external/wpt/css/css-color/lch-006.html [ WontFix ]
 external/wpt/css/css-color/lch-007.html [ WontFix ]
 
-# New rgb() and rgba() syntax not supported. https://crbug.com/788707
-external/wpt/css/css-color/rgb-002.html [ WontFix ]
-external/wpt/css/css-color/rgb-004.html [ WontFix ]
-external/wpt/css/css-color/rgb-006.html [ WontFix ]
-external/wpt/css/css-color/rgb-008.html [ WontFix ]
-external/wpt/css/css-color/rgba-002.html [ WontFix ]
-external/wpt/css/css-color/rgba-004.html [ WontFix ]
-external/wpt/css/css-color/rgba-006.html [ WontFix ]
-external/wpt/css/css-color/rgba-008.html [ WontFix ]
-
 # Failures on the initial import of css-color. Test suite had many other bugs,
 # so these may also be incorrect tests, but probably some real issues too.
 external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-1-c.xht [ WontFix ]
@@ -1831,12 +1817,16 @@ external/wpt/css/css-color/t422-rgba-onscreen-b.xht [ WontFix ]
 external/wpt/css/css-color/t422-rgba-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
 
-# Percentages are rounded incorrectly in rgb
-external/wpt/css/css-color/color-resolving.html [ WontFix ]
-
 # https://github.com/w3c/web-platform-tests/issues/8547
 external/wpt/css/mediaqueries/device-aspect-ratio-001.html [ WontFix ]
 external/wpt/css/mediaqueries/device-aspect-ratio-005.html [ WontFix ]
+
+# image() (https://drafts.csswg.org/css-images-4/#image-notation) isn't supported
+crbug.com/254753 external/wpt/css/css-images/css-image-fallbacks-and-annotations.html [ WontFix ]
+crbug.com/254753 external/wpt/css/css-images/css-image-fallbacks-and-annotations002.html [ WontFix ]
+crbug.com/254753 external/wpt/css/css-images/css-image-fallbacks-and-annotations003.html [ WontFix ]
+crbug.com/254753 external/wpt/css/css-images/css-image-fallbacks-and-annotations004.html [ WontFix ]
+crbug.com/254753 external/wpt/css/css-images/css-image-fallbacks-and-annotations005.html [ WontFix ]
 
 # https://github.com/w3c/web-platform-tests/issues/8633
 external/wpt/css/css-style-attr/style-attr-braces-002-quirks.htm [ WontFix ]

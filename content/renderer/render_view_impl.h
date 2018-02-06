@@ -107,7 +107,7 @@ class CreateViewParams;
 // project. New code should be added to RenderFrameImpl instead.
 //
 // For context, please see https://crbug.com/467770 and
-// http://www.chromium.org/developers/design-documents/site-isolation.
+// https://www.chromium.org/developers/design-documents/site-isolation.
 class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                                       public blink::WebViewClient,
                                       public RenderWidgetOwnerDelegate,
@@ -139,10 +139,11 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   static RenderViewImpl* FromRoutingID(int routing_id);
 
   // May return NULL when the view is closing.
-  blink::WebView* webview() const;
+  blink::WebView* webview();
+  const blink::WebView* webview() const;
 
   // Returns the RenderWidget for this RenderView.
-  RenderWidget* GetWidget() const;
+  RenderWidget* GetWidget();
 
   const WebPreferences& webkit_preferences() const {
     return webkit_preferences_;
@@ -319,7 +320,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void PageImportanceSignalsChanged() override;
   void DidAutoResize(const blink::WebSize& newSize) override;
   blink::WebRect RootWindowRect() override;
-  void DidFocus() override;
+  void DidFocus(blink::WebLocalFrame* calling_frame) override;
 
 #if defined(OS_ANDROID)
   // Only used on Android since all other platforms implement
@@ -516,6 +517,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
       const gfx::Size& min_size,
       const gfx::Size& max_size,
       const content::ScreenInfo& screen_info,
+      uint32_t content_source_id,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnumerateDirectoryResponse(int id,
                                     const std::vector<base::FilePath>& paths);
@@ -542,7 +544,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnSelectWordAroundCaret();
   void OnAudioStateChanged(bool is_audio_playing);
 #if defined(OS_ANDROID)
-  void OnUndoScrollFocusedEditableNodeIntoRect();
   void OnUpdateBrowserControlsState(bool enable_hiding,
                                     bool enable_showing,
                                     bool animate);
@@ -774,6 +775,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   // The current directory enumeration callback
   std::map<int, blink::WebFileChooserCompletion*> enumeration_completions_;
   int enumeration_completion_id_;
+
+  base::Optional<float> device_scale_factor_for_testing_;
 
   // The SessionStorage namespace that we're assigned to has an ID, and that ID
   // is passed to us upon creation.  WebKit asks for this ID upon first use and

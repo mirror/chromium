@@ -48,7 +48,8 @@
     "channel": "stable",
     "extension_types": ["extension"],
     "whitelist": [
-      "0D209B5E4401BB8E7873B5AB5B1346A1CB067015"  // Autotest: crbug.com/654525
+      "0D209B5E4401BB8E7873B5AB5B1346A1CB067015", // http://crbug.com/654525
+      "93CFDA3681E923AD7AB291CEDD98248396B5496C"  // http://crbug.com/803543
     ]
   },
   "background": {
@@ -478,6 +479,11 @@
       "whitelist": [
         "B44D08FD98F1523ED5837D78D0A606EA9D6206E5"  // Web Store
       ]
+    },
+    {
+      "channel": "dev",
+      "extension_types": ["platform_app"],
+      "session_types": ["kiosk"]
     }
   ],
   "mediaGalleries": {

@@ -21,7 +21,6 @@ MockMojoMediaStreamDispatcherHost::CreateInterfacePtrAndBind() {
 }
 
 void MockMojoMediaStreamDispatcherHost::GenerateStream(
-    int32_t render_frame_id,
     int32_t request_id,
     const StreamControls& controls,
     bool user_gesture,
@@ -61,22 +60,21 @@ void MockMojoMediaStreamDispatcherHost::GenerateStream(
   }
 }
 
-void MockMojoMediaStreamDispatcherHost::CancelRequest(int32_t render_frame_id,
-                                                      int32_t request_id) {
+void MockMojoMediaStreamDispatcherHost::CancelRequest(int32_t request_id) {
   EXPECT_EQ(request_id, request_id_);
 }
 
 void MockMojoMediaStreamDispatcherHost::StopStreamDevice(
-    int32_t render_frame_id,
-    const std::string& device_id) {
+    const std::string& device_id,
+    int32_t session_id) {
   for (const MediaStreamDevice& device : audio_devices_) {
-    if (device.id == device_id) {
+    if (device.id == device_id && device.session_id == session_id) {
       ++stop_audio_device_counter_;
       return;
     }
   }
   for (const MediaStreamDevice& device : video_devices_) {
-    if (device.id == device_id) {
+    if (device.id == device_id && device.session_id == session_id) {
       ++stop_video_device_counter_;
       return;
     }
@@ -85,7 +83,6 @@ void MockMojoMediaStreamDispatcherHost::StopStreamDevice(
 }
 
 void MockMojoMediaStreamDispatcherHost::OpenDevice(
-    int32_t render_frame_id,
     int32_t request_id,
     const std::string& device_id,
     MediaStreamType type,

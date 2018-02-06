@@ -30,6 +30,11 @@ FakeRendererScheduler::CompositorTaskRunner() {
   return nullptr;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+FakeRendererScheduler::InputTaskRunner() {
+  return nullptr;
+}
+
 scoped_refptr<SingleThreadIdleTaskRunner>
 FakeRendererScheduler::IdleTaskRunner() {
   return nullptr;
@@ -75,6 +80,8 @@ bool FakeRendererScheduler::IsHighPriorityWorkAnticipated() {
 void FakeRendererScheduler::SetRendererHidden(bool hidden) {}
 
 void FakeRendererScheduler::SetRendererBackgrounded(bool backgrounded) {}
+
+void FakeRendererScheduler::SetSchedulerKeepActive(bool keep_active) {}
 
 std::unique_ptr<FakeRendererScheduler::RendererPauseHandle>
 FakeRendererScheduler::PauseRenderer() {

@@ -224,8 +224,8 @@ WebFrameScheduler::FrameType WebFrameSchedulerImpl::GetFrameType() const {
   return frame_type_;
 }
 
-scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
-    TaskType type) {
+scoped_refptr<base::SingleThreadTaskRunner>
+WebFrameSchedulerImpl::GetTaskRunner(TaskType type) {
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
   switch (type) {
     case TaskType::kJavascriptTimer:
@@ -268,6 +268,8 @@ scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::GetTaskRunner(
     // smooth.
     case TaskType::kMediaElementEvent:
     case TaskType::kInternalIndexedDB:
+    case TaskType::kInternalMedia:
+    case TaskType::kInternalMediaRealTime:
       return WebTaskRunnerImpl::Create(PausableTaskQueue(), type);
     case TaskType::kUnthrottled:
     case TaskType::kInternalTest:
@@ -299,7 +301,7 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::LoadingControlTaskQueue() {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_control_task_queue_) {
     loading_control_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
-        MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+        MainThreadTaskQueue::QueueType::kFrameLoadingControl);
     loading_control_task_queue_->SetBlameContext(blame_context_);
     loading_control_task_queue_->SetFrameScheduler(this);
     loading_control_queue_enabled_voter_ =

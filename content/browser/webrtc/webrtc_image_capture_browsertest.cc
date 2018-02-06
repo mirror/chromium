@@ -6,6 +6,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "content/browser/webrtc/webrtc_webcam_browsertest.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -15,7 +16,6 @@
 #include "media/base/media_switches.h"
 #include "media/capture/video/fake_video_capture_device_factory.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
-#include "services/video_capture/public/cpp/constants.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
@@ -23,16 +23,7 @@
 
 namespace content {
 
-#if defined(OS_WIN)
-// These tests are flaky on WebRTC Windows bots: https://crbug.com/633242.
-#define MAYBE_GetPhotoCapabilities DISABLED_GetPhotoCapabilities
-#define MAYBE_GetPhotoSettings DISABLED_GetPhotoSettings
-#define MAYBE_TakePhoto DISABLED_TakePhoto
-#define MAYBE_GrabFrame DISABLED_GrabFrame
-#define MAYBE_GetTrackCapabilities DISABLED_GetTrackCapabilities
-#define MAYBE_GetTrackSettings DISABLED_GetTrackSettings
-#define MAYBE_ManipulateZoom DISABLED_ManipulateZoom
-#elif defined(OS_ANDROID)
+#if defined(OS_ANDROID)
 // TODO(chfremer): Re-enable test on Android as soon as the cause for
 // https://crbug.com/793859 is understood and fixed.
 #define MAYBE_GetPhotoCapabilities GetPhotoCapabilities
@@ -68,6 +59,16 @@ static struct TargetVideoCaptureStack {
                                        {true}
 #endif
 };
+
+enum class TargetVideoCaptureImplementation {
+  DEFAULT,
+#if defined(OS_WIN)
+  WIN_MEDIA_FOUNDATION
+#endif
+};
+const TargetVideoCaptureImplementation
+    kTargetVideoCaptureImplementationsForFakeDevice[] = {
+        TargetVideoCaptureImplementation::DEFAULT};
 
 }  // namespace
 
@@ -134,12 +135,13 @@ class WebRtcImageCaptureBrowserTestBase
 class WebRtcImageCaptureSucceedsBrowserTest
     : public WebRtcImageCaptureBrowserTestBase,
       public testing::WithParamInterface<
-          std::tuple<TargetCamera, TargetVideoCaptureStack>> {
+          std::tuple<TargetCamera,
+                     TargetVideoCaptureStack,
+                     TargetVideoCaptureImplementation>> {
  public:
   WebRtcImageCaptureSucceedsBrowserTest() {
     if (std::get<1>(GetParam()).use_video_capture_service) {
-      scoped_feature_list_.InitAndEnableFeature(
-          video_capture::kMojoVideoCapture);
+      scoped_feature_list_.InitAndEnableFeature(features::kMojoVideoCapture);
     }
   }
 
@@ -154,6 +156,16 @@ class WebRtcImageCaptureSucceedsBrowserTest
       ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeDeviceForMediaStream));
     }
+
+#if defined(OS_WIN)
+    if (std::get<2>(GetParam()) ==
+        TargetVideoCaptureImplementation::WIN_MEDIA_FOUNDATION) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kForceMediaFoundationVideoCapture);
+      ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceMediaFoundationVideoCapture));
+    }
+#endif
   }
 
   bool RunImageCaptureTestCase(const std::string& command) override {
@@ -220,21 +232,35 @@ INSTANTIATE_TEST_CASE_P(
     ,  // Use no prefix, so that these get picked up when using
        // --gtest_filter=WebRtc*
     WebRtcImageCaptureSucceedsBrowserTest,
-    testing::Combine(testing::Values(TargetCamera::FAKE_DEVICE),
-                     testing::ValuesIn(kTargetVideoCaptureStacks)));
+    testing::Combine(
+        testing::Values(TargetCamera::FAKE_DEVICE),
+        testing::ValuesIn(kTargetVideoCaptureStacks),
+        testing::ValuesIn(kTargetVideoCaptureImplementationsForFakeDevice)));
 
 // Tests on real webcam can only run on platforms for which the image capture
 // API has already been implemented.
 // Note, these tests must be run sequentially, since multiple parallel test runs
 // competing for a single physical webcam typically causes failures.
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_ANDROID)
+#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_ANDROID) || \
+    defined(OS_WIN)
+
+const TargetVideoCaptureImplementation
+    kTargetVideoCaptureImplementationsForRealWebcam[] = {
+        TargetVideoCaptureImplementation::DEFAULT,
+#if defined(OS_WIN)
+        TargetVideoCaptureImplementation::WIN_MEDIA_FOUNDATION
+#endif
+};
+
 INSTANTIATE_TEST_CASE_P(
     UsingRealWebcam,  // This prefix can be used with --gtest_filter to
                       // distinguish the tests using a real camera from the ones
                       // that don't.
     WebRtcImageCaptureSucceedsBrowserTest,
-    testing::Combine(testing::Values(TargetCamera::REAL_WEBCAM),
-                     testing::ValuesIn(kTargetVideoCaptureStacks)));
+    testing::Combine(
+        testing::Values(TargetCamera::REAL_WEBCAM),
+        testing::ValuesIn(kTargetVideoCaptureStacks),
+        testing::ValuesIn(kTargetVideoCaptureImplementationsForRealWebcam)));
 #endif
 
 // Test fixture template for setting up a fake device with a custom
@@ -247,8 +273,7 @@ class WebRtcImageCaptureCustomConfigFakeDeviceBrowserTest
  public:
   WebRtcImageCaptureCustomConfigFakeDeviceBrowserTest() {
     if (GetParam().use_video_capture_service) {
-      scoped_feature_list_.InitAndEnableFeature(
-          video_capture::kMojoVideoCapture);
+      scoped_feature_list_.InitAndEnableFeature(features::kMojoVideoCapture);
     }
   }
 

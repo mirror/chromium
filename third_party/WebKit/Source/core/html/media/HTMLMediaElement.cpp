@@ -829,6 +829,8 @@ void HTMLMediaElement::InvokeLoadAlgorithm() {
   have_fired_loaded_data_ = false;
   display_mode_ = kUnknown;
 
+  autoplay_policy_->StopAutoplayMutedWhenVisible();
+
   // 1 - Abort any already-running instance of the resource selection algorithm
   // for this element.
   load_state_ = kWaitingForSource;
@@ -1456,17 +1458,30 @@ bool HTMLMediaElement::IsSafeToLoadURL(const KURL& url,
 
 bool HTMLMediaElement::IsMediaDataCORSSameOrigin(
     const SecurityOrigin* origin) const {
-  // hasSingleSecurityOrigin() tells us whether the origin in the src is
-  // the same as the actual request (i.e. after redirect).
-  // didPassCORSAccessCheck() means it was a successful CORS-enabled fetch
-  // (vs. non-CORS-enabled or failed).
-  // taintsCanvas() does checkAccess() on the URL plus allow data sources,
-  // to ensure that it is not a URL that requires CORS (basically same
-  // origin).
-  return HasSingleSecurityOrigin() &&
-         ((GetWebMediaPlayer() &&
-           GetWebMediaPlayer()->DidPassCORSAccessCheck()) ||
-          !origin->TaintsCanvas(currentSrc()));
+  // If a service worker handled the request, we don't know if the origin in the
+  // src is the same as the actual response URL so can't rely on URL checks
+  // alone. So detect an opaque response via
+  // DidGetOpaqueResponseFromServiceWorker().
+  if (GetWebMediaPlayer() &&
+      GetWebMediaPlayer()->DidGetOpaqueResponseFromServiceWorker()) {
+    return false;
+  }
+
+  // At this point, either a service worker was not used, or it didn't provide
+  // an opaque response, so continue with the normal checks.
+
+  // HasSingleSecurityOrigin() tells us whether the origin in the src
+  // is the same as the actual request (i.e. after redirects).
+  if (!HasSingleSecurityOrigin())
+    return false;
+
+  // DidPassCORSAccessCheck() means it was a successful CORS-enabled fetch (vs.
+  // non-CORS-enabled or failed). TaintsCanvas() does CheckAccess() on the URL
+  // plus allows data sources, to ensure that it is not a URL that requires
+  // CORS (basically same origin).
+  return (GetWebMediaPlayer() &&
+          GetWebMediaPlayer()->DidPassCORSAccessCheck()) ||
+         !origin->TaintsCanvas(currentSrc());
 }
 
 bool HTMLMediaElement::IsInCrossOriginFrame() const {
@@ -2324,13 +2339,13 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
   ScriptPromise promise = resolver->Promise();
   play_promise_resolvers_.push_back(resolver);
 
-  Nullable<ExceptionCode> code = Play();
-  if (!code.IsNull()) {
+  Optional<ExceptionCode> code = Play();
+  if (code) {
     DCHECK(!play_promise_resolvers_.IsEmpty());
     play_promise_resolvers_.pop_back();
 
     String message;
-    switch (code.Get()) {
+    switch (code.value()) {
       case kNotAllowedError:
         message = "play() can only be initiated by a user gesture.";
         RecordPlayPromiseRejected(
@@ -2343,24 +2358,24 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
       default:
         NOTREACHED();
     }
-    resolver->Reject(DOMException::Create(code.Get(), message));
+    resolver->Reject(DOMException::Create(code.value(), message));
     return promise;
   }
 
   return promise;
 }
 
-Nullable<ExceptionCode> HTMLMediaElement::Play() {
+Optional<ExceptionCode> HTMLMediaElement::Play() {
   BLINK_MEDIA_LOG << "play(" << (void*)this << ")";
 
-  Nullable<ExceptionCode> exception_code = autoplay_policy_->RequestPlay();
+  Optional<ExceptionCode> exception_code = autoplay_policy_->RequestPlay();
 
   if (exception_code == kNotAllowedError) {
     // If we're already playing, then this play would do nothing anyway.
     // Call playInternal to handle scheduling the promise resolution.
     if (!paused_) {
       PlayInternal();
-      return nullptr;
+      return WTF::nullopt;
     }
     return exception_code;
   }
@@ -2370,11 +2385,11 @@ Nullable<ExceptionCode> HTMLMediaElement::Play() {
   if (error_ && error_->code() == MediaError::kMediaErrSrcNotSupported)
     return kNotSupportedError;
 
-  DCHECK(exception_code.IsNull());
+  DCHECK(!exception_code.has_value());
 
   PlayInternal();
 
-  return nullptr;
+  return WTF::nullopt;
 }
 
 void HTMLMediaElement::PlayInternal() {
@@ -2567,16 +2582,16 @@ void HTMLMediaElement::setMuted(bool muted) {
   autoplay_policy_->StopAutoplayMutedWhenVisible();
 }
 
+void HTMLMediaElement::enterPictureInPicture() {
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->EnterPictureInPicture();
+}
+
 double HTMLMediaElement::EffectiveMediaVolume() const {
   if (muted_)
     return 0;
 
   return volume_;
-}
-
-void HTMLMediaElement::pictureInPicture() {
-  if (GetWebMediaPlayer())
-    GetWebMediaPlayer()->PictureInPicture();
 }
 
 // The spec says to fire periodic timeupdate events (those sent while playing)
@@ -3861,7 +3876,8 @@ void HTMLMediaElement::SetAudioSourceNode(
   DCHECK(IsMainThread());
   audio_source_node_ = source_node;
 
-  AudioSourceProviderClientLockScope scope(*this);
+  // No need to lock the |audio_source_node| because it locks itself when
+  // setFormat() is invoked.
   GetAudioSourceProvider().SetClient(audio_source_node_);
 }
 

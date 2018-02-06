@@ -78,11 +78,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/network/ignore_errors_cert_verifier.h"
-#include "content/public/network/network_service.h"
-#include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
 #include "net/cert/caching_cert_verifier.h"
 #include "net/cert/cert_verifier.h"
@@ -98,14 +94,12 @@
 #include "net/http/transport_security_persister.h"
 #include "net/net_features.h"
 #include "net/nqe/network_quality_estimator.h"
-#include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/data_protocol_handler.h"
 #include "net/url_request/file_protocol_handler.h"
 #include "net/url_request/ftp_protocol_handler.h"
-#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/report_sender.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
@@ -115,7 +109,11 @@
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory_impl.h"
+#include "services/network/ignore_errors_cert_verifier.h"
+#include "services/network/network_service.h"
+#include "services/network/public/cpp/features.h"
 #include "services/network/public/cpp/proxy_config_traits.h"
+#include "services/network/url_request_context_builder_mojo.h"
 #include "third_party/WebKit/public/public_features.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -124,10 +122,13 @@
 #include "extensions/browser/extension_throttle_manager.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/common/constants.h"
-#endif
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if defined(OS_ANDROID)
 #include "content/public/browser/android/content_protocol_handler.h"
+#else
+#include "chrome/browser/ui/search/new_tab_page_interceptor_service.h"
+#include "chrome/browser/ui/search/new_tab_page_interceptor_service_factory.h"
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
@@ -161,15 +162,20 @@
 #if defined(USE_NSS_CERTS)
 #include "chrome/browser/ui/crypto_module_delegate_nss.h"
 #include "net/ssl/client_cert_store_nss.h"
-#endif
+#endif  // defined(USE_NSS_CERTS)
 
 #if defined(OS_WIN)
 #include "net/ssl/client_cert_store_win.h"
-#endif
+#endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
 #include "net/ssl/client_cert_store_mac.h"
-#endif
+#endif  // defined(OS_MACOSX)
+
+#if BUILDFLAG(ENABLE_REPORTING)
+#include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 using content::BrowserContext;
 using content::BrowserThread;
@@ -451,6 +457,15 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->protocol_handler_interceptor =
       protocol_handler_registry->CreateJobInterceptorFactory();
 
+#if !defined(OS_ANDROID)
+  NewTabPageInterceptorService* new_tab_interceptor_service =
+      NewTabPageInterceptorServiceFactory::GetForProfile(profile);
+  if (new_tab_interceptor_service) {
+    params->new_tab_page_interceptor =
+        new_tab_interceptor_service->CreateInterceptor();
+  }
+#endif
+
 #if defined(OS_CHROMEOS)
   // Enable client certificates for the Chrome OS sign-in frame, if this feature
   // is not disabled by a flag.
@@ -623,6 +638,7 @@ void ProfileIOData::AppRequestContext::SetJobFactory(
   set_job_factory(job_factory_.get());
 }
 
+#if BUILDFLAG(ENABLE_REPORTING)
 void ProfileIOData::AppRequestContext::SetReportingService(
     std::unique_ptr<net::ReportingService> reporting_service) {
   reporting_service_ = std::move(reporting_service);
@@ -635,10 +651,13 @@ void ProfileIOData::AppRequestContext::SetNetworkErrorLoggingDelegate(
   network_error_logging_delegate_ = std::move(network_error_logging_delegate);
   set_network_error_logging_delegate(network_error_logging_delegate_.get());
 }
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 ProfileIOData::AppRequestContext::~AppRequestContext() {
+#if BUILDFLAG(ENABLE_REPORTING)
   SetNetworkErrorLoggingDelegate(nullptr);
   SetReportingService(nullptr);
+#endif  // BUILDFLAG(ENABLE_REPORTING)
   AssertNoURLRequests();
 }
 
@@ -1054,8 +1073,8 @@ void ProfileIOData::Init(
   extensions_request_context_->set_name("extensions");
 
   // Create the main request context.
-  std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
-      base::MakeUnique<content::URLRequestContextBuilderMojo>();
+  std::unique_ptr<network::URLRequestContextBuilderMojo> builder =
+      base::MakeUnique<network::URLRequestContextBuilderMojo>();
 
   builder->set_shared_http_user_agent_settings(
       chrome_http_user_agent_settings_.get());
@@ -1165,7 +1184,7 @@ void ProfileIOData::Init(
 #endif
     const base::CommandLine& command_line =
         *base::CommandLine::ForCurrentProcess();
-    cert_verifier = content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+    cert_verifier = network::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
         command_line, switches::kUserDataDir, std::move(cert_verifier));
     builder->SetCertVerifier(std::move(cert_verifier));
   }
@@ -1204,12 +1223,13 @@ void ProfileIOData::Init(
   builder->SetCreateHttpTransactionFactoryCallback(
       base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     main_request_context_owner_ = std::move(builder)->Create(
         std::move(profile_params_->main_network_context_params).get(),
         io_thread_globals->quic_disabled, io_thread->net_log());
     main_request_context_ =
-        main_request_context_owner_.url_request_context.get();
+        main_request_context_owner_.url_request_context_getter
+            ->GetURLRequestContext();
   } else {
     main_network_context_ =
         content::GetNetworkServiceImpl()->CreateNetworkContextWithBuilder(

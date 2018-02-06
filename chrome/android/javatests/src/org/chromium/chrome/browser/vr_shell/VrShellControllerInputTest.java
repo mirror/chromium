@@ -152,7 +152,8 @@ public class VrShellControllerInputTest {
         VrTransitionUtils.forceEnterVr();
         VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
         // Enter fullscreen
-        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen");
+        DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen",
+                false /* goThroughRootAndroidView */);
         VrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
         Assert.assertTrue(DOMUtils.isFullscreen(mVrTestFramework.getFirstTabWebContents()));
 

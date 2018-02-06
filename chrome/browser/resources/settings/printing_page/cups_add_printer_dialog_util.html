@@ -39,6 +39,10 @@
         width: 270px;
       }
 
+      iron-dropdown {
+        height: 270px;
+      }
+
       iron-dropdown .dropdown-content {
         background-color: white;
         box-shadow: 0 2px 6px var(--paper-grey-500);
@@ -58,12 +62,14 @@
     </style>
     <paper-input-container no-label-float on-tap="onTap_">
       <input is="iron-input" type="search" bind-value="{{selectedItem}}"
-          on-search="onInputValueChanged_" on-change="onChange_" incremental>
+          on-search="onInputValueChanged_" on-change="onChange_" incremental
+          slot="input">
+      <!-- TODO(hcarmona): remove "suffix" when paper-input is v2. -->
       <button is="paper-icon-button-light" class="icon-search" suffix
-          id="searchIcon" hidden>
+          id="searchIcon" hidden slot="suffix">
       </button>
       <button is="paper-icon-button-light" class="icon-arrow-dropdown" suffix
-          id="dropdownIcon">
+          id="dropdownIcon" slot="suffix">
       </button>
     </paper-input-container>
     <iron-dropdown horizontal-align="left" vertical-align="top"

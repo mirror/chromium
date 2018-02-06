@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -16,7 +17,6 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_handle.h"
 #include "base/single_thread_task_runner.h"
@@ -117,15 +117,19 @@ int GetDPI(const PrintMsg_Print_Params* print_params) {
   // on dpi.
   return kPointsPerInch;
 #else
-  return static_cast<int>(print_params->dpi);
+  // Render using the higher of the two resolutions in both dimensions to
+  // prevent bad quality print jobs on rectantular DPI printers.
+  return static_cast<int>(
+      std::max(print_params->dpi.width(), print_params->dpi.height()));
 #endif  // defined(OS_MACOSX)
 }
 
 bool PrintMsg_Print_Params_IsValid(const PrintMsg_Print_Params& params) {
   return !params.content_size.IsEmpty() && !params.page_size.IsEmpty() &&
          !params.printable_area.IsEmpty() && params.document_cookie &&
-         params.dpi && params.margin_top >= 0 && params.margin_left >= 0 &&
-         params.dpi > kMinDpi && params.document_cookie != 0;
+         !params.dpi.IsEmpty() && params.dpi.width() > kMinDpi &&
+         params.dpi.height() > kMinDpi && params.margin_top >= 0 &&
+         params.margin_left >= 0 && params.document_cookie != 0;
 }
 
 // Helper function to check for fit to page
@@ -524,7 +528,6 @@ PrintMsg_Print_Params CalculatePrintParamsForCss(
 
   return result_params;
 }
-
 }  // namespace
 
 FrameReference::FrameReference(blink::WebLocalFrame* frame) {
@@ -615,7 +618,7 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
   // Load page with script to avoid async operations.
   ExecuteScript(frame, kPageLoadScriptFormat, html);
 
-  auto options = base::MakeUnique<base::DictionaryValue>();
+  auto options = std::make_unique<base::DictionaryValue>();
   options->SetDouble(kSettingHeaderFooterDate, base::Time::Now().ToJsTime());
   options->SetDouble("width", page_size.width);
   options->SetDouble("height", page_size.height);
@@ -1195,7 +1198,7 @@ void PrintRenderFrameHelper::PrepareFrameForPreviewDocument() {
   }
 
   const PrintMsg_Print_Params& print_params = print_pages_params_->params;
-  prep_frame_view_ = base::MakeUnique<PrepareFrameAndViewForPrint>(
+  prep_frame_view_ = std::make_unique<PrepareFrameAndViewForPrint>(
       print_params, print_preview_context_.source_frame(),
       print_preview_context_.source_node(), ignore_css_margins_);
   prep_frame_view_->CopySelectionIfNeeded(
@@ -1330,7 +1333,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
   PdfMetafileSkia* initial_render_metafile = print_preview_context_.metafile();
   if (print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_) {
     draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+        std::make_unique<PdfMetafileSkia>(print_params.printed_doc_type);
     initial_render_metafile = draft_metafile.get();
   }
 
@@ -1361,14 +1364,13 @@ bool PrintRenderFrameHelper::FinalizePrintReadyDocument() {
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
   PrintHostMsg_DidPreviewDocument_Params preview_params;
 
-  if (!CopyMetafileDataToReadOnlySharedMem(
-          *metafile, &preview_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToReadOnlySharedMem(*metafile,
+                                           &preview_params.content)) {
     LOG(ERROR) << "CopyMetafileDataToReadOnlySharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_params.data_size = metafile->GetDataSize();
   preview_params.document_cookie = print_pages_params_->params.document_cookie;
   preview_params.expected_pages_count =
       print_preview_context_.total_page_count();
@@ -1501,9 +1503,13 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
     if (!self)
       return;
 
-    print_settings.params.print_scaling_option = scaling_option;
+    print_settings.params.print_scaling_option =
+        print_settings.params.prefer_css_page_size
+            ? blink::kWebPrintScalingOptionSourceSize
+            : scaling_option;
     SetPrintPagesParams(print_settings);
-    if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
+    if (print_settings.params.dpi.IsEmpty() ||
+        !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
       return;
     }
@@ -1626,12 +1632,10 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
 
   metafile.FinishDocument();
 
-  if (!CopyMetafileDataToReadOnlySharedMem(metafile,
-                                           &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToReadOnlySharedMem(metafile, &page_params.content)) {
     return false;
   }
 
-  page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = print_params.document_cookie;
 #if defined(OS_WIN)
   page_params.physical_offsets = printer_printable_area_.origin();
@@ -1841,7 +1845,7 @@ void PrintRenderFrameHelper::GetPrintSettingsFromUser(
 
   print_pages_params_.reset();
 
-  auto msg = base::MakeUnique<PrintHostMsg_ScriptedPrint>(routing_id(), params,
+  auto msg = std::make_unique<PrintHostMsg_ScriptedPrint>(routing_id(), params,
                                                           print_settings);
   msg->EnableMessagePumping();
   Send(msg.release());
@@ -1856,7 +1860,7 @@ bool PrintRenderFrameHelper::RenderPagesForPrint(blink::WebLocalFrame* frame,
 
   const PrintMsg_PrintPages_Params& params = *print_pages_params_;
   const PrintMsg_Print_Params& print_params = params.params;
-  prep_frame_view_ = base::MakeUnique<PrepareFrameAndViewForPrint>(
+  prep_frame_view_ = std::make_unique<PrepareFrameAndViewForPrint>(
       print_params, frame, node, ignore_css_margins_);
   DCHECK(!print_pages_params_->params.selection_only ||
          print_pages_params_->pages.empty());
@@ -1949,7 +1953,7 @@ void PrintRenderFrameHelper::PrintPageInternal(
 
 bool PrintRenderFrameHelper::CopyMetafileDataToReadOnlySharedMem(
     const PdfMetafileSkia& metafile,
-    base::SharedMemoryHandle* shared_mem_handle) {
+    PrintHostMsg_DidPrintContent_Params* params) {
   uint32_t buf_size = metafile.GetDataSize();
   if (buf_size == 0)
     return false;
@@ -1968,8 +1972,11 @@ bool PrintRenderFrameHelper::CopyMetafileDataToReadOnlySharedMem(
 
   MojoResult result = mojo::UnwrapSharedMemoryHandle(
       buffer->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
-      shared_mem_handle, nullptr, nullptr);
+      &params->metafile_data_handle, nullptr, nullptr);
   DCHECK_EQ(MOJO_RESULT_OK, result);
+  params->data_size = metafile.GetDataSize();
+  // TODO(weili): Copy the actual subframes' content information here.
+  params->subframe_content_info.clear();
   return true;
 }
 
@@ -2013,7 +2020,7 @@ void PrintRenderFrameHelper::RequestPrintPreview(PrintPreviewRequestType type) {
             base::Bind(&PrintRenderFrameHelper::ShowScriptedPrintPreview,
                        weak_ptr_factory_.GetWeakPtr()));
       }
-      auto msg = base::MakeUnique<PrintHostMsg_SetupScriptedPrintPreview>(
+      auto msg = std::make_unique<PrintHostMsg_SetupScriptedPrintPreview>(
           routing_id());
       msg->EnableMessagePumping();
       auto self = weak_ptr_factory_.GetWeakPtr();
@@ -2093,17 +2100,18 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
   }
 
   PrintHostMsg_DidPreviewPage_Params preview_page_params;
-  if (!CopyMetafileDataToReadOnlySharedMem(
-          *metafile, &preview_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToReadOnlySharedMem(*metafile,
+                                           &preview_page_params.content)) {
     LOG(ERROR) << "CopyMetafileDataToReadOnlySharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_page_params.data_size = metafile->GetDataSize();
   preview_page_params.page_number = page_number;
   preview_page_params.preview_request_id =
       print_pages_params_->params.preview_request_id;
+  preview_page_params.document_cookie =
+      print_pages_params_->params.document_cookie;
 
   Send(new PrintHostMsg_DidPreviewPage(routing_id(), preview_page_params));
   return true;
@@ -2165,7 +2173,7 @@ bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     return false;
   }
 
-  metafile_ = base::MakeUnique<PdfMetafileSkia>(doc_type);
+  metafile_ = std::make_unique<PdfMetafileSkia>(doc_type);
   CHECK(metafile_->Init());
 
   current_page_index_ = 0;
@@ -2353,7 +2361,7 @@ void PrintRenderFrameHelper::PrintPreviewContext::CalculateIsModifiable() {
 
 void PrintRenderFrameHelper::SetPrintPagesParams(
     const PrintMsg_PrintPages_Params& settings) {
-  print_pages_params_ = base::MakeUnique<PrintMsg_PrintPages_Params>(settings);
+  print_pages_params_ = std::make_unique<PrintMsg_PrintPages_Params>(settings);
   Send(new PrintHostMsg_DidGetDocumentCookie(routing_id(),
                                              settings.params.document_cookie));
 }

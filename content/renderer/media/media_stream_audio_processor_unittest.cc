@@ -79,6 +79,35 @@ void ReadDataFromSpeechFile(char* data, int length) {
 
 }  // namespace
 
+class AecDumpMessageFilterForTest : public AecDumpMessageFilter {
+ public:
+  // This class is only used for setting |override_aec3_|, so we simply inject
+  // the current task runner.
+  AecDumpMessageFilterForTest()
+      : AecDumpMessageFilter(base::MessageLoop::current()->task_runner(),
+                             base::MessageLoop::current()->task_runner()) {}
+
+  void set_override_aec3(base::Optional<bool> override_aec3) {
+    override_aec3_ = override_aec3;
+  }
+
+ protected:
+  ~AecDumpMessageFilterForTest() override {}
+};
+
+class MediaStreamAudioProcessorUnderTest : public MediaStreamAudioProcessor {
+ public:
+  MediaStreamAudioProcessorUnderTest(
+      const AudioProcessingProperties& properties,
+      WebRtcPlayoutDataSource* playout_data_source)
+      : MediaStreamAudioProcessor(properties, playout_data_source) {}
+
+  bool using_aec3() { return using_aec3_; }
+
+ protected:
+  ~MediaStreamAudioProcessorUnderTest() override {}
+};
+
 class MediaStreamAudioProcessorTest : public ::testing::Test {
  public:
   MediaStreamAudioProcessorTest()
@@ -86,7 +115,7 @@ class MediaStreamAudioProcessorTest : public ::testing::Test {
                 media::CHANNEL_LAYOUT_STEREO,
                 48000,
                 16,
-                512) {}
+                480) {}
 
  protected:
   // Helper method to save duplicated code.
@@ -204,16 +233,6 @@ class MediaStreamAudioProcessorTest : public ::testing::Test {
 #endif
   }
 
-  bool GetAec3ConfigState(MediaStreamAudioProcessor* audio_processor) {
-    DCHECK(audio_processor);
-    if (!audio_processor->audio_processing_) {
-      ADD_FAILURE() << "AudioProcessing object missing where it shouldn't be";
-      return false;
-    }
-    return audio_processor->audio_processing_->GetConfig()
-        .echo_canceller3.enabled;
-  }
-
   base::MessageLoop main_thread_message_loop_;
   media::AudioParameters params_;
 };
@@ -228,8 +247,8 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_WithAudioProcessing) {
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
   EXPECT_TRUE(audio_processor->has_audio_processing());
   audio_processor->OnCaptureFormatChanged(params_);
@@ -251,8 +270,8 @@ TEST_F(MediaStreamAudioProcessorTest, TurnOffDefaultConstraints) {
   properties.DisableDefaultProperties();
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
   EXPECT_FALSE(audio_processor->has_audio_processing());
   audio_processor->OnCaptureFormatChanged(params_);
@@ -277,16 +296,15 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestAllSampleRates) {
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
   EXPECT_TRUE(audio_processor->has_audio_processing());
 
   static const int kSupportedSampleRates[] =
       { 8000, 16000, 22050, 32000, 44100, 48000 };
   for (size_t i = 0; i < arraysize(kSupportedSampleRates); ++i) {
-    int buffer_size = (kSupportedSampleRates[i] / 100)  < 128 ?
-        kSupportedSampleRates[i] / 100 : 128;
+    int buffer_size = kSupportedSampleRates[i] / 100;
     media::AudioParameters params(
         media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
         media::CHANNEL_LAYOUT_STEREO, kSupportedSampleRates[i], 16,
@@ -317,8 +335,8 @@ TEST_F(MediaStreamAudioProcessorTest, GetAecDumpMessageFilter) {
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
 
   EXPECT_TRUE(audio_processor->aec_dump_message_filter_.get());
@@ -339,8 +357,8 @@ TEST_F(MediaStreamAudioProcessorTest, StartStopAecDump) {
   ASSERT_TRUE(base::CreateTemporaryFileInDir(temp_directory.GetPath(),
                                              &temp_file_path));
   {
-    scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-        new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+    scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+        new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
             properties, webrtc_audio_device.get()));
 
     // Start and stop recording.
@@ -369,8 +387,8 @@ TEST_F(MediaStreamAudioProcessorTest, TestStereoAudio) {
   // Turn off the audio processing and turn on the stereo channels mirroring.
   properties.DisableDefaultProperties();
   properties.goog_audio_mirroring = true;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
   EXPECT_FALSE(audio_processor->has_audio_processing());
   const media::AudioParameters source_params(
@@ -430,14 +448,14 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestWithKeyboardMicChannel) {
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
   EXPECT_TRUE(audio_processor->has_audio_processing());
 
   media::AudioParameters params(media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
                                 media::CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC,
-                                48000, 16, 512);
+                                48000, 16, 480);
   audio_processor->OnCaptureFormatChanged(params);
 
   ProcessDataAndVerifyFormat(audio_processor.get(),
@@ -450,45 +468,43 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestWithKeyboardMicChannel) {
   audio_processor->Stop();
 }
 
-// Test that the OnAec3Enable method has the desired effect on the APM config.
+// Test that setting AEC3 override has the desired effect on the APM
+// configuration.
 TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch) {
+  scoped_refptr<AecDumpMessageFilterForTest> admf =
+      new AecDumpMessageFilterForTest();
+  admf->set_override_aec3(true);
+
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
 
-  audio_processor->OnAec3Enable(true);
-  EXPECT_TRUE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(false);
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
+  EXPECT_TRUE(audio_processor->using_aec3());
 
   // Stop |audio_processor| so that it removes itself from
   // |webrtc_audio_device| and clears its pointer to it.
   audio_processor->Stop();
 }
 
-// Same test as above, but when AEC is disabled in the constrants. The expected
+// Same test as above, but when AEC is disabled in the constraints. The expected
 // outcome is that AEC3 should be disabled in all cases.
 TEST_F(MediaStreamAudioProcessorTest, TestAec3Switch_AecOff) {
+  scoped_refptr<AecDumpMessageFilterForTest> admf =
+      new AecDumpMessageFilterForTest();
+  admf->set_override_aec3(true);
+
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());
   AudioProcessingProperties properties;
-  // Disable the AEC.
   properties.enable_sw_echo_cancellation = false;
-  scoped_refptr<MediaStreamAudioProcessor> audio_processor(
-      new rtc::RefCountedObject<MediaStreamAudioProcessor>(
+  scoped_refptr<MediaStreamAudioProcessorUnderTest> audio_processor(
+      new rtc::RefCountedObject<MediaStreamAudioProcessorUnderTest>(
           properties, webrtc_audio_device.get()));
 
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(true);
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
-
-  audio_processor->OnAec3Enable(false);
-  EXPECT_FALSE(GetAec3ConfigState(audio_processor.get()));
+  EXPECT_FALSE(audio_processor->using_aec3());
 
   // Stop |audio_processor| so that it removes itself from
   // |webrtc_audio_device| and clears its pointer to it.

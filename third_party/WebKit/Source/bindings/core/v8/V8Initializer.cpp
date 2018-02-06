@@ -40,6 +40,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8ContextSnapshot.h"
 #include "bindings/core/v8/V8DOMException.h"
+#include "bindings/core/v8/V8EmbedderGraphBuilder.h"
 #include "bindings/core/v8/V8ErrorEvent.h"
 #include "bindings/core/v8/V8ErrorHandler.h"
 #include "bindings/core/v8/V8GCController.h"
@@ -55,7 +56,7 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/bindings/DOMWrapperWorld.h"
-#include "platform/bindings/ScriptWrappableVisitor.h"
+#include "platform/bindings/ScriptWrappableMarkingVisitor.h"
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -254,8 +255,7 @@ static void PromiseRejectHandler(v8::PromiseRejectMessage data,
 
   DCHECK_EQ(data.GetEvent(), v8::kPromiseRejectWithNoHandler);
 
-  v8::Local<v8::Promise> promise = data.GetPromise();
-  v8::Isolate* isolate = promise->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
   ExecutionContext* context = ExecutionContext::From(script_state);
 
   v8::Local<v8::Value> exception = data.GetValue();
@@ -541,18 +541,33 @@ static void InitializeV8Common(v8::Isolate* isolate) {
 
 namespace {
 
+// We try to give each SecurityOrigin its own array buffer partition. Use a
+// SecurityOrigin pointer as an opaque key to tell ArrayBufferContents which
+// partition to use.
+void* GetPartitionKey() {
+  // TODO(bbudge): Pass in the isolate parameter from V8.
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  blink::ExecutionContext* context = CurrentExecutionContext(isolate);
+  // In some tests, there is no execution context.
+  if (!context)
+    return reinterpret_cast<void*>(isolate);
+
+  return reinterpret_cast<void*>(
+      const_cast<SecurityOrigin*>(context->GetSecurityOrigin()));
+}
+
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // Allocate() methods return null to signal allocation failure to V8, which
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+        GetPartitionKey(), size, WTF::ArrayBufferContents::kZeroInitialize);
   }
 
   void* AllocateUninitialized(size_t size) override {
     return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+        GetPartitionKey(), size, WTF::ArrayBufferContents::kDontInitialize);
   }
 
   void Free(void* data, size_t size) override {
@@ -674,6 +689,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
     profiler->SetWrapperClassInfoProvider(
         WrapperTypeInfo::kNodeClassId, &RetainedDOMInfo::CreateRetainedDOMInfo);
     profiler->SetGetRetainerInfosCallback(&V8GCController::GetRetainerInfos);
+    profiler->SetBuildEmbedderGraphCallback(
+        &V8EmbedderGraphBuilder::BuildEmbedderGraphCallback);
   }
 
   DCHECK(ThreadState::MainThreadState());

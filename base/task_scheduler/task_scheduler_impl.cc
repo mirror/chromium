@@ -186,7 +186,11 @@ void TaskSchedulerImpl::Shutdown() {
 }
 
 void TaskSchedulerImpl::FlushForTesting() {
-  task_tracker_->Flush();
+  task_tracker_->FlushForTesting();
+}
+
+void TaskSchedulerImpl::FlushAsyncForTesting(OnceClosure flush_callback) {
+  task_tracker_->FlushAsyncForTesting(std::move(flush_callback));
 }
 
 void TaskSchedulerImpl::JoinForTesting() {

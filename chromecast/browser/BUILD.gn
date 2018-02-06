@@ -44,8 +44,9 @@ cast_source_set("browser") {
     "cast_resource_dispatcher_host_delegate.h",
     "cast_web_contents_manager.cc",
     "cast_web_contents_manager.h",
-    "cast_web_view.cc",
     "cast_web_view.h",
+    "cast_web_view_default.cc",
+    "cast_web_view_default.h",
     "devtools/cast_devtools_manager_delegate.cc",
     "devtools/cast_devtools_manager_delegate.h",
     "devtools/remote_debugging_server.cc",
@@ -101,6 +102,7 @@ cast_source_set("browser") {
     "//chromecast/media/service",
     "//chromecast/net",
     "//chromecast/service",
+    "//components/download/public/common:public",
     "//components/metrics",
     "//components/metrics:gpu",
     "//components/metrics:net",
@@ -134,8 +136,8 @@ cast_source_set("browser") {
       "android/cast_content_window_android.cc",
       "android/cast_content_window_android.h",
       "android/cast_metrics_helper_android.cc",
-      "android/cast_web_contents_activity.cc",
-      "android/cast_web_contents_activity.h",
+      "android/cast_web_contents_surface_helper.cc",
+      "android/cast_web_contents_surface_helper.h",
     ]
     deps += [
       ":jni_headers",
@@ -145,6 +147,8 @@ cast_source_set("browser") {
     sources += [
       "cast_display_configurator.cc",
       "cast_display_configurator.h",
+      "cast_touch_device_manager.cc",
+      "cast_touch_device_manager.h",
     ]
 
     deps += [
@@ -198,6 +202,10 @@ cast_source_set("browser") {
 
   if (enable_chromecast_extensions) {
     sources += [
+      "cast_extension_host.cc",
+      "cast_extension_host.h",
+      "cast_web_view_extension.cc",
+      "cast_web_view_extension.h",
       "extensions/api/identity/identity_api.cc",
       "extensions/api/identity/identity_api.h",
       "extensions/cast_display_info_provider.cc",
@@ -361,7 +369,7 @@ if (is_android) {
       "android/apk/src/org/chromium/chromecast/shell/CastCrashHandler.java",
       "android/apk/src/org/chromium/chromecast/shell/CastMetricsHelper.java",
       "android/apk/src/org/chromium/chromecast/shell/CastSysInfoAndroid.java",
-      "android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+      "android/apk/src/org/chromium/chromecast/shell/CastWebContentsSurfaceHelper.java",
     ]
 
     jni_package = "chromecast"

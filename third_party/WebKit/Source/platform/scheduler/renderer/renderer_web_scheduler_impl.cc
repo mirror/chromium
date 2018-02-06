@@ -28,7 +28,7 @@ RendererWebSchedulerImpl::RendererWebSchedulerImpl(
 
 RendererWebSchedulerImpl::~RendererWebSchedulerImpl() = default;
 
-WebTaskRunner* RendererWebSchedulerImpl::CompositorTaskRunner() {
+base::SingleThreadTaskRunner* RendererWebSchedulerImpl::CompositorTaskRunner() {
   return compositor_task_runner_.get();
 }
 
@@ -45,6 +45,11 @@ RendererWebSchedulerImpl::CreateWebViewScheduler(
       intervention_reporter, delegate, renderer_scheduler_,
       !blink::RuntimeEnabledFeatures::
           TimerThrottlingForBackgroundTabsEnabled()));
+}
+
+base::TimeTicks RendererWebSchedulerImpl::MonotonicallyIncreasingVirtualTime()
+    const {
+  return renderer_scheduler_->GetActiveTimeDomain()->Now();
 }
 
 RendererScheduler* RendererWebSchedulerImpl::GetRendererSchedulerForTest() {

@@ -337,6 +337,9 @@ are declared in build/common.gypi.
         <message name="IDS_SEARCH_NO_RESULTS" desc="Text description of a search that has no results.">
           No search results found
         </message>
+        <message name="IDS_SHOW_BUBBLE_INACTIVE_DESCRIPTION" desc="Message announced to screen reader users when an inactive bubble gets shown.">
+          Press Alt Shift A to show
+        </message>
       </if>
 
        <!-- content area context menus. Android does not use it -->
@@ -1506,18 +1509,34 @@ are declared in build/common.gypi.
           Dangerous download blocked
         </message>
       </if>
-      <message name="IDS_CONFIRM_KEEP_DANGEROUS_DOWNLOAD_TITLE"
-               desc="Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
-        Confirm Download
-      </message>
-      <message name="IDS_KEEP_DANGEROUS_DOWNLOAD_TITLE"
-               desc="Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
-        Keep dangerous file?
-      </message>
-      <message name="IDS_KEEP_UNCOMMON_DOWNLOAD_TITLE"
-               desc="Title for the confirmation dialog asking whether the user really meant to keep an uncommon download">
-        Keep file?
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_CONFIRM_KEEP_DANGEROUS_DOWNLOAD_TITLE"
+                 desc="In Title Case: Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
+          Confirm Download
+        </message>
+        <message name="IDS_KEEP_DANGEROUS_DOWNLOAD_TITLE"
+                 desc="In Title Case: Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
+          Keep Dangerous File?
+        </message>
+        <message name="IDS_KEEP_UNCOMMON_DOWNLOAD_TITLE"
+                 desc="In Title Case: Title for the confirmation dialog asking whether the user really meant to keep an uncommon download">
+          Keep File?
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_CONFIRM_KEEP_DANGEROUS_DOWNLOAD_TITLE"
+                 desc="Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
+          Confirm download
+        </message>
+        <message name="IDS_KEEP_DANGEROUS_DOWNLOAD_TITLE"
+                 desc="Title for the confirmation dialog asking whether the user really meant to keep a dangerous download">
+          Keep dangerous file?
+        </message>
+        <message name="IDS_KEEP_UNCOMMON_DOWNLOAD_TITLE"
+                 desc="Title for the confirmation dialog asking whether the user really meant to keep an uncommon download">
+          Keep file?
+        </message>
+      </if>
       <message name="IDS_PROMPT_CONFIRM_KEEP_DANGEROUS_DOWNLOAD"
                desc="Prompt text for the confirmation dialog asking whether the user really meant to keep a dangerous download">
         This file may be harmful for your computer.
@@ -1526,14 +1545,26 @@ are declared in build/common.gypi.
                desc="Body prompt text for the confirmation dialog asking whether the user really meant to keep a download">
         Even if you have downloaded files from this site before, the site may be temporarily unsafe (hacked). Try downloading this file later.
       </message>
-      <message name="IDS_CONFIRM_DOWNLOAD_AGAIN"
-               desc="Text for the button used to confirm the dialog asking whether the user really meant to keep dangerous download.">
-        Keep anyway
-      </message>
-      <message name="IDS_CONFIRM_DOWNLOAD"
-               desc="Text for the button used to validate the downloading of a dangerous download on download shelf.">
-        Keep
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_CONFIRM_DOWNLOAD_AGAIN"
+                 desc="In Title Case: Text for the button used to confirm the dialog asking whether the user really meant to keep dangerous download.">
+          Keep Anyway
+        </message>
+        <message name="IDS_CONFIRM_DOWNLOAD"
+                 desc="In Title Case: Text for the button used to validate the downloading of a dangerous download on download shelf.">
+          Keep
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_CONFIRM_DOWNLOAD_AGAIN"
+                 desc="Text for the button used to confirm the dialog asking whether the user really meant to keep dangerous download.">
+          Keep anyway
+        </message>
+        <message name="IDS_CONFIRM_DOWNLOAD"
+                 desc="Text for the button used to validate the downloading of a dangerous download on download shelf.">
+          Keep
+        </message>
+      </if>
       <message name="IDS_CONFIRM_DOWNLOAD_RESTORE"
                desc="Text for the button used to validate the downloading of a dangerous download on chrome://downloads page.">
         Keep dangerous file
@@ -1878,6 +1909,12 @@ are declared in build/common.gypi.
         No, thanks
       </message>
 
+      <!-- Ambient badge -->
+      <if expr="is_android">
+        <message name="IDS_AMBIENT_BADGE" desc="String for the ambient badge promoting a progressive web app" formatter_data="android_java">
+          Add to Home screen
+        </message>
+      </if>
       <!-- Bookmark app bubble -->
       <if expr="chromeos">
         <message name="IDS_ADD_TO_OS_LAUNCH_SURFACE_BUBBLE_TITLE" desc="Title of the bubble for adding a bookmark app to the shelf.">
@@ -2143,14 +2180,24 @@ are declared in build/common.gypi.
       <message name="IDS_BLOCKED_DOWNLOADS_LINK" desc="Link to downloads section of content blocking management dialog, displayed in bubble when a page tries to download files automatically.">
         Manage download settings...
       </message>
-      <message name="IDS_BLOCKED_DOWNLOAD_TITLE" desc="Title for the page action when an automatic download was blocked">
-        This site attempted to download multiple files automatically.
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_ALLOWED_DOWNLOAD_TITLE" desc="In Title Case: Title for the page action when automatic downloads were allowed">
+          This Site Downloaded Multiple Files Automatically
+        </message>
+        <message name="IDS_BLOCKED_DOWNLOAD_TITLE" desc="In Title Case: Title for the page action when an automatic download was blocked">
+          This Site Attempted to Download Multiple Files Automatically
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_ALLOWED_DOWNLOAD_TITLE" desc="Title for the page action when automatic downloads were allowed">
+          This site downloaded multiple files automatically
+        </message>
+        <message name="IDS_BLOCKED_DOWNLOAD_TITLE" desc="Title for the page action when an automatic download was blocked">
+          This site attempted to download multiple files automatically
+        </message>
+      </if>
       <message name="IDS_BLOCKED_DOWNLOADS_EXPLANATION" desc="Explanatory animated text that appears (and then disappears) in the address line when a download is blocked">
         Download blocked
-      </message>
-      <message name="IDS_ALLOWED_DOWNLOAD_TITLE" desc="Title for the page action when automatic downloads were allowed">
-        This site downloaded multiple files automatically.
       </message>
       <message name="IDS_ALLOWED_DOWNLOAD_NO_ACTION" desc="Radio button to keep allowing automatic downloads">
         Continue allowing automatic downloads of multiple files
@@ -2160,10 +2207,10 @@ are declared in build/common.gypi.
       </message>
 
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_COOKIES_TITLE" desc="Short title of the bubble showing that a page was blocked from using cookies.">
+        <message name="IDS_BLOCKED_COOKIES_TITLE" desc="In Title Case: Short title of the bubble showing that a page was blocked from using cookies.">
           Cookies Blocked
         </message>
-        <message name="IDS_ACCESSED_COOKIES_TITLE" desc="Short title of the bubble showing that a page wrote cookies or other site data.">
+        <message name="IDS_ACCESSED_COOKIES_TITLE" desc="In Title Case: Short title of the bubble showing that a page wrote cookies or other site data.">
           Cookies Set
         </message>
       </if>
@@ -2188,7 +2235,7 @@ are declared in build/common.gypi.
         Show cookies and other site data...
       </message>
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_IMAGES_TITLE" desc="Tooltip and bubble info header text when a page is not allowed to display images.">
+        <message name="IDS_BLOCKED_IMAGES_TITLE" desc="In Title Case: Tooltip and bubble info header text when a page is not allowed to display images.">
           Images Blocked
         </message>
       </if>
@@ -2225,7 +2272,7 @@ are declared in build/common.gypi.
         Pop-ups were blocked on this page.
       </message>
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_POPUPS_TITLE" desc="Bubble title when a page is not allowed to display popups.">
+        <message name="IDS_BLOCKED_POPUPS_TITLE" desc="In Title Case: Bubble title when a page is not allowed to display popups.">
           Pop-ups Blocked
         </message>
       </if>
@@ -2298,7 +2345,7 @@ are declared in build/common.gypi.
         Plugin blocked
       </message>
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_JAVASCRIPT_TITLE" desc="Title for the bubble shown when a page is not allowed to run JavaScript.">
+        <message name="IDS_BLOCKED_JAVASCRIPT_TITLE" desc="In Title Case: Title for the bubble shown when a page is not allowed to run JavaScript.">
           JavaScript Blocked
         </message>
       </if>
@@ -2319,18 +2366,32 @@ are declared in build/common.gypi.
       <message name="IDS_BLOCKED_JAVASCRIPT_LINK" desc="Link to JavaScript section of content blocking management dialog, displayed in bubble when a page tries to run JavaScript.">
         Manage JavaScript blocking...
       </message>
-      <message name="IDS_BLOCKED_PLUGINS_TITLE" desc="Bubble info header text when a page is not allowed to run Flash. 'Flash' is the name of a plugin and should not be translated.">
-        Flash was blocked on this page
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_BLOCKED_PLUGINS_TITLE" desc="In Title Case: Bubble info header text when a page is not allowed to run Flash. 'Flash' is the name of a plugin and should not be translated.">
+          Flash Was Blocked on This Page
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_BLOCKED_PLUGINS_TITLE" desc="Bubble info header text when a page is not allowed to run Flash. 'Flash' is the name of a plugin and should not be translated.">
+          Flash was blocked on this page
+        </message>
+      </if>
       <message name="IDS_BLOCKED_PLUGINS_MESSAGE" desc="Tooltip on the icon when a page is not allowed to run Flash. 'Flash' is the name of a plugin and should not be translated.">
         Flash was blocked on this page.
       </message>
       <message name="IDS_BLOCKED_PLUGINS_LOAD_ALL" desc="Button to load all blocked plugins on a page, displayed in bubble when a page tries to display plugins. 'Flash' is the name of a plugin and should not be translated.">
         Run Flash this time
       </message>
-      <message name="IDS_BLOCKED_SOUND_TITLE" desc="Tooltip and bubble info header text when a page is not allowed to play sound.">
-        Sound was muted on this page.
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_BLOCKED_SOUND_TITLE" desc="Tooltip and bubble info header text when a page is not allowed to play sound.">
+          Sound Was Muted on This Page
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_BLOCKED_SOUND_TITLE" desc="Tooltip and bubble info header text when a page is not allowed to play sound.">
+          Sound was muted on this page
+        </message>
+      </if>
       <message name="IDS_BLOCKED_SOUND_UNBLOCK" desc="Radio button choice to unblock a site from playing sound, displayed in bubble when a page tries to play sound.">
         Always allow sound on <ph name="HOST">$1<ex>mail.google.com</ex></ph>
       </message>
@@ -3810,59 +3871,14 @@ are declared in build/common.gypi.
       </if>
 
       <!-- Extension/App error messages -->
-      <message name="IDS_EXTENSION_CANT_GET_ABSOLUTE_PATH" desc="Warning displayed in pack dialog when the absolute path to the extension directory can not be found.">
-        Can't find the absolute path to the directory to pack.
-      </message>
-      <message name="IDS_EXTENSION_DIRECTORY_NO_EXISTS" desc="Warning displayed in pack dialog when the extension directory does not exist.">
-        Input directory must exist.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_INVALID_PATH" desc="Warning displayed in pack dialog when the private key must be a valid path.">
-        Input value for private key must be a valid path.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_EXISTS" desc="Warning displayed in pack dialog when the private key for the extension already exists.">
-        A private key for specified extension already exists. Reuse that key or delete it first.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_NO_EXISTS" desc="Warning displayed in pack dialog when the private key for the extension does not exist.">
-        Input value for private key must exist.
-      </message>
       <message name="IDS_EXTENSION_PACK_WARNING_TITLE" desc="Warning title message for pack extension">
         Pack Extension Warning
       </message>
       <message name="IDS_EXTENSION_PACK_ERROR_TITLE" desc="Error title message for pack extension">
         Pack Extension Error
       </message>
-      <message name="IDS_EXTENSION_CRX_EXISTS" desc="Warning displayed in pack dialog when the crx file already exists.">
-        There is already a CRX file present with this name.
-      </message>
       <message name="IDS_EXTENSION_PROCEED_ANYWAY" desc="Button to continue with operation in extension packing">
         Proceed anyway
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_FAILED_TO_READ" desc="Warning displayed in pack dialog when was not possible to read the private key of the extension.">
-        Failed to read private key.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_INVALID" desc="Warning displayed in pack dialog when the private key of extensions is invalid.">
-        Invalid private key.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_FAILED_TO_GENERATE" desc="Warning displayed in pack dialog when generating a random RSA private key failed.">
-        Yikes! Failed to generate random RSA private key.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_FAILED_TO_EXPORT" desc="Warning displayed in pack dialog when exporting a private key failed.">
-        Failed to export private key.
-      </message>
-      <message name="IDS_EXTENSION_PRIVATE_KEY_FAILED_TO_OUTPUT" desc="Warning displayed in pack dialog when outputing a private key failed.">
-        Failed to output private key.
-      </message>
-      <message name="IDS_EXTENSION_FAILED_DURING_PACKAGING" desc="Warning displayed in pack dialog when was not possible to create a zip file.">
-        Failed to create temporary zip file during packaging.
-      </message>
-      <message name="IDS_EXTENSION_ERROR_WHILE_SIGNING" desc="Warning displayed in pack dialog when occurred an error while signing an extension.">
-        Error while signing extension.
-      </message>
-      <message name="IDS_EXTENSION_SHARING_VIOLATION" desc="Warning displayed in pack dialog when a sharing violation is found during creation of the crx.">
-        Failed to replace crx file. Check to see if the file is in use.
-      </message>
-      <message name="IDS_EXTENSION_PUBLIC_KEY_FAILED_TO_EXPORT" desc="Warning displayed in pack dialog when exporting a public key failed.">
-        Failed to export public key.
       </message>
       <message name="IDS_EXTENSION_CANT_DOWNGRADE_VERSION" desc="Error message when a user tries to install an extension with a lower version than a version that it already installed.">
         Attempted to downgrade extension.
@@ -3992,6 +4008,15 @@ are declared in build/common.gypi.
         <message name="IDS_EXTENSION_INSTALLED_SIGNIN_PROMO" desc="The remaining text of the sign-in promo paragraph. Will be appended as a label to the string above. The triple single quotes are needed to preserve the space before the word 'to' (which is handy when the language (Chrome is being translated to) uses space as word separator).">
           ''' to get this extension, your history, and other Chrome settings on all your devices.'''
         </message>
+
+        <!-- Begin of Sync Promo strings for Desktop Identity Consistency. -->
+        <message name="IDS_EXTENSION_INSTALLED_DICE_PROMO_SIGNIN_MESSAGE" desc="Text of the sync promo displayed at the bottom of the extension installed bubble asking the user to sign in and enable sync.">
+          To get all your extensions on all your devices, sign in and turn on sync.
+        </message>
+        <message name="IDS_EXTENSION_INSTALLED_DICE_PROMO_SYNC_MESSAGE" desc="Text of the sync promo displayed at the bottom of the extension installed bubble asking the user to enable sync.">
+          To get all your extensions on all your devices, turn on sync.
+        </message>
+        <!-- End of Sync Promo strings for Desktop Identity Consistency. -->
       </if>
 
       <!-- Directory access confirmation dialog -->
@@ -4667,8 +4692,8 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_COMPONENTS_SVC_STATUS_UPTODATE" desc="Service Status">
         Up-to-date
       </message>
-      <message name="IDS_COMPONENTS_SVC_STATUS_NOUPDATE" desc="Service Status">
-        No update
+      <message name="IDS_COMPONENTS_SVC_STATUS_UPDATE_ERROR" desc="Service Status">
+        Update error
       </message>
       <message name="IDS_COMPONENTS_UNKNOWN" desc="Service Status">
         Unknown
@@ -4691,6 +4716,9 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_COMPONENTS_EVT_STATUS_NOTUPDATED" desc="Service Status">
         Component not updated
       </message>
+      <message name="IDS_COMPONENTS_EVT_STATUS_UPDATE_ERROR" desc="Service Status">
+        Update error
+      </message>
       <message name="IDS_COMPONENTS_EVT_STATUS_DOWNLOADING" desc="Service Status">
         Component downloading
       </message>
@@ -4711,16 +4739,40 @@ Keep your key file in a safe place. You will need it to create new versions of y
         <message name="IDS_PASSWORD_MANAGER_ACCOUNT_CHOOSER_SIGN_IN" desc="In Title Case: The title of the Sign in button in the account chooser when there is one account.">
           Sign In
         </message>
+        <message name="IDS_PASSWORD_MANAGER_MANAGE_PASSWORDS_BUTTON" desc="In Title Case: The label of the 'Manage Passwords' button in the manage-passwords bubble.">
+          Manage Passwords
+        </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_SIGN_IN" desc="In Title Case: The title of the Sign in button in the bubble promoting Chrome sign-in.">
           Sign In
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_NO_THANKS" desc="In Title Case: The title of the No Thanks button in the bubble promoting Chrome sign-in.">
           No Thanks
         </message>
+        <message name="IDS_PASSWORD_MANAGER_CONFIRM_SAVED_TITLE" desc="In Title Case: The title text used in the passwords bubble when the user has saved a password.">
+            Password Saved
+        </message>
+        <message name="IDS_SAVE_PASSWORD" desc="In Title Case: The title of the save password bubble when a password can be saved.">
+          Do You Want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to Save Your Password for This Site?
+        </message>
+        <message name="IDS_SAVE_ACCOUNT" desc="In Title Case: The title of the save password bubble when a federated credential can be saved.">
+          Do You Want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to Save Your Account for This Site?
+        </message>
+        <message name="IDS_UPDATE_PASSWORD" desc="In Title Case: The title of the save password bubble when a password can be updated.">
+          Do You Want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to Update Your Password for This Site?
+        </message>
+        <message name="IDS_SAVE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="In Title Case: The title of the save password bubble when the submitted form origin isn't equal to the page origin.">
+          Do You Want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to Save Your Password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
+        </message>
+        <message name="IDS_UPDATE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="In Title Case: The title of the update password bubble when the submitted form origin isn't equal to saved credentials origin.">
+          Do You Want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to Update Your Password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
+        </message>
       </if>
       <if expr="not use_titlecase">
         <message name="IDS_PASSWORD_MANAGER_ACCOUNT_CHOOSER_SIGN_IN" desc="The title of the Sign in button in the account chooser when there is one account.">
           Sign in
+        </message>
+        <message name="IDS_PASSWORD_MANAGER_MANAGE_PASSWORDS_BUTTON" desc="The label of the 'Manage passwords' link in the manage-passwords bubble.">
+          Manage passwords
         </message>
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_SIGN_IN" desc="The title of the Sign in button in the bubble promoting Chrome sign-in.">
           Sign in
@@ -4728,18 +4780,27 @@ Keep your key file in a safe place. You will need it to create new versions of y
         <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_NO_THANKS" desc="The title of the No Thanks button in the bubble promoting Chrome sign-in.">
           No thanks
         </message>
+        <message name="IDS_PASSWORD_MANAGER_CONFIRM_SAVED_TITLE" desc="The title text used in the passwords bubble when the user has saved a password.">
+            Password saved
+        </message>
+        <message name="IDS_SAVE_PASSWORD" desc="The title of the save password bubble when a password can be saved.">
+          Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for this site?
+        </message>
+        <message name="IDS_SAVE_ACCOUNT" desc="The title of the save password bubble when a federated credential can be saved.">
+          Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your account for this site?
+        </message>
+        <message name="IDS_UPDATE_PASSWORD" desc="The title of the save password bubble when a password can be updated.">
+          Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to update your password for this site?
+        </message>
+        <message name="IDS_SAVE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="The title of the save password bubble when the submitted form origin isn't equal to the page origin.">
+          Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
+        </message>
+        <message name="IDS_UPDATE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="The title of the update password bubble when the submitted form origin isn't equal to saved credentials origin.">
+          Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to update your password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
+        </message>
       </if>
-      <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
-        Password saved. To get your passwords on all your devices, sign in to Chrome.
-      </message>
-      <message name="IDS_SAVE_PASSWORD" desc="The title of the save password bubble when a password can be saved.">
-        Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for this site?
-      </message>
-      <message name="IDS_SAVE_ACCOUNT" desc="The title of the save password bubble when a federated credential can be saved.">
-        Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your account for this site?
-      </message>
-      <message name="IDS_UPDATE_PASSWORD" desc="The title of the save password bubble when a password can be updated.">
-        Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to update your password for this site?
+      <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_LABEL" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
+        To get your passwords on all your devices, sign in to Chrome.
       </message>
 
       <!-- Desktop iOS promotion. -->
@@ -4991,10 +5052,10 @@ Keep your key file in a safe place. You will need it to create new versions of y
         Deny
       </message>
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_PPAPI_BROKER_TITLE" desc="Title for the page action when Pepper sandbox access was blocked.">
+        <message name="IDS_BLOCKED_PPAPI_BROKER_TITLE" desc="In Title Case: Title for the page action when Pepper sandbox access was blocked.">
           Unsandboxed Plugin Blocked
         </message>
-        <message name="IDS_ALLOWED_PPAPI_BROKER_TITLE" desc="Title for the page action when Pepper sandbox access was allowed.">
+        <message name="IDS_ALLOWED_PPAPI_BROKER_TITLE" desc="In Title Case: Title for the page action when Pepper sandbox access was allowed.">
           Unsandboxed Plugin Allowed
         </message>
       </if>
@@ -5030,7 +5091,7 @@ Keep your key file in a safe place. You will need it to create new versions of y
 
       <!-- Blocked Displaying/Running Insecure Content bubble -->
       <if expr="use_titlecase">
-        <message name="IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT_TITLE" desc="Title of the bubble shown when a message has asked Chrome to display mixed content.">
+        <message name="IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT_TITLE" desc="In Title Case: Title of the bubble shown when a message has asked Chrome to display mixed content.">
           Insecure Content Blocked
         </message>
       </if>
@@ -5324,9 +5385,22 @@ the Bookmarks menu.">
           <ph name="URL">$1<ex>maps.google.com</ex></ph> wants to see text and images copied to the clipboard
         </message>
       </if>
-      <message name="IDS_ALLOWED_CLIPBOARD_TITLE" desc="Title of the info bubble shown when a page has been allowed access to read the contents of the system clipboard.">
-        Clipboard read access allowed
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_ALLOWED_CLIPBOARD_TITLE" desc="In Title Case: Title of the info bubble shown when a page has been allowed access to read the contents of the system clipboard.">
+          Clipboard Read Access Allowed
+        </message>
+        <message name="IDS_BLOCKED_CLIPBOARD_TITLE" desc="In Title Case: Title of the info bubble shown when a page has been denied access to read the contents of the system clipboard.">
+          Clipboard Read Access Denied
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_ALLOWED_CLIPBOARD_TITLE" desc="Title of the info bubble shown when a page has been allowed access to read the contents of the system clipboard.">
+          Clipboard read access allowed
+        </message>
+        <message name="IDS_BLOCKED_CLIPBOARD_TITLE" desc="Title of the info bubble shown when a page has been denied access to read the contents of the system clipboard.">
+          Clipboard read access denied
+        </message>
+      </if>
       <message name="IDS_ALLOWED_CLIPBOARD_MESSAGE" desc="Info bubble message and location bar icon tooltip text shown when a page has been allowed access to read the contents of the system clipboard.">
         This page can see text and images copied to the clipboard.
       </message>
@@ -5335,9 +5409,6 @@ the Bookmarks menu.">
       </message>
       <message name="IDS_ALLOWED_CLIPBOARD_NO_ACTION" desc="Radio button to keep allowing read access to the system clipboard">
         Continue allowing this site to see the clipboard
-      </message>
-      <message name="IDS_BLOCKED_CLIPBOARD_TITLE" desc="Title of the info bubble shown when a page has been denied access to read the contents of the system clipboard.">
-        Clipboard read access denied
       </message>
       <message name="IDS_BLOCKED_CLIPBOARD_MESSAGE" desc="Info bubble message and location bar icon tooltip text shown when a page has been denied access to read the system clipboard.">
         This page has been blocked from seeing text and images copied to the clipboard
@@ -5480,12 +5551,16 @@ the Bookmarks menu.">
         <message name="IDS_PASSWORD_MANAGER_SAVE_BUTTON" desc="Save button text for password manager">
           Save
         </message>
-        <message name="IDS_PASSWORD_MANAGER_UPDATE_BUTTON" desc="Update button text for password manager">
-          Update password
-        </message>
-        <message name="IDS_PASSWORD_MANAGER_BLACKLIST_BUTTON" desc="Button text for the 'Save Password' infobar's 'Never remember for this site' option">
-          Never for this site
-        </message>
+        <if expr="use_titlecase">
+          <message name="IDS_PASSWORD_MANAGER_UPDATE_BUTTON" desc="In Title Case: Update button text for password manager">
+            Update Password
+          </message>
+        </if>
+        <if expr="not use_titlecase">
+          <message name="IDS_PASSWORD_MANAGER_UPDATE_BUTTON" desc="Update button text for password manager">
+            Update password
+          </message>
+        </if>
         <message name="IDS_PASSWORD_MANAGER_BUBBLE_BLACKLIST_BUTTON" desc="Button text for the 'Save Password' bubble's 'Never remember for this site' option">
           Never
         </message>
@@ -5497,9 +5572,6 @@ the Bookmarks menu.">
         </message>
         <message name="IDS_PASSWORD_MANAGER_IMPORT_BUTTON" desc="The label of the button for importing passwords. The button appears next to the list of saved passwords in Chrome's settings.">
           Import
-        </message>
-        <message name="IDS_PASSWORD_MANAGER_EXPORT_BUTTON" desc="The label of the button for exporting passwords. The button appears next to the list of saved passwords in Chrome's settings.">
-          Export
         </message>
         <message name="IDS_PASSWORD_MANAGER_IMPORT_DIALOG_TITLE" desc="The title of the file selection dialog for importing passwords">
           Import Passwords To Chrome
@@ -6622,17 +6694,6 @@ I don't think this site should be blocked!
         </message>
       </if>
 
-      <!-- First run bubble popup -->
-      <message name="IDS_FR_BUBBLE_TITLE" desc="Bubble-like popup dialog title">
-        You can search from here with <ph name="SEARCH_ENGINE">$1<ex>Google</ex></ph>
-      </message>
-      <message name="IDS_FR_BUBBLE_SUBTEXT" desc="Text under the title for the bubble">
-        Type to search or enter a URL to navigate - everything just works.
-      </message>
-      <message name="IDS_FR_BUBBLE_CHANGE" desc="Text for the change button on the bubble">
-        Change
-      </message>
-
       <!-- Sad Tab Strings -->
       <message name="IDS_CRASHED_TAB_FEEDBACK_MESSAGE" desc="The text to auto-populate the feedback page with. The triple single quotes are needed to preserve the line break.">
         Help our engineers investigate and fix this crash. List exact steps if you can. No detail is too small!
@@ -6998,16 +7059,13 @@ I don't think this site should be blocked!
         Reload
       </message>
 
-      <!-- Accessiblility strings for Inforbars in Views -->
+      <!-- Accessiblility strings for Infobars in Views -->
       <if expr="toolkit_views">
         <message name="IDS_ACCNAME_INFOBAR_CONTAINER" desc="The accessible name for the infobar container.">
           Infobar Container
         </message>
-        <message name="IDS_ACCNAME_INFOBAR_WARNING" desc="The accessible name for the warning infobar type.">
-          Warning
-        </message>
-        <message name="IDS_ACCNAME_INFOBAR_PAGE_ACTION" desc="The accessible name for page action infobar type.">
-          Page Action
+        <message name="IDS_ACCNAME_INFOBAR" desc="The accessible name for an infobar.">
+          Infobar
         </message>
       </if>
 
@@ -7511,6 +7569,9 @@ I don't think this site should be blocked!
       </message>
       <message name="IDS_PROFILES_DICE_SIGNIN_WITH_ANOTHER_ACCOUNT_BUTTON" desc="Button to sign in and turn on Sync with another web account.">
         Sync to another account
+      </message>
+      <message name="IDS_PROFILES_DICE_USE_ANOTHER_ACCOUNT_BUTTON" desc="Button to use another account to sign in and turn on Sync.">
+        Use another account
       </message>
       <message name="IDS_PROFILES_ACCOUNT_REMOVAL_BUTTON" desc="Text of the ok button on the account removal view in the avatar menu bubble.">
         Remove account
@@ -9194,24 +9255,46 @@ Please help our engineers fix this problem. Tell us what happened right before y
         This page has been blocked from accessing your camera.
       </message>
 
-      <message name="IDS_MICROPHONE_CAMERA_ALLOWED_TITLE" desc="Title for the media status bubble when a page is allowed to use the camera and microphone.">
-        Camera and microphone allowed
-      </message>
-      <message name="IDS_MICROPHONE_CAMERA_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the camera and microphone.">
-        Camera and microphone blocked
-      </message>
-      <message name="IDS_MICROPHONE_ACCESSED_TITLE" desc="Title for the media status bubble when a page is allowed to use the microphone.">
-        Microphone allowed
-      </message>
-      <message name="IDS_CAMERA_ACCESSED_TITLE" desc="Title for the media status bubble when a page is allowed to use the camera.">
-        Camera allowed
-      </message>
-      <message name="IDS_MICROPHONE_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the microphone.">
-        Microphone blocked
-      </message>
-      <message name="IDS_CAMERA_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the camera.">
-        Camera blocked
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_MICROPHONE_CAMERA_ALLOWED_TITLE" desc="In Title Case: Title for the media status bubble when a page is allowed to use the camera and microphone.">
+          Camera and Microphone Allowed
+        </message>
+        <message name="IDS_MICROPHONE_CAMERA_BLOCKED_TITLE" desc="In Title Case: Title for the media status bubble when a page is blocked from using the camera and microphone.">
+          Camera and Microphone Blocked
+        </message>
+        <message name="IDS_MICROPHONE_ACCESSED_TITLE" desc="In Title Case: Title for the media status bubble when a page is allowed to use the microphone.">
+          Microphone Allowed
+        </message>
+        <message name="IDS_CAMERA_ACCESSED_TITLE" desc="In Title Case: Title for the media status bubble when a page is allowed to use the camera.">
+          Camera Allowed
+        </message>
+        <message name="IDS_MICROPHONE_BLOCKED_TITLE" desc="In Title Case: Title for the media status bubble when a page is blocked from using the microphone.">
+          Microphone Blocked
+        </message>
+        <message name="IDS_CAMERA_BLOCKED_TITLE" desc="In Title Case: Title for the media status bubble when a page is blocked from using the camera.">
+          Camera Blocked
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_MICROPHONE_CAMERA_ALLOWED_TITLE" desc="Title for the media status bubble when a page is allowed to use the camera and microphone.">
+          Camera and microphone allowed
+        </message>
+        <message name="IDS_MICROPHONE_CAMERA_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the camera and microphone.">
+          Camera and microphone blocked
+        </message>
+        <message name="IDS_MICROPHONE_ACCESSED_TITLE" desc="Title for the media status bubble when a page is allowed to use the microphone.">
+          Microphone allowed
+        </message>
+        <message name="IDS_CAMERA_ACCESSED_TITLE" desc="Title for the media status bubble when a page is allowed to use the camera.">
+          Camera allowed
+        </message>
+        <message name="IDS_MICROPHONE_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the microphone.">
+          Microphone blocked
+        </message>
+        <message name="IDS_CAMERA_BLOCKED_TITLE" desc="Title for the media status bubble when a page is blocked from using the camera.">
+          Camera blocked
+        </message>
+      </if>
 
       <message name="IDS_MEDIASTREAM_SETTING_CHANGED_MESSAGE" desc="Message that is used to suggest reloading when media (camera, microphone) settings was changed by the user. These settings are immediately effective, but the web page might not know how to deal with the new settings.">
         This page may need to be reloaded before the new settings take effect.
@@ -9226,17 +9309,6 @@ Please help our engineers fix this problem. Tell us what happened right before y
           <ph name="URL">$1<ex>https://www.youtube.com</ex></ph> wants to uniquely identify your device to play protected content
         </message>
       </if>
-
-      <if expr="use_titlecase">
-        <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when the user has generated a password.">
-            Password Saved
-        </message>
-      </if>
-      <if expr="not use_titlecase">
-        <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TITLE" desc="The title text that is used in the manage passwords bubble when the user has generated a password.">
-          Password saved
-        </message>
-      </if>
       <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT" desc="A message that the browser shows after saving a password it has autogenerated for the user. This message appears in a bubble and contains a link to all the user's saved autogenerated passwords. The link text is a separate string in the translation console and appears here as placeholder text.">
         View and manage saved passwords at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
       </message>
@@ -9245,19 +9317,37 @@ Please help our engineers fix this problem. Tell us what happened right before y
           Password saved. View and manage saved passwords at <ph name="SAVED_PASSWORDS_LINK">$1<ex>passwords.google.com</ex></ph>
         </message>
       </if>
-      <message name="IDS_MANAGE_PASSWORDS_BUBBLE_LINK" desc="The label of the 'Manage passwords' link in the Manage Passwords bubble view">
-        Manage passwords
-      </message>
       <message name="IDS_MANAGE_PASSWORDS_LINK" desc="The text for a link to the user's saved passwords. This is inserted into an infobar or a bubble that the browser shows to the user. The infobar and the bubble use a separate string in the translation console that has a placeholder for this link title.">
         Google saved passwords
       </message>
-      <message name="IDS_MANAGE_PASSWORDS_TITLE" desc="The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
-        Saved passwords for this site:
-      </message>
-
-      <message name="IDS_MANAGE_PASSWORDS_NO_PASSWORDS" desc="The text that is used in the manage passwords bubble when all passwords have been deleted.">
-        No passwords saved.
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_MANAGE_PASSWORDS_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
+          Saved Passwords for This Site
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_NO_PASSWORDS_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when no passwords are available.">
+          No Passwords Saved for This Site
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
+          Saved Passwords for <ph name="ORIGIN">$1<ex>example.com</ex></ph>
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_NO_PASSWORDS_TITLE" desc="In Title Case: The title text that is used in the manage passwords bubble when no passwords are available for a different domain.">
+          No Passwords Saved for <ph name="ORIGIN">$1<ex>example.com</ex></ph>
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_MANAGE_PASSWORDS_TITLE" desc="The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
+          Saved passwords for this site
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_NO_PASSWORDS_TITLE" desc="The title text that is used in the manage passwords bubble when no passwords are available.">
+          No passwords saved for this site
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_TITLE" desc="The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
+          Saved passwords for <ph name="ORIGIN">$1<ex>example.com</ex></ph>
+        </message>
+        <message name="IDS_MANAGE_PASSWORDS_DIFFERENT_DOMAIN_NO_PASSWORDS_TITLE" desc="The title text that is used in the manage passwords bubble when no passwords are available for a different domain.">
+          No passwords saved for <ph name="ORIGIN">$1<ex>example.com</ex></ph>
+        </message>
+      </if>
       <message name="IDS_MANAGE_PASSWORDS_DELETED" desc="The text that is used in the manage passwords bubble when a password is deleted.">
         Password deleted
       </message>
@@ -9433,12 +9523,22 @@ Please help our engineers fix this problem. Tell us what happened right before y
       <message name="IDS_REGISTER_PROTOCOL_HANDLER_WEBCAL_NAME" desc="A more user friendly way of describing webcal: links.">
         web calendar
       </message>
-      <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM" desc="The message to display when asking a user to confirm the registration of a protocol handler.">
-        Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to open all <ph name="PROTOCOL">$2<ex>search</ex></ph> links?
-      </message>
-      <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM_REPLACE" desc="The message to display when asking a user to confirm the registration of a protocol handler.">
-        Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to open all <ph name="PROTOCOL">$2<ex>search</ex></ph> links instead of <ph name="REPLACED_HANDLER_TITLE">$3<ex>Elgoog Search</ex></ph>?
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM" desc="In Title Case: The message to display when asking a user to confirm the registration of a protocol handler.">
+          Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to Open All <ph name="PROTOCOL">$2<ex>search</ex></ph> Links?
+        </message>
+        <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM_REPLACE" desc="In Title Case: The message to display when asking a user to confirm the registration of a protocol handler.">
+          Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to Open All <ph name="PROTOCOL">$2<ex>search</ex></ph> Links Instead of <ph name="REPLACED_HANDLER_TITLE">$3<ex>Elgoog Search</ex></ph>?
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM" desc="The message to display when asking a user to confirm the registration of a protocol handler.">
+          Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to open all <ph name="PROTOCOL">$2<ex>search</ex></ph> links?
+        </message>
+        <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM_REPLACE" desc="The message to display when asking a user to confirm the registration of a protocol handler.">
+          Allow <ph name="HANDLER_HOSTNAME">$1<ex>google.com</ex></ph> to open all <ph name="PROTOCOL">$2<ex>search</ex></ph> links instead of <ph name="REPLACED_HANDLER_TITLE">$3<ex>Elgoog Search</ex></ph>?
+        </message>
+      </if>
       <message name="IDS_REGISTER_PROTOCOL_HANDLER_CONFIRM_FRAGMENT" desc="The permission fragment to display when asking a user to confirm the registration of a protocol handler in a permission bubble. Follows a prompt 'This site would like to:'.">
         Open <ph name="PROTOCOL">$1<ex>search</ex></ph> links
       </message>
@@ -9865,9 +9965,21 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       </if>
 
       <!-- High-contrast mode. -->
-      <message name="IDS_HIGH_CONTRAST_NOTIFICATION"
-               desc="Text that explains that the user is using Windows High-Contrast mode, so they may be interested in a high-contrast extension or a dark theme. Note to translators: this is the name of a feature in Windows, so please try to find the correct name of that feature in your region.">
-        You have High Contrast mode enabled. Would you like to install our High Contrast extension and a dark theme?
+      <if expr="not use_titlecase">
+        <message name="IDS_HIGH_CONTRAST_TITLE"
+                 desc="Text for the dialog asking if the user may be interested in a High-Contrast extension or a dark theme. Note to translators: this is the name of a feature in Windows, so please try to find the correct name of that feature in your region.">
+          Browse the web in high contrast mode
+        </message>
+      </if>
+      <if expr="use_titlecase">
+        <message name="IDS_HIGH_CONTRAST_TITLE"
+                 desc="Text for the dialog asking if the user may be interested in a High-Contrast extension or a dark theme. Note to translators: this is the name of a feature in Windows, so please try to find the correct name of that feature in your region.">
+          Browse the Web in High Contrast Mode
+        </message>
+      </if>
+      <message name="IDS_HIGH_CONTRAST_HEADER"
+               desc="Section header for list of extensions or themes to try in conjunction with the High Contrast mode">
+        Try:
       </message>
       <message name="IDS_HIGH_CONTRAST_EXT"
                desc="The title of a link that will open the Chrome Web Store with a High Contrast extension the user can install.">
@@ -10418,7 +10530,7 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         Next time, your phone will unlock your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>. Turn off Smart Lock in Settings.
       </message>
       <message name="IDS_EASY_UNLOCK_CHROMEBOOK_ADDED_NOTIFICATION_ABOUT_BUTTON" desc="Label of a button on the new chrome notification to bring user to smart lock settings.">
-         Change settings
+        Change settings
       </message>
       <!-- Strings for the phone changed (aka old Chromebook setup) notification -->
       <message name="IDS_EASY_UNLOCK_PAIRING_CHANGED_NOTIFICATION_TITLE" desc="Title for notification shown when the paired phone is changed.">
@@ -10444,10 +10556,10 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       <!-- Strings for the Easy Unlock setup dialog -->
       <!-- Step 1: Intro -->
       <message name="IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TITLE" desc="The text to show as the header title of the Easy Unlock dialog during the first, introductory step.">
-       Set up Smart Lock for your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>
+        Set up Smart Lock for your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>
       </message>
       <message name="IDS_EASY_UNLOCK_SETUP_INTRO_HEADER_TEXT" desc="The text to show as the header body text of the Easy Unlock dialog during the first, introductory step. Note that the &lt;a&gt; element surrounds a link; these HTML elements should be preserved in the translation.">
-       Make sure your phone is nearby. To find your phone, Bluetooth will be turned on for all devices that have your account. &lt;a&gt;Learn more&lt;/a&gt;
+        Make sure your phone is nearby. To find your phone, Bluetooth will be turned on for all devices that have your account. &lt;a&gt;Learn more&lt;/a&gt;
       </message>
       <message name="IDS_EASY_UNLOCK_SETUP_INTRO_FIND_PHONE_BUTTON_LABEL" desc="The text to show as the 'Find phone' button label in the Easy Unlock dialog. This button is visible during the first, introductory step.">
         Find your phone
@@ -10700,16 +10812,6 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         </message>
       </if>
 
-      <message name="IDS_SAVE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="The title of the save password bubble when the submitted form origin isn't equal to the page origin.">
-        Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to save your password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
-      </message>
-      <message name="IDS_UPDATE_PASSWORD_DIFFERENT_DOMAINS_TITLE" desc="The title of the update password bubble when the submitted form origin isn't equal to saved credentials origin.">
-        Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to update your password for <ph name="ORIGIN">$2<ex>example.com</ex></ph>?
-      </message>
-      <message name="IDS_MANAGE_PASSWORDS_TITLE_DIFFERENT_DOMAIN" desc="The title text that is used in the manage passwords bubble when a password is autofilled or after a user has stored a password.">
-        Saved passwords for <ph name="ORIGIN">$1<ex>example.com</ex></ph>:
-      </message>
-
     <!-- WebUsb Notification -->
     <message name="IDS_WEBUSB_DEVICE_DETECTED_NOTIFICATION" desc="Content for notification shown to the user when a USB device gets plugged in.">
       Go to <ph name="LANDING_PAGE">$1<ex>www.google.com</ex></ph> to connect.
@@ -10849,9 +10951,16 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <message name="IDS_BLOCKED_ADS_INFOBAR_MESSAGE" desc="The mini infobar message shown to users on Android when Chrome has blocked ads on the site because the site tends to show intrusive ads. Will be presented as a sentence, next to a Details link to expand the infobar.">
       Ads blocked.
     </message>
-    <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users in the omnibox or infobar when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period." formatter_data="android_java">
-      Ads blocked
-    </message>
+    <if expr="use_titlecase">
+      <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="In Title Case: Title of the prompt shown to users in the omnibox or infobar when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period." formatter_data="android_java">
+        Ads Blocked
+      </message>
+    </if>
+    <if expr="not use_titlecase">
+      <message name="IDS_BLOCKED_ADS_PROMPT_TITLE" desc="Title of the prompt shown to users in the omnibox or infobar when Chrome has blocked ads on the site because the site tends to show intrusive ads. The title will stand alone next to an icon so there is no need for a period." formatter_data="android_java">
+        Ads blocked
+      </message>
+    </if>
     <message name="IDS_BLOCKED_ADS_PROMPT_EXPLANATION" desc="Longer explanation that Chrome has blocked ads on the site. To be shown in an expanded infobar / bubble">
       Chrome blocked ads on this site because this site tends to show intrusive ads.
     </message>
@@ -10868,17 +10977,27 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     <!-- Framebust / Blocked Redirection intervention message -->
     <if expr="not is_android">
       <!-- Android strings are declared in android_chrome_strings.grd. -->
-      <message name="IDS_REDIRECT_BLOCKED_MESSAGE" desc="The message stating that a redirect (noun) was blocked on this page. This will be followed on a separate line with the address the user was being redirected to.">
-        Redirect blocked to site:
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_REDIRECT_BLOCKED_MESSAGE" desc="In Title Case: The message stating that a redirect (noun) was blocked on this page. This will be followed on a separate line with the address the user was being redirected to.">
+          Redirect Blocked to Site
+        </message>
+        <message name="IDS_REDIRECT_BLOCKED_GOT_IT" desc="In Title Case: The text of the OK button for the blocked redirect dialog.">
+          Got It
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_REDIRECT_BLOCKED_MESSAGE" desc="The message stating that a redirect (noun) was blocked on this page. This will be followed on a separate line with the address the user was being redirected to.">
+          Redirect blocked to site
+        </message>
+        <message name="IDS_REDIRECT_BLOCKED_GOT_IT" desc="The text of the OK button for the blocked redirect dialog.">
+          Got it
+        </message>
+      </if>
       <message name="IDS_REDIRECT_BLOCKED_TITLE" desc="The short message stating that a redirect (noun) was blocked on this page. Same as IDS_REDIRECT_BLOCKED_SHORT_MESSAGE but without the period.">
          Redirect blocked
       </message>
       <message name="IDS_REDIRECT_BLOCKED_TOOLTIP" desc="Tooltip text that appears when the user hovers over the &quot;Redirect blocked&quot; icon in the address bar. It means that a redirect (noun) was blocked by Chrome on this page.">
          Redirect blocked on this page.
-      </message>
-      <message name="IDS_REDIRECT_BLOCKED_GOT_IT" desc="The text of the OK button for the blocked redirect dialog.">
-        Got it
       </message>
     </if>
 
@@ -10982,14 +11101,14 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
     </message>
 
     <!-- Security Key permission -->
-    <message name="IDS_SECURITY_KEY_ATTESTATION_PERMISSION_FRAGMENT" desc="Permission request shown when a site requests attestation information from a Security Key. This follows a prompt: 'This site would like to:'">
-      See the serial number of your security key
+    <message name="IDS_SECURITY_KEY_ATTESTATION_PERMISSION_FRAGMENT" desc="A permission prompt shown to a user when a website wants to see information that uniquely identifies the user's Security Key, such as make and model number. The text '[website URL] wants to:' precedes this string. The word 'identifying' modifies 'information'.">
+      See identifying information about your Security Key
     </message>
     <if expr="is_android">
-      <message name="IDS_SECURITY_KEY_ATTESTATION_INFOBAR_QUESTION" desc="Wording of an info bar prompt when a site requests attestation information from a Security Key.">
+      <message name="IDS_SECURITY_KEY_ATTESTATION_INFOBAR_QUESTION" desc="An infobar prompt shown to a user when a website wants to see information that uniquely identifies the user's Security Key, such as make and model number. The word 'identifying' modifies 'information'.">
         <ph name="URL">
           $1<ex>maps.google.com</ex>
-        </ph> wants to see the serial number of your security key
+        </ph> wants to see identifying information about your Security Key
       </message>
     </if>
 
@@ -11071,8 +11190,14 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
       <message name="IDS_VR_BUTTON_EXIT" desc="The label for the exit button on the VR controller -- shown when in fullscreen mode.">
         Exit Fullscreen
       </message>
-      <message name="IDS_VR_BUTTON_BACK" desc="The label for the back button on the VR controller -- shown when the keyboard is visible.">
+      <message name="IDS_VR_BUTTON_BACK" desc="The label for the back button on the VR controller -- shown when the keyboard is visible, we are in voice search, or we are repositioning.">
         Back
+      </message>
+      <message name="IDS_VR_BUTTON_TRACKPAD_REPOSITION" desc="The label for the trackpad while in window repositioning mode.">
+        Finish repositioning
+      </message>
+      <message name="IDS_VR_REPOSITION_LABEL" desc="This text appears over a window to explain to the user how to manipulate the window.">
+        Move the controller to reposition. Click to finish.
       </message>
     </if>
   </messages>

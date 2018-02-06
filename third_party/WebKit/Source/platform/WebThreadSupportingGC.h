@@ -10,6 +10,7 @@
 #include "platform/heap/GCTaskRunner.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 
@@ -78,7 +79,7 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
   }
 
  private:
-  WebThreadSupportingGC(const WebThreadCreationParams&, WebThread*);
+  WebThreadSupportingGC(const WebThreadCreationParams*, WebThread*);
 
   std::unique_ptr<GCTaskRunner> gc_task_runner_;
 

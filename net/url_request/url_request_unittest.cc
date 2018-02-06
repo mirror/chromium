@@ -17,6 +17,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <memory>
 #include <limits>
 
 #include "base/base64url.h"
@@ -29,7 +30,6 @@
 #include "base/json/json_reader.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
@@ -56,6 +56,7 @@
 #include "net/base/load_timing_info_test_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/upload_bytes_element_reader.h"
@@ -89,8 +90,7 @@
 #include "net/log/test_net_log_util.h"
 #include "net/net_features.h"
 #include "net/nqe/external_estimate_provider.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"
 #include "net/socket/socket_test_util.h"
@@ -149,7 +149,7 @@
 #include "net/url_request/network_error_logging_delegate.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
 #include "net/cert/cert_net_fetcher.h"
 #include "net/cert_net/cert_net_fetcher_impl.h"
 #endif
@@ -7223,7 +7223,7 @@ std::unique_ptr<test_server::HttpResponse> SendNelHeader(
 
 std::unique_ptr<test_server::HttpResponse> SendEmptyResponse(
     const test_server::HttpRequest& request) {
-  return base::MakeUnique<test_server::RawHttpResponse>("", "");
+  return std::make_unique<test_server::RawHttpResponse>("", "");
 }
 
 }  // namespace
@@ -10405,7 +10405,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
     CHECK_NE(static_cast<X509Certificate*>(NULL), root_cert.get());
     test_root_.reset(new ScopedTestRoot(root_cert.get()));
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
     SetGlobalCertNetFetcherForTesting(net::CreateCertNetFetcher(&context_));
 #endif
 
@@ -10454,7 +10454,7 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
   }
 
   ~HTTPSOCSPTest() override {
-#if defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
     ShutdownGlobalCertNetFetcher();
 #endif
 
@@ -11200,15 +11200,6 @@ INSTANTIATE_TEST_CASE_P(OCSPVerify,
                         HTTPSOCSPVerifyTest,
                         testing::ValuesIn(kOCSPVerifyData));
 
-static bool SystemSupportsAIA() {
-#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
-  return false;
-#else
-  return true;
-#endif
-}
-
 class HTTPSAIATest : public HTTPSOCSPTest {
  public:
   void SetupContext() override {
@@ -11241,15 +11232,10 @@ TEST_F(HTTPSAIATest, AIAFetching) {
   EXPECT_EQ(1, d.response_started_count());
 
   CertStatus cert_status = r->ssl_info().cert_status;
-  if (SystemSupportsAIA()) {
-    EXPECT_EQ(OK, d.request_status());
-    EXPECT_EQ(0u, cert_status & CERT_STATUS_ALL_ERRORS);
-    ASSERT_TRUE(r->ssl_info().cert);
-    EXPECT_EQ(2u, r->ssl_info().cert->intermediate_buffers().size());
-  } else {
-    EXPECT_EQ(CERT_STATUS_AUTHORITY_INVALID,
-              cert_status & CERT_STATUS_ALL_ERRORS);
-  }
+  EXPECT_EQ(OK, d.request_status());
+  EXPECT_EQ(0u, cert_status & CERT_STATUS_ALL_ERRORS);
+  ASSERT_TRUE(r->ssl_info().cert);
+  EXPECT_EQ(2u, r->ssl_info().cert->intermediate_buffers().size());
   ASSERT_TRUE(r->ssl_info().unverified_cert);
   EXPECT_EQ(0u, r->ssl_info().unverified_cert->intermediate_buffers().size());
 }

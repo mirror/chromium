@@ -3,6 +3,16 @@ Hi!
   "layers": [
     {
       "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "backgroundColor": "#FFFFFF"
+    },
+    {
+      "name": "Scrolling Layer",
+      "bounds": [785, 600],
+      "drawsContent": false
+    },
+    {
+      "name": "Scrolling Contents Layer",
       "bounds": [785, 4021],
       "contentsOpaque": true,
       "backgroundColor": "#FFFFFF",
@@ -10,86 +20,78 @@ Hi!
         {
           "object": "LayoutBlockFlow (positioned) DIV id='abs'",
           "rect": [425, 980, 360, 90],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='abs'",
           "rect": [425, 980, 360, 90],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='abs'",
           "rect": [425, 480, 360, 90],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='abs'",
           "rect": [425, 480, 360, 90],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
           "rect": [425, 980, 22, 18],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
           "rect": [425, 980, 22, 18],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
           "rect": [425, 480, 22, 18],
-          "reason": "subtree"
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
           "rect": [425, 480, 22, 18],
-          "reason": "subtree"
+          "reason": "geometry"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutBlockFlow (positioned) DIV id='fixed'",
-      "reason": "subtree"
-    },
-    {
       "object": "LayoutBlockFlow (positioned) DIV id='abs'",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "RootInlineBox",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "LayoutText #text",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "InlineTextBox 'Hi!'",
-      "reason": "subtree"
-    },
-    {
-      "object": "LayoutBlockFlow (positioned) DIV id='fixed'",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV id='abs'",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "RootInlineBox",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "LayoutText #text",
-      "reason": "subtree"
+      "reason": "geometry"
     },
     {
       "object": "InlineTextBox 'Hi!'",
-      "reason": "subtree"
+      "reason": "geometry"
     }
   ]
 }

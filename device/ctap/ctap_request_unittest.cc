@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "device/ctap/ctap_authenticator_request_param.h"
 #include "device/ctap/ctap_get_assertion_request_param.h"
 #include "device/ctap/ctap_make_credential_request_param.h"
-#include "device/ctap/ctap_request_param.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -13,20 +13,20 @@ namespace device {
 // Leveraging example 4 of section 6.1 of the spec
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html
 TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
-  const std::vector<uint8_t> kClientDataHash = {
+  static constexpr uint8_t kClientDataHash[] = {
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42,
       0x50, 0x5f, 0x8e, 0xd2, 0xb1, 0x6a, 0xe2, 0x2f, 0x16, 0xbb, 0x05,
       0xb8, 0x8c, 0x25, 0xdb, 0x9e, 0x60, 0x26, 0x45, 0xf1, 0x41};
 
-  const std::vector<uint8_t> kUserId = {
+  static constexpr uint8_t kUserId[] = {
       0x30, 0x82, 0x01, 0x93, 0x30, 0x82, 0x01, 0x38, 0xa0, 0x03, 0x02,
       0x01, 0x02, 0x30, 0x82, 0x01, 0x93, 0x30, 0x82, 0x01, 0x38, 0xa0,
       0x03, 0x02, 0x01, 0x02, 0x30, 0x82, 0x01, 0x93, 0x30, 0x82};
 
-  const std::vector<uint8_t> kSerializedRequest = {
-      // clang format-off
+  static constexpr uint8_t kSerializedRequest[] = {
+      // clang-format off
       0x01,        // authenticatorMakeCredential command
-      0xa4,        // map(4)
+      0xa5,        // map(5)
       0x01,        //  clientDataHash
       0x58, 0x20,  // bytes(32)
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42, 0x50,
@@ -94,36 +94,49 @@ TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
       0x74, 0x79, 0x70, 0x65,  // "type"
       0x6a,                    // text(10)
       // "public-key"
-      0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79
-      // clang format-on
+      0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79,
+
+      0x07,        // unsigned(7) - options
+      0xa2,        // map(2)
+      0x62,        // text(2)
+      0x72, 0x6b,  // "rk"
+      0xf5,        // True(21)
+      0x62,        // text(2)
+      0x75, 0x76,  // "uv"
+      0xf5         // True(21)
+      // clang-format on
   };
 
   PublicKeyCredentialRPEntity rp("acme.com");
   rp.SetRPName("Acme");
 
-  PublicKeyCredentialUserEntity user(kUserId);
+  PublicKeyCredentialUserEntity user(
+      std::vector<uint8_t>(kUserId, std::end(kUserId)));
   user.SetUserName("johnpsmith@example.com")
       .SetDisplayName("John P. Smith")
       .SetIconUrl(GURL("https://pics.acme.com/00/p/aBjjjpqPb.png"));
 
   CTAPMakeCredentialRequestParam make_credential_param(
-      kClientDataHash, std::move(rp), std::move(user),
+      std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)),
+      std::move(rp), std::move(user),
       PublicKeyCredentialParams({{"public-key", 7}, {"public-key", 257}}));
-  auto serialized_data = make_credential_param.SerializeToCBOR();
+  auto serialized_data = make_credential_param.SetResidentKey(true)
+                             .SetUserVerificationRequired(true)
+                             .Encode();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
 }
 
 TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
-  const std::vector<uint8_t> kClientDataHash = {
+  static constexpr uint8_t kClientDataHash[] = {
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42,
       0x50, 0x5f, 0x8e, 0xd2, 0xb1, 0x6a, 0xe2, 0x2f, 0x16, 0xbb, 0x05,
       0xb8, 0x8c, 0x25, 0xdb, 0x9e, 0x60, 0x26, 0x45, 0xf1, 0x41};
 
-  static const uint8_t kSerializedRequest[] = {
-      // clang format-off
+  static constexpr uint8_t kSerializedRequest[] = {
+      // clang-format off
       0x02,  // authenticatorGetAssertion command
-      0xa3,  // map(3)
+      0xa4,  // map(4)
 
       0x01,  // rpId
       0x68,  // text(8)
@@ -170,10 +183,23 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
       0x6a,                    // text(10)
       // "public-key"
       0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79,
-      // clang format-on
+
+      0x07,        // unsigned(7) - options
+      0xa2,        // map(2)
+      0x62,        // text(2)
+      0x75, 0x70,  // "up"
+      0xf5,        // True(21)
+      0x62,        // text(2)
+      0x75, 0x76,  // "uv"
+      0xf5         // True(21)
+
+      // clang-format on
   };
 
-  CTAPGetAssertionRequestParam get_assertion_req("acme.com", kClientDataHash);
+  CTAPGetAssertionRequestParam get_assertion_req(
+      "acme.com",
+      std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)));
+
   std::vector<PublicKeyCredentialDescriptor> allowed_list;
   allowed_list.push_back(PublicKeyCredentialDescriptor(
       "public-key",
@@ -191,11 +217,39 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
        0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03,
        0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03}));
 
-  get_assertion_req.SetAllowList(std::move(allowed_list));
+  get_assertion_req.SetAllowList(std::move(allowed_list))
+      .SetUserPresenceRequired(true)
+      .SetUserVerificationRequired(true);
 
-  auto serialized_data = get_assertion_req.SerializeToCBOR();
+  auto serialized_data = get_assertion_req.Encode();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(kSerializedRequest));
+}
+
+TEST(CTAPRequestTest, TestConstructCtapAuthenticatorRequestParam) {
+  static constexpr uint8_t kSerializedGetInfoCmd = 0x04;
+  static constexpr uint8_t kSerializedGetNextAssertionCmd = 0x08;
+  static constexpr uint8_t kSerializedCancelCmd = 0x03;
+  static constexpr uint8_t kSerializedResetCmd = 0x07;
+
+  auto get_info_cmd =
+      CTAPAuthenticatorRequestParam::CreateGetInfoParam().Encode();
+  ASSERT_TRUE(get_info_cmd);
+  EXPECT_THAT(*get_info_cmd, testing::ElementsAre(kSerializedGetInfoCmd));
+
+  auto get_next_assertion_cmd =
+      CTAPAuthenticatorRequestParam::CreateGetNextAssertionParam().Encode();
+  ASSERT_TRUE(get_next_assertion_cmd);
+  EXPECT_THAT(*get_next_assertion_cmd,
+              testing::ElementsAre(kSerializedGetNextAssertionCmd));
+
+  auto cancel_cmd = CTAPAuthenticatorRequestParam::CreateCancelParam().Encode();
+  ASSERT_TRUE(cancel_cmd);
+  EXPECT_THAT(*cancel_cmd, testing::ElementsAre(kSerializedCancelCmd));
+
+  auto reset_cmd = CTAPAuthenticatorRequestParam::CreateResetParam().Encode();
+  ASSERT_TRUE(reset_cmd);
+  EXPECT_THAT(*reset_cmd, testing::ElementsAre(kSerializedResetCmd));
 }
 
 }  // namespace device

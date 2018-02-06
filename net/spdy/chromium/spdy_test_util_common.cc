@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
+#include "net/base/completion_callback.h"
 #include "net/base/host_port_pair.h"
 #include "net/cert/ct_policy_enforcer.h"
 #include "net/cert/ct_policy_status.h"
@@ -235,7 +236,7 @@ base::WeakPtr<SpdyStream> CreateStreamSynchronously(
     const NetLogWithSource& net_log) {
   SpdyStreamRequest stream_request;
   int rv = stream_request.StartRequest(type, session, url, priority, net_log,
-                                       CompletionCallback());
+                                       CompletionOnceCallback());
   return
       (rv == OK) ? stream_request.ReleaseStream() : base::WeakPtr<SpdyStream>();
 }
@@ -244,11 +245,10 @@ StreamReleaserCallback::StreamReleaserCallback() = default;
 
 StreamReleaserCallback::~StreamReleaserCallback() = default;
 
-CompletionCallback StreamReleaserCallback::MakeCallback(
+CompletionOnceCallback StreamReleaserCallback::MakeCallback(
     SpdyStreamRequest* request) {
-  return base::Bind(&StreamReleaserCallback::OnComplete,
-                    base::Unretained(this),
-                    request);
+  return base::BindOnce(&StreamReleaserCallback::OnComplete,
+                        base::Unretained(this), request);
 }
 
 void StreamReleaserCallback::OnComplete(
@@ -325,6 +325,7 @@ SpdySessionDependencies::SpdySessionDependencies(
       session_max_recv_window_size(kDefaultInitialWindowSize),
       time_func(&base::TimeTicks::Now),
       enable_http2_alternative_service(false),
+      enable_websocket_over_http2(false),
       net_log(nullptr),
       http_09_on_non_default_ports_enabled(false),
       disable_idle_sockets_close_on_memory_pressure(false) {
@@ -379,6 +380,8 @@ HttpNetworkSession::Params SpdySessionDependencies::CreateSessionParams(
   params.time_func = session_deps->time_func;
   params.enable_http2_alternative_service =
       session_deps->enable_http2_alternative_service;
+  params.enable_websocket_over_http2 =
+      session_deps->enable_websocket_over_http2;
   params.http_09_on_non_default_ports_enabled =
       session_deps->http_09_on_non_default_ports_enabled;
   params.disable_idle_sockets_close_on_memory_pressure =
@@ -476,7 +479,8 @@ base::WeakPtr<SpdySession> CreateSpdySessionHelper(
     HttpNetworkSession* http_session,
     const SpdySessionKey& key,
     const NetLogWithSource& net_log,
-    bool enable_ip_based_pooling) {
+    bool enable_ip_based_pooling,
+    bool is_trusted_proxy) {
   EXPECT_FALSE(http_session->spdy_session_pool()->FindAvailableSession(
       key, enable_ip_based_pooling, NetLogWithSource()));
 
@@ -502,7 +506,7 @@ base::WeakPtr<SpdySession> CreateSpdySessionHelper(
 
   base::WeakPtr<SpdySession> spdy_session =
       http_session->spdy_session_pool()->CreateAvailableSessionFromSocket(
-          key, std::move(connection), net_log);
+          key, is_trusted_proxy, std::move(connection), net_log);
   // Failure is reported asynchronously.
   EXPECT_TRUE(spdy_session);
   EXPECT_TRUE(HasSpdySession(http_session->spdy_session_pool(), key));
@@ -515,7 +519,17 @@ base::WeakPtr<SpdySession> CreateSpdySession(HttpNetworkSession* http_session,
                                              const SpdySessionKey& key,
                                              const NetLogWithSource& net_log) {
   return CreateSpdySessionHelper(http_session, key, net_log,
-                                 /* enable_ip_based_pooling = */ true);
+                                 /* enable_ip_based_pooling = */ true,
+                                 /* is_trusted_proxy = */ false);
+}
+
+base::WeakPtr<SpdySession> CreateTrustedSpdySession(
+    HttpNetworkSession* http_session,
+    const SpdySessionKey& key,
+    const NetLogWithSource& net_log) {
+  return CreateSpdySessionHelper(http_session, key, net_log,
+                                 /* enable_ip_based_pooling = */ true,
+                                 /* is_trusted_proxy = */ true);
 }
 
 base::WeakPtr<SpdySession> CreateSpdySessionWithIpBasedPoolingDisabled(
@@ -523,7 +537,8 @@ base::WeakPtr<SpdySession> CreateSpdySessionWithIpBasedPoolingDisabled(
     const SpdySessionKey& key,
     const NetLogWithSource& net_log) {
   return CreateSpdySessionHelper(http_session, key, net_log,
-                                 /* enable_ip_based_pooling = */ false);
+                                 /* enable_ip_based_pooling = */ false,
+                                 /* is_trusted_proxy = */ false);
 }
 
 namespace {
@@ -593,8 +608,9 @@ base::WeakPtr<SpdySession> CreateFakeSpdySessionHelper(
   handle->SetSocket(std::make_unique<FakeSpdySessionClientSocket>(
       expected_status == OK ? ERR_IO_PENDING : expected_status));
   base::WeakPtr<SpdySession> spdy_session =
-      pool->CreateAvailableSessionFromSocket(key, std::move(handle),
-                                             NetLogWithSource());
+      pool->CreateAvailableSessionFromSocket(
+          key,
+          /*is_trusted_proxy=*/false, std::move(handle), NetLogWithSource());
   // Failure is reported asynchronously.
   EXPECT_TRUE(spdy_session);
   EXPECT_TRUE(HasSpdySession(pool, key));

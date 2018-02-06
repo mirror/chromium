@@ -423,10 +423,10 @@ const char kEnableSandboxLogging[]          = "enable-sandbox-logging";
 const char kEnableSkiaBenchmarking[]        = "enable-skia-benchmarking";
 
 // Enables slimming paint phase 1.75:
-// http://www.chromium.org/blink/slimming-paint
+// https://www.chromium.org/blink/slimming-paint
 const char kEnableSlimmingPaintV175[] = "enable-slimming-paint-v175";
 
-// Enables slimming paint phase 2: http://www.chromium.org/blink/slimming-paint
+// Enables slimming paint phase 2: https://www.chromium.org/blink/slimming-paint
 const char kEnableSlimmingPaintV2[]         = "enable-slimming-paint-v2";
 
 // On platforms that support it, enables smooth scroll animation.
@@ -543,20 +543,6 @@ const char kGpuStartupDialog[]              = "gpu-startup-dialog";
 const char kHistoryEntryRequiresUserGesture[] =
     "history-entry-requires-user-gesture";
 
-// A set of public key hashes for which to ignore certificate-related errors.
-//
-// If the certificate chain presented by the server does not validate, and one
-// or more certificates have public key hashes that match a key from this list,
-// the error is ignored.
-//
-// The switch value must a be a comma-separated list of Base64-encoded SHA-256
-// SPKI Fingerprints (RFC 7469, Section 2.4).
-//
-// This switch has no effect unless --user-data-dir (as defined by the content
-// embedder) is also present.
-const char kIgnoreCertificateErrorsSPKIList[] =
-    "ignore-certificate-errors-spki-list";
-
 // Run the GPU process as a thread in the browser process.
 const char kInProcessGPU[]                  = "in-process-gpu";
 
@@ -611,10 +597,6 @@ const char kMHTMLSkipNostoreAll[]           = "skip-nostore-all";
 
 // Use a Mojo-based LocalStorage implementation.
 const char kMojoLocalStorage[]              = "mojo-local-storage";
-
-// Mutes audio sent to the audio device so it is not audible during
-// automated testing.
-const char kMuteAudio[]                     = "mute-audio";
 
 // Disables the sandbox for all process types that are normally sandboxed.
 const char kNoSandbox[]                     = "no-sandbox";
@@ -686,7 +668,7 @@ const char kPpapiStartupDialog[]            = "ppapi-startup-dialog";
 // consolidates same-site pages so that they share a single process.
 //
 // More details here:
-// - http://www.chromium.org/developers/design-documents/process-models
+// - https://www.chromium.org/developers/design-documents/process-models
 // - The class comment in site_instance.h, listing the supported process models.
 //
 // IMPORTANT: This isn't to be confused with --site-per-process (which is about
@@ -755,6 +737,9 @@ const char kReducedReferrerGranularity[] =
 // Handles frame scrolls via the root RenderLayer instead of the FrameView.
 const char kRootLayerScrolls[]              = "root-layer-scrolls";
 
+// Enables native memory sampling profiler with a given rate (default 128 KiB).
+const char kSamplingHeapProfiler[]          = "sampling-heap-profiler";
+
 // Causes the process to run as a sandbox IPC subprocess.
 const char kSandboxIPCProcess[]             = "sandbox-ipc";
 
@@ -781,20 +766,13 @@ const char kSingleProcess[]                 = "single-process";
 //  * <iframe>s are rendered out-of-process whenever the src= is cross-site.
 //
 // More details here:
-// - http://www.chromium.org/developers/design-documents/site-isolation
-// - http://www.chromium.org/developers/design-documents/process-models
+// - https://www.chromium.org/developers/design-documents/site-isolation
+// - https://www.chromium.org/developers/design-documents/process-models
 // - The class comment in site_instance.h, listing the supported process models.
 //
 // IMPORTANT: this isn't to be confused with --process-per-site (which is about
 // process consolidation, not isolation). You probably want this one.
 const char kSitePerProcess[]                = "site-per-process";
-
-// Skip gpu info collection, blacklist loading, and blacklist auto-update
-// scheduling at browser startup time.
-// Therefore, all GPU features are available, and about:gpu page shows empty
-// content. The switch is intended only for layout tests.
-// TODO(gab): Get rid of this switch entirely.
-const char kSkipGpuDataLoading[]            = "skip-gpu-data-loading";
 
 // Skips reencoding bitmaps as PNGs when the encoded data is unavailable
 // during SKP capture.  This allows for obtaining an accurate sample of

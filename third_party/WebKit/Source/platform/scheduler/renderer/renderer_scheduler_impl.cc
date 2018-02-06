@@ -7,6 +7,7 @@
 #include <memory>
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram.h"
@@ -25,6 +26,7 @@
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_selector.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
+#include "platform/scheduler/child/features.h"
 #include "platform/scheduler/child/process_state.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/task_queue_throttler.h"
@@ -176,6 +178,10 @@ const char* TaskTypeToString(TaskType task_type) {
       return "InternalWebCrypto";
     case TaskType::kInternalIndexedDB:
       return "InternalIndexedDB";
+    case TaskType::kInternalMedia:
+      return "InternalMedia";
+    case TaskType::kInternalMediaRealTime:
+      return "InternalMediaRealTime";
     case TaskType::kCount:
       return "Count";
   }
@@ -190,6 +196,10 @@ const char* OptionalTaskDescriptionToString(
   if (opt_desc->task_type)
     return TaskTypeToString(opt_desc->task_type.value());
   return MainThreadTaskQueue::NameForQueueType(opt_desc->queue_type);
+}
+
+bool IsUnconditionalHighPriorityInputEnabled() {
+  return base::FeatureList::IsEnabled(kHighPriorityInput);
 }
 
 }  // namespace
@@ -212,8 +222,16 @@ RendererSchedulerImpl::RendererSchedulerImpl(
           helper_.NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
                                    MainThreadTaskQueue::QueueType::kCompositor)
                                    .SetShouldMonitorQuiescence(true))),
+      input_task_queue_(helper_.NewTaskQueue(
+          MainThreadTaskQueue::QueueCreationParams(
+              MainThreadTaskQueue::QueueType::kInput)
+              .SetShouldMonitorQuiescence(true)
+              .SetUsedForImportantTasks(
+                  IsUnconditionalHighPriorityInputEnabled()))),
       compositor_task_queue_enabled_voter_(
           compositor_task_queue_->CreateQueueEnabledVoter()),
+      input_task_queue_enabled_voter_(
+          input_task_queue_->CreateQueueEnabledVoter()),
       delayed_update_policy_runner_(
           base::Bind(&RendererSchedulerImpl::UpdatePolicy,
                      base::Unretained(this)),
@@ -241,6 +259,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
   task_runners_.insert(
       std::make_pair(compositor_task_queue_,
                      compositor_task_queue_->CreateQueueEnabledVoter()));
+  task_runners_.insert(std::make_pair(
+      input_task_queue_, input_task_queue_->CreateQueueEnabledVoter()));
 
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::kDefaultTimer);
@@ -366,6 +386,11 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                             renderer_scheduler_impl,
                             &renderer_scheduler_impl->tracing_controller_,
                             BackgroundStateToString),
+      keep_active_fetch_or_worker(false,
+                                  "RendererScheduler.RendererKeepAactive",
+                                  renderer_scheduler_impl,
+                                  &renderer_scheduler_impl->tracing_controller_,
+                                  YesNoStateToString),
       stopping_when_backgrounded_enabled(
           false,
           "RendererScheduler.StoppingWhenBackgroundedEnabled",
@@ -591,6 +616,12 @@ RendererSchedulerImpl::CompositorTaskRunner() {
   return compositor_task_queue_;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+RendererSchedulerImpl::InputTaskRunner() {
+  helper_.CheckOnValidThread();
+  return input_task_queue_;
+}
+
 scoped_refptr<SingleThreadIdleTaskRunner>
 RendererSchedulerImpl::IdleTaskRunner() {
   return idle_helper_.IdleTaskRunner();
@@ -609,6 +640,11 @@ scoped_refptr<MainThreadTaskQueue>
 RendererSchedulerImpl::CompositorTaskQueue() {
   helper_.CheckOnValidThread();
   return compositor_task_queue_;
+}
+
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::InputTaskQueue() {
+  helper_.CheckOnValidThread();
+  return input_task_queue_;
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
@@ -675,9 +711,9 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
           .SetCanBePaused(true)
           .SetCanBeStopped(StopLoadingInBackgroundEnabled())
           .SetCanBeDeferred(true)
-          .SetUsedForControlTasks(
+          .SetUsedForImportantTasks(
               queue_type ==
-              MainThreadTaskQueue::QueueType::kFrameLoading_kControl));
+              MainThreadTaskQueue::QueueType::kFrameLoadingControl));
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
@@ -710,9 +746,11 @@ void RendererSchedulerImpl::OnShutdownTaskQueue(
       case MainThreadTaskQueue::QueueClass::kTimer:
         task_queue->RemoveTaskObserver(
             &main_thread_only().timer_task_cost_estimator);
+        break;
       case MainThreadTaskQueue::QueueClass::kLoading:
         task_queue->RemoveTaskObserver(
             &main_thread_only().loading_task_cost_estimator);
+        break;
       default:
         break;
     }
@@ -900,6 +938,13 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   } else {
     main_thread_only().metrics_helper.OnRendererForegrounded(now);
   }
+}
+
+void RendererSchedulerImpl::SetSchedulerKeepActive(bool keep_active) {
+  if (main_thread_only().keep_active_fetch_or_worker == keep_active)
+    return;
+  main_thread_only().keep_active_fetch_or_worker = keep_active;
+  UpdatePolicy();
 }
 
 #if defined(OS_ANDROID)
@@ -1339,7 +1384,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       main_thread_only().stopped_when_backgrounded;
   bool newly_stopped = false;
   if (main_thread_only().renderer_backgrounded &&
-      main_thread_only().stopping_when_backgrounded_enabled) {
+      main_thread_only().stopping_when_backgrounded_enabled &&
+      !main_thread_only().keep_active_fetch_or_worker) {
     base::TimeTicks stop_at = main_thread_only().background_status_changed_at +
                               delay_for_background_tab_stopping_;
 
@@ -2002,6 +2048,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
       main_thread_only().have_reported_blocking_intervention_since_navigation);
   state->SetBoolean("renderer_backgrounded",
                     main_thread_only().renderer_backgrounded);
+  state->SetBoolean("keep_active_fetch_or_worker",
+                    main_thread_only().keep_active_fetch_or_worker);
   state->SetBoolean("stopped_when_backgrounded",
                     main_thread_only().stopped_when_backgrounded);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());
@@ -2095,8 +2143,8 @@ bool RendererSchedulerImpl::TaskQueuePolicy::IsQueueEnabled(
 
 TaskQueue::QueuePriority RendererSchedulerImpl::TaskQueuePolicy::GetPriority(
     MainThreadTaskQueue* task_queue) const {
-  return task_queue->UsedForControlTasks() ? TaskQueue::kHighPriority
-                                           : priority;
+  return task_queue->UsedForImportantTasks() ? TaskQueue::kHighPriority
+                                             : priority;
 }
 
 RendererSchedulerImpl::TimeDomainType
@@ -2485,7 +2533,7 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
   UMA_HISTOGRAM_TIMES("RendererScheduler.ExpectedTaskQueueingDuration",
                       queueing_time);
   UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "RendererScheduler.ExpectedTaskQueueingDuration2",
+      "RendererScheduler.ExpectedTaskQueueingDuration3",
       queueing_time.InMicroseconds(), kMinExpectedQueueingTimeBucket,
       kMaxExpectedQueueingTimeBucket, kNumberExpectedQueueingTimeBuckets);
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),

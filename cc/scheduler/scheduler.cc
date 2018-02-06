@@ -475,7 +475,7 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   if (ShouldRecoverMainLatency(adjusted_args, can_activate_before_deadline)) {
     TRACE_EVENT_INSTANT0("cc", "SkipBeginMainFrameToReduceLatency",
                          TRACE_EVENT_SCOPE_THREAD);
-    state_machine_.SetSkipNextBeginMainFrameToReduceLatency();
+    state_machine_.SetSkipNextBeginMainFrameToReduceLatency(true);
   } else if (ShouldRecoverImplLatency(adjusted_args,
                                       can_activate_before_deadline)) {
     TRACE_EVENT_INSTANT0("cc", "SkipBeginImplFrameToReduceLatency",
@@ -554,7 +554,13 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
     devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
     compositor_timing_history_->WillBeginImplFrame(
         state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
-    client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+    bool has_damage =
+        client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+
+    if (!has_damage) {
+      state_machine_.AbortDraw();
+      compositor_timing_history_->DrawAborted();
+    }
   }
 
   ProcessScheduledActions();
@@ -966,7 +972,10 @@ viz::BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
 }
 
 void Scheduler::ClearHistoryOnNavigation() {
+  // Ensure we reset decisions based on history from the previous navigation.
+  state_machine_.SetSkipNextBeginMainFrameToReduceLatency(false);
   compositor_timing_history_->ClearHistoryOnNavigation();
+  ProcessScheduledActions();
 }
 
 }  // namespace cc

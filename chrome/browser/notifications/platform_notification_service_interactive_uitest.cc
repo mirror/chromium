@@ -45,7 +45,7 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 #if BUILDFLAG(ENABLE_BACKGROUND_MODE)
 #include "components/keep_alive_registry/keep_alive_registry.h"
@@ -167,22 +167,6 @@ class PlatformNotificationServiceBrowserTest : public InProcessBrowserTest {
         script, result);
   }
 
-  // Executes |script| and stores the result as a string in |result|. Blocks
-  // until a notification has been added to the |display_service_tester_|'s
-  // display service.
-  void RunScriptAndWaitForNotificationAdded(const std::string& script,
-                                            std::string* result) const {
-    base::RunLoop run_loop;
-    display_service_tester_->SetNotificationAddedClosure(
-        run_loop.QuitClosure());
-    ASSERT_TRUE(RunScript(script, result));
-    run_loop.Run();
-
-    // Clear the closure.
-    display_service_tester_->SetNotificationAddedClosure(
-        base::RepeatingClosure());
-  }
-
   GURL TestPageUrl() const {
     return https_server_->GetURL(std::string("/") + kTestFileName);
   }
@@ -214,7 +198,7 @@ PlatformNotificationServiceBrowserTest::PlatformNotificationServiceBrowserTest()
     : server_root_(FILE_PATH_LITERAL("chrome/test/data")) {}
 
 // TODO(peter): Move PlatformNotificationService-related tests over from
-// notification_browsertest.cc to this file.
+// notification_interactive_uitest.cc to this file.
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
                        DisplayPersistentNotificationWithoutPermission) {
@@ -361,6 +345,20 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_TRUE(all_options_notification.never_timeout());
   EXPECT_DOUBLE_EQ(kNotificationTimestamp,
                    all_options_notification.timestamp().ToJsTime());
+}
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
+                       DisplayAndCloseNonPersistentNotification) {
+  ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
+
+  std::string script_result;
+  ASSERT_TRUE(RunScript("DisplayAndCloseNonPersistentNotification('')",
+                        &script_result));
+  EXPECT_EQ("ok", script_result);
+
+  std::vector<message_center::Notification> notifications =
+      GetDisplayedNotifications(false /* is_persistent */);
+  EXPECT_EQ(0u, notifications.size());
 }
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
@@ -1004,13 +1002,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   // First, test the default values.
 
   std::string script_result;
-  // TODO(crbug.com/595685): Can simply call
-  // 'RunScript("DisplayNonPersistentNotification(...' once the show event is
-  // implemented via mojo, here and elsewhere in this test.
-  RunScriptAndWaitForNotificationAdded(
-      "DisplayNonPersistentNotificationWithoutWaitingForEvent('Title')",
-      &script_result);
-  EXPECT_EQ("sync-ok", script_result);
+  RunScript("DisplayNonPersistentNotification('Title')", &script_result);
+  EXPECT_EQ("ok", script_result);
 
   std::vector<message_center::Notification> notifications =
       GetDisplayedNotifications(false /* is_persistent */);
@@ -1037,8 +1030,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
 
   // Now, test the non-default values.
 
-  RunScriptAndWaitForNotificationAdded(
-      R"(DisplayNonPersistentNotificationWithoutWaitingForEvent('Title2', {
+  RunScript(
+      R"(DisplayNonPersistentNotification('Title2', {
           body: 'Contents',
           tag: 'replace-id',
           dir: 'rtl',
@@ -1055,7 +1048,7 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
           ]
         }))",
       &script_result);
-  EXPECT_EQ("sync-ok", script_result);
+  EXPECT_EQ("ok", script_result);
 
   notifications = GetDisplayedNotifications(false /* is_persistent */);
   ASSERT_EQ(2u, notifications.size());
@@ -1090,12 +1083,12 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   // Test that notifications with the same tag replace each other and have
   // identical ids.
 
-  RunScriptAndWaitForNotificationAdded(
-      R"(DisplayNonPersistentNotificationWithoutWaitingForEvent('Title3', {
+  RunScript(
+      R"(DisplayNonPersistentNotification('Title3', {
           tag: 'replace-id'
         }))",
       &script_result);
-  EXPECT_EQ("sync-ok", script_result);
+  EXPECT_EQ("ok", script_result);
 
   notifications = GetDisplayedNotifications(false /* is_persistent */);
   ASSERT_EQ(2u, notifications.size());

@@ -138,6 +138,15 @@ Element* FrameSelection::RootEditableElementOrDocumentElement() const {
   return selection_root ? selection_root : GetDocument().documentElement();
 }
 
+size_t FrameSelection::CharacterIndexForPoint(const IntPoint& point) const {
+  const EphemeralRange range = GetFrame()->GetEditor().RangeForPoint(point);
+  if (range.IsNull())
+    return kNotFound;
+  Element* const editable = RootEditableElementOrDocumentElement();
+  DCHECK(editable);
+  return PlainTextRange::Create(*editable, range).Start();
+}
+
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated()
     const {
   // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets
@@ -161,7 +170,6 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   const VisiblePosition position =
       VisiblePositionForContentsPoint(point, GetFrame());
   SelectionInDOMTree::Builder builder;
-  builder.SetIsDirectional(GetSelectionInDOMTree().IsDirectional());
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
   SetSelection(builder.Build(), SetSelectionOptions::Builder()
@@ -188,19 +196,14 @@ void FrameSelection::SetSelectionAndEndTyping(
 }
 
 bool FrameSelection::SetSelectionDeprecated(
-    const SelectionInDOMTree& passed_selection,
+    const SelectionInDOMTree& new_selection,
     const SetSelectionOptions& passed_options) {
-  DCHECK(IsAvailable());
-  passed_selection.AssertValidFor(GetDocument());
-
   SetSelectionOptions::Builder options_builder(passed_options);
-  SelectionInDOMTree::Builder builder(passed_selection);
   if (ShouldAlwaysUseDirectionalSelection(frame_)) {
-    builder.SetIsDirectional(true);
     options_builder.SetIsDirectional(true);
   }
-  SelectionInDOMTree new_selection = builder.Build();
   SetSelectionOptions options = options_builder.Build();
+
   if (granularity_strategy_ && !options.DoNotClearStrategy())
     granularity_strategy_->Clear();
   granularity_ = options.Granularity();
@@ -750,6 +753,34 @@ void FrameSelection::SelectAll() {
   SelectAll(SetSelectionBy::kSystem);
 }
 
+// Implementation of |SVGTextControlElement::selectSubString()|
+void FrameSelection::SelectSubString(const Element& element,
+                                     int offset,
+                                     int length) {
+  // Find selection start
+  VisiblePosition start = VisiblePosition::FirstPositionInNode(element);
+  for (int i = 0; i < offset; ++i)
+    start = NextPositionOf(start);
+  if (start.IsNull())
+    return;
+
+  // Find selection end
+  VisiblePosition end(start);
+  for (int i = 0; i < length; ++i)
+    end = NextPositionOf(end);
+  if (end.IsNull())
+    return;
+
+  // TODO(editing-dev): We assume |start| and |end| are not null and we don't
+  // known when |start| and |end| are null. Once we get a such case, we check
+  // null for |start| and |end|.
+  SetSelectionAndEndTyping(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(start.DeepEquivalent(), end.DeepEquivalent())
+          .SetAffinity(start.Affinity())
+          .Build());
+}
+
 void FrameSelection::NotifyAccessibilityForSelectionChange() {
   if (GetSelectionInDOMTree().IsNone())
     return;
@@ -1218,7 +1249,7 @@ void FrameSelection::ClearLayoutSelection() {
 }
 
 std::pair<unsigned, unsigned> FrameSelection::LayoutSelectionStartEndForNG(
-    const NGPhysicalTextFragment& text_fragment) {
+    const NGPhysicalTextFragment& text_fragment) const {
   return layout_selection_->SelectionStartEndForNG(text_fragment);
 }
 

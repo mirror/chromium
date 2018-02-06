@@ -24,15 +24,15 @@ SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
 }
 
-void SurfaceLayer::SetPrimarySurfaceId(
-    const viz::SurfaceId& surface_id,
-    base::Optional<uint32_t> deadline_in_frames) {
+void SurfaceLayer::SetPrimarySurfaceId(const viz::SurfaceId& surface_id,
+                                       const DeadlinePolicy& deadline_policy) {
   if (primary_surface_id_ == surface_id &&
-      deadline_in_frames_ == deadline_in_frames) {
+      deadline_policy.use_existing_deadline()) {
     return;
   }
   primary_surface_id_ = surface_id;
-  deadline_in_frames_ = deadline_in_frames;
+  if (!deadline_policy.use_existing_deadline())
+    deadline_in_frames_ = deadline_policy.deadline_in_frames();
   UpdateDrawsContent(HasDrawableContent());
   SetNeedsCommit();
 }
@@ -89,7 +89,9 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   SurfaceLayerImpl* layer_impl = static_cast<SurfaceLayerImpl*>(layer);
   layer_impl->SetPrimarySurfaceId(primary_surface_id_,
                                   std::move(deadline_in_frames_));
-  deadline_in_frames_.reset();
+  // Unless the client explicitly calls SetPrimarySurfaceId again after this
+  // commit, don't block on |primary_surface_id_| again.
+  deadline_in_frames_ = 0u;
   layer_impl->SetFallbackSurfaceId(fallback_surface_id_);
   layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
 }

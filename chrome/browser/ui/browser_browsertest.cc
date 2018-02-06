@@ -23,7 +23,6 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -1928,7 +1927,13 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose2) {
   EXPECT_EQ(title, title_watcher.WaitAndGetTitle());
 }
 
-IN_PROC_BROWSER_TEST_F(BrowserTest, WindowOpenClose3) {
+#if defined(OS_WIN) && !defined(NDEBUG)
+// Times out on windows (dbg). https://crbug.com/753691.
+#define MAYBE_WindowOpenClose3 DISABLED_WindowOpenClose3
+#else
+#define MAYBE_WindowOpenClose3 WindowOpenClose3
+#endif
+IN_PROC_BROWSER_TEST_F(BrowserTest, MAYBE_WindowOpenClose3) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kDisablePopupBlocking);
   ASSERT_TRUE(embedded_test_server()->Start());

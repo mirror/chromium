@@ -46,6 +46,7 @@
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/input/input_handler.mojom.h"
 #include "content/common/navigation_params.mojom.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
@@ -140,6 +141,10 @@ struct FrameOwnerProperties;
 struct RequestNavigationParams;
 struct ResourceTimingInfo;
 struct SubresourceLoaderParams;
+
+#if BUILDFLAG(ENABLE_WEBRTC)
+class MediaStreamDispatcherHost;
+#endif
 
 class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
@@ -489,7 +494,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // renderer process, and the accessibility tree it sent can be
   // retrieved using GetAXTreeForTesting().
   void SetAccessibilityCallbackForTesting(
-      const base::Callback<void(RenderFrameHostImpl*, ui::AXEvent, int)>&
+      const base::Callback<void(RenderFrameHostImpl*, ax::mojom::Event, int)>&
           callback);
 
   // Called when the metadata about the accessibility tree for this frame
@@ -558,6 +563,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
                         bool has_stale_copy_in_cache,
                         int error_code,
                         const base::Optional<std::string>& error_page_content);
+
+  // Seneds a renderer-debug URL to the renderer process for handling.
+  void HandleRendererDebugURL(const GURL& url);
 
   // Sets up the Mojo connection between this instance and its associated render
   // frame if it has not yet been set up.
@@ -676,6 +684,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   blink::WebSandboxFlags active_sandbox_flags() {
     return active_sandbox_flags_;
   }
+
+  // Call |FlushForTesting()| on Network Service and FrameNavigationControl
+  // related interfaces to make sure all in-flight mojo messages have been
+  // received by the other end. For test use only.
+  void FlushNetworkAndNavigationInterfacesForTesting();
+
+  // Notifies the render frame that a user gesture was received.
+  void SetHasReceivedUserGesture();
 
  protected:
   friend class RenderFrameHostFactory;
@@ -800,7 +816,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const gfx::Point& point,
       int child_frame_routing_id,
       int child_frame_browser_plugin_instance_id,
-      ui::AXEvent event_to_fire);
+      ax::mojom::Event event_to_fire);
   void OnAccessibilitySnapshotResponse(
       int callback_id,
       const AXContentTreeUpdate& snapshot);
@@ -826,6 +842,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnScrollRectToVisibleInParentFrame(
       const gfx::Rect& rect_to_scroll,
       const blink::WebScrollIntoViewParams& params);
+  void OnFrameDidCallFocus();
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
@@ -913,6 +930,16 @@ class CONTENT_EXPORT RenderFrameHostImpl
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params);
 
+  // Handle Network Service connection errors. Will re-create broken Network
+  // Service-backed factories and send to |RenderFrame|.
+  void OnNetworkServiceConnectionError();
+
+  // Creates a Network Service-backed factory from appropriate |NetworkContext|
+  // and sets a connection error handler to trigger
+  // |OnNetworkServiceConnectionError()| if the factory is out-of-process.
+  void CreateNetworkServiceDefaultFactoryAndObserve(
+      network::mojom::URLLoaderFactoryRequest default_factory_request);
+
   // Returns true if the ExecuteJavaScript() API can be used on this host.
   bool CanExecuteJavaScript();
 
@@ -963,6 +990,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
       mojom::RendererAudioInputStreamFactoryRequest request);
   void CreateAudioOutputStreamFactory(
       mojom::RendererAudioOutputStreamFactoryRequest request);
+
+#if BUILDFLAG(ENABLE_WEBRTC)
+  void CreateMediaStreamDispatcherHost(
+      MediaStreamManager* media_stream_manager,
+      mojom::MediaStreamDispatcherHostRequest request);
+#endif
 
   void BindMediaInterfaceFactoryRequest(
       media::mojom::InterfaceFactoryRequest request);
@@ -1210,7 +1243,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 #endif  // defined(OS_ANDROID)
 
   // Callback when an event is received, for testing.
-  base::Callback<void(RenderFrameHostImpl*, ui::AXEvent, int)>
+  base::Callback<void(RenderFrameHostImpl*, ax::mojom::Event, int)>
       accessibility_testing_callback_;
   // The most recently received accessibility tree - for testing only.
   std::unique_ptr<ui::AXTree> ax_tree_for_testing_;
@@ -1301,6 +1334,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
   UniqueAudioInputStreamFactoryPtr audio_input_stream_factory_;
   UniqueAudioOutputStreamFactoryPtr audio_output_stream_factory_;
 
+#if BUILDFLAG(ENABLE_WEBRTC)
+  std::unique_ptr<MediaStreamDispatcherHost, BrowserThread::DeleteOnIOThread>
+      media_stream_dispatcher_host_;
+#endif
+
   // Hosts media::mojom::InterfaceFactory for the RenderFrame and forwards
   // media::mojom::InterfaceFactory calls to the remote "media" service.
   std::unique_ptr<MediaInterfaceProxy> media_interface_proxy_;
@@ -1386,6 +1424,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   std::unique_ptr<KeepAliveHandleFactory> keep_alive_handle_factory_;
   base::TimeDelta keep_alive_timeout_;
+
+  // For observing Network Service connection errors only. Will trigger
+  // |OnNetworkServiceConnectionError()| and push updated factories to
+  // |RenderFrame|.
+  network::mojom::URLLoaderFactoryPtr
+      network_service_connection_error_handler_holder_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

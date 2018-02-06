@@ -42,7 +42,7 @@ namespace {
 const base::Feature* kFeaturesExposedToJava[] = {
     &autofill::kAutofillScanCardholderName,
     &features::kClearOldBrowsingData,
-    &features::kCopylessPaste,
+    &features::kClipboardContentSetting,
     &features::kDownloadsForeground,
     &features::kDownloadsLocationChange,
     &features::kImportantSitesInCbd,
@@ -53,7 +53,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kSoundContentSetting,
     &features::kVrBrowsing,
     &features::kWebPayments,
-    &features::kTabsInCbd,
     &kAdjustWebApkInstallationSpace,
     &kAllowReaderForAccessibility,
     &kAndroidPayIntegrationV1,
@@ -71,17 +70,14 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomeInactivitySheetExpansion,
     &kChromeHomeMenuItemsExpandSheet,
     &kChromeHomePersistentIph,
-    &kChromeHomePromo,
-    &kChromeHomePromoInfoOnly,
-    &kChromeHomePromoOnStartup,
     &kChromeHomePullToRefreshIphAtTop,
-    &kChromeHomeOptOutSnackbar,
     &kChromeHomeShowGoogleGWhenUrlCleared,
     &kChromeHomeSurvey,
     &kChromeHomeSwipeLogic,
     &kChromeHomeSwipeLogicVelocity,
     &kChromeSmartSelection,
     &kChromeMemexFeature,
+    &kChromeModernDesign,
     &kContentSuggestionsScrollToLoad,
     &kContentSuggestionsSettings,
     &kContentSuggestionsThumbnailDominantColor,
@@ -124,6 +120,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kVideoPersistence,
     &kVrBrowsingFeedback,
     &kVrBrowsingInCustomTab,
+    &kVrBrowsingNativeAndroidUi,
     &kVrIconInDaydreamHome,
     &kVrLaunchIntents,
     &payments::features::kWebPaymentsMethodSectionOrderV2,
@@ -131,6 +128,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebPaymentsSingleAppUiSkip,
     &kWebVrAutopresentFromIntent,
     &kWebVrCardboardSupport,
+    &ntp_snippets::kArticleSuggestionsExpandableHeader,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
@@ -143,7 +141,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &offline_pages::kOfflinePagesSharingFeature,
     &omnibox::kAndroidChromeHomePersonalizedSuggestions,
     &password_manager::features::kPasswordExport,
-    &password_manager::features::kViewPasswords,
+    &password_manager::features::kPasswordSearchMobile,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
     &safe_browsing::kDispatchSafetyNetCheckOffThread,
 };
@@ -165,7 +163,7 @@ const base::Feature kAdjustWebApkInstallationSpace = {
     "AdjustWebApkInstallationSpace", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kAllowReaderForAccessibility = {
-    "AllowReaderForAccessibility", base::FEATURE_DISABLED_BY_DEFAULT};
+    "AllowReaderForAccessibility", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kAndroidPayIntegrationV1{"AndroidPayIntegrationV1",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
@@ -212,20 +210,8 @@ const base::Feature kChromeHomeMenuItemsExpandSheet{
 const base::Feature kChromeHomePersistentIph{"ChromeHomePersistentIph",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomePromo{"ChromeHomePromo",
-                                     base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeHomePromoInfoOnly{"ChromeHomePromoInfoOnly",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeHomePromoOnStartup{"ChromeHomePromoOnStartup",
-                                              base::FEATURE_ENABLED_BY_DEFAULT};
-
 const base::Feature kChromeHomePullToRefreshIphAtTop{
     "ChromeHomePullToRefreshIphAtTop", base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeHomeOptOutSnackbar{
-    "ChromeHomeOptOutSnackbar", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeShowGoogleGWhenUrlCleared{
     "ChromeHomeShowGoogleGWhenUrlCleared", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -240,6 +226,9 @@ const base::Feature kChromeHomeSwipeLogicVelocity{
     "ChromeHomeSwipeLogicVelocity", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeMemexFeature{"ChromeMemex",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kChromeModernDesign{"ChromeModernDesign",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeSmartSelection{"ChromeSmartSelection",
@@ -381,6 +370,9 @@ const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
 
 const base::Feature kVrBrowsingInCustomTab{"VrBrowsingInCustomTab",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kVrBrowsingNativeAndroidUi{
+    "VrBrowsingNativeAndroidUi", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kVrIconInDaydreamHome{"VrIconInDaydreamHome",
                                           base::FEATURE_DISABLED_BY_DEFAULT};

@@ -133,14 +133,6 @@ TEST_F(SearchResultAnswerCardViewTest, Basic) {
   EXPECT_EQ(1, GetYSize());
 }
 
-TEST_F(SearchResultAnswerCardViewTest, ButtonBackground) {
-  views::View* button = result_view()->parent();
-  EXPECT_EQ(kAnswerCardSelectedColor, button->background()->get_color());
-
-  ClearSelectedIndex();
-  EXPECT_EQ(nullptr, button->background());
-}
-
 TEST_F(SearchResultAnswerCardViewTest, KeyboardEvents) {
   EXPECT_TRUE(KeyPress(ui::VKEY_RETURN));
   EXPECT_EQ(1, GetOpenResultCountAndReset(0));
@@ -160,8 +152,9 @@ TEST_F(SearchResultAnswerCardViewTest, KeyboardEvents) {
 TEST_F(SearchResultAnswerCardViewTest, SpokenFeedback) {
   ui::AXNodeData node_data;
   GetAccessibleNodeData(&node_data);
-  EXPECT_EQ(ui::AX_ROLE_GENERIC_CONTAINER, node_data.role);
-  EXPECT_EQ(kResultTitle, node_data.GetStringAttribute(ui::AX_ATTR_NAME));
+  EXPECT_EQ(ax::mojom::Role::kGenericContainer, node_data.role);
+  EXPECT_EQ(kResultTitle,
+            node_data.GetStringAttribute(ax::mojom::StringAttribute::kName));
 }
 
 TEST_F(SearchResultAnswerCardViewTest, DeleteResult) {

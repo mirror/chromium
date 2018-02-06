@@ -66,7 +66,10 @@ gfx::Rect ConvertRectToPixel(const Layer* layer,
 namespace {
 
 void CheckSnapped(float snapped_position) {
-  const float kEplison = 0.0003f;
+  // The acceptable error epsilon should be small enough to detect visible
+  // artifacts as well as large enough to not cause false crashes when an
+  // uncommon device scale factor is applied.
+  const float kEplison = 0.003f;
   float diff = std::abs(snapped_position - gfx::ToRoundedInt(snapped_position));
   DCHECK_LT(diff, kEplison);
 }
@@ -90,6 +93,14 @@ void SnapLayerToPhysicalPixelBoundary(ui::Layer* snapped_layer,
 
   gfx::Vector2dF fudge = view_offset_snapped - view_offset;
   fudge.Scale(1.0 / scale_factor);
+
+  // Apply any scale originating from transforms to the fudge.
+  gfx::Transform transform;
+  layer_to_snap->parent()->GetTargetTransformRelativeTo(snapped_layer,
+                                                        &transform);
+  gfx::Vector2dF transform_scale = transform.Scale2d();
+  fudge.Scale(1.0 / transform_scale.x(), 1.0 / transform_scale.y());
+
   layer_to_snap->SetSubpixelPositionOffset(fudge);
 #if DCHECK_IS_ON()
   gfx::PointF layer_offset;
@@ -102,6 +113,7 @@ void SnapLayerToPhysicalPixelBoundary(ui::Layer* snapped_layer,
   } else {
     origin = layer_to_snap->position();
   }
+  origin.Scale(transform_scale.x(), transform_scale.y());
   CheckSnapped((layer_offset.x() + origin.x()) * scale_factor);
   CheckSnapped((layer_offset.y() + origin.y()) * scale_factor);
 #endif

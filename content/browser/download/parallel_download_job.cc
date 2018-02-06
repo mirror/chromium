@@ -12,6 +12,7 @@
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/parallel_download_utils.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -117,12 +118,11 @@ void ParallelDownloadJob::BuildParallelRequestAfterDelay() {
                &ParallelDownloadJob::BuildParallelRequests);
 }
 
-void ParallelDownloadJob::OnByteStreamReady(
+void ParallelDownloadJob::OnInputStreamReady(
     DownloadWorker* worker,
-    std::unique_ptr<ByteStreamReader> stream_reader) {
+    std::unique_ptr<DownloadManager::InputStream> input_stream) {
   bool success = DownloadJob::AddInputStream(
-      std::make_unique<DownloadManager::InputStream>(std::move(stream_reader)),
-      worker->offset(), worker->length());
+      std::move(input_stream), worker->offset(), worker->length());
   RecordParallelDownloadAddStreamSuccess(success);
 
   // Destroy the request if the sink is gone.
@@ -192,9 +192,6 @@ void ParallelDownloadJob::BuildParallelRequests() {
   }
 
   DCHECK(!slices_to_download.empty());
-  DCHECK_EQ(slices_to_download.back().received_bytes,
-            DownloadSaveInfo::kLengthFullContent);
-
   ForkSubRequests(slices_to_download);
   RecordParallelDownloadRequestCount(
       static_cast<int>(slices_to_download.size()));
@@ -226,12 +223,16 @@ void ParallelDownloadJob::ForkSubRequests(
     }
 
     DCHECK_GE(it->offset, initial_request_offset_);
-    CreateRequest(it->offset, it->received_bytes);
+    // All parallel requests are half open, which sends request headers like
+    // "Range:50-".
+    // If server rejects a certain request, others should take over.
+    CreateRequest(it->offset, download::DownloadSaveInfo::kLengthFullContent);
   }
 }
 
 void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
   DCHECK(download_item_);
+  DCHECK_EQ(download::DownloadSaveInfo::kLengthFullContent, length);
 
   std::unique_ptr<DownloadWorker> worker =
       std::make_unique<DownloadWorker>(this, offset, length);
@@ -284,7 +285,9 @@ void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
   download_params->set_referrer(Referrer(download_item_->GetReferrerUrl(),
                                          blink::kWebReferrerPolicyAlways));
   // Send the request.
-  worker->SendRequest(std::move(download_params));
+  worker->SendRequest(std::move(download_params),
+                      static_cast<StoragePartitionImpl*>(storage_partition)
+                          ->url_loader_factory_getter());
   DCHECK(workers_.find(offset) == workers_.end());
   workers_[offset] = std::move(worker);
 }

@@ -104,6 +104,10 @@
   return self.toolbarController;
 }
 
+- (id<OmniboxFocuser>)omniboxFocuser {
+  return self.toolbarController;
+}
+
 #pragma mark - WebToolbarController public interface
 
 - (void)setToolbarController:(id<Toolbar>)toolbarController {
@@ -139,18 +143,6 @@
   [self.toolbarController setShareButtonEnabled:enabled];
 }
 
-- (void)showPrerenderingAnimation {
-  [self.toolbarController showPrerenderingAnimation];
-}
-
-- (BOOL)isOmniboxFirstResponder {
-  return [self.toolbarController isOmniboxFirstResponder];
-}
-
-- (BOOL)showingOmniboxPopup {
-  return [self.toolbarController showingOmniboxPopup];
-}
-
 - (void)currentPageLoadStarted {
   [self.toolbarController currentPageLoadStarted];
 }
@@ -163,14 +155,22 @@
   [self.toolbarController triggerToolsMenuButtonAnimation];
 }
 
-#pragma mark - OmniboxFocuser
+#pragma mark - PrimaryToolbarCoordinator
 
-- (void)focusOmnibox {
-  [self.toolbarController focusOmnibox];
+- (void)showPrerenderingAnimation {
+  [self.toolbarController showPrerenderingAnimation];
 }
 
-- (void)cancelOmniboxEdit {
-  [self.toolbarController cancelOmniboxEdit];
+- (BOOL)isOmniboxFirstResponder {
+  return [self.toolbarController isOmniboxFirstResponder];
+}
+
+- (BOOL)showingOmniboxPopup {
+  return [self.toolbarController showingOmniboxPopup];
+}
+
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  [self.toolbarController transitionToLocationBarFocusedState:focused];
 }
 
 #pragma mark - FakeboxFocuser
@@ -283,12 +283,6 @@
 
 - (void)toolsMenuWillHideNotification:(NSNotification*)note {
   [self.toolbarController setToolsMenuIsVisibleForToolsMenuButton:NO];
-}
-
-#pragma mark - Toolbar Commands
-
-- (void)contractToolbar {
-  [self cancelOmniboxEdit];
 }
 
 #pragma mark - Fullscreen helpers

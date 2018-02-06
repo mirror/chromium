@@ -198,8 +198,8 @@ class BrowserWindow : public ui::BaseWindow {
   // Focuses the bookmarks toolbar (for accessibility).
   virtual void FocusBookmarksToolbar() = 0;
 
-  // Focuses an infobar, if shown (for accessibility).
-  virtual void FocusInfobars() = 0;
+  // Focuses a visible but inactive popup for accessibility.
+  virtual void FocusInactivePopupForAccessibility() = 0;
 
   // Moves keyboard focus to the next pane.
   virtual void RotatePaneFocus(bool forwards) = 0;
@@ -371,6 +371,13 @@ class BrowserWindow : public ui::BaseWindow {
   friend class BrowserCloseManager;
   friend class BrowserView;
   virtual void DestroyBrowser() = 0;
+
+#if defined(OS_MACOSX)
+  // Creates a Cocoa browser window, in browser builds where both Views and
+  // Cocoa browsers windows are present.
+  static BrowserWindow* CreateBrowserWindowCocoa(Browser* browser,
+                                                 bool user_gesture);
+#endif
 };
 
 #endif  // CHROME_BROWSER_UI_BROWSER_WINDOW_H_

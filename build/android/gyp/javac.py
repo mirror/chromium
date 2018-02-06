@@ -27,8 +27,6 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
   'SynchronizeOnNonFinalField',
   # TODO(crbug.com/801253): Follow steps in bug.
   'JavaLangClash',
-  # TODO(crbug.com/801256): Follow steps in bug.
-  'ParameterName',
   # TODO(crbug.com/801261): Follow steps in bug
   'ArgumentSelectionDefectChecker',
   # TODO(crbug.com/801268): Follow steps in bug.
@@ -67,6 +65,8 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
   # Alias of ParameterName warning.
   'NamedParameters',
   # Low priority corner cases with String.split.
+  # Linking Guava and using Splitter was rejected
+  # in the https://chromium-review.googlesource.com/c/chromium/src/+/871630.
   'StringSplitter',
   # Preferred to use another method since it propagates exceptions better.
   'ClassNewInstance',
@@ -104,16 +104,25 @@ ERRORPRONE_WARNINGS_TO_TURN_OFF = [
 
 ERRORPRONE_WARNINGS_TO_ERROR = [
   # Add warnings to this after fixing/suppressing all instances in our codebase.
+  'ParameterName',
 ]
 
 
-def ColorJavacOutput(output):
+def ProcessJavacOutput(output):
   fileline_prefix = r'(?P<fileline>(?P<file>[-.\w/\\]+.java):(?P<line>[0-9]+):)'
   warning_re = re.compile(
       fileline_prefix + r'(?P<full_message> warning: (?P<message>.*))$')
   error_re = re.compile(
       fileline_prefix + r'(?P<full_message> (?P<message>.*))$')
   marker_re = re.compile(r'\s*(?P<marker>\^)\s*$')
+
+  # These warnings cannot be suppressed even for third party code. Deprecation
+  # warnings especially do not help since we must support older android version.
+  deprecated_re = re.compile(
+      r'(Note: .* uses? or overrides? a deprecated API.)$')
+  unchecked_re = re.compile(
+      r'(Note: .* uses? unchecked or unsafe operations.)$')
+  recompile_re = re.compile(r'(Note: Recompile with -Xlint:.* for details.)$')
 
   warning_color = ['full_message', colorama.Fore.YELLOW + colorama.Style.DIM]
   error_color = ['full_message', colorama.Fore.MAGENTA + colorama.Style.BRIGHT]
@@ -128,7 +137,12 @@ def ColorJavacOutput(output):
             + colorama.Fore.RESET + colorama.Style.RESET_ALL
             + line[end:])
 
-  def ApplyColor(line):
+  def ApplyFilters(line):
+    return not (deprecated_re.match(line)
+        or unchecked_re.match(line)
+        or recompile_re.match(line))
+
+  def ApplyColors(line):
     if warning_re.match(line):
       line = Colorize(line, warning_re, warning_color)
     elif error_re.match(line):
@@ -137,7 +151,7 @@ def ColorJavacOutput(output):
       line = Colorize(line, marker_re, marker_color)
     return line
 
-  return '\n'.join(map(ApplyColor, output.split('\n')))
+  return '\n'.join(map(ApplyColors, filter(ApplyFilters, output.split('\n'))))
 
 
 def _ExtractClassFiles(jar_path, dest_dir, java_files):
@@ -312,10 +326,7 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs,
       # Pass classpath and source paths as response files to avoid extremely
       # long command lines that are tedius to debug.
       if classpath:
-        classpath_rsp_path = os.path.join(temp_dir, 'classpath.txt')
-        with open(classpath_rsp_path, 'w') as f:
-          f.write(':'.join(classpath))
-        cmd += ['-classpath', '@' + classpath_rsp_path]
+        cmd += ['-classpath', ':'.join(classpath)]
 
       java_files_rsp_path = os.path.join(temp_dir, 'files_list.txt')
       with open(java_files_rsp_path, 'w') as f:
@@ -332,7 +343,7 @@ def _OnStaleMd5(changes, options, javac_cmd, java_files, classpath_inputs,
           cmd,
           print_stdout=options.chromium_code,
           stdout_filter=stdout_filter,
-          stderr_filter=ColorJavacOutput)
+          stderr_filter=ProcessJavacOutput)
       try:
         attempt_build()
       except build_utils.CalledProcessError as e:
@@ -508,7 +519,7 @@ def main(argv):
     ])
 
   if options.chromium_code:
-    javac_cmd.extend(['-Xlint:unchecked', '-Xlint:deprecation'])
+    javac_cmd.extend(['-Xlint:unchecked'])
   else:
     # XDignore.symbol.file makes javac compile against rt.jar instead of
     # ct.sym. This means that using a java internal package/class will not

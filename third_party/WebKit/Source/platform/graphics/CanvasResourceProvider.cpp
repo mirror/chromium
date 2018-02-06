@@ -4,8 +4,8 @@
 
 #include "platform/graphics/CanvasResourceProvider.h"
 
+#include "cc/paint/decode_stashing_image_provider.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "cc/raster/playback_image_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
@@ -303,6 +303,43 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
   return nullptr;
 }
 
+CanvasResourceProvider::CanvasImageProvider::CanvasImageProvider(
+    cc::ImageDecodeCache* cache,
+    const gfx::ColorSpace& target_color_space)
+    : playback_image_provider_(cache,
+                               target_color_space,
+                               cc::PlaybackImageProvider::Settings()) {}
+
+CanvasResourceProvider::CanvasImageProvider::~CanvasImageProvider() = default;
+
+cc::ImageProvider::ScopedDecodedDrawImage
+CanvasResourceProvider::CanvasImageProvider::GetDecodedDrawImage(
+    const cc::DrawImage& draw_image) {
+  auto scoped_decoded_image =
+      playback_image_provider_.GetDecodedDrawImage(draw_image);
+  if (!scoped_decoded_image.decoded_image().is_budgeted()) {
+    // If we have exceeded the budget, ReleaseLockedImages any locked decodes.
+    ReleaseLockedImages();
+  }
+
+  // It is safe to use base::Unretained, since decodes acquired from a provider
+  // must not exceed the provider's lifetime.
+  auto decoded_draw_image = scoped_decoded_image.decoded_image();
+  return ScopedDecodedDrawImage(
+      decoded_draw_image,
+      base::BindOnce(&CanvasImageProvider::CanUnlockImage,
+                     base::Unretained(this), std::move(scoped_decoded_image)));
+}
+
+void CanvasResourceProvider::CanvasImageProvider::ReleaseLockedImages() {
+  locked_images_.clear();
+}
+
+void CanvasResourceProvider::CanvasImageProvider::CanUnlockImage(
+    ScopedDecodedDrawImage image) {
+  locked_images_.push_back(std::move(image));
+}
+
 CanvasResourceProvider::CanvasResourceProvider(
     const IntSize& size,
     const CanvasColorParams& color_params,
@@ -310,9 +347,15 @@ CanvasResourceProvider::CanvasResourceProvider(
     : weak_ptr_factory_(this),
       context_provider_wrapper_(std::move(context_provider_wrapper)),
       size_(size),
-      color_params_(color_params) {}
+      color_params_(color_params) {
+  if (context_provider_wrapper_)
+    context_provider_wrapper_->AddObserver(this);
+}
 
-CanvasResourceProvider::~CanvasResourceProvider() = default;
+CanvasResourceProvider::~CanvasResourceProvider() {
+  if (context_provider_wrapper_)
+    context_provider_wrapper_->RemoveObserver(this);
+}
 
 SkSurface* CanvasResourceProvider::GetSkSurface() const {
   if (!surface_) {
@@ -323,11 +366,13 @@ SkSurface* CanvasResourceProvider::GetSkSurface() const {
 
 PaintCanvas* CanvasResourceProvider::Canvas() {
   if (!canvas_) {
-    std::unique_ptr<cc::ImageProvider> image_provider;
+    DCHECK(!canvas_image_provider_);
+
+    cc::ImageProvider* image_provider = nullptr;
     if (ImageDecodeCache()) {
-      image_provider = std::make_unique<cc::PlaybackImageProvider>(
-          ImageDecodeCache(), ColorParams().GetStorageGfxColorSpace(),
-          cc::PlaybackImageProvider::Settings());
+      canvas_image_provider_.emplace(ImageDecodeCache(),
+                                     ColorParams().GetStorageGfxColorSpace());
+      image_provider = &*canvas_image_provider_;
     }
 
     if (ColorParams().NeedsSkColorSpaceXformCanvas()) {
@@ -339,7 +384,21 @@ PaintCanvas* CanvasResourceProvider::Canvas() {
           GetSkSurface()->getCanvas(), std::move(image_provider));
     }
   }
+
   return canvas_.get();
+}
+
+void CanvasResourceProvider::OnContextDestroyed() {
+  if (canvas_image_provider_) {
+    DCHECK(canvas_);
+    canvas_->reset_image_provider();
+    canvas_image_provider_.reset();
+  }
+}
+
+void CanvasResourceProvider::ReleaseLockedImages() {
+  if (canvas_image_provider_)
+    canvas_image_provider_->ReleaseLockedImages();
 }
 
 scoped_refptr<StaticBitmapImage> CanvasResourceProvider::Snapshot() {
@@ -428,6 +487,7 @@ void CanvasResourceProvider::ClearRecycledResources() {
 
 void CanvasResourceProvider::InvalidateSurface() {
   canvas_ = nullptr;
+  canvas_image_provider_.reset();
   xform_canvas_ = nullptr;
   surface_ = nullptr;
 }

@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
 #include "platform/wtf/RefCounted.h"
+#include "platform/wtf/ThreadSafeRefCounted.h"
 
 namespace blink {
 namespace scheduler {
@@ -56,10 +57,6 @@ void FakeWebTaskRunner::SetTime(base::TimeTicks new_time) {
 
 bool FakeWebTaskRunner::RunsTasksInCurrentSequence() const {
   return true;
-}
-
-double FakeWebTaskRunner::MonotonicallyIncreasingVirtualTimeSeconds() const {
-  return (data_->time_ - base::TimeTicks()).InSecondsF();
 }
 
 void FakeWebTaskRunner::RunUntilIdle() {

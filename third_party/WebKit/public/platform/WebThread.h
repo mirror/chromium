@@ -26,6 +26,7 @@
 #define WebThread_h
 
 #include "WebCommon.h"
+#include "WebThreadType.h"
 #include "base/callback_forward.h"
 #include "base/memory/scoped_refptr.h"
 
@@ -41,14 +42,16 @@ class TaskTimeObserver;
 }
 
 class WebScheduler;
-class WebTaskRunner;
 
 // Always an integer value.
 typedef uintptr_t PlatformThreadId;
 
 struct BLINK_PLATFORM_EXPORT WebThreadCreationParams {
-  explicit WebThreadCreationParams(const char* name);
+  explicit WebThreadCreationParams(WebThreadType);
 
+  WebThreadCreationParams& SetThreadName(const char* name);
+
+  WebThreadType thread_type;
   const char* name;
 };
 
@@ -75,7 +78,9 @@ class BLINK_PLATFORM_EXPORT WebThread {
   // Default scheduler task queue does not give scheduler enough freedom to
   // manage task priorities and should not be used.
   // Use TaskRunnerHelper::Get instead (crbug.com/624696).
-  virtual WebTaskRunner* GetWebTaskRunner() const { return nullptr; }
+  virtual base::SingleThreadTaskRunner* GetWebTaskRunner() const {
+    return nullptr;
+  }
   virtual scoped_refptr<base::SingleThreadTaskRunner>
   GetSingleThreadTaskRunner() const;
 

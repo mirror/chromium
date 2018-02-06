@@ -92,7 +92,7 @@ ChromeDataUseRecorder* ChromeDataUseAscriber::GetDataUseRecorder(
 }
 
 ChromeDataUseAscriber::DataUseRecorderEntry
-ChromeDataUseAscriber::GetDataUseRecorderEntry(net::URLRequest* request) {
+ChromeDataUseAscriber::GetDataUseRecorderEntry(const net::URLRequest* request) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   // If a DataUseRecorder has already been set as user data, then return that.
@@ -192,6 +192,17 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
   return entry;
 }
 
+void ChromeDataUseAscriber::OnBeforeUrlRequest(net::URLRequest* request) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(request);
+
+  if (IsDisabled())
+    return;
+
+  requests_.insert(request);
+  DataUseAscriber::OnBeforeUrlRequest(request);
+}
+
 void ChromeDataUseAscriber::OnUrlRequestCompleted(net::URLRequest* request,
                                                   bool started) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
@@ -200,10 +211,15 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(net::URLRequest* request,
   if (IsDisabled())
     return;
 
+  if (requests_.find(request) == requests_.end())
+    return;
+
   const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
 
-  if (entry == data_use_recorders_.end())
+  if (entry == data_use_recorders_.end()) {
+    requests_.erase(request);
     return;
+  }
 
   for (auto& observer : observers_)
     observer.OnPageResourceLoad(*request, &entry->data_use());
@@ -212,6 +228,15 @@ void ChromeDataUseAscriber::OnUrlRequestCompleted(net::URLRequest* request,
 }
 
 void ChromeDataUseAscriber::OnUrlRequestDestroyed(net::URLRequest* request) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(request);
+
+  if (IsDisabled())
+    return;
+
+  if (requests_.find(request) == requests_.end())
+    return;
+
   OnUrlRequestCompletedOrDestroyed(request);
 }
 
@@ -227,8 +252,10 @@ void ChromeDataUseAscriber::OnUrlRequestCompletedOrDestroyed(
 
   const DataUseRecorderEntry entry = GetDataUseRecorderEntry(request);
 
-  if (entry == data_use_recorders_.end())
+  if (entry == data_use_recorders_.end()) {
+    requests_.erase(request);
     return;
+  }
 
   {
     const content::ResourceRequestInfo* request_info =
@@ -269,7 +296,7 @@ void ChromeDataUseAscriber::OnUrlRequestCompletedOrDestroyed(
         pending_navigation_data_use_map_.end();
   }
 
-  DataUseAscriber::OnUrlRequestDestroyed(request);
+  entry->OnUrlRequestDestroyed(request);
   request->RemoveUserData(
       DataUseRecorderEntryAsUserData::kDataUseAscriberUserDataKey);
 
@@ -279,6 +306,8 @@ void ChromeDataUseAscriber::OnUrlRequestCompletedOrDestroyed(
     NotifyPageLoadConcluded(entry);
     data_use_recorders_.erase(entry);
   }
+
+  requests_.erase(request);
 }
 
 void ChromeDataUseAscriber::RenderFrameCreated(int render_process_id,
@@ -328,14 +357,46 @@ void ChromeDataUseAscriber::RenderFrameDeleted(int render_process_id,
 
     if (main_render_frame_entry_map_.end() != main_frame_it) {
       DataUseRecorderEntry entry = main_frame_it->second.data_use_recorder;
-      if (entry->IsDataUseComplete()) {
-        NotifyPageLoadConcluded(entry);
-        data_use_recorders_.erase(entry);
+
+      // Stop tracking requests for the old frame.
+      std::vector<net::URLRequest*> pending_url_requests;
+      entry->GetPendingURLRequests(&pending_url_requests);
+      for (net::URLRequest* request : pending_url_requests) {
+        OnUrlRequestCompletedOrDestroyed(request);
       }
+      ValidateAndCleanUp(entry);
+      DCHECK(entry->IsDataUseComplete());
+      NotifyPageLoadConcluded(entry);
+      data_use_recorders_.erase(entry);
       main_render_frame_entry_map_.erase(main_frame_it);
     }
   }
   subframe_to_mainframe_map_.erase(key);
+}
+
+void ChromeDataUseAscriber::ValidateAndCleanUp(DataUseRecorderEntry entry) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  for (auto it = requests_.begin(); it != requests_.end();) {
+    const net::URLRequest* request = *it;
+
+    DCHECK(request);
+
+    const DataUseRecorderEntry request_entry = GetDataUseRecorderEntry(request);
+
+    if (request_entry == data_use_recorders_.end()) {
+      requests_.erase(it++);
+      continue;
+    }
+    // All requests that point to |entry| should have been deleted.
+    DCHECK(entry != request_entry);
+
+    if (entry == request_entry) {
+      requests_.erase(it++);
+    } else {
+      ++it;
+    }
+  }
 }
 
 void ChromeDataUseAscriber::ReadyToCommitMainFrameNavigation(
@@ -472,10 +533,19 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
         AscribeRecorderWithRequest(request, entry);
       }
     }
-    if (old_frame_entry->IsDataUseComplete()) {
-      NotifyPageLoadConcluded(old_frame_entry);
-      data_use_recorders_.erase(old_frame_entry);
+
+    // Stop tracking requests for the old frame.
+    pending_url_requests.clear();
+    old_frame_entry->GetPendingURLRequests(&pending_url_requests);
+    for (net::URLRequest* request : pending_url_requests) {
+      OnUrlRequestCompletedOrDestroyed(request);
     }
+    DCHECK(old_frame_entry->IsDataUseComplete());
+    ValidateAndCleanUp(old_frame_entry);
+
+    NotifyPageLoadConcluded(old_frame_entry);
+    data_use_recorders_.erase(old_frame_entry);
+
     entry->set_is_visible(main_frame_it->second.is_visible);
     main_frame_it->second.data_use_recorder = entry;
     NotifyPageLoadCommit(entry);

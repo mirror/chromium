@@ -30,7 +30,8 @@ scoped_refptr<cc::SurfaceLayer> CreateSurfaceLayer(
     bool surface_opaque) {
   // manager must outlive compositors using it.
   auto layer = cc::SurfaceLayer::Create();
-  layer->SetPrimarySurfaceId(surface_info.id(), base::nullopt);
+  layer->SetPrimarySurfaceId(surface_info.id(),
+                             cc::DeadlinePolicy::UseDefaultDeadline());
   layer->SetFallbackSurfaceId(surface_info.id());
   layer->SetBounds(surface_info.size_in_pixels());
   layer->SetIsDrawable(true);
@@ -92,9 +93,7 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
         viz::SurfaceId(frame_sink_id_, local_surface_id), 1.f, frame_size);
     has_transparent_background_ = root_pass->has_transparent_background;
 
-    bool result =
-        support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
-    DCHECK(result);
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
 
     content_layer_ =
         CreateSurfaceLayer(surface_info_, !has_transparent_background_);

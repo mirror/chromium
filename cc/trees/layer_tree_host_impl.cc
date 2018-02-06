@@ -80,6 +80,7 @@
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/compositor_frame_metadata.h"
+#include "components/viz/common/quads/frame_deadline.h"
 #include "components/viz/common/quads/render_pass_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/common/quads/solid_color_draw_quad.h"
@@ -841,11 +842,19 @@ static viz::RenderPass* FindRenderPassById(const viz::RenderPassList& list,
   return it == list.end() ? nullptr : it->get();
 }
 
-bool LayerTreeHostImpl::HasDamage(bool handle_visibility_changed) const {
+bool LayerTreeHostImpl::HasDamage() const {
   DCHECK(!active_tree()->needs_update_draw_properties());
   DCHECK(CanDraw());
 
-  if (handle_visibility_changed || !viewport_damage_rect_.IsEmpty())
+  // When touch handle visibility changes there is no visible damage
+  // because touch handles are composited in the browser. However we
+  // still want the browser to be notified that the handles changed
+  // through the |ViewHostMsg_SwapCompositorFrame| IPC so we keep
+  // track of handle visibility changes here.
+  if (active_tree()->HandleVisibilityChanged())
+    return true;
+
+  if (!viewport_damage_rect_.IsEmpty())
     return true;
 
   const LayerTreeImpl* active_tree = active_tree_.get();
@@ -862,10 +871,16 @@ bool LayerTreeHostImpl::HasDamage(bool handle_visibility_changed) const {
   bool must_always_swap =
       layer_tree_frame_sink_->capabilities().must_always_swap;
 
+  // If we have a new LocalSurfaceId, we must always submit a CompositorFrame
+  // because the parent is blocking on us.
+  bool local_surface_id_changed =
+      settings_.enable_surface_synchronization &&
+      (last_draw_local_surface_id_ != active_tree->local_surface_id());
+
   return !root_surface_has_contributing_layers ||
          !root_surface_has_no_visible_damage ||
          active_tree_->property_trees()->effect_tree.HasCopyRequests() ||
-         must_always_swap || hud_wants_to_draw_;
+         must_always_swap || hud_wants_to_draw_ || local_surface_id_changed;
 }
 
 DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
@@ -880,15 +895,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   DamageTracker::UpdateDamageTracking(active_tree_.get(),
                                       active_tree_->GetRenderSurfaceList());
 
-  // When touch handle visibility changes there is no visible damage
-  // because touch handles are composited in the browser. However we
-  // still want the browser to be notified that the handles changed
-  // through the |ViewHostMsg_SwapCompositorFrame| IPC so we keep
-  // track of handle visibility changes through |handle_visibility_changed|.
-  bool handle_visibility_changed =
-      active_tree_->GetAndResetHandleVisibilityChanged();
-
-  if (!HasDamage(handle_visibility_changed)) {
+  if (!HasDamage()) {
     TRACE_EVENT0("cc",
                  "LayerTreeHostImpl::CalculateRenderPasses::EmptyDamageRect");
     frame->has_no_damage = true;
@@ -900,6 +907,12 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
                      "render_surface_list.size()",
                      static_cast<uint64_t>(frame->render_surface_list->size()),
                      "RequiresHighResToDraw", RequiresHighResToDraw());
+
+  // HandleVisibilityChanged contributed to the above damage check, so reset it
+  // now that we're going to draw.
+  // TODO(jamwalla): only call this if we are sure the frame draws. Tracked in
+  // crbug.com/805673.
+  active_tree_->ResetHandleVisibilityChanged();
 
   // Create the render passes in dependency order.
   size_t render_surface_list_size = frame->render_surface_list->size();
@@ -1034,12 +1047,15 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         append_quads_data.activation_dependencies.begin(),
         append_quads_data.activation_dependencies.end());
     if (append_quads_data.deadline_in_frames) {
-      if (!frame->deadline_in_frames)
-        frame->deadline_in_frames = 0u;
-
-      frame->deadline_in_frames = std::max(
-          *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
+      if (!frame->deadline_in_frames) {
+        frame->deadline_in_frames = append_quads_data.deadline_in_frames;
+      } else {
+        frame->deadline_in_frames = std::max(
+            *frame->deadline_in_frames, *append_quads_data.deadline_in_frames);
+      }
     }
+    frame->use_default_lower_bound_deadline |=
+        append_quads_data.use_default_lower_bound_deadline;
   }
 
   // If CommitToActiveTree() is true, then we wait to draw until
@@ -1165,6 +1181,11 @@ void LayerTreeHostImpl::InvalidateContentOnImplSide() {
     CreatePendingTree();
 
   UpdateSyncTreeAfterCommitOrImplSideInvalidation();
+}
+
+void LayerTreeHostImpl::InvalidateLayerTreeFrameSink() {
+  DCHECK(layer_tree_frame_sink());
+  layer_tree_frame_sink()->Invalidate();
 }
 
 DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
@@ -1645,6 +1666,7 @@ void LayerTreeHostImpl::DidPresentCompositorFrame(uint32_t presentation_token,
                                                   base::TimeTicks time,
                                                   base::TimeDelta refresh,
                                                   uint32_t flags) {
+  TRACE_EVENT_MARK_WITH_TIMESTAMP0("cc,benchmark", "FramePresented", time);
   std::vector<int> source_frames;
   auto iter = presentation_token_to_frame_.begin();
   for (; iter != presentation_token_to_frame_.end() &&
@@ -1789,9 +1811,8 @@ viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() {
         IsActivelyScrolling() || mutator_host_->NeedsTickAnimations();
   }
 
-  for (auto& surface_id : active_tree_->SurfaceLayerIds()) {
+  for (auto& surface_id : active_tree_->SurfaceLayerIds())
     metadata.referenced_surfaces.push_back(surface_id);
-  }
 
   const auto* inner_viewport_scroll_node = InnerViewportScrollNode();
   if (!inner_viewport_scroll_node)
@@ -1879,7 +1900,10 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   viz::CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
   metadata.may_contain_video = frame->may_contain_video;
-  metadata.deadline_in_frames = frame->deadline_in_frames;
+  if (frame->deadline_in_frames) {
+    metadata.deadline = viz::FrameDeadline(
+        *frame->deadline_in_frames, frame->use_default_lower_bound_deadline);
+  }
   metadata.activation_dependencies = std::move(frame->activation_dependencies);
 
   RenderFrameMetadata render_frame_metadata = MakeRenderFrameMetadata();
@@ -1929,6 +1953,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
       active_tree()->local_surface_id().is_valid()) {
     layer_tree_frame_sink_->SetLocalSurfaceId(
         active_tree()->local_surface_id());
+    last_draw_local_surface_id_ = active_tree()->local_surface_id();
   }
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_quad_count = 0;
@@ -2131,7 +2156,7 @@ void LayerTreeHostImpl::UpdateTreeResourcesForGpuRasterizationIfNeeded() {
   SetRequiresHighResToDraw();
 }
 
-void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
+bool LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   current_begin_frame_tracker_.Start(args);
 
   if (is_likely_to_require_a_draw_) {
@@ -2150,6 +2175,19 @@ void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
     it->OnBeginFrame(args);
 
   impl_thread_phase_ = ImplThreadPhase::INSIDE_IMPL_FRAME;
+
+  // HasDamage() expects the return values of CanDraw and
+  // active_tree()->UpdateDrawProperties() to be true. If we can't check
+  // damage, return true to indicate that there might be damage in this frame.
+  if (settings_.check_damage_early && CanDraw()) {
+    bool ok = active_tree()->UpdateDrawProperties();
+    DCHECK(ok);
+    DamageTracker::UpdateDamageTracking(active_tree_.get(),
+                                        active_tree_->GetRenderSurfaceList());
+    return HasDamage();
+  }
+  // Assume there is damage if we cannot check for damage.
+  return true;
 }
 
 void LayerTreeHostImpl::DidFinishImplFrame() {
@@ -2562,8 +2600,9 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
         ResourcePool::kDefaultExpirationDelay,
         settings_.disallow_non_exact_resource_reuse);
 
-    *raster_buffer_provider =
-        BitmapRasterBufferProvider::Create(resource_provider_.get());
+    *raster_buffer_provider = std::make_unique<BitmapRasterBufferProvider>(
+        resource_provider_.get(),
+        layer_tree_frame_sink_->shared_bitmap_manager());
     return;
   }
 

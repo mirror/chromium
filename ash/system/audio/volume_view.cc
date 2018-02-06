@@ -22,6 +22,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/vector_icon_types.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/button.h"
@@ -100,11 +101,10 @@ class VolumeButton : public ButtonListenerActionableView {
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
     node_data->SetName(
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_VOLUME_MUTE));
-    node_data->role = ui::AX_ROLE_TOGGLE_BUTTON;
+    node_data->role = ax::mojom::Role::kToggleButton;
     const bool is_pressed = CrasAudioHandler::Get()->IsOutputMuted();
-    node_data->AddIntAttribute(
-        ui::AX_ATTR_CHECKED_STATE,
-        is_pressed ? ui::AX_CHECKED_STATE_TRUE : ui::AX_CHECKED_STATE_FALSE);
+    node_data->SetCheckedState(is_pressed ? ax::mojom::CheckedState::kTrue
+                                          : ax::mojom::CheckedState::kFalse);
   }
 
   views::ImageView* image_;
@@ -130,7 +130,7 @@ VolumeView::VolumeView(SystemTrayItem* owner,
 
   slider_ = TrayPopupUtils::CreateSlider(this);
   slider_->SetValue(CrasAudioHandler::Get()->GetOutputVolumePercent() / 100.0f);
-  slider_->SetAccessibleName(
+  slider_->GetViewAccessibility().OverrideName(
       l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_VOLUME));
   tri_view_->AddView(TriView::Container::CENTER, slider_);
 

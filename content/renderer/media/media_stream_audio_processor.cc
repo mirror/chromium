@@ -281,26 +281,21 @@ MediaStreamAudioProcessor::MediaStreamAudioProcessor(
     const AudioProcessingProperties& properties,
     WebRtcPlayoutDataSource* playout_data_source)
     : render_delay_ms_(0),
-      has_echo_cancellation_(false),
       playout_data_source_(playout_data_source),
       main_thread_runner_(base::ThreadTaskRunnerHandle::Get()),
       audio_mirroring_(false),
       typing_detected_(false),
+      aec_dump_message_filter_(AecDumpMessageFilter::Get()),
       stopped_(false) {
   DCHECK(main_thread_runner_);
   capture_thread_checker_.DetachFromThread();
   render_thread_checker_.DetachFromThread();
 
-  // In unit tests not creating a message filter, |aec_dump_message_filter_|
-  // will be null. We can just ignore that below. Other unit tests and browser
-  // tests ensure that we do get the filter when we should.
-  aec_dump_message_filter_ = AecDumpMessageFilter::Get();
-
-  if (aec_dump_message_filter_)
-    override_aec3_ = aec_dump_message_filter_->GetOverrideAec3();
-
   InitializeAudioProcessingModule(properties);
 
+  // In unit tests not creating a message filter, |aec_dump_message_filter_|
+  // will be null. We can just ignore that. Other unit tests and browser tests
+  // ensure that we do get the filter when we should.
   if (aec_dump_message_filter_.get())
     aec_dump_message_filter_->AddDelegate(this);
 }
@@ -443,30 +438,6 @@ void MediaStreamAudioProcessor::OnDisableAecDump() {
   worker_queue_.reset(nullptr);
 }
 
-void MediaStreamAudioProcessor::OnAec3Enable(bool enable) {
-  DCHECK(main_thread_runner_->BelongsToCurrentThread());
-  if (override_aec3_ == enable)
-    return;
-
-  override_aec3_ = enable;
-  if (!has_echo_cancellation_)
-    return;
-
-  auto apm_config = audio_processing_->GetConfig();
-  if (apm_config.echo_canceller3.enabled == enable)
-    return;
-
-  apm_config.echo_canceller3.enabled = enable;
-  audio_processing_->ApplyConfig(apm_config);
-  if (apm_config.echo_canceller3.enabled) {
-    // Do not log any echo information when AEC3 is active, as the echo
-    // information then will not be properly updated.
-    echo_information_.reset();
-  } else {
-    echo_information_ = std::make_unique<EchoInformation>();
-  }
-}
-
 void MediaStreamAudioProcessor::OnIpcClosing() {
   DCHECK(main_thread_runner_->BelongsToCurrentThread());
   aec_dump_message_filter_ = nullptr;
@@ -513,6 +484,17 @@ void MediaStreamAudioProcessor::OnPlayoutData(media::AudioBus* audio_bus,
 #else
   DCHECK(!audio_processing_->echo_control_mobile()->is_enabled());
 #endif
+  DCHECK_GE(audio_bus->channels(), 1);
+  DCHECK_LE(audio_bus->channels(), 2);
+  int frames_per_10_ms = sample_rate / 100;
+  if (audio_bus->frames() != frames_per_10_ms) {
+    if (unsupported_buffer_size_log_count_ < 10) {
+      LOG(ERROR) << "MSAP::OnPlayoutData: Unsupported audio buffer size "
+                 << audio_bus->frames() << ", expected " << frames_per_10_ms;
+      ++unsupported_buffer_size_log_count_;
+    }
+    return;
+  }
 
   TRACE_EVENT1("audio", "MediaStreamAudioProcessor::OnPlayoutData",
                "delay (ms)", audio_delay_milliseconds);
@@ -520,20 +502,20 @@ void MediaStreamAudioProcessor::OnPlayoutData(media::AudioBus* audio_bus,
             std::numeric_limits<base::subtle::Atomic32>::max());
   base::subtle::Release_Store(&render_delay_ms_, audio_delay_milliseconds);
 
-  InitializeRenderFifoIfNeeded(sample_rate, audio_bus->channels(),
-                               audio_bus->frames());
+  std::vector<const float*> channel_ptrs(audio_bus->channels());
+  for (int i = 0; i < audio_bus->channels(); ++i)
+    channel_ptrs[i] = audio_bus->channel(i);
 
-  render_fifo_->Push(
-      *audio_bus, base::TimeDelta::FromMilliseconds(audio_delay_milliseconds));
-  MediaStreamAudioBus* analysis_bus;
-  base::TimeDelta audio_delay;
-  while (render_fifo_->Consume(&analysis_bus, &audio_delay)) {
-    // TODO(ajm): Should AnalyzeReverseStream() account for the |audio_delay|?
-    audio_processing_->AnalyzeReverseStream(
-        analysis_bus->channel_ptrs(),
-        analysis_bus->bus()->frames(),
-        sample_rate,
-        ChannelsToLayout(audio_bus->channels()));
+  // TODO(ajm): Should AnalyzeReverseStream() account for the
+  // |audio_delay_milliseconds|?
+  const int apm_error = audio_processing_->AnalyzeReverseStream(
+      channel_ptrs.data(), audio_bus->frames(), sample_rate,
+      ChannelsToLayout(audio_bus->channels()));
+  if (apm_error != webrtc::AudioProcessing::kNoError &&
+      apm_playout_error_code_log_count_ < 10) {
+    LOG(ERROR) << "MSAP::OnPlayoutData: AnalyzeReverseStream error="
+               << apm_error;
+    ++apm_playout_error_code_log_count_;
   }
 }
 
@@ -542,13 +524,11 @@ void MediaStreamAudioProcessor::OnPlayoutDataSourceChanged() {
   // There is no need to hold a lock here since the caller guarantees that
   // there is no more OnPlayoutData() callback on the render thread.
   render_thread_checker_.DetachFromThread();
-  render_fifo_.reset();
 }
 
 void MediaStreamAudioProcessor::OnRenderThreadChanged() {
   render_thread_checker_.DetachFromThread();
   DCHECK(render_thread_checker_.CalledOnValidThread());
-  render_fifo_->ReattachThreadChecker();
 }
 
 void MediaStreamAudioProcessor::GetStats(AudioProcessorStats* stats) {
@@ -575,7 +555,6 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
   // is handled within this MediaStreamAudioProcessor and does not, by itself,
   // require webrtc::AudioProcessing.
   audio_mirroring_ = properties.goog_audio_mirroring;
-  has_echo_cancellation_ = properties.enable_sw_echo_cancellation;
 
 #if defined(OS_ANDROID)
   const bool goog_experimental_aec = false;
@@ -629,8 +608,26 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
         new webrtc::ExperimentalAgc(true, startup_min_volume.value_or(0)));
   }
 
+  // Check if experimental echo canceller should be used.
+  if (properties.enable_sw_echo_cancellation) {
+    base::Optional<bool> override_aec3;
+    // In unit tests not creating a message filter, |aec_dump_message_filter_|
+    // will be null. We can just ignore that. Other unit tests and browser tests
+    // ensure that we do get the filter when we should.
+    if (aec_dump_message_filter_)
+      override_aec3 = aec_dump_message_filter_->GetOverrideAec3();
+    using_aec3_ = override_aec3.value_or(
+        base::FeatureList::IsEnabled(features::kWebRtcUseEchoCanceller3));
+  }
+
   // Create and configure the webrtc::AudioProcessing.
-  audio_processing_.reset(webrtc::AudioProcessingBuilder().Create(config));
+  webrtc::AudioProcessingBuilder ap_builder;
+  if (using_aec3_) {
+    ap_builder.SetEchoControlFactory(
+        std::unique_ptr<webrtc::EchoControlFactory>(
+            new webrtc::EchoCanceller3Factory()));
+  }
+  audio_processing_.reset(ap_builder.Create(config));
 
   // Enable the audio processing components.
   webrtc::AudioProcessing::Config apm_config;
@@ -642,20 +639,11 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
   if (properties.enable_sw_echo_cancellation) {
     EnableEchoCancellation(audio_processing_.get());
 
-    apm_config.echo_canceller3.enabled = override_aec3_.value_or(
-        base::FeatureList::IsEnabled(features::kWebRtcUseEchoCanceller3));
-
-    if (!apm_config.echo_canceller3.enabled) {
-      // Prepare for logging echo information. If there are data remaining in
-      // |echo_information_| we simply discard it.
+    // Prepare for logging echo information. Do not log any echo information
+    // when AEC3 is active, as the echo information then will not be properly
+    // updated.
+    if (!using_aec3_)
       echo_information_ = std::make_unique<EchoInformation>();
-    } else {
-      // Do not log any echo information when AEC3 is active, as the echo
-      // information then will not be properly updated.
-      echo_information_.reset();
-    }
-  } else {
-    apm_config.echo_canceller3.enabled = false;
   }
 
   if (properties.goog_noise_suppression) {
@@ -757,33 +745,6 @@ void MediaStreamAudioProcessor::InitializeCaptureFifo(
     output_bus_.reset(new MediaStreamAudioBus(output_format_.channels(),
                                               output_frames));
   }
-}
-
-void MediaStreamAudioProcessor::InitializeRenderFifoIfNeeded(
-    int sample_rate, int number_of_channels, int frames_per_buffer) {
-  DCHECK(render_thread_checker_.CalledOnValidThread());
-  if (render_fifo_.get() &&
-      render_format_.sample_rate() == sample_rate &&
-      render_format_.channels() == number_of_channels &&
-      render_format_.frames_per_buffer() == frames_per_buffer) {
-    // Do nothing if the |render_fifo_| has been setup properly.
-    return;
-  }
-
-  render_format_ = media::AudioParameters(
-      media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-      media::GuessChannelLayout(number_of_channels),
-      sample_rate,
-      16,
-      frames_per_buffer);
-
-  const int analysis_frames = sample_rate / 100;  // 10 ms chunks.
-  render_fifo_.reset(
-      new MediaStreamAudioFifo(number_of_channels,
-                               number_of_channels,
-                               frames_per_buffer,
-                               analysis_frames,
-                               sample_rate));
 }
 
 int MediaStreamAudioProcessor::ProcessData(const float* const* process_ptrs,

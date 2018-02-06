@@ -13,18 +13,18 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/markers/DocumentMarkerController.h"
+#include "core/editing/testing/EditingTestBase.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
-#include "core/testing/PageTestBase.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class InputMethodControllerTest : public PageTestBase {
+class InputMethodControllerTest : public EditingTestBase {
  protected:
   InputMethodController& Controller() {
     return GetFrame().GetInputMethodController();
@@ -3054,6 +3054,13 @@ TEST_F(
 }
 
 TEST_F(InputMethodControllerTest, AutocapitalizeTextInputFlags) {
+  // This test assumes that the behavior tested in
+  // LayoutTests/fast/forms/autocapitalize.html works properly and tests the
+  // following:
+  // - The autocapitalize IDL states map properly to WebTextInputFlags for
+  //   <input> elements, <textarea> elements, and editable regions
+  // - We ignore the value of the IDL attribute for password/email/URL inputs
+  //   and always send None for this case.
   Vector<std::pair<String, int>> element_and_expected_flags_pairs = {
       {"<input type='text'>", kWebTextInputFlagAutocapitalizeSentences},
       {"<input type='text' autocapitalize='none'>",
@@ -3161,6 +3168,30 @@ TEST_F(InputMethodControllerTest, ExecCommandDuringComposition) {
 
   // "world" should be bold.
   EXPECT_EQ("hello<b>world</b>", div->InnerHTMLAsString());
+}
+
+TEST_F(InputMethodControllerTest, SetCompositionAfterNonEditableElement) {
+  GetFrame().Selection().SetSelectionAndEndTyping(
+      SetSelectionTextToBody("<div id='sample' contenteditable='true'>"
+                             "<span contenteditable='false'>a</span>|b</div>"));
+  Element* const div = GetDocument().getElementById("sample");
+  div->focus();
+
+  // Open a composition and insert some text.
+  Controller().SetComposition(String::FromUTF8("c"), Vector<ImeTextSpan>(), 1,
+                              1);
+
+  // Add some more text to the composition.
+  Controller().SetComposition(String::FromUTF8("cd"), Vector<ImeTextSpan>(), 2,
+                              2);
+
+  EXPECT_EQ(
+      "<div contenteditable=\"true\" id=\"sample\">"
+      "<span contenteditable=\"false\">a</span>^cd|b</div>",
+      GetSelectionTextFromBody(
+          SelectionInDOMTree::Builder()
+              .SetBaseAndExtent(Controller().CompositionEphemeralRange())
+              .Build()));
 }
 
 }  // namespace blink

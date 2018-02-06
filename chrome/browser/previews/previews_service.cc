@@ -26,8 +26,10 @@ namespace {
 
 // Returns true if previews can be shown for |type|.
 bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
-  bool server_previews_enabled = base::FeatureList::IsEnabled(
-      data_reduction_proxy::features::kDataReductionProxyDecidesTransform);
+  bool server_previews_enabled =
+      previews::params::ArePreviewsAllowed() &&
+      base::FeatureList::IsEnabled(
+          data_reduction_proxy::features::kDataReductionProxyDecidesTransform);
   switch (type) {
     case previews::PreviewsType::OFFLINE:
       return previews::params::IsOfflinePreviewsEnabled();
@@ -39,6 +41,9 @@ bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
       return previews::params::IsAMPRedirectionPreviewEnabled();
     case previews::PreviewsType::NOSCRIPT:
       return previews::params::IsNoScriptPreviewsEnabled();
+    case previews::PreviewsType::UNSPECIFIED:
+      // Not a real previews type so treat as false.
+      return false;
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
       break;
@@ -62,6 +67,7 @@ int GetPreviewsTypeVersion(previews::PreviewsType type) {
     case previews::PreviewsType::NOSCRIPT:
       return previews::params::NoScriptPreviewsVersion();
     case previews::PreviewsType::NONE:
+    case previews::PreviewsType::UNSPECIFIED:
     case previews::PreviewsType::LAST:
       break;
   }

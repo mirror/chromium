@@ -678,8 +678,26 @@ public class CustomTabActivityTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testOpenInBrowser() throws InterruptedException {
-        mCustomTabActivityTestRule.startCustomTabActivityWithIntent(createMinimalCustomTabIntent());
+    public void testOpenInBrowser() throws InterruptedException, TimeoutException {
+        // Augment the CustomTabsSession to catch the callback.
+        CallbackHelper callbackTriggered = new CallbackHelper();
+        CustomTabsSession session = bindWithCallback(new CustomTabsCallback() {
+            @Override
+            public void extraCallback(String callbackName, Bundle args) {
+                if (callbackName.equals(CustomTabsConnection.OPEN_IN_BROWSER_CALLBACK)) {
+                    callbackTriggered.notifyCalled();
+                }
+            }
+        });
+
+        Intent intent = new CustomTabsIntent.Builder(session).build().intent;
+        intent.setData(Uri.parse(mTestPage));
+        intent.setComponent(new ComponentName(
+                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
+
         IntentFilter filter = new IntentFilter(Intent.ACTION_VIEW);
         filter.addDataScheme(Uri.parse(mTestServer.getURL("/")).getScheme());
         final ActivityMonitor monitor =
@@ -702,6 +720,8 @@ public class CustomTabActivityTest {
                 return InstrumentationRegistry.getInstrumentation().checkMonitorHit(monitor, 1);
             }
         });
+
+        callbackTriggered.waitForCallback(0);
     }
 
     /**
@@ -936,7 +956,7 @@ public class CustomTabActivityTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testLaunchWithSession() throws InterruptedException {
+    public void testLaunchWithSession() throws InterruptedException, TimeoutException {
         CustomTabsSessionToken session = warmUpAndLaunchUrlWithSession();
         Assert.assertEquals(getActivity().getIntentDataProvider().getSession(), session);
     }
@@ -1338,7 +1358,7 @@ public class CustomTabActivityTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testPostMessageBasic() throws InterruptedException {
+    public void testPostMessageBasic() throws InterruptedException, TimeoutException {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
         Context context = InstrumentationRegistry.getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
@@ -1430,7 +1450,7 @@ public class CustomTabActivityTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testPostMessageRequiresValidation() throws InterruptedException {
+    public void testPostMessageRequiresValidation() throws InterruptedException, TimeoutException {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
         Context context = InstrumentationRegistry.getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
@@ -1455,7 +1475,7 @@ public class CustomTabActivityTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testPostMessageReceivedInPage() throws InterruptedException {
+    public void testPostMessageReceivedInPage() throws InterruptedException, TimeoutException {
         final String url =
                 mWebServer.setResponse("/test.html", TITLE_FROM_POSTMESSAGE_TO_CHANNEL, null);
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
@@ -1830,7 +1850,7 @@ public class CustomTabActivityTest {
     @DisabledTest
     @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
-    public void testWarmupAndLaunchRegularChrome() {
+    public void testWarmupAndLaunchRegularChrome() throws InterruptedException, TimeoutException {
         CustomTabsTestUtils.warmUpAndWait();
         Intent intent = new Intent(
                 InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class);
@@ -1858,7 +1878,8 @@ public class CustomTabActivityTest {
     @SmallTest
     @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
-    public void testWarmupAndLaunchRightToolbarLayout() {
+    public void testWarmupAndLaunchRightToolbarLayout()
+            throws InterruptedException, TimeoutException {
         CustomTabsTestUtils.warmUpAndWait();
         mCustomTabActivityTestRule.startActivityCompletely(createMinimalCustomTabIntent());
         Assert.assertNull("Should not have a tab switcher button.",
@@ -2730,7 +2751,7 @@ public class CustomTabActivityTest {
     }
 
     private CustomTabsSessionToken warmUpAndLaunchUrlWithSession(Intent intentWithSession)
-            throws InterruptedException {
+            throws InterruptedException, TimeoutException {
         CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
         CustomTabsSessionToken token =
                 CustomTabsSessionToken.getSessionTokenFromIntent(intentWithSession);
@@ -2740,7 +2761,8 @@ public class CustomTabActivityTest {
         return token;
     }
 
-    private CustomTabsSessionToken warmUpAndLaunchUrlWithSession() throws InterruptedException {
+    private CustomTabsSessionToken warmUpAndLaunchUrlWithSession()
+            throws InterruptedException, TimeoutException {
         return warmUpAndLaunchUrlWithSession(CustomTabsTestUtils.createMinimalCustomTabIntent(
                 InstrumentationRegistry.getTargetContext(), mTestPage));
     }

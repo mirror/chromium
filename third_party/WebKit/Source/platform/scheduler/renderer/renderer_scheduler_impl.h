@@ -110,7 +110,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   static const int kMinExpectedQueueingTimeBucket = 1;
   // The highest bucket for fine-grained Expected Queueing Time reporting, in
   // microseconds.
-  static const int kMaxExpectedQueueingTimeBucket = 4 * 1000 * 1000;
+  static const int kMaxExpectedQueueingTimeBucket = 30 * 1000 * 1000;
   // The number of buckets for fine-grained Expected Queueing Time reporting.
   static const int kNumberExpectedQueueingTimeBuckets = 50;
 
@@ -137,6 +137,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void DidAnimateForInputOnCompositorThread() override;
   void SetRendererHidden(bool hidden) override;
   void SetRendererBackgrounded(bool backgrounded) override;
+  void SetSchedulerKeepActive(bool keep_active) override;
 #if defined(OS_ANDROID)
   void PauseTimersForAndroidWebView();
   void ResumeTimersForAndroidWebView();
@@ -183,6 +184,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   scoped_refptr<MainThreadTaskQueue> DefaultTaskQueue();
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
+  scoped_refptr<MainThreadTaskQueue> InputTaskQueue();
   scoped_refptr<MainThreadTaskQueue> TimerTaskQueue();
   scoped_refptr<MainThreadTaskQueue> V8TaskQueue();
 
@@ -192,7 +194,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   // Returns a new loading task queue. This queue is intended for tasks related
   // to resource dispatch, foreground HTML parsing, etc...
-  // Note: Tasks posted to kFrameLoading_kControl queues must execute quickly.
+  // Note: Tasks posted to kFrameLoadingControl queues must execute quickly.
   scoped_refptr<MainThreadTaskQueue> NewLoadingTaskQueue(
       MainThreadTaskQueue::QueueType queue_type);
 
@@ -304,6 +306,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // Use *TaskQueue internally.
   scoped_refptr<base::SingleThreadTaskRunner> DefaultTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
+  scoped_refptr<base::SingleThreadTaskRunner> InputTaskRunner() override;
 
  private:
   friend class RenderWidgetSchedulingState;
@@ -598,9 +601,11 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   const scoped_refptr<MainThreadTaskQueue> control_task_queue_;
   const scoped_refptr<MainThreadTaskQueue> compositor_task_queue_;
+  const scoped_refptr<MainThreadTaskQueue> input_task_queue_;
   scoped_refptr<MainThreadTaskQueue> virtual_time_control_task_queue_;
   std::unique_ptr<TaskQueue::QueueEnabledVoter>
       compositor_task_queue_enabled_voter_;
+  std::unique_ptr<TaskQueue::QueueEnabledVoter> input_task_queue_enabled_voter_;
 
   using TaskQueueVoterMap =
       std::map<scoped_refptr<MainThreadTaskQueue>,
@@ -660,6 +665,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
         rail_mode_for_tracing;  // Don't use except for tracing.
     TraceableState<bool, kTracingCategoryNameDebug> renderer_hidden;
     TraceableState<bool, kTracingCategoryNameDefault> renderer_backgrounded;
+    TraceableState<bool, kTracingCategoryNameDefault>
+        keep_active_fetch_or_worker;
     TraceableState<bool, kTracingCategoryNameInfo>
         stopping_when_backgrounded_enabled;
     TraceableState<bool, kTracingCategoryNameInfo>

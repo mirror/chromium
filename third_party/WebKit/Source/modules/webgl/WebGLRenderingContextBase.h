@@ -28,7 +28,6 @@
 
 #include <memory>
 #include <set>
-#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
@@ -49,6 +48,7 @@
 #include "platform/graphics/gpu/Extensions3DUtil.h"
 #include "platform/graphics/gpu/WebGLImageConversion.h"
 #include "platform/wtf/CheckedNumeric.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
@@ -275,10 +275,10 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   WebGLActiveInfo* getActiveAttrib(WebGLProgram*, GLuint index);
   WebGLActiveInfo* getActiveUniform(WebGLProgram*, GLuint index);
   bool getAttachedShaders(WebGLProgram*, HeapVector<Member<WebGLShader>>&);
-  Nullable<HeapVector<Member<WebGLShader>>> getAttachedShaders(WebGLProgram*);
+  Optional<HeapVector<Member<WebGLShader>>> getAttachedShaders(WebGLProgram*);
   GLint getAttribLocation(WebGLProgram*, const String& name);
   ScriptValue getBufferParameter(ScriptState*, GLenum target, GLenum pname);
-  void getContextAttributes(Nullable<WebGLContextAttributes>&);
+  void getContextAttributes(Optional<WebGLContextAttributes>&);
   GLenum getError();
   ScriptValue getExtension(ScriptState*, const String& name);
   virtual ScriptValue getFramebufferAttachmentParameter(ScriptState*,
@@ -296,7 +296,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   WebGLShaderPrecisionFormat* getShaderPrecisionFormat(GLenum shader_type,
                                                        GLenum precision_type);
   String getShaderSource(WebGLShader*);
-  Nullable<Vector<String>> getSupportedExtensions();
+  Optional<Vector<String>> getSupportedExtensions();
   virtual ScriptValue getTexParameter(ScriptState*,
                                       GLenum target,
                                       GLenum pname);
@@ -710,7 +710,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   TaskRunnerTimer<WebGLRenderingContextBase> dispatch_context_lost_event_timer_;
   bool restore_allowed_;
   TaskRunnerTimer<WebGLRenderingContextBase> restore_timer_;
-  scoped_refptr<WebTaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   bool marked_canvas_dirty_;
   bool animation_frame_in_progress_;
@@ -745,15 +745,13 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   // Fixed-size cache of reusable resource providers for video texImage2D calls.
   class LRUCanvasResourceProviderCache {
    public:
-    LRUCanvasResourceProviderCache(int capacity);
+    explicit LRUCanvasResourceProviderCache(size_t capacity);
     // The pointer returned is owned by the image buffer map.
     CanvasResourceProvider* GetCanvasResourceProvider(const IntSize&);
 
    private:
-    void BubbleToFront(int idx);
-    std::unique_ptr<std::unique_ptr<CanvasResourceProvider>[]>
-        resource_providers_;
-    int capacity_;
+    void BubbleToFront(size_t idx);
+    Vector<std::unique_ptr<CanvasResourceProvider>> resource_providers_;
   };
   LRUCanvasResourceProviderCache generated_image_cache_;
 
@@ -1667,7 +1665,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
  private:
   WebGLRenderingContextBase(CanvasRenderingContextHost*,
-                            scoped_refptr<WebTaskRunner>,
+                            scoped_refptr<base::SingleThreadTaskRunner>,
                             std::unique_ptr<WebGraphicsContext3DProvider>,
                             bool using_gpu_compositing,
                             const CanvasContextCreationAttributes&,

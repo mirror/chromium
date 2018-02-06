@@ -2234,7 +2234,7 @@
                 },
                 {
                     "name": "stopRuleUsageTracking",
-                    "description": "The list of rules with an indication of whether these were used",
+                    "description": "Stop tracking rule usage and return the list of rules that were used since last call to\n`takeCoverageDelta` (or since start of coverage instrumentation)",
                     "returns": [
                         {
                             "name": "ruleUsage",
@@ -6066,11 +6066,6 @@
                             "type": "integer"
                         },
                         {
-                            "name": "timestamp",
-                            "description": "Time at which the event occurred.",
-                            "$ref": "TimeSinceEpoch"
-                        },
-                        {
                             "name": "button",
                             "description": "Mouse button.",
                             "type": "string",
@@ -6080,6 +6075,12 @@
                                 "middle",
                                 "right"
                             ]
+                        },
+                        {
+                            "name": "timestamp",
+                            "description": "Time at which the event occurred (default: current time).",
+                            "optional": true,
+                            "$ref": "TimeSinceEpoch"
                         },
                         {
                             "name": "deltaX",
@@ -6294,6 +6295,10 @@
                 {
                     "name": "targetCrashed",
                     "description": "Fired when debugging target has crashed"
+                },
+                {
+                    "name": "targetReloadedAfterCrash",
+                    "description": "Fired when debugging target has reloaded after crash"
                 }
             ]
         },
@@ -6886,6 +6891,45 @@
                         "moderate",
                         "critical"
                     ]
+                },
+                {
+                    "id": "SamplingProfileNode",
+                    "description": "Heap profile sample.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "size",
+                            "description": "Size of the sampled allocation.",
+                            "type": "number"
+                        },
+                        {
+                            "name": "count",
+                            "description": "Number of sampled allocations of that size.",
+                            "type": "number"
+                        },
+                        {
+                            "name": "stack",
+                            "description": "Execution stack at the point of allocation.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "SamplingProfile",
+                    "description": "Array of heap profile samples.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "samples",
+                            "type": "array",
+                            "items": {
+                                "$ref": "SamplingProfileNode"
+                            }
+                        }
+                    ]
                 }
             ],
             "commands": [
@@ -6928,6 +6972,48 @@
                             "name": "level",
                             "description": "Memory pressure level of the notification.",
                             "$ref": "PressureLevel"
+                        }
+                    ]
+                },
+                {
+                    "name": "startSampling",
+                    "description": "Start collecting native memory profile.",
+                    "parameters": [
+                        {
+                            "name": "samplingInterval",
+                            "description": "Average number of bytes between samples.",
+                            "optional": true,
+                            "type": "integer"
+                        },
+                        {
+                            "name": "suppressRandomness",
+                            "description": "Do not randomize intervals between samples.",
+                            "optional": true,
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "name": "stopSampling",
+                    "description": "Stop collecting native memory profile."
+                },
+                {
+                    "name": "getAllTimeSamplingProfile",
+                    "description": "Retrieve native memory allocations profile collected since process startup.",
+                    "returns": [
+                        {
+                            "name": "profile",
+                            "$ref": "SamplingProfile"
+                        }
+                    ]
+                },
+                {
+                    "name": "getSamplingProfile",
+                    "description": "Retrieve native memory allocations profile collected since last\n`startSampling` call.",
+                    "returns": [
+                        {
+                            "name": "profile",
+                            "$ref": "SamplingProfile"
                         }
                     ]
                 }
@@ -9916,6 +10002,12 @@
                             "description": "Intended transition type.",
                             "optional": true,
                             "$ref": "TransitionType"
+                        },
+                        {
+                            "name": "frameId",
+                            "description": "Frame id to navigate, if not specified navigates the top frame.",
+                            "optional": true,
+                            "$ref": "FrameId"
                         }
                     ],
                     "returns": [
@@ -10036,6 +10128,12 @@
                             "description": "HTML template for the print footer. Should use the same format as the `headerTemplate`.",
                             "optional": true,
                             "type": "string"
+                        },
+                        {
+                            "name": "preferCSSPageSize",
+                            "description": "Whether or not to prefer page size as defined by css. Defaults to false,\nin which case the content will be scaled to fit the paper size.",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ],
                     "returns": [
@@ -11818,17 +11916,6 @@
                             "deprecated": true,
                             "optional": true,
                             "$ref": "TargetID"
-                        }
-                    ]
-                },
-                {
-                    "name": "setAttachToFrames",
-                    "experimental": true,
-                    "parameters": [
-                        {
-                            "name": "value",
-                            "description": "Whether to attach to frames.",
-                            "type": "boolean"
                         }
                     ]
                 },

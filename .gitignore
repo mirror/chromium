@@ -68,7 +68,8 @@ vs-chromium-project.txt
 /c
 /cdm
 /ceee/internal/
-/chrome/android/profiles/chrome-profile-*.prof
+/chrome/android/profiles/afdo.prof
+/chrome/android/profiles/local.txt
 /chrome/angle_unittests_run.xml
 /chrome/build/chrome.x64.orderfile
 /chrome/build/chrome.x86.orderfile
@@ -84,6 +85,7 @@ vs-chromium-project.txt
 /chrome/app/theme/google_chrome
 /chrome/browser/autofill/internal
 /chrome/browser/chromeos/arc/voice_interaction/internal
+/chrome/browser/chromeos/assistant/internal
 /chrome/browser/chromeos/login/screenshot_testing/golden_screenshots/*.png
 /chrome/browser/chromeos/login/screenshot_testing/artifacts
 /chrome/browser/extensions/api/ledger/
@@ -95,6 +97,7 @@ vs-chromium-project.txt
 /chrome/browser/protector/internal
 /chrome/browser/resources/chromeos/quickoffice
 /chrome/browser/resources/pdf/html_office
+/chrome/browser/resources/media_router/extension/src/
 /chrome/browser/resources/media_router_internal/
 /chrome/browser/resources/settings_internal/
 /chrome/browser/resources/software_rendering_list
@@ -150,6 +153,7 @@ vs-chromium-project.txt
 /chrome/web_ui_mojo_bindings.xml
 /chrome_elf/chrome_elf_resources.xml
 /chromecast/internal
+/chromeos/assistant/internal
 /clank
 /cloud_print/cloud_print_version_resources.xml
 /components/chrome_settings_proto_generated_compile.xml

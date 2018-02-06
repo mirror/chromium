@@ -23,6 +23,9 @@
 #include "media/mojo/interfaces/media_metrics_provider.mojom.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 
+#include "base/unguessable_token.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+
 namespace base {
 class SingleThreadTaskRunner;
 class TaskRunner;
@@ -45,6 +48,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
  public:
   typedef base::Callback<void(const base::Closure&)> DeferLoadCB;
   typedef base::Callback<Context3D()> Context3DCB;
+
+  // Callback to
+  typedef base::Callback<void(int delegate_id,
+                              viz::FrameSinkId frame_sink_id,
+                              uint32_t parent_id,
+                              base::UnguessableToken nonce)>
+      SurfaceInfoCB;
 
   // Callback to obtain the media ContextProvider.
   // Requires being called on the media thread.
@@ -82,7 +92,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::MediaMetricsProviderPtr metrics_provider,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
           blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<viz::ContextProvider> context_provider,
+      const SurfaceInfoCB& surface_info_cb);
 
   ~WebMediaPlayerParams();
 
@@ -161,6 +172,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return context_provider_;
   }
 
+  SurfaceInfoCB surface_info_cb() const { return surface_info_cb_; }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -185,6 +198,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
   scoped_refptr<viz::ContextProvider> context_provider_;
+  SurfaceInfoCB surface_info_cb_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

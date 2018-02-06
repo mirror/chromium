@@ -25,7 +25,7 @@
 #include "net/http/http_response_body_drainer.h"
 #include "net/http/http_stream_factory_impl.h"
 #include "net/http/url_security_manager.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/quic/chromium/quic_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_stream_factory.h"
 #include "net/quic/core/crypto/quic_random.h"
@@ -110,6 +110,7 @@ HttpNetworkSession::Params::Params()
       enable_quic(false),
       quic_max_packet_length(kDefaultMaxPacketSize),
       quic_max_server_configs_stored_in_properties(0u),
+      quic_enable_socket_recv_optimization(false),
       mark_quic_broken_when_network_blackholes(false),
       retry_without_alt_svc_on_quic_errors(false),
       support_ietf_format_quic_altsvc(false),
@@ -130,7 +131,7 @@ HttpNetworkSession::Params::Params()
       quic_max_migrations_to_non_default_network_on_path_degrading(
           kMaxMigrationsToNonDefaultNetworkOnPathDegrading),
       quic_allow_server_migration(false),
-      quic_allow_remote_alt_svc(false),
+      quic_allow_remote_alt_svc(true),
       quic_disable_bidirectional_streams(false),
       quic_force_hol_blocking(false),
       quic_race_cert_verification(false),
@@ -139,7 +140,7 @@ HttpNetworkSession::Params::Params()
       enable_token_binding(false),
       http_09_on_non_default_ports_enabled(false),
       disable_idle_sockets_close_on_memory_pressure(false) {
-  quic_supported_versions.push_back(QUIC_VERSION_39);
+  quic_supported_versions.push_back(QUIC_VERSION_41);
 }
 
 HttpNetworkSession::Params::Params(const Params& other) = default;
@@ -220,7 +221,8 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
           params.quic_headers_include_h2_stream_dependency,
           params.quic_connection_options,
           params.quic_client_connection_options,
-          params.enable_token_binding),
+          params.enable_token_binding,
+          params.quic_enable_socket_recv_optimization),
       spdy_session_pool_(context.host_resolver,
                          context.ssl_config_service,
                          context.http_server_properties,
@@ -230,8 +232,7 @@ HttpNetworkSession::HttpNetworkSession(const Params& params,
                          params.support_ietf_format_quic_altsvc,
                          params.spdy_session_max_recv_window_size,
                          AddDefaultHttp2Settings(params.http2_settings),
-                         params.time_func,
-                         context.proxy_delegate),
+                         params.time_func),
       http_stream_factory_(std::make_unique<HttpStreamFactoryImpl>(this)),
       network_stream_throttler_(std::make_unique<NetworkThrottleManagerImpl>()),
       params_(params),

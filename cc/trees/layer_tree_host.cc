@@ -312,7 +312,7 @@ void LayerTreeHost::FinishCommitOnImplThread(
   sync_tree->set_source_frame_number(SourceFrameNumber());
 
   // Set presentation token if any pending .
-  bool request_presentation_time = false;
+  bool request_presentation_time = settings_.always_request_presentation_time;
   if (!pending_presentation_time_callbacks_.empty()) {
     request_presentation_time = true;
     frame_to_presentation_time_callbacks_[SourceFrameNumber()] =
@@ -333,6 +333,7 @@ void LayerTreeHost::FinishCommitOnImplThread(
   // the |content_source_id_| on the sync tree.
   bool did_navigate = content_source_id_ != sync_tree->content_source_id();
   if (did_navigate) {
+    TRACE_EVENT0("cc,benchmark", "LayerTreeHost::DidNavigate");
     proxy_->ClearHistoryOnNavigation();
     host_impl->ClearImageCacheOnNavigation();
   }
@@ -928,9 +929,9 @@ void LayerTreeHost::AnimateLayers(base::TimeTicks monotonic_time) {
 int LayerTreeHost::ScheduleMicroBenchmark(
     const std::string& benchmark_name,
     std::unique_ptr<base::Value> value,
-    const MicroBenchmark::DoneCallback& callback) {
-  return micro_benchmark_controller_.ScheduleRun(benchmark_name,
-                                                 std::move(value), callback);
+    MicroBenchmark::DoneCallback callback) {
+  return micro_benchmark_controller_.ScheduleRun(
+      benchmark_name, std::move(value), std::move(callback));
 }
 
 bool LayerTreeHost::SendMessageToMicroBenchmark(

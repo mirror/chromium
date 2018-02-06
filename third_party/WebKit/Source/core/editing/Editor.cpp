@@ -45,7 +45,6 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
-#include "core/editing/RenderedPosition.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/VisiblePosition.h"
@@ -1473,19 +1472,18 @@ IntRect Editor::FirstRectForRange(const EphemeralRange& range) const {
   LayoutUnit extra_width_to_end_of_line;
   DCHECK(range.IsNotNull());
 
-  IntRect start_caret_rect =
-      RenderedPosition(
-          CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
-          TextAffinity::kDownstream)
-          .AbsoluteRect(&extra_width_to_end_of_line);
+  const PositionWithAffinity start_position(
+      CreateVisiblePosition(range.StartPosition()).DeepEquivalent(),
+      TextAffinity::kDownstream);
+  const IntRect start_caret_rect =
+      AbsoluteCaretRectOfPosition(start_position, &extra_width_to_end_of_line);
   if (start_caret_rect.IsEmpty())
     return IntRect();
 
-  IntRect end_caret_rect =
-      RenderedPosition(
-          CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
-          TextAffinity::kUpstream)
-          .AbsoluteRect();
+  const PositionWithAffinity end_position(
+      CreateVisiblePosition(range.EndPosition()).DeepEquivalent(),
+      TextAffinity::kUpstream);
+  const IntRect end_caret_rect = AbsoluteCaretRectOfPosition(end_position);
   if (end_caret_rect.IsEmpty())
     return IntRect();
 
@@ -1503,6 +1501,34 @@ IntRect Editor::FirstRectForRange(const EphemeralRange& range) const {
       start_caret_rect.X(), start_caret_rect.Y(),
       (start_caret_rect.Width() + extra_width_to_end_of_line).ToInt(),
       start_caret_rect.Height());
+}
+
+EphemeralRange Editor::RangeForPoint(const IntPoint& frame_point) const {
+  const PositionWithAffinity position_with_affinity =
+      GetFrame().PositionForPoint(frame_point);
+  if (position_with_affinity.IsNull())
+    return EphemeralRange();
+
+  const VisiblePosition position =
+      CreateVisiblePosition(position_with_affinity);
+  const VisiblePosition previous = PreviousPositionOf(position);
+  if (previous.IsNotNull()) {
+    const EphemeralRange previous_character_range =
+        MakeRange(previous, position);
+    const IntRect rect = FirstRectForRange(previous_character_range);
+    if (rect.Contains(frame_point))
+      return EphemeralRange(previous_character_range);
+  }
+
+  const VisiblePosition next = NextPositionOf(position);
+  const EphemeralRange next_character_range = MakeRange(position, next);
+  if (next_character_range.IsNotNull()) {
+    const IntRect rect = FirstRectForRange(next_character_range);
+    if (rect.Contains(frame_point))
+      return EphemeralRange(next_character_range);
+  }
+
+  return EphemeralRange();
 }
 
 void Editor::ComputeAndSetTypingStyle(CSSPropertyValueSet* style,

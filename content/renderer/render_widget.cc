@@ -29,7 +29,6 @@
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/drag_messages.h"
 #include "content/common/input_messages.h"
@@ -614,6 +613,7 @@ void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
 void RenderWidget::SetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
     const content::ScreenInfo& screen_info,
+    uint32_t content_source_id,
     const viz::LocalSurfaceId& local_surface_id) {
   bool screen_info_changed = screen_info_ != screen_info;
 
@@ -632,7 +632,12 @@ void RenderWidget::SetLocalSurfaceIdForAutoResize(
       observer.ScreenInfoChanged(screen_info);
   }
 
-  AutoResizeCompositor(local_surface_id);
+  // If the given LocalSurfaceId was generated before navigation, don't use it.
+  // We should receive a new LocalSurfaceId later.
+  if (content_source_id != current_content_source_id_)
+    AutoResizeCompositor(viz::LocalSurfaceId());
+  else
+    AutoResizeCompositor(local_surface_id);
 }
 
 void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
@@ -770,18 +775,18 @@ void RenderWidget::OnClose() {
 
   if (for_oopif_) {
     // Widgets for frames may be created and closed at any time while the frame
-    // is alive. However, the closing process must happen synchronously. Frame
-    // widget and frames hold pointers to each other. If Close() is deferred to
-    // the message loop like in the non-frame widget case, WebWidget::close()
-    // can end up accessing members of an already-deleted frame.
-    Close();
-  } else {
-    // If there is a Send call on the stack, then it could be dangerous to close
-    // now.  Post a task that only gets invoked when there are no nested message
-    // loops.
-    task_runner_->PostNonNestableTask(
-        FROM_HERE, base::BindOnce(&RenderWidget::Close, this));
+    // is alive. However, WebWidget must be closed synchronously because frame
+    // widgets and frames hold pointers to each other. The deferred call to
+    // Close() will complete cleanup and release |this|, but CloseWebWidget()
+    // prevents Close() from attempting to access members of an
+    // already-deleted frame.
+    CloseWebWidget();
   }
+  // If there is a Send call on the stack, then it could be dangerous to close
+  // now.  Post a task that only gets invoked when there are no nested message
+  // loops.
+  task_runner_->PostNonNestableTask(FROM_HERE,
+                                    base::BindOnce(&RenderWidget::Close, this));
 
   // Balances the AddRef taken when we called AddRoute.
   Release();
@@ -811,12 +816,13 @@ void RenderWidget::OnSetLocalSurfaceIdForAutoResize(
     const gfx::Size& min_size,
     const gfx::Size& max_size,
     const content::ScreenInfo& screen_info,
+    uint32_t content_source_id,
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
 
   SetLocalSurfaceIdForAutoResize(sequence_number, screen_info,
-                                 local_surface_id);
+                                 content_source_id, local_surface_id);
 }
 
 void RenderWidget::OnEnableDeviceEmulation(
@@ -847,14 +853,24 @@ void RenderWidget::OnWasHidden() {
   SetHidden(true);
   for (auto& observer : render_frames_)
     observer.WasHidden();
+
+  // Ack the resize if we have to, so that the next time we're visible we get a
+  // fresh ResizeParams right away; otherwise we'll start painting based on a
+  // stale ResizeParams.
+  DidResizeOrRepaintAck();
 }
 
-void RenderWidget::OnWasShown(bool needs_repainting,
-                              const ui::LatencyInfo& latency_info) {
+void RenderWidget::OnWasShown(
+    bool needs_repainting,
+    const ui::LatencyInfo& latency_info,
+    const base::Optional<ResizeParams>& resize_params) {
   TRACE_EVENT0("renderer", "RenderWidget::OnWasShown");
   // During shutdown we can just ignore this message.
   if (!GetWebWidget())
     return;
+
+  if (resize_params)
+    OnResize(*resize_params);
 
   was_shown_time_ = base::TimeTicks::Now();
   // See OnWasHidden
@@ -972,6 +988,8 @@ void RenderWidget::ApplyViewportDeltas(
     const gfx::Vector2dF& elastic_overscroll_delta,
     float page_scale,
     float top_controls_delta) {
+  if (!GetWebWidget())
+    return;
   GetWebWidget()->ApplyViewportDeltas(inner_delta, outer_delta,
                                       elastic_overscroll_delta, page_scale,
                                       top_controls_delta);
@@ -980,11 +998,15 @@ void RenderWidget::ApplyViewportDeltas(
 void RenderWidget::RecordWheelAndTouchScrollingCount(
     bool has_scrolled_by_wheel,
     bool has_scrolled_by_touch) {
+  if (!GetWebWidget())
+    return;
   GetWebWidget()->RecordWheelAndTouchScrollingCount(has_scrolled_by_wheel,
                                                     has_scrolled_by_touch);
 }
 
 void RenderWidget::BeginMainFrame(double frame_time_sec) {
+  if (!GetWebWidget())
+    return;
   if (input_event_queue_) {
     input_event_queue_->DispatchRafAlignedInput(
         ui::EventTimeStampFromSeconds(frame_time_sec));
@@ -1009,6 +1031,11 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   // tab_capture_performancetest.cc.
   TRACE_EVENT0("gpu", "RenderWidget::DidCommitAndDrawCompositorFrame");
 
+  // If we haven't commited yet, then this method was called as a response to a
+  // previous commit and should not be used to ack the resize.
+  if (did_commit_after_resize_)
+    DidResizeOrRepaintAck();
+
   for (auto& observer : render_frames_)
     observer.DidCommitAndDrawCompositorFrame();
 
@@ -1016,13 +1043,13 @@ void RenderWidget::DidCommitAndDrawCompositorFrame() {
   DidInitiatePaint();
 }
 
-void RenderWidget::DidCommitCompositorFrame() {}
+void RenderWidget::DidCommitCompositorFrame() {
+  did_commit_after_resize_ = true;
+}
 
 void RenderWidget::DidCompletePageScaleAnimation() {}
 
 void RenderWidget::DidReceiveCompositorFrameAck() {
-  TRACE_EVENT0("renderer", "RenderWidget::DidReceiveCompositorFrameAck");
-  DidResizeOrRepaintAck();
 }
 
 bool RenderWidget::IsClosing() const {
@@ -1034,6 +1061,9 @@ void RenderWidget::RequestScheduleAnimation() {
 }
 
 void RenderWidget::UpdateVisualState(VisualStateUpdate requested_update) {
+  if (!GetWebWidget())
+    return;
+
   bool pre_paint_only = requested_update == VisualStateUpdate::kPrePaint;
   WebWidget::LifecycleUpdate lifecycle_update =
       pre_paint_only ? WebWidget::LifecycleUpdate::kPrePaint
@@ -1066,6 +1096,9 @@ void RenderWidget::RecordTimeToFirstActivePaint() {
 
 void RenderWidget::WillBeginCompositorFrame() {
   TRACE_EVENT0("gpu", "RenderWidget::willBeginCompositorFrame");
+
+  if (!GetWebWidget())
+    return;
 
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(true);
 
@@ -1295,6 +1328,10 @@ gfx::Size RenderWidget::GetSizeForWebWidget() const {
 }
 
 void RenderWidget::Resize(const ResizeParams& params) {
+  // The content_source_id that the browser sends us should never be larger than
+  // |current_content_source_id_|.
+  DCHECK_GE(1u << 30, current_content_source_id_ - params.content_source_id);
+
   bool orientation_changed =
       screen_info_.orientation_angle != params.screen_info.orientation_angle ||
       screen_info_.orientation_type != params.screen_info.orientation_type;
@@ -1302,6 +1339,12 @@ void RenderWidget::Resize(const ResizeParams& params) {
   bool screen_info_changed = screen_info_ != params.screen_info;
 
   screen_info_ = params.screen_info;
+
+  // If this resize needs to be acked, make sure we ack it only after we commit.
+  // It is possible to get DidCommitAndDraw calls that belong to the previous
+  // commit, in which case we should not ack this resize.
+  if (params.needs_resize_ack)
+    did_commit_after_resize_ = false;
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (render_thread)
@@ -1315,15 +1358,22 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (resizing_mode_selector_->NeverUsesSynchronousResize()) {
     // A resize ack shouldn't be requested if we have not ACK'd the previous
     // one.
-    DCHECK(!params.needs_resize_ack || !next_paint_is_resize_ack());
+    DCHECK(!compositor_ || !params.needs_resize_ack ||
+           !next_paint_is_resize_ack());
   }
 
   // Ignore this during shutdown.
   if (!GetWebWidget())
     return;
 
-  if (params.local_surface_id)
+  // If the content_source_id of ResizeParams doesn't match
+  // |current_content_source_id_|, then the given LocalSurfaceId was generated
+  // before the navigation. Continue with the resize but don't use the
+  // LocalSurfaceId until the right one comes.
+  if (params.local_surface_id &&
+      params.content_source_id == current_content_source_id_) {
     local_surface_id_ = *params.local_surface_id;
+  }
 
   if (compositor_) {
     // If surface synchronization is enabled, then this will use the provided
@@ -1332,7 +1382,7 @@ void RenderWidget::Resize(const ResizeParams& params) {
     // it receives a valid surface ID. This is a no-op if surface
     // synchronization is disabled.
     DCHECK(!compositor_->IsSurfaceSynchronizationEnabled() ||
-           !params.needs_resize_ack || local_surface_id_.is_valid());
+           !params.needs_resize_ack || params.local_surface_id->is_valid());
     compositor_->SetViewportSize(params.physical_backing_size,
                                  local_surface_id_);
     compositor_->SetBrowserControlsHeight(
@@ -1400,6 +1450,14 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
   DCHECK(!params.needs_resize_ack || next_paint_is_resize_ack());
+
+  // If this resize was initiated before navigation and surface synchronization
+  // is on, it is not expected to be acked.
+  if (compositor_ && compositor_->IsSurfaceSynchronizationEnabled() &&
+      params.needs_resize_ack && !local_surface_id_.is_valid()) {
+    DCHECK_NE(params.content_source_id, current_content_source_id_);
+    reset_next_paint_is_resize_ack();
+  }
 }
 
 void RenderWidget::SetScreenMetricsEmulationParameters(
@@ -1440,6 +1498,14 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   compositor_->Initialize(std::move(layer_tree_host),
                           std::move(animation_host));
 
+  // We can get into this state if surface synchronization is on and the last
+  // resize was initiated before navigation, in which case we don't have to ack
+  // it.
+  if (compositor_->IsSurfaceSynchronizationEnabled() && !auto_resize_mode_ &&
+      next_paint_is_resize_ack() && !local_surface_id_.is_valid()) {
+    reset_next_paint_is_resize_ack();
+  }
+
   compositor_->SetViewportSize(physical_backing_size_, local_surface_id_);
   OnDeviceScaleFactorChanged();
   compositor_->SetRasterColorSpace(
@@ -1460,7 +1526,7 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (render_thread) {
     input_event_queue_ = new MainThreadEventQueue(
-        this, render_thread->GetRendererScheduler()->CompositorTaskRunner(),
+        this, render_thread->GetRendererScheduler()->InputTaskRunner(),
         render_thread->GetRendererScheduler(), should_generate_frame_sink);
 
     InputHandlerManager* input_handler_manager =
@@ -1477,6 +1543,11 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   UpdateURLForCompositorUkm();
 
   return compositor_.get();
+}
+
+void RenderWidget::IntrinsicSizingInfoChanged(
+    const blink::WebIntrinsicSizingInfo& sizing_info) {
+  Send(new ViewHostMsg_IntrinsicSizingInfoChanged(routing_id_, sizing_info));
 }
 
 void RenderWidget::WillCloseLayerTreeView() {
@@ -1622,8 +1693,12 @@ void RenderWidget::CloseWidgetSoon() {
 
 void RenderWidget::Close() {
   screen_metrics_emulator_.reset();
-  WillCloseLayerTreeView();
+  CloseWebWidget();
   compositor_.reset();
+}
+
+void RenderWidget::CloseWebWidget() {
+  WillCloseLayerTreeView();
   if (webwidget_internal_) {
     webwidget_internal_->Close();
     webwidget_internal_ = nullptr;
@@ -2107,11 +2182,14 @@ void RenderWidget::SetHidden(bool hidden) {
     RendererWindowTreeClient::Get(routing_id_)->SetVisible(!hidden);
 #endif
 
-  if (is_hidden_) {
-    RenderThreadImpl::current()->WidgetHidden();
-    first_update_visual_state_after_hidden_ = true;
-  } else {
-    RenderThreadImpl::current()->WidgetRestored();
+  // RenderThreadImpl::current() could be null in tests.
+  if (RenderThreadImpl::current()) {
+    if (is_hidden_) {
+      RenderThreadImpl::current()->WidgetHidden();
+      first_update_visual_state_after_hidden_ = true;
+    } else {
+      RenderThreadImpl::current()->WidgetRestored();
+    }
   }
 
   if (render_widget_scheduling_state_)
@@ -2140,6 +2218,11 @@ void RenderWidget::set_next_paint_is_resize_ack() {
 
 void RenderWidget::set_next_paint_is_repaint_ack() {
   next_paint_flags_ |= ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_REPAINT_ACK;
+}
+
+void RenderWidget::reset_next_paint_is_resize_ack() {
+  DCHECK(next_paint_is_resize_ack());
+  next_paint_flags_ ^= ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_RESIZE_ACK;
 }
 
 void RenderWidget::OnImeEventGuardStart(ImeEventGuard* guard) {
@@ -2366,10 +2449,10 @@ void RenderWidget::ShowUnhandledTapUIIfNeeded(
                         !tapped_node.IsContentEditable() &&
                         !tapped_node.IsInsideFocusableElementOrARIAWidget();
   if (should_trigger) {
-    float x_px = UseZoomForDSFEnabled()
+    float x_px = IsUseZoomForDSFEnabled()
                      ? tapped_position.x
                      : tapped_position.x * device_scale_factor_;
-    float y_px = UseZoomForDSFEnabled()
+    float y_px = IsUseZoomForDSFEnabled()
                      ? tapped_position.y
                      : tapped_position.y * device_scale_factor_;
     Send(new ViewHostMsg_ShowUnhandledTapUIIfNeeded(routing_id_, x_px, y_px));
@@ -2546,9 +2629,19 @@ uint32_t RenderWidget::GetContentSourceId() {
   return current_content_source_id_;
 }
 
-void RenderWidget::IncrementContentSourceId() {
-  if (compositor_)
-    compositor_->SetContentSourceId(++current_content_source_id_);
+void RenderWidget::DidNavigate() {
+  if (!compositor_)
+    return;
+  compositor_->SetContentSourceId(++current_content_source_id_);
+  local_surface_id_ = viz::LocalSurfaceId();
+  compositor_->SetViewportSize(physical_backing_size_, local_surface_id_);
+  // If surface synchronization is on, navigation implicitly acks any resize
+  // that has happened so far so we can get the next ResizeParams containing the
+  // LocalSurfaceId that should be used after navigation.
+  if (compositor_->IsSurfaceSynchronizationEnabled() && !auto_resize_mode_ &&
+      next_paint_is_resize_ack()) {
+    reset_next_paint_is_resize_ack();
+  }
 }
 
 blink::WebWidget* RenderWidget::GetWebWidget() const {

@@ -9,15 +9,19 @@ mojom("interfaces") {
     "battery_monitor.mojom",
     "battery_status.mojom",
     "fingerprint.mojom",
+    "geolocation.mojom",
     "geolocation_config.mojom",
     "geolocation_context.mojom",
     "geolocation_control.mojom",
+    "geoposition.mojom",
     "hid.mojom",
     "input_service.mojom",
     "nfc.mojom",
     "nfc_provider.mojom",
     "power_monitor.mojom",
     "public_ip_address_geolocation_provider.mojom",
+    "screen_orientation.mojom",
+    "screen_orientation_lock_types.mojom",
     "serial.mojom",
     "time_zone_monitor.mojom",
     "vibration_manager.mojom",
@@ -28,7 +32,6 @@ mojom("interfaces") {
 
   public_deps = [
     ":constants",
-    "//device/geolocation/public/interfaces",
     "//services/network/public/interfaces",
   ]
 

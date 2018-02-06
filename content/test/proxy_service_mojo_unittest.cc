@@ -13,7 +13,6 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "content/network/proxy_service_mojo.h"
 #include "content/test/test_mojo_proxy_resolver_factory.h"
 #include "net/base/network_delegate_impl.h"
 #include "net/base/test_completion_callback.h"
@@ -22,12 +21,13 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
-#include "net/proxy/dhcp_pac_file_fetcher.h"
-#include "net/proxy/mock_pac_file_fetcher.h"
-#include "net/proxy/proxy_config_service_fixed.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/dhcp_pac_file_fetcher.h"
+#include "net/proxy_resolution/mock_pac_file_fetcher.h"
+#include "net/proxy_resolution/proxy_config_service_fixed.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/test/event_waiter.h"
 #include "net/test/gtest_util.h"
+#include "services/network/proxy_service_mojo.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -131,7 +131,7 @@ class ProxyServiceMojoTest : public testing::Test {
     mock_host_resolver_.rules()->AddRule("example.com", "1.2.3.4");
 
     fetcher_ = new net::MockProxyScriptFetcher;
-    proxy_resolution_service_ = CreateProxyServiceUsingMojoFactory(
+    proxy_resolution_service_ = network::CreateProxyServiceUsingMojoFactory(
         test_mojo_proxy_resolver_factory_.CreateFactoryInterface(),
         std::make_unique<net::ProxyConfigServiceFixed>(
             net::ProxyConfig::CreateFromCustomPacURL(GURL(kPacUrl))),

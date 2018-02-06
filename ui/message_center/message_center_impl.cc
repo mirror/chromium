@@ -18,13 +18,13 @@
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "ui/message_center/message_center_types.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_blocker.h"
 #include "ui/message_center/notification_list.h"
-#include "ui/message_center/notification_types.h"
 #include "ui/message_center/popup_timers_controller.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
+#include "ui/message_center/public/cpp/notification.h"
+#include "ui/message_center/public/cpp/notification_types.h"
 
 namespace message_center {
 
@@ -67,7 +67,8 @@ class ScopedNotificationsIterationLock {
 
 MessageCenterImpl::MessageCenterImpl()
     : MessageCenter(),
-      popup_timers_controller_(new PopupTimersController(this)) {
+      popup_timers_controller_(std::make_unique<PopupTimersController>(this)),
+      stats_collector_(this) {
   notification_list_.reset(new NotificationList(this));
   notification_change_queue_.reset(new ChangeQueue());
 }
@@ -178,7 +179,7 @@ bool MessageCenterImpl::IsQuietMode() const {
   return notification_list_->quiet_mode();
 }
 
-message_center::Notification* MessageCenterImpl::FindVisibleNotificationById(
+Notification* MessageCenterImpl::FindVisibleNotificationById(
     const std::string& id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return notification_list_->GetNotificationById(id);

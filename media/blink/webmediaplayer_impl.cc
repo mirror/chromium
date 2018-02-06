@@ -34,7 +34,6 @@
 #include "media/audio/null_audio_sink.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/cdm_context.h"
-#include "media/base/content_decryption_module.h"
 #include "media/base/limits.h"
 #include "media/base/media_content_type.h"
 #include "media/base/media_log.h"
@@ -272,10 +271,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   DCHECK(client_);
   DCHECK(delegate_);
 
-  if (surface_layer_for_video_enabled_)
-    bridge_ = params->create_bridge_callback().Run(this);
-
   if (surface_layer_for_video_enabled_) {
+    bridge_ = params->create_bridge_callback().Run(this);
     vfc_task_runner_->PostTask(
         FROM_HERE, base::Bind(&VideoFrameCompositor::EnableSubmission,
                               base::Unretained(compositor_.get()),
@@ -429,6 +426,19 @@ void WebMediaPlayerImpl::RegisterContentsLayer(blink::WebLayer* web_layer) {
 void WebMediaPlayerImpl::UnregisterContentsLayer(blink::WebLayer* web_layer) {
   // |client_| will unregister its WebLayer if given a nullptr.
   client_->SetWebLayer(nullptr);
+}
+
+void WebMediaPlayerImpl::OnSurfaceIdUpdated(uint32_t client_id,
+                                            uint32_t frame_sink_id,
+                                            uint32_t parent_id,
+                                            base::UnguessableToken nonce) {
+  frame_sink_id_ = viz::FrameSinkId(client_id, frame_sink_id);
+  parent_id_ = parent_id;
+  nonce_ = nonce;
+
+  if (client_ && client_->IsInPictureInPictureMode())
+    delegate_->ShowPictureInPicture(delegate_id_, frame_sink_id_, parent_id_,
+                                    nonce_);
 }
 
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
@@ -800,7 +810,10 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   UpdatePlayState();
 }
 
-void WebMediaPlayerImpl::PictureInPicture() {
+void WebMediaPlayerImpl::EnterPictureInPicture() {
+  delegate_->ShowPictureInPicture(delegate_id_, frame_sink_id_, parent_id_,
+                                  nonce_);
+
   if (client_)
     client_->PictureInPictureStarted();
 }
@@ -1077,7 +1090,7 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
   TRACE_EVENT0("media", "WebMediaPlayerImpl:paint");
 
   // We can't copy from protected frames.
-  if (cdm_)
+  if (cdm_context_ref_)
     return;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
@@ -1106,6 +1119,12 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
   video_renderer_.Paint(
       video_frame, canvas, gfx::RectF(gfx_rect), flags,
       pipeline_metadata_.video_decoder_config.video_rotation(), context_3d);
+}
+
+bool WebMediaPlayerImpl::DidGetOpaqueResponseFromServiceWorker() const {
+  if (data_source_)
+    return data_source_->DidGetOpaqueResponseViaServiceWorker();
+  return false;
 }
 
 bool WebMediaPlayerImpl::HasSingleSecurityOrigin() const {
@@ -1160,7 +1179,7 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
   TRACE_EVENT0("media", "WebMediaPlayerImpl:copyVideoTextureToPlatformTexture");
 
   // We can't copy from protected frames.
-  if (cdm_)
+  if (cdm_context_ref_)
     return false;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
@@ -1302,26 +1321,24 @@ void WebMediaPlayerImpl::OnFFmpegMediaTracksUpdated(
 void WebMediaPlayerImpl::SetCdm(blink::WebContentDecryptionModule* cdm) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   DCHECK(cdm);
-  scoped_refptr<ContentDecryptionModule> cdm_reference =
-      ToWebContentDecryptionModuleImpl(cdm)->GetCdm();
-  if (!cdm_reference) {
+
+  auto cdm_context_ref =
+      ToWebContentDecryptionModuleImpl(cdm)->GetCdmContextRef();
+  if (!cdm_context_ref) {
     NOTREACHED();
     OnCdmAttached(false);
     return;
   }
 
-  CdmContext* cdm_context = cdm_reference->GetCdmContext();
-  if (!cdm_context) {
-    OnCdmAttached(false);
-    return;
-  }
+  CdmContext* cdm_context = cdm_context_ref->GetCdmContext();
+  DCHECK(cdm_context);
 
   if (observer_)
     observer_->OnSetCdm(cdm_context);
 
   // Keep the reference to the CDM, as it shouldn't be destroyed until
   // after the pipeline is done with the |cdm_context|.
-  pending_cdm_ = std::move(cdm_reference);
+  pending_cdm_context_ref_ = std::move(cdm_context_ref);
   pipeline_controller_.SetCdm(
       cdm_context, base::Bind(&WebMediaPlayerImpl::OnCdmAttached, AsWeakPtr()));
 }
@@ -1329,7 +1346,7 @@ void WebMediaPlayerImpl::SetCdm(blink::WebContentDecryptionModule* cdm) {
 void WebMediaPlayerImpl::OnCdmAttached(bool success) {
   DVLOG(1) << __func__ << ": success = " << success;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  DCHECK(pending_cdm_);
+  DCHECK(pending_cdm_context_ref_);
 
   // If the CDM is set from the constructor there is no promise
   // (|set_cdm_result_|) to fulfill.
@@ -1337,7 +1354,7 @@ void WebMediaPlayerImpl::OnCdmAttached(bool success) {
     media_log_->SetBooleanProperty("has_cdm", true);
 
     // This will release the previously attached CDM (if any).
-    cdm_ = std::move(pending_cdm_);
+    cdm_context_ref_ = std::move(pending_cdm_context_ref_);
     if (set_cdm_result_) {
       set_cdm_result_->Complete();
       set_cdm_result_.reset();
@@ -1346,7 +1363,7 @@ void WebMediaPlayerImpl::OnCdmAttached(bool success) {
     return;
   }
 
-  pending_cdm_ = nullptr;
+  pending_cdm_context_ref_.reset();
   if (set_cdm_result_) {
     set_cdm_result_->CompleteWithError(
         blink::kWebContentDecryptionModuleExceptionNotSupportedError, 0,
@@ -1950,6 +1967,9 @@ void WebMediaPlayerImpl::OnFrameShown() {
 void WebMediaPlayerImpl::OnIdleTimeout() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
+  // This should never be called when stale state testing overrides are used.
+  DCHECK(!stale_state_override_for_testing_.has_value());
+
   // If we are attempting preroll, clear the stale flag.
   if (IsPrerollAttemptNeeded()) {
     delegate_->ClearStaleFlag(delegate_id_);
@@ -2484,7 +2504,8 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   PlayState result;
 
   bool must_suspend = delegate_->IsFrameClosed();
-  bool is_stale = delegate_->IsStale(delegate_id_);
+  bool is_stale = stale_state_override_for_testing_.value_or(
+      delegate_->IsStale(delegate_id_));
 
   // This includes both data source (before pipeline startup) and pipeline
   // errors.
@@ -2747,6 +2768,17 @@ void WebMediaPlayerImpl::UpdateRemotePlaybackCompatibility(bool is_compatible) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   client_->RemotePlaybackCompatibilityChanged(loaded_url_, is_compatible);
+}
+
+void WebMediaPlayerImpl::ForceStaleStateForTesting() {
+  stale_state_override_for_testing_.emplace(true);
+  UpdatePlayState();
+}
+
+bool WebMediaPlayerImpl::IsSuspendedForTesting() {
+  // This intentionally uses IsPipelineSuspended since we need to know when the
+  // pipeline has reached the suspended state, not when it's in suspending.
+  return pipeline_controller_.IsPipelineSuspended();
 }
 
 bool WebMediaPlayerImpl::ShouldPauseVideoWhenHidden() const {

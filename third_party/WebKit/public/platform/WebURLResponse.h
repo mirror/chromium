@@ -197,7 +197,6 @@ class WebURLResponse {
 
   BLINK_PLATFORM_EXPORT void SetHasMajorCertificateErrors(bool);
   BLINK_PLATFORM_EXPORT void SetIsLegacySymantecCert(bool);
-  BLINK_PLATFORM_EXPORT void SetCertValidityStart(base::Time);
 
   BLINK_PLATFORM_EXPORT void SetSecurityStyle(WebSecurityStyle);
 
@@ -225,9 +224,12 @@ class WebURLResponse {
   // details.
   BLINK_PLATFORM_EXPORT void SetWasFallbackRequiredByServiceWorker(bool);
 
-  // The type of the response which was returned by the ServiceWorker.
+  // The type of the response, if it was returned by a service worker. This is
+  // kDefault if the response was not returned by a service worker.
   BLINK_PLATFORM_EXPORT void SetResponseTypeViaServiceWorker(
       network::mojom::FetchResponseType);
+  BLINK_PLATFORM_EXPORT network::mojom::FetchResponseType
+  ResponseTypeViaServiceWorker() const;
 
   // The URL list of the Response object the ServiceWorker passed to
   // respondWith(). See ServiceWorkerResponseInfo::url_list_via_service_worker()

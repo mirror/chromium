@@ -45,6 +45,7 @@ class U2fDevice {
   // https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html
   void Register(const std::vector<uint8_t>& appid_digest,
                 const std::vector<uint8_t>& challenge_digest,
+                bool individual_attestation_ok,
                 MessageCallback callback);
   void Version(VersionCallback callback);
   void Sign(const std::vector<uint8_t>& appid_digest,
@@ -71,6 +72,7 @@ class U2fDevice {
                       bool success,
                       std::unique_ptr<U2fApduResponse> sign_response);
   void OnVersionComplete(VersionCallback callback,
+                         bool legacy,
                          bool success,
                          std::unique_ptr<U2fApduResponse> version_response);
 

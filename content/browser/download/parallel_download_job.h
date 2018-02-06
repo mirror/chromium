@@ -57,9 +57,9 @@ class CONTENT_EXPORT ParallelDownloadJob : public DownloadJobImpl,
   friend class ParallelDownloadJobTest;
 
   // DownloadWorker::Delegate implementation.
-  void OnByteStreamReady(
+  void OnInputStreamReady(
       DownloadWorker* worker,
-      std::unique_ptr<ByteStreamReader> stream_reader) override;
+      std::unique_ptr<DownloadManager::InputStream> input_stream) override;
 
   // Build parallel requests after a delay, to effectively measure the single
   // stream bandwidth.
@@ -73,7 +73,9 @@ class CONTENT_EXPORT ParallelDownloadJob : public DownloadJobImpl,
   // The first slice represents the original request.
   void ForkSubRequests(const DownloadItem::ReceivedSlices& slices_to_download);
 
-  // Create one range request, virtual for testing.
+  // Create one range request, virtual for testing. Range request will start
+  // from |offset| to |length|. Range request will be half open, e.g.
+  // "Range:50-" if |length| is 0.
   virtual void CreateRequest(int64_t offset, int64_t length);
 
   // Information about the initial request when download is started.

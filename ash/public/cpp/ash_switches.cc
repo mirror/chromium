@@ -37,6 +37,9 @@ const char kAshDisableSmoothScreenRotation[] =
 const char kAshDisableTabletAutohideTitlebars[] =
     "ash-disable-tablet-autohide-titlebars";
 
+// Disables the split view on tablet mode.
+const char kAshDisableTabletSplitView[] = "disable-tablet-splitview";
+
 // Disable the Touch Exploration Mode. Touch Exploration Mode will no longer be
 // turned on automatically when spoken feedback is enabled when this flag is
 // set.
@@ -51,6 +54,11 @@ const char kAshEnableV1AppBackButton[] = "ash-enable-v1-app-back-button";
 // TODO(warx): Remove this once the feature is launched. crbug.com/773749.
 const char kAshEnableDisplayMoveWindowAccels[] =
     "ash-enable-display-move-window-accels";
+
+// Enables the docked (a.k.a. picture-in-picture) magnifier.
+// TODO(afakhry): Remove this once the feature is launched.
+// https://crbug.com/709824.
+const char kAshEnableDockedMagnifier[] = "ash-enable-docked-magnifier";
 
 // Enables keyboard shortcut viewer.
 // TODO(wutao): Remove this once the feature is launched. crbug.com/768932.
@@ -72,6 +80,11 @@ const char kAshEnableNightLight[] = "ash-enable-night-light";
 const char kAshEnablePaletteOnAllDisplays[] =
     "ash-enable-palette-on-all-displays";
 
+// Enables persistent window bounds in multi-displays scenario.
+// TODO(warx): Remove this once the feature is launched. crbug.com/805046.
+const char kAshEnablePersistentWindowBounds[] =
+    "ash-enable-persistent-window-bounds";
+
 // Enables the sidebar.
 const char kAshSidebarEnabled[] = "enable-ash-sidebar";
 const char kAshSidebarDisabled[] = "disable-ash-sidebar";
@@ -90,9 +103,6 @@ const char kAshEnableMirroredScreen[] = "ash-enable-mirrored-screen";
 // Enables display scale tray settings. This uses force-device-scale-factor flag
 // to modify the dsf of the device to any non discrete value.
 const char kAshEnableScaleSettingsTray[] = "ash-enable-scale-settings-tray";
-
-// Enables the split view on tablet mode.
-const char kAshEnableTabletSplitView[] = "enable-tablet-splitview";
 
 // Specifies the estimated time (in milliseconds) from VSYNC event until when
 // visible light can be noticed by the user.
@@ -115,6 +125,10 @@ const char kAshUiModeTablet[] = "touch_view";
 // such as battery level updates.
 const char kAshHideNotificationsForFactory[] =
     "ash-hide-notifications-for-factory";
+
+// Enables new implementation of touch support for screen magnification.
+const char kAshNewTouchSupportForScreenMagnification[] =
+    "ash-new-touch-support-for-screen-magnification";
 
 // Enables the shelf color to be derived from the wallpaper.
 const char kAshShelfColor[] = "ash-shelf-color";
@@ -169,6 +183,9 @@ const char kShowWebUiLock[] = "show-webui-lock";
 // suspended.
 const char kTouchscreenUsableWhileScreenOff[] =
     "touchscreen-usable-while-screen-off";
+
+// Hides all Message Center notification popups (toasts). Used for testing.
+const char kSuppressMessageCenterPopups[] = "suppress-message-center-popups";
 
 // By default we use classic IME (i.e. InputMethodChromeOS) in kMus. This flag
 // enables the IME service (i.e. InputMethodMus) instead.

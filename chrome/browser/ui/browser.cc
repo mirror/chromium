@@ -1,3 +1,4 @@
+
 // Copyright 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -123,7 +124,6 @@
 #include "chrome/browser/ui/find_bar/find_bar.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
-#include "chrome/browser/ui/first_run_bubble_presenter.h"
 #include "chrome/browser/ui/global_error/global_error.h"
 #include "chrome/browser/ui/global_error/global_error_service.h"
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
@@ -232,6 +232,10 @@
 #include "chrome/browser/chromeos/fileapi/external_file_url_util.h"
 #include "chrome/browser/ui/settings_window_manager_chromeos.h"
 #endif
+
+#include "base/unguessable_token.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 
 using base::TimeDelta;
 using base::UserMetricsAction;
@@ -1413,6 +1417,17 @@ void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
       url, FramebustBlockTabHelper::ClickCallback());
 }
 
+void Browser::UpdatePictureInPictureSurfaceId(viz::FrameSinkId frame_sink_id,
+                                              uint32_t parent_id,
+                                              base::UnguessableToken nonce) {
+  pip_window_controller_.reset(
+      PictureInPictureWindowController::GetOrCreateForWebContents(
+          tab_strip_model_->GetActiveWebContents()));
+  pip_window_controller_->Init();
+  pip_window_controller_->EmbedSurface(frame_sink_id, parent_id, nonce);
+  pip_window_controller_->Show();
+}
+
 bool Browser::IsMouseLocked() const {
   return exclusive_access_manager_->mouse_lock_controller()->IsMouseLocked();
 }
@@ -1434,10 +1449,6 @@ void Browser::OnWindowDidShow() {
   GlobalError* error = service->GetFirstGlobalErrorWithBubbleView();
   if (error)
     error->ShowBubbleView(this);
-}
-
-void Browser::ShowFirstRunBubble() {
-  FirstRunBubblePresenter::PresentWhenReady(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1671,7 +1682,9 @@ void Browser::WebContentsCreated(WebContents* source_contents,
   task_manager::WebContentsTags::CreateForTabContents(new_contents);
 }
 
-void Browser::RendererUnresponsive(WebContents* source) {
+void Browser::RendererUnresponsive(
+    WebContents* source,
+    content::RenderProcessHost* render_process_host) {
   // Ignore hangs if a tab is blocked.
   int index = tab_strip_model_->GetIndexOfWebContents(source);
   DCHECK_NE(TabStripModel::kNoTab, index);
@@ -1681,7 +1694,9 @@ void Browser::RendererUnresponsive(WebContents* source) {
   TabDialogs::FromWebContents(source)->ShowHungRendererDialog();
 }
 
-void Browser::RendererResponsive(WebContents* source) {
+void Browser::RendererResponsive(
+    WebContents* source,
+    content::RenderProcessHost* render_process_host) {
   TabDialogs::FromWebContents(source)->HideHungRendererDialog();
 }
 

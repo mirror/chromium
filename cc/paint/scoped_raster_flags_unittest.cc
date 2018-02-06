@@ -27,11 +27,11 @@ class MockImageProvider : public ImageProvider {
 
     return ScopedDecodedDrawImage(
         DecodedDrawImage(image, SkSize::MakeEmpty(), SkSize::Make(1.0f, 1.0f),
-                         draw_image.filter_quality()),
+                         draw_image.filter_quality(), true),
         base::BindOnce(&MockImageProvider::UnrefImage, base::Unretained(this)));
   }
 
-  void UnrefImage(DecodedDrawImage decoded_image) {
+  void UnrefImage() {
     ref_count_--;
     CHECK_GE(ref_count_, 0);
   }

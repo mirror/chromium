@@ -30,7 +30,6 @@
 #include "platform/loader/fetch/ResourceLoader.h"
 
 #include "platform/SharedBuffer.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/loader/cors/CORS.h"
@@ -483,6 +482,13 @@ void ResourceLoader::DidReceiveResponse(
     std::unique_ptr<WebDataConsumerHandle> handle) {
   DCHECK(!web_url_response.IsNull());
 
+  if (Context().IsDetached()) {
+    // If the fetch context is already detached, we don't need further signals,
+    // so let's cancel the request.
+    HandleError(ResourceError::CancelledError(web_url_response.Url()));
+    return;
+  }
+
   Resource::Type resource_type = resource_->GetType();
 
   const ResourceRequest& initial_request = resource_->GetResourceRequest();
@@ -763,8 +769,9 @@ void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(
   is_cache_aware_loading_activated_ = true;
 }
 
-bool ResourceLoader::GetKeepalive() const {
-  return resource_->GetResourceRequest().GetKeepalive();
+bool ResourceLoader::ShouldBeKeptAliveWhenDetached() const {
+  return resource_->GetResourceRequest().GetKeepalive() &&
+         resource_->GetResponse().IsNull();
 }
 
 }  // namespace blink

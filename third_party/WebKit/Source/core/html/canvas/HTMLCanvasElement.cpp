@@ -386,6 +386,12 @@ void HTMLCanvasElement::DidDraw() {
 
 void HTMLCanvasElement::FinalizeFrame() {
   TRACE_EVENT0("blink", "HTMLCanvasElement::FinalizeFrame");
+
+  // FinalizeFrame indicates the end of a script task that may have rendered
+  // into the canvas, now is a good time to unlock cache entries.
+  if (auto* resource_provider = ResourceProvider())
+    resource_provider->ReleaseLockedImages();
+
   if (canvas2d_bridge_) {
     // Compute to determine whether disable accleration is needed
     if (IsAccelerated() &&
@@ -436,9 +442,16 @@ void HTMLCanvasElement::FinalizeFrame() {
   did_notify_listeners_for_current_frame_ = false;
 }
 
-void HTMLCanvasElement::DisableAcceleration() {
+void HTMLCanvasElement::DisableAcceleration(
+    std::unique_ptr<Canvas2DLayerBridge>
+        unaccelerated_bridge_used_for_testing) {
   // Create and configure an unaccelerated Canvas2DLayerBridge.
-  std::unique_ptr<Canvas2DLayerBridge> bridge = CreateUnaccelerated2dBuffer();
+  std::unique_ptr<Canvas2DLayerBridge> bridge;
+  if (unaccelerated_bridge_used_for_testing) {
+    bridge = std::move(unaccelerated_bridge_used_for_testing);
+  } else {
+    bridge = CreateUnaccelerated2dBuffer();
+  }
 
   if (bridge && canvas2d_bridge_) {
     ReplaceExistingCanvas2DBuffer(std::move(bridge));
@@ -495,10 +508,7 @@ void HTMLCanvasElement::DoDeferredPaintInvalidation() {
     }
   }
 
-  if (context_ &&
-      context_->GetContextType() ==
-          CanvasRenderingContext::kContextImageBitmap &&
-      context_->PlatformLayer()) {
+  if (context_ && HasImageBitmapContext() && context_->PlatformLayer()) {
     context_->PlatformLayer()->Invalidate();
   }
 
@@ -1020,7 +1030,7 @@ CanvasResourceProvider* HTMLCanvasElement::ResourceProvider() const {
   return webgl_resource_provider_.get();
 }
 
-void HTMLCanvasElement::CreateResourceProviderInternal(
+void HTMLCanvasElement::CreateImageBufferInternal(
     std::unique_ptr<Canvas2DLayerBridge> external_canvas2d_bridge) {
   DCHECK(!canvas2d_bridge_ && !webgl_resource_provider_);
 
@@ -1043,18 +1053,19 @@ void HTMLCanvasElement::CreateResourceProviderInternal(
     }
   }
 
-  if (canvas2d_bridge_) {
-    canvas2d_bridge_->SetCanvasResourceHost(this);
-    if (!canvas2d_bridge_->GetOrCreateResourceProvider())
-      return;
-  }
-
   if (Is3d()) {
     webgl_resource_provider_ = CanvasResourceProvider::Create(
         size_, CanvasResourceProvider::kAcceleratedResourceUsage,
         SharedGpuContext::ContextProviderWrapper(), 0, ColorParams());
     if (!webgl_resource_provider_)
       return;
+  } else {
+    DCHECK(Is2d());
+    if (canvas2d_bridge_) {
+      canvas2d_bridge_->SetCanvasResourceHost(this);
+    } else {
+      return;
+    }
   }
 
   did_fail_to_create_resource_provider_ = false;
@@ -1122,10 +1133,9 @@ PaintCanvas* HTMLCanvasElement::ExistingDrawingCanvas() const {
 
 bool HTMLCanvasElement::TryCreateImageBuffer() {
   DCHECK(context_);
-  DCHECK(context_->GetContextType() !=
-         CanvasRenderingContext::kContextImageBitmap);
+  DCHECK(!HasImageBitmapContext());
   if (!HasImageBuffer() && !did_fail_to_create_resource_provider_) {
-    CreateResourceProviderInternal(nullptr);
+    CreateImageBufferInternal(nullptr);
     if (did_fail_to_create_resource_provider_ && Is2d() && !Size().IsEmpty()) {
       context_->LoseContext(CanvasRenderingContext::kSyntheticLostContext);
     }
@@ -1135,15 +1145,11 @@ bool HTMLCanvasElement::TryCreateImageBuffer() {
 
 void HTMLCanvasElement::CreateImageBufferUsingSurfaceForTesting(
     std::unique_ptr<Canvas2DLayerBridge> surface,
-    const IntSize& size,
-    bool is_resource_provider_needed) {
+    const IntSize& size) {
   DiscardImageBuffer();
   SetIntegralAttribute(widthAttr, size.Width());
   SetIntegralAttribute(heightAttr, size.Height());
-  CreateResourceProviderInternal(std::move(surface));
-  if (!is_resource_provider_needed && canvas2d_bridge_) {
-    canvas2d_bridge_->ResetResourceProvider();
-  }
+  CreateImageBufferInternal(std::move(surface));
 }
 
 scoped_refptr<Image> HTMLCanvasElement::CopiedImage(
@@ -1158,8 +1164,7 @@ scoped_refptr<Image> HTMLCanvasElement::CopiedImage(
   if (!context_)
     return CreateTransparentImage(Size());
 
-  if (context_->GetContextType() ==
-      CanvasRenderingContext::kContextImageBitmap) {
+  if (HasImageBitmapContext()) {
     scoped_refptr<Image> image = context_->GetImage(hint);
     // TODO(fserb): return image?
     if (image)
@@ -1270,8 +1275,7 @@ scoped_refptr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
     return result;
   }
 
-  if (context_->GetContextType() ==
-      CanvasRenderingContext::kContextImageBitmap) {
+  if (HasImageBitmapContext()) {
     *status = kNormalSourceImageStatus;
     scoped_refptr<Image> result = context_->GetImage(hint);
     if (!result)
@@ -1319,8 +1323,7 @@ bool HTMLCanvasElement::WouldTaintOrigin(const SecurityOrigin*) const {
 }
 
 FloatSize HTMLCanvasElement::ElementSize(const FloatSize&) const {
-  if (context_ && context_->GetContextType() ==
-                      CanvasRenderingContext::kContextImageBitmap) {
+  if (context_ && HasImageBitmapContext()) {
     scoped_refptr<Image> image = context_->GetImage(kPreferNoAcceleration);
     if (image)
       return FloatSize(image->width(), image->height());
@@ -1349,7 +1352,7 @@ ScriptPromise HTMLCanvasElement::CreateImageBitmap(
 void HTMLCanvasElement::SetPlaceholderFrame(
     scoped_refptr<StaticBitmapImage> image,
     base::WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
-    scoped_refptr<WebTaskRunner> task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     unsigned resource_id) {
   OffscreenCanvasPlaceholder::SetPlaceholderFrame(
       std::move(image), std::move(dispatcher), std::move(task_runner),
@@ -1470,6 +1473,11 @@ void HTMLCanvasElement::UnregisterContentsLayer(WebLayer* web_layer) {
   GraphicsLayer::UnregisterContentsLayer(web_layer);
 }
 
+void HTMLCanvasElement::OnSurfaceIdUpdated(uint32_t client_id,
+                                           uint32_t frame_sink_id,
+                                           uint32_t parent_id,
+                                           base::UnguessableToken nonce) {}
+
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
 }
@@ -1549,10 +1557,11 @@ void HTMLCanvasElement::ReplaceExistingCanvas2DBuffer(
     // functional.
     if (!image)
       return;
-    new_buffer->Canvas()->drawImage(image->PaintImageForCurrentFrame(), 0, 0);
+    new_buffer->DrawFullImage(image->PaintImageForCurrentFrame());
   }
 
   RestoreCanvasMatrixClipStack(new_buffer->Canvas());
+  new_buffer->DidRestoreCanvasMatrixClipStack(new_buffer->Canvas());
   canvas2d_bridge_ = std::move(new_buffer);
 }
 
@@ -1563,6 +1572,14 @@ scoped_refptr<StaticBitmapImage> HTMLCanvasElement::NewImageSnapshot(
   if (webgl_resource_provider_)
     return webgl_resource_provider_->Snapshot();
   return nullptr;
+}
+
+bool HTMLCanvasElement::HasImageBitmapContext() const {
+  if (!context_)
+    return false;
+  CanvasRenderingContext::ContextType type = context_->GetContextType();
+  return (type == CanvasRenderingContext::kContextImageBitmap ||
+          type == CanvasRenderingContext::kContextXRPresent);
 }
 
 }  // namespace blink

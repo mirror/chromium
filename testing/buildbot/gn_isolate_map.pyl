@@ -311,6 +311,16 @@
     "label": "//chrome/test/chromedriver:chromedriver",
     "type": "additional_compile_target",
   },
+  "chromedriver_py_tests": {
+    "label": "//chrome/test/chromedriver:chromedriver_py_tests",
+    "type": "script",
+    "script": "//testing/xvfb.py",
+    "args": [
+      "../../chrome/test/chromedriver/test/run_py_tests.py",
+      "--chromedriver=chromedriver",
+      "--log-path=${ISOLATED_OUTDIR}/chromedriver.log",
+    ],
+  },
   "chromedriver_unittests": {
     "label": "//chrome/test/chromedriver:chromedriver_unittests",
     "type": "windowed_test_launcher",
@@ -978,6 +988,14 @@
       "../../tools/perf/run_benchmark",
     ],
   },
+  "telemetry_perf_tests_experimental": {
+    "label": "//chrome/test:telemetry_perf_tests_experimental",
+    "type": "script",
+    "script": "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
+    "args": [
+      "../../tools/perf/run_benchmark",
+    ],
+  },
   "performance_test_suite": {
     "label": "//chrome/test:performance_test_suite",
     "type": "script",
@@ -1167,6 +1185,15 @@
   "views_mus_unittests": {
     "label": "//ui/views/mus:views_mus_unittests",
     "type": "windowed_test_launcher",
+  },
+  "views_perftests": {
+    "label": "//ui/views:views_perftests",
+    "type": "script",
+    "script": "//testing/scripts/run_gtest_perf_test.py",
+    "args": [
+      "--xvfb",
+      "views_perftests",
+    ],
   },
   "views_unittests": {
     "label": "//ui/views:views_unittests",

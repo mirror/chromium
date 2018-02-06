@@ -1001,6 +1001,15 @@ float StyleBuilderConverter::ConvertBorderWidth(StyleResolverState& state,
                         defaultMaximumForClamp<float>());
 }
 
+GapLength StyleBuilderConverter::ConvertGapLength(StyleResolverState& state,
+                                                  const CSSValue& value) {
+  if (value.IsIdentifierValue() &&
+      ToCSSIdentifierValue(value).GetValueID() == CSSValueNormal)
+    return GapLength();
+
+  return GapLength(ConvertLength(state, value));
+}
+
 Length StyleBuilderConverter::ConvertLength(const StyleResolverState& state,
                                             const CSSValue& value) {
   return ToCSSPrimitiveValue(value).ConvertToLength(
@@ -1271,6 +1280,7 @@ ShadowData StyleBuilderConverter::ConvertShadow(
         switch (value_id) {
           case CSSValueInvalid:
             NOTREACHED();
+            FALLTHROUGH;
           case CSSValueInternalQuirkInherit:
           case CSSValueWebkitLink:
           case CSSValueWebkitActivelink:

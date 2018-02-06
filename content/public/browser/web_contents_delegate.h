@@ -38,12 +38,14 @@ class GURL;
 
 namespace base {
 class FilePath;
+class UnguessableToken;
 }
 
 namespace content {
 class ColorChooser;
 class JavaScriptDialogManager;
 class RenderFrameHost;
+class RenderProcessHost;
 class RenderWidgetHost;
 class SessionStorageNamespace;
 class SiteInstance;
@@ -64,6 +66,10 @@ class Size;
 
 namespace url {
 class Origin;
+}
+
+namespace viz {
+class FrameSinkId;
 }
 
 namespace blink {
@@ -316,11 +322,13 @@ class CONTENT_EXPORT WebContentsDelegate {
                                   const GURL& target_url,
                                   WebContents* new_contents) {}
 
-  // Notification that the tab is hung.
-  virtual void RendererUnresponsive(WebContents* source) {}
+  // Notification that a process in the WebContents is hung.
+  virtual void RendererUnresponsive(WebContents* source,
+                                    RenderProcessHost* render_process_host) {}
 
-  // Notification that the tab is no longer hung.
-  virtual void RendererResponsive(WebContents* source) {}
+  // Notification that a process in the WebContents is no longer hung.
+  virtual void RendererResponsive(WebContents* source,
+                                  RenderProcessHost* render_process_host) {}
 
   // Invoked when a main fram navigation occurs.
   virtual void DidNavigateMainFramePostCommit(WebContents* source) {}
@@ -540,6 +548,10 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Give WebContentsDelegates the opportunity to adjust the previews state.
   virtual void AdjustPreviewsStateForNavigation(PreviewsState* previews_state) {
   }
+
+  virtual void UpdatePictureInPictureSurfaceId(viz::FrameSinkId frame_sink_id,
+                                               uint32_t parent_id,
+                                               base::UnguessableToken nonce);
 
  protected:
   virtual ~WebContentsDelegate();

@@ -10,6 +10,7 @@
 
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 #include "base/allocator/partition_allocator/spin_lock.h"
+#include "base/compiler_specific.h"
 #include "base/base_export.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -46,9 +47,11 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
       return PROT_READ | PROT_WRITE;
     case PageReadExecute:
       return PROT_READ | PROT_EXEC;
+    case PageReadWriteExecute:
+      return PROT_READ | PROT_WRITE | PROT_EXEC;
     default:
       NOTREACHED();
-    // Fall through.
+      FALLTHROUGH;
     case PageInaccessible:
       return PROT_NONE;
   }
@@ -72,6 +75,8 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
       return PAGE_READWRITE;
     case PageReadExecute:
       return PAGE_EXECUTE_READ;
+    case PageReadWriteExecute:
+      return PAGE_EXECUTE_READWRITE;
     default:
       NOTREACHED();
     // Fall through.

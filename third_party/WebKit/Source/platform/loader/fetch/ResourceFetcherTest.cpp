@@ -31,7 +31,6 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 
 #include <memory>
-#include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
@@ -772,7 +771,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     FetchParameters fetch_params(resource_request);
     RawResource* resource = RawResource::FetchMainResource(
         fetch_params, fetcher, nullptr, SubstituteData());
-    EXPECT_NE(nullptr, resource);
+    ASSERT_NE(nullptr, resource);
+    EXPECT_FALSE(resource->ErrorOccurred());
   }
 
   // Subresource case.
@@ -782,7 +782,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     FetchParameters fetch_params(resource_request);
     RawResource* resource =
         RawResource::FetchMedia(fetch_params, fetcher, nullptr);
-    EXPECT_NE(nullptr, resource);
+    ASSERT_NE(nullptr, resource);
+    EXPECT_FALSE(resource->ErrorOccurred());
   }
 }
 

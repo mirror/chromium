@@ -17,6 +17,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_source_type.h"
+#include "net/quic/chromium/quic_http_utils.h"
 #include "net/quic/chromium/quic_proxy_client_socket.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/socket_tag.h"
@@ -48,6 +49,7 @@ HttpProxyClientSocketWrapper::HttpProxyClientSocketWrapper(
     HttpAuthHandlerFactory* http_auth_handler_factory,
     SpdySessionPool* spdy_session_pool,
     QuicStreamFactory* quic_stream_factory,
+    bool is_trusted_proxy,
     bool tunnel,
     const NetLogWithSource& net_log)
     : next_state_(STATE_NONE),
@@ -68,6 +70,7 @@ HttpProxyClientSocketWrapper::HttpProxyClientSocketWrapper(
       has_restarted_(false),
       tunnel_(tunnel),
       using_spdy_(false),
+      is_trusted_proxy_(is_trusted_proxy),
       quic_stream_request_(quic_stream_factory),
       http_auth_controller_(
           tunnel ? new HttpAuthController(
@@ -598,7 +601,7 @@ int HttpProxyClientSocketWrapper::DoSpdyProxyCreateStream() {
   } else {
     // Create a session direct to the proxy itself
     spdy_session = spdy_session_pool_->CreateAvailableSessionFromSocket(
-        key, std::move(transport_socket_handle_), net_log_);
+        key, is_trusted_proxy_, std::move(transport_socket_handle_), net_log_);
     DCHECK(spdy_session);
   }
 
@@ -658,6 +661,10 @@ int HttpProxyClientSocketWrapper::DoQuicProxyCreateStreamComplete(int result) {
   next_state_ = STATE_HTTP_PROXY_CONNECT_COMPLETE;
   std::unique_ptr<QuicChromiumClientStream::Handle> quic_stream =
       quic_session_->ReleaseStream();
+
+  SpdyPriority spdy_priority = ConvertRequestPriorityToQuicPriority(priority_);
+  quic_stream->SetPriority(spdy_priority);
+
   transport_socket_.reset(new QuicProxyClientSocket(
       std::move(quic_stream), std::move(quic_session_), user_agent_, endpoint_,
       net_log_, http_auth_controller_.get()));

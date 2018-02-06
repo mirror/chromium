@@ -59,7 +59,7 @@ class Connector;
 
 namespace content {
 class BlinkInterfaceProviderImpl;
-class ChildURLLoaderFactoryGetter;
+class ChildURLLoaderFactoryBundle;
 class LocalStorageCachedAreas;
 class NotificationDispatcher;
 class PlatformEventObserverBase;
@@ -170,8 +170,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   std::unique_ptr<blink::WebRTCCertificateGenerator>
   CreateRTCCertificateGenerator() override;
-  std::unique_ptr<blink::WebMediaRecorderHandler> CreateMediaRecorderHandler()
-      override;
+  std::unique_ptr<blink::WebMediaRecorderHandler> CreateMediaRecorderHandler(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   std::unique_ptr<blink::WebMediaStreamCenter> CreateMediaStreamCenter(
       blink::WebMediaStreamCenterClient* client) override;
   std::unique_ptr<blink::WebCanvasCaptureHandler> CreateCanvasCaptureHandler(
@@ -207,10 +207,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   void StartListening(blink::WebPlatformEventType,
                       blink::WebPlatformEventListener*) override;
   void StopListening(blink::WebPlatformEventType) override;
-  void QueryStorageUsageAndQuota(
-      const blink::WebSecurityOrigin& storage_partition,
-      blink::mojom::StorageType,
-      QueryStorageUsageAndQuotaCallback) override;
   blink::WebThread* CurrentThread() override;
   blink::BlameContext* GetTopLevelBlameContext() override;
   void RecordRappor(const char* metric,
@@ -261,18 +257,18 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // Returns non-null.
   // It is invalid to call this in an incomplete env where
   // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
-  scoped_refptr<ChildURLLoaderFactoryGetter>
-  CreateDefaultURLLoaderFactoryGetter();
+  scoped_refptr<ChildURLLoaderFactoryBundle>
+  CreateDefaultURLLoaderFactoryBundle();
 
   // This class does *not* own the compositor thread. It is the responsibility
   // of the caller to ensure that the compositor thread is cleared before it is
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
 
- private:
   PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
   CreateNetworkURLLoaderFactory();
 
+ private:
   bool CheckPreparsedJsCachingEnabled() const;
 
   // Factory that takes a type and return PlatformEventObserverBase that matches

@@ -1051,7 +1051,10 @@ void BrowserView::FocusBookmarksToolbar() {
   }
 }
 
-void BrowserView::FocusInfobars() {
+void BrowserView::FocusInactivePopupForAccessibility() {
+  if (GetLocationBarView()->ActivateFirstInactiveBubbleForAccessibility())
+    return;
+
   if (infobar_container_->child_count() > 0)
     infobar_container_->SetPaneFocusAndFocusDefault();
 }
@@ -1612,13 +1615,6 @@ views::View* BrowserView::GetInitiallyFocusedView() {
 
 bool BrowserView::ShouldShowWindowTitle() const {
 #if defined(OS_CHROMEOS)
-  // Hosted apps on ChromeOS should always show their window icon.
-  if (extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
-          browser())) {
-    DCHECK(browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR));
-    return true;
-  }
-
   // For Chrome OS only, trusted windows (apps and settings) do not show a
   // title, crbug.com/119411. Child windows (i.e. popups) do show a title.
   if (browser_->is_trusted_source()) {
@@ -1982,7 +1978,7 @@ void BrowserView::ChildPreferredSizeChanged(View* child) {
 }
 
 void BrowserView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_CLIENT;
+  node_data->role = ax::mojom::Role::kClient;
 }
 
 void BrowserView::OnThemeChanged() {

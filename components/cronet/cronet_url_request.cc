@@ -15,12 +15,12 @@
 #include "net/base/load_flags.h"
 #include "net/base/load_states.h"
 #include "net/base/net_errors.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/http/http_util.h"
-#include "net/proxy/proxy_server.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/ssl/ssl_info.h"
 #include "net/url_request/redirect_info.h"
@@ -105,33 +105,34 @@ void CronetURLRequest::SetUpload(
 void CronetURLRequest::Start() {
   DCHECK(!context_->IsOnNetworkThread());
   context_->PostTaskToNetworkThread(
-      FROM_HERE, base::Bind(&CronetURLRequest::NetworkTasks::Start,
-                            base::Unretained(&network_tasks_),
-                            base::Unretained(context_), initial_method_,
-                            base::Passed(std::move(initial_request_headers_)),
-                            base::Passed(std::move(upload_))));
+      FROM_HERE,
+      base::BindOnce(&CronetURLRequest::NetworkTasks::Start,
+                     base::Unretained(&network_tasks_),
+                     base::Unretained(context_), initial_method_,
+                     base::Passed(std::move(initial_request_headers_)),
+                     base::Passed(std::move(upload_))));
 }
 
 void CronetURLRequest::GetStatus(OnStatusCallback callback) const {
   context_->PostTaskToNetworkThread(
-      FROM_HERE,
-      base::Bind(&CronetURLRequest::NetworkTasks::GetStatus,
-                 base::Unretained(&network_tasks_), base::Passed(&callback)));
+      FROM_HERE, base::BindOnce(&CronetURLRequest::NetworkTasks::GetStatus,
+                                base::Unretained(&network_tasks_),
+                                base::Passed(&callback)));
 }
 
 void CronetURLRequest::FollowDeferredRedirect() {
   context_->PostTaskToNetworkThread(
       FROM_HERE,
-      base::Bind(&CronetURLRequest::NetworkTasks::FollowDeferredRedirect,
-                 base::Unretained(&network_tasks_)));
+      base::BindOnce(&CronetURLRequest::NetworkTasks::FollowDeferredRedirect,
+                     base::Unretained(&network_tasks_)));
 }
 
 bool CronetURLRequest::ReadData(net::IOBuffer* raw_read_buffer, int max_size) {
   scoped_refptr<net::IOBuffer> read_buffer(raw_read_buffer);
   context_->PostTaskToNetworkThread(
       FROM_HERE,
-      base::Bind(&CronetURLRequest::NetworkTasks::ReadData,
-                 base::Unretained(&network_tasks_), read_buffer, max_size));
+      base::BindOnce(&CronetURLRequest::NetworkTasks::ReadData,
+                     base::Unretained(&network_tasks_), read_buffer, max_size));
   return true;
 }
 
@@ -142,9 +143,9 @@ void CronetURLRequest::Destroy(bool send_on_canceled) {
   // within a synchronized block that guarantees no future posts to the
   // network thread with the request pointer.
   context_->PostTaskToNetworkThread(
-      FROM_HERE, base::Bind(&CronetURLRequest::NetworkTasks::Destroy,
-                            base::Unretained(&network_tasks_),
-                            base::Unretained(this), send_on_canceled));
+      FROM_HERE, base::BindOnce(&CronetURLRequest::NetworkTasks::Destroy,
+                                base::Unretained(&network_tasks_),
+                                base::Unretained(this), send_on_canceled));
 }
 
 CronetURLRequest::NetworkTasks::NetworkTasks(std::unique_ptr<Callback> callback,

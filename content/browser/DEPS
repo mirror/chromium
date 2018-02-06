@@ -4,6 +4,8 @@ include_rules = [
   "+components/discardable_memory/common",
   "+components/discardable_memory/service",
   "+components/download/downloader/in_progress",
+  "+components/download/public/common",
+  "+components/filename_generation",
   "+components/filesystem",
   "+components/leveldb",
   "+components/link_header_util",
@@ -27,7 +29,6 @@ include_rules = [
   "+device/gamepad", # For gamepad API
   "+device/geolocation",
   "+device/nfc",
-  "+device/screen_orientation/public/interfaces",
   "+device/sensors",
   "+device/vr",  # For WebVR API
   # This can only be used on POSIX, in particular it mustn't be used on Windows
@@ -60,10 +61,6 @@ include_rules = [
   "+chromeos",
   "+third_party/cros_system_api",
 
-  # Temporary include to allow easier transition to using a network service.
-  # TODO(mmenke): Remove this when the network service ships.
-  "+content/network",
-
   # No inclusion of WebKit from the browser, other than strictly enum/POD,
   # header-only types, and some selected common code.
   "-third_party/WebKit",
@@ -78,6 +75,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/WebGestureEvent.h",
   "+third_party/WebKit/public/platform/WebInputEvent.h",
   "+third_party/WebKit/public/platform/WebInsecureRequestPolicy.h",
+  "+third_party/WebKit/public/platform/WebIntrinsicSizingInfo.h",
   "+third_party/WebKit/public/platform/WebKeyboardEvent.h",
   "+third_party/WebKit/public/platform/WebMixedContentContextType.h",
   "+third_party/WebKit/public/platform/WebMouseEvent.h",

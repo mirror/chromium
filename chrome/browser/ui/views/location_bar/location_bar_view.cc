@@ -8,8 +8,8 @@
 #include <map>
 #include <memory>
 
-#include "base/feature_list.h"
 #include "base/i18n/rtl.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
@@ -40,6 +40,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 #include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
@@ -49,7 +50,6 @@
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/location_bar/zoom_view.h"
-#include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_icon_views.h"
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/translate/translate_icon_view.h"
@@ -57,7 +57,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/favicon/content/content_favicon_driver.h"
-#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #include "components/prefs/pref_service.h"
@@ -103,8 +102,6 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
-#else
-#include "chrome/browser/ui/views/first_run_bubble.h"
 #endif
 
 #if defined(USE_AURA)
@@ -230,26 +227,31 @@ void LocationBarView::Init() {
     AddChildView(image_view);
   }
 
-  auto add_icon = [this](BubbleIconView* icon_view) -> void {
-    icon_view->Init();
-    icon_view->SetVisible(false);
-    AddChildView(icon_view);
-  };
-
-  add_icon(zoom_view_ = new ZoomView(delegate_));
-  add_icon(manage_passwords_icon_view_ =
-               new ManagePasswordsIconViews(command_updater()));
+  bubble_icons_.push_back(zoom_view_ = new ZoomView(delegate_));
+  bubble_icons_.push_back(manage_passwords_icon_view_ =
+                              new ManagePasswordsIconViews(command_updater()));
   if (browser_)
-    add_icon(save_credit_card_icon_view_ =
-                 new autofill::SaveCardIconView(command_updater(), browser_));
-  add_icon(translate_icon_view_ = new TranslateIconView(command_updater()));
+    bubble_icons_.push_back(
+        save_credit_card_icon_view_ =
+            new autofill::SaveCardIconView(command_updater(), browser_));
+  bubble_icons_.push_back(translate_icon_view_ =
+                              new TranslateIconView(command_updater()));
 #if defined(OS_CHROMEOS)
   if (browser_)
-    add_icon(intent_picker_view_ = new IntentPickerView(browser_));
+    bubble_icons_.push_back(intent_picker_view_ =
+                                new IntentPickerView(browser_));
 #endif
-  add_icon(find_bar_icon_ = new FindBarIcon());
+  bubble_icons_.push_back(find_bar_icon_ = new FindBarIcon());
   if (browser_)
-    add_icon(star_view_ = new StarView(command_updater(), browser_));
+    bubble_icons_.push_back(star_view_ =
+                                new StarView(command_updater(), browser_));
+
+  std::for_each(bubble_icons_.begin(), bubble_icons_.end(),
+                [this](BubbleIconView* icon_view) -> void {
+                  icon_view->Init();
+                  icon_view->SetVisible(false);
+                  AddChildView(icon_view);
+                });
 
   clear_all_button_ = views::CreateVectorImageButton(this);
   clear_all_button_->SetTooltipText(
@@ -372,33 +374,6 @@ views::View* LocationBarView::GetSecurityBubbleAnchorView() {
   return location_icon_view()->GetImageView();
 }
 
-void LocationBarView::GetOmniboxPopupPositioningInfo(
-    gfx::Point* top_left_screen_coord,
-    int* popup_width,
-    int* left_margin,
-    int* right_margin,
-    int top_edge_overlap) {
-  // The popup contents are always sized matching the location bar size.
-  const int popup_contents_left = x();
-  const int popup_contents_right = bounds().right();
-
-  // The popup itself may either be the same width as the contents, or as wide
-  // as the toolbar.
-  bool narrow_popup =
-      base::FeatureList::IsEnabled(omnibox::kUIExperimentNarrowDropdown);
-  const int popup_left = narrow_popup ? popup_contents_left : 0;
-  const int popup_right =
-      narrow_popup ? popup_contents_right : parent()->width();
-
-  *top_left_screen_coord =
-      gfx::Point(popup_left, parent()->height() - top_edge_overlap);
-  views::View::ConvertPointToScreen(parent(), top_left_screen_coord);
-
-  *popup_width = popup_right - popup_left;
-  *left_margin = popup_contents_left - popup_left;
-  *right_margin = popup_right - popup_contents_right;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // LocationBarView, public LocationBar implementation:
 
@@ -424,7 +399,7 @@ bool LocationBarView::HasFocus() const {
 }
 
 void LocationBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_GROUP;
+  node_data->role = ax::mojom::Role::kGroup;
 }
 
 gfx::Size LocationBarView::CalculatePreferredSize() const {
@@ -644,10 +619,27 @@ void LocationBarView::Update(const WebContents* contents) {
       ShouldShowLocationIconText(),
       !contents && ShouldAnimateLocationIconTextVisibilityChange());
   OnChanged();  // NOTE: Calls Layout().
+  last_update_security_level_ = GetToolbarModel()->GetSecurityLevel(false);
 }
 
 void LocationBarView::ResetTabState(WebContents* contents) {
   omnibox_view_->ResetTabState(contents);
+}
+
+bool LocationBarView::ActivateFirstInactiveBubbleForAccessibility() {
+  auto result = std::find_if(
+      bubble_icons_.begin(), bubble_icons_.end(), [](BubbleIconView* view) {
+        if (!view || !view->visible() || !view->GetBubble())
+          return false;
+
+        views::Widget* widget = view->GetBubble()->GetWidget();
+        return widget && widget->IsVisible() && !widget->IsActive();
+      });
+
+  if (result != bubble_icons_.end())
+    (*result)->GetBubble()->GetWidget()->Show();
+
+  return result != bubble_icons_.end();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -862,10 +854,7 @@ base::string16 LocationBarView::GetLocationIconText() const {
       return extension_name;
   }
 
-  bool has_ev_cert =
-      (GetToolbarModel()->GetSecurityLevel(false) == security_state::EV_SECURE);
-  return has_ev_cert ? GetToolbarModel()->GetEVCertName()
-                     : GetToolbarModel()->GetSecureVerboseText();
+  return GetToolbarModel()->GetSecureVerboseText();
 }
 
 bool LocationBarView::ShouldShowKeywordBubble() const {
@@ -879,18 +868,17 @@ bool LocationBarView::ShouldShowLocationIconText() const {
        GetToolbarModel()->GetURL().SchemeIs(extensions::kExtensionScheme)))
     return true;
 
-  using SecurityLevel = security_state::SecurityLevel;
-  const SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
-  return level == SecurityLevel::EV_SECURE || level == SecurityLevel::SECURE ||
-         level == SecurityLevel::DANGEROUS ||
-         level == SecurityLevel::HTTP_SHOW_WARNING;
+  return !GetToolbarModel()->GetSecureVerboseText().empty();
 }
 
 bool LocationBarView::ShouldAnimateLocationIconTextVisibilityChange() const {
-  // Text for extension URLs should not be animated (their security level is
-  // SecurityLevel::NONE).
   using SecurityLevel = security_state::SecurityLevel;
   SecurityLevel level = GetToolbarModel()->GetSecurityLevel(false);
+  // Do not animate transitions from HTTP_SHOW_WARNING to DANGEROUS, since the
+  // transition can look confusing/messy.
+  if (level == SecurityLevel::DANGEROUS &&
+      last_update_security_level_ == SecurityLevel::HTTP_SHOW_WARNING)
+    return false;
   return level == SecurityLevel::DANGEROUS ||
          level == SecurityLevel::HTTP_SHOW_WARNING;
 }

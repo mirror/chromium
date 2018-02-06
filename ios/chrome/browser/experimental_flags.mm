@@ -32,7 +32,6 @@
 namespace {
 
 NSString* const kEnableStartupCrash = @"EnableStartupCrash";
-NSString* const kEnableViewCopyPasswords = @"EnableViewCopyPasswords";
 NSString* const kFirstRunForceEnabled = @"FirstRunForceEnabled";
 NSString* const kGaiaEnvironment = @"GAIAEnvironment";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
@@ -101,16 +100,6 @@ bool IsNewClearBrowsingDataUIEnabled() {
   return false;
 }
 
-// Emergency switch for https://crbug.com/527084 in case of unforeseen UX
-// regressions.
-// Defaults to Enabled unless the Finch trial has explicitly disabled it.
-bool IsPageIconForDowngradedHTTPSEnabled() {
-  std::string group_name =
-      base::FieldTrialList::FindFullName("IOSPageIconForDowngradedHTTPS");
-  return !base::StartsWith(group_name, "Disabled",
-                           base::CompareCase::INSENSITIVE_ASCII);
-}
-
 bool IsStartupCrashEnabled() {
   return [[NSUserDefaults standardUserDefaults] boolForKey:kEnableStartupCrash];
 }
@@ -121,18 +110,6 @@ bool MustClearApplicationGroupSandbox() {
   [[NSUserDefaults standardUserDefaults] setBool:NO
                                           forKey:kClearApplicationGroup];
   return value;
-}
-
-// This feature is on by default. Finch and experimental settings can be used to
-// disable it.
-// TODO(crbug.com/739404): Remove this method and the experimental flag once the
-// feature spends a couple of releases in stable.
-bool IsViewCopyPasswordsEnabled() {
-  if (!base::FeatureList::IsEnabled(password_manager::features::kViewPasswords))
-    return false;
-  NSString* viewCopyPasswordFlag = [[NSUserDefaults standardUserDefaults]
-      objectForKey:kEnableViewCopyPasswords];
-  return ![viewCopyPasswordFlag isEqualToString:@"Disabled"];
 }
 
 bool IsNewFeedbackKitEnabled() {

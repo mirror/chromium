@@ -559,7 +559,8 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
     ::testing::Values(
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDownloads"),
         TestParameter(NOT_IN_GUEST_MODE, "showHiddenFilesOnDrive"),
-        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs")));
+        TestParameter(NOT_IN_GUEST_MODE, "hideGoogleDocs"),
+        TestParameter(NOT_IN_GUEST_MODE, "showPasteInGearMenu")));
 
 // Structure to describe an account info.
 struct TestAccountInfo {
@@ -595,6 +596,11 @@ class MultiProfileFileManagerBrowserTest : public FileManagerBrowserTestBase {
                                     kTestAccounts[DUMMY_ACCOUNT_INDEX].email);
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile,
                                     kTestAccounts[DUMMY_ACCOUNT_INDEX].hash);
+    // Don't require policy for our sessions - this is required because
+    // this test creates a secondary profile synchronously, so we need to
+    // let the policy code know not to expect cached policy.
+    command_line->AppendSwitchASCII(chromeos::switches::kProfileRequiresPolicy,
+                                    "false");
   }
 
   // Logs in to the primary profile of this test.

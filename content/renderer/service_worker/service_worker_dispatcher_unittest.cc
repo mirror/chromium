@@ -49,9 +49,8 @@ class ServiceWorkerDispatcherTest : public testing::Test {
   ServiceWorkerDispatcherTest() {}
 
   void SetUp() override {
-    dispatcher_.reset(
-        new ServiceWorkerDispatcher(nullptr /* thread_safe_sender */,
-                                    nullptr /* main_thread_task_runner */));
+    dispatcher_ = std::make_unique<ServiceWorkerDispatcher>(
+        nullptr /* thread_safe_sender */);
   }
 
   bool ContainsServiceWorker(int handle_id) {
@@ -101,10 +100,9 @@ TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
     EXPECT_EQ(1, mock_service_worker_object_host->GetBindingCount());
   }
 
-  // Should return nullptr when a given object is invalid.
+  // Should return nullptr when given nullptr.
   scoped_refptr<WebServiceWorkerImpl> invalid_worker =
-      dispatcher()->GetOrCreateServiceWorker(
-          blink::mojom::ServiceWorkerObjectInfo::New());
+      dispatcher()->GetOrCreateServiceWorker(nullptr);
   EXPECT_FALSE(invalid_worker);
 }
 

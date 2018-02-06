@@ -16,7 +16,7 @@
 #include "content/child/thread_safe_sender.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/renderer/child_url_loader_factory_getter.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "content/renderer/service_worker/controller_service_worker_connector.h"
 #include "content/renderer/service_worker/service_worker_dispatcher.h"
 #include "content/renderer/service_worker/service_worker_subresource_loader.h"
@@ -36,9 +36,8 @@ namespace content {
 // Holds state for service worker clients.
 struct ServiceWorkerProviderContext::ProviderStateForClient {
   explicit ProviderStateForClient(
-      scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
-      : default_loader_factory_getter(
-            std::move(default_loader_factory_getter)) {}
+      scoped_refptr<SharedURLLoaderFactory> default_loader_factory)
+      : default_loader_factory(std::move(default_loader_factory)) {}
   ~ProviderStateForClient() = default;
 
   // |controller| will be set by SetController() and taken by TakeController().
@@ -53,7 +52,7 @@ struct ServiceWorkerProviderContext::ProviderStateForClient {
 
   // S13nServiceWorker:
   // Used when we create |subresource_loader_factory|.
-  scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter;
+  scoped_refptr<SharedURLLoaderFactory> default_loader_factory;
 
   // Tracks feature usage for UseCounter.
   std::set<blink::mojom::WebFeature> used_features;
@@ -100,7 +99,7 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     mojom::ServiceWorkerContainerAssociatedRequest request,
     mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
     mojom::ControllerServiceWorkerInfoPtr controller_info,
-    scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
+    scoped_refptr<SharedURLLoaderFactory> default_loader_factory)
     : provider_type_(provider_type),
       provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -108,7 +107,7 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
       weak_factory_(this) {
   container_host_.Bind(std::move(host_ptr_info));
   state_for_client_ = std::make_unique<ProviderStateForClient>(
-      std::move(default_loader_factory_getter));
+      std::move(default_loader_factory));
 
   if (!CanCreateSubresourceLoaderFactory())
     return;
@@ -198,7 +197,7 @@ ServiceWorkerProviderContext::GetSubresourceLoaderFactory() {
   if (!state->subresource_loader_factory) {
     mojo::MakeStrongBinding(
         std::make_unique<ServiceWorkerSubresourceLoaderFactory>(
-            state->controller_connector, state->default_loader_factory_getter),
+            state->controller_connector, state->default_loader_factory),
         mojo::MakeRequest(&state->subresource_loader_factory));
   }
   return state->subresource_loader_factory.get();
@@ -297,18 +296,18 @@ void ServiceWorkerProviderContext::SetController(
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   ProviderStateForClient* state = state_for_client_.get();
   DCHECK(state);
-  DCHECK(!state->controller || state->controller->handle_id !=
-                                   blink::mojom::kInvalidServiceWorkerHandleId);
 
-  auto& controller = controller_info->object_info;
-  state->controller_version_id = controller->version_id;
-  state->controller =
-      controller->handle_id != blink::mojom::kInvalidServiceWorkerHandleId
-          ? std::move(controller)
-          : nullptr;
+  state->controller = std::move(controller_info->object_info);
+  state->controller_version_id =
+      state->controller ? state->controller->version_id
+                        : blink::mojom::kInvalidServiceWorkerVersionId;
 
   // Propagate the controller to workers related to this provider.
   if (state->controller) {
+    DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId,
+              state->controller->handle_id);
+    DCHECK_NE(blink::mojom::kInvalidServiceWorkerVersionId,
+              state->controller->version_id);
     for (const auto& worker : state->worker_clients) {
       // This is a Mojo interface call to the (dedicated or shared) worker
       // thread.
@@ -416,12 +415,12 @@ void ServiceWorkerProviderContext::CountFeature(
 bool ServiceWorkerProviderContext::CanCreateSubresourceLoaderFactory() const {
   // Expected that it is called only for clients.
   DCHECK(state_for_client_);
-  // |state_for_client_->default_loader_factory_getter| could be null
+  // |state_for_client_->default_loader_factory| could be null
   // for SharedWorker case (which is not supported by S13nServiceWorker
   // yet, https://crbug.com/796819) and in unit tests, return early in such
   // cases too.
   return (ServiceWorkerUtils::IsServicificationEnabled() &&
-          state_for_client_->default_loader_factory_getter);
+          state_for_client_->default_loader_factory);
 }
 
 void ServiceWorkerProviderContext::DestructOnMainThread() const {

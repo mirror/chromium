@@ -206,8 +206,8 @@ class CORE_EXPORT LocalFrameView final
   int InitialViewportWidth() const;
   int InitialViewportHeight() const;
 
-  bool GetIntrinsicSizingInfo(IntrinsicSizingInfo&) const;
-  bool HasIntrinsicSizingInfo() const;
+  bool GetIntrinsicSizingInfo(IntrinsicSizingInfo&) const override;
+  bool HasIntrinsicSizingInfo() const override;
 
   void UpdateAcceleratedCompositingSettings();
 
@@ -273,7 +273,7 @@ class CORE_EXPORT LocalFrameView final
     return background_attachment_fixed_objects_.size();
   }
   bool HasBackgroundAttachmentFixedDescendants(const LayoutObject&) const;
-  void InvalidateBackgroundAttachmentFixedObjects();
+  void InvalidateBackgroundAttachmentFixedDescendants(const LayoutObject&);
 
   void HandleLoadCompleted();
 
@@ -373,6 +373,8 @@ class CORE_EXPORT LocalFrameView final
                                       const LayoutPoint&) const;
   LayoutPoint ConvertToLayoutObject(const LayoutObject&,
                                     const LayoutPoint&) const;
+  FloatPoint ConvertToLayoutObject(const LayoutObject&,
+                                   const FloatPoint&) const;
 
   bool IsFrameViewScrollCorner(LayoutScrollbarPart* scroll_corner) const {
     return scroll_corner_ == scroll_corner;
@@ -485,7 +487,7 @@ class CORE_EXPORT LocalFrameView final
   FloatQuad LocalToVisibleContentQuad(const FloatQuad&,
                                       const LayoutObject*,
                                       unsigned = 0) const final;
-  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
+  scoped_refptr<base::SingleThreadTaskRunner> GetTimerTaskRunner() const final;
 
   LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
                             const WebScrollIntoViewParams& params) override;
@@ -580,6 +582,10 @@ class CORE_EXPORT LocalFrameView final
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   IntSize VisibleContentSize(
       IncludeScrollbarsInRect = kExcludeScrollbars) const;
+
+  // The visible scroll snapport rect is contracted from the visible content
+  // rect, by the amount of the document's scroll-padding.
+  LayoutRect VisibleScrollSnapportRect() const override;
 
   // Clips the provided rect to the visible content area. For this purpose, we
   // also query the chrome client for any active overrides to the visible area
@@ -704,6 +710,9 @@ class CORE_EXPORT LocalFrameView final
   FloatPoint DocumentToAbsolute(const FloatPoint&) const;
   LayoutPoint DocumentToAbsolute(const LayoutPoint&) const;
   LayoutRect DocumentToAbsolute(const LayoutRect&) const;
+
+  LayoutPoint AbsoluteToDocument(const LayoutPoint&) const;
+  LayoutRect AbsoluteToDocument(const LayoutRect&) const;
 
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&,
@@ -1080,6 +1089,9 @@ class CORE_EXPORT LocalFrameView final
   IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
   LayoutPoint ConvertFromContainingEmbeddedContentView(
       const LayoutPoint&) const;
+  FloatPoint ConvertFromContainingEmbeddedContentView(const FloatPoint&) const;
+  DoublePoint ConvertFromContainingEmbeddedContentView(
+      const DoublePoint&) const;
 
   void DidChangeGlobalRootScroller() override;
 
@@ -1252,6 +1264,9 @@ class CORE_EXPORT LocalFrameView final
 
   ScrollOffset pending_scroll_delta_;
   ScrollOffset scroll_offset_;
+
+  // TODO(bokan): This is unneeded when root-layer-scrolls is turned on.
+  // crbug.com/417782.
   IntSize layout_overflow_size_;
 
   bool scrollbars_suppressed_;

@@ -38,17 +38,18 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     kCompositor = 8,
     kIdle = 9,
     kTest = 10,
-    kFrameLoading_kControl = 11,
+    kFrameLoadingControl = 11,
     kFrameThrottleable = 12,
     kFrameDeferrable = 13,
     kFramePausable = 14,
     kFrameUnpausable = 15,
     kV8 = 16,
     kIPC = 17,
+    kInput = 18,
 
     // Used to group multiple types when calculating Expected Queueing Time.
-    kOther = 18,
-    kCount = 19
+    kOther = 19,
+    kCount = 20
   };
 
   // Returns name of the given queue type. Returned string has application
@@ -75,7 +76,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
           can_be_throttled(false),
           can_be_paused(false),
           can_be_stopped(false),
-          used_for_control_tasks(false) {}
+          used_for_important_tasks(false) {}
 
     QueueCreationParams SetCanBeDeferred(bool value) {
       can_be_blocked = value;
@@ -97,8 +98,8 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
       return *this;
     }
 
-    QueueCreationParams SetUsedForControlTasks(bool value) {
-      used_for_control_tasks = value;
+    QueueCreationParams SetUsedForImportantTasks(bool value) {
+      used_for_important_tasks = value;
       return *this;
     }
 
@@ -132,7 +133,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     bool can_be_throttled;
     bool can_be_paused;
     bool can_be_stopped;
-    bool used_for_control_tasks;
+    bool used_for_important_tasks;
   };
 
   ~MainThreadTaskQueue() override;
@@ -149,7 +150,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   bool CanBeStopped() const { return can_be_stopped_; }
 
-  bool UsedForControlTasks() const { return used_for_control_tasks_; }
+  bool UsedForImportantTasks() const { return used_for_important_tasks_; }
 
   void OnTaskStarted(const TaskQueue::Task& task, base::TimeTicks start);
 
@@ -181,7 +182,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
   const bool can_be_throttled_;
   const bool can_be_paused_;
   const bool can_be_stopped_;
-  const bool used_for_control_tasks_;
+  const bool used_for_important_tasks_;
 
   // Needed to notify renderer scheduler about completed tasks.
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED

@@ -57,11 +57,6 @@
 
 namespace blink {
 
-static inline bool PageIsBeingDismissed(Document* document) {
-  return document->PageDismissalEventBeingDispatched() !=
-         Document::kNoDismissal;
-}
-
 static ImageLoader::BypassMainWorldBehavior ShouldBypassMainWorldCSP(
     ImageLoader* loader) {
   DCHECK(loader);
@@ -401,8 +396,9 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
       resource_request.SetRequestContext(
           WebURLRequest::kRequestContextImageSet);
 
-    if (document.PageDismissalEventBeingDispatched() !=
-        Document::kNoDismissal) {
+    bool page_is_being_dismissed =
+        document.PageDismissalEventBeingDispatched() != Document::kNoDismissal;
+    if (page_is_being_dismissed) {
       resource_request.SetHTTPHeaderField(HTTPNames::Cache_Control,
                                           "max-age=0");
       resource_request.SetKeepalive(true);
@@ -418,12 +414,12 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
 
     new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());
 
-    if (!new_image_content && !PageIsBeingDismissed(&document)) {
-      CrossSiteOrCSPViolationOccurred(image_source_url);
-      DispatchErrorEvent();
-    } else {
-      ClearFailedLoadURL();
-    }
+    // If this load is starting while navigating away, treat it as an auditing
+    // keepalive request, and don't report its results back to the element.
+    if (page_is_being_dismissed)
+      new_image_content = nullptr;
+
+    ClearFailedLoadURL();
   } else {
     if (!image_source_url.IsNull()) {
       // Fire an error event if the url string is not empty, but the KURL is.
@@ -649,9 +645,8 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
     pending_load_event_.Cancel();
 
     Optional<ResourceError> error = resource->GetResourceError();
-    if (error && error->IsAccessCheck()) {
+    if (error && error->IsAccessCheck())
       CrossSiteOrCSPViolationOccurred(AtomicString(error->FailingURL()));
-    }
 
     // The error event should not fire if the image data update is a result of
     // environment change.

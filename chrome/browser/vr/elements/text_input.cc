@@ -18,10 +18,8 @@ constexpr int kCursorBlinkHalfPeriodMs = 600;
 namespace vr {
 
 TextInput::TextInput(float font_height_meters,
-                     OnFocusChangedCallback focus_changed_callback,
                      OnInputEditedCallback input_edit_callback)
-    : focus_changed_callback_(focus_changed_callback),
-      input_edit_callback_(input_edit_callback) {
+    : input_edit_callback_(input_edit_callback) {
   auto text = std::make_unique<Text>(font_height_meters);
   text->SetType(kTypeTextInputHint);
   text->SetDrawPhase(kPhaseForeground);
@@ -69,6 +67,18 @@ void TextInput::SetTextInputDelegate(TextInputDelegate* text_input_delegate) {
   delegate_ = text_input_delegate;
 }
 
+void TextInput::OnButtonDown(const gfx::PointF& position) {
+  // Reposition the cursor based on click position.
+  int cursor_position = text_element_->GetCursorPositionFromPoint(position);
+  TextInputInfo info(text_info_);
+  info.selection_start = cursor_position;
+  info.selection_end = cursor_position;
+  if (text_info_ != info) {
+    UpdateInput(info);
+    ResetCursorBlinkCycle();
+  }
+}
+
 void TextInput::OnButtonUp(const gfx::PointF& position) {
   RequestFocus();
 }
@@ -80,8 +90,8 @@ void TextInput::OnFocusChanged(bool focused) {
   if (delegate_ && focused)
     delegate_->UpdateInput(text_info_);
 
-  if (focus_changed_callback_)
-    focus_changed_callback_.Run(focused);
+  if (event_handlers_.focus_change)
+    event_handlers_.focus_change.Run(focused);
 }
 
 void TextInput::RequestFocus() {
@@ -125,6 +135,8 @@ void TextInput::SetHintColor(SkColor color) {
 void TextInput::UpdateInput(const TextInputInfo& info) {
   if (text_info_ == info)
     return;
+
+  DCHECK_EQ(info.selection_start, info.selection_end);
   text_info_ = info;
 
   if (delegate_ && focused_)
@@ -151,6 +163,10 @@ void TextInput::OnSetName() {
   cursor_element_->set_owner_name_for_test(name());
 }
 
+TextInputInfo TextInput::GetTextInputInfoForTest() const {
+  return text_info_;
+}
+
 void TextInput::LayOutChildren() {
   // To avoid re-rendering a texture when the cursor blinks, the texture is a
   // separate element. Once the text has been laid out, we can position the
@@ -161,14 +177,18 @@ void TextInput::LayOutChildren() {
 }
 
 bool TextInput::SetCursorBlinkState(const base::TimeTicks& time) {
-  base::TimeDelta delta = time - base::TimeTicks();
+  base::TimeDelta delta = time - cursor_blink_start_ticks_;
   bool visible =
-      focused_ && delta.InMilliseconds() / kCursorBlinkHalfPeriodMs % 2;
+      focused_ && (delta.InMilliseconds() / kCursorBlinkHalfPeriodMs + 1) % 2;
   if (cursor_visible_ == visible)
     return false;
   cursor_visible_ = visible;
   cursor_element_->SetVisible(visible);
   return true;
+}
+
+void TextInput::ResetCursorBlinkCycle() {
+  cursor_blink_start_ticks_ = base::TimeTicks::Now();
 }
 
 }  // namespace vr

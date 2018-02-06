@@ -16,8 +16,9 @@
 #include "base/memory/ref_counted.h"
 #include "crypto/ec_private_key.h"
 #include "crypto/ec_signature_creator.h"
-#include "net/base/completion_callback.h"
+#include "net/base/completion_once_callback.h"
 #include "net/base/proxy_delegate.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/cert/cert_verifier.h"
@@ -27,8 +28,7 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/transport_security_state.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -120,7 +120,7 @@ class StreamReleaserCallback : public TestCompletionCallbackBase {
   ~StreamReleaserCallback() override;
 
   // Returns a callback that releases |request|'s stream.
-  CompletionCallback MakeCallback(SpdyStreamRequest* request);
+  CompletionOnceCallback MakeCallback(SpdyStreamRequest* request);
 
  private:
   void OnComplete(SpdyStreamRequest* request, int result);
@@ -219,6 +219,7 @@ struct SpdySessionDependencies {
   SpdySession::TimeFunc time_func;
   std::unique_ptr<ProxyDelegate> proxy_delegate;
   bool enable_http2_alternative_service;
+  bool enable_websocket_over_http2;
   NetLog* net_log;
   bool http_09_on_non_default_ports_enabled;
   bool disable_idle_sockets_close_on_memory_pressure;
@@ -246,6 +247,13 @@ bool HasSpdySession(SpdySessionPool* pool, const SpdySessionKey& key);
 base::WeakPtr<SpdySession> CreateSpdySession(HttpNetworkSession* http_session,
                                              const SpdySessionKey& key,
                                              const NetLogWithSource& net_log);
+
+// Like CreateSpdySession(), but the host is considered a trusted proxy and
+// allowed to push cross-origin resources.
+base::WeakPtr<SpdySession> CreateTrustedSpdySession(
+    HttpNetworkSession* http_session,
+    const SpdySessionKey& key,
+    const NetLogWithSource& net_log);
 
 // Like CreateSpdySession(), but does not fail if there is already an IP
 // pooled session for |key|.

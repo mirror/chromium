@@ -646,32 +646,26 @@ interface CSSMathInvert : CSSMathValue
     attribute @@toStringTag
     getter value
     method constructor
-    setter value
 interface CSSMathMax : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathMin : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathNegate : CSSMathValue
     attribute @@toStringTag
     getter value
     method constructor
-    setter value
 interface CSSMathProduct : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathSum : CSSMathValue
     attribute @@toStringTag
     getter values
     method constructor
-    setter values
 interface CSSMathValue : CSSNumericValue
     attribute @@toStringTag
     getter operator
@@ -695,6 +689,10 @@ interface CSSNumericArray
     getter length
     method @@iterator
     method constructor
+    method entries
+    method forEach
+    method keys
+    method values
 interface CSSNumericValue : CSSStyleValue
     attribute @@toStringTag
     method add
@@ -707,6 +705,7 @@ interface CSSNumericValue : CSSStyleValue
     method sub
     method to
     method toSum
+    method type
 interface CSSPageRule : CSSRule
     attribute @@toStringTag
     getter selectorText
@@ -729,7 +728,7 @@ interface CSSResourceValue : CSSStyleValue
     attribute @@toStringTag
     getter state
     method constructor
-interface CSSRotation : CSSTransformComponent
+interface CSSRotate : CSSTransformComponent
     attribute @@toStringTag
     getter angle
     getter x
@@ -798,9 +797,9 @@ interface CSSStyleDeclaration
     setter cssText
 interface CSSStyleRule : CSSRule
     attribute @@toStringTag
-    getter attributeStyleMap
     getter selectorText
     getter style
+    getter styleMap
     method constructor
     setter selectorText
     setter style
@@ -840,7 +839,7 @@ interface CSSTransformValue : CSSStyleValue
     method keys
     method toMatrix
     method values
-interface CSSTranslation : CSSTransformComponent
+interface CSSTranslate : CSSTransformComponent
     attribute @@toStringTag
     getter x
     getter y
@@ -874,7 +873,6 @@ interface CSSVariableReferenceValue
     getter fallback
     getter variable
     method constructor
-    setter fallback
     setter variable
 interface CSSViewportRule : CSSRule
     attribute @@toStringTag
@@ -1053,8 +1051,21 @@ interface CompositionEvent : UIEvent
     method initCompositionEvent
 interface ComputedAccessibleNode
     attribute @@toStringTag
+    getter colCount
+    getter colIndex
+    getter colSpan
+    getter keyShortcuts
+    getter level
     getter name
+    getter placeholder
+    getter posInSet
     getter role
+    getter roleDescription
+    getter rowCount
+    getter rowIndex
+    getter rowSpan
+    getter setSize
+    getter valueText
     method constructor
 interface ConstantSourceNode : AudioScheduledSourceNode
     attribute @@toStringTag
@@ -1573,6 +1584,8 @@ interface Document : Node
     getter onwebkitfullscreenerror
     getter onwheel
     getter origin
+    getter pictureInPictureElement
+    getter pictureInPictureEnabled
     getter plugins
     getter pointerLockElement
     getter policy
@@ -1628,6 +1641,7 @@ interface Document : Node
     method evaluate
     method execCommand
     method exitFullscreen
+    method exitPictureInPicture
     method exitPointerLock
     method getAnimations
     method getElementById
@@ -3336,6 +3350,7 @@ interface HTMLScriptElement : HTMLElement
     setter type
 interface HTMLSelectElement : HTMLElement
     attribute @@toStringTag
+    getter autocomplete
     getter autofocus
     getter disabled
     getter form
@@ -3362,6 +3377,7 @@ interface HTMLSelectElement : HTMLElement
     method remove
     method reportValidity
     method setCustomValidity
+    setter autocomplete
     setter autofocus
     setter disabled
     setter length
@@ -3536,6 +3552,7 @@ interface HTMLTemplateElement : HTMLElement
     method constructor
 interface HTMLTextAreaElement : HTMLElement
     attribute @@toStringTag
+    getter autocomplete
     getter autofocus
     getter cols
     getter defaultValue
@@ -3567,6 +3584,7 @@ interface HTMLTextAreaElement : HTMLElement
     method setCustomValidity
     method setRangeText
     method setSelectionRange
+    setter autocomplete
     setter autofocus
     setter cols
     setter defaultValue
@@ -3625,7 +3643,9 @@ interface HTMLUnknownElement : HTMLElement
     method constructor
 interface HTMLVideoElement : HTMLMediaElement
     attribute @@toStringTag
+    getter disablePictureInPicture
     getter height
+    getter onenterpictureinpicture
     getter poster
     getter videoHeight
     getter videoWidth
@@ -3636,11 +3656,14 @@ interface HTMLVideoElement : HTMLMediaElement
     getter width
     method constructor
     method getVideoPlaybackQuality
+    method requestPictureInPicture
     method webkitEnterFullScreen
     method webkitEnterFullscreen
     method webkitExitFullScreen
     method webkitExitFullscreen
+    setter disablePictureInPicture
     setter height
+    setter onenterpictureinpicture
     setter poster
     setter width
 interface HashChangeEvent : Event
@@ -4147,6 +4170,7 @@ interface MediaList
     method constructor
     method deleteMedium
     method item
+    method toString
     setter mediaText
 interface MediaMetadata
     attribute @@toStringTag
@@ -8923,6 +8947,10 @@ interface XRFrameOfReference : XRCoordinateSystem
     method constructor
 interface XRLayer
     attribute @@toStringTag
+    method constructor
+interface XRPresentationContext
+    attribute @@toStringTag
+    getter canvas
     method constructor
 interface XRPresentationFrame
     attribute @@toStringTag

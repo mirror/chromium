@@ -55,7 +55,7 @@ constexpr float kMaxViewScaleFactor = 5.0f;
 constexpr float kViewScaleAdjustmentFactor = 0.2f;
 constexpr float kPageLoadTimeMilliseconds = 500;
 
-constexpr gfx::Point3F kDefaultLaserOrigin = {0.1f, -0.5f, 0.f};
+constexpr gfx::Point3F kDefaultLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
 constexpr float kControllerScaleFactor = 1.5f;
 
@@ -91,8 +91,15 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   text_input_delegate_ = std::make_unique<TextInputDelegate>();
   keyboard_delegate_ = std::make_unique<TestKeyboardDelegate>();
 
+  UiInitialState ui_initial_state;
+#if defined(GOOGLE_CHROME_BUILD)
+  ui_initial_state.assets_available = true;
+#endif
   ui_ = std::make_unique<Ui>(this, nullptr, keyboard_delegate_.get(),
-                             text_input_delegate_.get(), UiInitialState());
+                             text_input_delegate_.get(), ui_initial_state);
+  if (ui_initial_state.assets_available) {
+    LoadAssets();
+  }
 
   text_input_delegate_->SetRequestFocusCallback(
       base::BindRepeating(&vr::Ui::RequestFocus, base::Unretained(ui_.get())));
@@ -111,9 +118,8 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   ui_->SetLoadProgress(0.4);
   ui_->SetVideoCaptureEnabled(true);
   ui_->SetScreenCaptureEnabled(true);
-  ui_->SetAudioCaptureEnabled(true);
   ui_->SetBluetoothConnected(true);
-  ui_->SetLocationAccess(true);
+  ui_->SetLocationAccessEnabled(true);
   ui_->input_manager()->set_hit_test_strategy(
       UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
 }
@@ -197,7 +203,8 @@ void VrTestContext::HandleInput(ui::Event* event) {
         break;
       }
       case ui::DomCode::US_E:
-        model_->exiting_vr = !model_->exiting_vr;
+        model_->experimental_features_enabled =
+            !model_->experimental_features_enabled;
         break;
       case ui::DomCode::US_O:
         CycleOrigin();
@@ -232,6 +239,12 @@ void VrTestContext::HandleInput(ui::Event* event) {
   }
 
   const ui::MouseEvent* mouse_event = event->AsMouseEvent();
+
+  if (mouse_event->IsMiddleMouseButton()) {
+    if (mouse_event->type() == ui::ET_MOUSE_RELEASED) {
+      ui_->OnAppButtonClicked();
+    }
+  }
 
   // TODO(cjgrant): Figure out why, quite regularly, mouse click events do not
   // make it into this method and are missed.
@@ -346,8 +359,9 @@ ControllerModel VrTestContext::UpdateController(const RenderInfo& render_info) {
 void VrTestContext::OnGlInitialized() {
   unsigned int content_texture_id = CreateFakeContentTexture();
 
-  ui_->OnGlInitialized(content_texture_id,
-                       UiElementRenderer::kTextureLocationLocal, false);
+  ui_->OnGlInitialized(
+      content_texture_id, UiElementRenderer::kTextureLocationLocal,
+      content_texture_id, UiElementRenderer::kTextureLocationLocal, 0, false);
 
   keyboard_delegate_->Initialize(ui_->scene()->SurfaceProviderForTesting(),
                                  ui_->ui_element_renderer());
@@ -408,6 +422,8 @@ void VrTestContext::CycleWebVrModes() {
   switch (model_->web_vr.state) {
     case kWebVrNoTimeoutPending:
       ui_->SetWebVrMode(true, false);
+      break;
+    case kWebVrAwaitingMinSplashScreenDuration:
       break;
     case kWebVrAwaitingFirstFrame:
       ui_->OnWebVrTimeoutImminent();
@@ -531,10 +547,31 @@ void VrTestContext::StopAutocomplete() {
 
 void VrTestContext::CycleOrigin() {
   const std::vector<ToolbarState> states = {
-      {GURL("http://www.domain.com/path/segment/directory/file.html"),
+      {GURL("http://domain.com"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
-      {GURL("http://www.domain.com/"),
+      {GURL("http://domaaaaaaaaaaain.com"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/a/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/aaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaain.com/aaaaaaaaaaaaaaaaaaaaaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com/aaaaaaaaaa/"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("http://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
       {GURL("http://subdomain.domain.com/"),
@@ -549,6 +586,12 @@ void VrTestContext::CycleOrigin() {
       {GURL("https://www.domain.com/path/segment/directory/file.html"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING,
        &toolbar::kOfflinePinIcon, base::UTF8ToUTF16("Offline"), true, true},
+      {GURL("file:///C:/path/filename"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
+      {GURL("file:///C:/path/path/path/path/path/path/path/path"),
+       security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
+       base::string16(), true, false},
   };
 
   static int state = 0;

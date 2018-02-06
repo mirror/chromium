@@ -280,7 +280,8 @@ Output.PRESSED_STATE_MAP = {
 Output.RULES = {
   navigate: {
     'default': {
-      speak: `$name $value $state $restriction $role $description`,
+      speak: `$name $node(activeDescendant) $value $state $restriction $role
+          $description`,
       braille: ``
     },
     abstractContainer: {
@@ -293,7 +294,7 @@ Output.RULES = {
       // author (via posInSet), do we include them in the output.
       enter: `$nameFromNode $role $state $restriction $description
           $if($posInSet, @describe_index($posInSet, $setSize))`,
-      speak: `$state $name= $role
+      speak: `$state $nameOrTextContent= $role
           $if($posInSet, @describe_index($posInSet, $setSize))
           $description $restriction`
     },
@@ -301,7 +302,7 @@ Output.RULES = {
       speak: `$if($valueForRange, $valueForRange, $value)
           $if($minValueForRange, @aria_value_min($minValueForRange))
           $if($maxValueForRange, @aria_value_max($maxValueForRange))
-          $name $role $description $state $restriction`
+          $name $node(activeDescendant) $role $description $state $restriction`
     },
     alert: {
       enter: `$name $role $state`,
@@ -345,7 +346,8 @@ Output.RULES = {
     },
     group: {
       enter: `$nameFromNode $state $restriction $description`,
-      speak: `$nameOrDescendants $value $state $restriction $description`,
+      speak: `$nameOrDescendants $value $state $restriction $roleDescription
+          $description`,
       leave: ``
     },
     heading: {
@@ -365,7 +367,7 @@ Output.RULES = {
     inlineTextBox: {speak: `$name=`},
     inputTime: {enter: `$nameFromNode $role $state $restriction $description`},
     labelText: {
-      speak: `$name $value $state $restriction $description`,
+      speak: `$name $value $state $restriction $roleDescription $description`,
     },
     lineBreak: {speak: `$name=`},
     link: {
@@ -390,7 +392,8 @@ Output.RULES = {
     listMarker: {speak: `$name`},
     menu: {
       enter: `$name $role`,
-      speak: `$name $role @@list_with_items($countChildren(menuItem))
+      speak: `$name $node(activeDescendant)
+          $role @@list_with_items($countChildren(menuItem))
           $description $state $restriction`
     },
     menuItem: {
@@ -406,12 +409,12 @@ Output.RULES = {
     menuItemRadio: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
           $if($checked, @describe_radio_selected($name),
-          @describe_radio_unselected($name)) $state $restriction
+          @describe_radio_unselected($name)) $state $roleDescription
+          $restriction
           $description @describe_index($posInSet, $setSize) `
     },
     menuListOption: {
-      speak: `$name @role_menuitem
-          @describe_index($posInSet, $setSize) $state
+      speak: `$name $role @describe_index($posInSet, $setSize) $state
           $restriction $description`
     },
     paragraph: {speak: `$descendants`},
@@ -424,20 +427,24 @@ Output.RULES = {
           $if($checked, @describe_radio_selected($name),
           @describe_radio_unselected($name))
           @describe_index($posInSet, $setSize)
-          $description $state $restriction`
+          $roleDescription $description $state $restriction`
     },
     rootWebArea: {enter: `$name`, speak: `$if($name, $name, $docUrl)`},
     region: {speak: `$state $nameOrTextContent $description $roleDescription`},
     row: {enter: `$node(tableRowHeader)`},
-    rowHeader: {speak: `$nameOrTextContent $description $state`},
+    rowHeader: {
+      speak: `$nameOrTextContent $description $roleDescription
+        $state`
+    },
     staticText: {speak: `$name=`},
     switch: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
           $if($checked, @describe_switch_on($name),
-          @describe_switch_off($name)) $description $state $restriction`
+          @describe_switch_off($name)) $roleDescription
+          $description $state $restriction`
     },
     tab: {
-      speak: `@describe_tab($name) $description
+      speak: `@describe_tab($name) $roleDescription $description
           @describe_index($posInSet, $setSize) $state $restriction `,
     },
     table: {
@@ -446,7 +453,10 @@ Output.RULES = {
           $if($ariaColumnCount, $ariaColumnCount, $tableColumnCount))
           $node(tableHeader)`
     },
-    tableHeaderContainer: {speak: `$nameOrTextContent $state $description`},
+    tableHeaderContainer: {
+      speak: `$nameOrTextContent $state $roleDescription
+        $description`
+    },
     tabList: {
       speak: `$name $node(activeDescendant) $state $restriction $role
           $description`,
@@ -459,7 +469,10 @@ Output.RULES = {
           $description $state $restriction`,
       braille: ``
     },
-    timer: {speak: `$nameFromNode $descendants $value $state $description`},
+    timer: {
+      speak: `$nameFromNode $descendants $value $state $role
+        $description`
+    },
     toggleButton: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
           $name $role $pressed $description $state $restriction`
@@ -1211,27 +1224,58 @@ Output.prototype = {
                 buff);
           }
         } else if (token == 'node') {
-          if (!tree.firstChild || !node[tree.firstChild.value])
+          if (!tree.firstChild)
             return;
-          var related = node[tree.firstChild.value];
-          this.node_(related, related, Output.EventType.NAVIGATE, buff);
+
+          var relationName = tree.firstChild.value;
+          if (node[relationName]) {
+            var related = node[relationName];
+            this.node_(related, related, Output.EventType.NAVIGATE, buff);
+          } else if (
+              relationName == 'tableColumnHeader' &&
+              node.role == RoleType.CELL) {
+            // Because table columns do not contain cells as descendants, we
+            // must search for the correct column.
+            var columnIndex = node.tableCellColumnIndex;
+            if (opt_prevNode) {
+              // Skip output when previous position falls on the same column.
+              while (opt_prevNode &&
+                     !AutomationPredicate.cellLike(opt_prevNode)) {
+                opt_prevNode = opt_prevNode.parent;
+              }
+
+              if (opt_prevNode &&
+                  opt_prevNode.tableCellColumnIndex == columnIndex)
+                return;
+            }
+            var tableLike = node.parent && node.parent.parent;
+            if (!tableLike || !AutomationPredicate.table(tableLike))
+              return;
+            var column = tableLike.children.find(function(candidate) {
+              return columnIndex === candidate.tableColumnIndex;
+            });
+            if (column && column.tableColumnHeader &&
+                column.tableColumnHeader.name) {
+              this.append_(buff, column.tableColumnHeader.name, options);
+            }
+          }
         } else if (token == 'nameOrTextContent') {
           if (node.name) {
             this.format_(node, '$name', buff);
-          } else {
-            var walker = new AutomationTreeWalker(node, Dir.FORWARD, {
-              visit: AutomationPredicate.leafOrStaticText,
-              leaf: AutomationPredicate.leafOrStaticText
-            });
-            var outputStrings = [];
-            while (walker.next().node &&
-                   walker.phase == AutomationTreeWalkerPhase.DESCENDANT) {
-              if (walker.node.name)
-                outputStrings.push(walker.node.name);
-            }
-            var joinedOutput = outputStrings.join(' ');
-            this.append_(buff, joinedOutput, options);
+            return;
           }
+          var walker = new AutomationTreeWalker(node, Dir.FORWARD, {
+            visit: AutomationPredicate.leafOrStaticText,
+            leaf: AutomationPredicate.leafOrStaticText
+          });
+          var outputStrings = [];
+          while (walker.next().node &&
+                 walker.phase == AutomationTreeWalkerPhase.DESCENDANT) {
+            if (walker.node.name)
+              outputStrings.push(walker.node.name);
+          }
+          var finalOutput = outputStrings.join(' ');
+          this.append_(buff, finalOutput, options);
         } else if (node[token] !== undefined) {
           options.annotation.push(token);
           var value = node[token];

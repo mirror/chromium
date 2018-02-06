@@ -261,6 +261,7 @@ jumbo_component("base") {
     "command_line.cc",
     "command_line.h",
     "compiler_specific.h",
+    "component_export.h",
     "containers/adapters.h",
     "containers/circular_deque.h",
     "containers/flat_map.h",
@@ -884,6 +885,7 @@ jumbo_component("base") {
     "third_party/nspr/prtime.cc",
     "third_party/nspr/prtime.h",
     "third_party/superfasthash/superfasthash.c",
+    "thread_annotations.h",
     "threading/platform_thread.h",
     "threading/platform_thread_android.cc",
     "threading/platform_thread_internal_posix.cc",
@@ -936,6 +938,8 @@ jumbo_component("base") {
     "time/tick_clock.h",
     "time/time.cc",
     "time/time.h",
+    "time/time_override.cc",
+    "time/time_override.h",
     "timer/elapsed_timer.cc",
     "timer/elapsed_timer.h",
     "timer/hi_res_timer_manager.h",
@@ -1222,6 +1226,7 @@ jumbo_component("base") {
     sources += [
       "memory/shared_memory_android.cc",
       "memory/shared_memory_handle_android.cc",
+      "time/time_android.cc",
     ]
 
     # Android uses some Linux sources, put those back.
@@ -1276,6 +1281,7 @@ jumbo_component("base") {
 
     sources += [
       "base_paths_fuchsia.cc",
+      "base_paths_fuchsia.h",
       "debug/stack_trace_fuchsia.cc",
       "files/file_path_watcher_fuchsia.cc",
       "fuchsia/default_job.cc",
@@ -1784,10 +1790,14 @@ buildflag_header("synchronization_flags") {
 buildflag_header("anchor_functions_flags") {
   header = "anchor_functions_flags.h"
   header_dir = "base/android/library_loader"
+  _supports_code_ordering = current_cpu == "arm"
 
   # buildflag entries added to this header must also must be manually added to
   # tools/gn/bootstrap/bootstrap.py
-  flags = [ "USE_LLD=$use_lld" ]
+  flags = [
+    "USE_LLD=$use_lld",
+    "SUPPORTS_CODE_ORDERING=$_supports_code_ordering",
+  ]
 }
 
 # This is the subset of files from base that should not be used with a dynamic
@@ -2073,6 +2083,7 @@ test("base_unittests") {
     "callback_unittest.cc",
     "cancelable_callback_unittest.cc",
     "command_line_unittest.cc",
+    "component_export_unittest.cc",
     "containers/adapters_unittest.cc",
     "containers/circular_deque_unittest.cc",
     "containers/flat_map_unittest.cc",
@@ -2568,6 +2579,7 @@ if (enable_nocompile_tests) {
       "memory/weak_ptr_unittest.nc",
       "metrics/field_trial_params_unittest.nc",
       "metrics/histogram_unittest.nc",
+      "optional_unittest.nc",
       "strings/string16_unittest.nc",
       "task_scheduler/task_traits_unittest.nc",
     ]
@@ -2683,6 +2695,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/SecureRandomInitializer.java",
       "android/java/src/org/chromium/base/StreamUtil.java",
       "android/java/src/org/chromium/base/StrictModeContext.java",
+      "android/java/src/org/chromium/base/Supplier.java",
       "android/java/src/org/chromium/base/SysUtils.java",
       "android/java/src/org/chromium/base/SystemMessageHandler.java",
       "android/java/src/org/chromium/base/ThreadUtils.java",
@@ -2778,9 +2791,6 @@ if (is_android) {
       "//third_party/ub-uiautomator:ub_uiautomator_java",
     ]
     java_files = [
-      "test/android/javatests/src/org/chromium/base/test/BaseActivityInstrumentationTestCase.java",
-      "test/android/javatests/src/org/chromium/base/test/BaseChromiumInstrumentationTestRunner.java",
-      "test/android/javatests/src/org/chromium/base/test/BaseInstrumentationTestRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
       "test/android/javatests/src/org/chromium/base/test/BaseChromiumRunnerCommon.java",
@@ -2849,9 +2859,13 @@ if (is_android) {
     # Plaform checks are broken for Robolectric.
     bypass_platform_checks = true
     testonly = true
-    java_files = [ "android/junit/src/org/chromium/base/metrics/test/ShadowRecordHistogram.java" ]
+    java_files = [
+      "android/junit/src/org/chromium/base/metrics/test/ShadowRecordHistogram.java",
+      "test/android/junit/src/org/chromium/base/test/BaseRobolectricTestRunner.java",
+    ]
     deps = [
       ":base_java",
+      "//testing/android/junit:junit_test_support",
       "//third_party/robolectric:robolectric_all_java",
     ]
   }
@@ -2881,7 +2895,7 @@ if (is_android) {
       ":base_java",
       ":base_java_process_launcher_test_support",
       ":base_java_test_support",
-      "//third_party/android_support_test_runner:runner_java",
+      ":base_junit_test_support",
       "//third_party/hamcrest:hamcrest_java",
     ]
     srcjar_deps = [ ":base_build_config_gen" ]

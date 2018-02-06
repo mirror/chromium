@@ -28,10 +28,10 @@
 #include "base/test/mock_entropy_provider.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/platform_thread.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/download/public/common/download_danger_type.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/download_file_factory.h"
 #include "content/browser/download/download_file_impl.h"
@@ -41,7 +41,6 @@
 #include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/web_contents/web_contents_impl.h"
-#include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_paths.h"
@@ -96,6 +95,7 @@ constexpr int kTestRequestCount = 3;
 const std::string kOriginOne = "one.example";
 const std::string kOriginTwo = "two.example";
 const std::string kOriginThree = "example.com";
+const char k404Response[] = "HTTP/1.1 404 Not found\r\n\r\n";
 
 // Implementation of TestContentBrowserClient that overrides
 // AllowRenderingMhtmlOverHttp() and allows consumers to set a value.
@@ -166,7 +166,7 @@ static DownloadManagerImpl* DownloadManagerForShell(Shell* shell) {
 
 class DownloadFileWithDelay : public DownloadFileImpl {
  public:
-  DownloadFileWithDelay(std::unique_ptr<DownloadSaveInfo> save_info,
+  DownloadFileWithDelay(std::unique_ptr<download::DownloadSaveInfo> save_info,
                         const base::FilePath& default_download_directory,
                         std::unique_ptr<DownloadManager::InputStream> stream,
                         uint32_t download_id,
@@ -211,7 +211,7 @@ class DownloadFileWithDelayFactory : public DownloadFileFactory {
 
   // DownloadFileFactory interface.
   DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
+      std::unique_ptr<download::DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<DownloadManager::InputStream> stream,
       uint32_t download_id,
@@ -232,7 +232,7 @@ class DownloadFileWithDelayFactory : public DownloadFileFactory {
 };
 
 DownloadFileWithDelay::DownloadFileWithDelay(
-    std::unique_ptr<DownloadSaveInfo> save_info,
+    std::unique_ptr<download::DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<DownloadManager::InputStream> stream,
     uint32_t download_id,
@@ -291,7 +291,7 @@ DownloadFileWithDelayFactory::DownloadFileWithDelayFactory()
 DownloadFileWithDelayFactory::~DownloadFileWithDelayFactory() {}
 
 DownloadFile* DownloadFileWithDelayFactory::CreateFile(
-    std::unique_ptr<DownloadSaveInfo> save_info,
+    std::unique_ptr<download::DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<DownloadManager::InputStream> stream,
     uint32_t download_id,
@@ -326,7 +326,7 @@ void DownloadFileWithDelayFactory::WaitForSomeCallback() {
 
 class CountingDownloadFile : public DownloadFileImpl {
  public:
-  CountingDownloadFile(std::unique_ptr<DownloadSaveInfo> save_info,
+  CountingDownloadFile(std::unique_ptr<download::DownloadSaveInfo> save_info,
                        const base::FilePath& default_downloads_directory,
                        std::unique_ptr<DownloadManager::InputStream> stream,
                        uint32_t download_id,
@@ -384,7 +384,7 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
 
   // DownloadFileFactory interface.
   DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
+      std::unique_ptr<download::DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<DownloadManager::InputStream> stream,
       uint32_t download_id,
@@ -398,7 +398,7 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
 class ErrorInjectionDownloadFile : public DownloadFileImpl {
  public:
   ErrorInjectionDownloadFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
+      std::unique_ptr<download::DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<DownloadManager::InputStream> stream,
       uint32_t download_id,
@@ -445,7 +445,7 @@ class ErrorInjectionDownloadFileFactory : public DownloadFileFactory {
 
   // DownloadFileFactory interface.
   DownloadFile* CreateFile(
-      std::unique_ptr<DownloadSaveInfo> save_info,
+      std::unique_ptr<download::DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<DownloadManager::InputStream> stream,
       uint32_t download_id,
@@ -779,11 +779,6 @@ class DownloadContentTest : public ContentBrowserTest {
     return CountingDownloadFile::GetNumberActiveFilesFromFileThread() == 0;
   }
 
-  void WaitForServerToFinishAllResponses(size_t request_num) {
-    while (test_response_handler_.completed_requests().size() != request_num)
-      base::RunLoop().RunUntilIdle();
-  }
-
   void SetupErrorInjectionDownloads() {
     auto factory = std::make_unique<ErrorInjectionDownloadFileFactory>();
     inject_error_callback_ = base::Bind(
@@ -907,6 +902,39 @@ class ParallelDownloadTest : public DownloadContentTest {
   }
 
   ~ParallelDownloadTest() override {}
+
+  // Verify parallel download completion tests.
+  void RunCompletionTest(TestDownloadHttpResponse::Parameters& parameters) {
+    EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
+
+    GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
+    GURL server_url = embedded_test_server()->GetURL(url.host(), url.path());
+
+    // Only parallel download needs to specify the connection type to http 1.1,
+    // other tests will automatically fall back to non-parallel download even if
+    // the ParallelDownloading feature is enabled based on
+    // fieldtrial_testing_config.json.
+    parameters.connection_type = net::HttpResponseInfo::CONNECTION_INFO_HTTP1_1;
+    TestRequestPauseHandler request_pause_handler;
+    parameters.on_pause_handler = request_pause_handler.GetOnPauseHandler();
+    parameters.pause_offset = DownloadRequestCore::kDownloadByteStreamSize;
+    TestDownloadHttpResponse::StartServing(parameters, server_url);
+
+    DownloadItem* download = StartDownloadAndReturnItem(shell(), server_url);
+    // Send some data for the first request and pause it so download won't
+    // complete before other parallel requests are created.
+    test_response_handler()->WaitUntilCompletion(2u);
+
+    // Now resume the first request.
+    request_pause_handler.Resume();
+    WaitForCompletion(download);
+
+    const TestDownloadResponseHandler::CompletedRequests& completed_requests =
+        test_response_handler()->completed_requests();
+    EXPECT_EQ(kTestRequestCount, static_cast<int>(completed_requests.size()));
+    ReadAndVerifyFileContents(parameters.pattern_generator_seed,
+                              parameters.size, download->GetTargetFilePath());
+  }
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -1324,7 +1352,6 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, RedirectBeforeResume) {
   // Now that the download is interrupted, make all intermediate servers return
   // a 404. The only way a resumption request would succeed if the resumption
   // request is sent to the final server in the chain.
-  const char k404Response[] = "HTTP/1.1 404 Not found\r\n\r\n";
   TestDownloadHttpResponse::StartServingStaticResponse(k404Response, first_url);
   TestDownloadHttpResponse::StartServingStaticResponse(k404Response,
                                                        second_url);
@@ -1999,7 +2026,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, RemoveResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
-  WaitForServerToFinishAllResponses(2);
+  test_response_handler()->WaitUntilCompletion(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
@@ -2034,7 +2061,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
-  WaitForServerToFinishAllResponses(2);
+  test_response_handler()->WaitUntilCompletion(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoFile) {
@@ -2056,7 +2083,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoFile) {
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
-      DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2119,7 +2146,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoHash) {
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
-      DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2169,7 +2196,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), "fake-etag", std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
-      DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2225,7 +2252,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size,
       std::string(std::begin(kPartialHash), std::end(kPartialHash)),
-      DownloadItem::INTERRUPTED, DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      DownloadItem::INTERRUPTED, download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2288,7 +2315,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_WrongHash) {
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size,
       std::string(std::begin(kPartialHash), std::end(kPartialHash)),
-      DownloadItem::INTERRUPTED, DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      DownloadItem::INTERRUPTED, download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2359,7 +2386,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_ShortFile) {
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
-      DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2428,7 +2455,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_LongFile) {
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
-      DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       std::vector<DownloadItem::ReceivedSlice>());
 
@@ -2900,48 +2927,51 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
                download->GetTargetFilePath().BaseName().value().c_str());
 }
 
-#if defined(OS_ANDROID)
-// Flaky on android: https://crbug.com/786626
-#define MAYBE_ParallelDownloadComplete DISABLED_ParallelDownloadComplete
-#else
-#define MAYBE_ParallelDownloadComplete ParallelDownloadComplete
-#endif
 // Verify parallel download in normal case.
-IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, MAYBE_ParallelDownloadComplete) {
-  EXPECT_TRUE(base::FeatureList::IsEnabled(features::kParallelDownloading));
-
-  GURL url = TestDownloadHttpResponse::GetNextURLForDownload();
-  GURL server_url = embedded_test_server()->GetURL(url.host(), url.path());
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadComplete) {
   TestDownloadHttpResponse::Parameters parameters;
   parameters.etag = "ABC";
   parameters.size = 5097152;
 
-  // Only parallel download needs to specify the connection type to http 1.1,
-  // other tests will automatically fall back to non-parallel download even if
-  // the ParallelDownloading feature is enabled based on
-  // fieldtrial_testing_config.json.
-  parameters.connection_type = net::HttpResponseInfo::CONNECTION_INFO_HTTP1_1;
-  TestRequestPauseHandler request_pause_handler;
-  parameters.on_pause_handler = request_pause_handler.GetOnPauseHandler();
-  parameters.pause_offset = DownloadRequestCore::kDownloadByteStreamSize;
-  TestDownloadHttpResponse::StartServing(parameters, server_url);
+  RunCompletionTest(parameters);
+}
 
-  DownloadItem* download = StartDownloadAndReturnItem(shell(), server_url);
-  // Send some data for the first request and pause it so download won't
-  // complete before other parallel requests are created.
-  request_pause_handler.WaitForCallback();
-  while (test_response_handler()->completed_requests().size() == 0)
-    base::RunLoop().RunUntilIdle();
-  // Now resume the first request.
-  request_pause_handler.Resume();
-  WaitForCompletion(download);
+// When the last request is rejected by the server, other parallel requests
+// should take over and complete the download.
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, LastRequestRejected) {
+  TestDownloadHttpResponse::Parameters parameters;
+  parameters.etag = "ABC";
+  parameters.size = 5097152;
+  // The 3rd request will always fail. Other requests should take over.
+  parameters.SetResponseForRangeRequest(3398000, -1, k404Response,
+                                        std::string());
 
-  const TestDownloadResponseHandler::CompletedRequests& completed_requests =
-      test_response_handler()->completed_requests();
-  EXPECT_EQ(kTestRequestCount, static_cast<int>(completed_requests.size()));
+  RunCompletionTest(parameters);
+}
 
-  ReadAndVerifyFileContents(parameters.pattern_generator_seed, parameters.size,
-                            download->GetTargetFilePath());
+// When the second request is rejected by the server, other parallel requests
+// should take over and complete the download.
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, SecondRequestRejected) {
+  TestDownloadHttpResponse::Parameters parameters;
+  parameters.etag = "ABC";
+  parameters.size = 5097152;
+  // The 2nd request will always fail. Other requests should take over.
+  parameters.SetResponseForRangeRequest(1699000, 2000000, k404Response,
+                                        std::string());
+  RunCompletionTest(parameters);
+}
+
+// The server will only accept the original request, and reject all other
+// requests. The original request should complete the whole download.
+IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, OnlyFirstRequestValid) {
+  TestDownloadHttpResponse::Parameters parameters;
+  parameters.etag = "ABC";
+  parameters.size = 5097152;
+
+  // 2nd and 3rd request will fail, the original request should complete the
+  // download.
+  parameters.SetResponseForRangeRequest(1000, -1, k404Response, std::string());
+  RunCompletionTest(parameters);
 }
 
 // Verify parallel download resumption.
@@ -2997,7 +3027,7 @@ IN_PROC_BROWSER_TEST_F(ParallelDownloadTest, ParallelDownloadResumption) {
       "application/octet-stream", "application/octet-stream", base::Time::Now(),
       base::Time(), parameters.etag, parameters.last_modified,
       kIntermediateSize * 3, parameters.size, std::string(),
-      DownloadItem::INTERRUPTED, DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      DownloadItem::INTERRUPTED, download::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
       DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(), false,
       received_slices);
 
@@ -3108,8 +3138,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, FetchErrorResponseBodyResumption) {
   EXPECT_EQ(1u, items.size());
 
   // Now server will start to response 404 with empty body.
-  const std::string k404ResponseHeader = "HTTP/1.1 404 Not found\r\n\r\n";
-  TestDownloadHttpResponse::StartServingStaticResponse(k404ResponseHeader,
+  TestDownloadHttpResponse::StartServingStaticResponse(k404Response,
                                                        server_url);
   DownloadItem* download = items[0];
 

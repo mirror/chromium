@@ -130,6 +130,7 @@ class MockWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   MOCK_METHOD1(MediaRemotingStopped, void(blink::WebLocalizedString::Name));
   MOCK_METHOD0(PictureInPictureStarted, void());
   MOCK_METHOD0(PictureInPictureStopped, void());
+  MOCK_METHOD0(IsInPictureInPictureMode, bool());
 
   void set_is_autoplaying_muted(bool value) { is_autoplaying_muted_ = value; }
 
@@ -172,6 +173,13 @@ class MockWebMediaPlayerDelegate : public WebMediaPlayerDelegate {
   }
 
   void DidPlayerMutedStatusChange(int delegate_id, bool muted) override {
+    DCHECK_EQ(player_id_, delegate_id);
+  }
+
+  void ShowPictureInPicture(int delegate_id,
+                            viz::FrameSinkId frame_sink_id,
+                            uint32_t parent_id,
+                            base::UnguessableToken nonce) override {
     DCHECK_EQ(player_id_, delegate_id);
   }
 

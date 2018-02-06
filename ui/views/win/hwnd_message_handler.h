@@ -20,7 +20,7 @@
 #include "base/strings/string16.h"
 #include "base/win/scoped_gdi_object.h"
 #include "base/win/win_util.h"
-#include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_enums.mojom.h"
 #include "ui/base/ime/input_method_observer.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/base/win/window_event_target.h"
@@ -34,9 +34,6 @@
 namespace gfx {
 class ImageSkia;
 class Insets;
-namespace win {
-class DirectManipulationHelper;
-}  // namespace win
 }  // namespace gfx
 
 namespace ui  {
@@ -44,7 +41,10 @@ class AXSystemCaretWin;
 class InputMethod;
 class TextInputClient;
 class ViewProp;
-}
+namespace win {
+class DirectManipulationHelper;
+}  // namespace win
+}  // namespace ui
 
 namespace views {
 
@@ -737,7 +737,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   // This class provides functionality to register the legacy window as a
   // Direct Manipulation consumer. This allows us to support smooth scroll
   // in Chrome on Windows 10.
-  std::unique_ptr<gfx::win::DirectManipulationHelper>
+  std::unique_ptr<ui::win::DirectManipulationHelper>
       direct_manipulation_helper_;
 
   // The location where the user clicked on the caption. We cache this when we

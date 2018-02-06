@@ -344,16 +344,22 @@ int ComputeAutocapitalizeFlags(const Element* element) {
   DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
 
   const AtomicString& autocapitalize = html_element->autocapitalize();
-  if (autocapitalize == none)
+  if (autocapitalize == none) {
     flags |= kWebTextInputFlagAutocapitalizeNone;
-  else if (autocapitalize == characters)
+  } else if (autocapitalize == characters) {
     flags |= kWebTextInputFlagAutocapitalizeCharacters;
-  else if (autocapitalize == words)
+  } else if (autocapitalize == words) {
     flags |= kWebTextInputFlagAutocapitalizeWords;
-  else if (autocapitalize == sentences)
+  } else if (autocapitalize == sentences || autocapitalize == "") {
+    // Note: we tell the IME to enable autocapitalization for both the default
+    // state ("") and the sentences states. We could potentially treat these
+    // differently if we had a platform that supported autocapitalization but
+    // didn't want to enable it unless explicitly requested by a web page, but
+    // this so far has not been necessary.
     flags |= kWebTextInputFlagAutocapitalizeSentences;
-  else
+  } else {
     NOTREACHED();
+  }
 
   return flags;
 }
@@ -848,7 +854,8 @@ void InputMethodController::SetComposition(
   }
 
   // Find out what node has the composition now.
-  const Position base = MostForwardCaretPosition(selection.Base());
+  const Position base =
+      MostForwardCaretPosition(selection.Base(), kCanSkipOverEditingBoundary);
   Node* base_node = base.AnchorNode();
   if (!base_node || !base_node->IsTextNode())
     return;

@@ -169,6 +169,9 @@
       name: "ClientPlaceholdersForServerLoFi",
     },
     {
+      name: "CodeCacheAfterExecute"
+    },
+    {
       name: "CompositedSelectionUpdate",
     },
     {
@@ -211,6 +214,7 @@
     {
       name: "CSSAdditiveAnimations",
       depends_on: ["StackedCSSPropertyAnimations"],
+      settable_from_internals: true,
       status: "experimental",
     },
     {
@@ -288,20 +292,12 @@
       status: "experimental",
     },
     {
-      name: "CSSStickyPosition",
-      status: "stable",
-    },
-    {
       name: "CSSTransformBox",
       status: "stable",
     },
     {
       name: "CSSTypedOM",
       status: "experimental",
-    },
-    {
-      name: "CSSVariableFonts",
-      status: "stable",
     },
     {
       name: "CSSVariables2",
@@ -313,7 +309,7 @@
     },
     {
       name: "CustomElementsBuiltin",
-      status: "test",
+      status: "experimental",
     },
     {
       name: "CustomUserTiming",
@@ -397,18 +393,21 @@
     },
     {
       name: "FeaturePolicyAutoplayFeature",
-      status: "stable"
+      status: "stable",
+      depends_on: ["FeaturePolicy"]
     },
     {
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
       name: "FeaturePolicyForPermissions",
-      status: "stable"
+      status: "stable",
+      depends_on: ["FeaturePolicy"]
     },
     {
       name: "FeaturePolicyJavaScriptInterface",
-      status: "experimental"
+      status: "experimental",
+      depends_on: ["FeaturePolicy"]
     },
     {
       name: "FetchRequestCache",
@@ -450,7 +449,7 @@
     {
       name: "FramebustingNeedsSameOriginOrUserGesture",
       settable_from_internals: true,
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "FramesTimingFunction",
@@ -500,6 +499,11 @@
     {
       name: "ImageOrientation",
       status: "test",
+    },
+    {
+      name: "ImplicitRootScroller",
+      status: "experimental",
+      settable_from_internals: true,
     },
     {
       name: "IncrementalShadowDOM",
@@ -821,6 +825,10 @@
       settable_from_internals: true,
     },
     {
+      name: "PictureInPictureAPI",
+      status: "test",
+    },
+    {
       name: "PreciseMemoryInfo",
     },
     {
@@ -901,6 +909,7 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+      status: "experimental",
     },
     {
       name: "RTCUnifiedPlan",
@@ -1082,6 +1091,10 @@
       status: "experimental",
     },
     {
+      name: "UnifiedTouchAdjustment",
+      status: "experimental",
+    },
+    {
       name: "UpdateHoverPostLayout",
       status: "stable",
     },
@@ -1126,6 +1139,7 @@
     },
     {
       name: "WebAnimationsAPI",
+      settable_from_internals: true,
       status: "experimental",
     },
     {

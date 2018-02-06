@@ -7,7 +7,7 @@
 #include "media/audio/test_audio_thread.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/audio/in_process_audio_manager_accessor.h"
-#include "services/audio/public/interfaces/constants.mojom.h"
+#include "services/audio/public/mojom/constants.mojom.h"
 #include "services/audio/system_info.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/interfaces/connector.mojom.h"
@@ -39,7 +39,8 @@ class AudioSystemToServiceAdapterTestBase : public testing::Test {
     auto connector = service_manager::Connector::Create(&ignored_request);
     service_manager::Connector::TestApi connector_test_api(connector.get());
     connector_test_api.OverrideBinderForTesting(
-        mojom::kServiceName, mojom::SystemInfo::Name_,
+        service_manager::Identity(mojom::kServiceName),
+        mojom::SystemInfo::Name_,
         base::BindRepeating(
             &AudioSystemToServiceAdapterTestBase::BindSystemInfoRequest,
             base::Unretained(this)));

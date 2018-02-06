@@ -10,13 +10,18 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/optional.h"
 #include "device/u2f/u2f_request.h"
+#include "device/u2f/u2f_transport_protocol.h"
+
+namespace service_manager {
+class Connector;
+};
 
 namespace device {
 
 class RegisterResponseData;
-class U2fDiscovery;
 
 class U2fRegister : public U2fRequest {
  public:
@@ -25,19 +30,23 @@ class U2fRegister : public U2fRequest {
       base::Optional<RegisterResponseData> response_data)>;
 
   U2fRegister(std::string relying_party_id,
-              std::vector<U2fDiscovery*> discoveries,
+              service_manager::Connector* connector,
+              const base::flat_set<U2fTransportProtocol>& protocols,
               const std::vector<std::vector<uint8_t>>& registered_keys,
               const std::vector<uint8_t>& challenge_hash,
               const std::vector<uint8_t>& app_param,
+              bool individual_attestation_ok,
               RegisterResponseCallback completion_callback);
   ~U2fRegister() override;
 
   static std::unique_ptr<U2fRequest> TryRegistration(
       std::string relying_party_id,
-      std::vector<U2fDiscovery*> discoveries,
+      service_manager::Connector* connector,
+      const base::flat_set<U2fTransportProtocol>& protocols,
       const std::vector<std::vector<uint8_t>>& registered_keys,
       const std::vector<uint8_t>& challenge_hash,
       const std::vector<uint8_t>& app_param,
+      bool individual_attestation_ok,
       RegisterResponseCallback completion_callback);
 
  private:
@@ -63,6 +72,9 @@ class U2fRegister : public U2fRequest {
   const std::vector<std::vector<uint8_t>> registered_keys_;
   std::vector<uint8_t> challenge_hash_;
   std::vector<uint8_t> app_param_;
+  // Indicates whether the token should be signaled that using an individual
+  // attestation certificate is acceptable.
+  const bool individual_attestation_ok_;
   RegisterResponseCallback completion_callback_;
 
   // List of authenticators that did not create any of the key handles in the

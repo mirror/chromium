@@ -54,8 +54,7 @@
 #include "content/renderer/gamepad_shared_memory_reader.h"
 #include "content/renderer/image_capture/image_capture_frame_grabber.h"
 #include "content/renderer/indexed_db/webidbfactory_impl.h"
-#include "content/renderer/loader/child_url_loader_factory_getter_impl.h"
-#include "content/renderer/loader/cors_url_loader_factory.h"
+#include "content/renderer/loader/child_url_loader_factory_bundle.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/web_data_consumer_handle_impl.h"
 #include "content/renderer/loader/web_url_loader_impl.h"
@@ -71,7 +70,6 @@
 #include "content/renderer/notifications/notification_dispatcher.h"
 #include "content/renderer/notifications/notification_manager.h"
 #include "content/renderer/push_messaging/push_provider.h"
-#include "content/renderer/quota_dispatcher.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/storage_util.h"
 #include "content/renderer/web_database_observer_impl.h"
@@ -93,12 +91,12 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/features.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/database/database_identifier.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom.h"
 #include "third_party/WebKit/public/platform/BlameContext.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -344,7 +342,7 @@ RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactory() {
   }
   return std::make_unique<WebURLLoaderFactoryImpl>(
       RenderThreadImpl::current()->resource_dispatcher()->GetWeakPtr(),
-      CreateDefaultURLLoaderFactoryGetter());
+      CreateDefaultURLLoaderFactoryBundle());
 }
 
 std::unique_ptr<blink::WebDataConsumerHandle>
@@ -353,13 +351,14 @@ RendererBlinkPlatformImpl::CreateDataConsumerHandle(
   return std::make_unique<WebDataConsumerHandleImpl>(std::move(handle));
 }
 
-scoped_refptr<ChildURLLoaderFactoryGetter>
-RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
-  return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-      CreateNetworkURLLoaderFactory(),
-      base::FeatureList::IsEnabled(features::kNetworkService)
+scoped_refptr<ChildURLLoaderFactoryBundle>
+RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryBundle() {
+  return base::MakeRefCounted<ChildURLLoaderFactoryBundle>(
+      base::BindOnce(&RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory,
+                     base::Unretained(this)),
+      base::FeatureList::IsEnabled(network::features::kNetworkService)
           ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
-          : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
+          : ChildURLLoaderFactoryBundle::FactoryGetterCallback());
 }
 
 PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
@@ -369,25 +368,13 @@ RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
   PossiblyAssociatedInterfacePtr<network::mojom::URLLoaderFactory>
       url_loader_factory;
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(network::features::kNetworkService)) {
     network::mojom::URLLoaderFactoryPtr factory_ptr;
     connector_->BindInterface(mojom::kBrowserServiceName, &factory_ptr);
     url_loader_factory = std::move(factory_ptr);
   } else {
     network::mojom::URLLoaderFactoryAssociatedPtr factory_ptr;
     render_thread->channel()->GetRemoteAssociatedInterface(&factory_ptr);
-    url_loader_factory = std::move(factory_ptr);
-  }
-
-  // Attach the CORS-enabled URLLoader for the network URLLoaderFactory. To
-  // avoid thread hops and prevent jank on the main thread from affecting
-  // requests from other threads this object should live on the IO thread.
-  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
-    network::mojom::URLLoaderFactoryPtr factory_ptr;
-    RenderThreadImpl::current()->GetIOTaskRunner()->PostTask(
-        FROM_HERE, base::BindOnce(&CORSURLLoaderFactory::CreateAndBind,
-                                  url_loader_factory.PassInterface(),
-                                  mojo::MakeRequest(&factory_ptr)));
     url_loader_factory = std::move(factory_ptr);
   }
   return url_loader_factory;
@@ -901,9 +888,11 @@ void RendererBlinkPlatformImpl::SampleGamepads(device::Gamepads& gamepads) {
 //------------------------------------------------------------------------------
 
 std::unique_ptr<WebMediaRecorderHandler>
-RendererBlinkPlatformImpl::CreateMediaRecorderHandler() {
+RendererBlinkPlatformImpl::CreateMediaRecorderHandler(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
 #if BUILDFLAG(ENABLE_WEBRTC)
-  return std::make_unique<content::MediaRecorderHandler>();
+  return std::make_unique<content::MediaRecorderHandler>(
+      std::move(task_runner));
 #else
   return nullptr;
 #endif
@@ -1064,7 +1053,6 @@ static void Collect3DContextInformation(
       gl_info->reset_notification_strategy =
           gpu_info.gl_reset_notification_strategy;
       gl_info->sandboxed = gpu_info.sandboxed;
-      gl_info->process_crash_count = gpu_info.process_crash_count;
       gl_info->amd_switchable = gpu_info.amd_switchable;
       gl_info->optimus = gpu_info.optimus;
       break;
@@ -1362,16 +1350,6 @@ void RendererBlinkPlatformImpl::StopListening(
   if (!observer)
     return;
   observer->Stop();
-}
-
-//------------------------------------------------------------------------------
-
-void RendererBlinkPlatformImpl::QueryStorageUsageAndQuota(
-    const blink::WebSecurityOrigin& storage_partition,
-    blink::mojom::StorageType type,
-    QueryStorageUsageAndQuotaCallback callback) {
-  QuotaDispatcher::ThreadSpecificInstance(default_task_runner_)
-      ->QueryStorageUsageAndQuota(storage_partition, type, std::move(callback));
 }
 
 //------------------------------------------------------------------------------

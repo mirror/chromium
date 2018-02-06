@@ -10,9 +10,6 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/sync/sync_setup_service.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/icons/chrome_icon.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #import "ios/chrome/browser/ui/material_components/app_bar_presenting.h"
@@ -40,27 +37,16 @@
 #error "This file requires ARC support."
 #endif
 
-// TODO(crbug.com/785484): Implements workarounds for bugs between iOS and MDC.
-// To be removed or refactored when iOS 9 is dropped.
+// TODO(crbug.com/785484): Implements workaround for iPhone X safe area bug in
+// MDC.
 @interface SettingsAppBarContainerViewController
     : MDCAppBarContainerViewController
 @end
 
 @implementation SettingsAppBarContainerViewController
 
-#pragma mark - Status bar
-
-- (UIViewController*)childViewControllerForStatusBarHidden {
-  if (!base::ios::IsRunningOnIOS10OrLater()) {
-    // TODO(crbug.com/785484): Remove the entire method override when iOS 9 is
-    // dropped.
-    return self.contentViewController;
-  } else {
-    return [super childViewControllerForStatusBarHidden];
-  }
-}
-
-// TODO(crbug.com/785484): Investigate if this can be fixed in MDC.
+// TODO(crbug.com/785484): Remove once fixed in MDC:
+// https://github.com/material-components/material-components-ios/pull/2890
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
@@ -78,16 +64,6 @@
     [contentView.bottomAnchor
         constraintEqualToAnchor:safeAreaLayoutGuide.bottomAnchor],
   ]];
-}
-
-- (UIViewController*)childViewControllerForStatusBarStyle {
-  if (!base::ios::IsRunningOnIOS10OrLater()) {
-    // TODO(crbug.com/620361): Remove the entire method override when iOS 9 is
-    // dropped.
-    return self.contentViewController;
-  } else {
-    return [super childViewControllerForStatusBarStyle];
-  }
 }
 
 @end
@@ -110,9 +86,6 @@
 
 // Creates an autoreleased "CANCEL" button that closes the settings when tapped.
 - (UIBarButtonItem*)cancelButton;
-
-// Intercepts some commands and forwards all others up the responder chain.
-- (void)chromeExecuteCommand:(id)sender;
 
 @end
 
@@ -488,30 +461,6 @@ initWithRootViewController:(UIViewController*)rootViewController
   return NO;
 }
 
-#pragma mark - UIResponder (ChromeExecuteCommand)
-
-- (void)chromeExecuteCommand:(id)sender {
-  switch ([sender tag]) {
-    case IDC_CLEAR_BROWSING_DATA_IOS: {
-      // Check that the data for the right browser state is being cleared before
-      // forwarding it up the responder chain.
-      ios::ChromeBrowserState* commandBrowserState =
-          [base::mac::ObjCCast<ClearBrowsingDataCommand>(sender) browserState];
-
-      // Clearing browsing data for the wrong profile is a destructive action.
-      // Executing it on the wrong profile is a privacy issue. Kill the
-      // app if this ever happens.
-      CHECK_EQ(commandBrowserState, [self mainBrowserState]);
-      break;
-    }
-    default:
-      NOTREACHED()
-          << "Unexpected command " << [sender tag]
-          << " Settings commands must execute on the main browser state.";
-  }
-  [[self nextResponder] chromeExecuteCommand:sender];
-}
-
 #pragma mark - UIResponder
 
 - (NSArray*)keyCommands {
@@ -603,7 +552,6 @@ initWithRootViewController:(UIViewController*)rootViewController
         [[SettingsAppBarContainerViewController alloc]
             initWithContentViewController:controller];
 
-    // TODO(crbug.com/785484): Investigate if this and below can be removed.
     // Configure the style.
     appBarContainer.view.backgroundColor = [UIColor whiteColor];
     ConfigureAppBarWithCardStyle(appBarContainer.appBar);

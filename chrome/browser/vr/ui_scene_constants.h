@@ -61,16 +61,18 @@ static constexpr float kUrlBarHeightDMM = 0.088f;
 static constexpr float kUrlBarVerticalOffsetDMM = -0.516f;
 static constexpr float kUrlBarRotationRad = gfx::DegToRad(-10.0f);
 static constexpr float kUrlBarFontHeightDMM = 0.027f;
-static constexpr float kUrlBarIconSizeDMM = 0.05f;
+static constexpr float kUrlBarIconSizeDMM = 0.038f;
 static constexpr float kUrlBarBackButtonWidthDMM = 0.087f;
 static constexpr float kUrlBarBackButtonIconOffsetDMM = 0.0045f;
 static constexpr float kUrlBarSeparatorWidthDMM = 0.002f;
 static constexpr float kUrlBarOriginRegionWidthDMM = 0.583f;
-static constexpr float kUrlBarOriginContentWidthDMM = 0.556f;
-static constexpr float kUrlBarOriginContentOffsetDMM = 0.007f;
-static constexpr float kUrlBarFieldSpacingDMM = 0.008f;
+static constexpr float kUrlBarOriginContentWidthDMM = 0.543f;
+static constexpr float kUrlBarOriginContentOffsetDMM = 0.020f;
+static constexpr float kUrlBarFieldSpacingDMM = 0.014f;
 static constexpr float kUrlBarOfflineIconTextSpacingDMM = 0.004f;
 static constexpr float kUrlBarSecuritySeparatorHeightDMM = 0.026f;
+static constexpr float kUrlBarOriginFadeWidth = 0.044f;
+static constexpr float kUrlBarOriginMinimumPathWidth = 0.044f;
 
 static constexpr float kOverlayPlaneDistance = 2.3f;
 
@@ -199,6 +201,10 @@ static constexpr float kTimeoutButtonTextWidthDMM = 0.058f;
 static constexpr float kTimeoutButtonTextHeightDMM = 0.024f;
 static constexpr float kTimeoutButtonTextVerticalOffsetDMM = 0.024f;
 
+static constexpr float kHostedUiHeightRatio = 0.6f;
+static constexpr float kHostedUiWidthRatio = 0.6f;
+static constexpr float kHostedUiDepthOffset = 0.3f;
+
 static constexpr float kScreenDimmerOpacity = 0.9f;
 
 static constexpr gfx::Point3F kOrigin = {0.0f, 0.0f, 0.0f};
@@ -274,8 +280,30 @@ static constexpr float kControllerBackButtonOffset = -0.008f;
 
 static constexpr int kControllerLabelTransitionDurationMs = 700;
 
+static constexpr float kControllerWidth = 0.035f;
+static constexpr float kControllerHeight = 0.016f;
+static constexpr float kControllerLength = 0.105f;
+static constexpr float kControllerSmallButtonSize = kControllerWidth * 0.306f;
+static constexpr float kControllerAppButtonZ = kControllerLength * -0.075f;
+static constexpr float kControllerHomeButtonZ = kControllerLength * 0.075f;
+
 static constexpr float kSkyDistance = 1000.0f;
 static constexpr float kGridOpacity = 0.5f;
+
+static constexpr float kRepositionButtonDiameter = 0.75f * kCloseButtonDiameter;
+// This allows the button to be hittable even when hidden.
+static constexpr float kRepositionButtonMinOpacity = 0.001f;
+static constexpr float kRepositionButtonMidOpacity = 0.3f;
+static constexpr float kRepositionButtonMaxOpacity = 1.0f;
+static constexpr float kRepositionButtonXOffset = kIndicatorGap;
+static constexpr float kRepositionButtonYOffset = 0.5f * kIndicatorGap;
+static constexpr int kRepositionButtonTransitionDurationMs = 750;
+static constexpr float kRepositionLabelWidth = 0.55f * kContentWidth;
+static constexpr float kRepositionLabelFontHeight = kControllerLabelFontHeight;
+static constexpr float kRepositionLabelFontScale = 1.5f;
+static constexpr float kRepositionLabelBackgroundPadding = 0.06f;
+static constexpr float kRepositionContentOpacity = 0.2f;
+static constexpr float kRepositionLabelBackgroundCornerRadius = 0.02f;
 
 }  // namespace vr
 

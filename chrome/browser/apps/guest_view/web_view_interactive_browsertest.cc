@@ -81,8 +81,10 @@ class BrowserClientForTextInputClientMac : public ChromeContentBrowserClient {
 
   // ContentBrowserClient overrides.
   void RenderProcessWillLaunch(
-      content::RenderProcessHost* process_host) override {
-    ChromeContentBrowserClient::RenderProcessWillLaunch(process_host);
+      content::RenderProcessHost* process_host,
+      service_manager::mojom::ServiceRequest* service_request) override {
+    ChromeContentBrowserClient::RenderProcessWillLaunch(process_host,
+                                                        service_request);
     filters_.push_back(
         new content::TestTextInputClientMessageFilter(process_host));
   }
@@ -1243,7 +1245,14 @@ IN_PROC_BROWSER_TEST_F(WebViewContextMenuInteractiveTest,
 
 // https://crbug.com/754890: The embedder could become out of sync and think
 // that the guest is not focused when the guest actually was.
-IN_PROC_BROWSER_TEST_F(WebViewBrowserPluginInteractiveTest, EnsureFocusSynced) {
+// TODO(crbug.com/807116): Flaky on the Linux MSAN bot.
+#if defined(OS_LINUX)
+#define MAYBE_EnsureFocusSynced DISABLED_EnsureFocusSynced
+#else
+#define MAYBE_EnsureFocusSynced EnsureFocusSynced
+#endif
+IN_PROC_BROWSER_TEST_F(WebViewBrowserPluginInteractiveTest,
+                       MAYBE_EnsureFocusSynced) {
   LoadAndLaunchPlatformApp("web_view/focus_sync", "WebViewTest.LAUNCHED");
 
   content::WebContents* embedder_web_contents = GetFirstAppWindowWebContents();
@@ -1307,7 +1316,8 @@ IN_PROC_BROWSER_TEST_F(WebViewPopupInteractiveTest, PopupPositioningBasic) {
 }
 
 // Flaky on ChromeOS and Linux: http://crbug.com/526886
-#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+// TODO(crbug.com/807446): Flaky on Mac.
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX)
 #define MAYBE_PopupPositioningMoved DISABLED_PopupPositioningMoved
 #else
 #define MAYBE_PopupPositioningMoved PopupPositioningMoved
@@ -1654,11 +1664,12 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, TextSelection) {
   ASSERT_TRUE(ui_test_utils::ShowAndFocusNativeWindow(
       GetPlatformAppWindow()));
 
-  // Wait until guest sees a context menu, select an arbitrary item (copy).
+  // Wait until guest sees a context menu.
   ExtensionTestMessageListener ctx_listener("MSG_CONTEXTMENU", false);
-  ContextMenuNotificationObserver menu_observer(IDC_CONTENT_CONTEXT_COPY);
+  ContextMenuWaiter menu_observer(content::NotificationService::AllSources());
   SimulateRWHMouseClick(guest_web_contents()->GetRenderViewHost()->GetWidget(),
                         blink::WebMouseEvent::Button::kRight, 20, 20);
+  menu_observer.WaitForMenuOpenAndClose();
   ASSERT_TRUE(ctx_listener.WaitUntilSatisfied());
 
   // Now verify that the selection text propagates properly to RWHV.

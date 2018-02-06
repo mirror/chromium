@@ -348,6 +348,7 @@ Polymer({
     }
     this.onCertificateListsChanged_();
     this.updateIsConfigured_();
+    this.setShareNetwork_();
     requestAnimationFrame(() => {
       var e = this.$$(
           'network-config-input:not([disabled]),' +
@@ -364,13 +365,14 @@ Polymer({
     this.error_ = '';
 
     var propertiesToSet = this.getPropertiesToSet_();
-    if (!this.guid || this.getSource_() == CrOnc.Source.NONE) {
-      // New network configurations default to 'AutoConnect' unless prohibited
-      // by policy.
+    if (this.getSource_() == CrOnc.Source.NONE) {
+      // New non VPN network configurations default to 'AutoConnect' unless
+      // prohibited by policy.
+      var prohibitAutoConnect = this.globalPolicy &&
+          this.globalPolicy.AllowOnlyPolicyNetworksToConnect;
       CrOnc.setTypeProperty(
           propertiesToSet, 'AutoConnect',
-          !(this.globalPolicy &&
-            this.globalPolicy.AllowOnlyPolicyNetworksToConnect));
+          this.type != CrOnc.Type.VPN && !prohibitAutoConnect);
 
       // Create the configuration, then connect to it in the callback.
       this.networkingPrivate.createNetwork(
@@ -381,6 +383,13 @@ Polymer({
       this.networkingPrivate.setProperties(
           this.guid, propertiesToSet, this.setPropertiesCallback_.bind(this));
     }
+  },
+
+  /** @private */
+  connectIfConfigured_: function() {
+    if (!this.isConfigured_)
+      return;
+    this.saveOrConnect();
   },
 
   /** @private */
@@ -402,6 +411,8 @@ Polymer({
    * @return {!CrOnc.Source}
    */
   getSource_: function() {
+    if (!this.guid)
+      return CrOnc.Source.NONE;
     var source = this.networkProperties.Source;
     return source ? /** @type {!CrOnc.Source} */ (source) : CrOnc.Source.NONE;
   },
@@ -477,7 +488,7 @@ Polymer({
   setNetworkProperties_: function(properties) {
     this.propertiesReceived_ = true;
     this.networkProperties = properties;
-    this.error_ = properties.ErrorState || '';
+    this.setError_(properties.ErrorState);
 
     // Set the current shareNetwork_ value when porperties are received.
     this.setShareNetwork_();
@@ -534,11 +545,15 @@ Polymer({
 
   /** @private */
   setShareNetwork_: function() {
-    if (this.guid) {
+    var source = this.getSource_();
+    if (source != CrOnc.Source.NONE) {
       // Configured networks can not change whether they are shared.
-      var source = this.getSource_();
       this.shareNetwork_ =
           source == CrOnc.Source.DEVICE || source == CrOnc.Source.DEVICE_POLICY;
+      return;
+    }
+    if (!this.shareIsVisible_()) {
+      this.shareNetwork_ = false;
       return;
     }
     if (this.shareAllowEnable) {
@@ -883,10 +898,7 @@ Polymer({
 
     var requireCerts = (this.showEap_ && this.showEap_.UserCert) ||
         (this.showVpn_ && this.showVpn_.UserCert);
-    if (requireCerts && !this.userCerts_.length)
-      this.error_ = certError;
-    else
-      this.error_ = '';
+    this.setError_(requireCerts && !this.userCerts_.length ? certError : '');
   },
 
   /**
@@ -1009,8 +1021,16 @@ Polymer({
    * @private
    */
   shareIsVisible_: function() {
-    return !this.guid &&
+    return this.getSource_() == CrOnc.Source.NONE &&
         (this.type == CrOnc.Type.WI_FI || this.type == CrOnc.Type.WI_MAX);
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  connectingIsVisible_: function() {
+    return this.propertiesSent_ && !this.error_;
   },
 
   /**
@@ -1178,9 +1198,10 @@ Polymer({
 
   /** @private */
   setPropertiesCallback_: function() {
-    this.error_ = this.getRuntimeError_();
+    this.setError_(this.getRuntimeError_());
     if (this.error_) {
       console.error('setProperties error: ' + this.guid + ': ' + this.error_);
+      this.propertiesSent_ = false;
       return;
     }
     var connectState = this.networkProperties.ConnectionState;
@@ -1198,11 +1219,12 @@ Polymer({
    * @private
    */
   createNetworkCallback_: function(guid) {
-    this.error_ = this.getRuntimeError_();
+    this.setError_(this.getRuntimeError_());
     if (this.error_) {
       console.error(
           'createNetworkError, type: ' + this.networkProperties.Type + ': ' +
           'error: ' + this.error_);
+      this.propertiesSent_ = false;
       return;
     }
     this.startConnect_(guid);
@@ -1215,18 +1237,15 @@ Polymer({
   startConnect_: function(guid) {
     this.networkingPrivate.startConnect(guid, () => {
       var error = this.getRuntimeError_();
-      if (!error || error == 'connected' || error == 'connect-canceled') {
-        this.close_();  // Connect completed or canceled, close the dialog.
+      if (!error || error == 'connected' || error == 'connect-canceled' ||
+          error == 'connecting') {
+        // Connect is in progress, completed or canceled, close the dialog.
+        this.close_();
         return;
       }
-      if (error == 'connecting') {
-        // Keep the dialog open while connecting. TODO(stevenjb): Add a listener
-        // for the network properties and close the dialog if connected or show
-        // an error if not.
-        return;
-      }
-      this.error_ = error;
+      this.setError_(error);
       console.error('Error connecting to network: ' + error);
+      this.propertiesSent_ = false;
     });
   },
 
@@ -1266,6 +1285,18 @@ Polymer({
       GUID: properties.GUID || '',
       Type: this.type,
     };
+  },
+
+  /**
+   * @param {string|undefined} error
+   * @private
+   */
+  setError_: function(error) {
+    if (!error) {
+      this.error_ = '';
+      return;
+    }
+    this.error_ = error;
   },
 
   /**

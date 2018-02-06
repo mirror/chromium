@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "content/common/content_export.h"
+#include "content/common/frame_messages.h"
 #include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
@@ -150,8 +151,12 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void WasResized();
 
-  const gfx::Rect& frame_rect() const {
-    return pending_resize_params_.frame_rect;
+  const gfx::Rect& screen_space_rect() const {
+    return pending_resize_params_.screen_space_rect;
+  }
+
+  const gfx::Size& local_frame_size() const {
+    return pending_resize_params_.local_frame_size;
   }
 
   const ScreenInfo& screen_info() const {
@@ -172,7 +177,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
                           blink::WebDOMMessageEvent event) override;
   void Navigate(const blink::WebURLRequest& request,
                 bool should_replace_current_entry) override;
-  void FrameRectsChanged(const blink::WebRect& frame_rect) override;
+  void FrameRectsChanged(const blink::WebRect& local_frame_rect,
+                         const blink::WebRect& screen_space_rect) override;
   void UpdateRemoteViewportIntersection(
       const blink::WebRect& viewportIntersection) override;
   void VisibilityChanged(bool visible) override;
@@ -208,8 +214,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnCompositorFrameSwapped(const IPC::Message& message);
   // TODO(fsamuel): Rename OnFirstSurfaceActivation().
   void OnSetChildFrameSurface(const viz::SurfaceInfo& surface_info);
+  void OnIntrinsicSizingInfoOfChildChanged(
+      blink::WebIntrinsicSizingInfo sizing_info);
   void OnUpdateOpener(int opener_routing_id);
-  void OnViewChanged(const viz::FrameSinkId& frame_sink_id);
+  void OnViewChanged(const FrameMsg_ViewChanged_Params& params);
   void OnDidStopLoading();
   void OnDidUpdateFramePolicy(const blink::FramePolicy& frame_policy);
   void OnDidSetActiveSandboxFlags(blink::WebSandboxFlags active_sandbox_flags);
@@ -268,7 +276,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // therefore don't care to synchronize ResizeParams with viz::LocalSurfaceIds.
   // Perhaps this can be moved to ChildFrameCompositingHelper?
   struct ResizeParams {
-    gfx::Rect frame_rect;
+    gfx::Rect screen_space_rect;
+    gfx::Size local_frame_size;
     ScreenInfo screen_info;
     uint64_t sequence_number = 0lu;
   };

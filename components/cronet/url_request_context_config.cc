@@ -73,6 +73,8 @@ const char kQuicDisableBidirectionalStreams[] =
     "quic_disable_bidirectional_streams";
 const char kQuicRaceCertVerification[] = "race_cert_verification";
 const char kQuicHostWhitelist[] = "host_whitelist";
+const char kQuicEnableSocketRecvOptimization[] =
+    "enable_socket_recv_optimization";
 
 // AsyncDNS experiment dictionary name.
 const char kAsyncDnsFieldTrialName[] = "AsyncDNS";
@@ -163,6 +165,7 @@ URLRequestContextConfig::URLRequestContextConfig(
     int http_cache_max_size,
     bool load_disable_cache,
     const std::string& storage_path,
+    const std::string& accept_language,
     const std::string& user_agent,
     const std::string& experimental_options,
     std::unique_ptr<net::CertVerifier> mock_cert_verifier,
@@ -177,6 +180,7 @@ URLRequestContextConfig::URLRequestContextConfig(
       http_cache_max_size(http_cache_max_size),
       load_disable_cache(load_disable_cache),
       storage_path(storage_path),
+      accept_language(accept_language),
       user_agent(user_agent),
       mock_cert_verifier(std::move(mock_cert_verifier)),
       enable_network_quality_estimator(enable_network_quality_estimator),
@@ -313,6 +317,13 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
       std::string quic_user_agent_id;
       if (quic_args->GetString(kQuicUserAgentId, &quic_user_agent_id)) {
         session_params->quic_user_agent_id = quic_user_agent_id;
+      }
+
+      bool quic_enable_socket_recv_optimization = false;
+      if (quic_args->GetBoolean(kQuicEnableSocketRecvOptimization,
+                                &quic_enable_socket_recv_optimization)) {
+        session_params->quic_enable_socket_recv_optimization =
+            quic_enable_socket_recv_optimization;
       }
 
       bool quic_migrate_sessions_on_network_change_v2 = false;
@@ -544,6 +555,7 @@ void URLRequestContextConfig::ConfigureURLRequestContextBuilder(
   } else {
     context_builder->DisableHttpCache();
   }
+  context_builder->set_accept_language(accept_language);
   context_builder->set_user_agent(user_agent);
   net::HttpNetworkSession::Params session_params;
   session_params.enable_http2 = enable_spdy;
@@ -581,8 +593,8 @@ std::unique_ptr<URLRequestContextConfig>
 URLRequestContextConfigBuilder::Build() {
   return std::make_unique<URLRequestContextConfig>(
       enable_quic, quic_user_agent_id, enable_spdy, enable_brotli, http_cache,
-      http_cache_max_size, load_disable_cache, storage_path, user_agent,
-      experimental_options, std::move(mock_cert_verifier),
+      http_cache_max_size, load_disable_cache, storage_path, accept_language,
+      user_agent, experimental_options, std::move(mock_cert_verifier),
       enable_network_quality_estimator,
       bypass_public_key_pinning_for_local_trust_anchors, cert_verifier_data);
 }

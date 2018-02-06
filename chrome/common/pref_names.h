@@ -61,11 +61,15 @@ extern const char kURLsToRestoreOnStartup[];
 extern const char kRlzPingDelaySeconds[];
 #endif  // BUILDFLAG(ENABLE_RLZ)
 
+// The application locale.
+// DO NOT USE this locale directly: use language::ConverToActualLocale() after
+// reading it to get the system locale.
+// This pref stores the locale that the user selected, if applicable.
+extern const char kApplicationLocale[];
 // For OS_CHROMEOS we maintain the kApplicationLocale property in both local
 // state and the user's profile.  The global property determines the locale of
 // the login screen, while the user's profile determines their personal locale
 // preference.
-extern const char kApplicationLocale[];
 #if defined(OS_CHROMEOS)
 extern const char kApplicationLocaleBackup[];
 extern const char kApplicationLocaleAccepted[];
@@ -450,18 +454,6 @@ extern const char kHasSeenWelcomePage[];
 extern const char kHasSeenWin10PromoPage[];
 #endif
 
-extern const char kGLVendorString[];
-extern const char kGLRendererString[];
-extern const char kGLVersionString[];
-
-#if defined(OS_ANDROID)
-extern const char kGLExtensionsString[];
-extern const char kGpuDriverInfoMaxSamples[];
-extern const char kGpuDriverInfoResetNotificationStrategy[];
-extern const char kGpuDriverInfoShaderVersion[];
-extern const char kGpuDriverInfoBuildFingerPrint[];
-#endif
-
 // Deprecated preference for metric / crash reporting on Android. Use
 // kMetricsReportingEnabled instead.
 #if defined(OS_ANDROID)
@@ -501,6 +493,9 @@ extern const char kDownloadDirUpgraded[];
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_MACOSX)
 extern const char kOpenPdfDownloadInSystemReader[];
 #endif
+#if defined(OS_ANDROID)
+extern const char kPromptForDownloadAndroid[];
+#endif
 
 extern const char kSaveFileDefaultDirectory[];
 extern const char kSaveFileType[];
@@ -515,7 +510,6 @@ extern const char kSelectFileLastDirectory[];
 extern const char kExcludedSchemes[];
 
 extern const char kOptionsWindowLastTabIndex[];
-extern const char kShowFirstRunBubbleOption[];
 
 extern const char kLastKnownIntranetRedirectOrigin[];
 
@@ -907,6 +901,7 @@ extern const char kUnsafelyTreatInsecureOriginAsSecure[];
 
 extern const char kIsolateOrigins[];
 extern const char kSitePerProcess[];
+extern const char kWebDriverOverridesIncompatiblePolicies[];
 
 #if defined(OS_WIN)
 // Preference for controlling whether or not third party blocking is enabled on

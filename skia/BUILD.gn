@@ -476,6 +476,7 @@ component("skia") {
     "//base/third_party/dynamic_annotations",
     "//third_party/libpng",
     "//third_party/libwebp",
+    "//third_party/libwebp:libwebp_webp",
   ]
 
   if (!is_ios) {
@@ -503,6 +504,7 @@ component("skia") {
   if (skia_support_pdf) {
     deps += [
       "//third_party/sfntly",
+      "//third_party/sfntly:sfntly_chromium",
       "//third_party/zlib",
     ]
     sources += skia_pdf_sources
@@ -735,7 +737,6 @@ test("skia_unittests") {
     "ext/platform_canvas_unittest.cc",
     "ext/recursive_gaussian_convolution_unittest.cc",
     "ext/skia_memory_dump_provider_unittest.cc",
-    "ext/skia_utils_base_unittest.cc",
     "ext/skia_utils_ios_unittest.mm",
     "ext/skia_utils_mac_unittest.mm",
   ]

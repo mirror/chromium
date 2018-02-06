@@ -4,6 +4,7 @@
     {
       "id": 1,
       "description": "Imagination driver doesn't like uploading lots of buffer data constantly",
+      "cr_bugs": [178093],
       "os": {
         "type": "android"
       },
@@ -15,6 +16,7 @@
     {
       "id": 2,
       "description": "ARM driver doesn't like uploading lots of buffer data constantly",
+      "cr_bugs": [178093],
       "os": {
         "type": "android"
       },
@@ -1016,6 +1018,9 @@
       "gl_renderer": "Adreno \\(TM\\) 3.*",
       "features": [
         "disable_timestamp_queries"
+      ],
+      "disabled_extensions": [
+        "GL_EXT_disjoint_timer_query"
       ]
     },
     {
@@ -2619,7 +2624,7 @@
           "value": "9.0"
         }
       },
-      "gl_renderer": "Adreno \\(TM\\) 5[34]0",
+      "gl_renderer": "Adreno \\(TM\\) (3.*|5[34]0)",
       "disabled_extensions": [
         "GL_EXT_disjoint_timer_query",
         "GL_EXT_disjoint_timer_query_webgl2"
@@ -2736,13 +2741,15 @@
     },
     {
       "id": 250,
-      "description": "Depth/stencil renderbuffers can't be resized on NVIDIA on macOS 10.13",
+      "description": "Depth/stencil renderbuffers can't be resized on NVIDIA on early macOS 10.13",
       "cr_bugs": [775202],
       "os": {
         "type": "macosx",
         "version": {
-          "op": ">=",
-          "value": "10.13.0"
+          "op": "between",
+          "value": "10.13.0",
+          "value2": "10.13.3",
+          "comment": "Fixed in 10.13.4."
         }
       },
       "vendor_id": "0x10de",
@@ -2787,6 +2794,21 @@
       "device_id": ["0x98e4"],
       "features": [
         "max_msaa_sample_count_4"
+      ]
+    },
+    {
+      "id": 255,
+      "description": "Fullscreen video crashes macOS 10.11 WindowServer.",
+      "cr_bugs": [806506],
+      "os": {
+        "type": "macosx",
+        "version": {
+          "op": "<",
+          "value": "10.12"
+        }
+      },
+      "features": [
+        "disable_av_sample_buffer_display_layer"
       ]
     }
   ]

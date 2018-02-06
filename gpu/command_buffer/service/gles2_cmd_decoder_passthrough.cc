@@ -353,6 +353,7 @@ void GLES2DecoderPassthroughImpl::EmulatedDefaultFramebuffer::Blit(
 bool GLES2DecoderPassthroughImpl::EmulatedDefaultFramebuffer::Resize(
     const gfx::Size& new_size,
     const FeatureInfo* feature_info) {
+  DCHECK(!new_size.IsEmpty());
   if (size == new_size) {
     return true;
   }
@@ -744,6 +745,9 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
       attrib_helper.lose_context_when_out_of_memory;
 
   api()->glGetIntegervFn(GL_MAX_TEXTURE_SIZE, &max_2d_texture_size_);
+  api()->glGetIntegervFn(GL_MAX_RENDERBUFFER_SIZE, &max_renderbuffer_size_);
+  max_offscreen_framebuffer_size_ =
+      std::min(max_2d_texture_size_, max_renderbuffer_size_);
 
   if (offscreen_) {
     offscreen_single_buffer_ = attrib_helper.single_buffer;
@@ -798,8 +802,12 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
     FlushErrors();
     emulated_back_buffer_ = std::make_unique<EmulatedDefaultFramebuffer>(
         api(), emulated_default_framebuffer_format_, feature_info_.get());
-    if (!emulated_back_buffer_->Resize(attrib_helper.offscreen_framebuffer_size,
-                                       feature_info_.get())) {
+    // Make sure to use a non-empty offscreen surface so that the framebuffer is
+    // complete.
+    gfx::Size initial_size(
+        std::max(1, attrib_helper.offscreen_framebuffer_size.width()),
+        std::max(1, attrib_helper.offscreen_framebuffer_size.height()));
+    if (!emulated_back_buffer_->Resize(initial_size, feature_info_.get())) {
       bool was_lost = CheckResetStatus();
       Destroy(true);
       LOG(ERROR) << (was_lost ? "ContextResult::kTransientFailure: "
@@ -1020,8 +1028,8 @@ bool GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer(
   }
 
   if (size.width() < 0 || size.height() < 0 ||
-      size.width() > max_2d_texture_size_ ||
-      size.height() > max_2d_texture_size_) {
+      size.width() > max_offscreen_framebuffer_size_ ||
+      size.height() > max_offscreen_framebuffer_size_) {
     LOG(ERROR) << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer "
                   "failed to allocate storage due to excessive dimensions.";
     return false;

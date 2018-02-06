@@ -32,6 +32,7 @@
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "components/keep_alive_registry/keep_alive_registry.h"
+#include "components/language/core/common/locale_util.h"
 #include "components/metrics/metrics_service.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
@@ -104,8 +105,9 @@ bool SetLocaleForNextStart(PrefService* local_state) {
 
   // Login screen should show up in owner's locale.
   std::string owner_locale = local_state->GetString(prefs::kOwnerLocale);
-  if (!owner_locale.empty() &&
-      local_state->GetString(prefs::kApplicationLocale) != owner_locale &&
+  std::string pref_locale = local_state->GetString(prefs::kApplicationLocale);
+  language::ConvertToActualUILocale(&pref_locale);
+  if (!owner_locale.empty() && pref_locale != owner_locale &&
       !local_state->IsManagedPreference(prefs::kApplicationLocale)) {
     local_state->SetString(prefs::kApplicationLocale, owner_locale);
     return true;
@@ -228,7 +230,8 @@ void AttemptRestart() {
   // environment variable is defined. So we undefine this environment variable
   // before restarting, as the restarted processes will inherit their
   // environment variables from ours, thus suppressing crash uploads.
-  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()) {
+  if (!ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+          g_browser_process->local_state())) {
     HMODULE exe_module = GetModuleHandle(kBrowserProcessExecutableName);
     if (exe_module) {
       typedef void (__cdecl *ClearBreakpadPipeEnvVar)();

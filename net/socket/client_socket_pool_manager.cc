@@ -10,7 +10,7 @@
 #include "net/http/http_proxy_client_socket_pool.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_stream_factory.h"
-#include "net/proxy/proxy_info.h"
+#include "net/proxy_resolution/proxy_info.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/socks_client_socket_pool.h"
@@ -153,7 +153,7 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
                                   resolution_callback,
                                   non_ssl_combine_connect_and_write_policy));
 
-    if (proxy_info.is_http() || proxy_info.is_https()) {
+    if (proxy_info.is_http() || proxy_info.is_https() || proxy_info.is_quic()) {
       // TODO(mmenke):  Would it be better to split these into two different
       //     socket pools?  And maybe socks4/socks5 as well?
       if (proxy_info.is_http()) {
@@ -166,7 +166,7 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
       request_extra_headers.GetHeader(HttpRequestHeaders::kUserAgent,
                                       &user_agent);
       scoped_refptr<SSLSocketParams> ssl_params;
-      if (proxy_info.is_https()) {
+      if (!proxy_info.is_http()) {
         proxy_tcp_params = new TransportSocketParams(
             *proxy_host_port, disable_resolver_cache, resolution_callback,
             ssl_combine_connect_and_write_policy);
@@ -178,15 +178,16 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
         proxy_tcp_params = NULL;
       }
 
-      // TODO (wangyix): QUIC_VERSION_UNSUPPORTED will be passed in
-      // |http_proxy_params| for now to avoid creating a QUIC proxy, which is
-      // not ready yet. Eventually, |quic_version| should be passed in if doing
-      // a QUIC proxy.
+      if (!proxy_info.is_quic()) {
+        quic_version = QUIC_VERSION_UNSUPPORTED;
+      }
+
       http_proxy_params = new HttpProxySocketParams(
-          proxy_tcp_params, ssl_params, QUIC_VERSION_UNSUPPORTED, user_agent,
+          proxy_tcp_params, ssl_params, quic_version, user_agent,
           origin_host_port, session->http_auth_cache(),
           session->http_auth_handler_factory(), session->spdy_session_pool(),
-          session->quic_stream_factory(), force_tunnel || using_ssl);
+          session->quic_stream_factory(), proxy_server.is_trusted_proxy(),
+          force_tunnel || using_ssl);
     } else {
       DCHECK(proxy_info.is_socks());
       char socks_version;
@@ -407,6 +408,8 @@ int InitSocketHandleForWebSocketRequest(
 
 int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   HttpNetworkSession* session,
+                                  int request_load_flags,
+                                  RequestPriority request_priority,
                                   const ProxyInfo& proxy_info,
                                   const SSLConfig& ssl_config_for_origin,
                                   const SSLConfig& ssl_config_for_proxy,
@@ -416,8 +419,6 @@ int InitSocketHandleForRawConnect(const HostPortPair& host_port_pair,
                                   const CompletionCallback& callback) {
   DCHECK(socket_handle);
   HttpRequestHeaders request_extra_headers;
-  int request_load_flags = 0;
-  RequestPriority request_priority = MEDIUM;
   return InitSocketPoolHelper(
       ClientSocketPoolManager::NORMAL_GROUP, host_port_pair,
       request_extra_headers, request_load_flags, request_priority, session,

@@ -59,14 +59,13 @@ Node* FlatTreeTraversal::ResolveDistributionStartingAt(
        sibling = (direction == kTraversalDirectionForward
                       ? sibling->nextSibling()
                       : sibling->previousSibling())) {
-    if (auto* slot = ToHTMLSlotElementOrNull(*sibling)) {
-      if (slot->SupportsAssignment()) {
-        if (Node* found = (direction == kTraversalDirectionForward
-                               ? slot->FirstDistributedNode()
-                               : slot->LastDistributedNode()))
-          return found;
-        continue;
-      }
+    if (const HTMLSlotElement* slot =
+            ToHTMLSlotElementIfSupportsAssignmentOrNull(*sibling)) {
+      if (Node* found = (direction == kTraversalDirectionForward
+                             ? slot->FirstDistributedNode()
+                             : slot->LastDistributedNode()))
+        return found;
+      continue;
     }
     if (node->IsInV0ShadowTree())
       return V0ResolveDistributionStartingAt(*sibling, direction);
@@ -78,8 +77,7 @@ Node* FlatTreeTraversal::ResolveDistributionStartingAt(
 Node* FlatTreeTraversal::V0ResolveDistributionStartingAt(
     const Node& node,
     TraversalDirection direction) {
-  DCHECK(!IsHTMLSlotElement(node) ||
-         !ToHTMLSlotElement(node).SupportsAssignment());
+  DCHECK(!ToHTMLSlotElementIfSupportsAssignmentOrNull(node));
   for (const Node* sibling = &node; sibling;
        sibling = (direction == kTraversalDirectionForward
                       ? sibling->nextSibling()
@@ -117,24 +115,12 @@ Node* FlatTreeTraversal::TraverseSiblings(const Node& node,
 
   // Slotted nodes are already handled in traverseSiblingsForV1HostChild()
   // above, here is for fallback contents.
-  if (auto* slot = ToHTMLSlotElementOrNull(node.parentElement())) {
-    if (slot->SupportsAssignment() && slot->AssignedNodes().IsEmpty())
+  if (auto* slot =
+          ToHTMLSlotElementIfSupportsAssignmentOrNull(node.parentElement())) {
+    if (slot->AssignedNodes().IsEmpty())
       return TraverseSiblings(*slot, direction);
   }
 
-  if (!node.IsInV0ShadowTree())
-    return nullptr;
-
-  // For v0 older shadow tree
-  if (node.parentNode() && node.parentNode()->IsShadowRoot()) {
-    ShadowRoot* parent_shadow_root = ToShadowRoot(node.parentNode());
-    if (!parent_shadow_root->IsYoungest()) {
-      HTMLShadowElement* assigned_insertion_point =
-          parent_shadow_root->ShadowInsertionPointOfYoungerShadowRoot();
-      DCHECK(assigned_insertion_point);
-      return TraverseSiblings(*assigned_insertion_point, direction);
-    }
-  }
   return nullptr;
 }
 
@@ -180,12 +166,11 @@ ContainerNode* FlatTreeTraversal::TraverseParent(
     return TraverseParent(*slot);
   }
 
-  if (auto* slot = ToHTMLSlotElementOrNull(node.parentElement())) {
-    if (slot->SupportsAssignment()) {
-      if (!slot->AssignedNodes().IsEmpty())
-        return nullptr;
-      return TraverseParent(*slot, details);
-    }
+  if (auto* slot =
+          ToHTMLSlotElementIfSupportsAssignmentOrNull(node.parentElement())) {
+    if (!slot->AssignedNodes().IsEmpty())
+      return nullptr;
+    return TraverseParent(*slot, details);
   }
 
   if (CanBeDistributedToV0InsertionPoint(node))
@@ -223,9 +208,6 @@ ContainerNode* FlatTreeTraversal::TraverseParentOrHost(const Node& node) {
   if (!parent->IsShadowRoot())
     return parent;
   ShadowRoot* shadow_root = ToShadowRoot(parent);
-  DCHECK(!shadow_root->ShadowInsertionPointOfYoungerShadowRoot());
-  if (!shadow_root->IsYoungest())
-    return nullptr;
   return &shadow_root->host();
 }
 

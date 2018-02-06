@@ -399,6 +399,8 @@ class Internals final : public ScriptWrappable {
   void mediaPlayerPlayingRemotelyChanged(HTMLMediaElement*, bool);
   void setMediaElementNetworkState(HTMLMediaElement*, int state);
   void setPersistent(HTMLVideoElement*, bool);
+  void forceStaleStateForMediaElement(HTMLMediaElement*);
+  bool isMediaElementSuspended(HTMLMediaElement*);
 
   void registerURLSchemeAsBypassingContentSecurityPolicy(const String& scheme);
   void registerURLSchemeAsBypassingContentSecurityPolicy(
@@ -498,12 +500,10 @@ class Internals final : public ScriptWrappable {
 
   void setNetworkConnectionInfoOverride(bool,
                                         const String&,
+                                        const String&,
+                                        unsigned long http_rtt_msec,
                                         double downlink_max_mbps,
                                         ExceptionState&);
-  void setNetworkQualityInfoOverride(const String&,
-                                     unsigned long transport_rtt_msec,
-                                     double downlink_throughput_mbps,
-                                     ExceptionState&);
   void setSaveDataEnabled(bool);
 
   void clearNetworkConnectionInfoOverride();

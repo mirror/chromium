@@ -129,6 +129,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableRootLayerScrolling(bool);
   BLINK_PLATFORM_EXPORT static void EnableScriptedSpeech(bool);
   BLINK_PLATFORM_EXPORT static void EnableScrollAnchoring(bool);
+  BLINK_PLATFORM_EXPORT static void EnableScrollAnchorSerialization(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerNavigationPreload(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerScriptStreaming(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerScriptFullCodeCache(
@@ -186,6 +187,8 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableStopNonTimersInBackground(bool);
   BLINK_PLATFORM_EXPORT static void EnablePWAFullCodeCache(bool);
   BLINK_PLATFORM_EXPORT static void EnableDoubleTapToJumpOnVideo(bool);
+  BLINK_PLATFORM_EXPORT static void EnableCodeCacheAfterExecute(bool);
+  BLINK_PLATFORM_EXPORT static void EnableUnifiedTouchAdjustment(bool);
 
  private:
   WebRuntimeFeatures();

@@ -133,12 +133,6 @@ class PLATFORM_EXPORT Visitor {
     Trace(*(static_cast<const Member<T>*>(&t)));
   }
 
-  // Only called from automatically generated bindings code.
-  template <typename T>
-  void TraceFromGeneratedCode(const T* t) {
-    Mark(const_cast<T*>(t));
-  }
-
   // Fallback method used only when we need to trace raw pointers of T.
   // This is the case when a member is a union where we do not support members.
   template <typename T>
@@ -162,12 +156,6 @@ class PLATFORM_EXPORT Visitor {
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
     RegisterWeakCell(const_cast<WeakMember<T>&>(t).Cell());
-  }
-
-  template <typename T>
-  void TraceInCollection(T& t,
-                         WTF::ShouldWeakPointersBeMarkedStrongly strongify) {
-    HashTraits<T>::TraceInCollection(this, t, strongify);
   }
 
   // Fallback trace method for part objects to allow individual trace methods

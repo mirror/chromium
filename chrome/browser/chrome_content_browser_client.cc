@@ -28,7 +28,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/after_startup_task_utils.h"
@@ -215,8 +214,8 @@
 #include "content/public/common/url_loader_throttle.h"
 #include "content/public/common/url_utils.h"
 #include "content/public/common/web_preferences.h"
-#include "device/usb/public/interfaces/chooser_service.mojom.h"
-#include "device/usb/public/interfaces/device_manager.mojom.h"
+#include "device/usb/public/mojom/chooser_service.mojom.h"
+#include "device/usb/public/mojom/device_manager.mojom.h"
 #include "extensions/features/features.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "google_apis/google_api_keys.h"
@@ -228,13 +227,16 @@
 #include "net/base/mime_util.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
+#include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
+#include "services/network/public/cpp/features.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
+#include "services/service_manager/public/interfaces/connector.mojom.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
@@ -318,7 +320,6 @@
 #include "chrome/browser/payments/payment_request_factory.h"
 #include "chrome/browser/search/instant_service.h"
 #include "chrome/browser/search/instant_service_factory.h"
-#include "chrome/browser/ui/search/new_tab_page_navigation_throttle.h"
 #include "chrome/common/importer/profile_import.mojom.h"
 #endif
 
@@ -846,6 +847,8 @@ void ChromeContentBrowserClient::RegisterLocalStatePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kIsolateOrigins, std::string());
   registry->RegisterBooleanPref(prefs::kSitePerProcess, false);
+  registry->RegisterBooleanPref(prefs::kWebDriverOverridesIncompatiblePolicies,
+                                false);
 #if defined(OS_WIN)
   // TODO(chrisha): Move this to chrome/browser/conflicts as we build the
   // logic that responds to this pref.
@@ -864,21 +867,21 @@ void ChromeContentBrowserClient::RegisterProfilePrefs(
 // static
 void ChromeContentBrowserClient::SetApplicationLocale(
     const std::string& locale) {
+  // The common case is that this function is called early in Chrome startup
+  // before any threads are created or registered. When there are no threads,
+  // we can just set the string without worrying about threadsafety.
+  if (!BrowserThread::IsThreadInitialized(BrowserThread::UI)) {
+    g_io_thread_application_locale.Get() = locale;
+    return;
+  }
+
+  // Otherwise we're being called to change the locale. In this case set it on
+  // the IO thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // This object is guaranteed to outlive all threads so we don't have to
-  // worry about the lack of refcounting and can just post as Unretained.
-  //
-  // The common case is that this function is called early in Chrome startup
-  // before any threads are created (it will also be called later if the user
-  // changes the pref). In this case, there will be no threads created and
-  // posting will fail. When there are no threads, we can just set the string
-  // without worrying about threadsafety.
-  if (!BrowserThread::PostTask(
-          BrowserThread::IO, FROM_HERE,
-          base::BindOnce(&SetApplicationLocaleOnIOThread, locale))) {
-    g_io_thread_application_locale.Get() = locale;
-  }
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&SetApplicationLocaleOnIOThread, locale));
 }
 
 content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
@@ -928,6 +931,8 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
   main_parts->AddParts(new ChromeBrowserMainExtraPartsProfiling);
 
   chrome::AddMetricsExtraParts(main_parts);
+
+  main_parts->AddParts(ChromeService::GetInstance()->CreateExtraParts());
 
   return main_parts;
 }
@@ -1047,7 +1052,8 @@ bool ChromeContentBrowserClient::AllowGpuLaunchRetryOnIOThread() {
 }
 
 void ChromeContentBrowserClient::RenderProcessWillLaunch(
-    content::RenderProcessHost* host) {
+    content::RenderProcessHost* host,
+    service_manager::mojom::ServiceRequest* service_request) {
   int id = host->GetID();
   Profile* profile = Profile::FromBrowserContext(host->GetBrowserContext());
   host->AddFilter(new ChromeRenderMessageFilter(id, profile));
@@ -1075,7 +1081,7 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
   // The audio manager outlives the host, so it's safe to hand a raw pointer to
   // it to the AudioDebugRecordingsHandler, which is owned by the host.
   AudioDebugRecordingsHandler* audio_debug_recordings_handler =
-      new AudioDebugRecordingsHandler(profile, media::AudioManager::Get());
+      new AudioDebugRecordingsHandler(profile);
   host->SetUserData(
       AudioDebugRecordingsHandler::kAudioDebugRecordingsHandlerKey,
       base::MakeUnique<base::UserDataAdapter<AudioDebugRecordingsHandler>>(
@@ -1118,6 +1124,16 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
         HostContentSettingsMapFactory::GetForProfile(profile), &rules);
   }
   rc_interface->SetContentSettingRules(rules);
+
+  service_manager::mojom::ServicePtr service;
+  *service_request = mojo::MakeRequest(&service);
+  service_manager::mojom::PIDReceiverPtr pid_receiver;
+  service_manager::Identity renderer_identity = host->GetChildIdentity();
+  ChromeService::GetInstance()->connector()->StartService(
+      service_manager::Identity(chrome::mojom::kRendererServiceName,
+                                renderer_identity.user_id(),
+                                renderer_identity.instance()),
+      std::move(service), mojo::MakeRequest(&pid_receiver));
 }
 
 GURL ChromeContentBrowserClient::GetEffectiveURL(
@@ -3142,7 +3158,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
   {
     service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(&ChromeService::Create);
+    info.factory = ChromeService::GetInstance()->CreateChromeServiceFactory();
     services->insert(std::make_pair(chrome::mojom::kServiceName, info));
   }
   if (g_browser_process->pref_service_factory()) {
@@ -3273,6 +3289,8 @@ ChromeContentBrowserClient::GetExtraServiceManifests() {
 #if BUILDFLAG(ENABLE_PRINTING)
         {printing::mojom::kServiceName, IDR_PDF_COMPOSITOR_MANIFEST},
 #endif
+        {chrome::mojom::kRendererServiceName,
+         IDR_CHROME_RENDERER_SERVICE_MANIFEST},
   });
 }
 
@@ -3504,11 +3522,6 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
       DevToolsWindow::MaybeCreateNavigationThrottle(handle);
   if (devtools_throttle)
     throttles.push_back(std::move(devtools_throttle));
-
-  std::unique_ptr<content::NavigationThrottle> new_tab_page_throttle =
-      NewTabPageNavigationThrottle::MaybeCreateThrottleFor(handle);
-  if (new_tab_page_throttle)
-    throttles.push_back(std::move(new_tab_page_throttle));
 #endif
 
   return throttles;
@@ -3684,7 +3697,7 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<content::WebContents*()>& wc_getter,
     content::NavigationUIData* navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  DCHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
 
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
 
@@ -3810,6 +3823,15 @@ void ChromeContentBrowserClient::CreateUsbChooserService(
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
 }
 
+std::unique_ptr<net::ClientCertStore>
+ChromeContentBrowserClient::CreateClientCertStore(
+    content::ResourceContext* resource_context) {
+  if (!resource_context)
+    return nullptr;
+  return ProfileIOData::FromResourceContext(resource_context)
+      ->CreateClientCertStore();
+}
+
 // Static; handles rewriting Web UI URLs.
 bool ChromeContentBrowserClient::HandleWebUI(
     GURL* url,
@@ -3857,6 +3879,25 @@ bool ChromeContentBrowserClient::ShowPaymentHandlerWindow(
       ->GetForBrowserContext(browser_context)
       ->ShowPaymentHandlerWindow(url, std::move(callback));
   return true;
+#endif
+}
+
+bool ChromeContentBrowserClient::
+    ShouldPermitIndividualAttestationForWebauthnRPID(
+        content::BrowserContext* browser_context,
+        const std::string& rp_id) {
+#if defined(OS_ANDROID)
+  return false;
+#else
+  const Profile* profile = Profile::FromBrowserContext(browser_context);
+  const PrefService* prefs = profile->GetPrefs();
+  const base::ListValue* permit_attestation =
+      prefs->GetList(prefs::kSecurityKeyPermitAttestation);
+
+  // If the RP ID is listed in the policy, enable individual attestation.
+  return std::any_of(
+      permit_attestation->begin(), permit_attestation->end(),
+      [&rp_id](const base::Value& v) { return v.GetString() == rp_id; });
 #endif
 }
 

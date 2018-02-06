@@ -152,6 +152,9 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   // to be added.
   virtual void OnAckNeedsRetransmittableFrame() = 0;
 
+  // Called when a ping needs to be sent.
+  virtual void SendPing() = 0;
+
   // Called to ask if the visitor wants to schedule write resumption as it both
   // has pending data to write, and is able to write (e.g. based on flow control
   // limits).
@@ -363,10 +366,17 @@ class QUIC_EXPORT_PRIVATE QuicConnection
                                           QuicStreamOffset offset,
                                           StreamSendingState state);
 
+  // Send |frame| to the peer. Returns true if frame is consumed, false
+  // otherwise.
+  virtual bool SendControlFrame(const QuicFrame& frame);
+
   // Send a RST_STREAM frame to the peer.
   virtual void SendRstStream(QuicStreamId id,
                              QuicRstStreamErrorCode error,
                              QuicStreamOffset bytes_written);
+
+  // Called when stream |id| is reset because of |error|.
+  virtual void OnStreamReset(QuicStreamId id, QuicRstStreamErrorCode error);
 
   // Send a BLOCKED frame to the peer.
   virtual void SendBlocked(QuicStreamId id);
@@ -725,6 +735,8 @@ class QUIC_EXPORT_PRIVATE QuicConnection
     defer_send_in_response_to_packets_ = defer;
   }
 
+  bool use_control_frame_manager() const { return use_control_frame_manager_; }
+
  protected:
   // Calls cancel() on all the alarms owned by this connection.
   void CancelAllAlarms();
@@ -822,6 +834,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Deletes and clears any queued packets.
   void ClearQueuedPackets();
+
+  // Closes the connection if the sent packet manager are tracking too many
+  // outstanding packets.
+  void CloseIfTooManyOutstandingSentPackets();
 
   // Writes as many queued packets as possible.  The connection must not be
   // blocked when this is called.
@@ -957,6 +973,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Maximum number of undecryptable packets the connection will store.
   size_t max_undecryptable_packets_;
+
+  // Maximum number of tracked packets.
+  QuicPacketCount max_tracked_packets_;
 
   // When the version negotiation packet could not be sent because the socket
   // was not writable, this is set to true.
@@ -1156,6 +1175,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Id of latest sent control frame. 0 if no control frame has been sent.
   QuicControlFrameId last_control_frame_id_;
+
+  // Latched value of quic_reloadable_flag_quic_use_control_frame_manager.
+  const bool use_control_frame_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicConnection);
 };

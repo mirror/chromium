@@ -1,5 +1,6 @@
 {
   "-- Template --": {
+    "intro": "Tests that policies map to prefs properly and whether the corresponding Chrome settings UI behaves properly, e.g. if a policy is managed, the UI should be readonly and an icon with a properly worded tooltip should show up.",
     "intro": "Top-level entries map a policy name to its test parameters, described below. The name of the top level entry should be of the form <policy name>[.suffix]. The optional suffix is used for defining multiple test cases for a single policy.",
 
     "os": ["List of operating systems that support this policy. Valid values:", "win", "linux", "mac", "chromeos", "android", "Defaults to empty if not specified."],
@@ -754,6 +755,16 @@
     "note": "This policy is deprecated and removed since Chrome 66."
   },
 
+  "EnableSymantecLegacyInfrastructure": {
+    "os": ["win", "linux", "mac", "chromeos", "android"],
+    "test_policy": { "EnableSymantecLegacyInfrastructure": true },
+    "pref_mappings": [
+      { "pref": "ssl.enable_symantec_legacy_infrastructure",
+        "local_state": true
+      }
+    ]
+  },
+
   "AuthSchemes": {
     "os": ["win", "linux", "mac", "chromeos", "android"],
     "test_policy": { "AuthSchemes": "AuthSchemes" },
@@ -862,6 +873,16 @@
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "SitePerProcess": false },
     "note": "There is a pref behind this setting, but due to the fact that tests override the default with a command-line flag on some trybots, this setting cannot be verified with the common test."
+  },
+
+  "WebDriverOverridesIncompatiblePolicies": {
+    "os": ["win", "linux", "mac"],
+    "test_policy": { "WebDriverOverridesIncompatiblePolicies": true },
+    "pref_mappings": [
+      { "pref": "webdriver.override_incompatible_policy",
+        "local_state": true
+      }
+    ]
   },
 
   "DefaultDownloadDirectory": {
@@ -2150,7 +2171,13 @@
   },
 
   "SSLVersionMin": {
-    "note": "This policy is retired, see https://crbug.com/487730."
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": { "SSLVersionMin": "tls1.1" },
+    "pref_mappings": [
+      { "pref": "ssl.version_min",
+        "local_state": true
+      }
+    ]
   },
 
   "SSLVersionFallbackMin": {
@@ -3456,6 +3483,41 @@
   "RestrictAccountsToPatterns": {
   },
 
+  "PasswordProtectionWarningTrigger": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "PasswordProtectionWarningTrigger": 2
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.password_protection_warning_trigger"}
+    ]
+  },
+
+  "PasswordProtectionRiskTrigger": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "PasswordProtectionRiskTrigger": 2
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.password_protection_risk_trigger"}
+    ]
+  },
+
+  "DeviceOffHours": {
+    "os": ["chromeos"],
+    "test_policy": {"DeviceOffHours": {"intervals": [{"start" : {"day_of_week" : 1, "time": 12840000}, "end": {"day_of_week" : 1, "time": 21720000}}], "timezone" : "GMT", "ignored_policy_proto_tags": [8, 3]}}
+  },
+
+  "DeviceKerberosEncryptionTypes": {
+    "os": ["chromeos"],
+    "note": "Chrome OS device policy used by authpolicyd only, not used in Chrome"
+  },
+
+  "DeviceUserPolicyLoopbackProcessingMode": {
+    "os": ["chromeos"],
+    "note": "Chrome OS device policy used by authpolicyd only, not used in Chrome"
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
@@ -3480,10 +3542,5 @@
   },
 
   "SkipMetadataCheck": {
-  },
-
-  "DeviceOffHours": {
-    "os": ["chromeos"],
-    "test_policy": {"DeviceOffHours": {"intervals": [{"start" : {"day_of_week" : 1, "time": 12840000}, "end": {"day_of_week" : 1, "time": 21720000}}], "timezone" : "GMT", "ignored_policy_proto_tags": [8, 3]}}
   }
 }

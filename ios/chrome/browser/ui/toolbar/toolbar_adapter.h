@@ -20,8 +20,8 @@ class ChromeBrowserState;
 
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
+@protocol OmniboxFocuser;
 @protocol ToolbarCoordinatorDelegate;
-@protocol ToolbarCommands;
 @protocol UrlLoader;
 class WebStateList;
 
@@ -31,7 +31,7 @@ class WebStateList;
 
 - (instancetype)
 initWithDispatcher:
-    (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)dispatcher
+    (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)dispatcher
       browserState:(ios::ChromeBrowserState*)browserState
       webStateList:(WebStateList*)webStateList NS_DESIGNATED_INITIALIZER;
 

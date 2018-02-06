@@ -71,6 +71,7 @@
 #include "core/paint/ClipPathClipper.h"
 #include "core/paint/FilterEffectBuilder.h"
 #include "core/paint/ObjectPaintInvalidator.h"
+#include "core/paint/PaintInfo.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "platform/LengthFunctions.h"
@@ -138,7 +139,9 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       needs_descendant_dependent_flags_update_(true),
       has_visible_descendant_(false),
 #if DCHECK_IS_ON()
-      needs_position_update_(true),
+      // The root layer (LayoutView) does not need position update at start
+      // because its Location() is always 0.
+      needs_position_update_(!IsRootLayer()),
 #endif
       has3d_transformed_descendant_(false),
       contains_dirty_overlay_scrollbars_(false),
@@ -376,8 +379,7 @@ bool PaintLayer::FixedToViewport() const {
     return scroll == view_scroll;
   }
 
-  return GetLayoutObject().ContainerForFixedPosition() ==
-         GetLayoutObject().View();
+  return GetLayoutObject().Container() == GetLayoutObject().View();
 }
 
 bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
@@ -840,14 +842,18 @@ void PaintLayer::UpdateLayerPosition() {
       IntSize offset =
           containing_layer->GetLayoutBox()->ScrolledContentOffset();
       local_point -= offset;
-    } else if (GetLayoutObject().IsAbsolutePositioned() &&
-               containing_layer->GetLayoutObject().IsInFlowPositioned() &&
-               containing_layer->GetLayoutObject().IsLayoutInline()) {
-      // Adjust offset for absolute under in-flow positioned inline.
-      LayoutSize offset =
-          ToLayoutInline(containing_layer->GetLayoutObject())
-              .OffsetForInFlowPositionedInline(ToLayoutBox(GetLayoutObject()));
-      local_point += offset;
+    } else {
+      auto& container = containing_layer->GetLayoutObject();
+      if (GetLayoutObject().IsOutOfFlowPositioned() &&
+          container.IsLayoutInline() &&
+          container.CanContainOutOfFlowPositionedElement(
+              GetLayoutObject().Style()->GetPosition())) {
+        // Adjust offset for absolute under in-flow positioned inline.
+        LayoutSize offset =
+            ToLayoutInline(container).OffsetForInFlowPositionedInline(
+                ToLayoutBox(GetLayoutObject()));
+        local_point += offset;
+      }
     }
   }
 
@@ -911,10 +917,8 @@ FloatPoint PaintLayer::PerspectiveOrigin() const {
   const LayoutRect border_box = ToLayoutBox(GetLayoutObject()).BorderBoxRect();
   const ComputedStyle& style = GetLayoutObject().StyleRef();
 
-  return FloatPoint(FloatValueForLength(style.PerspectiveOriginX(),
-                                        border_box.Width().ToFloat()),
-                    FloatValueForLength(style.PerspectiveOriginY(),
-                                        border_box.Height().ToFloat()));
+  return FloatPointForLengthPoint(style.PerspectiveOrigin(),
+                                  FloatSize(border_box.Size()));
 }
 
 PaintLayer* PaintLayer::ContainingLayer(const PaintLayer* ancestor,
@@ -2680,10 +2684,15 @@ void PaintLayer::SetGroupedMapping(CompositedLayerMapping* grouped_mapping,
     grouped_mapping->SetNeedsGraphicsLayerUpdate(kGraphicsLayerUpdateSubtree);
 }
 
-bool PaintLayer::MaskBlendingAppliedByCompositor() const {
+bool PaintLayer::MaskBlendingAppliedByCompositor(
+    const PaintInfo& paint_info) const {
   DCHECK(layout_object_.HasMask());
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return true;
+
+  if (paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers)
+    return false;
+
   return rare_data_ && rare_data_->composited_layer_mapping &&
          rare_data_->composited_layer_mapping->HasMaskLayer();
 }
@@ -2745,6 +2754,9 @@ bool PaintLayer::BackgroundIsKnownToBeOpaqueInRect(
   // layoutObject is hidden, but some child is visible and that child doesn't
   // cover the entire rect.
   if (GetLayoutObject().Style()->Visibility() != EVisibility::kVisible)
+    return false;
+
+  if (GetLayoutObject().HasMask() || GetLayoutObject().HasClipPath())
     return false;
 
   if (PaintsWithFilters() &&

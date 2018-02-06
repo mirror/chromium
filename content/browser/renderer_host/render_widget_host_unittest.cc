@@ -19,10 +19,12 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "components/viz/common/features.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/mock_compositor_frame_sink_client.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
@@ -127,6 +129,7 @@ class MockInputRouter : public InputRouter {
                 bool frame_handler) override {}
   void ProgressFling(base::TimeTicks time) override {}
   void StopFling() override {}
+  bool FlingCancellationIsDeferred() override { return false; }
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& message) override {
@@ -195,6 +198,15 @@ class MockRenderWidgetHost : public RenderWidgetHostImpl {
 
   WebInputEvent::Type acked_touch_event_type() const {
     return acked_touch_event_type_;
+  }
+
+  // Mocks out |renderer_compositor_frame_sink_| with a
+  // CompositorFrameSinkClientPtr bound to
+  // |mock_renderer_compositor_frame_sink|.
+  void SetMockRendererCompositorFrameSink(
+      viz::MockCompositorFrameSinkClient* mock_renderer_compositor_frame_sink) {
+    renderer_compositor_frame_sink_ =
+        mock_renderer_compositor_frame_sink->BindInterfacePtr();
   }
 
   void SetupForInputRouterTest() {
@@ -1032,6 +1044,25 @@ TEST_F(RenderWidgetHostTest, Resize) {
   EXPECT_FALSE(host_->resize_ack_pending_);
   EXPECT_EQ(gfx::Size(0, 31), host_->old_resize_params_->new_size);
   EXPECT_TRUE(process_->sink().GetUniqueMessageMatching(ViewMsg_Resize::ID));
+
+  // If the host is hidden, don't send WasResized messages.
+  process_->sink().ClearMessages();
+  host_->WasHidden();
+  view_->SetBounds(gfx::Rect(100, 100, 200, 300));
+  host_->WasResized();
+  EXPECT_FALSE(process_->sink().GetUniqueMessageMatching(ViewMsg_Resize::ID));
+
+  // When the host is visible again, any pending resize has to be sent in
+  // ViewMsg_WasShown, not ViewMsg_Resize.
+  process_->sink().ClearMessages();
+  host_->WasShown(ui::LatencyInfo());
+  const IPC::Message* message =
+      process_->sink().GetUniqueMessageMatching(ViewMsg_WasShown::ID);
+  EXPECT_FALSE(process_->sink().GetUniqueMessageMatching(ViewMsg_Resize::ID));
+  ViewMsg_WasShown::Param was_shown_params;
+  ViewMsg_WasShown::Read(message, &was_shown_params);
+  base::Optional<ResizeParams> resize_params = std::get<2>(was_shown_params);
+  EXPECT_TRUE(resize_params.has_value());
 }
 
 // Test that a resize event is sent if WasResized() is called after a
@@ -1161,7 +1192,7 @@ TEST_F(RenderWidgetHostTest, HiddenPaint) {
   const IPC::Message* restored = process_->sink().GetUniqueMessageMatching(
       ViewMsg_WasShown::ID);
   ASSERT_TRUE(restored);
-  std::tuple<bool, ui::LatencyInfo> needs_repaint;
+  std::tuple<bool, ui::LatencyInfo, base::Optional<ResizeParams>> needs_repaint;
   ViewMsg_WasShown::Read(restored, &needs_repaint);
   EXPECT_TRUE(std::get<0>(needs_repaint));
 }
@@ -1719,18 +1750,32 @@ TEST_F(RenderWidgetHostTest, MultipleInputEvents) {
   EXPECT_TRUE(delegate_->unresponsive_timer_fired());
 }
 
-// Test that the rendering timeout for newly loaded content fires
-// when enough time passes without receiving a new compositor frame.
-TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
+// Test that the rendering timeout for newly loaded content fires when enough
+// time passes without receiving a new compositor frame. This test assumes
+// Surface Synchronization is off.
+TEST_F(RenderWidgetHostTest, NewContentRenderingTimeoutWithoutSurfaceSync) {
+  // If Surface Synchronization is on, we have a separate code path for
+  // cancelling new content rendering timeout that is tested separately.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
+
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
+
+  // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+  std::unique_ptr<viz::MockCompositorFrameSinkClient>
+      mock_compositor_frame_sink_client =
+          std::make_unique<viz::MockCompositorFrameSinkClient>();
+  host_->SetMockRendererCompositorFrameSink(
+      mock_compositor_frame_sink_client.get());
 
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(10));
 
   // Start the timer and immediately send a CompositorFrame with the
   // content_source_id of the new page. The timeout shouldn't fire.
-  host_->StartNewContentRenderingTimeout(5);
+  host_->DidNavigate(5);
   auto frame = viz::CompositorFrameBuilder()
                    .AddDefaultRenderPass()
                    .SetContentSourceId(5)
@@ -1746,7 +1791,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 
   // Start the timer but receive frames only from the old page. The timer
   // should fire.
-  host_->StartNewContentRenderingTimeout(10);
+  host_->DidNavigate(10);
   frame = viz::CompositorFrameBuilder()
               .AddDefaultRenderPass()
               .SetContentSourceId(9)
@@ -1767,7 +1812,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
               .SetContentSourceId(7)
               .Build();
   host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr, 0);
-  host_->StartNewContentRenderingTimeout(7);
+  host_->DidNavigate(7);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1777,7 +1822,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   host_->reset_new_content_rendering_timeout_fired();
 
   // Don't send any frames after the timer starts. The timer should fire.
-  host_->StartNewContentRenderingTimeout(20);
+  host_->DidNavigate(20);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1789,10 +1834,14 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
 // This tests that a compositor frame received with a stale content source ID
 // in its metadata is properly discarded.
 TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
+  // If Surface Synchronization is on, we don't keep track of content_source_id
+  // in CompositorFrameMetadata.
+  if (features::IsSurfaceSynchronizationEnabled())
+    return;
   const viz::LocalSurfaceId local_surface_id(1,
                                              base::UnguessableToken::Create());
 
-  host_->StartNewContentRenderingTimeout(100);
+  host_->DidNavigate(100);
   host_->set_new_content_rendering_delay_for_testing(
       base::TimeDelta::FromMicroseconds(9999));
 
@@ -1803,6 +1852,15 @@ TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
                      .SetBeginFrameAck(viz::BeginFrameAck(0, 1, true))
                      .SetContentSourceId(99)
                      .Build();
+
+    // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+    // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+    std::unique_ptr<viz::MockCompositorFrameSinkClient>
+        mock_compositor_frame_sink_client =
+            std::make_unique<viz::MockCompositorFrameSinkClient>();
+    host_->SetMockRendererCompositorFrameSink(
+        mock_compositor_frame_sink_client.get());
+
     host_->SubmitCompositorFrame(local_surface_id, std::move(frame), nullptr,
                                  0);
     EXPECT_FALSE(
@@ -2887,6 +2945,14 @@ TEST_F(RenderWidgetHostTest, FrameToken_RendererCrash) {
   std::vector<IPC::Message> messages3;
   messages1.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(5));
   messages3.push_back(ViewHostMsg_DidFirstVisuallyNonEmptyPaint(6));
+
+  // Mocking |renderer_compositor_frame_sink_| to prevent crashes in
+  // renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(resources).
+  std::unique_ptr<viz::MockCompositorFrameSinkClient>
+      mock_compositor_frame_sink_client =
+          std::make_unique<viz::MockCompositorFrameSinkClient>();
+  host_->SetMockRendererCompositorFrameSink(
+      mock_compositor_frame_sink_client.get());
 
   // If we don't do this, then RWHI destroys the view in RendererExited and
   // then a crash occurs when we attempt to destroy it again in TearDown().

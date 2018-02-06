@@ -608,7 +608,7 @@ LayoutRect LayoutReplaced::ComputeObjectFit(
       if (object_fit != EObjectFit::kScaleDown ||
           final_rect.Width() <= intrinsic_size.Width())
         break;
-    // fall through
+      FALLTHROUGH;
     case EObjectFit::kNone:
       final_rect.SetSize(intrinsic_size);
       break;
@@ -922,12 +922,6 @@ LayoutRect LayoutReplaced::LocalSelectionRect() const {
                       root.SelectionHeight());
   return LayoutRect(new_logical_top, LayoutUnit(), root.SelectionHeight(),
                     Size().Height());
-}
-
-void IntrinsicSizingInfo::Transpose() {
-  size = size.TransposedSize();
-  aspect_ratio = aspect_ratio.TransposedSize();
-  std::swap(has_width, has_height);
 }
 
 }  // namespace blink

@@ -6,6 +6,7 @@
 #define CustomElement_h
 
 #include "core/CoreExport.h"
+#include "core/dom/CreateElementFlags.h"
 #include "core/dom/Element.h"
 #include "platform/text/Character.h"
 #include "platform/wtf/ASCIICType.h"
@@ -69,12 +70,11 @@ class CORE_EXPORT CustomElement {
 
   static HTMLElement* CreateCustomElementSync(Document&, const QualifiedName&);
   static HTMLElement* CreateCustomElementSync(Document&,
-                                              const AtomicString& local_name,
-                                              CustomElementDefinition*);
-  static HTMLElement* CreateCustomElementSync(Document&,
                                               const QualifiedName&,
                                               CustomElementDefinition*);
-  static HTMLElement* CreateCustomElementAsync(Document&, const QualifiedName&);
+  static HTMLElement* CreateCustomElementAsync(Document&,
+                                               const QualifiedName&,
+                                               CreateElementFlags);
 
   static HTMLElement* CreateFailedElement(Document&, const QualifiedName&);
 

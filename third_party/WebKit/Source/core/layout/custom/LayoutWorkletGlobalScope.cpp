@@ -4,10 +4,15 @@
 
 #include "core/layout/custom/LayoutWorkletGlobalScope.h"
 
+#include "bindings/core/v8/V8ObjectParser.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
+#include "core/CSSPropertyNames.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/layout/custom/CSSLayoutDefinition.h"
+#include "core/layout/custom/DocumentLayoutDefinition.h"
+#include "core/layout/custom/LayoutWorklet.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 
@@ -45,6 +50,115 @@ void LayoutWorkletGlobalScope::Dispose() {
       ScriptController()->GetScriptState());
 
   MainThreadWorkletGlobalScope::Dispose();
+}
+
+// https://drafts.css-houdini.org/css-layout-api/#dom-layoutworkletglobalscope-registerlayout
+void LayoutWorkletGlobalScope::registerLayout(
+    const String& name,
+    const ScriptValue& constructor_value,
+    ExceptionState& exception_state) {
+  if (name.IsEmpty()) {
+    exception_state.ThrowTypeError("The empty string is not a valid name.");
+    return;
+  }
+
+  if (layout_definitions_.Contains(name)) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "A class with name:'" + name + "' is already registered.");
+    return;
+  }
+
+  v8::Local<v8::Context> context = ScriptController()->GetContext();
+
+  DCHECK(constructor_value.V8Value()->IsFunction());
+  v8::Local<v8::Function> constructor =
+      v8::Local<v8::Function>::Cast(constructor_value.V8Value());
+
+  Vector<CSSPropertyID> native_invalidation_properties;
+  Vector<AtomicString> custom_invalidation_properties;
+
+  if (!V8ObjectParser::ParseCSSPropertyList(
+          context, constructor, "inputProperties",
+          &native_invalidation_properties, &custom_invalidation_properties,
+          &exception_state))
+    return;
+
+  Vector<CSSPropertyID> child_native_invalidation_properties;
+  Vector<AtomicString> child_custom_invalidation_properties;
+
+  if (!V8ObjectParser::ParseCSSPropertyList(
+          context, constructor, "childInputProperties",
+          &child_native_invalidation_properties,
+          &child_custom_invalidation_properties, &exception_state))
+    return;
+
+  v8::Local<v8::Object> prototype;
+  if (!V8ObjectParser::ParsePrototype(context, constructor, &prototype,
+                                      &exception_state))
+    return;
+
+  v8::Local<v8::Function> intrinsic_sizes;
+  if (!V8ObjectParser::ParseGeneratorFunction(
+          context, prototype, "intrinsicSizes", &intrinsic_sizes,
+          &exception_state))
+    return;
+
+  v8::Local<v8::Function> layout;
+  if (!V8ObjectParser::ParseGeneratorFunction(context, prototype, "layout",
+                                              &layout, &exception_state))
+    return;
+
+  CSSLayoutDefinition* definition = new CSSLayoutDefinition(
+      ScriptController()->GetScriptState(), constructor, intrinsic_sizes,
+      layout, native_invalidation_properties, custom_invalidation_properties,
+      child_native_invalidation_properties,
+      child_custom_invalidation_properties);
+  layout_definitions_.Set(name, definition);
+
+  LayoutWorklet* layout_worklet =
+      LayoutWorklet::From(*GetFrame()->GetDocument()->domWindow());
+  LayoutWorklet::DocumentDefinitionMap* document_definition_map =
+      layout_worklet->GetDocumentDefinitionMap();
+  if (document_definition_map->Contains(name)) {
+    DocumentLayoutDefinition* existing_document_definition =
+        document_definition_map->at(name);
+    if (existing_document_definition == kInvalidDocumentLayoutDefinition)
+      return;
+    if (!existing_document_definition->RegisterAdditionalLayoutDefinition(
+            *definition)) {
+      document_definition_map->Set(name, kInvalidDocumentLayoutDefinition);
+      exception_state.ThrowDOMException(kNotSupportedError,
+                                        "A class with name:'" + name +
+                                            "' was registered with a "
+                                            "different definition.");
+      return;
+    }
+
+    // TODO(ikilpatrick): Notify the pending layout objects awaiting for this
+    // class to be registered.
+  } else {
+    DocumentLayoutDefinition* document_definition =
+        new DocumentLayoutDefinition(definition);
+    document_definition_map->Set(name, document_definition);
+  }
+}
+
+CSSLayoutDefinition* LayoutWorkletGlobalScope::FindDefinition(
+    const String& name) {
+  return layout_definitions_.at(name);
+}
+
+void LayoutWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+  visitor->Trace(layout_definitions_);
+  MainThreadWorkletGlobalScope::Trace(visitor);
+}
+
+void LayoutWorkletGlobalScope::TraceWrappers(
+    const ScriptWrappableVisitor* visitor) const {
+  for (auto definition : layout_definitions_)
+    visitor->TraceWrappers(definition.value);
+  MainThreadWorkletGlobalScope::TraceWrappers(visitor);
 }
 
 }  // namespace blink

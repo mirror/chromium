@@ -128,11 +128,13 @@ void RemoteFrameView::FrameRectsChanged() {
   // Update the rect to reflect the position of the frame relative to the
   // containing local frame root. The position of the local root within
   // any remote frames, if any, is accounted for by the embedder.
-  IntRect new_rect = frame_rect_;
+  IntRect screen_space_rect = frame_rect_;
 
-  if (LocalFrameView* parent = ParentFrameView())
-    new_rect = parent->ConvertToRootFrame(parent->ContentsToFrame(new_rect));
-  remote_frame_->Client()->FrameRectsChanged(new_rect);
+  if (LocalFrameView* parent = ParentFrameView()) {
+    screen_space_rect =
+        parent->ConvertToRootFrame(parent->ContentsToFrame(screen_space_rect));
+  }
+  remote_frame_->Client()->FrameRectsChanged(frame_rect_, screen_space_rect);
 }
 
 void RemoteFrameView::UpdateGeometry() {
@@ -218,6 +220,25 @@ bool RemoteFrameView::CanThrottleRendering() const {
   if (subtree_throttled_)
     return true;
   return hidden_for_throttling_;
+}
+
+void RemoteFrameView::SetIntrinsicSizeInfo(
+    const IntrinsicSizingInfo& size_info) {
+  intrinsic_sizing_info_ = size_info;
+  has_intrinsic_sizing_info_ = true;
+}
+
+bool RemoteFrameView::GetIntrinsicSizingInfo(
+    IntrinsicSizingInfo& sizing_info) const {
+  if (!has_intrinsic_sizing_info_)
+    return false;
+
+  sizing_info = intrinsic_sizing_info_;
+  return true;
+}
+
+bool RemoteFrameView::HasIntrinsicSizingInfo() const {
+  return has_intrinsic_sizing_info_;
 }
 
 void RemoteFrameView::Trace(blink::Visitor* visitor) {

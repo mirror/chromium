@@ -29,7 +29,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/url_constants.h"
-#include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/render_frame.h"
@@ -381,8 +380,7 @@ void NetErrorHelper::FetchNavigationCorrections(
   correction_fetcher_->Start(
       render_frame()->GetWebFrame(),
       blink::WebURLRequest::kRequestContextInternal,
-      render_frame()->GetURLLoaderFactory(navigation_correction_url),
-      GetNetworkTrafficAnnotationTag(),
+      render_frame()->GetURLLoaderFactory(), GetNetworkTrafficAnnotationTag(),
       base::BindOnce(&NetErrorHelper::OnNavigationCorrectionsFetched,
                      base::Unretained(this)));
 
@@ -406,8 +404,7 @@ void NetErrorHelper::SendTrackingRequest(
   tracking_fetcher_->Start(
       render_frame()->GetWebFrame(),
       blink::WebURLRequest::kRequestContextInternal,
-      render_frame()->GetURLLoaderFactory(tracking_url),
-      GetNetworkTrafficAnnotationTag(),
+      render_frame()->GetURLLoaderFactory(), GetNetworkTrafficAnnotationTag(),
       base::BindOnce(&NetErrorHelper::OnTrackingRequestComplete,
                      base::Unretained(this)));
 }

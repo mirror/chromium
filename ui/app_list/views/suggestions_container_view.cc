@@ -4,6 +4,8 @@
 
 #include "ui/app_list/views/suggestions_container_view.h"
 
+#include <memory>
+
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/views/app_list_main_view.h"
@@ -33,8 +35,9 @@ SuggestionsContainerView::~SuggestionsContainerView() = default;
 int SuggestionsContainerView::DoUpdate() {
   // Ignore updates and disable buttons when suggestions container view is not
   // shown.
-  const AppListModel::State state = contents_view_->GetActiveState();
-  if (state != AppListModel::STATE_START && state != AppListModel::STATE_APPS) {
+  const ash::AppListState state = contents_view_->GetActiveState();
+  if (state != ash::AppListState::kStateStart &&
+      state != ash::AppListState::kStateApps) {
     for (auto* view : search_result_tile_views_)
       view->SetEnabled(false);
 
@@ -62,7 +65,7 @@ int SuggestionsContainerView::DoUpdate() {
     // Notify text change after accessible name is updated and the tile view
     // is re-enabled, so that ChromeVox will announce the updated text.
     search_result_tile_views_[i]->NotifyAccessibilityEvent(
-        ui::AX_EVENT_TEXT_CHANGED, true);
+        ax::mojom::Event::kTextChanged, true);
   }
 
   parent()->Layout();
@@ -87,17 +90,15 @@ int SuggestionsContainerView::GetYSize() {
   return 0;
 }
 
-views::View* SuggestionsContainerView::GetSelectedView() const {
+views::View* SuggestionsContainerView::GetSelectedView() {
   return IsValidSelectionIndex(selected_index())
              ? search_result_tile_views_[selected_index()]
              : nullptr;
 }
 
-views::View* SuggestionsContainerView::GetFirstResultView() {
+SearchResultBaseView* SuggestionsContainerView::GetFirstResultView() {
   return nullptr;
 }
-
-void SuggestionsContainerView::SetFirstResultSelected(bool selected) {}
 
 const char* SuggestionsContainerView::GetClassName() const {
   return "SuggestionsContainerView";

@@ -140,21 +140,9 @@ TEST_F(KeepAliveOperationTest, TestSendsKeepAliveTickleAndReceivesResponse) {
 
 TEST_F(KeepAliveOperationTest, TestCannotConnect) {
   // Simulate the device failing to connect.
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
+  fake_ble_connection_manager_->SimulateUnansweredConnectionAttempts(
       test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(), cryptauth::SecureChannel::Status::CONNECTING);
-  fake_ble_connection_manager_->SetDeviceStatus(
-      test_device_.GetDeviceId(),
-      cryptauth::SecureChannel::Status::DISCONNECTED);
+      MessageTransferOperation::kMaxEmptyScansPerDevice);
 
   // The maximum number of connection failures has occurred.
   EXPECT_TRUE(test_observer_->has_run_callback());

@@ -64,7 +64,7 @@ class PassKitCoordinatorTest : public PlatformTest {
 // Tests that PassKitCoordinator presents PKAddPassesViewController for the
 // valid PKPass object.
 // TODO(crbug.com/804250): this test is flaky.
-TEST_F(PassKitCoordinatorTest, FLAKY_ValidPassKitObject) {
+TEST_F(PassKitCoordinatorTest, ValidPassKitObject) {
   std::string data = testing::GetTestPass();
   NSData* nsdata = [NSData dataWithBytes:data.c_str() length:data.size()];
   PKPass* pass = [[PKPass alloc] initWithData:nsdata error:nil];
@@ -101,7 +101,7 @@ TEST_F(PassKitCoordinatorTest, FLAKY_ValidPassKitObject) {
 
 // Tests presenting multiple valid PKPass objects.
 // TODO(crbug.com/804250): this test is flaky.
-TEST_F(PassKitCoordinatorTest, FLAKY_MultiplePassKitObjects) {
+TEST_F(PassKitCoordinatorTest, MultiplePassKitObjects) {
   if (IsIPadIdiom()) {
     // Wallet app is not supported on iPads.
     return;
@@ -144,6 +144,12 @@ TEST_F(PassKitCoordinatorTest, FLAKY_MultiplePassKitObjects) {
           PresentAddPassesDialogResult::
               kAnotherAddPassesViewControllerIsPresented),
       1);
+
+  // Previously presented view controller can be dismissed.
+  [coordinator_ stop];
+  EXPECT_TRUE(WaitUntilConditionOrTimeout(kWaitForUIElementTimeout, ^{
+    return base_view_controller_.presentedViewController == nil;
+  }));
 }
 
 // Tests presenting valid PKPass object, while another view controller is

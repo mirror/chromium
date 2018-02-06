@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 #define CONTENT_RENDERER_DEVICE_SENSORS_DEVICE_SENSOR_EVENT_PUMP_H_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -137,7 +138,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
     }
 
     // Mojo callback for SensorProvider::GetSensor().
-    void OnSensorCreated(device::mojom::SensorInitParamsPtr params) {
+    void OnSensorCreated(device::mojom::SensorCreationResult result,
+                         device::mojom::SensorInitParamsPtr params) {
       // |sensor_state| can be SensorState::SHOULD_SUSPEND if Stop() is called
       // before OnSensorCreated() is called.
       DCHECK(sensor_state == SensorState::INITIALIZING ||
@@ -148,6 +150,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
         event_pump->DidStartIfPossible();
         return;
       }
+      DCHECK_EQ(device::mojom::SensorCreationResult::SUCCESS, result);
 
       constexpr size_t kReadBufferSize =
           sizeof(device::SensorReadingSharedBuffer);
@@ -176,7 +179,9 @@ class CONTENT_EXPORT DeviceSensorEventPump
       shared_buffer_reader.reset(
           new device::SensorReadingSharedBufferReader(buffer));
 
-      default_config.set_frequency(kDefaultPumpFrequencyHz);
+      default_config.set_frequency(
+          std::min(static_cast<double>(kDefaultPumpFrequencyHz),
+                   params->maximum_frequency));
 
       sensor.set_connection_error_handler(base::BindOnce(
           &SensorEntry::HandleSensorError, base::Unretained(this)));

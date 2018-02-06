@@ -26,6 +26,8 @@
 #include "ui/views/painter.h"
 #include "ui/views/widget/widget.h"
 
+namespace message_center {
+
 namespace {
 
 const SkColor kBorderColor = SkColorSetARGB(0x1F, 0x0, 0x0, 0x0);
@@ -37,8 +39,7 @@ bool sidebar_enabled = false;
 
 // Creates a text for spoken feedback from the data contained in the
 // notification.
-base::string16 CreateAccessibleName(
-    const message_center::Notification& notification) {
+base::string16 CreateAccessibleName(const Notification& notification) {
   if (!notification.accessible_name().empty())
     return notification.accessible_name();
 
@@ -46,10 +47,8 @@ base::string16 CreateAccessibleName(
   std::vector<base::string16> accessible_lines = {
       notification.title(), notification.message(),
       notification.context_message()};
-  std::vector<message_center::NotificationItem> items = notification.items();
-  for (size_t i = 0;
-       i < items.size() && i < message_center::kNotificationMaximumItems;
-       ++i) {
+  std::vector<NotificationItem> items = notification.items();
+  for (size_t i = 0; i < items.size() && i < kNotificationMaximumItems; ++i) {
     accessible_lines.push_back(items[i].title + base::ASCIIToUTF16(" ") +
                                items[i].message);
   }
@@ -60,13 +59,11 @@ bool ShouldRoundMessageViewCorners() {
 #if defined(OS_CHROMEOS)
   return true;
 #else
-  return message_center::IsNewStyleNotificationEnabled();
+  return IsNewStyleNotificationEnabled();
 #endif
 }
 
 }  // namespace
-
-namespace message_center {
 
 // static
 const char MessageView::kViewClassName[] = "MessageView";
@@ -148,9 +145,9 @@ void MessageView::OnContainerAnimationEnded() {
 }
 
 void MessageView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_BUTTON;
+  node_data->role = ax::mojom::Role::kButton;
   node_data->AddStringAttribute(
-      ui::AX_ATTR_ROLE_DESCRIPTION,
+      ax::mojom::StringAttribute::kRoleDescription,
       l10n_util::GetStringUTF8(
           IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME));
   node_data->SetName(accessible_name_);

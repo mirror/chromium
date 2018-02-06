@@ -6,12 +6,10 @@
 
 #include "url/gurl.h"
 
-using std::string;
-
 namespace net {
 
 // static
-string QuicUrlUtilsImpl::HostName(QuicStringPiece url) {
+std::string QuicUrlUtilsImpl::HostName(QuicStringPiece url) {
   return GURL(url).host();
 }
 

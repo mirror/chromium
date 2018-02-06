@@ -93,7 +93,9 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentControll
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetPaddingUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -237,6 +239,8 @@ public class LocationBarLayout extends FrameLayout
 
     private DeferredOnSelectionRunnable mDeferredOnSelection;
 
+    private WebContentsObserver mVoiceSearchWebContentsObserver;
+
     private static abstract class DeferredOnSelectionRunnable implements Runnable {
         protected final OmniboxSuggestion mSuggestion;
         protected final int mPosition;
@@ -260,6 +264,45 @@ public class LocationBarLayout extends FrameLayout
          */
         public boolean shouldLog() {
             return mShouldLog;
+        }
+    }
+
+    /**
+     * Instantiated when a voice search is performed to monitor the web contents for a navigation
+     * to be started so we can notify the render frame that a user gesture has been performed. This
+     * allows autoplay of the voice response for search results.
+     */
+    private final class VoiceSearchWebContentsObserver extends WebContentsObserver {
+        public VoiceSearchWebContentsObserver(WebContents webContents) {
+            super(webContents);
+        }
+
+        /**
+         * Forces the user gesture flag to be set on a render frame if the URL being navigated to
+         * is a SRP.
+         *
+         * @param url The URL for the navigation that started, so we can ensure that what we're
+         * navigating to is actually a SRP.
+         */
+        private void setReceivedUserGesture(String url) {
+            WebContents webContents = mWebContents.get();
+            if (webContents == null) return;
+
+            RenderFrameHost renderFrameHost = webContents.getMainFrame();
+            if (renderFrameHost == null) return;
+            if (TemplateUrlService.getInstance().isSearchResultsPageFromDefaultSearchProvider(
+                        url)) {
+                renderFrameHost.setHasReceivedUserGesture();
+            }
+        }
+
+        @Override
+        public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
+                boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
+                @Nullable Integer pageTransition, int errorCode, String errorDescription,
+                int httpStatusCode) {
+            if (hasCommitted && isInMainFrame && !isErrorPage) setReceivedUserGesture(url);
+            destroy();
         }
     }
 
@@ -450,7 +493,7 @@ public class LocationBarLayout extends FrameLayout
             mSuggestionDefinitionHeight = context.getResources().getDimensionPixelOffset(
                     R.dimen.omnibox_suggestion_definition_height);
 
-            int paddingTop = mBottomSheet != null
+            int paddingTop = useModernDesign()
                     ? 0
                     : context.getResources().getDimensionPixelOffset(
                               R.dimen.omnibox_suggestion_list_padding_top);
@@ -1275,11 +1318,10 @@ public class LocationBarLayout extends FrameLayout
     /**
      * @param provider The {@link ToolbarDataProvider}.
      * @param resources The Resources for the Context.
-     * @param isChromeHomeEnabled Whether Chrome Home is enabled.
      * @return The {@link ColorStateList} to use to tint the security state icon.
      */
     public static ColorStateList getColorStateList(
-            ToolbarDataProvider provider, Resources resources, boolean isChromeHomeEnabled) {
+            ToolbarDataProvider provider, Resources resources) {
         int securityLevel = provider.getSecurityLevel();
 
         ColorStateList list = null;
@@ -1322,8 +1364,7 @@ public class LocationBarLayout extends FrameLayout
         } else {
             // ImageView#setImageResource is no-op if given resource is the current one.
             mSecurityButton.setImageResource(id);
-            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources(),
-                    mBottomSheet != null));
+            mSecurityButton.setTint(getColorStateList(mToolbarDataProvider, getResources()));
         }
 
         updateVerboseStatusVisibility();
@@ -1537,6 +1578,11 @@ public class LocationBarLayout extends FrameLayout
         return mSuggestionList;
     }
 
+    @Override
+    public boolean useModernDesign() {
+        return FeatureUtilities.isChromeModernDesignEnabled();
+    }
+
     /**
      * Initiates the mSuggestionListPopup.  Done on demand to not slow down
      * the initial inflation of the location bar.
@@ -1547,7 +1593,7 @@ public class LocationBarLayout extends FrameLayout
         assert mNativeInitialized || mShowCachedZeroSuggestResults
                 : "Trying to initialize native suggestions list before native init";
         if (mSuggestionList != null) return;
-        mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
+        mSuggestionListAdapter.setUseModernDesign(useModernDesign());
 
         OnLayoutChangeListener suggestionListResizer = new OnLayoutChangeListener() {
             @Override
@@ -1672,7 +1718,7 @@ public class LocationBarLayout extends FrameLayout
     protected Drawable getSuggestionPopupBackground() {
         int omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_BG_COLOR;
         int omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_BG_COLOR;
-        if (mBottomSheet != null) {
+        if (FeatureUtilities.isChromeModernDesignEnabled()) {
             omniboxResultsColorForNonIncognito = OMNIBOX_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
             omniboxResultsColorForIncognito = OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_BG_COLOR;
         }
@@ -1896,6 +1942,7 @@ public class LocationBarLayout extends FrameLayout
             }
 
             startZeroSuggest();
+            RecordUserAction.record("MobileOmniboxDeleteUrl");
             return;
         } else if (!mUrlHasFocus && shouldShowPageInfoForView(v)) {
             if (mToolbarDataProvider.hasTab() && getCurrentTab().getWebContents() != null
@@ -2595,6 +2642,18 @@ public class LocationBarLayout extends FrameLayout
         if (url == null) {
             url = TemplateUrlService.getInstance().getUrlForVoiceSearchQuery(
                     topResultQuery);
+        }
+        // Since voice was used, we need to let the frame know that there was a user gesture.
+        Tab currentTab = getCurrentTab();
+        if (currentTab != null) {
+            if (mVoiceSearchWebContentsObserver != null) {
+                mVoiceSearchWebContentsObserver.destroy();
+                mVoiceSearchWebContentsObserver = null;
+            }
+            if (currentTab.getWebContents() != null) {
+                mVoiceSearchWebContentsObserver =
+                        new VoiceSearchWebContentsObserver(currentTab.getWebContents());
+            }
         }
         loadUrl(url, PageTransition.TYPED);
     }

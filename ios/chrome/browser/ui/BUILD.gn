@@ -295,6 +295,7 @@ source_set("ui_internal") {
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
     "//ios/chrome/browser/app_launcher",
+    "//ios/chrome/browser/autofill:autofill_internal",
     "//ios/chrome/browser/bookmarks",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/download",
@@ -405,14 +406,20 @@ source_set("ui_internal") {
     "//ui/base",
     "//ui/gfx",
     "//url",
+
+    # Fake dependencies to break cycles
+    "//ios/chrome/browser/browsing_data:browsing_data_internal",
+    "//ios/chrome/browser/ui/settings",
   ]
   public_deps = [
     "//ios/chrome/browser/ui/side_swipe",
     "//ios/chrome/browser/ui/toolbar",
   ]
   allow_circular_includes_from = [
+    "//ios/chrome/browser/browsing_data:browsing_data_internal",
     "//ios/chrome/browser/ui/ntp:ntp_internal",
     "//ios/chrome/browser/ui/overscroll_actions",
+    "//ios/chrome/browser/ui/settings",
     "//ios/chrome/browser/ui/stack_view",
     "//ios/chrome/browser/ui/tab_switcher",
     "//ios/chrome/browser/ui/tabs:coordinator",
@@ -537,6 +544,7 @@ source_set("perf_tests") {
     "//ios/chrome/browser/tabs:tabs_internal",
     "//ios/chrome/browser/ui/omnibox:omnibox_internal",
     "//ios/chrome/browser/ui/toolbar",
+    "//ios/chrome/browser/ui/toolbar/clean:toolbar",
     "//ios/chrome/browser/ui/util",
     "//ios/chrome/browser/web_state_list",
     "//ios/chrome/browser/web_state_list:test_support",

@@ -169,8 +169,16 @@ WebServiceWorkerRegistrationImpl::CreateForServiceWorkerClient(
 
 void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerClient(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  if (state_ == LifecycleState::kAttachedAndBound)
+  if (state_ == LifecycleState::kAttachedAndBound) {
+    // |update_via_cache| is handled specifically here as it is the only mutable
+    // property when the browser process sends |info| for an existing
+    // registration. The installing/waiting/active properties are changed by the
+    // SetVersionAttributes method instead.
+    if (info_->options && info->options) {
+      info_->options->update_via_cache = info->options->update_via_cache;
+    }
     return;
+  }
   DCHECK_EQ(LifecycleState::kDetached, state_);
   DCHECK(!info->request.is_pending());
   Attach(std::move(info));
@@ -290,6 +298,11 @@ WebServiceWorkerRegistrationImpl::Proxy() {
 
 blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
   return info_->options->scope;
+}
+
+blink::mojom::ServiceWorkerUpdateViaCache
+WebServiceWorkerRegistrationImpl::UpdateViaCache() const {
+  return info_->options->update_via_cache;
 }
 
 void WebServiceWorkerRegistrationImpl::Update(
@@ -482,11 +495,8 @@ void WebServiceWorkerRegistrationImpl::SetActive(
 }
 
 void WebServiceWorkerRegistrationImpl::RefreshVersionAttributes() {
-  DCHECK(info_->installing);
   SetInstalling(std::move(info_->installing));
-  DCHECK(info_->waiting);
   SetWaiting(std::move(info_->waiting));
-  DCHECK(info_->active);
   SetActive(std::move(info_->active));
 }
 
@@ -514,16 +524,16 @@ void WebServiceWorkerRegistrationImpl::SetVersionAttributes(
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
   ChangedVersionAttributesMask mask(changed_mask);
+  DCHECK(mask.installing_changed() || !installing);
   if (mask.installing_changed()) {
-    DCHECK(installing);
     SetInstalling(std::move(installing));
   }
+  DCHECK(mask.waiting_changed() || !waiting);
   if (mask.waiting_changed()) {
-    DCHECK(waiting);
     SetWaiting(std::move(waiting));
   }
+  DCHECK(mask.active_changed() || !active);
   if (mask.active_changed()) {
-    DCHECK(active);
     SetActive(std::move(active));
   }
 }

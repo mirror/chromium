@@ -224,6 +224,10 @@ void ConversionContext::SwitchToClip(const ClipPaintPropertyNode* target_clip) {
       cc_list_.push<cc::ClipRRectOp>(static_cast<SkRRect>(sub_clip->ClipRect()),
                                      SkClipOp::kIntersect, true);
     }
+    if (sub_clip->ClipPath()) {
+      cc_list_.push<cc::ClipPathOp>(sub_clip->ClipPath()->GetSkPath(),
+                                    SkClipOp::kIntersect, true);
+    }
     cc_list_.EndPaintOfPairedBegin();
 
     // Step 3b: Adjust state and push previous state onto clip stack.
@@ -351,7 +355,8 @@ void ConversionContext::Convert(const Vector<const PaintChunk*>& paint_chunks,
   for (auto chunk_it = paint_chunks.begin(); chunk_it != paint_chunks.end();
        chunk_it++) {
     const PaintChunk& chunk = **chunk_it;
-    const PropertyTreeState& chunk_state = chunk.properties.property_tree_state;
+    const PropertyTreeState& chunk_state =
+        chunk.properties.property_tree_state.GetPropertyTreeState();
     SwitchToEffect(chunk_state.Effect());
     SwitchToClip(chunk_state.Clip());
     bool transformed = chunk_state.Transform() != current_transform_;
@@ -441,7 +446,8 @@ IntRect PaintChunksToCcLayer::MapRectFromChunkToLayer(
     const gfx::Vector2dF& layer_offset) {
   FloatClipRect rect(r);
   GeometryMapper::LocalToAncestorVisualRect(
-      chunk.properties.property_tree_state, layer_state, rect);
+      chunk.properties.property_tree_state.GetPropertyTreeState(), layer_state,
+      rect);
   if (rect.Rect().IsEmpty())
     return IntRect();
 

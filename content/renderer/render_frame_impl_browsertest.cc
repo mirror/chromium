@@ -182,6 +182,7 @@ TEST_F(RenderFrameImplTest, FrameResize) {
   resize_params.top_controls_height = 0.f;
   resize_params.browser_controls_shrink_blink_size = false;
   resize_params.is_fullscreen_granted = false;
+  resize_params.content_source_id = frame_widget()->GetContentSourceId();
 
   ViewMsg_Resize resize_message(0, resize_params);
   frame_widget()->OnMessageReceived(resize_message);
@@ -194,7 +195,7 @@ TEST_F(RenderFrameImplTest, FrameResize) {
 TEST_F(RenderFrameImplTest, FrameWasShown) {
   RenderFrameTestObserver observer(frame());
 
-  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo());
+  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo(), base::nullopt);
   frame_widget()->OnMessageReceived(was_shown_message);
 
   EXPECT_FALSE(frame_widget()->is_hidden());
@@ -224,7 +225,7 @@ TEST_F(RenderFrameImplTest, LocalChildFrameWasShown) {
 
   RenderFrameTestObserver observer(grandchild);
 
-  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo());
+  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo(), base::nullopt);
   frame_widget()->OnMessageReceived(was_shown_message);
 
   EXPECT_FALSE(frame_widget()->is_hidden());
@@ -237,7 +238,7 @@ TEST_F(RenderFrameImplTest, FrameWasShownAfterWidgetClose) {
   ViewMsg_Close close_message(0);
   frame_widget()->OnMessageReceived(close_message);
 
-  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo());
+  ViewMsg_WasShown was_shown_message(0, true, ui::LatencyInfo(), base::nullopt);
   // Test passes if this does not crash.
   static_cast<RenderViewImpl*>(view_)->OnMessageReceived(was_shown_message);
 }

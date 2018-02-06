@@ -34,6 +34,7 @@
 #include "components/printing/browser/print_composite_client.h"
 #include "components/printing/browser/print_manager_utils.h"
 #include "components/printing/common/print_messages.h"
+#include "components/printing/service/public/cpp/pdf_service_mojo_types.h"
 #include "components/printing/service/public/cpp/pdf_service_mojo_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
@@ -333,12 +334,14 @@ void PrintViewManagerBase::OnComposePdfDone(
 }
 
 void PrintViewManagerBase::OnDidPrintDocument(
+    content::RenderFrameHost* render_frame_host,
     const PrintHostMsg_DidPrintDocument_Params& params) {
   PrintedDocument* document = GetDocument(params.document_cookie);
   if (!document)
     return;
 
-  if (!base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
+  const PrintHostMsg_DidPrintContent_Params& content = params.content;
+  if (!base::SharedMemory::IsHandleValid(content.metafile_data_handle)) {
     NOTREACHED() << "invalid memory handle";
     web_contents()->Stop();
     return;
@@ -347,15 +350,18 @@ void PrintViewManagerBase::OnDidPrintDocument(
   auto* client = PrintCompositeClient::FromWebContents(web_contents());
   if (IsOopifEnabled() && !client->for_preview() &&
       document->settings().is_modifiable()) {
-    client->DoComposite(params.metafile_data_handle, params.data_size,
-                        base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
-                                       weak_ptr_factory_.GetWeakPtr(), params));
+    client->DoCompositeDocumentToPdf(
+        params.document_cookie,
+        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
+                     render_frame_host->GetRoutingID()),
+        content.metafile_data_handle, content.data_size, ContentToFrameMap(),
+        base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
+                       weak_ptr_factory_.GetWeakPtr(), params));
     return;
   }
-
-  std::unique_ptr<base::SharedMemory> shared_buf =
-      std::make_unique<base::SharedMemory>(params.metafile_data_handle, true);
-  if (!shared_buf->Map(params.data_size)) {
+  auto shared_buf =
+      std::make_unique<base::SharedMemory>(content.metafile_data_handle, true);
+  if (!shared_buf->Map(content.data_size)) {
     NOTREACHED() << "couldn't map";
     web_contents()->Stop();
     return;
@@ -363,7 +369,7 @@ void PrintViewManagerBase::OnDidPrintDocument(
   scoped_refptr<base::RefCountedBytes> bytes =
       base::MakeRefCounted<base::RefCountedBytes>(
           reinterpret_cast<const unsigned char*>(shared_buf->memory()),
-          params.data_size);
+          content.data_size);
   PrintDocument(document, bytes, params.page_size, params.content_area,
                 params.physical_offsets);
 }
@@ -435,8 +441,16 @@ bool PrintViewManagerBase::OnMessageReceived(
     const IPC::Message& message,
     content::RenderFrameHost* render_frame_host) {
   bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PrintViewManagerBase, message)
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(PrintViewManagerBase, message,
+                                   render_frame_host)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintDocument, OnDidPrintDocument)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  if (handled)
+    return true;
+
+  handled = true;
+  IPC_BEGIN_MESSAGE_MAP(PrintViewManagerBase, message)
     IPC_MESSAGE_HANDLER(PrintHostMsg_ShowInvalidPrinterSettingsError,
                         OnShowInvalidPrinterSettingsError)
     IPC_MESSAGE_UNHANDLED(handled = false)

@@ -311,13 +311,14 @@ void TrayBackgroundView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (LockScreen::IsShown()) {
     int next_id = views::AXAuraObjCache::GetInstance()->GetID(
         static_cast<views::Widget*>(LockScreen::Get()->window()));
-    node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID, next_id);
+    node_data->AddIntAttribute(ax::mojom::IntAttribute::kNextFocusId, next_id);
   }
 
   Shelf* shelf = Shelf::ForWindow(GetWidget()->GetNativeWindow());
   ShelfWidget* shelf_widget = shelf->shelf_widget();
   int previous_id = views::AXAuraObjCache::GetInstance()->GetID(shelf_widget);
-  node_data->AddIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID, previous_id);
+  node_data->AddIntAttribute(ax::mojom::IntAttribute::kPreviousFocusId,
+                             previous_id);
 }
 
 void TrayBackgroundView::ChildPreferredSizeChanged(views::View* child) {
@@ -487,10 +488,12 @@ aura::Window* TrayBackgroundView::GetBubbleWindowContainer() {
       kShellWindowId_SettingBubbleContainer);
 
   // Place the bubble in |container|, or in a window clipped to the work area
-  // in maximize mode, to avoid tray bubble and shelf overlap.
+  // in maximize mode, to avoid tray bubble and shelf overlap when dragging the
+  // bubble from the tray.
   if (Shell::Get()
           ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+          ->IsTabletModeWindowManagerEnabled() &&
+      drag_controller()) {
     if (!clipping_window_.get()) {
       clipping_window_ = std::make_unique<aura::Window>(nullptr);
       clipping_window_->Init(ui::LAYER_NOT_DRAWN);

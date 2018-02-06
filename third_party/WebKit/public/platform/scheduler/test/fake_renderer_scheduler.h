@@ -23,6 +23,7 @@ class FakeRendererScheduler : public RendererScheduler {
   std::unique_ptr<WebThread> CreateMainThread() override;
   scoped_refptr<base::SingleThreadTaskRunner> DefaultTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> CompositorTaskRunner() override;
+  scoped_refptr<base::SingleThreadTaskRunner> InputTaskRunner() override;
   scoped_refptr<SingleThreadIdleTaskRunner> IdleTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner> IPCTaskRunner() override;
   std::unique_ptr<RenderWidgetSchedulingState> NewRenderWidgetSchedulingState()
@@ -40,6 +41,7 @@ class FakeRendererScheduler : public RendererScheduler {
   void DidAnimateForInputOnCompositorThread() override;
   void SetRendererHidden(bool hidden) override;
   void SetRendererBackgrounded(bool backgrounded) override;
+  void SetSchedulerKeepActive(bool keep_active) override;
   std::unique_ptr<RendererPauseHandle> PauseRenderer() override;
 #if defined(OS_ANDROID)
   void PauseTimersForAndroidWebView() override;

@@ -14,13 +14,14 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
+#include "net/base/completion_callback.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/io_buffer.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/proxy_delegate.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_data_stream.h"
-#include "net/base/test_proxy_delegate.h"
 #include "net/cert/ct_policy_status.h"
 #include "net/http/http_request_info.h"
 #include "net/log/net_log_event_type.h"
@@ -28,7 +29,6 @@
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
-#include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_pool_manager.h"
 #include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
@@ -175,6 +175,12 @@ class SpdySessionTest : public PlatformTest {
     DCHECK(!session_);
     session_ =
         ::net::CreateSpdySession(http_session_.get(), key_, log_.bound());
+  }
+
+  void CreateTrustedSpdySession() {
+    DCHECK(!session_);
+    session_ = ::net::CreateTrustedSpdySession(http_session_.get(), key_,
+                                               log_.bound());
   }
 
   void StallSessionSend() {
@@ -379,9 +385,9 @@ class StreamRequestDestroyingCallback : public TestCompletionCallbackBase {
     request_ = std::move(request);
   }
 
-  CompletionCallback MakeCallback() {
-    return base::Bind(&StreamRequestDestroyingCallback::OnComplete,
-                      base::Unretained(this));
+  CompletionOnceCallback MakeCallback() {
+    return base::BindOnce(&StreamRequestDestroyingCallback::OnComplete,
+                          base::Unretained(this));
   }
 
  private:
@@ -869,7 +875,7 @@ TEST_F(SpdySessionTest, CreateStreamAfterGoAway) {
   SpdyStreamRequest stream_request;
   int rv = stream_request.StartRequest(SPDY_REQUEST_RESPONSE_STREAM, session_,
                                        test_url_, MEDIUM, NetLogWithSource(),
-                                       CompletionCallback());
+                                       CompletionOnceCallback());
   EXPECT_THAT(rv, IsError(ERR_FAILED));
 
   EXPECT_TRUE(session_);
@@ -1536,7 +1542,8 @@ TEST_F(SpdySessionTest, CancelPushAfterExpired) {
 
   session_ =
       http_session_->spdy_session_pool()->CreateAvailableSessionFromSocket(
-          key_, std::move(connection), log_.bound());
+          key_, /*is_trusted_proxy=*/false, std::move(connection),
+          log_.bound());
   EXPECT_TRUE(session_);
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
@@ -1644,7 +1651,8 @@ TEST_F(SpdySessionTest, ClaimPushedStreamBeforeExpires) {
 
   session_ =
       http_session_->spdy_session_pool()->CreateAvailableSessionFromSocket(
-          key_, std::move(connection), log_.bound());
+          key_, /*is_trusted_proxy=*/false, std::move(connection),
+          log_.bound());
   EXPECT_TRUE(session_);
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
@@ -5304,16 +5312,10 @@ TEST_F(SpdySessionTest, TrustedSpdyProxy) {
   SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
-  auto proxy_delegate = std::make_unique<TestProxyDelegate>();
-  proxy_delegate->set_trusted_spdy_proxy(
-      net::ProxyServer(net::ProxyServer::SCHEME_HTTPS,
-                       HostPortPair(GURL(kDefaultUrl).host(), 443)));
-  session_deps_.proxy_delegate = std::move(proxy_delegate);
-
   AddSSLSocketData();
 
   CreateNetworkSession();
-  CreateSpdySession();
+  CreateTrustedSpdySession();
 
   base::WeakPtr<SpdyStream> spdy_stream =
       CreateStreamSynchronously(SPDY_REQUEST_RESPONSE_STREAM, session_,
@@ -5776,6 +5778,121 @@ TEST_F(SpdySessionTest, RejectInvalidUnknownFrames) {
   EXPECT_TRUE(OnUnknownFrame(2, 0));
   // Server id exceeding last accepted id.
   EXPECT_FALSE(OnUnknownFrame(8, 0));
+}
+
+TEST_F(SpdySessionTest, EnableWebsocket) {
+  SettingsMap settings_map;
+  settings_map[SETTINGS_ENABLE_CONNECT_PROTOCOL] = 1;
+  SpdySerializedFrame settings(spdy_util_.ConstructSpdySettings(settings_map));
+  MockRead reads[] = {CreateMockRead(settings, 0),
+                      MockRead(ASYNC, ERR_IO_PENDING, 2),
+                      MockRead(ASYNC, 0, 3)};
+
+  SpdySerializedFrame ack(spdy_util_.ConstructSpdySettingsAck());
+  MockWrite writes[] = {CreateMockWrite(ack, 1)};
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSpdySession();
+
+  EXPECT_FALSE(session_->support_websocket());
+
+  // Read SETTINGS frame.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(session_->support_websocket());
+
+  // Read EOF.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(data.AllWriteDataConsumed());
+  EXPECT_TRUE(data.AllReadDataConsumed());
+  EXPECT_FALSE(session_);
+}
+
+TEST_F(SpdySessionTest, DisableWebsocketDoesNothing) {
+  SettingsMap settings_map;
+  settings_map[SETTINGS_ENABLE_CONNECT_PROTOCOL] = 0;
+  SpdySerializedFrame settings(spdy_util_.ConstructSpdySettings(settings_map));
+  MockRead reads[] = {CreateMockRead(settings, 0),
+                      MockRead(ASYNC, ERR_IO_PENDING, 2),
+                      MockRead(ASYNC, 0, 3)};
+
+  SpdySerializedFrame ack(spdy_util_.ConstructSpdySettingsAck());
+  MockWrite writes[] = {CreateMockWrite(ack, 1)};
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSpdySession();
+
+  EXPECT_FALSE(session_->support_websocket());
+
+  // Read SETTINGS frame.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(session_->support_websocket());
+
+  // Read EOF.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(data.AllWriteDataConsumed());
+  EXPECT_TRUE(data.AllReadDataConsumed());
+  EXPECT_FALSE(session_);
+}
+
+TEST_F(SpdySessionTest, EnableWebsocketThenDisableIsProtocolError) {
+  SettingsMap settings_map1;
+  settings_map1[SETTINGS_ENABLE_CONNECT_PROTOCOL] = 1;
+  SpdySerializedFrame settings1(
+      spdy_util_.ConstructSpdySettings(settings_map1));
+  SettingsMap settings_map2;
+  settings_map2[SETTINGS_ENABLE_CONNECT_PROTOCOL] = 0;
+  SpdySerializedFrame settings2(
+      spdy_util_.ConstructSpdySettings(settings_map2));
+  MockRead reads[] = {CreateMockRead(settings1, 0),
+                      MockRead(ASYNC, ERR_IO_PENDING, 2),
+                      CreateMockRead(settings2, 3)};
+
+  SpdySerializedFrame ack1(spdy_util_.ConstructSpdySettingsAck());
+  SpdySerializedFrame ack2(spdy_util_.ConstructSpdySettingsAck());
+  SpdySerializedFrame goaway(spdy_util_.ConstructSpdyGoAway(
+      0, ERROR_CODE_PROTOCOL_ERROR,
+      "Invalid value for SETTINGS_ENABLE_CONNECT_PROTOCOL."));
+  MockWrite writes[] = {CreateMockWrite(ack1, 1), CreateMockWrite(ack2, 4),
+                        CreateMockWrite(goaway, 5)};
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSpdySession();
+
+  EXPECT_FALSE(session_->support_websocket());
+
+  // Read first SETTINGS frame.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(session_->support_websocket());
+
+  // Read second SETTINGS frame.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(data.AllWriteDataConsumed());
+  EXPECT_TRUE(data.AllReadDataConsumed());
+  EXPECT_FALSE(session_);
 }
 
 enum ReadIfReadySupport {

@@ -537,10 +537,18 @@ cr.define('print_preview', function() {
     }
 
     /**
+     * @return {boolean} Whether the destination is offline or has an invalid
+     *     certificate.
+     */
+    get isOfflineOrInvalid() {
+      return this.isOffline || this.shouldShowInvalidCertificateError;
+    }
+
+    /**
      * @return {string} Human readable status for a destination that is offline
      *     or has a bad certificate. */
     get connectionStatusText() {
-      if (!this.isOffline && !this.shouldShowInvalidCertificateError)
+      if (!this.isOfflineOrInvalid)
         return '';
       const offlineDurationMs = Date.now() - this.lastAccessTime_;
       let statusMessageId;
@@ -781,7 +789,6 @@ cr.define('print_preview', function() {
     LOCAL_2X: 'images/2x/printer.png',
     MOBILE: 'images/mobile.png',
     MOBILE_SHARED: 'images/mobile_shared.png',
-    THIRD_PARTY: 'images/third_party.png',
     PDF: 'images/pdf.png',
     DOCS: 'images/google_doc.png',
     ENTERPRISE: 'images/business.svg'

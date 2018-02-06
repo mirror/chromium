@@ -31,25 +31,12 @@ SafeSeedManager::SafeSeedManager(bool did_previous_session_exit_cleanly,
     local_state->SetInteger(prefs::kVariationsCrashStreak, num_crashes);
   }
 
-  // After three failures in a row -- either consistent crashes or consistent
-  // failures to fetch the seed -- assume that the current seed is bad, and fall
-  // back to the safe seed. However, ignore any number of failures if the
-  // --force-fieldtrials flag is set, as this flag is only used by developers,
-  // and there's no need to make the development process flakier.
-  const int kMaxFailuresBeforeRevertingToSafeSeed = 3;
-  int num_failures_to_fetch =
+  int num_failed_fetches =
       local_state->GetInteger(prefs::kVariationsFailedToFetchSeedStreak);
-  bool fall_back_to_safe_mode =
-      (num_crashes >= kMaxFailuresBeforeRevertingToSafeSeed ||
-       num_failures_to_fetch >= kMaxFailuresBeforeRevertingToSafeSeed) &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          ::switches::kForceFieldTrials);
-  UMA_HISTOGRAM_BOOLEAN("Variations.SafeMode.FellBackToSafeMode",
-                        fall_back_to_safe_mode);
   base::UmaHistogramSparse("Variations.SafeMode.Streak.Crashes",
                            base::ClampToRange(num_crashes, 0, 100));
   base::UmaHistogramSparse("Variations.SafeMode.Streak.FetchFailures",
-                           base::ClampToRange(num_failures_to_fetch, 0, 100));
+                           base::ClampToRange(num_failed_fetches, 0, 100));
 }
 
 SafeSeedManager::~SafeSeedManager() = default;
@@ -61,15 +48,31 @@ void SafeSeedManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kVariationsFailedToFetchSeedStreak, 0);
 }
 
+bool SafeSeedManager::ShouldRunInSafeMode() const {
+  // Ignore any number of failures if the --force-fieldtrials flag is set. This
+  // flag is only used by developers, and there's no need to make the
+  // development process flakier.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kForceFieldTrials)) {
+    return false;
+  }
+
+  // TODO(isherman): Choose reasonable thresholds for the crash and fetch
+  // failure streaks, and return true or false based on those.
+  return false;
+}
+
 void SafeSeedManager::SetActiveSeedState(
     const std::string& seed_data,
     const std::string& base64_seed_signature,
-    std::unique_ptr<ClientFilterableState> client_filterable_state) {
+    std::unique_ptr<ClientFilterableState> client_filterable_state,
+    base::Time seed_fetch_time) {
   DCHECK(!has_set_active_seed_state_);
   has_set_active_seed_state_ = true;
 
   active_seed_state_ = std::make_unique<ActiveSeedState>(
-      seed_data, base64_seed_signature, std::move(client_filterable_state));
+      seed_data, base64_seed_signature, std::move(client_filterable_state),
+      seed_fetch_time);
 }
 
 void SafeSeedManager::RecordFetchStarted() {
@@ -89,11 +92,10 @@ void SafeSeedManager::RecordSuccessfulFetch(VariationsSeedStore* seed_store) {
   // even if running in safe mode, as the saved seed in that case will just be
   // the existing safe seed.
   if (active_seed_state_) {
-    // TODO(isherman): As an optimization, skip writing the seed if we're
-    // already running in safe mode.
     seed_store->StoreSafeSeed(active_seed_state_->seed_data,
                               active_seed_state_->base64_seed_signature,
-                              *active_seed_state_->client_filterable_state);
+                              *active_seed_state_->client_filterable_state,
+                              active_seed_state_->seed_fetch_time);
 
     // The active seed state is only needed for the first time this code path is
     // reached, so free up its memory once the data is no longer needed.
@@ -111,10 +113,12 @@ void SafeSeedManager::RecordSuccessfulFetch(VariationsSeedStore* seed_store) {
 SafeSeedManager::ActiveSeedState::ActiveSeedState(
     const std::string& seed_data,
     const std::string& base64_seed_signature,
-    std::unique_ptr<ClientFilterableState> client_filterable_state)
+    std::unique_ptr<ClientFilterableState> client_filterable_state,
+    base::Time seed_fetch_time)
     : seed_data(seed_data),
       base64_seed_signature(base64_seed_signature),
-      client_filterable_state(std::move(client_filterable_state)) {}
+      client_filterable_state(std::move(client_filterable_state)),
+      seed_fetch_time(seed_fetch_time) {}
 
 SafeSeedManager::ActiveSeedState::~ActiveSeedState() = default;
 

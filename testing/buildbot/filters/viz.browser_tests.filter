@@ -5,8 +5,14 @@
 -AppWindowApiTest.OnBoundsChangedEvent
 -ForceMaximizeOnFirstRunTest.*TwoRuns
 -ForceMaximizePolicyFalseTest.GeneralFirstRun
+-SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_AllowCreatingNewWindows
+-SafeBrowsingTriggeredPopupBlockerBrowserTest.NoFeature_NoMessages
 -ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus0
 -ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus1
+
+# viz::HostFrameSinkManager::CreateCompositorFrameSinkSupport crash.
+# http://crbug.com/807465
+-ArcAccessibilityHelperBridgeBrowserTest.PreferenceChange
 
 # PictureLayerTilingSet::ComputeSkewport crash crbug.com/796594
 -LoginFeedbackTest.Basic
@@ -18,14 +24,23 @@
 # Tab Capture is still in development: crbug.com/754864
 -CastStreamingApiTestWithPixelOutput.EndToEnd
 -ChromeScreenshotGrabberBrowserTest.TakeScreenshot
+-PluginPowerSaverBrowserTest.PosterTests
+-PluginPowerSaverBrowserTest.SmallCrossOrigin
+-PluginPowerSaverBrowserTest.SmallerThanPlayIcon
 -TabCaptureApiPixelTest.EndToEndThroughWebRTC
 -TabCaptureApiPixelTest.EndToEndWithoutRemoting
 -TabCaptureApiPixelTest.OffscreenTabEndToEnd
 -TabCaptureApiPixelTest.OffscreenTabEvilTests
+-ThumbnailTest.ShouldCaptureOnNavigatingAwayExplicitWait
+-ThumbnailTest.ShouldCaptureOnNavigatingAwaySlowPageLoad
 
 # WaitForChildFrameSurfaceReady crashes crbug.com/787945
+-PDFExtensionTest.ContextMenuCoordinates
 -WebViewTests/WebViewTest.InterstitialPageFocusedWidget/1
 -WebViewTests/WebViewTest.ReloadAfterCrash/1
+
+# Flaky timeouts. http://crbug.com/807773
+-PDFExtensionClipboardTest.*
 
 # WebViewBrowserTest::ScrollWaiter Doesn't Work in Viz crbug.com/796336
 -WebViewScrollBubbling/WebViewGuestScrollTouchTest.TestGuestGestureScrollsBubble/0
@@ -42,3 +57,54 @@
 
 # Windows only failures
 -ExtensionApiTabTest.TabsOnUpdated
+
+# Individual test failure, Windows only
+-CloudPrintPolicyTest.NormalPassedFlag
+-PolicyMakeDefaultBrowserTest.MakeDefaultDisabled
+
+# Mac failures to triage
+-ActivityLogApiTest.TriggerEvent
+-AllUrlsApiTest.WhitelistedExtension
+-DNSErrorPageTest.DNSError_GoBack2Forward2
+-DeclarativeNetRequestBrowserTest.BlockRequests_UrlFilter/0
+-DeclarativeNetRequestBrowserTest.BlockRequests_UrlFilter/1
+-DeclarativeNetRequestBrowserTest.RedirectPriority/0
+-DeclarativeNetRequestBrowserTest.RedirectPriority/1
+-DeclarativeNetRequestResourceTypeBrowserTest.Test1/0
+-DeclarativeNetRequestResourceTypeBrowserTest.Test1/1
+-DeclarativeNetRequestResourceTypeBrowserTest.Test2/0
+-DevToolsFrontendInWebRequestApiTest.HiddenRequests
+-ExtensionApiNewTabTest.Tabs
+-ExtensionApiTabTest.TabEvents
+-ExtensionApiTabTest.Tabs2
+-ExtensionTabUtilBrowserTest.OpenExtensionsOptionsPage
+-ExtensionTabUtilBrowserTest.OpenSplitModeExtensionOptionsPageIncognito
+-ExtensionWebRequestApiTest.WebRequestBlocking
+-ExtensionWebRequestApiTest.WebRequestSimple
+-HardwareAccelerationModePolicyTest.HardwareAccelerationDisabled
+-HostedAppProcessModelTest.PopupsInsideHostedApp/0
+-HostedAppProcessModelTest.PopupsInsideHostedApp/1
+-IsolatedAppTest.IsolatedAppProcessModel
+-LocalNTPDoodleTest.ShouldNotMoveFakeboxForIframeSizes
+-PluginPowerSaverBrowserTest.BackgroundTabPlugins
+-PluginPowerSaverBrowserTest.BackgroundTabTinyPlugins
+-PluginPowerSaverBrowserTest.BlockTinyPlugins
+-PluginPowerSaverBrowserTest.EssentialPlugins
+-PluginPowerSaverBrowserTest.ExpandingSmallPlugin
+-PluginPowerSaverBrowserTest.ExpandingTinyPlugins
+-PluginPowerSaverBrowserTest.LargePostersNotThrottled
+-PluginPowerSaverBrowserTest.OriginWhitelisting
+-PluginPowerSaverBrowserTest.RunAllFlashInAllowMode
+-PluginPowerSaverBrowserTest.ZoomIndependent
+-SSLClientCertificateSelectorCocoaTest.WorkaroundCrashySierra
+-SSLUIWorkerFetchTest.MixedContentSettings/0
+-SSLUIWorkerFetchTest.MixedContentSettings/1
+-SSLUIWorkerFetchTest.MixedContentSettingsWithBlockingCSP/0
+-SSLUIWorkerFetchTest.MixedContentSettingsWithBlockingCSP/1
+-SSLUIWorkerFetchTest.MixedContentSubFrame/0
+-SSLUIWorkerFetchTest.MixedContentSubFrame/1
+-ServiceWorkerTestWithJSBindings/ServiceWorkerTest.ServiceWorkerSuspensionOnExtensionUnload/0
+-ServiceWorkerTestWithNativeBindings/ServiceWorkerTest.ServiceWorkerSuspensionOnExtensionUnload/0
+-TabManagerTest.DiscardTabsWithMinimizedAndOccludedWindows
+-ThumbnailTest.ShouldContainProperContentIfCapturedOnNavigatingAway
+-ThumbnailTest.ShouldContainProperContentIfCapturedOnTabSwitch

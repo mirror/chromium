@@ -58,6 +58,8 @@ static_library("vr_common") {
     "elements/exit_prompt_texture.h",
     "elements/full_screen_rect.cc",
     "elements/full_screen_rect.h",
+    "elements/gltf_controller.cc",
+    "elements/gltf_controller.h",
     "elements/invisible_hit_target.cc",
     "elements/invisible_hit_target.h",
     "elements/keyboard.cc",
@@ -135,6 +137,7 @@ static_library("vr_common") {
     "model/assets.cc",
     "model/assets.h",
     "model/camera_model.h",
+    "model/capturing_state_model.h",
     "model/color_scheme.cc",
     "model/color_scheme.h",
     "model/controller_model.cc",
@@ -143,9 +146,9 @@ static_library("vr_common") {
     "model/modal_prompt_type.h",
     "model/model.cc",
     "model/model.h",
+    "model/native_ui_model.h",
     "model/omnibox_suggestions.cc",
     "model/omnibox_suggestions.h",
-    "model/permissions_model.h",
     "model/reticle_model.h",
     "model/speech_recognition_model.h",
     "model/text_input_info.cc",
@@ -204,8 +207,6 @@ static_library("vr_common") {
     "ui_unsupported_mode.h",
     "vr_gl_util.cc",
     "vr_gl_util.h",
-    "web_contents_event_forwarder.cc",
-    "web_contents_event_forwarder.h",
   ]
 
   public_deps = [
@@ -233,8 +234,8 @@ static_library("vr_common") {
     "//components/vector_icons",
     "//content/public/browser",
     "//content/public/common",
-    "//device/vr:mojo_bindings",
-    "//device/vr:vr",
+    "//device/vr",
+    "//device/vr/public/mojom",
     "//net",
     "//skia",
     "//ui/base",
@@ -246,6 +247,7 @@ static_library("vr_common") {
 test("vr_common_unittests") {
   sources = [
     "animation_player_unittest.cc",
+    "content_element_unittest.cc",
     "databinding/binding_unittest.cc",
     "databinding/vector_binding_unittest.cc",
     "elements/button_unittest.cc",
@@ -356,8 +358,12 @@ source_set("vr_test_support") {
     "test/mock_browser_ui_interface.h",
     "test/mock_content_input_delegate.cc",
     "test/mock_content_input_delegate.h",
+    "test/mock_keyboard_delegate.cc",
+    "test/mock_keyboard_delegate.h",
     "test/mock_render_text.cc",
     "test/mock_render_text.h",
+    "test/mock_text_input_delegate.cc",
+    "test/mock_text_input_delegate.h",
     "test/mock_ui_browser_interface.cc",
     "test/mock_ui_browser_interface.h",
     "test/vr_test_suite.cc",
@@ -381,7 +387,7 @@ source_set("vr_test_support") {
     "//mojo/edk/system",
     "//skia",
     "//testing/gtest",
-    "//ui/accessibility:ax_gen",
+    "//ui/accessibility:ax_enums_mojo",
     "//ui/gfx:test_support",
 
     # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.

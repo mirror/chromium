@@ -337,12 +337,6 @@
       <structure name="IDR_SETTINGS_CLEAR_BROWSING_DATA_DIALOG_JS"
                  file="clear_browsing_data_dialog/clear_browsing_data_dialog.js"
                  type="chrome_html" />
-      <structure name="IDR_SETTINGS_CLEAR_BROWSING_DATA_DIALOG_TABS_HTML"
-                 file="clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html"
-                 type="chrome_html" />
-      <structure name="IDR_SETTINGS_CLEAR_BROWSING_DATA_DIALOG_TABS_JS"
-                 file="clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js"
-                 type="chrome_html" />
       <structure name="IDR_SETTINGS_HISTORY_DELETION_DIALOG_HTML"
                  file="clear_browsing_data_dialog/history_deletion_dialog.html"
                  type="chrome_html" />
@@ -707,6 +701,12 @@
                  preprocess="true"
                  allowexternalscript="true" />
       <if expr="not chromeos">
+        <structure name="IDR_SETTINGS_PEOPLE_PAGE_SYNC_ACCOUNT_CONTROL_HTML"
+                   file="people_page/sync_account_control.html"
+                   type="chrome_html" />
+        <structure name="IDR_SETTINGS_PEOPLE_PAGE_SYNC_ACCOUNT_CONTROL_JS"
+                   file="people_page/sync_account_control.js"
+                   type="chrome_html" />
         <structure name="IDR_SETTINGS_PEOPLE_PAGE_IMPORT_DATA_DIALOG_HTML"
                    file="people_page/import_data_dialog.html"
                    type="chrome_html" />

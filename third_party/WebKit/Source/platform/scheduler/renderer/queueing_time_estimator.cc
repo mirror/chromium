@@ -16,8 +16,8 @@ namespace scheduler {
 namespace {
 
 #define FRAME_STATUS_PREFIX \
-  "RendererScheduler.ExpectedQueueingTimeByFrameStatus."
-#define TASK_QUEUE_PREFIX "RendererScheduler.ExpectedQueueingTimeByTaskQueue."
+  "RendererScheduler.ExpectedQueueingTimeByFrameStatus2."
+#define TASK_QUEUE_PREFIX "RendererScheduler.ExpectedQueueingTimeByTaskQueue2."
 
 // On Windows, when a computer sleeps, we may end up getting extremely long
 // tasks or idling. We'll ignore tasks longer than |kInvalidPeriodThreshold|.
@@ -123,7 +123,7 @@ const char* QueueingTimeEstimator::Calculator::GetReportingMessageFromQueueType(
     case MainThreadTaskQueue::QueueType::kDefaultTimer:
     case MainThreadTaskQueue::QueueType::kIdle:
     case MainThreadTaskQueue::QueueType::kTest:
-    case MainThreadTaskQueue::QueueType::kFrameLoading_kControl:
+    case MainThreadTaskQueue::QueueType::kFrameLoadingControl:
     case MainThreadTaskQueue::QueueType::kFrameDeferrable:
     case MainThreadTaskQueue::QueueType::kFrameUnpausable:
     case MainThreadTaskQueue::QueueType::kV8:

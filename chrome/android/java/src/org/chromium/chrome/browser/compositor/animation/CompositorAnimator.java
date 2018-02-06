@@ -10,6 +10,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
 
@@ -37,7 +38,7 @@ public class CompositorAnimator extends Animator {
     private final WeakReference<CompositorAnimationHandler> mHandler;
 
     /** The list of listeners for events through the life of an animation. */
-    private final ArrayList<AnimatorListener> mListeners = new ArrayList<>();
+    private final ObserverList<AnimatorListener> mListeners = new ObserverList<>();
 
     /** The list of frame update listeners for this animation. */
     private final ArrayList<AnimatorUpdateListener> mAnimatorUpdateListeners = new ArrayList<>();
@@ -122,12 +123,8 @@ public class CompositorAnimator extends Animator {
         CompositorAnimator animator = new CompositorAnimator(handler);
         animator.setValues(startValue, endValue);
         animator.setDuration(durationMs);
-        animator.addUpdateListener(new AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(CompositorAnimator animator) {
-                property.setValue(target, animator.getAnimatedValue());
-            }
-        });
+        animator.addUpdateListener(
+                (CompositorAnimator a) -> property.setValue(target, a.getAnimatedValue()));
         return animator;
     }
 
@@ -205,13 +202,6 @@ public class CompositorAnimator extends Animator {
     }
 
     /**
-     * @param listener The listener to remove.
-     */
-    public void removeUpdateListener(AnimatorUpdateListener listener) {
-        mAnimatorUpdateListeners.remove(listener);
-    }
-
-    /**
      * @return Whether or not the animation has ended after being started. If the animation is
      *         started after ending, this value will be reset to true.
      */
@@ -240,12 +230,12 @@ public class CompositorAnimator extends Animator {
 
     @Override
     public void addListener(AnimatorListener listener) {
-        mListeners.add(listener);
+        mListeners.addObserver(listener);
     }
 
     @Override
     public void removeListener(AnimatorListener listener) {
-        mListeners.remove(listener);
+        mListeners.removeObserver(listener);
     }
 
     @Override
@@ -255,6 +245,7 @@ public class CompositorAnimator extends Animator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void start() {
         if (mAnimationState != AnimationState.ENDED) return;
 
@@ -265,11 +256,11 @@ public class CompositorAnimator extends Animator {
         if (handler != null) handler.registerAndStartAnimator(this);
         mTimeSinceStartMs = 0;
 
-        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
-        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationStart(this);
+        for (AnimatorListener listener : mListeners) listener.onAnimationStart(this);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void cancel() {
         if (mAnimationState == AnimationState.ENDED) return;
 
@@ -277,13 +268,13 @@ public class CompositorAnimator extends Animator {
 
         super.cancel();
 
-        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
-        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationCancel(this);
+        for (AnimatorListener listener : mListeners) listener.onAnimationCancel(this);
 
         end();
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void end() {
         if (mAnimationState == AnimationState.ENDED) return;
 
@@ -294,13 +285,12 @@ public class CompositorAnimator extends Animator {
         // If the animation was ended early but not canceled, push one last update to the listeners.
         if (!mDidUpdateToCompletion && !wasCanceled) {
             mAnimatedFraction = 1f;
-            ArrayList<AnimatorUpdateListener> clonedList =
-                    (ArrayList<AnimatorUpdateListener>) mAnimatorUpdateListeners.clone();
-            for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationUpdate(this);
+            for (AnimatorUpdateListener listener : mAnimatorUpdateListeners) {
+                listener.onAnimationUpdate(this);
+            }
         }
 
-        ArrayList<AnimatorListener> clonedList = (ArrayList<AnimatorListener>) mListeners.clone();
-        for (int i = 0; i < clonedList.size(); i++) clonedList.get(i).onAnimationEnd(this);
+        for (AnimatorListener listener : mListeners) listener.onAnimationEnd(this);
     }
 
     @Override

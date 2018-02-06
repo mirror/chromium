@@ -4,7 +4,6 @@
 
 package org.chromium.content.browser;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -15,7 +14,6 @@ import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewStructure;
 import android.view.accessibility.AccessibilityNodeProvider;
 import android.view.inputmethod.EditorInfo;
@@ -23,7 +21,9 @@ import android.view.inputmethod.InputConnection;
 import android.widget.FrameLayout;
 
 import org.chromium.base.TraceEvent;
+import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.ImeAdapter;
+import org.chromium.content_public.browser.WebContentsAccessibility;
 import org.chromium.ui.base.EventForwarder;
 
 /**
@@ -83,13 +83,15 @@ public class ContentView extends FrameLayout
         mContentViewCore = cvc;
     }
 
+    protected WebContentsAccessibility getWebContentsAccessibility() {
+        return WebContentsAccessibility.fromWebContents(mContentViewCore.getWebContents());
+    }
+
     @Override
     public boolean performAccessibilityAction(int action, Bundle arguments) {
-        if (mContentViewCore.supportsAccessibilityAction(action)) {
-            return mContentViewCore.performAccessibilityAction(action, arguments);
-        }
-
-        return super.performAccessibilityAction(action, arguments);
+        WebContentsAccessibility wcax = getWebContentsAccessibility();
+        return wcax.supportsAction(action) ? wcax.performAction(action, arguments)
+                                           : super.performAccessibilityAction(action, arguments);
     }
 
     /**
@@ -115,12 +117,9 @@ public class ContentView extends FrameLayout
 
     @Override
     public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        AccessibilityNodeProvider provider = mContentViewCore.getAccessibilityNodeProvider();
-        if (provider != null) {
-            return provider;
-        } else {
-            return super.getAccessibilityNodeProvider();
-        }
+        AccessibilityNodeProvider provider =
+                getWebContentsAccessibility().getAccessibilityNodeProvider();
+        return (provider != null) ? provider : super.getAccessibilityNodeProvider();
     }
 
     // Needed by ContentViewCore.InternalAccessDelegate
@@ -131,13 +130,14 @@ public class ContentView extends FrameLayout
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        return ImeAdapter.fromWebContents(mContentViewCore.getWebContents())
-                .onCreateInputConnection(outAttrs);
+        if (getWebContents() == null) return null;
+        return ImeAdapter.fromWebContents(getWebContents()).onCreateInputConnection(outAttrs);
     }
 
     @Override
     public boolean onCheckIsTextEditor() {
-        return ImeAdapter.fromWebContents(mContentViewCore.getWebContents()).onCheckIsTextEditor();
+        if (getWebContents() == null) return false;
+        return ImeAdapter.fromWebContents(getWebContents()).onCheckIsTextEditor();
     }
 
     @Override
@@ -176,7 +176,6 @@ public class ContentView extends FrameLayout
         return getEventForwarder().onDragEvent(event, this);
     }
 
-    @SuppressLint("ClickableViewAccessibility") // TODO(crbug.com/799070): Fix this.
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return getEventForwarder().onTouchEvent(event);
@@ -190,13 +189,17 @@ public class ContentView extends FrameLayout
     @Override
     public boolean onHoverEvent(MotionEvent event) {
         boolean consumed = getEventForwarder().onHoverEvent(event);
-        if (!mContentViewCore.isTouchExplorationEnabled()) super.onHoverEvent(event);
+        if (!getWebContentsAccessibility().isTouchExplorationEnabled()) super.onHoverEvent(event);
         return consumed;
     }
 
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         return mContentViewCore.onGenericMotionEvent(event);
+    }
+
+    private WebContentsImpl getWebContents() {
+        return (WebContentsImpl) mContentViewCore.getWebContents();
     }
 
     private EventForwarder getEventForwarder() {
@@ -335,7 +338,7 @@ public class ContentView extends FrameLayout
 
         @Override
         public void onProvideVirtualStructure(final ViewStructure structure) {
-            mContentViewCore.onProvideVirtualStructure(structure, false);
+            getWebContentsAccessibility().onProvideVirtualStructure(structure, false);
         }
     }
 }

@@ -37,6 +37,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/network_throttle_manager.h"
 #include "net/base/proxy_delegate.h"
+#include "net/base/proxy_server.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/test_proxy_delegate.h"
@@ -51,7 +52,6 @@
 #include "net/http/http_auth_handler_mock.h"
 #include "net/http/http_auth_handler_ntlm.h"
 #include "net/http/http_auth_scheme.h"
-#include "net/http/http_basic_state.h"
 #include "net/http/http_basic_stream.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_network_session_peer.h"
@@ -60,7 +60,6 @@
 #include "net/http/http_server_properties_impl.h"
 #include "net/http/http_stream.h"
 #include "net/http/http_stream_factory.h"
-#include "net/http/http_stream_parser.h"
 #include "net/http/http_transaction_test_util.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_event_type.h"
@@ -68,13 +67,12 @@
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
-#include "net/proxy/mock_proxy_resolver.h"
-#include "net/proxy/proxy_config_service_fixed.h"
-#include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_resolver.h"
-#include "net/proxy/proxy_resolver_factory.h"
-#include "net/proxy/proxy_server.h"
-#include "net/proxy/proxy_service.h"
+#include "net/proxy_resolution/mock_proxy_resolver.h"
+#include "net/proxy_resolution/proxy_config_service_fixed.h"
+#include "net/proxy_resolution/proxy_info.h"
+#include "net/proxy_resolution/proxy_resolver.h"
+#include "net/proxy_resolution/proxy_resolver_factory.h"
+#include "net/proxy_resolution/proxy_service.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_manager.h"
@@ -100,6 +98,7 @@
 #include "net/test/test_data_directory.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
+#include "net/websockets/websocket_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -352,14 +351,6 @@ void TestLoadTimingNotReusedWithPac(const LoadTimingInfo& load_timing_info,
   EXPECT_TRUE(load_timing_info.request_start_time.is_null());
   EXPECT_TRUE(load_timing_info.request_start.is_null());
   EXPECT_TRUE(load_timing_info.receive_headers_end.is_null());
-}
-
-void AddWebSocketHeaders(HttpRequestHeaders* headers) {
-  headers->SetHeader("Connection", "Upgrade");
-  headers->SetHeader("Upgrade", "websocket");
-  headers->SetHeader("Origin", "http://www.example.org");
-  headers->SetHeader("Sec-WebSocket-Version", "13");
-  headers->SetHeader("Sec-WebSocket-Key", "dGhlIHNhbXBsZSBub25jZQ==");
 }
 
 std::unique_ptr<HttpNetworkSession> CreateSession(
@@ -807,7 +798,7 @@ bool CheckNTLMServerAuth(const AuthChallengeInfo* auth_challenge) {
   if (!auth_challenge)
     return false;
   EXPECT_FALSE(auth_challenge->is_proxy);
-  EXPECT_EQ("https://172.22.68.17", auth_challenge->challenger.Serialize());
+  EXPECT_EQ("https://server", auth_challenge->challenger.Serialize());
   EXPECT_EQ(std::string(), auth_challenge->realm);
   EXPECT_EQ(kNtlmAuthScheme, auth_challenge->scheme);
   return true;
@@ -6220,10 +6211,10 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
 // [1] https://msdn.microsoft.com/en-us/library/cc236621.aspx
 
 // Enter the correct password and authenticate successfully.
-TEST_F(HttpNetworkTransactionTest, NTLMAuthV1) {
+TEST_F(HttpNetworkTransactionTest, NTLMAuthV2) {
   HttpRequestInfo request;
   request.method = "GET";
-  request.url = GURL("https://172.22.68.17/kids/login.aspx");
+  request.url = GURL("https://server/kids/login.aspx");
 
   // Ensure load is not disrupted by flags which suppress behaviour specific
   // to other auth schemes.
@@ -6242,21 +6233,23 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1) {
           reinterpret_cast<const char*>(ntlm::test::kExpectedNegotiateMsg),
           arraysize(ntlm::test::kExpectedNegotiateMsg)),
       &negotiate_msg);
-  base::Base64Encode(base::StringPiece(reinterpret_cast<const char*>(
-                                           ntlm::test::kChallengeMsgV1),
-                                       arraysize(ntlm::test::kChallengeMsgV1)),
-                     &challenge_msg);
+  base::Base64Encode(
+      base::StringPiece(
+          reinterpret_cast<const char*>(ntlm::test::kChallengeMsgFromSpecV2),
+          arraysize(ntlm::test::kChallengeMsgFromSpecV2)),
+      &challenge_msg);
   base::Base64Encode(
       base::StringPiece(
           reinterpret_cast<const char*>(
-              ntlm::test::kExpectedAuthenticateMsgSpecResponseV1),
-          arraysize(ntlm::test::kExpectedAuthenticateMsgSpecResponseV1)),
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2),
+          arraysize(
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2)),
       &authenticate_msg);
 
   MockWrite data_writes1[] = {
-    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-              "Host: 172.22.68.17\r\n"
-              "Connection: keep-alive\r\n\r\n"),
+      MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+                "Host: server\r\n"
+                "Connection: keep-alive\r\n\r\n"),
   };
 
   MockRead data_reads1[] = {
@@ -6276,7 +6269,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1) {
       // request we should be issuing -- the final header line contains a Type
       // 1 message.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(negotiate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6285,7 +6278,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1) {
       // (using correct credentials).  The second request continues on the
       // same connection.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(authenticate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6374,10 +6367,10 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1) {
 }
 
 // Enter a wrong password, and then the correct one.
-TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
+TEST_F(HttpNetworkTransactionTest, NTLMAuthV2WrongThenRightPassword) {
   HttpRequestInfo request;
   request.method = "GET";
-  request.url = GURL("https://172.22.68.17/kids/login.aspx");
+  request.url = GURL("https://server/kids/login.aspx");
 
   HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(
       MockGetMSTime, MockGenerateRandom, MockGetHostName);
@@ -6392,38 +6385,38 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
           reinterpret_cast<const char*>(ntlm::test::kExpectedNegotiateMsg),
           arraysize(ntlm::test::kExpectedNegotiateMsg)),
       &negotiate_msg);
-  base::Base64Encode(base::StringPiece(reinterpret_cast<const char*>(
-                                           ntlm::test::kChallengeMsgV1),
-                                       arraysize(ntlm::test::kChallengeMsgV1)),
-                     &challenge_msg);
+  base::Base64Encode(
+      base::StringPiece(
+          reinterpret_cast<const char*>(ntlm::test::kChallengeMsgFromSpecV2),
+          arraysize(ntlm::test::kChallengeMsgFromSpecV2)),
+      &challenge_msg);
   base::Base64Encode(
       base::StringPiece(
           reinterpret_cast<const char*>(
-              ntlm::test::kExpectedAuthenticateMsgSpecResponseV1),
-          arraysize(ntlm::test::kExpectedAuthenticateMsgSpecResponseV1)),
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2),
+          arraysize(
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2)),
       &authenticate_msg);
 
   // The authenticate message when |kWrongPassword| is sent.
   std::string wrong_password_authenticate_msg(
-      "TlRMTVNTUAADAAAAGAAYAEAAAAAYABgAWAAAAAwADABwAAAACAAIAHwAAAAQABAAhAAAAAAA"
-      "AABAAAAAA4IIAKqqqqqqqqqqAAAAAAAAAAAAAAAAAAAAAF2npafgDxlql9qxEIhLlsuuJIEd"
-      "NQHk7kQAbwBtAGEAaQBuAFUAcwBlAHIAQwBPAE0AUABVAFQARQBSAA==");
+      "TlRMTVNTUAADAAAAGAAYAFgAAACKAIoAcAAAAAwADAD6AAAACAAIAAYBAAAQABAADgEAAAAA"
+      "AABYAAAAA4IIAAAAAAAAAAAAAPknEYqtJQtusopDRSfYzAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      "AAAAAOtVz38osnFdRRggUQHUJ3EBAQAAAAAAAIALyP0A1NIBqqqqqqqqqqoAAAAAAgAMAEQA"
+      "bwBtAGEAaQBuAAEADABTAGUAcgB2AGUAcgAGAAQAAgAAAAoAEAAAAAAAAAAAAAAAAAAAAAAA"
+      "CQAWAEgAVABUAFAALwBzAGUAcgB2AGUAcgAAAAAAAAAAAEQAbwBtAGEAaQBuAFUAcwBlAHIA"
+      "QwBPAE0AUABVAFQARQBSAA==");
 
-  // Sanity check that this is the same as |authenticate_msg| except for the
-  // 24 bytes (32 encoded chars) of the NTLM Response.
+  // Sanity check that it's the same length as the correct authenticate message
+  // and that it's different.
   ASSERT_EQ(authenticate_msg.length(),
             wrong_password_authenticate_msg.length());
-  ASSERT_EQ(authenticate_msg.length(), 200u);
-  ASSERT_EQ(base::StringPiece(authenticate_msg.data(), 117),
-            base::StringPiece(wrong_password_authenticate_msg.data(), 117));
-  ASSERT_EQ(
-      base::StringPiece(authenticate_msg.data() + 149, 51),
-      base::StringPiece(wrong_password_authenticate_msg.data() + 149, 51));
+  ASSERT_NE(authenticate_msg, wrong_password_authenticate_msg);
 
   MockWrite data_writes1[] = {
-    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-              "Host: 172.22.68.17\r\n"
-              "Connection: keep-alive\r\n\r\n"),
+      MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+                "Host: server\r\n"
+                "Connection: keep-alive\r\n\r\n"),
   };
 
   MockRead data_reads1[] = {
@@ -6443,7 +6436,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
       // request we should be issuing -- the final header line contains a Type
       // 1 message.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(negotiate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6452,7 +6445,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
       // (using incorrect credentials).  The second request continues on the
       // same connection.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(wrong_password_authenticate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6479,7 +6472,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
       // request we should be issuing -- the final header line contains a Type
       // 1 message.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(negotiate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6488,7 +6481,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuthV1WrongThenRightPassword) {
       // (the credentials for the origin server).  The second request continues
       // on the same connection.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(authenticate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6609,7 +6602,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMOverHttp2) {
   HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(
       MockGetMSTime, MockGenerateRandom, MockGetHostName);
 
-  const char* kUrl = "https://172.22.68.17/kids/login.aspx";
+  const char* kUrl = "https://server/kids/login.aspx";
 
   HttpRequestInfo request;
   request.method = "GET";
@@ -6638,15 +6631,17 @@ TEST_F(HttpNetworkTransactionTest, NTLMOverHttp2) {
           reinterpret_cast<const char*>(ntlm::test::kExpectedNegotiateMsg),
           arraysize(ntlm::test::kExpectedNegotiateMsg)),
       &negotiate_msg);
-  base::Base64Encode(base::StringPiece(reinterpret_cast<const char*>(
-                                           ntlm::test::kChallengeMsgV1),
-                                       arraysize(ntlm::test::kChallengeMsgV1)),
-                     &challenge_msg);
+  base::Base64Encode(
+      base::StringPiece(
+          reinterpret_cast<const char*>(ntlm::test::kChallengeMsgFromSpecV2),
+          arraysize(ntlm::test::kChallengeMsgFromSpecV2)),
+      &challenge_msg);
   base::Base64Encode(
       base::StringPiece(
           reinterpret_cast<const char*>(
-              ntlm::test::kExpectedAuthenticateMsgSpecResponseV1),
-          arraysize(ntlm::test::kExpectedAuthenticateMsgSpecResponseV1)),
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2),
+          arraysize(
+              ntlm::test::kExpectedAuthenticateMsgEmptyChannelBindingsV2)),
       &authenticate_msg);
 
   // Retry with authorization header.
@@ -6667,7 +6662,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMOverHttp2) {
       // request we should be issuing -- the final header line contains a Type
       // 1 message.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(negotiate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -6676,7 +6671,7 @@ TEST_F(HttpNetworkTransactionTest, NTLMOverHttp2) {
       // (the credentials for the origin server).  The second request continues
       // on the same connection.
       MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
-                "Host: 172.22.68.17\r\n"
+                "Host: server\r\n"
                 "Connection: keep-alive\r\n"
                 "Authorization: NTLM "),
       MockWrite(authenticate_msg.c_str()), MockWrite("\r\n\r\n"),
@@ -16000,147 +15995,6 @@ class FakeStreamFactory : public HttpStreamFactory {
   DISALLOW_COPY_AND_ASSIGN(FakeStreamFactory);
 };
 
-// TODO(ricea): Maybe unify this with the one in
-// url_request_http_job_unittest.cc ?
-class FakeWebSocketBasicHandshakeStream : public WebSocketHandshakeStreamBase {
- public:
-  FakeWebSocketBasicHandshakeStream(
-      std::unique_ptr<ClientSocketHandle> connection,
-      bool using_proxy)
-      : state_(std::move(connection), using_proxy, false) {}
-
-  // Fake implementation of HttpStreamBase methods.
-  // This ends up being quite "real" because this object has to really send data
-  // on the mock socket. It might be easier to use the real implementation, but
-  // the fact that the WebSocket code is not compiled on iOS makes that
-  // difficult.
-  int InitializeStream(const HttpRequestInfo* request_info,
-                       bool can_send_early,
-                       RequestPriority priority,
-                       const NetLogWithSource& net_log,
-                       const CompletionCallback& callback) override {
-    state_.Initialize(request_info, can_send_early, priority, net_log,
-                      callback);
-    return OK;
-  }
-
-  int SendRequest(const HttpRequestHeaders& request_headers,
-                  HttpResponseInfo* response,
-                  const CompletionCallback& callback) override {
-    return parser()->SendRequest(state_.GenerateRequestLine(), request_headers,
-                                 TRAFFIC_ANNOTATION_FOR_TESTS, response,
-                                 callback);
-  }
-
-  int ReadResponseHeaders(const CompletionCallback& callback) override {
-    return parser()->ReadResponseHeaders(callback);
-  }
-
-  int ReadResponseBody(IOBuffer* buf,
-                       int buf_len,
-                       const CompletionCallback& callback) override {
-    NOTREACHED();
-    return ERR_IO_PENDING;
-  }
-
-  void Close(bool not_reusable) override {
-    if (parser())
-      parser()->Close(true);
-  }
-
-  bool IsResponseBodyComplete() const override {
-    NOTREACHED();
-    return false;
-  }
-
-  bool IsConnectionReused() const override {
-    NOTREACHED();
-    return false;
-  }
-  void SetConnectionReused() override { NOTREACHED(); }
-
-  bool CanReuseConnection() const override { return false; }
-
-  int64_t GetTotalReceivedBytes() const override {
-    NOTREACHED();
-    return 0;
-  }
-
-  int64_t GetTotalSentBytes() const override {
-    NOTREACHED();
-    return 0;
-  }
-
-  bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override {
-    NOTREACHED();
-    return false;
-  }
-
-  bool GetAlternativeService(
-      AlternativeService* alternative_service) const override {
-    ADD_FAILURE();
-    return false;
-  }
-
-  void GetSSLInfo(SSLInfo* ssl_info) override {}
-
-  void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override {
-    NOTREACHED();
-  }
-
-  bool GetRemoteEndpoint(IPEndPoint* endpoint) override { return false; }
-
-  Error GetTokenBindingSignature(crypto::ECPrivateKey* key,
-                                 TokenBindingType tb_type,
-                                 std::vector<uint8_t>* out) override {
-    ADD_FAILURE();
-    return ERR_NOT_IMPLEMENTED;
-  }
-
-  void Drain(HttpNetworkSession* session) override { NOTREACHED(); }
-
-  void PopulateNetErrorDetails(NetErrorDetails* details) override { return; }
-
-  void SetPriority(RequestPriority priority) override { NOTREACHED(); }
-
-  HttpStream* RenewStreamForAuth() override {
-    NOTREACHED();
-    return nullptr;
-  }
-
-  // Fake implementation of WebSocketHandshakeStreamBase method(s)
-  std::unique_ptr<WebSocketStream> Upgrade() override {
-    NOTREACHED();
-    return std::unique_ptr<WebSocketStream>();
-  }
-
- private:
-  HttpStreamParser* parser() const { return state_.parser(); }
-  HttpBasicState state_;
-
-  DISALLOW_COPY_AND_ASSIGN(FakeWebSocketBasicHandshakeStream);
-};
-
-// TODO(yhirano): Split this class out into a net/websockets file, if it is
-// worth doing.
-class FakeWebSocketStreamCreateHelper :
-      public WebSocketHandshakeStreamBase::CreateHelper {
- public:
-  std::unique_ptr<WebSocketHandshakeStreamBase> CreateBasicStream(
-      std::unique_ptr<ClientSocketHandle> connection,
-      bool using_proxy) override {
-    return std::make_unique<FakeWebSocketBasicHandshakeStream>(
-        std::move(connection), using_proxy);
-  }
-
-  ~FakeWebSocketStreamCreateHelper() override = default;
-
-  virtual std::unique_ptr<WebSocketStream> Upgrade() {
-    NOTREACHED();
-    return std::unique_ptr<WebSocketStream>();
-  }
-};
-
 }  // namespace
 
 // Make sure that HttpNetworkTransaction passes on its priority to its
@@ -16215,39 +16069,6 @@ TEST_F(HttpNetworkTransactionTest, SetStreamPriority) {
 
   trans.SetPriority(LOWEST);
   EXPECT_EQ(LOWEST, fake_stream->priority());
-}
-
-TEST_F(HttpNetworkTransactionTest, CreateWebSocketHandshakeStream) {
-  // The same logic needs to be tested for both ws: and wss: schemes, but this
-  // test is already parameterised on NextProto, so it uses a loop to verify
-  // that the different schemes work.
-  std::string test_cases[] = {"ws://www.example.org/",
-                              "wss://www.example.org/"};
-  for (size_t i = 0; i < arraysize(test_cases); ++i) {
-    std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
-    HttpNetworkSessionPeer peer(session.get());
-    FakeStreamFactory* fake_factory = new FakeStreamFactory();
-    FakeWebSocketStreamCreateHelper websocket_stream_create_helper;
-    peer.SetHttpStreamFactory(std::unique_ptr<HttpStreamFactory>(fake_factory));
-
-    HttpRequestInfo request;
-    HttpNetworkTransaction trans(LOW, session.get());
-    trans.SetWebSocketHandshakeStreamCreateHelper(
-        &websocket_stream_create_helper);
-
-    TestCompletionCallback callback;
-    request.method = "GET";
-    request.url = GURL(test_cases[i]);
-
-    EXPECT_EQ(ERR_IO_PENDING,
-              trans.Start(&request, callback.callback(), NetLogWithSource()));
-
-    base::WeakPtr<FakeStreamRequest> fake_request =
-        fake_factory->last_stream_request();
-    ASSERT_TRUE(fake_request);
-    EXPECT_EQ(&websocket_stream_create_helper,
-              fake_request->websocket_stream_create_helper());
-  }
 }
 
 // Tests that when a used socket is returned to the SSL socket pool, it's closed
@@ -16871,6 +16692,53 @@ TEST_F(HttpNetworkTransactionTest, PostIgnoresPartial400HeadersAfterReset) {
   EXPECT_THAT(rv, IsError(ERR_CONNECTION_RESET));
 }
 
+#if BUILDFLAG(ENABLE_WEBSOCKETS)
+
+namespace {
+
+void AddWebSocketHeaders(HttpRequestHeaders* headers) {
+  headers->SetHeader("Connection", "Upgrade");
+  headers->SetHeader("Upgrade", "websocket");
+  headers->SetHeader("Origin", "http://www.example.org");
+  headers->SetHeader("Sec-WebSocket-Version", "13");
+  headers->SetHeader("Sec-WebSocket-Key", "dGhlIHNhbXBsZSBub25jZQ==");
+}
+
+}  // namespace
+
+TEST_F(HttpNetworkTransactionTest, CreateWebSocketHandshakeStream) {
+  // The same logic needs to be tested for both ws: and wss: schemes, but this
+  // test is already parameterised on NextProto, so it uses a loop to verify
+  // that the different schemes work.
+  std::string test_cases[] = {"ws://www.example.org/",
+                              "wss://www.example.org/"};
+  for (size_t i = 0; i < arraysize(test_cases); ++i) {
+    std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
+    HttpNetworkSessionPeer peer(session.get());
+    FakeStreamFactory* fake_factory = new FakeStreamFactory();
+    peer.SetHttpStreamFactory(std::unique_ptr<HttpStreamFactory>(fake_factory));
+
+    HttpRequestInfo request;
+    request.method = "GET";
+    request.url = GURL(test_cases[i]);
+
+    FakeWebSocketStreamCreateHelper websocket_stream_create_helper;
+    HttpNetworkTransaction trans(LOW, session.get());
+    trans.SetWebSocketHandshakeStreamCreateHelper(
+        &websocket_stream_create_helper);
+
+    TestCompletionCallback callback;
+    EXPECT_EQ(ERR_IO_PENDING,
+              trans.Start(&request, callback.callback(), NetLogWithSource()));
+
+    base::WeakPtr<FakeStreamRequest> fake_request =
+        fake_factory->last_stream_request();
+    ASSERT_TRUE(fake_request);
+    EXPECT_EQ(&websocket_stream_create_helper,
+              fake_request->websocket_stream_create_helper());
+  }
+}
+
 // Verify that proxy headers are not sent to the destination server when
 // establishing a tunnel for a secure WebSocket connection.
 TEST_F(HttpNetworkTransactionTest, ProxyHeadersNotSentOverWssTunnel) {
@@ -17052,6 +16920,8 @@ TEST_F(HttpNetworkTransactionTest, ProxyHeadersNotSentOverWsTunnel) {
   trans.reset();
   session->CloseAllConnections();
 }
+
+#endif  // BUILDFLAG(ENABLE_WEBSOCKETS)
 
 TEST_F(HttpNetworkTransactionTest, TotalNetworkBytesPost) {
   std::vector<std::unique_ptr<UploadElementReader>> element_readers;

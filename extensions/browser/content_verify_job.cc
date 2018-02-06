@@ -18,7 +18,7 @@ namespace extensions {
 
 namespace {
 
-ContentVerifyJob::TestDelegate* g_test_delegate = NULL;
+bool g_ignore_verification_for_tests = false;
 ContentVerifyJob::TestObserver* g_content_verify_job_test_observer = NULL;
 
 class ScopedElapsedTimer {
@@ -72,13 +72,8 @@ void ContentVerifyJob::BytesRead(int count, const char* data) {
   base::AutoLock auto_lock(lock_);
   if (failed_)
     return;
-  if (g_test_delegate) {
-    FailureReason reason =
-        g_test_delegate->BytesRead(hash_reader_->extension_id(), count, data);
-    if (reason != NONE)
-      DispatchFailureCallback(reason);
+  if (g_ignore_verification_for_tests)
     return;
-  }
   if (!hashes_ready_) {
     queue_.append(data, count);
     return;
@@ -119,13 +114,8 @@ void ContentVerifyJob::DoneReading() {
   base::AutoLock auto_lock(lock_);
   if (failed_)
     return;
-  if (g_test_delegate) {
-    FailureReason reason =
-        g_test_delegate->DoneReading(hash_reader_->extension_id());
-    if (reason != NONE)
-      DispatchFailureCallback(reason);
+  if (g_ignore_verification_for_tests)
     return;
-  }
   done_reading_ = true;
   if (hashes_ready_) {
     if (!FinishBlock()) {
@@ -138,6 +128,7 @@ void ContentVerifyJob::DoneReading() {
 }
 
 bool ContentVerifyJob::FinishBlock() {
+  DCHECK(!failed_);
   if (current_hash_byte_count_ == 0) {
     if (!done_reading_ ||
         // If we have checked all blocks already, then nothing else to do here.
@@ -167,7 +158,13 @@ bool ContentVerifyJob::FinishBlock() {
 }
 
 void ContentVerifyJob::OnHashesReady(bool success) {
-  if (!success && !g_test_delegate) {
+  if (g_ignore_verification_for_tests)
+    return;
+  if (g_content_verify_job_test_observer) {
+    g_content_verify_job_test_observer->OnHashesReady(
+        hash_reader_->extension_id(), hash_reader_->relative_path(), success);
+  }
+  if (!success) {
     // TODO(lazyboy): Make ContentHashReader::Init return an enum instead of
     // bool. This should make the following checks on |hash_reader_| easier
     // to digest and will avoid future bugs from creeping up.
@@ -188,11 +185,15 @@ void ContentVerifyJob::OnHashesReady(bool success) {
     return;
   }
 
+  DCHECK(!failed_);
+
   hashes_ready_ = true;
   if (!queue_.empty()) {
     std::string tmp;
     queue_.swap(tmp);
     BytesRead(tmp.size(), base::string_as_array(&tmp));
+    if (failed_)
+      return;
   }
   if (done_reading_) {
     ScopedElapsedTimer timer(&time_spent_);
@@ -206,15 +207,16 @@ void ContentVerifyJob::OnHashesReady(bool success) {
 }
 
 // static
-void ContentVerifyJob::SetDelegateForTests(TestDelegate* delegate) {
-  DCHECK(delegate == nullptr || g_test_delegate == nullptr)
-      << "SetDelegateForTests does not support interleaving. Delegates should "
-      << "be set and then cleared one at a time.";
-  g_test_delegate = delegate;
+void ContentVerifyJob::SetIgnoreVerificationForTests(bool value) {
+  DCHECK_NE(g_ignore_verification_for_tests, value);
+  g_ignore_verification_for_tests = value;
 }
 
 // static
 void ContentVerifyJob::SetObserverForTests(TestObserver* observer) {
+  DCHECK(observer == nullptr || g_content_verify_job_test_observer == nullptr)
+      << "SetObserverForTests does not support interleaving. Observers should "
+      << "be set and then cleared one at a time.";
   g_content_verify_job_test_observer = observer;
 }
 

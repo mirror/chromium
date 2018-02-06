@@ -182,7 +182,6 @@
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/physical_web/physical_web_data_source_android.h"
-#include "chrome/browser/gpu/gpu_driver_info_manager_android.h"
 #endif
 
 #if (defined(OS_WIN) || defined(OS_LINUX)) && !defined(OS_CHROMEOS)
@@ -213,13 +212,27 @@ rappor::RapporService* GetBrowserRapporService() {
 
 BrowserProcessImpl::BrowserProcessImpl(
     base::SequencedTaskRunner* local_state_task_runner)
-    : download_status_updater_(std::make_unique<DownloadStatusUpdater>()),
-      local_state_task_runner_(local_state_task_runner),
+    : local_state_task_runner_(local_state_task_runner),
       pref_service_factory_(
           base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
   g_browser_process = this;
-  rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
   platform_part_ = base::MakeUnique<BrowserProcessPlatformPart>();
+  // Most work should be done in Init().
+}
+
+void BrowserProcessImpl::Init() {
+#if defined(OS_CHROMEOS)
+  // Forces creation of |metrics_services_manager_client_| if neccessary
+  // (typically this call is a no-op as MetricsServicesManager has already been
+  // created).
+  GetMetricsServicesManager();
+  DCHECK(metrics_services_manager_client_);
+  metrics_services_manager_client_->OnCrosSettingsCreated();
+#endif
+
+  download_status_updater_ = std::make_unique<DownloadStatusUpdater>();
+
+  rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
 
 #if BUILDFLAG(ENABLE_PRINTING)
   // Must be created after the NotificationService.
@@ -260,6 +273,30 @@ BrowserProcessImpl::BrowserProcessImpl(
   KeepAliveRegistry::GetInstance()->SetIsShuttingDown(false);
   KeepAliveRegistry::GetInstance()->AddObserver(this);
 #endif  // !defined(OS_ANDROID)
+
+  pref_change_registrar_.Init(local_state());
+
+  // Initialize the notification for the default browser setting policy.
+  pref_change_registrar_.Add(
+      prefs::kDefaultBrowserSettingEnabled,
+      base::Bind(&BrowserProcessImpl::ApplyDefaultBrowserPolicy,
+                 base::Unretained(this)));
+
+#if !defined(OS_ANDROID)
+  // This preference must be kept in sync with external values; update them
+  // whenever the preference or its controlling policy changes.
+  pref_change_registrar_.Add(
+      metrics::prefs::kMetricsReportingEnabled,
+      base::Bind(&BrowserProcessImpl::ApplyMetricsReportingPolicy,
+                 base::Unretained(this)));
+#endif
+
+  int max_per_proxy = local_state_->GetInteger(prefs::kMaxConnectionsPerProxy);
+  net::ClientSocketPoolManager::set_max_sockets_per_proxy_server(
+      net::HttpNetworkSession::NORMAL_SOCKET_POOL,
+      std::max(std::min(max_per_proxy, 99),
+               net::ClientSocketPoolManager::max_sockets_per_group(
+                   net::HttpNetworkSession::NORMAL_SOCKET_POOL)));
 }
 
 BrowserProcessImpl::~BrowserProcessImpl() {
@@ -529,6 +566,7 @@ BrowserProcessImpl::GetMetricsServicesManager() {
   if (!metrics_services_manager_) {
     auto client =
         base::MakeUnique<ChromeMetricsServicesManagerClient>(local_state());
+    metrics_services_manager_client_ = client.get();
     metrics_services_manager_ =
         base::MakeUnique<metrics_services_manager::MetricsServicesManager>(
             std::move(client));
@@ -666,15 +704,6 @@ IconManager* BrowserProcessImpl::icon_manager() {
   return icon_manager_.get();
 }
 
-#if defined(OS_ANDROID)
-GpuDriverInfoManager* BrowserProcessImpl::gpu_driver_info_manager() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!gpu_driver_info_manager_)
-    gpu_driver_info_manager_ = GpuDriverInfoManager::Create();
-  return gpu_driver_info_manager_.get();
-}
-#endif
-
 GpuModeManager* BrowserProcessImpl::gpu_mode_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!gpu_mode_manager_)
@@ -757,6 +786,8 @@ const std::string& BrowserProcessImpl::GetApplicationLocale() {
 }
 
 void BrowserProcessImpl::SetApplicationLocale(const std::string& locale) {
+  // NOTE: this is called before any threads have been created in non-test
+  // environments.
   locale_ = locale;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extension_l10n_util::SetProcessLocale(locale);
@@ -1043,30 +1074,6 @@ void BrowserProcessImpl::CreateLocalState() {
       local_state_path, local_state_task_runner_.get(), policy_service(),
       pref_registry, false, std::move(delegate));
   DCHECK(local_state_);
-
-  pref_change_registrar_.Init(local_state_.get());
-
-  // Initialize the notification for the default browser setting policy.
-  pref_change_registrar_.Add(
-      prefs::kDefaultBrowserSettingEnabled,
-      base::Bind(&BrowserProcessImpl::ApplyDefaultBrowserPolicy,
-                 base::Unretained(this)));
-
-  // This preference must be kept in sync with external values; update them
-  // whenever the preference or its controlling policy changes.
-#if !defined(OS_ANDROID)
-  pref_change_registrar_.Add(
-      metrics::prefs::kMetricsReportingEnabled,
-      base::Bind(&BrowserProcessImpl::ApplyMetricsReportingPolicy,
-                 base::Unretained(this)));
-#endif
-
-  int max_per_proxy = local_state_->GetInteger(prefs::kMaxConnectionsPerProxy);
-  net::ClientSocketPoolManager::set_max_sockets_per_proxy_server(
-      net::HttpNetworkSession::NORMAL_SOCKET_POOL,
-      std::max(std::min(max_per_proxy, 99),
-               net::ClientSocketPoolManager::max_sockets_per_group(
-                   net::HttpNetworkSession::NORMAL_SOCKET_POOL)));
 }
 
 void BrowserProcessImpl::PreCreateThreads(
@@ -1237,7 +1244,14 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
     return;
   }
 
+  // Runner for tasks critical for user experience.
   scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
+
+  // Runner for tasks that do not influence user experience.
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner(
       base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
@@ -1252,7 +1266,7 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
           blocking_task_runner);
   subresource_filter_ruleset_service_->set_ruleset_service(
       base::MakeUnique<subresource_filter::RulesetService>(
-          local_state(), blocking_task_runner,
+          local_state(), blocking_task_runner, background_task_runner,
           subresource_filter_ruleset_service_.get(), indexed_ruleset_base_dir));
 }
 
@@ -1336,7 +1350,8 @@ void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
       FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+              local_state())));
 }
 #endif
 

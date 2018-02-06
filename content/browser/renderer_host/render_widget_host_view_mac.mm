@@ -399,6 +399,10 @@ void RenderWidgetHostViewMac::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
 }
 
+void RenderWidgetHostViewMac::DidReceiveFirstFrameAfterNavigation() {
+  render_widget_host_->DidReceiveFirstFrameAfterNavigation();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 
@@ -1085,7 +1089,17 @@ void RenderWidgetHostViewMac::SetTooltipText(
 }
 
 void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
-  browser_compositor_->WasResized();
+  browser_compositor_->OnNSViewWasResized();
+}
+
+void RenderWidgetHostViewMac::ResizeDueToAutoResize(const gfx::Size& new_size,
+                                                    uint64_t sequence_number) {
+  browser_compositor_->OnNSViewWillAutoResize(new_size);
+  RenderWidgetHostViewBase::ResizeDueToAutoResize(new_size, sequence_number);
+}
+
+void RenderWidgetHostViewMac::DidNavigate() {
+  browser_compositor_->DidNavigate();
 }
 
 gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
@@ -1153,8 +1167,8 @@ void RenderWidgetHostViewMac::SetShowingContextMenu(bool showing) {
                                     clickCount:0
                                       pressure:0];
   WebMouseEvent web_event = WebMouseEventBuilder::Build(event, cocoa_view_);
-  if (showing)
-    web_event.SetType(WebInputEvent::kMouseLeave);
+  web_event.SetModifiers(web_event.GetModifiers() |
+                         WebInputEvent::kRelativeMotionEvent);
   ForwardMouseEvent(web_event);
 }
 
@@ -1390,9 +1404,8 @@ bool RenderWidgetHostViewMac::GetCachedFirstRectForCharacterRange(
   return true;
 }
 
-bool RenderWidgetHostViewMac::HasAcceleratedSurface(
-      const gfx::Size& desired_size) {
-  return browser_compositor_->HasFrameOfSize(desired_size);
+bool RenderWidgetHostViewMac::ShouldContinueToPauseForFrame() {
+  return browser_compositor_->ShouldContinueToPauseForFrame();
 }
 
 void RenderWidgetHostViewMac::FocusedNodeChanged(
@@ -1422,23 +1435,15 @@ void RenderWidgetHostViewMac::SubmitCompositorFrame(
     viz::mojom::HitTestRegionListPtr hit_test_region_list) {
   TRACE_EVENT0("browser", "RenderWidgetHostViewMac::OnSwapCompositorFrame");
 
-  if (repaint_state_ == RepaintState::Paused) {
-    gfx::Size frame_size = gfx::ConvertSizeToDIP(
-        frame.metadata.device_scale_factor, frame.size_in_pixels());
-    gfx::Size view_size = gfx::Size(cocoa_view_.bounds.size);
-    if (frame_size == view_size || render_widget_host_->auto_resize_enabled()) {
-      NSDisableScreenUpdates();
-      repaint_state_ = RepaintState::ScreenUpdatesDisabled;
-    }
-  }
-
   last_frame_root_background_color_ = frame.metadata.root_background_color;
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
 
   page_at_minimum_scale_ =
       frame.metadata.page_scale_factor == frame.metadata.min_page_scale_factor;
-  browser_compositor_->SubmitCompositorFrame(local_surface_id,
-                                             std::move(frame));
+
+  browser_compositor_->GetDelegatedFrameHost()->SubmitCompositorFrame(
+      local_surface_id, std::move(frame), nullptr);
+
   UpdateDisplayVSyncParameters();
 }
 
@@ -1721,11 +1726,10 @@ void RenderWidgetHostViewMac::PauseForPendingResizeOrRepaintsAndDraw() {
     return;
 
   // Wait for a frame of the right size to come in.
-  repaint_state_ = RepaintState::Paused;
+  browser_compositor_->BeginPauseForFrame(
+      render_widget_host_->auto_resize_enabled());
   render_widget_host_->PauseForPendingResizeOrRepaints();
-  if (repaint_state_ == RepaintState::ScreenUpdatesDisabled)
-    NSEnableScreenUpdates();
-  repaint_state_ = RepaintState::None;
+  browser_compositor_->EndPauseForFrame();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2840,12 +2844,21 @@ Class GetRenderWidgetHostViewCocoaClassForTesting() {
   if (!renderWidgetHostView_->render_widget_host_)
     return;
 
+  // During auto-resize it is the responsibility of the caller to ensure that
+  // the NSView and RenderWidgetHostImpl are kept in sync.
+  if (renderWidgetHostView_->render_widget_host_->auto_resize_enabled())
+    return;
+
   if (renderWidgetHostView_->render_widget_host_->delegate())
     renderWidgetHostView_->render_widget_host_->delegate()->SendScreenRects();
   else
     renderWidgetHostView_->render_widget_host_->SendScreenRects();
+
+  // RenderWidgetHostImpl will query BrowserCompositorMac for the dimensions
+  // to send to the renderer, so it is required that BrowserCompositorMac be
+  // updated first.
+  renderWidgetHostView_->browser_compositor_->OnNSViewWasResized();
   renderWidgetHostView_->render_widget_host_->WasResized();
-  renderWidgetHostView_->browser_compositor_->WasResized();
 
   // Wait for the frame that WasResize might have requested. If the view is
   // being made visible at a new size, then this call will have no effect

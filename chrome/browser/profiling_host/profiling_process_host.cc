@@ -431,20 +431,30 @@ profiling::mojom::StackMode ProfilingProcessHost::GetStackModeForStartup() {
         kOOPHeapProfilingFeature, kOOPHeapProfilingFeatureStackMode);
   }
 
-  if (stack_mode == switches::kMemlogStackModeNative)
-    return profiling::mojom::StackMode::NATIVE;
-  if (stack_mode == switches::kMemlogStackModePseudo)
+  return ConvertStringToStackMode(stack_mode);
+}
+
+// static
+mojom::StackMode ProfilingProcessHost::ConvertStringToStackMode(
+    const std::string& input) {
+  if (input == switches::kMemlogStackModeNative)
+    return profiling::mojom::StackMode::NATIVE_WITHOUT_THREAD_NAMES;
+  if (input == switches::kMemlogStackModeNativeWithThreadNames)
+    return profiling::mojom::StackMode::NATIVE_WITH_THREAD_NAMES;
+  if (input == switches::kMemlogStackModePseudo)
     return profiling::mojom::StackMode::PSEUDO;
-  if (stack_mode == switches::kMemlogStackModeMixed)
+  if (input == switches::kMemlogStackModeMixed)
     return profiling::mojom::StackMode::MIXED;
-  return profiling::mojom::StackMode::NATIVE;
+  DLOG(ERROR) << "Unsupported value: \"" << input << "\" passed to --"
+              << switches::kMemlogStackMode;
+  return profiling::mojom::StackMode::NATIVE_WITHOUT_THREAD_NAMES;
 }
 
 // static
 ProfilingProcessHost* ProfilingProcessHost::Start(
     content::ServiceManagerConnection* connection,
     Mode mode,
-    profiling::mojom::StackMode stack_mode) {
+    mojom::StackMode stack_mode) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   CHECK(!has_started_);
   has_started_ = true;
@@ -470,7 +480,10 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
 }
 
 void ProfilingProcessHost::ConfigureBackgroundProfilingTriggers() {
-  background_triggers_.StartTimer();
+  // Only enable automatic uploads when the Finch experiment is enabled.
+  // Developers can still manually upload via chrome://memory-internals.
+  if (base::FeatureList::IsEnabled(kOOPHeapProfilingFeature))
+    background_triggers_.StartTimer();
 }
 
 void ProfilingProcessHost::SaveTraceWithHeapDumpToFile(
@@ -664,6 +677,14 @@ void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
           FROM_HERE,
           base::BindOnce(&ProfilingProcessHost::StartProfilingPidOnIOThread,
                          base::Unretained(this), pid));
+}
+
+void ProfilingProcessHost::StartProfilingRenderersForTesting() {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
+  for (auto iter = content::RenderProcessHost::AllHostsIterator();
+       !iter.IsAtEnd(); iter.Advance()) {
+    StartProfilingRenderer(iter.GetCurrentValue());
+  }
 }
 
 void ProfilingProcessHost::StartProfilingPidOnIOThread(base::ProcessId pid) {

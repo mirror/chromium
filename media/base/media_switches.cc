@@ -124,6 +124,10 @@ const char kEnableInbandTextTracks[] = "enable-inband-text-tracks";
 const char kRequireAudioHardwareForTesting[] =
     "require-audio-hardware-for-testing";
 
+// Mutes audio sent to the audio device so it is not audible during
+// automated testing.
+const char kMuteAudio[] = "mute-audio";
+
 // Allows clients to override the threshold for when the media renderer will
 // declare the underflow state for the video stream when audio is present.
 // TODO(dalecurtis): Remove once experiments for http://crbug.com/470940 finish.
@@ -250,6 +254,13 @@ const base::Feature kMseBufferByPts{"MseBufferByPts",
 // Support FLAC codec within ISOBMFF streams used with Media Source Extensions.
 const base::Feature kMseFlacInIsobmff{"MseFlacInIsobmff",
                                       base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enable new cpu load estimator. Intended for evaluation in local
+// testing and origin-trial.
+// TODO(nisse): Delete once we have switched over to always using the
+// new estimator.
+const base::Feature kNewEncodeCpuLoadEstimator{
+    "NewEncodeCpuLoadEstimator", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Use the new Remote Playback / media flinging pipeline.
 const base::Feature kNewRemotePlaybackPipeline{

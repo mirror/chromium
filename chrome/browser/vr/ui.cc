@@ -65,7 +65,11 @@ base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
 void Ui::SetWebVrMode(bool enabled, bool show_toast) {
   model_->web_vr.show_exit_toast = show_toast;
   if (enabled) {
-    model_->web_vr.state = kWebVrAwaitingFirstFrame;
+    if (!model_->web_vr_autopresentation_enabled()) {
+      // When auto-presenting, we transition into this state when the minimum
+      // splash-screen duration has passed.
+      model_->web_vr.state = kWebVrAwaitingFirstFrame;
+    }
     // We have this check here so that we don't set the mode to kModeWebVr when
     // it should be kModeWebVrAutopresented. The latter is set when the UI is
     // initialized.
@@ -112,23 +116,23 @@ void Ui::SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) {
 }
 
 void Ui::SetVideoCaptureEnabled(bool enabled) {
-  model_->permissions.video_capture_enabled = enabled;
+  model_->capturing_state.video_capture_enabled = enabled;
 }
 
 void Ui::SetScreenCaptureEnabled(bool enabled) {
-  model_->permissions.screen_capture_enabled = enabled;
+  model_->capturing_state.screen_capture_enabled = enabled;
 }
 
 void Ui::SetAudioCaptureEnabled(bool enabled) {
-  model_->permissions.audio_capture_enabled = enabled;
+  model_->capturing_state.audio_capture_enabled = enabled;
 }
 
 void Ui::SetBluetoothConnected(bool enabled) {
-  model_->permissions.bluetooth_connected = enabled;
+  model_->capturing_state.bluetooth_connected = enabled;
 }
 
-void Ui::SetLocationAccess(bool enabled) {
-  model_->permissions.location_access = enabled;
+void Ui::SetLocationAccessEnabled(bool enabled) {
+  model_->capturing_state.location_access_enabled = enabled;
 }
 
 void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
@@ -197,13 +201,57 @@ void Ui::OnAssetsComponentReady() {
   model_->can_apply_new_background = true;
 }
 
+bool Ui::CanSendWebVrVSync() {
+  return model_->web_vr_enabled() &&
+         !model_->web_vr.awaiting_min_splash_screen_duration();
+}
+
+void Ui::ShowSoftInput(bool show) {
+  model_->editing_web_input = show;
+}
+
+void Ui::UpdateWebInputSelectionIndices(int selection_start,
+                                        int selection_end) {
+  model_->web_input_text_field_info.selection_start = selection_start;
+  model_->web_input_text_field_info.selection_end = selection_end;
+}
+
+void Ui::UpdateWebInputCompositionIndices(int composition_start,
+                                          int composition_end) {
+  model_->web_input_text_field_info.composition_start = composition_start;
+  model_->web_input_text_field_info.composition_end = composition_end;
+}
+
+void Ui::UpdateWebInputText(const base::string16& text) {
+  model_->web_input_text_field_info.text = text;
+}
+
+void Ui::SetAlertDialogEnabled(bool enabled,
+                               ContentInputDelegate* delegate,
+                               int width,
+                               int height) {
+  model_->native_ui.hosted_ui_enabled = enabled;
+  model_->native_ui.size_ratio =
+      static_cast<float>(height) / static_cast<float>(width);
+  model_->native_ui.delegate = delegate;
+}
+
+void Ui::SetAlertDialogSize(int width, int height) {
+  model_->native_ui.size_ratio =
+      static_cast<float>(height) / static_cast<float>(width);
+}
+
 bool Ui::ShouldRenderWebVr() {
   return model_->web_vr.has_produced_frames();
 }
 
-void Ui::OnGlInitialized(unsigned int content_texture_id,
-                         UiElementRenderer::TextureLocation content_location,
-                         bool use_ganesh) {
+void Ui::OnGlInitialized(
+    unsigned int content_texture_id,
+    UiElementRenderer::TextureLocation content_location,
+    unsigned int content_overlay_texture_id,
+    UiElementRenderer::TextureLocation content_overlay_location,
+    unsigned int ui_texture_id,
+    bool use_ganesh) {
   ui_element_renderer_ = std::make_unique<UiElementRenderer>();
   ui_renderer_ =
       std::make_unique<UiRenderer>(scene_.get(), ui_element_renderer_.get());
@@ -214,7 +262,10 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
   }
   scene_->OnGlInitialized(provider_.get());
   model_->content_texture_id = content_texture_id;
+  model_->content_overlay_texture_id = content_overlay_texture_id;
   model_->content_location = content_location;
+  model_->content_overlay_location = content_overlay_location;
+  model_->native_ui.texture_id = ui_texture_id;
 }
 
 void Ui::RequestFocus(int element_id) {
@@ -245,6 +296,11 @@ void Ui::OnAppButtonClicked() {
 
   // If browsing mode is disabled, the app button should no-op.
   if (model_->browsing_disabled) {
+    return;
+  }
+
+  if (model_->reposition_window_enabled()) {
+    model_->pop_mode(kModeRepositionWindow);
     return;
   }
 
@@ -318,12 +374,14 @@ bool Ui::SkipsRedrawWhenNotDirty() const {
 }
 
 void Ui::Dump(bool include_bindings) {
+#ifndef NDEBUG
   std::ostringstream os;
   os << std::setprecision(3);
   os << std::endl;
   scene_->root_element().DumpHierarchy(std::vector<size_t>(), &os,
                                        include_bindings);
   LOG(ERROR) << os.str();
+#endif
 }
 
 void Ui::OnAssetsLoading() {
@@ -345,6 +403,7 @@ void Ui::OnAssetsLoaded(AssetsLoadStatus status,
                                 std::move(assets->incognito_gradient),
                                 std::move(assets->fullscreen_gradient));
 
+  ColorScheme::UpdateForComponent(component_version);
   model_->background_loaded = true;
 }
 
@@ -360,10 +419,13 @@ void Ui::InitializeModel(const UiInitialState& ui_initial_state) {
   model_->ui_modes.clear();
   model_->push_mode(kModeBrowsing);
   if (ui_initial_state.in_web_vr) {
-    model_->web_vr.state = kWebVrAwaitingFirstFrame;
-    auto mode = ui_initial_state.web_vr_autopresentation_expected
-                    ? kModeWebVrAutopresented
-                    : kModeWebVr;
+    auto mode = kModeWebVr;
+    if (ui_initial_state.web_vr_autopresentation_expected) {
+      mode = kModeWebVrAutopresented;
+      model_->web_vr.state = kWebVrAwaitingMinSplashScreenDuration;
+    } else {
+      model_->web_vr.state = kWebVrAwaitingFirstFrame;
+    }
     model_->push_mode(mode);
   }
 

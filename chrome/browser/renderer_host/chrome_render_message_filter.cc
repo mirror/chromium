@@ -43,7 +43,7 @@ using content::BrowserThread;
 
 namespace {
 
-const uint32_t kFilteredMessageClasses[] = {
+const uint32_t kRenderFilteredMessageClasses[] = {
     ChromeMsgStart, NetworkHintsMsgStart,
 };
 
@@ -51,8 +51,8 @@ const uint32_t kFilteredMessageClasses[] = {
 
 ChromeRenderMessageFilter::ChromeRenderMessageFilter(int render_process_id,
                                                      Profile* profile)
-    : BrowserMessageFilter(kFilteredMessageClasses,
-                           arraysize(kFilteredMessageClasses)),
+    : BrowserMessageFilter(kRenderFilteredMessageClasses,
+                           arraysize(kRenderFilteredMessageClasses)),
       render_process_id_(render_process_id),
       profile_(profile),
       predictor_(profile_->GetNetworkPredictor()),
@@ -304,6 +304,7 @@ void ChromeRenderMessageFilter::OnAllowIndexedDB(int render_frame_id,
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 void ChromeRenderMessageFilter::OnIsCrashReportingEnabled(bool* enabled) {
-  *enabled = ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
+  *enabled = ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled(
+      g_browser_process->local_state());
 }
 #endif

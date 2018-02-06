@@ -91,7 +91,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "public/web/WebDocumentLoader.h"
 #include "public/web/WebHistoryCommitType.h"
 
 namespace blink {
@@ -120,7 +119,6 @@ DocumentLoader::DocumentLoader(
       data_received_(false),
       navigation_type_(kNavigationTypeOther),
       document_load_timing_(*this),
-      time_of_last_data_received_(0.0),
       application_cache_host_(ApplicationCacheHost::Create(this)),
       was_blocked_after_csp_(false),
       state_(kNotStarted),
@@ -392,7 +390,7 @@ void DocumentLoader::NotifyFinished(Resource* resource) {
   DCHECK(GetResource());
 
   if (!resource->ErrorOccurred() && !resource->WasCanceled()) {
-    FinishedLoading(resource->LoadFinishTime());
+    FinishedLoading(TimeTicksFromSeconds(resource->LoadFinishTime()));
     return;
   }
 
@@ -418,7 +416,7 @@ void DocumentLoader::LoadFailed(const ResourceError& error) {
   switch (state_) {
     case kNotStarted:
       probe::frameClearedScheduledClientNavigation(frame_);
-    // Fall-through
+      FALLTHROUGH;
     case kProvisional:
       state_ = kSentDidFinishLoad;
       GetLocalFrameClient().DispatchDidFailProvisionalLoad(error,
@@ -444,16 +442,16 @@ void DocumentLoader::SetUserActivated() {
   user_activated_ = true;
 }
 
-void DocumentLoader::FinishedLoading(double finish_time) {
+void DocumentLoader::FinishedLoading(TimeTicks finish_time) {
   DCHECK(frame_->Loader().StateMachine()->CreatingInitialEmptyDocument() ||
          !frame_->GetPage()->Paused() ||
          MainThreadDebugger::Instance()->IsPaused());
 
-  double response_end_time = finish_time;
-  if (!response_end_time)
+  TimeTicks response_end_time = finish_time;
+  if (response_end_time.is_null())
     response_end_time = time_of_last_data_received_;
-  if (!response_end_time)
-    response_end_time = CurrentTimeTicksInSeconds();
+  if (response_end_time.is_null())
+    response_end_time = CurrentTimeTicks();
   GetTiming().SetResponseEnd(response_end_time);
   if (!MaybeCreateArchive()) {
     // If this is an empty document, it will not have actually been created yet.
@@ -502,7 +500,7 @@ bool DocumentLoader::RedirectReceived(
     return false;
   }
 
-  DCHECK(GetTiming().FetchStart());
+  DCHECK(!GetTiming().FetchStart().is_null());
   AppendRedirect(request_url);
   GetTiming().AddRedirect(redirect_response.Url(), request_url);
 
@@ -567,7 +565,7 @@ void DocumentLoader::CancelLoadAfterCSPDenied(
   redirect_chain_.pop_back();
   AppendRedirect(blocked_url);
   response_ = ResourceResponse(blocked_url, "text/html");
-  FinishedLoading(CurrentTimeTicksInSeconds());
+  FinishedLoading(CurrentTimeTicks());
 
   return;
 }
@@ -755,7 +753,7 @@ void DocumentLoader::DataReceived(Resource* resource,
 
 void DocumentLoader::ProcessData(const char* data, size_t length) {
   application_cache_host_->MainResourceDataReceived(data, length);
-  time_of_last_data_received_ = CurrentTimeTicksInSeconds();
+  time_of_last_data_received_ = CurrentTimeTicks();
 
   if (IsArchiveMIMEType(GetResponse().MimeType()))
     return;
@@ -775,14 +773,15 @@ void DocumentLoader::AppendRedirect(const KURL& url) {
   redirect_chain_.push_back(url);
 }
 
-void DocumentLoader::DetachFromFrame() {
-  DCHECK(frame_);
-
-  // It never makes sense to have a document loader that is detached from its
-  // frame have any loads active, so go ahead and kill all the loads.
+void DocumentLoader::StopLoading() {
   fetcher_->StopFetching();
   if (frame_ && !SentDidFinishLoad())
     LoadFailed(ResourceError::CancelledError(Url()));
+}
+
+void DocumentLoader::DetachFromFrame() {
+  DCHECK(frame_);
+  StopLoading();
   fetcher_->ClearContext();
 
   // If that load cancellation triggered another detach, leave.
@@ -839,7 +838,7 @@ bool DocumentLoader::MaybeLoadEmpty() {
       !GetFrameLoader().StateMachine()->CreatingInitialEmptyDocument())
     request_.SetURL(BlankURL());
   response_ = ResourceResponse(request_.Url(), "text/html");
-  FinishedLoading(CurrentTimeTicksInSeconds());
+  FinishedLoading(CurrentTimeTicks());
   return true;
 }
 
@@ -852,12 +851,12 @@ void DocumentLoader::StartLoading() {
   if (MaybeLoadEmpty())
     return;
 
-  DCHECK(GetTiming().NavigationStart());
+  DCHECK(!GetTiming().NavigationStart().is_null());
 
   // PlzNavigate:
   // The fetch has already started in the browser. Don't mark it again.
   if (!frame_->GetSettings()->GetBrowserSideNavigationEnabled()) {
-    DCHECK(!GetTiming().FetchStart());
+    DCHECK(GetTiming().FetchStart().is_null());
     GetTiming().MarkFetchStart();
   }
 
@@ -867,18 +866,6 @@ void DocumentLoader::StartLoading() {
   FetchParameters fetch_params(request_, options);
   RawResource::FetchMainResource(fetch_params, Fetcher(), this,
                                  substitute_data_);
-
-  // PlzNavigate:
-  // The final access checks are still performed here, potentially rejecting
-  // the "provisional" load, but the browser side already expects the renderer
-  // to be able to unconditionally commit.
-  if (!GetResource() ||
-      (frame_->GetSettings()->GetBrowserSideNavigationEnabled() &&
-       GetResource()->ErrorOccurred())) {
-    request_ = ResourceRequest(BlankURL());
-    MaybeLoadEmpty();
-    return;
-  }
   // A bunch of headers are set when the underlying resource load begins, and
   // request_ needs to include those. Even when using a cached resource, we may
   // make some modification to the request, e.g. adding the referer header.
@@ -1002,8 +989,7 @@ void DocumentLoader::DidCommitNavigation(
   // Report legacy Symantec certificates after Page::DidCommitLoad, because the
   // latter clears the console.
   if (response_.IsLegacySymantecCert()) {
-    GetLocalFrameClient().ReportLegacySymantecCert(
-        response_.Url(), response_.CertValidityStart());
+    GetLocalFrameClient().ReportLegacySymantecCert(response_.Url());
   }
 }
 
@@ -1054,9 +1040,6 @@ void DocumentLoader::InstallNewDocument(
   if (global_object_reuse_policy != WebGlobalObjectReusePolicy::kUseExisting)
     frame_->SetDOMWindow(LocalDOMWindow::Create(*frame_));
 
-  bool user_gesture_bit_set = frame_->HasBeenActivated() ||
-                              frame_->HasReceivedUserGestureBeforeNavigation();
-
   if (reason == InstallNewDocumentReason::kNavigation)
     WillCommitNavigation();
 
@@ -1069,32 +1052,18 @@ void DocumentLoader::InstallNewDocument(
           .WithNewRegistrationContext(),
       false);
 
-  // Persist the user gesture state between frames.
-  bool user_gesture_before_value = false;
-  if (user_gesture_bit_set) {
-    user_gesture_before_value = WebDocumentLoader::ShouldPersistUserActivation(
-        WebSecurityOrigin(previous_security_origin),
-        WebSecurityOrigin(document->GetSecurityOrigin()));
+  // Clear the user activation state.
+  // TODO(crbug.com/736415): Clear this bit unconditionally for all frames.
+  if (frame_->IsMainFrame())
+    frame_->ClearActivation();
 
-    // Clear the user gesture bit that is not persisted.
-    // TODO(crbug.com/736415): Clear this bit unconditionally for all frames.
-    if (frame_->IsMainFrame())
-      frame_->ClearActivation();
-  }
-
-  // If the load request was user activated, pretend that there was a gesture
-  // to carry over.
-  if (user_activated_)
-    user_gesture_before_value = true;
-
-  // If the user gesture before navigation bit has changed then update it on the
-  // frame.
-  if (frame_->HasReceivedUserGestureBeforeNavigation() !=
-      user_gesture_before_value) {
-    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
-        user_gesture_before_value);
+  // The DocumentLoader was flagged as activated if it needs to notify the frame
+  // that it was activated before navigation. Update the frame state based on
+  // the new value.
+  if (frame_->HasReceivedUserGestureBeforeNavigation() != user_activated_) {
+    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(user_activated_);
     GetLocalFrameClient().SetHasReceivedUserGestureBeforeNavigation(
-        user_gesture_before_value);
+        user_activated_);
   }
 
   if (ShouldClearWindowName(*frame_, previous_security_origin, *document)) {

@@ -44,6 +44,7 @@ class TestPreviewsDecider : public PreviewsDecider {
         return previews::params::IsNoScriptPreviewsEnabled();
       case previews::PreviewsType::LITE_PAGE:
       case previews::PreviewsType::NONE:
+      case previews::PreviewsType::UNSPECIFIED:
       case previews::PreviewsType::LAST:
         break;
     }
@@ -87,6 +88,19 @@ class PreviewsContentUtilTest : public testing::Test {
   TestPreviewsDecider previews_decider_;
   net::TestURLRequestContext context_;
 };
+
+TEST_F(PreviewsContentUtilTest,
+       DetermineEnabledClientPreviewsStatePreviewsDisabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine("ClientLoFi" /* enable_features */,
+                                          "Previews" /* disable_features */);
+  EXPECT_EQ(content::PREVIEWS_UNSPECIFIED,
+            previews::DetermineEnabledClientPreviewsState(*CreateHttpsRequest(),
+                                                          previews_decider()));
+  EXPECT_EQ(content::PREVIEWS_UNSPECIFIED,
+            previews::DetermineEnabledClientPreviewsState(*CreateRequest(),
+                                                          previews_decider()));
+}
 
 TEST_F(PreviewsContentUtilTest, DetermineEnabledClientPreviewsStateClientLoFi) {
   base::test::ScopedFeatureList scoped_feature_list;

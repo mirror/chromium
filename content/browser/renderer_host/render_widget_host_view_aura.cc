@@ -48,7 +48,6 @@
 #include "content/browser/renderer_host/render_widget_host_view_event_handler.h"
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/browser/renderer_host/ui_events_helper.h"
-#include "content/common/content_switches_internal.h"
 #include "content/common/input_messages.h"
 #include "content/common/render_widget_window_tree_client_factory.mojom.h"
 #include "content/common/text_input_state.h"
@@ -57,6 +56,7 @@
 #include "content/public/browser/overscroll_configuration.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "media/base/video_frame.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -993,14 +993,6 @@ void RenderWidgetHostViewAura::DidStopFlinging() {
   selection_controller_client_->OnScrollCompleted();
 }
 
-bool RenderWidgetHostViewAura::HasAcceleratedSurface(
-    const gfx::Size& desired_size) {
-  // Aura doesn't use GetBackingStore for accelerated pages, so it doesn't
-  // matter what is returned here as GetBackingStore is the only caller of this
-  // method. TODO(jbates) implement this if other Aura code needs it.
-  return false;
-}
-
 gfx::Rect RenderWidgetHostViewAura::GetBoundsInRootWindow() {
   aura::Window* top_level = window_->GetToplevelWindow();
   gfx::Rect bounds(top_level->GetBoundsInScreen());
@@ -1595,7 +1587,7 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
 
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2046,10 +2038,11 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
   }
 }
 
-void RenderWidgetHostViewAura::WasResized() {
+void RenderWidgetHostViewAura::WasResized(
+    const cc::DeadlinePolicy& deadline_policy) {
   window_->AllocateLocalSurfaceId();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(deadline_policy);
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2192,7 +2185,7 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
     window_->SetBounds(rect);
   host_->WasResized();
   if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+    delegated_frame_host_->WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
   if (host_->auto_resize_enabled()) {
     host_->DidAllocateLocalSurfaceIdForAutoResize(
         host_->last_auto_resize_request_number());
@@ -2486,12 +2479,18 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
 }
 
 void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
-  WasResized();
+  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
 void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
                                                      uint64_t sequence_number) {
-  WasResized();
+  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+}
+
+void RenderWidgetHostViewAura::DidNavigate() {
+  WasResized(cc::DeadlinePolicy::UseExistingDeadline());
+  if (delegated_frame_host_)
+    delegated_frame_host_->DidNavigate();
 }
 
 }  // namespace content

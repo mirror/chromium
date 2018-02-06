@@ -19,7 +19,7 @@
 @synthesize URLLoader = _URLLoader;
 
 - (instancetype)initWithDispatcher:
-                    (id<ApplicationCommands, BrowserCommands, ToolbarCommands>)
+                    (id<ApplicationCommands, BrowserCommands, OmniboxFocuser>)
                         dispatcher
                       browserState:(ios::ChromeBrowserState*)browserState
                       webStateList:(WebStateList*)webStateList {
@@ -60,7 +60,7 @@
 }
 
 - (void)updateToolbarState {
-  [self.toolbarCoordinator updateToolbarState];
+  // No op, the location bar mediator is taking care of this.
 }
 
 - (void)showPrerenderingAnimation {
@@ -134,14 +134,18 @@
   [self.toolbarCoordinator stop];
 }
 
+- (void)transitionToLocationBarFocusedState:(BOOL)focused {
+  [self.toolbarCoordinator transitionToLocationBarFocusedState:focused];
+}
+
 #pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
-  [self.toolbarCoordinator focusOmnibox];
+  [self.toolbarCoordinator.omniboxFocuser focusOmnibox];
 }
 
 - (void)cancelOmniboxEdit {
-  [self.toolbarCoordinator cancelOmniboxEdit];
+  [self.toolbarCoordinator.omniboxFocuser cancelOmniboxEdit];
 }
 
 #pragma mark - FakeboxFocuser
@@ -161,7 +165,8 @@
 #pragma mark - VoiceSearchControllerDelegate
 
 - (void)receiveVoiceSearchResult:(NSString*)voiceResult {
-  [self.toolbarCoordinator receiveVoiceSearchResult:voiceResult];
+  [self.toolbarCoordinator.voiceSearchControllerDelegate
+      receiveVoiceSearchResult:voiceResult];
 }
 
 #pragma mark - ActivityServicePositioner
@@ -174,8 +179,9 @@
 
 - (void)receiveQRScannerResult:(NSString*)qrScannerResult
                loadImmediately:(BOOL)load {
-  [self.toolbarCoordinator receiveQRScannerResult:qrScannerResult
-                                  loadImmediately:load];
+  [self.toolbarCoordinator.QRScannerResultLoader
+      receiveQRScannerResult:qrScannerResult
+             loadImmediately:load];
 }
 
 #pragma mark - BubbleViewAnchorPointProvider
@@ -203,6 +209,14 @@
 
 - (void)finishFullscreenScrollWithAnimator:
     (FullscreenScrollEndAnimator*)animator {
+}
+
+- (void)scrollFullscreenToTopWithAnimator:
+    (FullscreenScrollToTopAnimator*)animator {
+}
+
+- (void)showToolbarForForgroundWithAnimator:
+    (FullscreenForegroundAnimator*)animator {
 }
 
 #pragma mark - ToolsMenuPresentationProvider

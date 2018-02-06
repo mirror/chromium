@@ -37,7 +37,7 @@ class InputHandler : public DevToolsDomainHandler,
   static std::vector<InputHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
+  void SetRenderer(int process_host_id,
                    RenderFrameHostImpl* frame_host) override;
 
   void OnSwapCompositorFrame(
@@ -83,8 +83,8 @@ class InputHandler : public DevToolsDomainHandler,
   Response EmulateTouchFromMouseEvent(const std::string& type,
                                       int x,
                                       int y,
-                                      double timestamp,
                                       const std::string& button,
+                                      Maybe<double> timestamp,
                                       Maybe<double> delta_x,
                                       Maybe<double> delta_y,
                                       Maybe<int> modifiers,

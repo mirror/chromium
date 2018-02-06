@@ -124,12 +124,14 @@
 #include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/svg/SVGResources.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/SpatialNavigation.h"
 #include "core/page/scrolling/RootScrollerController.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollCustomizationCallbacks.h"
 #include "core/page/scrolling/ScrollState.h"
 #include "core/page/scrolling/ScrollStateCallback.h"
@@ -139,7 +141,6 @@
 #include "core/resize_observer/ResizeObservation.h"
 #include "core/svg/SVGAElement.h"
 #include "core/svg/SVGElement.h"
-#include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg_names.h"
 #include "core/xml_names.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -239,7 +240,7 @@ int Element::tabIndex() const {
              : 0;
 }
 
-bool Element::LayoutObjectIsFocusable() const {
+bool Element::IsFocusableStyle() const {
   // Elements in canvas fallback content are not rendered, but they are allowed
   // to be focusable as long as their canvas is displayed and visible.
   if (IsInCanvasSubtree()) {
@@ -279,7 +280,12 @@ Element* Element::CloneElementWithoutChildren() {
 }
 
 Element* Element::CloneElementWithoutAttributesAndChildren() {
-  return GetDocument().createElement(TagQName(), kCreatedByCloneNode);
+  auto* element = GetDocument().createElement(TagQName(), kCreatedByCloneNode);
+  const AtomicString& is = FastGetAttribute(HTMLNames::isAttr);
+  if (!is.IsNull() && !V0CustomElement::IsValidName(element->localName()))
+    V0CustomElementRegistrationContext::SetTypeExtension(element, is);
+  // TODO(tkent): Handle V1 custom built-in elements. crbug.com/807871
+  return element;
 }
 
 Attr* Element::DetachAttribute(size_t index) {
@@ -529,7 +535,7 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
   ScrollAlignment align_y =
       ToPhysicalAlignment(options, kVerticalScroll, is_horizontal_writing_mode);
 
-  LayoutRect bounds = BoundingBox();
+  LayoutRect bounds = BoundingBoxForScrollIntoView();
   GetLayoutObject()->ScrollRectToVisible(
       bounds, {align_x, align_y, kProgrammaticScroll, false, behavior});
 
@@ -542,7 +548,7 @@ void Element::scrollIntoViewIfNeeded(bool center_if_needed) {
   if (!GetLayoutObject())
     return;
 
-  LayoutRect bounds = BoundingBox();
+  LayoutRect bounds = BoundingBoxForScrollIntoView();
   if (center_if_needed) {
     GetLayoutObject()->ScrollRectToVisible(
         bounds,
@@ -615,6 +621,11 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
+  disable_custom_callbacks |=
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !GetScrollCustomizationCallbacks().InScrollPhase(this);
+
   if (!callback || disable_custom_callbacks) {
     NativeDistributeScroll(scroll_state);
     return;
@@ -628,7 +639,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
   if (callback->NativeScrollBehavior() ==
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
-};
+}
 
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
@@ -697,6 +708,10 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        .GetPage()
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
+  disable_custom_callbacks |=
+      !RootScrollerUtil::IsGlobal(this) &&
+      RuntimeEnabledFeatures::ScrollCustomizationEnabled() &&
+      !GetScrollCustomizationCallbacks().InScrollPhase(this);
 
   if (!callback || disable_custom_callbacks) {
     NativeApplyScroll(scroll_state);
@@ -1283,6 +1298,8 @@ ComputedAccessibleNode* Element::GetComputedAccessibleNode() {
   if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
+  // TODO(meredithl): Create finer grain method for enabling accessibility.
+  GetDocument().GetPage()->GetSettings().SetAccessibilityEnabled(true);
   ElementRareData& rare_data = EnsureElementRareData();
   return rare_data.EnsureComputedAccessibleNode(this);
 }
@@ -1462,8 +1479,10 @@ void Element::AttributeChanged(const AttributeModificationParams& params) {
   InvalidateNodeListCachesInAncestors(&name, this, nullptr);
 
   if (isConnected()) {
-    if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-      cache->HandleAttributeChanged(name, this);
+    if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache()) {
+      if (params.old_value != params.new_value)
+        cache->HandleAttributeChanged(name, this);
+    }
   }
 
   if (params.reason == AttributeModificationReason::kDirectly &&
@@ -1487,12 +1506,11 @@ const QualifiedName& Element::SubResourceAttributeName() const {
   return QualifiedName::Null();
 }
 
+// TODO(tkent): Remove this function, and call AttributeChanged directly.
 inline void Element::AttributeChangedFromParserOrByCloning(
     const QualifiedName& name,
     const AtomicString& new_value,
     AttributeModificationReason reason) {
-  if (name == isAttr)
-    V0CustomElementRegistrationContext::SetTypeExtension(this, new_value);
   AttributeChanged(
       AttributeModificationParams(name, g_null_atom, new_value, reason));
 }
@@ -1794,11 +1812,8 @@ void Element::RemovedFrom(ContainerNode* insertion_point) {
     if (this == GetDocument().CssTarget())
       GetDocument().SetCSSTarget(nullptr);
 
-    if (HasPendingResources()) {
-      GetTreeScope()
-          .EnsureSVGTreeScopedResources()
-          .RemoveElementFromPendingResources(*this);
-    }
+    if (HasPendingResources())
+      SVGResources::RemoveWatchesForElement(*this);
 
     if (GetCustomElementState() == CustomElementState::kCustom)
       CustomElement::EnqueueDisconnectedCallback(this);
@@ -2967,7 +2982,7 @@ void Element::UpdateFocusAppearanceWithOptions(
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
     if (!options.preventScroll()) {
-      GetLayoutObject()->ScrollRectToVisible(BoundingBox(),
+      GetLayoutObject()->ScrollRectToVisible(BoundingBoxForScrollIntoView(),
                                              WebScrollIntoViewParams());
     }
   }
@@ -3028,8 +3043,7 @@ bool Element::IsFocusable() const {
   // needsLayoutTreeUpdateForNode check is invalid.
   DCHECK(!GetDocument().IsActive() ||
          !GetDocument().NeedsLayoutTreeUpdateForNode(*this));
-  return isConnected() && SupportsFocus() && !IsInert() &&
-         LayoutObjectIsFocusable();
+  return isConnected() && SupportsFocus() && !IsInert() && IsFocusableStyle();
 }
 
 bool Element::IsKeyboardFocusable() const {
@@ -3269,6 +3283,24 @@ void Element::SetNeedsResizeObserverUpdate() {
     for (auto& observation : data->Values())
       observation->ElementSizeChanged();
   }
+}
+
+void Element::WillBeginCustomizedScrollPhase(
+    ScrollCustomization::ScrollDirection direction) {
+  DCHECK(!GetScrollCustomizationCallbacks().InScrollPhase(this));
+  LayoutBox* box = GetLayoutBox();
+  if (!box)
+    return;
+
+  ScrollCustomization::ScrollDirection scroll_customization =
+      box->Style()->ScrollCustomization();
+
+  GetScrollCustomizationCallbacks().SetInScrollPhase(
+      this, direction & scroll_customization);
+}
+
+void Element::DidEndCustomizedScrollPhase() {
+  GetScrollCustomizationCallbacks().SetInScrollPhase(this, false);
 }
 
 // Step 1 of http://domparsing.spec.whatwg.org/#insertadjacenthtml()

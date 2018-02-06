@@ -12,11 +12,11 @@
 
 #include "base/atomicops.h"
 #include "base/compiler_specific.h"
+#include "base/component_export.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "base/threading/thread_checker.h"
 #include "ipc/ipc.mojom.h"
-#include "ipc/ipc_export.h"
 #include "ipc/ipc_message.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
@@ -43,7 +43,7 @@ namespace internal {
 // be called on any thread. All |Delegate| functions will be called on the IO
 // thread.
 //
-class IPC_EXPORT MessagePipeReader : public mojom::Channel {
+class COMPONENT_EXPORT(IPC) MessagePipeReader : public mojom::Channel {
  public:
   class Delegate {
    public:
@@ -95,9 +95,9 @@ class IPC_EXPORT MessagePipeReader : public mojom::Channel {
  private:
   // mojom::Channel:
   void SetPeerPid(int32_t peer_pid) override;
-  void Receive(base::span<const uint8_t> data,
-               base::Optional<std::vector<mojo::native::SerializedHandlePtr>>
-                   handles) override;
+  void Receive(
+      base::span<const uint8_t> data,
+      base::Optional<std::vector<mojom::SerializedHandlePtr>> handles) override;
   void GetAssociatedInterface(
       const std::string& name,
       mojom::GenericInterfaceAssociatedRequest request) override;

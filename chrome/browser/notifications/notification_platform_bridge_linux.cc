@@ -18,6 +18,7 @@
 #include "base/files/file_util.h"
 #include "base/i18n/number_formatting.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/ranges.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -45,7 +46,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/public/cpp/notification.h"
 
 namespace {
 
@@ -75,6 +76,7 @@ const char kCapabilityPersistence[] = "persistence";
 const char kCapabilitySound[] = "sound";
 
 // Button IDs.
+const char kCloseButtonId[] = "close";
 const char kDefaultButtonId[] = "default";
 const char kSettingsButtonId[] = "settings";
 
@@ -108,10 +110,6 @@ enum class ConnectionInitializationStatusCode {
   NUM_ITEMS
 };
 
-int ClampInt(int value, int low, int hi) {
-  return std::max(std::min(value, hi), low);
-}
-
 base::string16 CreateNotificationTitle(
     const message_center::Notification& notification) {
   base::string16 title;
@@ -142,6 +140,7 @@ int NotificationPriorityToFdoUrgency(int priority) {
       return URGENCY_CRITICAL;
     default:
       NOTREACHED();
+      FALLTHROUGH;
     case message_center::DEFAULT_PRIORITY:
       return URGENCY_NORMAL;
   }
@@ -162,12 +161,21 @@ gfx::Image ResizeImageToFdoMaxSize(const gfx::Image& image) {
   const SkBitmap* image_bitmap = image.ToSkBitmap();
   double scale = std::min(static_cast<double>(kMaxImageWidth) / width,
                           static_cast<double>(kMaxImageHeight) / height);
-  width = ClampInt(scale * width, 1, kMaxImageWidth);
-  height = ClampInt(scale * height, 1, kMaxImageHeight);
+  width = base::ClampToRange<int>(scale * width, 1, kMaxImageWidth);
+  height = base::ClampToRange<int>(scale * height, 1, kMaxImageHeight);
   return gfx::Image(
       gfx::ImageSkia::CreateFrom1xBitmap(skia::ImageOperations::Resize(
           *image_bitmap, skia::ImageOperations::RESIZE_LANCZOS3, width,
           height)));
+}
+
+bool ShouldAddCloseButton(const std::string& server_name) {
+  // Cinnamon doesn't add a close button on notifications.  With eg. calendar
+  // notifications, which are stay-on-screen, this can lead to a situation where
+  // the only way to dismiss a notification is to click on it, which would
+  // create an unwanted web navigation.  For this reason, manually add a close
+  // button. (https://crbug.com/804637)
+  return server_name == "cinnamon";
 }
 
 void ForwardNotificationOperationOnUiThread(
@@ -436,6 +444,17 @@ class NotificationPlatformBridgeLinuxImpl
         &NotificationPlatformBridgeLinuxImpl::SetBodyImagesSupported, this,
         base::ContainsKey(capabilities_, kCapabilityBodyImages)));
 
+    dbus::MethodCall get_server_information_call(kFreedesktopNotificationsName,
+                                                 "GetServerInformation");
+    std::unique_ptr<dbus::Response> server_information_response =
+        notification_proxy_->CallMethodAndBlock(
+            &get_server_information_call,
+            dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+    if (server_information_response) {
+      dbus::MessageReader reader(server_information_response.get());
+      reader.PopString(&server_name_);
+    }
+
     connected_signals_barrier_ = base::BarrierClosure(
         2, base::Bind(&NotificationPlatformBridgeLinuxImpl::
                           OnConnectionInitializationFinishedOnTaskRunner,
@@ -600,6 +619,11 @@ class NotificationPlatformBridgeLinuxImpl
         actions.push_back(kSettingsButtonId);
         actions.push_back(
             l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_SETTINGS));
+      }
+      if (ShouldAddCloseButton(server_name_)) {
+        actions.push_back(kCloseButtonId);
+        actions.push_back(
+            l10n_util::GetStringUTF8(IDS_NOTIFICATION_BUTTON_CLOSE));
       }
     }
     writer.AppendArrayOfStrings(actions);
@@ -771,6 +795,8 @@ class NotificationPlatformBridgeLinuxImpl
       ForwardNotificationOperation(data, NotificationCommon::SETTINGS,
                                    base::nullopt /* action_index */,
                                    base::nullopt /* by_user */);
+    } else if (action == kCloseButtonId) {
+      CloseOnTaskRunner(data->profile_id, data->notification_id);
     } else {
       size_t id;
       if (!base::StringToSizeT(action, &id))
@@ -923,6 +949,8 @@ class NotificationPlatformBridgeLinuxImpl
   dbus::ObjectProxy* notification_proxy_ = nullptr;
 
   std::unordered_set<std::string> capabilities_;
+
+  std::string server_name_;
 
   base::Closure connected_signals_barrier_;
 

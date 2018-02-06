@@ -51,6 +51,7 @@
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerController.h"
 #include "core/paint/BlockPaintInvalidator.h"
 #include "core/paint/BlockPainter.h"
 #include "core/paint/ObjectPaintInvalidator.h"
@@ -185,7 +186,7 @@ void LayoutBlock::StyleWillChange(StyleDifference diff,
       // Remove our fixed positioned descendants from their current containing
       // block.
       // They will be inserted into our positioned objects list during layout.
-      if (LayoutBlock* cb = ContainerForFixedPosition())
+      if (LayoutBlock* cb = ContainingBlockForFixedPosition())
         cb->RemovePositionedObjects(this, kNewContainingBlock);
     }
   }
@@ -312,11 +313,14 @@ void LayoutBlock::AddChildBeforeDescendant(LayoutObject* new_child,
       || before_descendant_container->IsLayoutFullScreen() ||
       before_descendant_container->IsLayoutFullScreenPlaceholder()) {
     // Insert the child into the anonymous block box instead of here.
-    if (new_child->IsInline() || new_child->IsFloatingOrOutOfFlowPositioned() ||
-        before_descendant->Parent()->SlowFirstChild() != before_descendant)
+    if (new_child->IsInline() ||
+        (new_child->IsFloatingOrOutOfFlowPositioned() && !IsFlexibleBox() &&
+         !IsLayoutGrid()) ||
+        before_descendant->Parent()->SlowFirstChild() != before_descendant) {
       before_descendant_container->AddChild(new_child, before_descendant);
-    else
+    } else {
       AddChild(new_child, before_descendant->Parent());
+    }
     return;
   }
 
@@ -351,7 +355,8 @@ void LayoutBlock::AddChild(LayoutObject* new_child,
   // here.
   DCHECK(!ChildrenInline());
 
-  if (new_child->IsInline() || new_child->IsFloatingOrOutOfFlowPositioned()) {
+  if (new_child->IsInline() || (new_child->IsFloatingOrOutOfFlowPositioned() &&
+                                !IsFlexibleBox() && !IsLayoutGrid())) {
     // If we're inserting an inline child but all of our children are blocks,
     // then we have to make sure it is put into an anomyous block box. We try to
     // use an existing anonymous box if possible, otherwise a new one is created
@@ -409,6 +414,10 @@ void LayoutBlock::RemoveLeftoverAnonymousBlock(LayoutBlock* child) {
 
 void LayoutBlock::UpdateAfterLayout() {
   InvalidateStickyConstraints();
+
+  if (RuntimeEnabledFeatures::ImplicitRootScrollerEnabled() && GetNode())
+    GetDocument().GetRootScrollerController().ConsiderForImplicit(*GetNode());
+
   LayoutBox::UpdateAfterLayout();
 }
 

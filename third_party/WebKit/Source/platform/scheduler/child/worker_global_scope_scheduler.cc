@@ -28,8 +28,8 @@ void WorkerGlobalScopeScheduler::Dispose() {
 #endif
 }
 
-scoped_refptr<WebTaskRunner> WorkerGlobalScopeScheduler::GetTaskRunner(
-    TaskType type) const {
+scoped_refptr<base::SingleThreadTaskRunner>
+WorkerGlobalScopeScheduler::GetTaskRunner(TaskType type) const {
   switch (type) {
     case TaskType::kDOMManipulation:
     case TaskType::kUserInteraction:
@@ -59,6 +59,8 @@ scoped_refptr<WebTaskRunner> WorkerGlobalScopeScheduler::GetTaskRunner(
     case TaskType::kInternalTest:
     case TaskType::kInternalWebCrypto:
     case TaskType::kInternalIndexedDB:
+    case TaskType::kInternalMedia:
+    case TaskType::kInternalMediaRealTime:
       // UnthrottledTaskRunner is generally discouraged in future.
       // TODO(nhiroki): Identify which tasks can be throttled / suspendable and
       // move them into other task runners. See also comments in

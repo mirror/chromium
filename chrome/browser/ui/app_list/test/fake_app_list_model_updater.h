@@ -5,9 +5,9 @@
 #ifndef CHROME_BROWSER_UI_APP_LIST_TEST_FAKE_APP_LIST_MODEL_UPDATER_H_
 #define CHROME_BROWSER_UI_APP_LIST_TEST_FAKE_APP_LIST_MODEL_UPDATER_H_
 
-#include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "ash/app_list/model/search/search_result.h"
@@ -40,14 +40,11 @@ class FakeAppListModelUpdater : public AppListModelUpdater {
   ChromeAppListItem* FindItem(const std::string& id) override;
   size_t ItemCount() override;
   ChromeAppListItem* ItemAtForTest(size_t index) override;
-  app_list::AppListFolderItem* FindFolderItem(
-      const std::string& folder_id) override;
+  ChromeAppListItem* FindFolderItem(const std::string& folder_id) override;
   bool FindItemIndexForTest(const std::string& id, size_t* index) override;
-  app_list::AppListViewState StateFullscreen() override;
-  std::map<std::string, size_t> GetIdToAppListIndexMap() override;
+  void GetIdToAppListIndexMap(GetIdToAppListIndexMapCallback callback) override;
   size_t BadgedItemCount() override;
   // For SearchModel:
-  bool TabletMode() override;
   bool SearchEngineIsGoogle() override;
   const std::vector<std::unique_ptr<app_list::SearchResult>>& search_results()
       const {

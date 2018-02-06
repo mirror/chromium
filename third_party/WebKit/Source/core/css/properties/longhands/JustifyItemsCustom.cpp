@@ -8,6 +8,7 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSParsingUtils.h"
 #include "core/css/properties/ComputedStyleUtils.h"
+#include "core/frame/WebFeature.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -27,10 +28,13 @@ const CSSValue* JustifyItems::ParseSingleValue(
     legacy = CSSPropertyParserHelpers::ConsumeIdent<CSSValueLegacy>(range_copy);
   if (legacy && position_keyword) {
     range = range_copy;
+    context.Count(WebFeature::kCSSLegacyAlignment);
     return CSSValuePair::Create(legacy, position_keyword,
                                 CSSValuePair::kDropIdenticalValues);
   }
-  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(range);
+
+  return CSSParsingUtils::ConsumeSelfPositionOverflowPosition(
+      range, CSSParsingUtils::IsSelfPositionOrLeftOrRightKeyword);
 }
 
 const CSSValue* JustifyItems::CSSValueFromComputedStyleInternal(

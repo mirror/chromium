@@ -19,6 +19,7 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/common/frame_messages.h"
+#include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 
 namespace {
@@ -161,8 +162,7 @@ RenderWidgetHostInputEventRouter::RenderWidgetHostInputEventRouter()
       in_touchscreen_gesture_pinch_(false),
       gesture_pinch_did_send_scroll_begin_(false),
       event_targeter_(std::make_unique<RenderWidgetTargeter>(this)),
-      enable_viz_(
-          base::FeatureList::IsEnabled(features::kVizDisplayCompositor)),
+      use_viz_hit_test_(features::IsVizHitTestingEnabled()),
       weak_ptr_factory_(this) {}
 
 RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {
@@ -207,27 +207,6 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindMouseEventTarget(
     target = result.view;
     // |transformed_point| is already transformed.
     needs_transform_point = false;
-  }
-
-  if (target && target->IsRenderWidgetHostViewGuest()) {
-    RenderWidgetHostViewBase* owner_view =
-        static_cast<RenderWidgetHostViewGuest*>(target)
-            ->GetOwnerRenderWidgetHostView();
-    // In case there is nested RenderWidgetHostViewGuests (i.e., PDF inside
-    // <webview>), we will need the owner view of the top-most guest for input
-    // routing.
-    while (owner_view->IsRenderWidgetHostViewGuest()) {
-      owner_view = static_cast<RenderWidgetHostViewGuest*>(owner_view)
-                       ->GetOwnerRenderWidgetHostView();
-    }
-
-    if (owner_view != root_view) {
-      needs_transform_point = true;
-    } else {
-      needs_transform_point = false;
-      transformed_point = event.PositionInWidget();
-    }
-    target = owner_view;
   }
 
   if (needs_transform_point) {
@@ -284,7 +263,7 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
   viz::FrameSinkId frame_sink_id;
 
   bool query_renderer = false;
-  if (enable_viz_) {
+  if (use_viz_hit_test_) {
     const auto& display_hit_test_query_map =
         GetHostFrameSinkManager()->display_hit_test_query();
     const auto iter =
@@ -308,6 +287,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
     } else {
       *transformed_point = point;
     }
+    if (target.flags & viz::mojom::kHitTestAsk)
+      query_renderer = true;
   } else {
     // Short circuit if owner_map has only one RenderWidgetHostView, no need for
     // hit testing.
