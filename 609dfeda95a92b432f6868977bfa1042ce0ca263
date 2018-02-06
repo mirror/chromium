@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1d93b5fd_c2c6d000",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2018-02-06T17:45:05Z",
+      "side": 1,
+      "message": "I really like XSDB-protected and XSDB-ignored. Although, what does \"XSDB\" stand for now ;).",
+      "parentUuid": "0a06d5ce_11016161",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a836e0_2a99eae0",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -401,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "4e8398e6_afdee69d",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2018-02-06T17:45:05Z",
+      "side": 1,
+      "message": "Thanks for opening the issue. I think the spec\u0027s list is quite flexible in general, since it\u0027s not used for anything terribly important. So we should have no problem modifying it once XSDB comes about as a more important consumer of the list.",
+      "parentUuid": "7b23a025_66aface7",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fcb5ba_9aec7020",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -600,6 +642,24 @@
     },
     {
       "key": {
+        "uuid": "4d0ce4d1_adc43adc",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2018-02-06T17:45:05Z",
+      "side": 1,
+      "message": "Oh, nice, I didn\u0027t realize we were already somewhat strict for \u003clink rel\u003d\"stylesheet\"\u003e. Even the quirks mode exception is only same-origin. So with luck this isn\u0027t an actual issue.\n\nOf course, maybe the spec is more strict than is web-compatible; we should check that empty/missing Content-Type case :(. Filed https://github.com/whatwg/html/issues/3457 to investigate.",
+      "parentUuid": "752d5657_9a20c751",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a069c2c3_3b2a7d9b",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -757,6 +817,24 @@
       "side": 1,
       "message": "These are meant to be RFC 2119 should/may.  Perhaps it is too early to go there (i.e. it seems that we are still discovering new issues / corner cases when discussing the explainer).",
       "parentUuid": "e6c55756_b35c23d0",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18fc6991_5e5df229",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2018-02-06T17:45:05Z",
+      "side": 1,
+      "message": "In general I find should/may suboptimal for specs. Prefer must/must not if at all possible.",
+      "parentUuid": "9aa6cb7f_c936586a",
       "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
