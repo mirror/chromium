@@ -47,6 +47,9 @@ class LoginKeyboardTestBase : public AshTestBase {
   // Loads the number of test users specified by |count|;
   void LoadUsers(int count);
 
+  // Loads user with the email specified by |name|@|domain|;
+  void LoadUser(const std::string& name, const std::string& domain);
+
   // AshTestBase:
   void SetUp() override;
   void TearDown() override;

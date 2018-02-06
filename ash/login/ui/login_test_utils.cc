@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ash/login/ui/login_test_utils.h"
+#include "base/strings/strcat.h"
 
 namespace ash {
 
@@ -20,11 +21,12 @@ LoginPasswordView::TestApi MakeLoginPasswordTestApi(LockContentsView* view) {
       MakeLoginPrimaryAuthTestApi(view).password_view());
 }
 
-mojom::LoginUserInfoPtr CreateUser(const std::string& name) {
+mojom::LoginUserInfoPtr CreateUser(const std::string& name,
+                                   const std::string& domain) {
   auto user = mojom::LoginUserInfo::New();
   user->basic_user_info = mojom::UserInfo::New();
   user->basic_user_info->account_id =
-      AccountId::FromUserEmail(name + "@foo.com");
+      AccountId::FromUserEmail(base::StrCat({name, "@", domain}));
   user->basic_user_info->display_name = "User " + name;
   user->basic_user_info->display_email =
       user->basic_user_info->account_id.GetUserEmail();

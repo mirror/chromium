@@ -96,8 +96,15 @@ void LoginKeyboardTestBase::ShowLoginScreen() {
 void LoginKeyboardTestBase::LoadUsers(int count) {
   std::vector<mojom::LoginUserInfoPtr> users;
   for (int i = 0; i < count; ++i) {
-    users.push_back(CreateUser("user"));
+    users.push_back(CreateUser("user", "foo.com"));
   }
+  login_controller_->LoadUsers(std::move(users), false);
+}
+
+void LoginKeyboardTestBase::LoadUser(const std::string& name,
+                                     const std::string& domain) {
+  std::vector<mojom::LoginUserInfoPtr> users;
+  users.push_back(CreateUser(name, domain));
   login_controller_->LoadUsers(std::move(users), false);
 }
 
