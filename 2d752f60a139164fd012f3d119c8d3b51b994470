@@ -34,6 +34,41 @@
       "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40a0ef8_f1a64462",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T18:50:56Z",
+      "side": 1,
+      "message": "I think it just makes things ambiguous.\n\nNoDestructor\u003cstd::string\u003e s(\"hi\");\n\nThis could make std::string(\"hi\") and then move it to T\u0026\u0026\nOr it could pass \"hi\" as Args\u0026\u0026 and construct it in place.\n\nWhich one does this pick now? If it picks the T\u0026\u0026 path, what happens if T is moveonly?\n\nNoDestructor\u003cstd::unique_ptr\u003cint\u003e\u003e s(new int(3));\n\nDoes this work?",
+      "parentUuid": "ff6cafef_bbc1724a",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a625fd47_1c72e15a",
+        "filename": "base/no_destructor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T18:50:56Z",
+      "side": 1,
+      "message": "Should we delete operator\u003d too?",
+      "revId": "2d752f60a139164fd012f3d119c8d3b51b994470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
