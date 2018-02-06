@@ -41,6 +41,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/origin_trials/origin_trials.h"
+#include "core/page/Page.h"
 #include "core/timing/PerformanceTiming.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/runtime_enabled_features.h"
@@ -121,6 +122,8 @@ ExecutionContext* Performance::GetExecutionContext() const {
 }
 
 MemoryInfo* Performance::memory() {
+  if (Page::OrdinaryPages().size() > 1u)
+    return nullptr;
   return MemoryInfo::Create();
 }
 
