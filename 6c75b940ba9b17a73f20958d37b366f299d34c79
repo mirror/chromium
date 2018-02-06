@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8a71853_4d208056",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-06T18:07:42Z",
+      "side": 0,
+      "message": "nit: Since the toolbar is not translucent anymore, should we consider re-organizing selectable_list_layout.xml back to toolbar at top and recycler view at bottom instead of having them overlapped?\n\nChanges was made here: https://chromium-review.googlesource.com/c/chromium/src/+/606387/10/chrome/android/java/res/layout/selectable_list_layout.xml",
+      "range": {
+        "startLine": 209,
+        "startChar": 43,
+        "endLine": 209,
+        "endChar": 57
+      },
+      "revId": "6c75b940ba9b17a73f20958d37b366f299d34c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
