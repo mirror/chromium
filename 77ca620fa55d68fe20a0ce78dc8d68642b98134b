@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec16387_f783381e",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T18:00:38Z",
+      "side": 1,
+      "message": "can be StartSuspendForAudioOnly also.",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f571569_50e6f89a",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T18:00:38Z",
+      "side": 1,
+      "message": "it\u0027s confusing with |state_| and |state|, sometimes equal and sometime (with the new suspend logic) not.\n\nmaybe \u0027const State expected_state\u0027 for the arg, or similar.",
+      "range": {
+        "startLine": 123,
+        "startChar": 48,
+        "endLine": 123,
+        "endChar": 53
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe4050d_9014aa1f",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T18:00:38Z",
+      "side": 1,
+      "message": "else if.\n\nalso, it\u0027s unclear to me that |state| buys us anything here anyway, except for some DCHECKs.  can\u0027t we just \"state_ \u003d pipeline_-\u003eIsSuspended() ? State::SUSPENDED : State::PLAYING\"?\n\nmight be worth keeping |state| as an arg, to keep the DCHECKs for sanity, but can probably simplify the logic some.",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
