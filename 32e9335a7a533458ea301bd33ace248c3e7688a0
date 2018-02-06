@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d369985d_c9905129",
+        "filename": "device/fido/device_response_converter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7025077c_94d6fd62",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f7f91ea_2b8763a7",
         "filename": "device/fido/fido_hid_message.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66146497_b22f6c10",
+        "filename": "device/fido/fido_hid_message.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Oops. You\u0027re absolutely right. Thanks for the catch! :)",
+      "parentUuid": "3f7f91ea_2b8763a7",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f7375c62_bc7788f0",
+        "filename": "device/fido/fido_hid_message.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad9a46d_0814cb11",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bfdc77c_3ec28e71",
         "filename": "device/fido/fido_hid_message.cc",
         "patchSetId": 16
@@ -85,6 +157,24 @@
       "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d46ca9f_022f0f7a",
+        "filename": "device/fido/fido_hid_message.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bfdc77c_3ec28e71",
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "2a8845bd_6ab508f3",
+        "filename": "device/fido/fido_hid_message.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ef4f91_d6cc5f3f",
+      "range": {
+        "startLine": 24,
+        "startChar": 144,
+        "endLine": 24,
+        "endChar": 145
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b589a784_75145ddd",
         "filename": "device/fido/fido_hid_message.h",
         "patchSetId": 16
@@ -131,6 +245,30 @@
       "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05501cea_723089a8",
+        "filename": "device/fido/fido_hid_message.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b589a784_75145ddd",
+      "range": {
+        "startLine": 27,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "b807da38_a8c7defd",
+        "filename": "device/fido/fido_hid_message_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb273fa_30460858",
+      "range": {
+        "startLine": 16,
+        "startChar": 48,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b62b39f6_481e6467",
         "filename": "device/fido/fido_hid_message_unittest.cc",
         "patchSetId": 16
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "7702ef62_8f1f6557",
+        "filename": "device/fido/fido_hid_message_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62b39f6_481e6467",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 33
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e3e97d5_c09f6b48",
         "filename": "device/fido/fido_hid_message_unittest.cc",
         "patchSetId": 16
@@ -200,6 +386,30 @@
       "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f99309d_1c4d388b",
+        "filename": "device/fido/fido_hid_message_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e3e97d5_c09f6b48",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 75
+      },
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "98d69ce1_e3efec64",
+        "filename": "device/fido/fido_hid_packet.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "543d406f_a7adc173",
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bccf928c_d5a4c4c4",
         "filename": "device/fido/fido_hid_packet.h",
         "patchSetId": 16
@@ -280,6 +508,24 @@
       "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bf04cb_753be546",
+        "filename": "device/fido/u2f_hid_device.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-06T21:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e16594f1_dc704fb4",
+      "revId": "32e9335a7a533458ea301bd33ace248c3e7688a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
