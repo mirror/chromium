@@ -7,6 +7,18 @@ import("//extensions/features/features.gni")
 assert(enable_extensions,
        "Cannot depend on extensions because enable_extensions=false.")
 
+source_set("messaging_host") {
+  sources = [
+    "native_message_host.cc",
+    "native_message_host.h",
+    "native_messaging_channel.h",
+  ]
+
+  deps = [
+    "//base",
+  ]
+}
+
 source_set("messaging") {
   sources = [
     "extension_message_port.cc",
@@ -19,12 +31,10 @@ source_set("messaging") {
     "message_service.h",
     "messaging_delegate.cc",
     "messaging_delegate.h",
-    "native_message_host.cc",
-    "native_message_host.h",
-    "native_messaging_channel.h",
   ]
 
   deps = [
+    ":messaging_host",
     "//base",
     "//content/public/browser",
     "//content/public/common",

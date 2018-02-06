@@ -92,7 +92,10 @@ source_set("linux") {
   ]
 
   deps = [
+    "//base",
     "//remoting/protocol",
+
+    #"//remoting/host",
     "//third_party/webrtc/modules/desktop_capture",
   ]
   public_deps = []
@@ -119,7 +122,10 @@ source_set("x11") {
     "x_server_clipboard.h",
   ]
   deps = [
+    "//base",
+    "//remoting/base",
     "//third_party/webrtc/modules/desktop_capture",
+    "//ui/gfx/x",
   ]
 }
 
@@ -134,8 +140,11 @@ executable("remoting_native_messaging_host") {
 
   deps = [
     "//base",
+    "//base:i18n",
     "//build/config:exe_and_shlib_deps",
     "//net",
+    "//remoting/base",
+    "//remoting/base:authorization",
     "//remoting/base:breakpad",
     "//remoting/host",
     "//remoting/host:remoting_infoplist_strings",
@@ -172,6 +181,7 @@ source_set("unit_tests") {
     "//remoting/host",
     "//remoting/host:test_support",
     "//remoting/host/it2me:common",
+    "//remoting/host/linux:x11",
     "//remoting/host/native_messaging",
     "//remoting/host/security_key:unit_tests",
     "//remoting/host/setup",
