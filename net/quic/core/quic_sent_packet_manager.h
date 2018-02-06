@@ -335,6 +335,9 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
   // number of times.
   void SetSendAlgorithm(SendAlgorithmInterface* send_algorithm);
 
+  // Sets the initial RTT of the connection.
+  void SetInitialRtt(QuicTime::Delta rtt);
+
   // Newly serialized retransmittable packets are added to this map, which
   // contains owning pointers to any contained frames.  If a packet is
   // retransmitted, this map will contain entries for both the old and the new

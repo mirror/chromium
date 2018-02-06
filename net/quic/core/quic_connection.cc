@@ -1320,15 +1320,11 @@ const QuicConnectionStats& QuicConnection::GetStats() {
   QuicTime::Delta min_rtt = rtt_stats->min_rtt();
   if (min_rtt.IsZero()) {
     // If min RTT has not been set, use initial RTT instead.
-    min_rtt = QuicTime::Delta::FromMicroseconds(rtt_stats->initial_rtt_us());
+    min_rtt = rtt_stats->initial_rtt();
   }
   stats_.min_rtt_us = min_rtt.ToMicroseconds();
 
-  QuicTime::Delta srtt = rtt_stats->smoothed_rtt();
-  if (srtt.IsZero()) {
-    // If SRTT has not been set, use initial RTT instead.
-    srtt = QuicTime::Delta::FromMicroseconds(rtt_stats->initial_rtt_us());
-  }
+  QuicTime::Delta srtt = rtt_stats->SmoothedOrInitialRtt();
   stats_.srtt_us = srtt.ToMicroseconds();
 
   stats_.estimated_bandwidth = sent_packet_manager_.BandwidthEstimate();
@@ -1917,8 +1913,7 @@ void QuicConnection::OnCongestionChange() {
   // Uses the connection's smoothed RTT. If zero, uses initial_rtt.
   QuicTime::Delta rtt = sent_packet_manager_.GetRttStats()->smoothed_rtt();
   if (rtt.IsZero()) {
-    rtt = QuicTime::Delta::FromMicroseconds(
-        sent_packet_manager_.GetRttStats()->initial_rtt_us());
+    rtt = sent_packet_manager_.GetRttStats()->initial_rtt();
   }
 
   if (debug_visitor_ != nullptr) {
