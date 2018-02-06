@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4572d418_f1b87b9c",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2018-02-06T18:29:08Z",
+      "side": 1,
+      "message": "was this supposed to right below the helper MakeCompositorFrameWithChildSurface?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 15
+      },
+      "revId": "cd523fb26183778d3517643d0005cd0e8b363074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
