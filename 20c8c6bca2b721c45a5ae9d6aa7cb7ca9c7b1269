@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674dc519_6516f16f",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-06T15:49:54Z",
+      "side": 1,
+      "message": "An out param might be cleaner?\nOr I could stick this in a superclass of the merger classes.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5a6731_f62baa21",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-06T15:49:54Z",
+      "side": 1,
+      "message": "I think this is a bug? This doesn\u0027t set did_merge_new_timing_value_.\n\nI\u0027m inclined to just always use MaybeUpdateTimeDelta?",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 78
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
