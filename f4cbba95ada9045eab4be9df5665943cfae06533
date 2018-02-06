@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d09142e3_e230d8b5",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/mock_tts.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-06T18:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a948b350_05989b45",
+      "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a886411_c6cd1ab5",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_mouse_selection_test.extjs",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T17:32:04Z",
       "side": 1,
       "message": "tiny nit: should this be one to the right? And also adjust 2 lines below",
+      "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2680cc9c_f509e58e",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_mouse_selection_test.extjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-06T18:37:02Z",
+      "side": 1,
+      "message": "I think this is correct?\nI want to click slightly into the firstNode, so I add 1 to the top and left positions to get 1 px into it.\n\nLet me know if that\u0027s not what you mean.",
+      "parentUuid": "3a886411_c6cd1ab5",
       "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
