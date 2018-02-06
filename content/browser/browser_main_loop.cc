@@ -736,6 +736,25 @@ void BrowserMainLoop::MainMessageLoopStart() {
 }
 
 void BrowserMainLoop::PostMainMessageLoopStart() {
+  TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:BrowserThread::IO");
+  base::Thread::Options options;
+  options.message_loop_type = base::MessageLoop::TYPE_IO;
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+  // Up the priority of the |io_thread_| as some of its IPCs relate to
+  // display tasks.
+  options.priority = base::ThreadPriority::DISPLAY;
+#endif
+
+  io_thread_.reset(new BrowserProcessSubThread(BrowserThread::IO));
+  if (!io_thread_->StartWithOptions(options))
+    LOG(FATAL) << "Failed to start the browser thread: IO";
+
+  // Bring up Mojo IPC and the embedded Service Manager as early as possible.
+  // Initializaing mojo requires the IO thread to have been initialized first,
+  // so this cannot happen any earlier than now.
+  TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:InitializeMojo");
+  InitializeMojo();
+
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:SystemMonitor");
     system_monitor_.reset(new base::SystemMonitor);
@@ -751,10 +770,15 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:HighResTimerManager");
     hi_res_timer_manager_.reset(new base::HighResolutionTimerManager);
   }
-  {
+
+  // There is a global singleton net::NetworkChangeNotifier if NetworkService
+  // is running inside of the browser process. The net::NetworkChangeNotifier
+  // object may has been created in ServiceManagerContext.
+  if (!net::NetworkChangeNotifier::HasNetworkChangeNotifier()) {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:NetworkChangeNotifier");
     network_change_notifier_.reset(net::NetworkChangeNotifier::Create());
   }
+
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:MediaFeatures");
     media::InitializeMediaLibrary();
@@ -1036,9 +1060,6 @@ int BrowserMainLoop::CreateThreads() {
 
   base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
 
-  base::Thread::Options io_message_loop_options;
-  io_message_loop_options.message_loop_type = base::MessageLoop::TYPE_IO;
-
   // Start threads in the order they occur in the BrowserThread::ID enumeration,
   // except for BrowserThread::UI which is the main thread.
   //
@@ -1046,6 +1067,11 @@ int BrowserMainLoop::CreateThreads() {
   for (size_t thread_id = BrowserThread::UI + 1;
        thread_id < BrowserThread::ID_COUNT;
        ++thread_id) {
+    if (thread_id == BrowserThread::IO) {
+      io_thread_->InitIOThreadDelegate();
+      continue;
+    }
+
     // If this thread ID is backed by a real thread, |thread_to_start| will be
     // set to the appropriate BrowserProcessSubThread*. And |options| can be
     // updated away from its default.
@@ -1080,18 +1106,6 @@ int BrowserMainLoop::CreateThreads() {
                        base::TaskPriority::USER_BLOCKING,
                        base::TaskShutdownBehavior::BLOCK_SHUTDOWN};
 #endif  // defined(OS_ANDROID)
-        break;
-      case BrowserThread::IO:
-        TRACE_EVENT_BEGIN1("startup",
-            "BrowserMainLoop::CreateThreads:start",
-            "Thread", "BrowserThread::IO");
-        thread_to_start = &io_thread_;
-        options = io_message_loop_options;
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-        // Up the priority of the |io_thread_| as some of its IPCs relate to
-        // display tasks.
-        options.priority = base::ThreadPriority::DISPLAY;
-#endif
         break;
       case BrowserThread::UI:        // Falls through.
       case BrowserThread::ID_COUNT:  // Falls through.
@@ -1384,11 +1398,6 @@ void BrowserMainLoop::InitializeMainThread() {
 
 int BrowserMainLoop::BrowserThreadsStarted() {
   TRACE_EVENT0("startup", "BrowserMainLoop::BrowserThreadsStarted");
-
-  // Bring up Mojo IPC and the embedded Service Manager as early as possible.
-  // Initializaing mojo requires the IO thread to have been initialized first,
-  // so this cannot happen any earlier than now.
-  InitializeMojo();
 
 #if BUILDFLAG(ENABLE_MUS)
   if (IsUsingMus()) {

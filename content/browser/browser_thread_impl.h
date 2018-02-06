@@ -43,6 +43,10 @@ class CONTENT_EXPORT BrowserThreadImpl : public BrowserThread,
   bool Start();
   bool StartWithOptions(const Options& options);
   bool StartAndWaitForTesting();
+  // Called only by the BrowserThread::IO thread to initialize its
+  // BrowserThreadDelegate after the thread is created. See
+  // https://crbug.com/729596.
+  void InitIOThreadDelegate();
 
   // Redirects tasks posted to |identifier| to |task_runner|.
   static void RedirectThreadIDToTaskRunner(
@@ -87,6 +91,8 @@ class CONTENT_EXPORT BrowserThreadImpl : public BrowserThread,
 
   // Common initialization code for the constructors.
   void Initialize();
+
+  void InitIOThreadDelegateImpl();
 
   // For testing.
   friend class ContentTestSuiteBaseListener;

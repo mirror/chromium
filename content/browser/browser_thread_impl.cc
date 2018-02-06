@@ -37,6 +37,10 @@ static const char* const g_browser_thread_names[BrowserThread::ID_COUNT] = {
   "Chrome_IOThread",  // IO
 };
 
+// A flag indicates whether the BrowserThreadDelegate of the BrowserThread::IO
+// thread has been initialized.
+bool is_io_thread_initialized_ = false;
+
 static const char* GetThreadName(BrowserThread::ID thread) {
   if (BrowserThread::UI < thread && thread < BrowserThread::ID_COUNT)
     return g_browser_thread_names[thread];
@@ -183,13 +187,6 @@ void BrowserThreadImpl::Init() {
     base::RunLoop::DisallowNestingOnCurrentThread();
     message_loop()->DisallowTaskObservers();
   }
-
-  if (identifier_ == BrowserThread::IO) {
-    BrowserThreadDelegateAtomicPtr delegate =
-        base::subtle::NoBarrier_Load(&globals.io_thread_delegate);
-    if (delegate)
-      reinterpret_cast<BrowserThreadDelegate*>(delegate)->Init();
-  }
 }
 
 // We disable optimizations for this block of functions so the compiler doesn't
@@ -253,11 +250,12 @@ void BrowserThreadImpl::Run(base::RunLoop* run_loop) {
 void BrowserThreadImpl::CleanUp() {
   BrowserThreadGlobals& globals = g_globals.Get();
 
-  if (identifier_ == BrowserThread::IO) {
+  if (identifier_ == BrowserThread::IO && is_io_thread_initialized_) {
     BrowserThreadDelegateAtomicPtr delegate =
         base::subtle::NoBarrier_Load(&globals.io_thread_delegate);
     if (delegate)
       reinterpret_cast<BrowserThreadDelegate*>(delegate)->CleanUp();
+    is_io_thread_initialized_ = false;
   }
 
   // Change the state to SHUTDOWN so that PostTaskHelper stops accepting tasks
@@ -289,6 +287,23 @@ void BrowserThreadImpl::ResetGlobalsForTesting(BrowserThread::ID identifier) {
   globals.task_runners[identifier] = nullptr;
   if (identifier == BrowserThread::IO)
     SetIOThreadDelegate(nullptr);
+}
+
+void BrowserThreadImpl::InitIOThreadDelegate() {
+  DCHECK(!is_io_thread_initialized_);
+
+  is_io_thread_initialized_ = true;
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&BrowserThreadImpl::InitIOThreadDelegateImpl,
+                     base::Unretained(this)));
+}
+
+void BrowserThreadImpl::InitIOThreadDelegateImpl() {
+  BrowserThreadDelegateAtomicPtr delegate =
+      base::subtle::NoBarrier_Load(&g_globals.Get().io_thread_delegate);
+  if (delegate)
+    reinterpret_cast<BrowserThreadDelegate*>(delegate)->Init();
 }
 
 BrowserThreadImpl::~BrowserThreadImpl() {
@@ -477,8 +492,13 @@ bool BrowserThread::IsThreadInitialized(ID identifier) {
   base::AutoLock lock(globals.lock);
   DCHECK_GE(identifier, 0);
   DCHECK_LT(identifier, ID_COUNT);
-  return globals.states[identifier] == BrowserThreadState::INITIALIZED ||
-         globals.states[identifier] == BrowserThreadState::RUNNING;
+  bool initialized =
+      globals.states[identifier] == BrowserThreadState::INITIALIZED ||
+      globals.states[identifier] == BrowserThreadState::RUNNING;
+  if (identifier != BrowserThread::IO)
+    return initialized;
+
+  return is_io_thread_initialized_ && initialized;
 }
 
 // static
