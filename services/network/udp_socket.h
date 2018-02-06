@@ -68,6 +68,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
                          int buf_len,
                          net::IPEndPoint* address,
                          const net::CompletionCallback& callback) = 0;
+    virtual void Close() = 0;
   };
 
   UDPSocket(mojom::UDPSocketRequest request,
@@ -90,6 +91,8 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
   void LeaveGroup(const net::IPAddress& group_address,
                   LeaveGroupCallback callback) override;
   void ReceiveMore(uint32_t num_additional_datagrams) override;
+  void ReceiveMoreWithBufferSize(uint32_t num_additional_datagrams,
+                                 uint32_t buffer_size) override;
   void SendTo(const net::IPEndPoint& dest_addr,
               base::span<const uint8_t> data,
               const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
@@ -97,6 +100,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
   void Send(base::span<const uint8_t> data,
             const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
             SendCallback callback) override;
+  void Close() override;
 
  private:
   friend class UDPSocketTest;
@@ -119,7 +123,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
   // Returns whether a successful Connect() or Bind() has been executed.
   bool IsConnectedOrBound() const;
 
-  void DoRecvFrom();
+  void DoRecvFrom(uint32_t buffer_size);
   void DoSendToOrWrite(
       const net::IPEndPoint* dest_addr,
       const base::span<const uint8_t>& data,
@@ -131,7 +135,7 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) UDPSocket : public mojom::UDPSocket {
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       SendToCallback callback);
 
-  void OnRecvFromCompleted(int net_result);
+  void OnRecvFromCompleted(uint32_t buffer_size, int net_result);
   void OnSendToCompleted(int net_result);
 
   // Whether a Bind() has been successfully executed.
