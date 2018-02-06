@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2496ccf_a652bb8e",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T21:51:30Z",
+      "side": 1,
+      "message": "I think you should add a method to WidgetObserver (maybe \"OnAddedToWidget\"; sky will probably have an opinion on the name) that will be called when AddObserver is called, then you don\u0027t need to change the callsites. I also think this should just call OnWidgetVisibilityChanged(bubble_widget, bubble_widget-\u003eIsVisible()), or at least have them delegate to the same method.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca54beac_4c6ba442",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T21:51:30Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 16
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a8d1822_b1149217",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
         "patchSetId": 1
@@ -22,6 +68,30 @@
       "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21a318d8_1d2e9cc4",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T21:51:30Z",
+      "side": 1,
+      "message": "From Google C++ style guide: \"All inheritance should be public\"",
+      "parentUuid": "1a8d1822_b1149217",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
