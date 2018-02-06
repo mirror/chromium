@@ -11,6 +11,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/input/EventHandler.h"
+#include "public/platform/WebSelectionSourceType.h"
 
 namespace blink {
 
@@ -37,7 +38,7 @@ class SelectionControllerTest : public EditingTestBase {
 void SelectionControllerTest::SetCaretAtHitTestResult(
     const HitTestResult& hit_test_result) {
   GetFrame().GetEventHandler().GetSelectionController().SetCaretAtHitTestResult(
-      hit_test_result);
+      hit_test_result, kSelectionSourceOther);
 }
 
 void SelectionControllerTest::SetNonDirectionalSelectionIfNeeded(

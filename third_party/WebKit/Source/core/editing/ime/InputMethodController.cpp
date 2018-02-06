@@ -1280,6 +1280,7 @@ WebTextInputInfo InputMethodController::TextInputInfo() const {
     // plugins/mouse-capture-inside-shadow.html reaches here.
     return info;
   }
+  info.selection_id = GetFrame().Selection().GetSelectionId();
   Element* element = RootEditableElementOfSelection(GetFrame().Selection());
   if (!element)
     return info;
@@ -1364,6 +1365,12 @@ int InputMethodController::TextInputFlags() const {
     if (input->HasBeenPasswordField())
       flags |= kWebTextInputFlagHasBeenPasswordField;
   }
+
+  if (GetDocument().queryCommandEnabled("selectAll", ASSERT_NO_EXCEPTION))
+    flags |= kWebTextInputFlagCanSelectAll;
+
+  if (GetFrame().GetEditor().CanEditRichly())
+    flags |= kWebTextInputFlagCanEditRichly;
 
   return flags;
 }

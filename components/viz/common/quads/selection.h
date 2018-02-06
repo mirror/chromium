@@ -16,6 +16,8 @@ struct Selection {
 
   BoundType start, end;
 
+  int selection_id;
+
   std::string ToString() const {
     return base::StringPrintf("Selection(%s, %s)", start.ToString().c_str(),
                               end.ToString().c_str());
@@ -25,7 +27,8 @@ struct Selection {
 template <typename BoundType>
 inline bool operator==(const Selection<BoundType>& lhs,
                        const Selection<BoundType>& rhs) {
-  return lhs.start == rhs.start && lhs.end == rhs.end;
+  return lhs.start == rhs.start && lhs.end == rhs.end &&
+         lhs.selection_id == rhs.selection_id;
 }
 
 template <typename BoundType>

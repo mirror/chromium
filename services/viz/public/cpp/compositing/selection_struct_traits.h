@@ -24,8 +24,14 @@ struct StructTraits<viz::mojom::SelectionDataView,
     return selection.end;
   }
 
+  static int selection_id(
+      const viz::Selection<gfx::SelectionBound>& selection) {
+    return selection.selection_id;
+  }
+
   static bool Read(viz::mojom::SelectionDataView data,
                    viz::Selection<gfx::SelectionBound>* out) {
+    out->selection_id = data.selection_id();
     return data.ReadStart(&out->start) && data.ReadEnd(&out->end);
   }
 };
