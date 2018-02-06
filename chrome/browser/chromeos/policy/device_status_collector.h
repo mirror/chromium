@@ -167,7 +167,9 @@ class DeviceStatusCollector {
                                  int min_day_trim_duration,
                                  int64_t max_day_key);
 
-  void AddActivePeriod(base::Time start, base::Time end);
+  void AddActivePeriod(base::Time start,
+                       base::Time end,
+                       const std::string& active_user_email);
 
   // Clears the cached hardware resource usage.
   void ClearCachedResourceUsage();
