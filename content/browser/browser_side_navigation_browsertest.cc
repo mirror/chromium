@@ -849,4 +849,98 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
   }
 }
 
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       ServiceWorkerNoRace) {
+  net::EmbeddedTestServer server(net::EmbeddedTestServer::TYPE_HTTPS);
+
+  server.RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        if (request.relative_url == "/") {
+          http_response->set_content_type("text/html");
+          http_response->set_content(R"HTML(
+            <script>
+              navigator.serviceWorker.register("/service_worker.js");
+              navigator.serviceWorker
+              .addEventListener("controllerchange", event => {
+                window.domAutomationController.send("Service Worker activated");
+              })
+            </script>
+          )HTML");
+        } else if (request.relative_url == "/service_worker.js") {
+          http_response->set_content_type("application/javascript");
+          http_response->set_content(R"JavaScript(
+            self.addEventListener("install",  event => {
+              return self.skipWaiting();
+            });
+            self.addEventListener("activate",  event => {
+              return self.clients.claim();
+            });
+
+            let iframe_response = new Response(
+              "<script src='/script.js'></script>",
+              { headers: {"Content-Type": "text/html" }}
+            );
+
+            let script_response = new Response(
+              "window.domAutomationController.send('Script executed')",
+              { headers: {"Content-Type": "application/javascript" }}
+            );
+
+            self.addEventListener("fetch", event => {
+              if (event.request.url.endsWith("iframe.html")) {
+                event.respondWith(
+                  new Promise(resolve => resolve(iframe_response))
+                );
+              }
+              if (event.request.url.endsWith("script.js")) {
+                event.respondWith(
+                  new Promise(resolve => resolve(script_response))
+                );
+              }
+            });
+          )JavaScript");
+        } else {
+          ADD_FAILURE() << "Network request made for " << request.relative_url;
+        }
+
+        return http_response;
+      }));
+
+  DOMMessageQueue dom_messages_queue;
+  ASSERT_TRUE(server.Start());
+
+  // 1) Navigate to a document with a ServiceWorker.
+  EXPECT_TRUE(NavigateToURL(shell(), server.GetURL("/")));
+
+  // 2) Wait for the service worker to be activated.
+  {
+    std::string message;
+    EXPECT_TRUE(dom_messages_queue.WaitForMessage(&message));
+    EXPECT_EQ("\"Service Worker activated\"", message);
+  }
+
+  // 3) Create an iframe, it should be served from the Service Worker.
+  GURL iframe_url = server.GetURL("/iframe.html");
+  TestNavigationManager manager(shell()->web_contents(), iframe_url);
+  ExecuteScriptAsync(shell(), R"JavaScript(
+    let iframe = document.createElement("iframe");
+    iframe.src = "/iframe.html"
+    document.body.appendChild(iframe);
+  )JavaScript");
+  EXPECT_TRUE(manager.WaitForResponse());
+  manager.WaitForNavigationFinished();
+
+  // 4) Wait for the script to be executed. It should be served from the Service
+  //    Worker.
+  {
+    std::string message;
+    EXPECT_TRUE(dom_messages_queue.WaitForMessage(&message));
+    EXPECT_EQ("\"Script executed\"", message);
+  }
+}
+
 }  // namespace content
