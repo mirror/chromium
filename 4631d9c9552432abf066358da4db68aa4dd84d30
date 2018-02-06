@@ -128,6 +128,30 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f30bac9f_83411d06",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T18:16:03Z",
+      "side": 1,
+      "message": "Re 1: IIUC this policy is evaluated by a D-Bus call to chrome when deciding if a VM may be started.\nIn this case, I\u0027d suggest adding a sentence here to mention that when this policy is changed to False, it applies to starting new VMs and does not automatically shut down already-running VMs.\n\nRe 2: I\u0027m not sure I\u0027m following - the newest patchset seems to allow VMs by default?",
+      "parentUuid": "97e4fb5c_ae85ca5a",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
