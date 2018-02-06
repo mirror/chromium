@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70499159_ba7eff14",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-06T21:35:56Z",
+      "side": 1,
+      "message": "I suppose that\u0027s better. I\u0027m trying to find a syntax that works as an implied global property of Chrome (\"all the tab contentses\") that doesn\u0027t have too much C++ overhead.",
+      "parentUuid": "ad6b2c31_4466769e",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "639c83cf_f9b91251",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a6d896b2_f1a9021f",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-06T21:35:56Z",
+      "side": 1,
+      "message": "Done, though how is this useful in any meaningful way other than compatibility with C++ requirements?",
+      "parentUuid": "639c83cf_f9b91251",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072b59e5_e8c662f3",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-06T17:06:12Z",
       "side": 1,
       "message": "operator* is supposed to return |reference| for forward iterators, but this is |pointer|:\n\nExpression\tReturn type\tEquivalent expression\ni++\t\tIt\t\tIt ip\u003di; ++i; return ip;\t\n*i++\t\treference",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820bed92_6e8a85ad",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-06T21:35:56Z",
+      "side": 1,
+      "message": "I\u0027m having a real problem here. The spec talks about owning containers, where that makes sense. Creating a pseudo-container, like I am here, is tough.\n\nSwitching to |reference| here yields:\n\n../../chrome/browser/ui/tab_contents/tab_contents_iterator.h:48:42: error: binding value of type \u0027content::WebContents *const\u0027 to reference to type \u0027AllTabContentsesList::Iterator::value_type\u0027 (aka \u0027content::WebContents *\u0027) drops \u0027const\u0027 qualifier\n    reference operator*() const { return cur_; }\n\nNow I get how this is supposed to work for owning containers; *it means \"get me a reference to the thing (that lives in the container) pointed to by the iterator\". But the AllTabContentsesList vends out WebContents*s that aren\u0027t contained in it. *it on a AllTabContentsesList::Iterator means \"get me the WebContents* that the iterator points at\". There is no \"getting a reference to a thing in the container\" and I can\u0027t figure out how to say this in a way that is spec compliant.\n\nSo questions to you:\n\n1. Can you think of a way to make this spec compliant?\n2. Is the best way forward to drop the \"forward iterator\" tag?\n3. If so, am I allowed to use all the fancy std:: algorithms?",
+      "parentUuid": "072b59e5_e8c662f3",
       "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

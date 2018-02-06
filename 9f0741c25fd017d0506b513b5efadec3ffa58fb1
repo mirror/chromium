@@ -70,6 +70,30 @@
       "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527c75d0_73131ba4",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-06T21:35:56Z",
+      "side": 1,
+      "message": "Fixed. :)",
+      "parentUuid": "067e7406_d89264d6",
+      "range": {
+        "startLine": 1243,
+        "startChar": 2,
+        "endLine": 1248,
+        "endChar": 18
+      },
+      "revId": "9f0741c25fd017d0506b513b5efadec3ffa58fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
