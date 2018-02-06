@@ -26,7 +26,8 @@ class VIEWS_EXPORT MenuModelAdapter : public MenuDelegate {
   // must ensure it exists for the lifetime of the adapter.
   explicit MenuModelAdapter(ui::MenuModel* menu_model);
   MenuModelAdapter(ui::MenuModel* menu_model,
-                   const base::Closure& on_menu_closed_callback);
+                   const base::Closure& on_menu_closed_callback,
+                   const int run_types = 0);
   ~MenuModelAdapter() override;
 
   // Populate a MenuItemView menu with the ui::MenuModel items
@@ -35,7 +36,7 @@ class VIEWS_EXPORT MenuModelAdapter : public MenuDelegate {
 
   // Convenience for creating and populating a menu. The caller owns the
   // returned MenuItemView.
-  MenuItemView* CreateMenu();
+  MenuItemView* CreateMenu(bool use_touchable_layout = false);
 
   void set_triggerable_event_flags(int triggerable_event_flags) {
     triggerable_event_flags_ = triggerable_event_flags;

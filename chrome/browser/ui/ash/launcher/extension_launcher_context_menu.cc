@@ -41,25 +41,15 @@ ExtensionLauncherContextMenu::ExtensionLauncherContextMenu(
 
 ExtensionLauncherContextMenu::~ExtensionLauncherContextMenu() {}
 
-void ExtensionLauncherContextMenu::Init() {
-  extension_items_.reset(new extensions::ContextMenuMatcher(
-      controller()->profile(), this, this,
-      base::Bind(MenuItemHasLauncherContext)));
+void ExtensionLauncherContextMenu::AddOpenOptions() {
   if (item().type == ash::TYPE_PINNED_APP || item().type == ash::TYPE_APP) {
-    // V1 apps can be started from the menu - but V2 apps should not.
     if (!controller()->IsPlatformApp(item().id)) {
       int string_id = (GetLaunchType() == extensions::LAUNCH_TYPE_PINNED ||
                        GetLaunchType() == extensions::LAUNCH_TYPE_REGULAR)
                           ? IDS_APP_LIST_CONTEXT_MENU_NEW_TAB
                           : IDS_APP_LIST_CONTEXT_MENU_NEW_WINDOW;
       AddItemWithStringId(MENU_OPEN_NEW, string_id);
-      AddSeparator(ui::NORMAL_SEPARATOR);
     }
-
-    AddPinMenu();
-
-    if (controller()->IsOpen(item().id))
-      AddItemWithStringId(MENU_CLOSE, IDS_LAUNCHER_CONTEXT_MENU_CLOSE);
 
     if (!controller()->IsPlatformApp(item().id) &&
         item().type == ash::TYPE_PINNED_APP) {
@@ -83,29 +73,88 @@ void ExtensionLauncherContextMenu::Init() {
                                  IDS_APP_CONTEXT_MENU_OPEN_MAXIMIZED);
       }
     }
+
   } else if (item().type == ash::TYPE_BROWSER_SHORTCUT) {
     AddItemWithStringId(MENU_NEW_WINDOW, IDS_APP_LIST_NEW_WINDOW);
     if (!controller()->profile()->IsGuestSession()) {
       AddItemWithStringId(MENU_NEW_INCOGNITO_WINDOW,
                           IDS_APP_LIST_NEW_INCOGNITO_WINDOW);
     }
+
+  } else if (item().type == ash::TYPE_DIALOG) {
+    //
+  } else if (controller()->IsOpen(item().id)) {
+    //
+  }
+}
+
+void ExtensionLauncherContextMenu::AddPinOption() {
+  if (item().type == ash::TYPE_PINNED_APP || item().type == ash::TYPE_APP) {
+    AddPinMenu();
+  } else if (item().type == ash::TYPE_BROWSER_SHORTCUT) {
+  } else if (item().type == ash::TYPE_DIALOG) {
+    //
+  } else if (controller()->IsOpen(item().id)) {
+    //
+  }
+}
+
+void ExtensionLauncherContextMenu::AddCloseOption() {
+  if (item().type == ash::TYPE_PINNED_APP || item().type == ash::TYPE_APP) {
+    if (controller()->IsOpen(item().id))
+      AddItemWithStringId(MENU_CLOSE, IDS_LAUNCHER_CONTEXT_MENU_CLOSE);
+  } else if (item().type == ash::TYPE_BROWSER_SHORTCUT) {
     if (!BrowserShortcutLauncherItemController(controller()->shelf_model())
              .IsListOfActiveBrowserEmpty()) {
       AddItemWithStringId(MENU_CLOSE, IDS_LAUNCHER_CONTEXT_MENU_CLOSE);
     }
-  } else if (item().type == ash::TYPE_DIALOG) {
+
+  } else if (item().type == ash::TYPE_DIALOG) {  // consolidate two ifs below.
     AddItemWithStringId(MENU_CLOSE, IDS_LAUNCHER_CONTEXT_MENU_CLOSE);
   } else if (controller()->IsOpen(item().id)) {
     AddItemWithStringId(MENU_CLOSE, IDS_LAUNCHER_CONTEXT_MENU_CLOSE);
   }
-  AddSeparator(ui::NORMAL_SEPARATOR);
+}
+
+/* skeleton
+ *
+ *   if (item().type == ash::TYPE_PINNED_APP || item().type == ash::TYPE_APP) {
+
+  } else if (item().type == ash::TYPE_BROWSER_SHORTCUT) {
+
+
+   } else if (item().type == ash::TYPE_DIALOG) {
+  //
+  } else if (controller()->IsOpen(item().id)) {
+//
+
+}
+
+*/
+
+void ExtensionLauncherContextMenu::Init() {
+  extension_items_.reset(new extensions::ContextMenuMatcher(
+      controller()->profile(), this, this,
+      base::Bind(MenuItemHasLauncherContext)));
+
+  AddOpenOptions();
+
+  AddPinOption();
+
+  AddCloseOption();
+
+  // AddUninstallOptions();
+
+  // AddAppInfo();
+
+  // AddSeparator(ui::NORMAL_SEPARATOR);
   if (item().type == ash::TYPE_PINNED_APP || item().type == ash::TYPE_APP) {
     const extensions::MenuItem::ExtensionKey app_key(item().id.app_id);
     if (!app_key.empty()) {
       int index = 0;
       extension_items_->AppendExtensionItems(app_key, base::string16(), &index,
                                              false);  // is_action_menu
-      AddSeparator(ui::NORMAL_SEPARATOR);
+      // AddSeparator(ui::NORMAL_SEPARATOR);
     }
   }
 }

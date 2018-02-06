@@ -161,7 +161,8 @@ ShelfContextMenuModel::ShelfContextMenuModel(MenuItemList menu_items,
       delegate_(delegate),
       display_id_(display_id) {
   // Append some menu items that are handled locally by Ash.
-  AddLocalMenuItems(&menu_items_, display_id);
+  if (!delegate)
+    AddLocalMenuItems(&menu_items_, display_id);
   AddItems(this, this, menu_items_, &submenus_);
 }
 

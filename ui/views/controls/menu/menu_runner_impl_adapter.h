@@ -23,7 +23,8 @@ class MenuRunnerImpl;
 class VIEWS_EXPORT MenuRunnerImplAdapter : public MenuRunnerImplInterface {
  public:
   MenuRunnerImplAdapter(ui::MenuModel* menu_model,
-                        const base::Closure& on_menu_closed_callback);
+                        const base::Closure& on_menu_closed_callback,
+                        const int run_types);
 
   // MenuRunnerImplInterface:
   bool IsRunning() const override;
