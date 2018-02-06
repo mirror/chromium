@@ -54,6 +54,7 @@
 #include "net/test/test_data_directory.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_test_util.h"
+#include "net/websockets/websocket_handshake_stream_create_helper.h"
 #include "net/websockets/websocket_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/platform_test.h"
@@ -7059,9 +7060,16 @@ TEST_F(SpdyNetworkTransactionTest, WebsocketOpensNewConnection) {
                 "Upgrade: websocket\r\n"
                 "Origin: http://www.example.org\r\n"
                 "Sec-WebSocket-Version: 13\r\n"
-                "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n")};
+                "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n"
+                "Sec-WebSocket-Extensions: permessage-deflate; "
+                "client_max_window_bits\r\n\r\n")};
 
-  MockRead reads2[] = {MockRead("HTTP/1.1 200 Connection Established\r\n\r\n")};
+  MockRead reads2[] = {
+      MockRead("HTTP/1.1 101 Switching Protocols\r\n"
+               "Upgrade: websocket\r\n"
+               "Connection: Upgrade\r\n"
+               "Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\r\n\r\n")};
+
   StaticSocketDataProvider data2(reads2, arraysize(reads2), writes2,
                                  arraysize(writes2));
 
@@ -7109,11 +7117,10 @@ TEST_F(SpdyNetworkTransactionTest, WebsocketOpensNewConnection) {
   request2.extra_headers.SetHeader("Upgrade", "websocket");
   request2.extra_headers.SetHeader("Origin", "http://www.example.org");
   request2.extra_headers.SetHeader("Sec-WebSocket-Version", "13");
-  request2.extra_headers.SetHeader("Sec-WebSocket-Key",
-                                   "dGhlIHNhbXBsZSBub25jZQ==");
+
+  TestWebSocketHandshakeStreamCreateHelper websocket_stream_create_helper;
 
   HttpNetworkTransaction trans2(DEFAULT_PRIORITY, helper.session());
-  FakeWebSocketStreamCreateHelper websocket_stream_create_helper;
   trans2.SetWebSocketHandshakeStreamCreateHelper(
       &websocket_stream_create_helper);
 
