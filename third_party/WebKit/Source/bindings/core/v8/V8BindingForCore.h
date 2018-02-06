@@ -486,12 +486,14 @@ CORE_EXPORT bool IsValidEnum(const String& value,
                              const char** valid_values,
                              size_t length,
                              const String& enum_name,
-                             ExceptionState&);
+                             ExceptionState&,
+                             bool may_be_null = false);
 CORE_EXPORT bool IsValidEnum(const Vector<String>& values,
                              const char** valid_values,
                              size_t length,
                              const String& enum_name,
-                             ExceptionState&);
+                             ExceptionState&,
+                             bool values_may_be_null = false);
 
 // Result values for platform object 'deleter' methods,
 // http://www.w3.org/TR/WebIDL/#delete
