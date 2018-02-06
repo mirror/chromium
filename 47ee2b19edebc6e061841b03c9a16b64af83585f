@@ -22,6 +22,30 @@
       "revId": "47ee2b19edebc6e061841b03c9a16b64af83585f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96b7f68_580e5f0d",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T13:03:33Z",
+      "side": 1,
+      "message": "The reason the callback is on the heap is because we release() it when we issue the JNI call and re-retain it when we get our response. I am unsure of how to do that if we\u0027re passing the callback around by value, since our ownership model breaks down a bit while we\u0027re on the Java side.\n\nWe could probably have some sort of proxy object own the callback, but it too would have some weird lifetime management.",
+      "parentUuid": "cbbe8a3d_95f07a1c",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "47ee2b19edebc6e061841b03c9a16b64af83585f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
