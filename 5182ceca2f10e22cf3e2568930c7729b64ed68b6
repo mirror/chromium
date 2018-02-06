@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "281d42be_df7b29dc",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-06T09:37:22Z",
+      "side": 1,
+      "message": "This code path is used when NetworkService is disabled. MaybeCreateSubresourceLoaderParams() is used **if and only** the NetworkService is enabled.\n\nI don\u0027t expect the case: (!NetworkService \u0026\u0026 ServiceWorkerService) to work right now. A bit of work is needed here.\n\nI could wrap this code in a \"!if (!ServiceWorkerUtils::IsServicificationEnabled())\", but I would like to avoid misleading people. I don\u0027t want people to think there is some kind of support for it for the moment. I prefer to let someone else adding this condition in the specific CL that adds support of it.",
+      "parentUuid": "73174698_82837f93",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed711279_728f060c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8232335_b33ad69e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-06T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed711279_728f060c",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "267c6fd3_2b137de9",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-06T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080d1949_272fa1c1",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a9b9c2_122f0a9b",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "07922b4f_539dc641",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-06T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a9b9c2_122f0a9b",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa2ddca_3cc62ee0",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 3
@@ -116,6 +188,24 @@
       "writtenOn": "2018-02-06T03:50:41Z",
       "side": 1,
       "message": "Let\u0027s make it a little clearer (since it\u0027s confusing):\n\n|controller_info| contains the endpoint (which is non-null only when S13nServiceWorker is enabled) and ...",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1024930_bcfe6758",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-06T09:37:22Z",
+      "side": 1,
+      "message": "I don\u0027t think so.\nI expect |controller_info| to be non-null when S13nServiceWorker or NavigationMojoResponse is enabled.",
+      "parentUuid": "2fa2ddca_3cc62ee0",
       "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
