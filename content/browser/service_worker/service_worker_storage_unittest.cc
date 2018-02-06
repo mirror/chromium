@@ -353,7 +353,7 @@ class ServiceWorkerStorageTest : public testing::Test {
   }
 
   void LazyInitialize() {
-    storage()->LazyInitializeForTest(base::BindOnce(&base::DoNothing));
+    storage()->LazyInitializeForTest(base::DoNothing());
     base::RunLoop().RunUntilIdle();
   }
 
