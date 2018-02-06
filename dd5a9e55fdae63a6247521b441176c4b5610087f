@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8952b7ba_759d7423",
+        "filename": "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-02-06T05:52:56Z",
+      "side": 1,
+      "message": "Can a scroll start for a new page before -didFinish is called?",
+      "range": {
+        "startLine": 109,
+        "startChar": 25,
+        "endLine": 109,
+        "endChar": 28
+      },
+      "revId": "dd5a9e55fdae63a6247521b441176c4b5610087f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
