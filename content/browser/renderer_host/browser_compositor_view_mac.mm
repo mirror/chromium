@@ -153,7 +153,8 @@ std::unique_ptr<RecyclableCompositorMac> RecyclableCompositorMac::Create() {
 // static
 void RecyclableCompositorMac::Recycle(
     std::unique_ptr<RecyclableCompositorMac> compositor) {
-  DCHECK(compositor);
+  CHECK(compositor);
+  CHECK(content::ImageTransportFactory::GetInstance());
   content::ImageTransportFactory::GetInstance()
       ->SetCompositorSuspendedForRecycle(compositor->compositor(), true);
 
