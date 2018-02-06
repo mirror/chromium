@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040c9cdd_d35eaa0d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-06T12:43:24Z",
+      "side": 1,
+      "message": "We shouldn\u0027t show a PIP button if there is no valid source. Actually, I think we should probably do similar checks as fullscreen: if we don\u0027t have a video track, we shouldn\u0027t show the button. Can you make this change part of this CL? Hopefully, you could drop the `Reset()` too :)",
+      "revId": "5cd1c06d51f7c3df8941d5ade71e759146d612b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
