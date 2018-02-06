@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddfbc49b_054a591d",
+        "filename": "components/viz/service/surfaces/surface_dependency_deadline.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-06T22:30:27Z",
+      "side": 1,
+      "message": "Can you possibly not have a deadline already if you\u0027re inheriting someone else\u0027s deadline?",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "e5dbbf436897ff0a07d00ce3381256a7a45d3d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025e2722_314af706",
+        "filename": "components/viz/service/surfaces/surface_dependency_deadline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-06T22:30:27Z",
+      "side": 1,
+      "message": "Some documentation for this method could be useful.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "e5dbbf436897ff0a07d00ce3381256a7a45d3d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
