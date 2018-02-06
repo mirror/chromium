@@ -152,6 +152,30 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d2e069_9fcbdb77",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1212939
+      },
+      "writtenOn": "2018-02-06T19:30:35Z",
+      "side": 1,
+      "message": "Done.\nMy other comment was to explain why I added default_for_enterprise_users to be False. Virtual machines are allowed when no enterprise policy applies by default but enterprise policy defaults it to False.",
+      "parentUuid": "f30bac9f_83411d06",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
