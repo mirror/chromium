@@ -22,6 +22,30 @@
       "revId": "bb3933892e1499aafdb25841ca90ff6c5e8ccf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130e247a_6fea2e33",
+        "filename": "sql/recovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T00:53:51Z",
+      "side": 0,
+      "message": "When this was added the commit was:\n\n    bool Recovery::FullRecoverySupported() {\n      // TODO(shess): See comment in Init().\n    #if defined(USE_SYSTEM_SQLITE)\n      return false;\n    #else\n      return true;\n    #endif\n    }\n\nAnd the ifdef\u0027s were removed in https://codereview.chromium.org/1785443004",
+      "parentUuid": "72a2dbe6_decb9d42",
+      "range": {
+        "startLine": 145,
+        "startChar": 33,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "bb3933892e1499aafdb25841ca90ff6c5e8ccf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
