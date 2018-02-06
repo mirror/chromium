@@ -1078,18 +1078,24 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   // be installed after layout which will happen as a part of the commit, for
   // widgets that delay the creation of their output surface.
   if (CompositeIsSynchronous()) {
+    // Since the composite is required for a pixel dump, we need to raster.
+    const bool raster = true;
     layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::SynchronouslyComposite,
-                       weak_factory_.GetWeakPtr()));
+                       weak_factory_.GetWeakPtr(), raster));
   } else {
     layer_tree_host_->SetNeedsCommit();
   }
 }
 
-void RenderWidgetCompositor::SynchronouslyComposite() {
+void RenderWidgetCompositor::SynchronouslyCompositeNoRaster() {
+  SynchronouslyComposite(false /* raster */);
+}
+
+void RenderWidgetCompositor::SynchronouslyComposite(bool raster) {
   DCHECK(CompositeIsSynchronous());
-  layer_tree_host_->Composite(base::TimeTicks::Now());
+  layer_tree_host_->Composite(base::TimeTicks::Now(), raster);
 }
 
 void RenderWidgetCompositor::SetDeferCommits(bool defer_commits) {
