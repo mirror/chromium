@@ -2047,6 +2047,11 @@ config("minimal_symbols") {
         ldflags += [ "-Wl,--strip-debug" ]
       }
     }
+    if (is_chromeos) {
+      # ChromeOS wants to get files and line numbers from debug symbols so
+      # that breakpad can generate valid stacktrace.
+      cflags += [ "-g1" ]
+    }
 
     # Note: -gsplit-dwarf implicitly turns on -g2 with clang, so don't pass it.
     asmflags = cflags
