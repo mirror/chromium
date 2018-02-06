@@ -118,6 +118,10 @@ class EVENTS_EXPORT Event {
 
   bool IsSynthesized() const { return (flags_ & EF_IS_SYNTHESIZED) != 0; }
 
+  bool FromPlatformHook() const {
+    return (flags_ & EF_FROM_PLATFORM_HOOK) != 0;
+  }
+
   bool IsCancelModeEvent() const {
     return type_ == ET_CANCEL_MODE;
   }
