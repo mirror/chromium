@@ -396,13 +396,12 @@
     ],
     "isolated_scripts": [
       {
-        "args": [
-          "--filter=__main__.ChromeDriverTest.testLoadUrl"
-        ],
+        "args": [],
         "isolate_name": "chromedriver_py_tests",
         "name": "chromedriver_py_tests",
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 10
         }
       },
       {
@@ -850,13 +849,12 @@
     ],
     "isolated_scripts": [
       {
-        "args": [
-          "--filter=__main__.ChromeDriverTest.testLoadUrl"
-        ],
+        "args": [],
         "isolate_name": "chromedriver_py_tests",
         "name": "chromedriver_py_tests",
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 10
         }
       },
       {
@@ -1304,13 +1302,12 @@
     ],
     "isolated_scripts": [
       {
-        "args": [
-          "--filter=__main__.ChromeDriverTest.testLoadUrl"
-        ],
+        "args": [],
         "isolate_name": "chromedriver_py_tests",
         "name": "chromedriver_py_tests",
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 10
         }
       },
       {
@@ -1772,13 +1769,12 @@
     ],
     "isolated_scripts": [
       {
-        "args": [
-          "--filter=__main__.ChromeDriverTest.testLoadUrl"
-        ],
+        "args": [],
         "isolate_name": "chromedriver_py_tests",
         "name": "chromedriver_py_tests",
         "swarming": {
-          "can_use_on_swarming_builders": true
+          "can_use_on_swarming_builders": true,
+          "shards": 10
         }
       },
       {
