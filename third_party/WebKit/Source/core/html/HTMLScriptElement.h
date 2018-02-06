@@ -52,6 +52,9 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
   bool async() const;
 
   ScriptLoader* Loader() const final { return loader_.Get(); }
+  void ResetLoader(bool parser_inserted,
+                   bool already_started,
+                   bool created_during_document_write);
 
   bool IsScriptElement() const override { return true; }
   Document& GetDocument() const override;

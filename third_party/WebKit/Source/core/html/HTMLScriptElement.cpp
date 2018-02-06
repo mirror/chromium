@@ -58,6 +58,13 @@ HTMLScriptElement* HTMLScriptElement::Create(
                                already_started, created_during_document_write);
 }
 
+void HTMLScriptElement::ResetLoader(bool parser_inserted,
+                                    bool already_started,
+                                    bool created_during_document_write) {
+  loader_ = InitializeScriptLoader(parser_inserted, already_started,
+                                   created_during_document_write);
+}
+
 bool HTMLScriptElement::IsURLAttribute(const Attribute& attribute) const {
   return attribute.GetName() == srcAttr ||
          HTMLElement::IsURLAttribute(attribute);

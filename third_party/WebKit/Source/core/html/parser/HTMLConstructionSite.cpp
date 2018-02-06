@@ -739,15 +739,18 @@ void HTMLConstructionSite::InsertScriptElement(AtomicHTMLToken* token) {
   // in are packed in a bitfield from an enum class.
   const bool created_during_document_write =
       OwnerDocumentForCurrentNode().IsInDocumentWrite();
-  HTMLScriptElement* element =
-      HTMLScriptElement::Create(OwnerDocumentForCurrentNode(), parser_inserted,
-                                already_started, created_during_document_write);
-  if (const Attribute* is_attribute =
-          token->GetAttributeItem(HTMLNames::isAttr)) {
-    V0CustomElementRegistrationContext::SetTypeExtension(element,
-                                                         is_attribute->Value());
+
+  HTMLScriptElement* element = nullptr;
+  if (const auto* is_attribute = token->GetAttributeItem(HTMLNames::isAttr)) {
+    element = ToHTMLScriptElement(OwnerDocumentForCurrentNode().CreateElement(
+        HTMLNames::scriptTag, is_attribute->Value(), GetCreateElementFlags()));
+    element->ResetLoader(parser_inserted, already_started,
+                         created_during_document_write);
+  } else {
+    element = HTMLScriptElement::Create(OwnerDocumentForCurrentNode(),
+                                        parser_inserted, already_started,
+                                        created_during_document_write);
   }
-  // TODO(tkent): Handle V1 custom built-in element. crbug.com/808311
   SetAttributes(element, token, parser_content_policy_);
   if (ScriptingContentIsAllowed(parser_content_policy_))
     AttachLater(CurrentNode(), element);
