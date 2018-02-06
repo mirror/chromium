@@ -991,6 +991,10 @@ void URLRequestHttpJob::RestartTransactionWithAuth(
   // extra_headers, we need to strip them out before adding them again.
   request_info_.extra_headers.RemoveHeader(HttpRequestHeaders::kCookie);
 
+  // Clear any header overrides from the NetworkDelegate. See
+  // https://crbug.com/801237.
+  override_response_headers_ = nullptr;
+
   AddCookieHeaderAndStart();
 }
 
