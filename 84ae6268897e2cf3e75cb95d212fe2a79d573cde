@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d6f67ba_2e357e26",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-06T21:38:41Z",
+      "side": 0,
+      "message": "I am not sure behind the reason for this. In my tests I wasn\u0027t able to see a network request to the about scheme (With about:blank, about:version etc.). In any case, isn\u0027t the about scheme protected?",
+      "range": {
+        "startLine": 214,
+        "startChar": 10,
+        "endLine": 214,
+        "endChar": 41
+      },
+      "revId": "84ae6268897e2cf3e75cb95d212fe2a79d573cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
