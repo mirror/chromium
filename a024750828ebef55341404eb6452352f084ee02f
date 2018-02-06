@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "adce8f0f_2f22dda9",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:19:12Z",
+      "side": 1,
+      "message": "nit: override",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfa1f9ae_8ff05374",
         "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
         "patchSetId": 2
@@ -47,6 +64,40 @@
       "writtenOn": "2018-02-05T23:34:39Z",
       "side": 1,
       "message": "these are closely related. There could be a refactoring in another CL. Someday.",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0597b15_99a339f5",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:19:12Z",
+      "side": 1,
+      "message": "nit: Probably doesn\u0027t need GPU_EXPORT here or below.",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fe33c3_c572d189",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-06T00:19:12Z",
+      "side": 1,
+      "message": "nit: #include base/macros.h",
       "revId": "a024750828ebef55341404eb6452352f084ee02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
