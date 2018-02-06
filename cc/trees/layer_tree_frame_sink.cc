@@ -17,6 +17,8 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/raster_interface.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace cc {
 
 class LayerTreeFrameSink::ContextLostForwarder
@@ -52,15 +54,22 @@ LayerTreeFrameSink::LayerTreeFrameSink(
       shared_bitmap_manager_(shared_bitmap_manager),
       weak_ptr_factory_(this) {
   DETACH_FROM_THREAD(thread_checker_);
+  if (!shared_bitmap_manager_)
+    base::debug::StackTrace().Print();
 }
 
 LayerTreeFrameSink::LayerTreeFrameSink(
-    scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider)
+    scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    viz::SharedBitmapManager* shared_bitmap_manager)
     : vulkan_context_provider_(vulkan_context_provider),
-      gpu_memory_buffer_manager_(nullptr),
-      shared_bitmap_manager_(nullptr),
+      gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
+      shared_bitmap_manager_(shared_bitmap_manager),
       weak_ptr_factory_(this) {
   DETACH_FROM_THREAD(thread_checker_);
+  LOG(ERROR) << "======";
+  if (!shared_bitmap_manager_)
+    base::debug::StackTrace().Print();
 }
 
 LayerTreeFrameSink::~LayerTreeFrameSink() {

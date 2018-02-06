@@ -136,6 +136,10 @@ config("SPIRV-Tools_config") {
   } else {
     assert(false, "Unsupported platform.")
   }
+
+  if (is_clang) {
+    cflags = [ "-Wno-implicit-fallthrough" ]
+  }
 }
 
 static_library("SPIRV-Tools") {
