@@ -144,6 +144,9 @@ template <typename Base>
 void LayoutNGMixin<Base>::SetPaintFragment(
     scoped_refptr<const NGPhysicalFragment> fragment) {
   paint_fragment_ = NGPaintFragment::Create(std::move(fragment));
+
+  // When paint fragment is replaced, the subtree needs paint invalidation.
+  Base::SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kSubtree);
 }
 
 static Vector<NGPaintFragment*> GetNGPaintFragmentsInternal(
