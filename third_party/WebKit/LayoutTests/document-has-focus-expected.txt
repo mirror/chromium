@@ -1,0 +1,4 @@
+CONSOLE MESSAGE: line 8: FOCUS -> document.hasFocus(): true
+CONSOLE MESSAGE: line 11: BLUR -> document.hasFocus(): false
+CONSOLE MESSAGE: line 8: FOCUS -> document.hasFocus(): true
+

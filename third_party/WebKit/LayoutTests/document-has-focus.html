@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<input id="input" />
+<script>
+if (window.internals) {
+  testRunner.dumpAsText();
+  const input = document.getElementById("input");
+  input.addEventListener("focus", () => {
+    console.log("FOCUS -> document.hasFocus(): " + document.hasFocus());
+  });
+  input.addEventListener("blur", () => {
+    console.log("BLUR -> document.hasFocus(): " + document.hasFocus());
+  });
+  input.focus();
+
+  testRunner.setWindowIsKey(false);
+  testRunner.setWindowIsKey(true);
+}
+</script>
