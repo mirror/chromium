@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9288dfe3_54e23958",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-06T23:18:23Z",
+      "side": 1,
+      "message": "As discussed offline the behavior is very similar to what it used to be before: 3 tasks run only once per session and 1 runs at most as often as dictated by `kClearStorageInterval`.\n\nIRT adding a delay between scheduling and execution: as that will add some complexity (even if little) shouldn\u0027t we base this off actual detected regressions? WDYT?",
+      "parentUuid": "ba322f7b_2b3ce1c5",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37970c9e_c102e0bf",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a09452_89948029",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-06T23:18:23Z",
+      "side": 1,
+      "message": "Explained in the other comment.",
+      "parentUuid": "37970c9e_c102e0bf",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d70fdd23_a85542f6",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-06T23:18:23Z",
+      "side": 1,
+      "message": "I moved this here to avoid the possibility of double-scheduling this task. That was possible if some AddPage or GetAllPages tasks were scheduled in sequence and this method method was called more than once before OnClearCachedPagesDone was called. This change avoids that.\n\nAlso, there\u0027s not practical difference between tracking the scheduling time versus the conclusion time and the former makes the code slightly simpler as this variable is only accessed by this single method.",
+      "parentUuid": "c7da1467_84599438",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e28f38ae_f14b9844",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c544edf_639eb3d9",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-06T23:18:23Z",
+      "side": 1,
+      "message": "Right! I was finally only checking that the task was scheduled and not executed. I do check for execution now based on the UMA data. Good catch.",
+      "parentUuid": "e28f38ae_f14b9844",
+      "revId": "f214d2fa38e0fd7bd6e3d27dac66951783f27f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
