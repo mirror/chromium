@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fec4f6d_1db6b8f2",
+        "filename": "media/capture/video/mac/video_capture_device_avfoundation_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-06T19:53:23Z",
+      "side": 1,
+      "message": "The code seems correct, but the whole block from line 446 to 461 demands comments explaining to the reader why things need to be done this way. Information that should go in there:\n* For MJPEG, sampleBuffer is expected to always be a CVBlockBuffer\n* For other formats, it may be either CVBlockBuffer or CVImageBuffer.\n  CVBlockBuffer seems to get used in the context of CoreMedia plugins / virtual cameras.\n* In order to find out wether it is CVBlockBuffer or CVImageBuffer we call CMSampleBufferGetImageBuffer() and check if the return value is nil.",
+      "revId": "654732ff566bd4fe0330c38941cda022171ea4ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
