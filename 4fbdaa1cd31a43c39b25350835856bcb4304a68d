@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed5ec49b_580f8c80",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-06T18:22:28Z",
+      "side": 1,
+      "message": "We have three different scenarios:\n1. Page is in background without audio and is throttled to 1Hz.\n2. Page is in background without audio for \u003e10s and no active connections are present -- budget-based throttling applies.\n3. Page is in background and audible -\u003e no throttling applies.\n\nI wonder what we should be exposing as LifecycleState?\n\nMy guess would be 1 -\u003e kHidden, 2 -\u003e kThrottled, 3 -\u003e kHidden (or kPassive)?",
+      "parentUuid": "715c6793_da78d91c",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "4fbdaa1cd31a43c39b25350835856bcb4304a68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "220c5695_46d16209",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 1
