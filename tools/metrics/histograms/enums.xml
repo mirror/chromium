@@ -31800,6 +31800,13 @@ Called by update_net_trust_anchors.py.-->
   <int value="8" label="User canceled">
     The request was removed by the user.
   </int>
+  <int value="9" label="File move failed">
+    Unable to move the file into a public directory while creating an offline
+    copy.
+  </int>
+  <int value="10" label="Download Manager registration failed">
+    Unable to add the file to the system download manager
+  </int>
 </enum>
 
 <enum name="OfflinePagesCctApiPrerenderAllowedStatus">
