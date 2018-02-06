@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcfeb6c5_9b608d87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T00:23:55Z",
+      "side": 1,
+      "message": "Review https://chromium.googlesource.com/chromium/src/+/lkgr/styleguide/c++/c++.md#naming. You may want to change chromium_ to chrome_",
+      "revId": "9b7e4c3c29c7513fab8288970e31d38c1401cec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4b13da_5b04fc3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-06T00:23:55Z",
+      "side": 1,
+      "message": "I think you can comma delimit bugs.",
+      "revId": "9b7e4c3c29c7513fab8288970e31d38c1401cec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
