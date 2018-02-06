@@ -468,14 +468,22 @@ RenderWidgetHostImpl* RenderWidgetHostImpl::From(RenderWidgetHost* rwh) {
 void RenderWidgetHostImpl::SetView(RenderWidgetHostViewBase* view) {
   if (view) {
     view_ = view->GetWeakPtr();
-    if (renderer_compositor_frame_sink_.is_bound()) {
-      view->DidCreateNewRendererCompositorFrameSink(
-          renderer_compositor_frame_sink_.get());
+    if (enable_viz_) {
+      if (pending_request_.is_pending()) {
+        GetHostFrameSinkManager()->CreateCompositorFrameSink(
+            view_->GetFrameSinkId(), std::move(pending_request_),
+            std::move(pending_client_));
+      }
+    } else {
+      if (renderer_compositor_frame_sink_.is_bound()) {
+        view->DidCreateNewRendererCompositorFrameSink(
+            renderer_compositor_frame_sink_.get());
+      }
+      // Views start out not needing begin frames, so only update its state
+      // if the value has changed.
+      if (needs_begin_frames_)
+        view_->SetNeedsBeginFrames(needs_begin_frames_);
     }
-    // Views start out not needing begin frames, so only update its state
-    // if the value has changed.
-    if (needs_begin_frames_)
-      view_->SetNeedsBeginFrames(needs_begin_frames_);
   } else {
     view_.reset();
   }
@@ -2649,11 +2657,13 @@ void RenderWidgetHostImpl::RequestCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest request,
     viz::mojom::CompositorFrameSinkClientPtr client) {
   if (enable_viz_) {
-    // TODO(kylechar): Find out why renderer is requesting a CompositorFrameSink
-    // with no view.
     if (view_) {
       GetHostFrameSinkManager()->CreateCompositorFrameSink(
           view_->GetFrameSinkId(), std::move(request), std::move(client));
+    } else {
+      // Store the interfaces for when/if a view is set later.
+      pending_request_ = std::move(request);
+      pending_client_ = std::move(client);
     }
     return;
   }

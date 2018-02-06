@@ -1036,6 +1036,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojo::Binding<viz::mojom::CompositorFrameSink> compositor_frame_sink_binding_;
   viz::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_;
 
+  // These are only used if |enable_viz_| is true. If we don't have view then
+  // store the interfaces until a view is added.
+  viz::mojom::CompositorFrameSinkRequest pending_request_;
+  viz::mojom::CompositorFrameSinkClientPtr pending_client_;
+
   viz::CompositorFrameMetadata last_frame_metadata_;
   cc::RenderFrameMetadata last_render_frame_metadata_;
 
