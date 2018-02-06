@@ -22,6 +22,30 @@
       "revId": "a7bd9488c2e9902e2f09f48166846d44f5a97aae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b712ba50_eacf97bd",
+        "filename": "chrome/browser/resources/md_downloads/toolbar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3155e99_80ed335b",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "a7bd9488c2e9902e2f09f48166846d44f5a97aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
