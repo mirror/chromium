@@ -143,6 +143,29 @@
     },
     {
       "key": {
+        "uuid": "96b5d983_4cae4283",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Will this have to be updated to one of the \u0027user visible\u0027 names we pick for things like SD Cards (e.g. \u0027SD Card 1\u0027)?",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecd344d9_6b56536b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7
@@ -187,6 +210,52 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b75dbf41_671f6b73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Is there no way to tell if a pref hasn\u0027t been set yet?  Or could we use a tri-state (UNSET, SHOW, HIDE) or something?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 123,
+        "endChar": 79
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cfd66b_c34824a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Should we trigger this if the user presses back on the dialog as well?  Not sure what the back key would do here.",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

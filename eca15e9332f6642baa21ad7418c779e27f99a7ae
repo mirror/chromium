@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891db2ad_4d5f5c22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Any way we can keep this from being a static?  What happens in the multiwindow case?\n\nIs there a pref changed listener we can rely on?  Also this will probably go away if we move to a drop down.  I\u0027d rather it be visually incorrect until we fix that than add singleton logic in the interim.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c118c42f_423c847b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "If we do keep a singleton, who erases the bridge?  Should we clear sInstance in destroy()?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81549b3_968e7001",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialogBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Should the dialog set this itself?  Fine either way.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 57
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406e2a98_95da03df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "No point passing this.  Just always check the singleton?  Also maybe just don\u0027t add if we\u0027re doing a dropdown.",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cb4bbf_04211ee7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Is most of this copy paste from the other class?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e37d33_2a7ccc8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4627cf8e_f2abc72e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Do we need to pas this in if we\u0027re saving it from the constructor?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151c7b41_ead1752f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Can these all be getOptionForXYZ()?",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa3cb0b_98612a9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Should we ever reach here?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 57
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe4b0b5_8e216ef3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryList.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Should we ever reach here?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 18
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d88bcb_09d871a4",
+        "filename": "chrome/browser/android/download/download_location_dialog_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "This can get messed up if the download gets removed due to some other system.  Can we just call DownloadController::RecordDownloadCancelReason(...) if cancelled?  Then revert the changes to DownloadManagerService?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 11
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28ddb13_c80ea936",
+        "filename": "chrome/browser/download/download_prefs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "It might make sense to not store this in the normal pref system.  We basically want it to store whether or not the user has ever seen the download location prompt right?  Could we call it \"download location prompt seen\"?  Or just default \"prompt for download android\" to true, so that way we don\u0027t show it if the user explicitly disables it in settings even the first time (which kind of makes sense)?\n\nI don\u0027t feel too strongly about it, but requiring two prefs for this makes me sad even though I understand why :(.",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 56
+      },
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec3e492_67af082b",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-06T19:31:29Z",
+      "side": 1,
+      "message": "Do this! ;)",
+      "revId": "eca15e9332f6642baa21ad7418c779e27f99a7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
