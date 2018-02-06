@@ -22,6 +22,30 @@
       "revId": "cec75f3670d7a4bc97ad770f9e4b8ed23e5cdeb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3738c50_36cc483a",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-02-06T21:38:51Z",
+      "side": 1,
+      "message": "sure, i could refactor it in that way.  i was keeping the logic in line with how command_ was being passed (indirectly) around the class.  i don\u0027t think it\u0027ll impact debugging/crash reports either way.",
+      "parentUuid": "30ebd151_40bb5452",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "cec75f3670d7a4bc97ad770f9e4b8ed23e5cdeb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
