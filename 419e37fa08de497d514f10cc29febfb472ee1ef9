@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fe95f1b_e1fb5580",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:11:57Z",
+      "side": 1,
+      "message": "Observing a widget !\u003d being added to it, so that is confusing. Calling it OnWidgetObserving and letting sky@ have input too.\n\nGood suggestion, thanks!",
+      "parentUuid": "d2496ccf_a652bb8e",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037fd0ff_f3495df9",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:11:57Z",
+      "side": 1,
+      "message": "pref keeping since it\u0027s part of an if-else block",
+      "parentUuid": "ca54beac_4c6ba442",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 16
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13106f5d_78f1736b",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:11:57Z",
+      "side": 1,
+      "message": "Fixed w/ your other suggestion (removes need for OnBubbleWidgetCreated).",
+      "parentUuid": "21a318d8_1d2e9cc4",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
