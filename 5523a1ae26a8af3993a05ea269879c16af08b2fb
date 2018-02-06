@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa130fc_b0f718e4",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-06T20:01:49Z",
+      "side": 1,
+      "message": "Can this actually happen? \nIf it does, we would have to protect ourselves against duplicate records in DownloadHistoryAdapter.onItemsAdded(). We don\u0027t do duplicate check over there.",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "5523a1ae26a8af3993a05ea269879c16af08b2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab86ee85_fa91894b",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2018-02-06T20:01:49Z",
+      "side": 1,
+      "message": "Similar to above comment, can this actually happen?",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "5523a1ae26a8af3993a05ea269879c16af08b2fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
