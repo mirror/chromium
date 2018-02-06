@@ -36,6 +36,9 @@ Polymer({
   /** @private {?settings.AndroidAppsBrowserProxy} */
   browserProxy_: null,
 
+  /** @private {boolean} */
+  playStoreDisabledHandled_: false,
+
   /** @override */
   created: function() {
     this.browserProxy_ = settings.AndroidAppsBrowserProxyImpl.getInstance();
@@ -45,8 +48,17 @@ Polymer({
    * @private
    */
   onAndroidAppsInfoUpdate_: function() {
-    if (!this.androidAppsInfo.playStoreEnabled &&
-        settings.getCurrentRoute() == settings.routes.ANDROID_APPS_DETAILS) {
+    if (this.androidAppsInfo.playStoreEnabled) {
+      playStoreDisabledHandled_ = false;
+      return;
+    }
+
+    if (playStoreDisabledHandled_) {
+      return;
+    }
+
+    playStoreDisabledHandled_ = true;
+    if (settings.getCurrentRoute() == settings.routes.ANDROID_APPS_DETAILS) {
       settings.navigateToPreviousRoute();
     }
   },
