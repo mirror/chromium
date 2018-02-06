@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d673a2f_22a794b6",
+        "filename": "third_party/WebKit/Source/core/frame/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-06T19:56:51Z",
+      "side": 1,
+      "message": "Awesome thanks!",
+      "revId": "7740ba7707678748161910b18a9c4246484f624d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e486c13_56e26080",
+        "filename": "third_party/WebKit/Source/core/testing/sim/SimCompositor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-06T19:56:51Z",
+      "side": 1,
+      "message": "I think this comment is debugging?",
+      "revId": "7740ba7707678748161910b18a9c4246484f624d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
