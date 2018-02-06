@@ -341,10 +341,12 @@ void BrowserProcessImpl::StartTearDown() {
   plugins_resource_service_.reset();
 #endif
 
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   // Need to clear the desktop notification balloons before the io_thread_ and
   // before the profiles, since if there are any still showing we will access
   // those things during teardown.
   notification_ui_manager_.reset();
+#endif
 
   // The SupervisedUserWhitelistInstaller observes the ProfileAttributesStorage,
   // so it needs to be shut down before the ProfileManager.
@@ -657,14 +659,12 @@ BrowserProcessImpl::extension_event_router_forwarder() {
 
 NotificationUIManager* BrowserProcessImpl::notification_ui_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-// TODO(miguelg) return NULL for MAC as well once native notifications
-// are enabled by default.
-#if defined(OS_ANDROID)
-  return nullptr;
-#else
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   if (!created_notification_ui_manager_)
     CreateNotificationUIManager();
   return notification_ui_manager_.get();
+#else
+  return nullptr;
 #endif
 }
 
@@ -1194,7 +1194,7 @@ void BrowserProcessImpl::CreateNotificationPlatformBridge() {
 void BrowserProcessImpl::CreateNotificationUIManager() {
 // Android does not use the NotificationUIManager anymore
 // All notification traffic is routed through NotificationPlatformBridge.
-#if !defined(OS_ANDROID)
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   DCHECK(!notification_ui_manager_);
   notification_ui_manager_.reset(NotificationUIManager::Create());
   created_notification_ui_manager_ = true;

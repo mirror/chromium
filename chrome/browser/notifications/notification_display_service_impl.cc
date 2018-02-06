@@ -47,8 +47,7 @@ namespace {
 //     Always uses native notifications.
 //
 //   * Mac OS X, Linux
-//     Uses native notifications by default, but can fall back to the message
-//     center if base::kNativeNotifications is disabled or initialization fails.
+//     Always uses native notifications.
 //
 //   * Windows 10 RS1+:
 //     Uses the message center by default, but can use native notifications if
@@ -64,7 +63,7 @@ namespace {
 // the platforms supported by the browser.
 NotificationPlatformBridge* GetNativeNotificationPlatformBridge() {
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
   DCHECK(base::FeatureList::IsEnabled(features::kNativeNotifications));
   return g_browser_process->notification_platform_bridge();
 #elif defined(OS_WIN)
