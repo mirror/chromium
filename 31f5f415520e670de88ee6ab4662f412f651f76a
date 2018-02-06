@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4019c1_b10ac307",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 50
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T07:46:36Z",
+      "side": 1,
+      "message": "Can these be annotated with EnableIf? We recently implemented a feature where mojom definitions can be guarded. See https://chromium-review.googlesource.com/c/chromium/src/+/899805 for an example.\n\nSimilarly for things guarded USE_BROWSER_SPELLCHECKER and Android-specific methods above.",
+      "revId": "31f5f415520e670de88ee6ab4662f412f651f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
