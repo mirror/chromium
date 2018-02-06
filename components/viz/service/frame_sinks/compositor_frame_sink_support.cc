@@ -30,6 +30,7 @@ CompositorFrameSinkSupport::CompositorFrameSinkSupport(
       surface_resource_holder_(this),
       is_root_(is_root),
       needs_sync_tokens_(needs_sync_tokens),
+      allow_copy_output_requests_(is_root),
       weak_factory_(this) {
   // This may result in SetBeginFrameSource() being called.
   frame_sink_manager_->RegisterCompositorFrameSinkSupport(frame_sink_id_, this);
@@ -187,6 +188,14 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
   DCHECK(!frame.render_pass_list.empty());
   DCHECK(success);
   *success = true;
+
+  // Ensure no CopyOutputRequests have been submitted if they are banned.
+  if (!allow_copy_output_requests_ && frame.HasCopyOutputRequests()) {
+    TRACE_EVENT_INSTANT0("viz", "CopyOutputRequest Permission Violation",
+                         TRACE_EVENT_SCOPE_THREAD);
+    *success = false;
+    return;
+  }
 
   uint64_t frame_index = ++last_frame_index_;
   ++ack_pending_count_;

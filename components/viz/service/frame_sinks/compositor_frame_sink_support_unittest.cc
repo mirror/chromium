@@ -93,6 +93,16 @@ class CompositorFrameSinkSupportTest : public testing::Test {
               local_surface_id_);
   }
 
+  bool SubmitCompositorFrameWithCopyRequest(
+      std::unique_ptr<CopyOutputRequest> request) {
+    auto frame = MakeDefaultCompositorFrame();
+    frame.render_pass_list.back()->copy_requests.push_back(std::move(request));
+    bool accepted = true;
+    support_->SubmitCompositorFrame(local_surface_id_, std::move(frame),
+                                    nullptr, &accepted);
+    return accepted;
+  }
+
   void UnrefResources(ResourceId* ids_to_unref,
                       int* counts_to_unref,
                       size_t num_ids_to_unref) {
@@ -513,6 +523,32 @@ TEST_F(CompositorFrameSinkSupportTest, MonotonicallyIncreasingLocalSurfaceIds) {
   support->SubmitCompositorFrame(
       local_surface_id6, MakeDefaultCompositorFrame(), nullptr, &success);
   EXPECT_TRUE(success);
+
+  support->EvictCurrentSurface();
+  manager_.InvalidateFrameSinkId(kAnotherArbitraryFrameSinkId);
+}
+
+// Verifies that CopyOutputRequests submitted by unprivileged clients are
+// rejected.
+TEST_F(CompositorFrameSinkSupportTest, ProhibitsUnprivilegedCopyRequests) {
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.SetFrameSinkDebugLabel(kAnotherArbitraryFrameSinkId,
+                                  "kAnotherArbitraryFrameSinkId");
+  MockCompositorFrameSinkClient mock_client;
+  auto support = std::make_unique<CompositorFrameSinkSupport>(
+      &mock_client, &manager_, kAnotherArbitraryFrameSinkId,
+      false /* not root frame sink */, kNeedsSyncPoints);
+
+  bool did_receive_aborted_copy_result = false;
+  auto request = std::make_unique<CopyOutputRequest>(
+      CopyOutputRequest::ResultFormat::RGBA_BITMAP,
+      base::BindOnce(
+          [](bool* got_nothing, std::unique_ptr<CopyOutputResult> result) {
+            *got_nothing = result->IsEmpty();
+          },
+          &did_receive_aborted_copy_result));
+  EXPECT_FALSE(SubmitCompositorFrameWithCopyRequest(std::move(request)));
+  EXPECT_TRUE(did_receive_aborted_copy_result);
 
   support->EvictCurrentSurface();
   manager_.InvalidateFrameSinkId(kAnotherArbitraryFrameSinkId);

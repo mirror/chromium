@@ -49,7 +49,7 @@ void CompositorFrameSinkImpl::SubmitCompositorFrame(
   if (!success) {
     DLOG(ERROR) << "SubmitCompositorFrame failed for " << local_surface_id;
     compositor_frame_sink_binding_.CloseWithReason(
-        1, "Surface invariants violation");
+        1, "Surface invariants or copy request permission violation");
     OnClientConnectionLost();
   }
 }
