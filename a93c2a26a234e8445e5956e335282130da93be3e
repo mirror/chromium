@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5c01421_f88e5a2b",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done. I ran into one issue where the \"base::FilePath\" is necessary to do the deletion on UNIX systems since it is handled through \"base::DeleteFile\". I have noted this behavior in the comments but it could result in some strange scenarios. Since this is primarily for Windows (for now) I went ahead anyways. However, we may want to revisit this decision.\n\nMy work around for now is to pass \"base::FilePath\" as a parameter to \"MappedFileWriter\" and then if \"\" is passed just ignore any deletion attempts and let the caller handle the deletion. This is a bad interface but it would preserve all current functionality while allowing \"Apply\" to be called with \"base::File\" arguments.\n\nIn future we should maybe consider moving the auto-delete feature out of \"MappedFileWriter\"? It makes the most sense that the file owner should handle the file cleanup and since \"MappedFileWriter\" is no longer the file owner I think we should abdicate it of this responsibility.",
+      "parentUuid": "a3708d5b_81562c76",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 66
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "595c72cf_7d049f37",
         "filename": "chrome/installer/zucchini/mapped_file.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9d61f8_ea487f2a",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595c72cf_7d049f37",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "90632b63_a72efdb4",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done. I used a struct instead of a map since it seemed more efficient and flexible. Plus I could use constructors to abstract away input types so it accepts both \"base::FilePath\" and \"std::string_view\".",
+      "parentUuid": "71020aaa_f96fef4f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0727f383_9877f1d4",
         "filename": "chrome/installer/zucchini/zucchini_integration.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1379f1_d35e6d90",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0727f383_9877f1d4",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f4e8df49_9d39911e",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7a10a4_7278fed3",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f20fde7_3a26a661",
         "filename": "chrome/installer/zucchini/zucchini_integration.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8787b004_13f8677a",
+        "filename": "chrome/installer/zucchini/zucchini_integration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1259740
+      },
+      "writtenOn": "2018-02-06T23:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f20fde7_3a26a661",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
