@@ -67,6 +67,16 @@ MATCHER_P(OpenParamEq, expected, "") {
          expected.ping_interval_in_seconds == arg.ping_interval_in_seconds;
 }
 
+class MockObserver : public CastMediaSinkServiceImpl::Observer {
+ public:
+  MockObserver() {}
+  ~MockObserver() override = default;
+
+  MOCK_METHOD2(OnSinkAddedOrUpdated,
+               void(const MediaSinkInternal&, cast_channel::CastSocket*));
+  MOCK_METHOD1(OnSinkRemoved, void(const MediaSink::Id&));
+};
+
 }  // namespace
 
 class CastMediaSinkServiceImplTest : public ::testing::Test {
@@ -77,6 +87,7 @@ class CastMediaSinkServiceImplTest : public ::testing::Test {
         mock_cast_socket_service_(
             new cast_channel::MockCastSocketService(mock_time_task_runner_)),
         media_sink_service_impl_(mock_sink_discovered_cb_.Get(),
+                                 &observer_,
                                  mock_cast_socket_service_.get(),
                                  discovery_network_monitor_.get(),
                                  nullptr /* url_request_context_getter */) {
@@ -132,6 +143,7 @@ class CastMediaSinkServiceImplTest : public ::testing::Test {
       mock_cast_socket_service_;
   base::MockTimer* mock_timer_;
   CastMediaSinkServiceImpl media_sink_service_impl_;
+  testing::NiceMock<MockObserver> observer_;
 
   DISALLOW_COPY_AND_ASSIGN(CastMediaSinkServiceImplTest);
 };
@@ -161,6 +173,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenSucceeded) {
   cast_channel::MockCastSocket socket;
   socket.set_id(1);
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink, &socket));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink, &socket, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
@@ -187,6 +200,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
   // Current round of Dns discovery finds service1 and service 2.
   // Fail to open channel 1.
   base::HistogramTester tester;
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink2, &socket2));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink2, &socket2, CastMediaSinkServiceImpl::SinkSource::kMdns);
   EXPECT_THAT(
@@ -195,6 +209,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
       ElementsAre(Bucket(
           static_cast<int>(CastMediaSinkServiceImpl::SinkSource::kMdns), 1)));
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink3, &socket3));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink3, &socket3, CastMediaSinkServiceImpl::SinkSource::kDial);
   EXPECT_THAT(
@@ -208,6 +223,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
 
   extra_data.discovered_by_dial = false;
   cast_sink3.set_cast_data(extra_data);
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink3, &socket3));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink3, &socket3, CastMediaSinkServiceImpl::SinkSource::kMdns);
   EXPECT_THAT(
@@ -242,6 +258,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestTimer) {
   cast_channel::MockCastSocket socket2;
   socket2.set_id(2);
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink2, &socket2));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink2, &socket2, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
@@ -257,6 +274,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestTimer) {
   cast_channel::MockCastSocket socket1;
   socket1.set_id(1);
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink1, &socket1));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink1, &socket1, CastMediaSinkServiceImpl::SinkSource::kMdns);
   EXPECT_TRUE(mock_timer_->IsRunning());
@@ -361,6 +379,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   clock.Advance(delta);
   base::HistogramTester tester;
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink2, &socket2));
   media_sink_service_impl_.OnChannelOpened(
       cast_sink2, nullptr, CastMediaSinkServiceImpl::SinkSource::kMdns,
       start_time, &socket2);
@@ -384,9 +403,11 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   socket3.set_id(3);
   socket1.SetErrorState(cast_channel::ChannelError::NONE);
   socket3.SetErrorState(cast_channel::ChannelError::NONE);
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink1, &socket1));
   media_sink_service_impl_.OnChannelOpened(
       cast_sink1, nullptr, CastMediaSinkServiceImpl::SinkSource::kMdns,
       start_time, &socket1);
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink3, &socket3));
   media_sink_service_impl_.OnChannelOpened(
       cast_sink3, nullptr, CastMediaSinkServiceImpl::SinkSource::kMdns,
       start_time, &socket3);
@@ -403,12 +424,14 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenFailed) {
   cast_channel::MockCastSocket socket;
   socket.set_id(1);
 
+  EXPECT_CALL(observer_, OnSinkAddedOrUpdated(cast_sink, &socket));
   media_sink_service_impl_.OnChannelOpenSucceeded(
       cast_sink, &socket, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
   EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_map_.size());
 
   socket.SetIPEndpoint(ip_endpoint1);
+  EXPECT_CALL(observer_, OnSinkRemoved(cast_sink.sink().id()));
   media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
 }

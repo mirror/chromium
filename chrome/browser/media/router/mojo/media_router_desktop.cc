@@ -10,6 +10,7 @@
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
+#include "chrome/browser/media/router/providers/cast/cast_media_route_provider.h"
 #include "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
@@ -94,6 +95,7 @@ void MediaRouterDesktop::RegisterMediaRouteProvider(
   // to disable it in the provider.
   config->enable_cast_discovery = !media_router::CastDiscoveryEnabled();
   config->enable_dial_sink_query = !media_router::DialSinkQueryEnabled();
+  config->enable_cast_sink_query = !media_router::CastSinkQueryEnabled();
   std::move(callback).Run(instance_id(), std::move(config));
 
   SyncStateToMediaRouteProvider(provider_id);
@@ -180,6 +182,8 @@ void MediaRouterDesktop::InitializeMediaRouteProviders() {
   InitializeExtensionMediaRouteProviderProxy();
   if (base::FeatureList::IsEnabled(features::kLocalScreenCasting))
     InitializeWiredDisplayMediaRouteProvider();
+  if (media_router::CastSinkQueryEnabled())
+    InitializeCastMediaRouteProvider();
 }
 
 void MediaRouterDesktop::InitializeExtensionMediaRouteProviderProxy() {
@@ -201,6 +205,19 @@ void MediaRouterDesktop::InitializeWiredDisplayMediaRouteProvider() {
   RegisterMediaRouteProvider(
       MediaRouteProviderId::WIRED_DISPLAY,
       std::move(wired_display_provider_ptr),
+      base::BindOnce([](const std::string& instance_id,
+                        mojom::MediaRouteProviderConfigPtr config) {}));
+}
+
+void MediaRouterDesktop::InitializeCastMediaRouteProvider() {
+  mojom::MediaRouterPtr media_router_ptr;
+  MediaRouterMojoImpl::BindToMojoRequest(mojo::MakeRequest(&media_router_ptr));
+  mojom::MediaRouteProviderPtr cast_provider_ptr;
+  cast_provider_ = std::make_unique<CastMediaRouteProvider>(
+      mojo::MakeRequest(&cast_provider_ptr), std::move(media_router_ptr),
+      media_sink_service_->cast_app_discovery_service());
+  RegisterMediaRouteProvider(
+      MediaRouteProviderId::CAST, std::move(cast_provider_ptr),
       base::BindOnce([](const std::string& instance_id,
                         mojom::MediaRouteProviderConfigPtr config) {}));
 }

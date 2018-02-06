@@ -212,7 +212,7 @@ enum RouteRequestResultCode {
 };
 
 // Used to pass feature configuration data from the Browser to Media Route
-// Provider.
+// Provider. This object is used by the extension MRP only.
 struct MediaRouteProviderConfig {
   // If the MRP should enable DIAL discovery.
   bool enable_dial_discovery;
@@ -222,6 +222,9 @@ struct MediaRouteProviderConfig {
 
   // If the MRP should enable DIAL sink query.
   bool enable_dial_sink_query;
+
+  // If the MRP should enable Cast sink query.
+  bool enable_cast_sink_query;
 };
 
 // Modeled after the MediaRouter interface defined in
@@ -235,7 +238,8 @@ interface MediaRouteProvider {
   // kept in sync with MediaRouteProviderId in C++.
   enum Id {
     EXTENSION,
-    WIRED_DISPLAY
+    WIRED_DISPLAY,
+    CAST
   };
 
   // Creates a media route from |media_source| to the sink given by |sink_id|.

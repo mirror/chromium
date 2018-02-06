@@ -9,6 +9,9 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/media_router_feature.h"
+#include "chrome/browser/media/router/providers/cast/cast_app_discovery_service.h"
+#include "chrome/browser/media/router/providers/cast/chrome_cast_message_handler.h"
+#include "components/cast_channel/cast_socket_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -59,12 +62,22 @@ DualMediaSinkService::DualMediaSinkService() {
   scoped_refptr<net::URLRequestContextGetter> request_context =
       g_browser_process->system_request_context();
 
-  if (media_router::CastDiscoveryEnabled()) {
+  if (CastDiscoveryEnabled()) {
+    if (CastSinkQueryEnabled()) {
+      cast_channel::CastSocketService* cast_socket_service =
+          cast_channel::CastSocketService::GetInstance();
+      cast_app_discovery_service_ = std::make_unique<CastAppDiscoveryService>(
+          GetCastMessageHandler(), cast_socket_service);
+    }
+
     cast_media_sink_service_ =
         std::make_unique<CastMediaSinkService>(request_context);
     cast_media_sink_service_->Start(
         base::BindRepeating(&DualMediaSinkService::OnSinksDiscovered,
-                            base::Unretained(this), "cast"));
+                            base::Unretained(this), "cast"),
+        cast_app_discovery_service_
+            ? cast_app_discovery_service_->GetSinkDiscoveryObserver()
+            : nullptr);
   }
 
   OnDialSinkAddedCallback dial_sink_added_cb;

@@ -36,6 +36,21 @@ class CastMediaSinkServiceImpl
       public cast_channel::CastSocket::Observer,
       public DiscoveryNetworkMonitor::Observer {
  public:
+  // Listens for sink updates in CastMediaSinkServiceImpl. All observer methods
+  // must run on the same sequence as CastMediaSinkServiceImpl.
+  class Observer {
+   public:
+    virtual ~Observer() = default;
+
+    // Invoked when |sink| is added or updated. |socket| is a pointer to the
+    // CastSocket instance associated with |sink|, and is never nullptr.
+    virtual void OnSinkAddedOrUpdated(const MediaSinkInternal& sink,
+                                      cast_channel::CastSocket* socket);
+
+    // Invoked when the sink given by |sink_id| is removed.
+    virtual void OnSinkRemoved(const MediaSink::Id& sink_id);
+  };
+
   using SinkSource = CastDeviceCountMetrics::SinkSource;
 
   // Default Cast control port to open Cast Socket from DIAL sink.
@@ -46,6 +61,7 @@ class CastMediaSinkServiceImpl
   static constexpr int kMaxDialSinkFailureCount = 10;
 
   // |callback|: Callback passed to MediaSinkServiceBase.
+  // |observer|: Observer to invoke on sink updates. Can be nullptr.
   // |cast_socket_service|: CastSocketService to use to open Cast channels to
   // discovered devices.
   // |network_monitor|: DiscoveryNetworkMonitor to use to listen for network
@@ -53,6 +69,7 @@ class CastMediaSinkServiceImpl
   // |url_request_context_getter|: URLRequestContextGetter used for making
   // network requests.
   CastMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
+                           Observer* observer,
                            cast_channel::CastSocketService* cast_socket_service,
                            DiscoveryNetworkMonitor* network_monitor,
                            const scoped_refptr<net::URLRequestContextGetter>&
@@ -300,6 +317,9 @@ class CastMediaSinkServiceImpl
 
   // Map of sinks with opened cast channels keyed by IP endpoint.
   MediaSinkInternalMap current_sinks_map_;
+
+  // Observer to notify when a sink is added, updated, or removed.
+  Observer* const observer_;
 
   // Raw pointer of leaky singleton CastSocketService, which manages adding and
   // removing Cast channels.

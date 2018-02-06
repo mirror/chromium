@@ -74,7 +74,8 @@ struct VirtualConnection {
 // message is sent. This makes the concept of VC transparent to the client.
 // This class currently provides only supports requesting app availability from
 // a device, but will be expanded to support additional types of messages.
-// This class must be run on the same sequence that CastSocketService runs on.
+// This class may be created on any sequence, but other methods (including
+// destructor) must be run on the same sequence that CastSocketService runs on.
 class CastMessageHandler : public CastSocket::Observer {
  public:
   explicit CastMessageHandler(CastSocketService* socket_service,

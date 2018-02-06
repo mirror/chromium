@@ -20,6 +20,7 @@ class Extension;
 }
 
 namespace media_router {
+class CastMediaRouteProvider;
 class DualMediaSinkService;
 class WiredDisplayMediaRouteProvider;
 
@@ -101,6 +102,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // Helper methods for InitializeMediaRouteProviders().
   void InitializeExtensionMediaRouteProviderProxy();
   void InitializeWiredDisplayMediaRouteProvider();
+  void InitializeCastMediaRouteProvider();
 
 #if defined(OS_WIN)
   // Ensures that mDNS discovery is enabled in the MRPM extension. This can be
@@ -120,6 +122,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // MediaRouteProvider for casting to local screens.
   std::unique_ptr<WiredDisplayMediaRouteProvider> wired_display_provider_;
+
+  // MediaRouteProvider for casting to Cast devices.
+  std::unique_ptr<CastMediaRouteProvider> cast_provider_;
 
   DualMediaSinkService* media_sink_service_;
   DualMediaSinkService::Subscription media_sink_service_subscription_;
