@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7664e050_b9279e41",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-02-06T21:59:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e5cefde3_9c6cdb49",
+      "revId": "d9ab62143be1630f2ed4b86824bbb42c9d5e56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcfb857d_a945c03f",
         "filename": "components/viz/client/hit_test_data_provider_simple_bounds.h",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9f32f95a_c44bca01",
+        "filename": "components/viz/client/hit_test_data_provider_simple_bounds.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-02-06T21:59:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcfb857d_a945c03f",
+      "revId": "d9ab62143be1630f2ed4b86824bbb42c9d5e56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8856ef2b_d1d48a97",
         "filename": "ui/aura/hit_test_data_provider_aura.cc",
         "patchSetId": 21
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-06T19:17:09Z",
       "side": 1,
       "message": "would it have been easier to have two GetHitTestData entry points? One with and one without a CF?",
+      "revId": "d9ab62143be1630f2ed4b86824bbb42c9d5e56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcaf061_d5efb7df",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2018-02-06T21:59:26Z",
+      "side": 1,
+      "message": "Possibly.  It would require a mechanism to know when to call one or the other which may also complicate the implementation.  Perhaps we can revisit after we are confidently creating hit test data in content and then we can remove this method.",
+      "parentUuid": "8856ef2b_d1d48a97",
       "revId": "d9ab62143be1630f2ed4b86824bbb42c9d5e56fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
