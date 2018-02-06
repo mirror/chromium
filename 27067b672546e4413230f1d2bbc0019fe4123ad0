@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0285451c_49d7c3c8",
+        "filename": "notification_helper/BUILD.gn",
+        "patchSetId": 85
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T20:51:19Z",
+      "side": 1,
+      "message": "this is no longer used in non-win contexts, is it? can you get rid of the conditional here?",
+      "revId": "27067b672546e4413230f1d2bbc0019fe4123ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

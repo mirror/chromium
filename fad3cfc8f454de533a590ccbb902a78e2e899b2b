@@ -645,6 +645,24 @@
       "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a315d6d_31a77976",
+        "filename": "notification_helper/trace_util.cc",
+        "patchSetId": 82
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T20:51:19Z",
+      "side": 1,
+      "message": "as you have it, callers prepare their arguments and pass them to an empty function. in theory, the compiler/linker could \"see\" that the fn is empty and drop the work of preparing for the call, but maybe we don\u0027t need to rely on that. can you put some #if magic in trace_util.h so that Trace() completely evaporates in debug builds? i could imagine something like:\n\n#if defined(NDEBUG)\n#define Trace(format, ...)\n#else\n#define Trace(format, ...) TraceImpl(format, __VA_ARGS__)\n#endif\n\nand then TraceImpl is what you have as Trace; only defined in !NDEBUG builds.",
+      "parentUuid": "6d9c8cce_63e08a0e",
+      "revId": "fad3cfc8f454de533a590ccbb902a78e2e899b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
