@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "cbd94ed3_2db8cfad",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "we should probably also consider only logging this one in a WasStartedInForegroundOptionalEventInForeground, as it\u0027s probably not useful to record time to first input if some of that time was time where page was in background and thus time where the user wasn\u0027t necessarily waiting for the page to be ready before they interact.\n\nrelated to this can be also add FG/BG breakouts for FID as part of this change? those will mostly be for diagnostic purposes to sanity check they aren;t significantly different.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "674dc519_6516f16f",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
         "patchSetId": 5
@@ -42,6 +59,81 @@
     },
     {
       "key": {
+        "uuid": "a54d1b66_ef265814",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "Ah, you know, I had implemented it the way you had now initially, and I was\u0027t super happy with all of the |\u003d code I had to add. So I do think having a superclass for merging might be the right way to go here.\n\nOther option would be to generalize PaintTimingMerger to PageLoadTimingMerger and have it take PageLoadTiming instances, or having separate MergePaintTiming and MergeInteractiveTiming methods on that class. That way we share a single backing did_merge_new_timing_value boolean, which I think is what we want (we don\u0027t actually need to know if only paint or interactive timing were updated, just that at least one value was updated, IIUC).",
+      "parentUuid": "674dc519_6516f16f",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31ad7ef_234570df",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "let\u0027s maybe update the comment to explain that inout_existing_value is relative to the main frame\u0027s nav start but optional_candidate_new_value is relative to its frame\u0027s nav start, where navigation_start_offset contains the diff in nav starts between main frame vs the frame for optional_candidate_new_value.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5127bcfb_fdc9be3e",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "i see this is really my code originally, so maybe this is really feedback to myself, but...\n\nthis bit of code is a little tricky for me to read since it is both a pointer (because it is an inout val) and because it\u0027s a base::Optional. When I first read if (*inout_existing_value) I thought it was checking pointer nullness - I think it\u0027s easy for readers to make that mistake.\n\nSo maybe we could do this instead:\nDCHECK_NE(nullptr, inout_existing_value);\nif (inout_existing_value-\u003ehas_value()) {\n  // If we have a new value, but...\n} else {\n  did_merge_new_timing_value \u003d true;\n}\n\nWDYT?",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9aae001_edddf123",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "i can never quite remember, do |\u003d short circuit if the first expression is already true? we would not want that behavior.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d5a6731_f62baa21",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
         "patchSetId": 5
@@ -53,6 +145,30 @@
       "writtenOn": "2018-02-06T15:49:54Z",
       "side": 1,
       "message": "I think this is a bug? This doesn\u0027t set did_merge_new_timing_value_.\n\nI\u0027m inclined to just always use MaybeUpdateTimeDelta?",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 78
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd66eb7f_95344644",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2018-02-06T22:21:53Z",
+      "side": 1,
+      "message": "I think you are right, thank you for catching this! Using MaybeUpdateTimeDelta here, but in an is_main_frame if statement, SGTM, thanks!",
+      "parentUuid": "3d5a6731_f62baa21",
       "range": {
         "startLine": 307,
         "startChar": 4,
