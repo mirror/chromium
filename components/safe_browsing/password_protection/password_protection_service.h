@@ -231,6 +231,10 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   virtual PasswordProtectionTrigger GetPasswordProtectionTriggerPref(
       const std::string& pref_name) const = 0;
 
+  // Returns the pref value of password protection email domains.
+  virtual void GetPasswordProtectionEmailDomainsPref(
+      std::vector<std::string>* out_canonicalized_domain_list) const = 0;
+
  protected:
   friend class PasswordProtectionRequest;
 
