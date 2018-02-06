@@ -87,3 +87,7 @@ LOAD_FLAG(DISABLE_CONNECTION_MIGRATION, 1 << 17)
 // Indicates that the cache should not check that the request matches the
 // response's vary header.
 LOAD_FLAG(SKIP_VARY_CHECK, 1 << 18)
+
+// Indicates that SameSite cookies are allowed to be attached to the request.
+// It should be used as additional input to network stack checks.
+LOAD_FLAG(ATTACH_SAME_SITE_COOKIES, 1 << 19)

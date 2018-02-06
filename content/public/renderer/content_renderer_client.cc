@@ -132,7 +132,10 @@ bool ContentRendererClient::WillSendRequest(
     blink::WebLocalFrame* frame,
     ui::PageTransition transition_type,
     const blink::WebURL& url,
-    GURL* new_url) {
+    base::Optional<url::Origin> initiator_origin,
+    GURL* new_url,
+    bool* attach_same_site_cookies) {
+  *attach_same_site_cookies = false;
   return false;
 }
 
