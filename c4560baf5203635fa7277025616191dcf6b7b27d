@@ -244,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "7f3267cb_af44d634",
+        "filename": "device/fido/u2f_register_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T18:25:52Z",
+      "side": 1,
+      "message": "Yes, that sounds good. Another idea I just had is to create another interface called `U2fRequestParam` (or similar). This would only be implemented by CtapMakeCredentialRequestParam and CtapGetAssertionRequestParam and would hide U2F specific logic from the CtapRequestParam interface.\n\nMy main problem with having U2f{Register,Sign}Param implement CtapRequestParam is that CTAP in general shouldn\u0027t really know about U2F specific logic and that it breaks the nice bijection between CtapRequestParam\u0027s subclasses and the APIs defined in https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api.\n\nI hope I\u0027m making sense :)",
+      "parentUuid": "9bb45f0d_01a204d1",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0305929_eebc9252",
         "filename": "device/fido/u2f_sign_param.h",
         "patchSetId": 13
