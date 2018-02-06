@@ -139,11 +139,11 @@ void ClearLegacyTemporaryPagesTask::Run() {
 }
 
 void ClearLegacyTemporaryPagesTask::OnClearLegacyTemporaryPagesDone(
-    bool result) {
+    bool success) {
   // TODO(romax): https://crbug.com/772204. Replace the DVLOG with UMA
   // collecting. If there's a need, introduce more detailed local enums
   // indicating which part failed.
-  DVLOG(1) << "ClearLegacyTemporaryPagesTask returns with result: " << result;
+  DVLOG(1) << "ClearLegacyTemporaryPagesTask returns with result: " << success;
   TaskComplete();
 }
 
