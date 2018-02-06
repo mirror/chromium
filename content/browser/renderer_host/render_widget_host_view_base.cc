@@ -284,8 +284,10 @@ void RenderWidgetHostViewBase::DidUnregisterFromTextInputManager(
   text_input_manager_ = nullptr;
 }
 
-void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
+void RenderWidgetHostViewBase::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
   host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
 }

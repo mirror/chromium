@@ -180,7 +180,8 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   BrowserPluginGuestManager* GetBrowserPluginGuestManager() const;
 
   void ResizeDueToAutoResize(const gfx::Size& new_size,
-                             uint64_t sequence_number);
+                             uint64_t sequence_number,
+                             const viz::LocalSurfaceId& surface_id);
 
   // WebContentsObserver implementation.
   void DidFinishNavigation(NavigationHandle* navigation_handle) override;

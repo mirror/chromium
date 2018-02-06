@@ -149,7 +149,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
       std::unique_ptr<MusEmbeddedFrame> mus_embedded_frame);
 #endif
 
-  void WasResized();
+  void WasResized(const viz::LocalSurfaceId& surface_id_for_auto_resize);
 
   const gfx::Rect& screen_space_rect() const {
     return pending_resize_params_.screen_space_rect;
@@ -240,7 +240,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetHasReceivedUserGesture();
   void OnScrollRectToVisible(const gfx::Rect& rect_to_scroll,
                              const blink::WebScrollIntoViewParams& params);
-  void OnResizeDueToAutoResize(uint64_t sequence_number);
+  void OnResizeDueToAutoResize(uint64_t sequence_number,
+                               base::Optional<viz::LocalSurfaceId> surface_id);
   void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
 
 #if defined(USE_AURA)

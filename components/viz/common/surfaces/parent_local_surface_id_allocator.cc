@@ -13,13 +13,12 @@ namespace viz {
 LocalSurfaceId ParentLocalSurfaceIdAllocator::set_child_sequence_number(
     uint32_t child_sequence_number) {
   child_sequence_number_ = child_sequence_number;
-  return LocalSurfaceId(next_parent_id_, child_sequence_number_, nonce_);
+  return LocalSurfaceId(current_parent_id_, child_sequence_number_, nonce_);
 }
 
 LocalSurfaceId ParentLocalSurfaceIdAllocator::GenerateId() {
   nonce_ = base::UnguessableToken::Create();
-  LocalSurfaceId id(next_parent_id_, child_sequence_number_, nonce_);
-  next_parent_id_++;
+  LocalSurfaceId id(++current_parent_id_, child_sequence_number_, nonce_);
   return id;
 }
 

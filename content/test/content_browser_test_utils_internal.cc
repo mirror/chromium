@@ -348,6 +348,7 @@ void UrlCommitObserver::DidFinishNavigation(
 
 UpdateResizeParamsMessageFilter::UpdateResizeParamsMessageFilter()
     : content::BrowserMessageFilter(FrameMsgStart),
+      surface_id_run_loop_(std::make_unique<base::RunLoop>()),
       screen_space_rect_run_loop_(std::make_unique<base::RunLoop>()),
       screen_space_rect_received_(false) {}
 
@@ -361,10 +362,15 @@ void UpdateResizeParamsMessageFilter::ResetRectRunLoop() {
   screen_space_rect_received_ = false;
 }
 
-viz::FrameSinkId UpdateResizeParamsMessageFilter::GetOrWaitForId() {
+viz::SurfaceId UpdateResizeParamsMessageFilter::GetOrWaitForId() {
   // No-opt if already quit.
-  frame_sink_id_run_loop_.Run();
-  return frame_sink_id_;
+  surface_id_run_loop_->Run();
+  return surface_id_;
+}
+
+void UpdateResizeParamsMessageFilter::ResetIdRunLoop() {
+  surface_id_run_loop_.reset(new base::RunLoop);
+  surface_id_ = viz::SurfaceId();
 }
 
 UpdateResizeParamsMessageFilter::~UpdateResizeParamsMessageFilter() {}
@@ -381,23 +387,23 @@ void UpdateResizeParamsMessageFilter::OnUpdateResizeParams(
       base::BindOnce(&UpdateResizeParamsMessageFilter::OnUpdatedFrameRectOnUI,
                      this, screen_space_rect));
 
-  // Record the received value. We cannot check the current state of the child
+  // Record the received values. We cannot check the current state of the child
   // frame, as it can only be processed on the UI thread, and we cannot block
   // here.
-  frame_sink_id_ = surface_id.frame_sink_id();
+  surface_id_ = surface_id;
 
   // There can be several updates before a valid viz::FrameSinkId is ready. Do
   // not quit |run_loop_| until after we receive a valid one.
-  if (!frame_sink_id_.is_valid())
+  if (!surface_id_.frame_sink_id().is_valid())
     return;
 
   // We can't nest on the IO thread. So tests will wait on the UI thread, so
   // post there to exit the nesting.
   content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
-      ->PostTask(FROM_HERE,
-                 base::BindOnce(
-                     &UpdateResizeParamsMessageFilter::OnUpdatedFrameSinkIdOnUI,
-                     this));
+      ->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &UpdateResizeParamsMessageFilter::OnUpdatedSurfaceIdOnUI, this));
 }
 
 void UpdateResizeParamsMessageFilter::OnUpdatedFrameRectOnUI(
@@ -411,8 +417,8 @@ void UpdateResizeParamsMessageFilter::OnUpdatedFrameRectOnUI(
   }
 }
 
-void UpdateResizeParamsMessageFilter::OnUpdatedFrameSinkIdOnUI() {
-  frame_sink_id_run_loop_.Quit();
+void UpdateResizeParamsMessageFilter::OnUpdatedSurfaceIdOnUI() {
+  surface_id_run_loop_->Quit();
 }
 
 bool UpdateResizeParamsMessageFilter::OnMessageReceived(

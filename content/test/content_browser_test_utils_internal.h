@@ -195,10 +195,11 @@ class UpdateResizeParamsMessageFilter : public content::BrowserMessageFilter {
   void WaitForRect();
   void ResetRectRunLoop();
 
-  // Returns the new viz::FrameSinkId immediately if the IPC has been received.
-  // Otherwise this will block the UI thread until it has been received, then it
-  // will return the new viz::FrameSinkId.
-  viz::FrameSinkId GetOrWaitForId();
+  // Returns the new viz::SurfaceId immediately if an IPC with a valid
+  // FrameSink has been received. Otherwise this will block the UI thread until
+  // it has been received, then it will return the new viz::SurfaceId.
+  viz::SurfaceId GetOrWaitForId();
+  void ResetIdRunLoop();
 
  protected:
   ~UpdateResizeParamsMessageFilter() override;
@@ -210,12 +211,12 @@ class UpdateResizeParamsMessageFilter : public content::BrowserMessageFilter {
                             uint64_t sequence_number,
                             const viz::SurfaceId& surface_id);
   void OnUpdatedFrameRectOnUI(const gfx::Rect& rect);
-  void OnUpdatedFrameSinkIdOnUI();
+  void OnUpdatedSurfaceIdOnUI();
 
   bool OnMessageReceived(const IPC::Message& message) override;
 
-  viz::FrameSinkId frame_sink_id_;
-  base::RunLoop frame_sink_id_run_loop_;
+  viz::SurfaceId surface_id_;
+  std::unique_ptr<base::RunLoop> surface_id_run_loop_;
 
   std::unique_ptr<base::RunLoop> screen_space_rect_run_loop_;
   bool screen_space_rect_received_;

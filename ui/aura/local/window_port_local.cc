@@ -100,7 +100,7 @@ void WindowPortLocal::OnDidChangeBounds(
     last_size_ = new_bounds.size();
     if (id_for_autoresize.is_valid())
       local_surface_id_ =
-          parent_local_surface_id_allocator_.update_child_sequence_number(
+          parent_local_surface_id_allocator_.set_child_sequence_number(
               id_for_autoresize.child_sequence_number());
     else
       local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();

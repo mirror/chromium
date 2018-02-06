@@ -184,7 +184,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       bool for_root_frame) override;
   void GetScreenInfo(ScreenInfo* screen_info) override;
   void ResizeDueToAutoResize(const gfx::Size& new_size,
-                             uint64_t sequence_number) override;
+                             uint64_t sequence_number,
+                             const viz::LocalSurfaceId& surface_id) override;
 
   // viz::mojom::CompositorFrameSinkClient implementation.
   void DidReceiveCompositorFrameAck(

@@ -1858,6 +1858,7 @@ bool RenderWidgetHostImpl::IsMouseLocked() const {
 void RenderWidgetHostImpl::SetAutoResize(bool enable,
                                          const gfx::Size& min_size,
                                          const gfx::Size& max_size) {
+  LOG(ERROR) << "STUFF2 " << this << " " << enable;
   auto_resize_enabled_ = enable;
   min_size_for_auto_resize_ = min_size;
   max_size_for_auto_resize_ = max_size;
@@ -2040,6 +2041,7 @@ void RenderWidgetHostImpl::OnResizeOrRepaintACK(
     const ViewHostMsg_ResizeOrRepaint_ACK_Params& params) {
   TRACE_EVENT0("renderer_host", "RenderWidgetHostImpl::OnResizeOrRepaintACK");
   TimeTicks paint_start = TimeTicks::Now();
+  LOG(ERROR) << "STUFF " << this << " " << auto_resize_enabled_;
 
   // Update our knowledge of the RenderWidget's size.
   current_size_ = params.view_size;
@@ -2470,6 +2472,8 @@ bool RenderWidgetHostImpl::GotResponseToLockMouseRequest(bool allowed) {
 }
 
 void RenderWidgetHostImpl::DelayedAutoResized() {
+  LOG(ERROR) << "DELAYEDAUTORESIZE" << this << " " << auto_resize_enabled_
+             << " " << !!delegate_;
   gfx::Size new_size = new_auto_size_;
   // Clear the new_auto_size_ since the empty value is used as a flag to
   // indicate that no callback is in progress (i.e. without this line
@@ -2480,7 +2484,8 @@ void RenderWidgetHostImpl::DelayedAutoResized() {
 
   if (delegate_) {
     delegate_->ResizeDueToAutoResize(this, new_size,
-                                     last_auto_resize_request_number_);
+                                     last_auto_resize_request_number_,
+                                     last_auto_resize_surface_id_);
   }
 }
 
