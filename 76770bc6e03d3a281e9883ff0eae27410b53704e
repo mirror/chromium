@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73f192cb_4011ba10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-06T18:14:29Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "1c0dc9f7_2c263513",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "76770bc6e03d3a281e9883ff0eae27410b53704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2cc37bf_8257595d",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-06T17:21:07Z",
       "side": 1,
       "message": "I think this comment is deprecated, MoveItemInModel is focus independent.",
+      "range": {
+        "startLine": 147,
+        "startChar": 23,
+        "endLine": 147,
+        "endChar": 38
+      },
+      "revId": "76770bc6e03d3a281e9883ff0eae27410b53704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2796deba_a7fccc94",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-06T18:14:29Z",
+      "side": 1,
+      "message": "FocusManager handles the focus movement based on the order of child views in its parent, not based on the order of views in |view_model_|. But I would remove this because we will use expand arrow view\u0027s index instead.",
+      "parentUuid": "d2cc37bf_8257595d",
       "range": {
         "startLine": 147,
         "startChar": 23,
@@ -68,6 +116,30 @@
       "revId": "76770bc6e03d3a281e9883ff0eae27410b53704e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07dff3b1_1f7d76f6",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-06T18:14:29Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. Done.",
+      "parentUuid": "19f8d611_7e91c1a6",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "76770bc6e03d3a281e9883ff0eae27410b53704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
