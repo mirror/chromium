@@ -49,6 +49,7 @@
         "*": [ "accessibility", "app" ],
         "accessibility_autoclick": [ "mash:launchable" ],
         "ash_pref_connector": [ "pref_connector" ],
+        "assistant" : [ "assistant_connector" ],
         "catalog": [ "directory" ],
         "local_state": [ "pref_client" ],
         "ui": [ "display_dev", "window_manager", "video_detector" ],

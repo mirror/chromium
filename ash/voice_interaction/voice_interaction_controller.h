@@ -9,15 +9,26 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/voice_interaction_controller.mojom.h"
+#include "ash/session/session_observer.h"
 #include "ash/voice_interaction/voice_interaction_observer.h"
+#if defined(ENABLE_CROS_ASSISTANT)
+#include "chromeos/services/assistant/public/interfaces/assistant.mojom.h"
+#endif
 #include "mojo/public/cpp/bindings/binding.h"
+
+namespace service_manager {
+class Connector;
+}  // namespace service_manager
+
+class AccountId;
 
 namespace ash {
 
 class ASH_EXPORT VoiceInteractionController
-    : public mojom::VoiceInteractionController {
+    : public mojom::VoiceInteractionController,
+      public SessionObserver {
  public:
-  VoiceInteractionController();
+  explicit VoiceInteractionController(service_manager::Connector* connector);
   ~VoiceInteractionController() override;
 
   void BindRequest(mojom::VoiceInteractionControllerRequest request);
@@ -31,6 +42,9 @@ class ASH_EXPORT VoiceInteractionController
   void NotifyContextEnabled(bool enabled) override;
   void NotifySetupCompleted(bool completed) override;
   void NotifyFeatureAllowed(mojom::AssistantAllowedState state) override;
+
+  // ash::SessionObserver overrides:
+  void OnActiveUserSessionChanged(const AccountId& account_id) override;
 
   mojom::VoiceInteractionState voice_interaction_state() const {
     return voice_interaction_state_;
@@ -61,6 +75,10 @@ class ASH_EXPORT VoiceInteractionController
   base::ObserverList<VoiceInteractionObserver> observers_;
 
   mojo::Binding<mojom::VoiceInteractionController> binding_;
+
+#if defined(ENABLE_CROS_ASSISTANT)
+  chromeos::assistant::mojom::AssistantConnectorPtr assistant_connector_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionController);
 };

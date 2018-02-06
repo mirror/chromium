@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_UTILITY_MASH_SERVICE_FACTORY_H_
-#define CHROME_UTILITY_MASH_SERVICE_FACTORY_H_
+#ifndef CHROME_UTILITY_CHROMEOS_SERVICE_FACTORY_H_
+#define CHROME_UTILITY_CHROMEOS_SERVICE_FACTORY_H_
 
 #include <memory>
 
@@ -14,10 +14,10 @@ class ImageCursorsSet;
 }
 
 // Lives on the utility process main thread.
-class MashServiceFactory {
+class ChromeOsServiceFactory {
  public:
-  MashServiceFactory();
-  ~MashServiceFactory();
+  ChromeOsServiceFactory();
+  ~ChromeOsServiceFactory();
 
   // Registers out-of-process services for --mash.
   void RegisterOutOfProcessServices(
@@ -27,7 +27,7 @@ class MashServiceFactory {
   // Must live on the utility main thread.
   std::unique_ptr<ui::ImageCursorsSet> cursors_;
 
-  DISALLOW_COPY_AND_ASSIGN(MashServiceFactory);
+  DISALLOW_COPY_AND_ASSIGN(ChromeOsServiceFactory);
 };
 
-#endif  // CHROME_UTILITY_MASH_SERVICE_FACTORY_H_
+#endif  // CHROME_UTILITY_CHRMEOS_SERVICE_FACTORY_H_
