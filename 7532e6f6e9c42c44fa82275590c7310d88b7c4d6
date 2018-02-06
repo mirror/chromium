@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8f71972_fd43d762",
+        "filename": "device/fido/ctap_response_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-02-06T08:39:34Z",
+      "side": 1,
+      "message": "Since this is not obvious, could you add a comment why this is needed? E.g.\n\n\" Creating a PublicKeyCredentialUserEntity from a CBOR value can involve URL parsing, which relies on ICU for IDN handling. This is why ICU needs to be initialized explicitly. \"\n\nAnd then also add a link to the bug for future reference?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "7532e6f6e9c42c44fa82275590c7310d88b7c4d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
