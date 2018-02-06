@@ -4737,7 +4737,6 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   WebDocumentLoader* document_loader = provisional_document_loader
                                            ? provisional_document_loader
                                            : frame_->GetDocumentLoader();
-
   DocumentState* document_state =
       DocumentState::FromDocumentLoader(document_loader);
   DCHECK(document_state);
@@ -4753,8 +4752,14 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   }
 
   GURL new_url;
+  base::Optional<url::Origin> initiator_origin =
+      request.RequestorOrigin().IsNull()
+          ? base::Optional<url::Origin>()
+          : base::Optional<url::Origin>(request.RequestorOrigin());
+  bool attach_same_site_cookies = false;
   if (GetContentClient()->renderer()->WillSendRequest(
-          frame_, transition_type, request.Url(), &new_url)) {
+          frame_, transition_type, request.Url(), initiator_origin, &new_url,
+          &attach_same_site_cookies)) {
     request.SetURL(WebURL(new_url));
   }
 
@@ -4827,6 +4832,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   extra_data->set_download_to_network_cache_only(
       is_prefetch && resource_type != RESOURCE_TYPE_MAIN_FRAME);
   extra_data->set_initiated_in_secure_context(frame_document.IsSecureContext());
+  extra_data->set_attach_same_site_cookies(attach_same_site_cookies);
 
   // Renderer process transfers apply only to navigational requests.
   bool is_navigational_request =

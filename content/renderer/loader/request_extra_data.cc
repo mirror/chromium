@@ -6,6 +6,7 @@
 
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/service_worker_modes.h"
+#include "net/base/load_flags.h"
 #include "services/network/public/cpp/resource_request.h"
 
 using blink::WebString;
@@ -44,6 +45,9 @@ void RequestExtraData::CopyToResourceRequest(
   request->originated_from_service_worker = originated_from_service_worker_;
 
   request->initiated_in_secure_context = initiated_in_secure_context_;
+
+  if (attach_same_site_cookies_)
+    request->load_flags |= net::LOAD_ATTACH_SAME_SITE_COOKIES;
 
   /*
   TODO(jam): if have agreement that alternate solution of having a dummy sink
