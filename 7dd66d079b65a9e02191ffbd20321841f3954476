@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70d649fd_e845b981",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:28:50Z",
+      "side": 1,
+      "message": "Nit: Add an empty line below.",
+      "revId": "7dd66d079b65a9e02191ffbd20321841f3954476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a263b669_d045d77b",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:28:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7dd66d079b65a9e02191ffbd20321841f3954476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95f8822_f8b122dd",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasContextCreationAttributes.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:28:50Z",
+      "side": 1,
+      "message": "Nit: SetAlpha ? We use camelCase only for IDL-exposed methods.",
+      "revId": "7dd66d079b65a9e02191ffbd20321841f3954476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
