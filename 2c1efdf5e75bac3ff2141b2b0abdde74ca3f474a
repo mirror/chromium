@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06881eee_26d975cd",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-02-06T16:55:02Z",
+      "side": 1,
+      "message": "Remove \"because the experiment is off\"",
+      "range": {
+        "startLine": 1879,
+        "startChar": 47,
+        "endLine": 1879,
+        "endChar": 76
+      },
+      "revId": "2c1efdf5e75bac3ff2141b2b0abdde74ca3f474a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
