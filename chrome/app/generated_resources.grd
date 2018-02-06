@@ -8578,10 +8578,10 @@ Please help our engineers fix this problem. Tell us what happened right before y
         </if>
         <if expr="use_titlecase">
           <message name="IDS_TRANSLATE_BUBBLE_BEFORE_TRANSLATE_TITLE" desc="In Title Case: Title text for the translate bubble when asking to translate a page.">
-            Do You Want To Translate This Page?
+            Do You Want to Translate This Page?
           </message>
           <message name="IDS_TRANSLATE_BUBBLE_BEFORE_TRANSLATE_NEW" desc="In Title Case: Text to show for the translate bubble label when that page is in specified language and ask if should translate.">
-            Do You Want Google To Translate This Page From <ph name="source_language">$1<ex>Spanish</ex></ph> To <ph name="target_language">$2<ex>English</ex></ph>?
+            Do You Want Google to Translate This Page From <ph name="source_language">$1<ex>Spanish</ex></ph> to <ph name="target_language">$2<ex>English</ex></ph>?
           </message>
           <message name="IDS_TRANSLATE_BUBBLE_ADVANCED_LINK" desc="In Title Case: Text to show for the translate bubble link label to jump to the advanced panel.">
             Options
