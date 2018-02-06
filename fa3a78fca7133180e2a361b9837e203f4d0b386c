@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b9f2d9c_f9de216c",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-06T18:16:37Z",
+      "side": 1,
+      "message": "nit: not sure I understand \"lifted to the enum level\". Do you mean that it\u0027s lifted to the union?\n\nAlso, it\u0027s somewhat surprising to me that null isn\u0027t treated the same way as [null]. Did you mean to return {nullopt}, or are null and [] equivalent for some webanim-specific reason?",
+      "revId": "fa3a78fca7133180e2a361b9837e203f4d0b386c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0529ca89_d7030706",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 6
