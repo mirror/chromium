@@ -856,9 +856,6 @@ extern const char kNumberBookmarksFootNoteIOSPromoShown[];
 extern const char kBookmarksFootNoteIOSPromoDismissed[];
 extern const char kNumberHistoryPageIOSPromoShown[];
 extern const char kHistoryPageIOSPromoDismissed[];
-
-extern const char kProblematicPrograms[];
-extern const char kThirdPartyBlockingEnabled[];
 #endif
 
 extern const char kSettingsResetPromptPromptWave[];
@@ -905,6 +902,14 @@ extern const char kUnsafelyTreatInsecureOriginAsSecure[];
 extern const char kIsolateOrigins[];
 extern const char kSitePerProcess[];
 extern const char kWebDriverOverridesIncompatiblePolicies[];
+
+#if defined(OS_WIN)
+// Preference for controlling whether or not third party blocking is enabled on
+// Windows.
+extern const char kThirdPartyBlockingEnabled[];
+
+extern const char kProblematicPrograms[];
+#endif
 
 }  // namespace prefs
 

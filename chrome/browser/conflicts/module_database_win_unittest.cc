@@ -45,8 +45,8 @@ class ModuleDatabaseTest : public testing::Test {
   ModuleDatabaseTest()
       : dll1_(kDll1),
         dll2_(kDll2),
-        scoped_testing_local_state_(TestingBrowserProcess::GetGlobal()),
-        module_database_(base::SequencedTaskRunnerHandle::Get()) {}
+        module_database_(base::SequencedTaskRunnerHandle::Get()),
+        scoped_testing_local_state_(TestingBrowserProcess::GetGlobal()) {}
 
   const ModuleDatabase::ModuleMap& modules() {
     return module_database_.modules_;
