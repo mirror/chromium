@@ -16,6 +16,24 @@
       "revId": "d038ed714fd802553255cc1b13c9e89c6d0e8afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578807b5_9b03e04c",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-02-06T21:08:31Z",
+      "side": 1,
+      "message": "It seems like this code here looks very client-y, so I think your first suggestion of moving this to client/ makes sense to me. viz having deps on gpu is the correct direction.\n\nIf you need more opinions, piman has been looking into cleaning up deps issues lately so would be your best bet.",
+      "parentUuid": "e86f4489_449c9126",
+      "revId": "d038ed714fd802553255cc1b13c9e89c6d0e8afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
