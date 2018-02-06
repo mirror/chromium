@@ -69,6 +69,40 @@
       "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5385d0a5_9784b5b4",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-02-06T02:15:19Z",
+      "side": 1,
+      "message": "re: Domininc\u0027s comment about equality of nodes in the test file, maybe chuck a TODO here under my name since I\u0027ll be doing the follow up for caching nodes.",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8477052a_835d1bfd",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2018-02-06T02:15:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure about chromium naming practices here, but instantiating an object from a class that starts with an verb sounds strange to me.",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
