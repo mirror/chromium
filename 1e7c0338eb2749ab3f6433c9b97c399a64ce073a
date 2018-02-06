@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "5a5efcfa_33347483",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-06T20:01:03Z",
+      "side": 1,
+      "message": "I think you can just startup the browser and look at the total time taken for BrowserMainLoop::CreateStartupTasks() - which seems to be a misnomer IIUC - it\u0027s actually running the startup, not just creating the tasks. The number of tabs isn\u0027t really relevant at this stage of the browser startup AFAIK.",
+      "parentUuid": "98118c99_720bf310",
+      "revId": "1e7c0338eb2749ab3f6433c9b97c399a64ce073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6751234d_a2da6b87",
         "filename": "content/browser/service_manager/service_manager_context.cc",
         "patchSetId": 24
