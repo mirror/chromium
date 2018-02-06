@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54297f7a_c28bbe14",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2018-02-06T18:14:07Z",
+      "side": 1,
+      "message": "Any idea why it\u0027s double-encoded here? Is that just an expected side-effect of GURL? In any case, it\u0027s a good test (ensure controls are converted to allowed URL characters) so I think it\u0027s a good case.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 63,
+        "endLine": 1032,
+        "endChar": 64
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
