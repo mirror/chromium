@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f91132a_f6538953",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "I still feel that it might be better to put the callback in the ctor since it is supposed to be unchanged after this class is constructed. Also in this way we don\u0027t need to put the |device_task_runner| in the ctor, which is only used to create the in process device launcher. So for now, I removed CreateInProcessVideoCaptureDeviceLauncher() from the new public API, and left it in a later CL when it is called. SGTY?",
+      "parentUuid": "347136ab_32a64bbd",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6f8a7a_7f0b7da1",
         "filename": "chrome/browser/media/single_client_video_capture_host.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc42259_cd1790c3",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee6f8a7a_7f0b7da1",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b9235b80_655c7d3d",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2da7b05_332935b7",
+      "range": {
+        "startLine": 196,
+        "startChar": 48,
+        "endLine": 196,
+        "endChar": 55
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d341ac_5c22cc0a",
         "filename": "chrome/browser/media/single_client_video_capture_host.h",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cd27f7e1_ed71d0a5",
+        "filename": "chrome/browser/media/single_client_video_capture_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d341ac_5c22cc0a",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 66
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcbb18fa_209d6e12",
         "filename": "content/public/browser/video_capture_device_launcher.h",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa9e070_9e5b2143",
+        "filename": "content/public/browser/video_capture_device_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "This will be called in a later CL. Removed it for now.",
+      "parentUuid": "bcbb18fa_209d6e12",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

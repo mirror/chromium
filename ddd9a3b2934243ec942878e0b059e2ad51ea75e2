@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f71a9dd1_29b2faa6",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d56c78e_de120b8d",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bcad682_4ec32020",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8d4227_f2b5a969",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bcad682_4ec32020",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3bfb16ba_d7f98927",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b27cd50_6dbf74f1",
+      "range": {
+        "startLine": 234,
+        "startChar": 22,
+        "endLine": 234,
+        "endChar": 31
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5db1f508_03ac98a3",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ba3114_7d6e6523",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Changed to use base::RunLoop functions and removed using the TestBrowserThreadBundle.",
+      "parentUuid": "5db1f508_03ac98a3",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 44
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +266,48 @@
     },
     {
       "key": {
+        "uuid": "14e34712_91fc0f97",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Now used the helpers and simplified the tests.",
+      "parentUuid": "ffa3846b_9559fe3b",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 40
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "250bd83f_e61edbfb",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done. Changed to use base::RunLoop and simplified the tests.",
+      "parentUuid": "4a7c45ee_b641b8ca",
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cfe1f91_9ed6842e",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 9
@@ -190,6 +328,30 @@
       "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c7f0c_dfb61706",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-02-06T20:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cfe1f91_9ed6842e",
+      "range": {
+        "startLine": 310,
+        "startChar": 2,
+        "endLine": 310,
+        "endChar": 61
+      },
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
