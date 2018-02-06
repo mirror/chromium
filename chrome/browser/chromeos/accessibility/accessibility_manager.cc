@@ -378,6 +378,7 @@ bool AccessibilityManager::ShouldShowAccessibilityMenu() {
     if (prefs->GetBoolean(ash::prefs::kAccessibilityStickyKeysEnabled) ||
         prefs->GetBoolean(ash::prefs::kAccessibilityLargeCursorEnabled) ||
         prefs->GetBoolean(ash::prefs::kAccessibilitySpokenFeedbackEnabled) ||
+        prefs->GetBoolean(ash::prefs::kAccessibilitySelectToSpeakEnabled) ||
         prefs->GetBoolean(ash::prefs::kAccessibilityHighContrastEnabled) ||
         prefs->GetBoolean(ash::prefs::kAccessibilityAutoclickEnabled) ||
         prefs->GetBoolean(ash::prefs::kShouldAlwaysShowAccessibilityMenu) ||
@@ -939,7 +940,7 @@ bool AccessibilityManager::IsSelectToSpeakEnabled() const {
   return select_to_speak_enabled_;
 }
 
-void AccessibilityManager::UpdateSelectToSpeakFromPref() {
+void AccessibilityManager::OnSelectToSpeakChanged() {
   if (!profile_)
     return;
 
@@ -949,6 +950,10 @@ void AccessibilityManager::UpdateSelectToSpeakFromPref() {
   if (select_to_speak_enabled_ == enabled)
     return;
   select_to_speak_enabled_ = enabled;
+
+  AccessibilityStatusEventDetails details(ACCESSIBILITY_TOGGLE_SELECT_TO_SPEAK,
+                                          enabled, ash::A11Y_NOTIFICATION_NONE);
+  NotifyAccessibilityStatusChanged(details);
 
   if (enabled)
     select_to_speak_loader_->Load(profile_, base::Closure() /* done_cb */);
@@ -1180,7 +1185,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilitySelectToSpeakEnabled,
-        base::Bind(&AccessibilityManager::UpdateSelectToSpeakFromPref,
+        base::Bind(&AccessibilityManager::OnSelectToSpeakChanged,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilitySwitchAccessEnabled,
@@ -1234,12 +1239,12 @@ void AccessibilityManager::SetProfile(Profile* profile) {
   UpdateCursorHighlightFromPref();
   UpdateFocusHighlightFromPref();
   UpdateTapDraggingFromPref();
-  UpdateSelectToSpeakFromPref();
   UpdateSwitchAccessFromPref();
 
   // TODO(warx): reconcile to ash once the prefs registration above is moved to
   // ash.
   OnSpokenFeedbackChanged();
+  OnSelectToSpeakChanged();
 
   // Update the panel height in the shelf layout manager when the profile
   // changes, since the shelf layout manager doesn't exist in the login profile.
@@ -1281,7 +1286,8 @@ void AccessibilityManager::NotifyAccessibilityStatusChanged(
       details.notification_type != ACCESSIBILITY_TOGGLE_HIGH_CONTRAST_MODE &&
       details.notification_type != ACCESSIBILITY_TOGGLE_LARGE_CURSOR &&
       details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK) {
+      details.notification_type != ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK &&
+      details.notification_type != ACCESSIBILITY_TOGGLE_SELECT_TO_SPEAK) {
     ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
         details.notify);
   }
