@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dfe7d2b_a018b93f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-02-06T18:30:58Z",
+      "side": 1,
+      "message": "super-nit: put bug #s on one line?",
+      "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
