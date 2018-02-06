@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4340d14e_1d9ac4ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2018-02-06T01:12:56Z",
+      "side": 1,
+      "message": "nit: Typos.",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "54f633bbfdbe9357ebf4006500b67de5a632b85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
