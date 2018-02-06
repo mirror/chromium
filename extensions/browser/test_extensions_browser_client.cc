@@ -182,7 +182,7 @@ TestExtensionsBrowserClient::GetExtensionSystemFactory() {
 }
 
 void TestExtensionsBrowserClient::RegisterExtensionFunctions(
-    ExtensionFunctionRegistry* registry) const {}
+    ExtensionFunctionRegistry& registry) const {}
 
 void TestExtensionsBrowserClient::RegisterExtensionInterfaces(
     service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>*

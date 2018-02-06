@@ -195,7 +195,7 @@ class ExtensionsBrowserClient {
 
   // Registers extension functions not belonging to the core extensions APIs.
   virtual void RegisterExtensionFunctions(
-      ExtensionFunctionRegistry* registry) const = 0;
+      ExtensionFunctionRegistry& registry) const = 0;
 
   // Registers additional interfaces to expose to a RenderFrame.
   virtual void RegisterExtensionInterfaces(

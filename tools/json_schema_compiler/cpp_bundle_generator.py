@@ -170,7 +170,7 @@ class CppBundleGenerator(object):
   def _GenerateFunctionRegistryRegisterAll(self):
     c = code.Code()
     c.Append('// static')
-    c.Sblock('void %s::RegisterAll(ExtensionFunctionRegistry* registry) {' %
+    c.Sblock('void %s::RegisterAll(ExtensionFunctionRegistry& registry) {' %
              self._GenerateBundleClass('GeneratedFunctionRegistry'))
     c.Sblock('constexpr ExtensionFunctionRegistry::FactoryEntry kEntries[] = {')
     for namespace in self._model.namespaces.values():
@@ -196,7 +196,7 @@ class CppBundleGenerator(object):
         c.Append("#endif  // %s" % namespace_ifdefs, indent_level=0)
     c.Eblock("};")
     c.Sblock("for (const auto& entry : kEntries) {")
-    c.Append("  registry->Register(entry);")
+    c.Append("  registry.Register(entry);")
     c.Eblock("}")
     c.Eblock("}")
     return c
