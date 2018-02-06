@@ -147,15 +147,9 @@ void AutocompleteInput::Init(
       canonicalized_url.is_valid() &&
       (!canonicalized_url.IsStandard() || canonicalized_url.SchemeIsFile() ||
        canonicalized_url.SchemeIsFileSystem() ||
-       !canonicalized_url.host().empty()) &&
-      // Treat "URLs" whose host is a TLD ("http://co.uk") as unlikely to be
-      // navigable. This prevents the alternate nav machinery from attempting
-      // TCP connections to these, which can leak user data. See
-      // crbug.com/669785.
-      !net::registry_controlled_domains::IsRegistry(
-          canonicalized_url,
-          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
+       !canonicalized_url.host().empty())) {
     canonicalized_url_ = canonicalized_url;
+  }
 }
 
 AutocompleteInput::AutocompleteInput(const AutocompleteInput& other) = default;
@@ -292,6 +286,15 @@ metrics::OmniboxInputType AutocompleteInput::Parse(
   // Either the user didn't type a scheme, in which case we need to distinguish
   // between an HTTP URL and a query, or the scheme is HTTP or HTTPS, in which
   // case we should reject invalid formulations.
+
+  // Treat "URLs" whose host is a TLD ("http://co.uk") as unlikely to be
+  // navigable. This prevents the alternate nav machinery from attempting
+  // TCP connections to these, which can leak user data. See
+  // crbug.com/669785.
+  if (net::registry_controlled_domains::IsRegistry(
+          *canonicalized_url,
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
+    return metrics::OmniboxInputType::QUERY;
 
   // Determine the host family.  We get this information by (re-)canonicalizing
   // the already-canonicalized host rather than using the user's original input,
