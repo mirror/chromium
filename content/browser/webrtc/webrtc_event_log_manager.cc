@@ -533,19 +533,32 @@ void WebRtcEventLogManager::SetRemoteLogsObserverInternal(
   }
 }
 
-void WebRtcEventLogManager::SetClockForTesting(base::Clock* clock) {
-  // Testing function only - threading left for the caller's discretion.
+void WebRtcEventLogManager::SetClockForTesting(base::Clock* clock,
+                                               base::OnceClosure reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // Posting to task queue owned by the unretained object - unretained is safe.
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce([](base::Clock* clock, base::OnceClosure reply) {
+                      
+                     },
+                     base::Unretained(this), browser_context_id,
+                     std::move(reply)));
+
+  task_runner_
   local_logs_manager_.SetClockForTesting(clock);
 }
 
 void WebRtcEventLogManager::SetPeerConnectionTrackerProxyForTesting(
     std::unique_ptr<PeerConnectionTrackerProxy> pc_tracker_proxy) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // Testing function only - threading left for the caller's discretion.
   pc_tracker_proxy_ = std::move(pc_tracker_proxy);
 }
 
 void WebRtcEventLogManager::SetWebRtcEventLogUploaderFactoryForTesting(
     std::unique_ptr<WebRtcEventLogUploader::Factory> uploader_factory) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // Testing function only - threading left for the caller's discretion.
   remote_logs_manager_.SetWebRtcEventLogUploaderFactoryForTesting(
       std::move(uploader_factory));

@@ -278,12 +278,17 @@ class CONTENT_EXPORT WebRtcEventLogManager
   void SetRemoteLogsObserverInternal(WebRtcRemoteEventLogsObserver* observer,
                                      base::OnceClosure reply);
 
-  // Methods for injecting testing utilities in place of actual implementations.
-  // Because these are only intended for testing, we perform these changes
-  // asynchronously, trusting the unit tests to do so carefully enough.
-  void SetClockForTesting(base::Clock* clock);
+  // Method for injecting a fake clock. For example, this could be used to
+  // inject a frozen clock, thereby allowing unit tests to know what a local
+  // log's filename would end up being.
+  void SetClockForTesting(base::Clock* clock,
+                          base::OnceClosure reply = base::OnceClosure());
+
+  // TODO: !!!
   void SetPeerConnectionTrackerProxyForTesting(
       std::unique_ptr<PeerConnectionTrackerProxy> pc_tracker_proxy);
+
+  // TODO: !!!
   void SetWebRtcEventLogUploaderFactoryForTesting(
       std::unique_ptr<WebRtcEventLogUploader::Factory> uploader_factory);
 
