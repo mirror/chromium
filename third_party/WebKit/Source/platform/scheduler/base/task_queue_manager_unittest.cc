@@ -3381,6 +3381,7 @@ TEST_F(TaskQueueManagerTest, ProcessTasksWithTaskTimeObservers) {
   EXPECT_EQ(complete_counter, 4);
   EXPECT_TRUE(runners_[0]->GetTaskQueueImpl()->RequiresTaskTiming());
   EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4, 5, 6, 7, 8));
+  UnsetOnTaskHandlers(runners_[0]);
 }
 
 TEST_F(TaskQueueManagerTest, GracefulShutdown) {
