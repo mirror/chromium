@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8b3790_d61d5b6f",
+        "filename": "third_party/WebKit/Source/core/editing/LocalCaretRect.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T23:45:24Z",
+      "side": 1,
+      "message": "This is already checked in NGInlineFormattingContextOf().\n\nWe can remove this if.",
+      "revId": "d86c07735c1a850631eed921a483f6fa6268f9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bfbb04_866887b7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T23:45:24Z",
+      "side": 1,
+      "message": "We can remove these lines.",
+      "range": {
+        "startLine": 1963,
+        "startChar": 0,
+        "endLine": 1966,
+        "endChar": 19
+      },
+      "revId": "d86c07735c1a850631eed921a483f6fa6268f9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47efaf7_ac777034",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-06T23:45:24Z",
+      "side": 1,
+      "message": "The test parameterization is now useless.\n\nCould you add a TODO to remove it?",
+      "revId": "d86c07735c1a850631eed921a483f6fa6268f9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
