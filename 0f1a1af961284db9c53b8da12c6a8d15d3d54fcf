@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0df0216a_0cf0ccdb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-06T15:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c7c935_0581225c",
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c5bfdf1_9223adf1",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa69bacf_b245e4a7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-06T15:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c5bfdf1_9223adf1",
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b850d23_bf9e4a3b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1002525
+      },
+      "writtenOn": "2018-02-06T15:13:39Z",
+      "side": 1,
+      "message": "Renamed it to \"PictureInPictureButtonVisible\"",
+      "parentUuid": "deaec88f_a07aee4e",
+      "range": {
+        "startLine": 600,
+        "startChar": 7,
+        "endLine": 600,
+        "endChar": 64
+      },
+      "revId": "0f1a1af961284db9c53b8da12c6a8d15d3d54fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
