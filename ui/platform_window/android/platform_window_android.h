@@ -5,6 +5,8 @@
 #ifndef UI_PLATFORM_WINDOW_ANDROID_PLATFORM_WINDOW_ANDROID_H_
 #define UI_PLATFORM_WINDOW_ANDROID_PLATFORM_WINDOW_ANDROID_H_
 
+#include <vector>
+
 #include "base/android/jni_weak_ref.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -71,6 +73,8 @@ class ANDROID_WINDOW_EXPORT PlatformWindowAndroid : public PlatformWindow {
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;

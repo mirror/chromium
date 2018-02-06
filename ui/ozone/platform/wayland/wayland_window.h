@@ -5,6 +5,9 @@
 #ifndef UI_OZONE_PLATFORM_WAYLAND_WAYLAND_WINDOW_H_
 #define UI_OZONE_PLATFORM_WAYLAND_WAYLAND_WINDOW_H_
 
+#include <memory>
+#include <vector>
+
 #include "base/memory/ref_counted.h"
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/gfx/geometry/rect.h"
@@ -57,6 +60,8 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;

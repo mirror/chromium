@@ -5,6 +5,8 @@
 #ifndef UI_PLATFORM_WINDOW_STUB_STUB_WINDOW_H_
 #define UI_PLATFORM_WINDOW_STUB_STUB_WINDOW_H_
 
+#include <vector>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
@@ -36,6 +38,8 @@ class STUB_WINDOW_EXPORT StubWindow : public PlatformWindow {
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;
