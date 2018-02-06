@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "322e4295_ef3b7c2d",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2018-02-06T00:09:03Z",
+      "side": 1,
+      "message": "If the client commits an empty surface, should we hide the cursor or retain the last one? The check should be moved to the callers in the former case.",
+      "parentUuid": "eb2bd834_fbd5e9cb",
+      "revId": "97bd20015eb952653604859abb993e53e440b3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364eeeff_ccde1e8c",
         "filename": "components/exo/pointer.cc",
         "patchSetId": 1
