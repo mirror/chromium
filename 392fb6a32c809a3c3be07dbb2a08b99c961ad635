@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "19443c8d_41104528",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-06T18:18:40Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I read the code again and yes you\u0027re right. I misunderstood the logic and thought each level of menu hold its own child menus. But actually all |ShelfContextSubMenuModel|s just share the same submenu list from the top level.\n\nThe new PS will update this.",
+      "parentUuid": "6677c23b_b0849857",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2987f4_a3d44ee7",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 10
