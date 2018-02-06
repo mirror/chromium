@@ -17,16 +17,18 @@
             "id": "node-connection",
             "title": "Connection",
             "order": 0,
-            "className": "Devices.DevicesView.Panel",
-            "condition": "nodeFrontend",
-            "tags": "node"
+            "className": "Devices.NodeConnectionsPanel",
+            "tags": "node",
+            "condition": "nodeFrontend"
         }
     ],
     "dependencies": ["platform", "ui", "host", "components"],
     "scripts": [
-        "DevicesView.js"
+        "DevicesView.js",
+        "NodeConnectionsPanel.js"
     ],
     "resources": [
-        "devicesView.css"
+        "devicesView.css",
+        "nodeConnectionsPanel.css"
     ]
 }
