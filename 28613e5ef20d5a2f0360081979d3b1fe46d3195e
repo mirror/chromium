@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e0dd4967_28542278",
+        "filename": "components/offline_pages/core/background/pick_request_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-02-06T17:58:22Z",
+      "side": 1,
+      "message": "use std::find instead",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 170,
+        "endChar": 54
+      },
+      "revId": "28613e5ef20d5a2f0360081979d3b1fe46d3195e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d25099_df37bcce",
         "filename": "components/offline_pages/core/background/pick_request_task.cc",
         "patchSetId": 1
