@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1cc53d3_cbd28524",
+        "filename": "chrome/browser/conflicts/proto/module_list.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T11:28:57Z",
+      "side": 1,
+      "message": "is this really the digest of the publisher information rather than something related to the directory?",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "b44337fcd33ea1fed107538ffab8e93dc53264fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
