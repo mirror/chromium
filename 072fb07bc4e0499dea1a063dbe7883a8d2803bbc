@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ebc9122_968b088f",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:28:46Z",
+      "side": 1,
+      "message": "Could we please get a comment here explaining what the values stored under these keys mean?\nAlso, why is this called \"end\"? Isn\u0027t the stored value the number of ms while the device was non-idle on a day? (I don\u0027t know for sure anymore and it\u0027s difficult to find out, so it\u0027s good to document this).",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 29
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44f9af3_55cdd22b",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:28:46Z",
+      "side": 1,
+      "message": "Do we care about migrating these?",
+      "range": {
+        "startLine": 638,
+        "startChar": 12,
+        "endLine": 638,
+        "endChar": 38
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2f8184_82db9724",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:28:46Z",
+      "side": 1,
+      "message": "nit: There\u0027s also FindKeyOfType, maybe you can use that?\nAlso, you might want to cache the result so you only have to invoke FindKey once.",
+      "range": {
+        "startLine": 639,
+        "startChar": 21,
+        "endLine": 640,
+        "endChar": 69
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e12911c_6f98e65f",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:28:46Z",
+      "side": 1,
+      "message": "So this code stores the total time duration during which the device was non-idle for each day bucket IIUC.\nHowever, we always overwrite the user - if N\u003e1 users were using a device on a day, this may give misleading results. Are we fine with that?",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 59
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df21875d_8f5705e7",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T17:28:46Z",
+      "side": 1,
+      "message": "IIUC IsAffiliated is implied by ShouldReportUser, so the IsAffiliated check should not be necessary here.",
+      "range": {
+        "startLine": 715,
+        "startChar": 8,
+        "endLine": 715,
+        "endChar": 52
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
