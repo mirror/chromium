@@ -87,6 +87,24 @@
       "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45de3d8_25f569d3",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_mouse_selection_test.extjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2018-02-06T18:42:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2694c3c2_a93176c4",
+      "revId": "f4cbba95ada9045eab4be9df5665943cfae06533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
