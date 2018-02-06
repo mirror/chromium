@@ -12,43 +12,48 @@
 
 namespace zucchini {
 
-MappedFileReader::MappedFileReader(const base::FilePath& file_path) {
-  bool is_ok = buffer_.Initialize(file_path);
-  LOG_IF(ERROR, !is_ok) << "Can't read file: " << file_path.value();
+MappedFileReader::MappedFileReader(base::File&& file) {
+  if (!file.IsValid()) {
+    status_ = "Invalid file.";
+    return;  // |buffer_| will be uninitialized, and therefore invalid.
+  }
+  bool is_ok = buffer_.Initialize(std::move(file));
+  if (!is_ok) {
+    status_ = "Can't map file to memory.";
+  }
 }
 
 MappedFileWriter::MappedFileWriter(const base::FilePath& file_path,
+                                   base::File&& file,
                                    size_t length)
     : file_path_(file_path), delete_behavior_(kManualDeleteOnClose) {
-  using base::File;
-  File file(file_path_, File::FLAG_CREATE_ALWAYS | File::FLAG_READ |
-                            File::FLAG_WRITE | File::FLAG_SHARE_DELETE |
-                            File::FLAG_CAN_DELETE_ON_CLOSE);
   if (!file.IsValid()) {
-    LOG(ERROR) << "Can't create file: " << file_path_.value();
+    status_ = "Invalid file.";
     return;  // |buffer_| will be uninitialized, and therefore invalid.
   }
 
 #if defined(OS_WIN)
-  file_handle_ = file.Duplicate();
+  file_handle_ = file_.Duplicate();
   // Tell the OS to delete the file when all handles are closed.
   if (file_handle_.DeleteOnClose(true)) {
     delete_behavior_ = kAutoDeleteOnClose;
   } else {
-    LOG(WARNING) << "Failed to mark file for delete-on-close: "
-                 << file_path_.value();
+    // TODO(ckitagawa): Get filename from somewhere.
+    status_ = "Failed to mark file for delete-on-close.";
   }
 #endif  // defined(OS_WIN)
 
   bool is_ok = buffer_.Initialize(std::move(file), {0, length},
                                   base::MemoryMappedFile::READ_WRITE_EXTEND);
-  LOG_IF(ERROR, !is_ok) << "Can't map file: " << file_path_.value();
+  if (!is_ok) {
+    status_ = "Can't map file to memory.";
+  }
 }
 
 MappedFileWriter::~MappedFileWriter() {
   if (IsValid() && delete_behavior_ == kManualDeleteOnClose &&
-      !base::DeleteFile(file_path_, false)) {
-    LOG(WARNING) << "Failed to delete file: " << file_path_.value();
+      file_path_.value() != "" && !base::DeleteFile(file_path_, false)) {
+    status_ = "Failed to delete file.";
   }
 }
 
@@ -56,7 +61,7 @@ bool MappedFileWriter::Keep() {
 #if defined(OS_WIN)
   if (delete_behavior_ == kAutoDeleteOnClose &&
       !file_handle_.DeleteOnClose(false)) {
-    LOG(ERROR) << "Failed to prevent deletion of file: " << file_path_.value();
+    status_ = "Failed to prevent deletion of file.";
     return false;
   }
 #endif  // defined(OS_WIN)
