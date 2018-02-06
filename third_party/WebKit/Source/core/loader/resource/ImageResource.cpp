@@ -146,32 +146,38 @@ class ImageResource::ImageResourceFactory : public NonTextResourceFactory {
   STACK_ALLOCATED();
 
  public:
-  ImageResourceFactory(const FetchParameters& fetch_params)
+  ImageResourceFactory(const FetchParameters& fetch_params,
+                       scoped_refptr<base::SingleThreadTaskRunner> task_runner)
       : NonTextResourceFactory(Resource::kImage),
-        fetch_params_(&fetch_params) {}
+        fetch_params_(&fetch_params),
+        task_runner_(std::move(task_runner)) {}
 
   Resource* Create(const ResourceRequest& request,
                    const ResourceLoaderOptions& options) const override {
     return new ImageResource(request, options,
                              ImageResourceContent::CreateNotStarted(),
                              fetch_params_->GetPlaceholderImageRequestType() ==
-                                 FetchParameters::kAllowPlaceholder);
+                                 FetchParameters::kAllowPlaceholder,
+                             task_runner_);
   }
 
  private:
   // Weak, unowned pointer. Must outlive |this|.
   const FetchParameters* fetch_params_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 };
 
-ImageResource* ImageResource::Fetch(FetchParameters& params,
-                                    ResourceFetcher* fetcher) {
+ImageResource* ImageResource::Fetch(
+    FetchParameters& params,
+    ResourceFetcher* fetcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   if (params.GetResourceRequest().GetRequestContext() ==
       WebURLRequest::kRequestContextUnspecified) {
     params.SetRequestContext(WebURLRequest::kRequestContextImage);
   }
 
-  ImageResource* resource = ToImageResource(
-      fetcher->RequestResource(params, ImageResourceFactory(params), nullptr));
+  ImageResource* resource = ToImageResource(fetcher->RequestResource(
+      params, ImageResourceFactory(params, std::move(task_runner)), nullptr));
 
   // If the fetch originated from user agent CSS we should mark it as a user
   // agent resource.
@@ -201,21 +207,28 @@ bool ImageResource::CanUseCacheValidator() const {
   return Resource::CanUseCacheValidator();
 }
 
-ImageResource* ImageResource::Create(const ResourceRequest& request) {
+ImageResource* ImageResource::Create(
+    const ResourceRequest& request,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   ResourceLoaderOptions options;
   return new ImageResource(request, options,
-                           ImageResourceContent::CreateNotStarted(), false);
+                           ImageResourceContent::CreateNotStarted(), false,
+                           std::move(task_runner));
 }
 
-ImageResource* ImageResource::CreateForTest(const KURL& url) {
+ImageResource* ImageResource::CreateForTest(
+    const KURL& url,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   ResourceRequest request(url);
-  return Create(request);
+  return Create(request, std::move(task_runner));
 }
 
-ImageResource::ImageResource(const ResourceRequest& resource_request,
-                             const ResourceLoaderOptions& options,
-                             ImageResourceContent* content,
-                             bool is_placeholder)
+ImageResource::ImageResource(
+    const ResourceRequest& resource_request,
+    const ResourceLoaderOptions& options,
+    ImageResourceContent* content,
+    bool is_placeholder,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : Resource(resource_request, kImage, options),
       content_(content),
       device_pixel_ratio_header_value_(1.0),
@@ -224,7 +237,9 @@ ImageResource::ImageResource(const ResourceRequest& resource_request,
       placeholder_option_(
           is_placeholder ? PlaceholderOption::kShowAndReloadPlaceholderAlways
                          : PlaceholderOption::kDoNotReloadPlaceholder),
-      flush_timer_(this, &ImageResource::FlushImageIfNeeded) {
+      flush_timer_(std::move(task_runner),
+                   this,
+                   &ImageResource::FlushImageIfNeeded) {
   DCHECK(GetContent());
   RESOURCE_LOADING_DVLOG(1) << "new ImageResource(ResourceRequest) " << this;
   GetContent()->SetImageResourceInfo(new ImageResourceInfoImpl(this));

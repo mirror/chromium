@@ -58,11 +58,16 @@ class CORE_EXPORT ImageResource final
  public:
   // Use ImageResourceContent::Fetch() unless ImageResource is required.
   // TODO(hiroshige): Make Fetch() private.
-  static ImageResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static ImageResource* Fetch(FetchParameters&,
+                              ResourceFetcher*,
+                              scoped_refptr<base::SingleThreadTaskRunner>);
 
   // TODO(hiroshige): Make Create() test-only by refactoring ImageDocument.
-  static ImageResource* Create(const ResourceRequest&);
-  static ImageResource* CreateForTest(const KURL&);
+  static ImageResource* Create(const ResourceRequest&,
+                               scoped_refptr<base::SingleThreadTaskRunner>);
+  static ImageResource* CreateForTest(
+      const KURL&,
+      scoped_refptr<base::SingleThreadTaskRunner>);
 
   ~ImageResource() override;
 
@@ -121,7 +126,8 @@ class CORE_EXPORT ImageResource final
   ImageResource(const ResourceRequest&,
                 const ResourceLoaderOptions&,
                 ImageResourceContent*,
-                bool is_placeholder);
+                bool is_placeholder,
+                scoped_refptr<base::SingleThreadTaskRunner>);
 
   // Only for ImageResourceInfoImpl.
   void DecodeError(bool all_data_received);
@@ -180,7 +186,7 @@ class CORE_EXPORT ImageResource final
   };
   PlaceholderOption placeholder_option_;
 
-  Timer<ImageResource> flush_timer_;
+  TaskRunnerTimer<ImageResource> flush_timer_;
   double last_flush_time_ = 0.;
 
   bool is_during_finish_as_error_ = false;
