@@ -289,6 +289,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // |sent_resize_params_|.
   ResizeParams pending_resize_params_;
 
+  bool crashed_ = false;
+
   viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId local_surface_id_;
   viz::ParentLocalSurfaceIdAllocator parent_local_surface_id_allocator_;
