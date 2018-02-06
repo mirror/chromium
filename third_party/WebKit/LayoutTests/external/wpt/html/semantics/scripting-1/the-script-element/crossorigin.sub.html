@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<title>Muted Errors</title>
+
+<script src="/resources/testharness.js"></script>
+<!-- <script src="/resources/testharnessreport.js"></script> -->
+<script>
+    setup({allow_uncaught_exception: true});
+
+    var test3 = async_test("Foo");
+    function step3() {
+      var script = document.createElement('script');
+      script.setAttribute('src', "//{{domains[www2]}}:{{ports[http][0]}}/html/semantics/scripting-1/the-script-element/cacheable-script-throw2.py?iframe");
+      script.setAttribute('crossOrigin', 'use-credentials');
+      script.onerror = test3.step_func_done(function() {});
+      script.onload = test3.unreached_func('SHOULD NOT LOAD');
+      document.body.appendChild(script);
+    }
+</script>
+<iframe src="//{{domains[www2]}}:{{ports[http][0]}}/html/semantics/scripting-1/the-script-element/crossorigin-iframe.html"
+    onerror="test3.unreached_func()()" onload="setTimeout(step3, 100)"></iframe>
