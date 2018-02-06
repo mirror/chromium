@@ -16,6 +16,24 @@
       "revId": "27576fa2e9d52f3097ac95ca15894870d4b8f224",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e8a7d0_e8fa7fb5",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-02-06T20:12:35Z",
+      "side": 1,
+      "message": "There should be a break here.\n\nThe only non-test use case is https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc?type\u003dcs\u0026q\u003dbyte_stats_shared_dirty_resident+-file:out/debug+-file:test\u0026sq\u003dpackage:chromium\u0026l\u003d211\n\nwhich emits a field in a detailed memory-infra trace [which itself is in a rarely used drilldown], which presumably no one has looked at and noticed on macOS since the bug was created.",
+      "parentUuid": "cd59a1fd_883ba2f2",
+      "revId": "27576fa2e9d52f3097ac95ca15894870d4b8f224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
