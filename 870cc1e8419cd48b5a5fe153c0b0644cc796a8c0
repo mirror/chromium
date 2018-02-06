@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4977e51_0950bd5a",
+        "filename": "android_webview/browser/aw_url_checker_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-06T20:41:01Z",
+      "side": 1,
+      "message": "Nate \u0026 Kinuko:\nThis line has different behavior comparing with the old code path (see the link below): It is conservative and *not* skip SafeBrowsing checks if we cannot find |client|. Does it makes sense?\n\nFor example:\n- If a request is from a shared worker, it is not associated with a frame. In that case, I imagine we will get a null |client| but we should still enforce SafeBrowsing checks.\n\n- If a request continues to load even after the corresponding frame is gone (Kinuko: is that possible?), it might be possible that the frame has been removed at this point which results in null |client|.\n\nThe old code path currently skips SafeBrowsing check if the client is null:\nhttps://cs.chromium.org/chromium/src/android_webview/browser/renderer_host/aw_resource_dispatcher_host_delegate.cc?rcl\u003dee5a883e7a082e1456108378340c8013b330588d\u0026l\u003d223\n\nIt seems problematic to me.\n\nDoes it make sense? Please let me know if I am wrong.",
+      "revId": "870cc1e8419cd48b5a5fe153c0b0644cc796a8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
