@@ -46,6 +46,30 @@
       "revId": "3616c21974a9e985a34c4e7c7009787cfe30bca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d4a5e0_abbb3d5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-06T18:52:42Z",
+      "side": 1,
+      "message": "I think my concern is that this animation isn\u0027t the only thing that mutates mUrlFocusChangePercent (because of that all other factors driven off this value have moved to that single function).  I do think that method is too large and should be split up, but having a single point driving the animation of this value is good for consistency.\n\nThe other gotcha with the updateLocationBarLayoutForExpansionAnimation method is that it treats url expansion the same as focus changes.  I don\u0027t know if that applies for this animation or not.\n\nI just think it\u0027s weird to have the url expansion animation \"Animator animator \u003d ObjectAnimator.ofFloat(this, mUrlFocusChangePercentProperty, 0f);\" defined up above and then we\u0027re animating the same thing for the same duration.\n\nSo, I guess I do think we should move it to the same function unless it\u0027s not possible.",
+      "parentUuid": "581c45a6_066a7f6e",
+      "range": {
+        "startLine": 2115,
+        "startChar": 18,
+        "endLine": 2115,
+        "endChar": 26
+      },
+      "revId": "3616c21974a9e985a34c4e7c7009787cfe30bca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
