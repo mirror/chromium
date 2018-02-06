@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56cd80c_00d08787",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T22:30:44Z",
+      "side": 1,
+      "message": "Can we move some of the comments into the header, so one can understand how DoCompositePageToPdf() and DoCompositeDocumentToPdf() are used by just reading the header comments?\n\nAs I understand it, without print preview, there\u0027s just a call to DoCompositeDocumentToPdf(). With print preview, for N-pages, there are N DoCompositePageToPdf() calls followed by DoCompositeDocumentToPdf(). Since all the DoCompositePageToPdf() calls are processed first, they can share the compositor request safely. If this wasn\u0027t the case, then OnDidCompositeDocumentToPdf() would have prematurely called RemoveCompositeRequest().",
+      "revId": "eb34c8a1217cbedcc5c6534b9077c2eac999bd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f22cdf_490880c1",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T22:30:44Z",
+      "side": 1,
+      "message": "Can this ever happen?",
+      "revId": "eb34c8a1217cbedcc5c6534b9077c2eac999bd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708e7af6_9744ca0e",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T22:30:44Z",
+      "side": 1,
+      "message": "nit: cookies",
+      "range": {
+        "startLine": 83,
+        "startChar": 41,
+        "endLine": 83,
+        "endChar": 47
+      },
+      "revId": "eb34c8a1217cbedcc5c6534b9077c2eac999bd0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
