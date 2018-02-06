@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e5da1a7_a57ca318",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T19:39:21Z",
+      "side": 1,
+      "message": "Removed these checks. We should just prevent the user from clicking print until the destination is defined and then prevent them from changing the destination after requesting a print.",
+      "parentUuid": "deba9286_ee07a674",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 173,
+        "endChar": 5
+      },
+      "revId": "9dcc22245f034304be7d12a17f3571b4fc5b8588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e3cced1_15c07399",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-06T18:20:11Z",
       "side": 1,
       "message": "Can this be private?",
+      "range": {
+        "startLine": 508,
+        "startChar": 27,
+        "endLine": 508,
+        "endChar": 47
+      },
+      "revId": "9dcc22245f034304be7d12a17f3571b4fc5b8588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0106c19_1c1308c3",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-02-06T19:39:21Z",
+      "side": 1,
+      "message": "Made it private for now. Will need to be public as soon as we add the cloud print interface.",
+      "parentUuid": "5e3cced1_15c07399",
       "range": {
         "startLine": 508,
         "startChar": 27,
