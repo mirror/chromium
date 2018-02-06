@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6d248dd_1b4fed81",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "It\u0027s passed to PlaybackAndCopyOnWorkerThread(), which will wait on it. It was also set previously by set_sync_token() when it was made for the first time. I tried to explain this in the next line\u0027s comment..",
+      "parentUuid": "ca97b1a3_39acc829",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4301b85b_abeb241c",
         "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T21:58:09Z",
       "side": 1,
       "message": "nit: can you rename this to returned_sync_token (or compositor_sync_token or consumer_sync_token or something like that?)",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45a07e1_a3409b90",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "It is either the compositor thread sync token from creating the texture, or the returned sync token from exporting it. These names seem to say only 1 of those.",
+      "parentUuid": "4301b85b_abeb241c",
       "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "708f3abb_10c52475",
+        "filename": "cc/raster/one_copy_raster_buffer_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "There\u0027s multiple textures in this class, between the staging texture and the texture backed by the mailbox. I wanted to make it more clear",
+      "parentUuid": "d5bff8df_867ffb6a",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be166264_0ca5dce7",
         "filename": "components/viz/common/gpu/texture_allocation.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3376a31_1fbb82ec",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "This function doesn\u0027t receive use_gpu_memory_buffer_resources, and it is controlled by the caller anywho, but can DCHECK the other two for sure.",
+      "parentUuid": "be166264_0ca5dce7",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ebbfc1d_455ad176",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36eb28ad_06227369",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959c2d0b_64144992",
         "filename": "components/viz/common/gpu/texture_allocation.cc",
         "patchSetId": 13
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3a5471e5_6b4dae1b",
+        "filename": "components/viz/common/gpu/texture_allocation.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "959c2d0b_64144992",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6410bcc_3243b87a",
         "filename": "components/viz/common/gpu/texture_allocation.h",
         "patchSetId": 13
@@ -115,6 +223,24 @@
       "writtenOn": "2018-02-05T21:58:09Z",
       "side": 1,
       "message": "nit: This doesn\u0027t allocate the storage, so calling what it returns TextureAllocation seems wrong.",
+      "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6accac04_80b9dd26",
+        "filename": "components/viz/common/gpu/texture_allocation.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-06T16:30:27Z",
+      "side": 1,
+      "message": "Hm, well, it\u0027s the outer class which is a class for allocating textures. It\u0027s also the thing passed to AllocateStorage() to specify what to allocate on. Any better suggestions? I think of texture allocation as allocating a texture id tbh, and texture /storage/ allocation as making the backing store. I am not sure what else to call this..",
+      "parentUuid": "f6410bcc_3243b87a",
       "revId": "230309f5057a09979a55e7ec0bb2e8b6b83b6c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
