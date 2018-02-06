@@ -502,6 +502,12 @@ CORE_EXPORT v8::Local<v8::Value> FromJSONString(v8::Isolate*,
                                                 const String& stringified_json,
                                                 ExceptionState&);
 
+// Clones a V8 value if the target context is different from the value's
+// creation context. If they are same, or the value is not associated with
+// contexts, returns the value itself.
+CORE_EXPORT v8::Local<v8::Value> CloneV8ValueFor(ScriptState*,
+                                                 v8::Local<v8::Value>);
+
 // Ensure that a typed array value is not backed by a SharedArrayBuffer. If it
 // is, an exception will be thrown. The return value will use the NotShared
 // wrapper type.
