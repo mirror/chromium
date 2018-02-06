@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e97234dc_0307d393",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "See reply to comments below.",
+      "parentUuid": "a9ae24cd_cb775230",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55ae9090_16546972",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2fbaec52_cc0502a0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "png_bytep is the type passed in by the calling function: PNGImageDecoder::RowAvailable. I can change it if you like but png_bytep is the type used within in PNGImageDecoder.cpp.",
+      "parentUuid": "55ae9090_16546972",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c0df30_7a5a8c23",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "00e43ad5_457a0232",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Given we\u0027ve moved back to an implementation where all of the code sits in PNGImageDecoder.cpp, and the default implementation uses SetRGBARaw, let me know if you\u0027d still like me to make this change. Personally I think the calls to SetRGBARaw keep the NEON implementation tied to the portable one in a good way - it\u0027s clear we\u0027re doing the same thing.",
+      "parentUuid": "b2c0df30_7a5a8c23",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1efabf61_86e791c0",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -109,6 +169,24 @@
       "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a1d63e_be990bea",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1efabf61_86e791c0",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "e04fa90d_14defce7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "I have left the unit tests out of this version of the patch. We can always add them back in using Adenilson\u0027s method if deemed necessary further down the road - a full suite of tests would be useful when adding the SetRGBAPremultiply patch as the maths in that case is non-trivial.",
+      "parentUuid": "3808550b_c6c13ed6",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d5eeb1_693b6d18",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -251,6 +353,30 @@
       "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5424c348_d7dca3ae",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter since alpha_mask_vector is ANDed with alpha_mask, and the result assigned to alpha_mask, before we clear up the left over elements with the scalar implementation.",
+      "parentUuid": "25d5eeb1_693b6d18",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "88caaea9_22fe16a8",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84333ac3_8c661ab1",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52bd2f8b_5b833df7",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -300,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "89fe12a5_5d70708f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52bd2f8b_5b833df7",
+      "range": {
+        "startLine": 68,
+        "startChar": 30,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a301c180_48db6cab",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -314,6 +488,24 @@
       "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b04b284_3804d388",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a301c180_48db6cab",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "3d904859_5608c79f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "PNGImageDecoder::RowAvailable (the caller) just sets a boolean based on (alpha_mask !\u003d 255), so we could go with your suggestion. However, ANDing a uint64 with a unint8 would 0 the upper 56 bits of the uint64 without some masking? To me, this masking would negate most of the performance gain and also make the code a little less readable.",
+      "parentUuid": "c53347b0_a2b758b9",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1c4dc2_83ea3bec",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
         "patchSetId": 6
@@ -348,6 +558,24 @@
       "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71edcf98_86f102a8",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/SetRGBA.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2018-02-06T18:30:48Z",
+      "side": 1,
+      "message": "Correct, added the comment to explain it.",
+      "parentUuid": "6c1c4dc2_83ea3bec",
+      "revId": "9cf7ae652d470b3f2d997cb6b1d0d7c8df67f840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
