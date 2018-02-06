@@ -111,6 +111,8 @@ struct TestURLInfo {
     // URLs to test exact-matching behavior.
     {"http://go/", "Intranet URL", 1, 1, 80},
     {"http://gooey/", "Intranet URL 2", 5, 5, 80},
+    // This entry is explicitly added as hidden
+    // {"http://g/", "Intranet URL", 7, 7, 80},
 
     // URLs for testing offset adjustment.
     {"http://www.\xEA\xB5\x90\xEC\x9C\xA1.kr/", "Korean", 2, 2, 80},
@@ -296,6 +298,10 @@ void HistoryURLProviderTest::FillData() {
         cur.typed_count, now - TimeDelta::FromDays(cur.age_in_days), false,
         history::SOURCE_BROWSED);
   }
+
+  client_->GetHistoryService()->AddPageWithDetails(
+      GURL("http://g/"), base::UTF8ToUTF16("Intranet URL"), 7, 7,
+      Time::Now() - TimeDelta::FromDays(80), true, history::SOURCE_BROWSED);
 
   client_->GetHistoryService()->AddPageWithDetails(
       GURL("http://pa/"), base::UTF8ToUTF16("pa"), 0, 0,
@@ -517,6 +523,8 @@ TEST_F(HistoryURLProviderTest, PromoteShorterURLs) {
     { "http://gooey/", true },
     { "http://www.google.com/", true }
   };
+  // Note that there is an http://g/ URL that is marked as hidden.  It shouldn't
+  // show up at all.  This test implicitly tests this fact too.
   RunTest(ASCIIToUTF16("g"), std::string(), false, short_5a,
           arraysize(short_5a));
   RunTest(ASCIIToUTF16("go"), std::string(), false, short_5b,
