@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c50093d_a3846c90",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "022ceee2_fdbf137b",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f3367e_11ffed0e",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 42
@@ -33,6 +51,24 @@
       "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f22a31_fa313db3",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50f3367e_11ffed0e",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "39a7c0d2_93277a6e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8018349a_394d6eef",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a94b934_6e67a196",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 42
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "2510f820_8e65d811",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a94b934_6e67a196",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a65b4b6e_b86eda8d",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 42
@@ -101,6 +173,24 @@
       "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2fc676_c279f50f",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure. I think I added this out of paranoia? I\u0027ll remove it.",
+      "parentUuid": "a65b4b6e_b86eda8d",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +214,30 @@
       "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69aae5a4_e6ee43fe",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-06T01:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727e92d3_654e803e",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 34
+      },
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
