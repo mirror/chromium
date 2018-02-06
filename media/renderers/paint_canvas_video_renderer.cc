@@ -137,19 +137,21 @@ sk_sp<SkImage> NewSkImageFromVideoFrameYUVTextures(
       gl->DeleteTextures(1, &source_textures[i].fID);
       source_textures[i].fID = texture_copy;
       source_textures[i].fTarget = GL_TEXTURE_2D;
+      // TODO(bsalomon): Change this to GL_RGB8 when Skia adds support.
+      // skbug.com/7533
+      source_textures[i].fFormat = GL_RGBA8;
+    } else {
+      source_textures[i].fFormat = GL_ALPHA8_EXT;
     }
   }
-  GrPixelConfig config = video_frame->format() == PIXEL_FORMAT_NV12
-                             ? kRGBA_8888_GrPixelConfig
-                             : kAlpha_8_GrPixelConfig;
   context_3d.gr_context->resetContext(kTextureBinding_GrGLBackendState);
   GrBackendTexture textures[3] = {
-      GrBackendTexture(ya_tex_size.width(), ya_tex_size.height(), config,
-                       source_textures[0]),
-      GrBackendTexture(uv_tex_size.width(), uv_tex_size.height(), config,
-                       source_textures[1]),
-      GrBackendTexture(uv_tex_size.width(), uv_tex_size.height(), config,
-                       source_textures[2]),
+      GrBackendTexture(ya_tex_size.width(), ya_tex_size.height(),
+                       GrMipMapped::kNo, source_textures[0]),
+      GrBackendTexture(uv_tex_size.width(), uv_tex_size.height(),
+                       GrMipMapped::kNo, source_textures[1]),
+      GrBackendTexture(uv_tex_size.width(), uv_tex_size.height(),
+                       GrMipMapped::kNo, source_textures[2]),
   };
 
   SkISize yuvSizes[] = {
