@@ -134,6 +134,7 @@ jumbo_component("message_center") {
         "views/notification_header_view.h",
         "views/notification_view.cc",
         "views/notification_view.h",
+        "views/notification_view_common.h",
         "views/notification_view_md.cc",
         "views/notification_view_md.h",
         "views/padded_button.cc",

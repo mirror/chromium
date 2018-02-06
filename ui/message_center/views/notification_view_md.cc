@@ -26,6 +26,7 @@
 #include "ui/message_center/views/bounded_label.h"
 #include "ui/message_center/views/notification_control_buttons_view.h"
 #include "ui/message_center/views/notification_header_view.h"
+#include "ui/message_center/views/notification_view_common.h"
 #include "ui/message_center/views/padded_button.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/strings/grit/ui_strings.h"
@@ -118,12 +119,6 @@ constexpr int kMessageViewWidth =
     kNotificationWidth - kLeftContentPadding.left() -
     kLeftContentPadding.right() - kContentRowPadding.left() -
     kContentRowPadding.right();
-
-const int kMinPixelsPerTitleCharacter = 4;
-
-// Character limit = pixels per line * line limit / min. pixels per character.
-constexpr size_t kMessageCharacterLimit =
-    kNotificationWidth * kMessageExpandedLineLimit / 3;
 
 // The default is 12, so this normally come out to 13.
 constexpr int kTextFontSizeDelta = 1;

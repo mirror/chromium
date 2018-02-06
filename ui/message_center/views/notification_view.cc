@@ -29,6 +29,7 @@
 #include "ui/message_center/views/bounded_label.h"
 #include "ui/message_center/views/notification_button.h"
 #include "ui/message_center/views/notification_control_buttons_view.h"
+#include "ui/message_center/views/notification_view_common.h"
 #include "ui/message_center/views/padded_button.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/native_theme/native_theme.h"
@@ -53,12 +54,6 @@ namespace {
 
 const int kTextBottomPadding = 12;
 const int kItemTitleToMessagePadding = 3;
-
-// Character limit = pixels per line * line limit / min. pixels per character.
-const int kMinPixelsPerTitleCharacter = 4;
-
-constexpr size_t kMessageCharacterLimit =
-    kNotificationWidth * kMessageExpandedLineLimit / 3;
 
 constexpr size_t kContextMessageCharacterLimit =
     kNotificationWidth * kContextMessageLineLimit / 3;
