@@ -1252,6 +1252,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       cookie_jar_(this),
       selection_text_offset_(0),
       selection_range_(gfx::Range::InvalidRange()),
+      selection_id_(0),
       handling_select_range_(false),
       web_user_media_client_(nullptr),
       presentation_dispatcher_(nullptr),
@@ -2909,9 +2910,11 @@ void RenderFrameImpl::DetachGuest(int element_instance_id) {
 
 void RenderFrameImpl::SetSelectedText(const base::string16& selection_text,
                                       size_t offset,
-                                      const gfx::Range& range) {
+                                      const gfx::Range& range,
+                                      int selection_id) {
   Send(new FrameHostMsg_SelectionChanged(routing_id_, selection_text,
-                                         static_cast<uint32_t>(offset), range));
+                                         static_cast<uint32_t>(offset), range,
+                                         selection_id));
 }
 
 void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
@@ -6533,19 +6536,20 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
     }
   }
 
+  int id = frame_->SelectionId();
   // TODO(dglazkov): Investigate if and why this would be happening,
   // and resolve this. We shouldn't be carrying selection text here.
   // http://crbug.com/632920.
   // Sometimes we get repeated didChangeSelection calls from webkit when
   // the selection hasn't actually changed. We don't want to report these
   // because it will cause us to continually claim the X clipboard.
-  if (selection_text_offset_ != offset ||
-      selection_range_ != range ||
-      selection_text_ != text) {
+  if (selection_text_offset_ != offset || selection_range_ != range ||
+      selection_text_ != text || selection_id_ != id) {
     selection_text_ = text;
     selection_text_offset_ = offset;
     selection_range_ = range;
-    SetSelectedText(text, offset, range);
+    selection_id_ = id;
+    SetSelectedText(text, offset, range, id);
   }
   GetRenderWidget()->UpdateSelectionBounds();
 }

@@ -99,6 +99,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CharacterNames.h"
 #include "public/platform/WebScrollIntoViewParams.h"
+#include "public/platform/WebSelectionSourceType.h"
 
 namespace blink {
 
@@ -1447,6 +1448,7 @@ void Editor::ChangeSelectionAfterCommand(
       new_selection, SetSelectionOptions::Builder(options)
                          .SetShouldShowHandle(handle_visible)
                          .SetIsDirectional(options.IsDirectional())
+                         .SetSourceType(kSelectionSourceEditingCmd)
                          .Build());
 
   // Some editing operations change the selection visually without affecting its
