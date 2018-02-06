@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "347136ab_32a64bbd",
+        "filename": "chrome/browser/media/single_client_video_capture_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T05:59:44Z",
+      "side": 1,
+      "message": "So, I was proposing (from the example) having the ctor set device_launcher_callback_ to call the new content public API by default, and then having a separate method to override the device_launcher_callback_ for testing purposes. (Note that Alex had a concern because the SingleClientVideoCaptureHost isn\u0027t actually using the new public API.)",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6f8a7a_7f0b7da1",
         "filename": "chrome/browser/media/single_client_video_capture_host.cc",
         "patchSetId": 10
