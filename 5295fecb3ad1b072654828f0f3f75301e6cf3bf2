@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebfb4bd0_4975d08e",
+        "filename": "content/browser/loader/signed_exchange_consts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T09:32:36Z",
+      "side": 1,
+      "message": "Please put them into content namespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 40,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "5295fecb3ad1b072654828f0f3f75301e6cf3bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
