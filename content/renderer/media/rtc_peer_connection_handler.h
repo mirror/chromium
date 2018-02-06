@@ -169,8 +169,7 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // thread.  If the |track_id| is empty, the |track_type| parameter is ignored.
   void GetStats(webrtc::StatsObserver* observer,
                 webrtc::PeerConnectionInterface::StatsOutputLevel level,
-                const std::string& track_id,
-                blink::WebMediaStreamSource::Type track_type);
+                rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> selector);
 
   // Tells the |client_| to close RTCPeerConnection.
   // Make it virtual for testing purpose.
