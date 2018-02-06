@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a2c07b9_e650044c",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T07:29:21Z",
+      "side": 1,
+      "message": "Skip this step if input.signature.certSha256 is empty?\n(Just to match the spec text)",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 76
+      },
+      "revId": "df5f19e58e57c6a419b74a57a1e0fa0c4b933a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6925950_d2feec15",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T07:29:21Z",
+      "side": 1,
+      "message": "nit: remove this empty line",
+      "revId": "df5f19e58e57c6a419b74a57a1e0fa0c4b933a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86666339_ca32d8a6",
         "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
         "patchSetId": 1
