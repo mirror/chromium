@@ -10,7 +10,7 @@
 Polymer({
   is: 'settings-android-apps-subpage',
 
-  behaviors: [I18nBehavior, PrefsBehavior],
+  behaviors: [I18nBehavior, PrefsBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /** Preferences state. */
@@ -36,18 +36,30 @@ Polymer({
   /** @private {?settings.AndroidAppsBrowserProxy} */
   browserProxy_: null,
 
+  /** @private {boolean} */
+  wasPlayStoreEnabled_: false,
+
   /** @override */
   created: function() {
     this.browserProxy_ = settings.AndroidAppsBrowserProxyImpl.getInstance();
+  },
+
+  /** @protected */
+  currentRouteChanged: function(newRoute) {
+    if (settings.getCurrentRoute() == settings.routes.ANDROID_APPS_DETAILS) {
+      this.wasPlayStoreEnabled_ = this.androidAppsInfo.playStoreEnabled;
+    }
   },
 
   /**
    * @private
    */
   onAndroidAppsInfoUpdate_: function() {
-    if (!this.androidAppsInfo.playStoreEnabled &&
-        settings.getCurrentRoute() == settings.routes.ANDROID_APPS_DETAILS) {
-      settings.navigateToPreviousRoute();
+    if (settings.getCurrentRoute() == settings.routes.ANDROID_APPS_DETAILS) {
+      if (this.wasPlayStoreEnabled_ && !this.androidAppsInfo.playStoreEnabled) {
+        this.wasPlayStoreEnabled_ = false;
+        settings.navigateToPreviousRoute();
+      }
     }
   },
 
