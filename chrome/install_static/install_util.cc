@@ -82,14 +82,14 @@ constexpr wchar_t kNaClBrokerProcess[] = L"nacl-broker";
 constexpr wchar_t kNaClLoaderProcess[] = L"nacl-loader";
 #endif
 
-void Trace(const wchar_t* format_string, ...) {
+void Trace(const wchar_t* format, ...) {
   static const int kMaxLogBufferSize = 1024;
   static wchar_t buffer[kMaxLogBufferSize] = {};
 
   va_list args = {};
 
-  va_start(args, format_string);
-  vswprintf(buffer, kMaxLogBufferSize, format_string, args);
+  va_start(args, format);
+  vswprintf(buffer, kMaxLogBufferSize, format, args);
   OutputDebugStringW(buffer);
   va_end(args);
 }
