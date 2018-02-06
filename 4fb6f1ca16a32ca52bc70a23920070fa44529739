@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e754e9d6_66814bd8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapProfileView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:43:15Z",
+      "side": 1,
+      "message": "This profile type has ...",
+      "revId": "4fb6f1ca16a32ca52bc70a23920070fa44529739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b1caf1_77fb58e3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapProfileView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-06T00:43:15Z",
+      "side": 1,
+      "message": "It provides ...",
+      "revId": "4fb6f1ca16a32ca52bc70a23920070fa44529739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
