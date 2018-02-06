@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac8f594_cea516b5",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-06T19:05:45Z",
+      "side": 1,
+      "message": "nit: may want to consider adding \"using PowerManagerClient \u003d chromeos::PowerManagerClient\" here if being able to drop the \"chromeos::\" namespace prefix would make some of the function calls fit on a single line",
+      "revId": "7373c002bb73a9a642d883bd35b969cd2d4c375b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
