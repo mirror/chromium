@@ -531,9 +531,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       last_sent_theme_color_(SK_ColorTRANSPARENT),
       did_first_visually_non_empty_paint_(false),
       capturer_count_(0),
-      should_normally_be_visible_(true),
-      should_normally_be_occluded_(false),
-      did_first_set_visible_(false),
       is_being_destroyed_(false),
       is_notifying_observers_(false),
       notify_disconnection_(false),
@@ -1336,7 +1333,8 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   }
 
   // Ensure that all views are un-occluded before capture begins.
-  DoWasUnOccluded();
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    view->WasUnOccluded();
 }
 
 void WebContentsImpl::DecrementCapturerCount() {
@@ -1353,12 +1351,9 @@ void WebContentsImpl::DecrementCapturerCount() {
     preferred_size_for_capture_ = gfx::Size();
     OnPreferredSizeChanged(old_size);
 
-    if (IsHidden()) {
-      DVLOG(1) << "Executing delayed WasHidden().";
+    if (visibility_ == Visibility::HIDDEN)
       WasHidden();
-    }
-
-    if (should_normally_be_occluded_)
+    else if (visibility_ == Visibility::OCCLUDED)
       WasOccluded();
   }
 }
@@ -1489,7 +1484,7 @@ void WebContentsImpl::WasShown() {
   for (auto& observer : observers_)
     observer.WasShown();
 
-  should_normally_be_visible_ = true;
+  visibility_ = Visibility::VISIBLE;
 }
 
 void WebContentsImpl::WasHidden() {
@@ -1514,7 +1509,7 @@ void WebContentsImpl::WasHidden() {
   for (auto& observer : observers_)
     observer.WasHidden();
 
-  should_normally_be_visible_ = false;
+  visibility_ = Visibility::HIDDEN;
 }
 
 #if defined(OS_ANDROID)
@@ -1547,15 +1542,11 @@ void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
 #endif
 
 Visibility WebContentsImpl::GetVisibility() const {
-  if (!should_normally_be_visible_)
-    return Visibility::HIDDEN;
-  if (should_normally_be_occluded_)
-    return Visibility::OCCLUDED;
-  return Visibility::VISIBLE;
+  return visibility_;
 }
 
 bool WebContentsImpl::IsVisible() const {
-  return should_normally_be_visible_;
+  return GetVisibility() != Visibility::HIDDEN;
 }
 
 void WebContentsImpl::WasOccluded() {
@@ -1563,21 +1554,7 @@ void WebContentsImpl::WasOccluded() {
     for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
       view->WasOccluded();
   }
-
-  should_normally_be_occluded_ = true;
-}
-
-void WebContentsImpl::WasUnOccluded() {
-  if (!IsBeingCaptured())
-    DoWasUnOccluded();
-
-  should_normally_be_occluded_ = false;
-}
-
-void WebContentsImpl::DoWasUnOccluded() {
-  // TODO(fdoray): Only call WasUnOccluded on frames in the active viewport.
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-    view->WasUnOccluded();
+  visibility_ = Visibility::OCCLUDED;
 }
 
 bool WebContentsImpl::NeedToFireBeforeUnload() {
@@ -1730,7 +1707,8 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
   // This is set before initializing the render manager since
   // RenderFrameHostManager::Init calls back into us via its delegate to ask if
   // it should be hidden.
-  should_normally_be_visible_ = !params.initially_hidden;
+  visibility_ =
+      params.initially_hidden ? Visibility::HIDDEN : Visibility::VISIBLE;
 
   // The routing ids must either all be set or all be unset.
   DCHECK((params.routing_id == MSG_ROUTING_NONE &&
@@ -5740,7 +5718,7 @@ void WebContentsImpl::SetEncoding(const std::string& encoding) {
 }
 
 bool WebContentsImpl::IsHidden() {
-  return !IsBeingCaptured() && !should_normally_be_visible_;
+  return !IsBeingCaptured() && visibility_ != Visibility::VISIBLE;
 }
 
 int WebContentsImpl::GetOuterDelegateFrameTreeNodeId() {
@@ -5991,7 +5969,14 @@ int WebContentsImpl::GetCurrentlyPlayingVideoCount() {
   return currently_playing_video_count_;
 }
 
-void WebContentsImpl::UpdateWebContentsVisibility(bool visible) {
+void WebContentsImpl::OnVisibilityChanged(Visibility visibility) {
+  // Occlusion can cause flakiness in browser tests.
+  static const bool occlusion_is_disabled =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableBackgroundingOccludedWindowsForTesting);
+  if (occlusion_is_disabled && visibility == Visibility::OCCLUDED)
+    visibility = Visibility::VISIBLE;
+
   if (!did_first_set_visible_) {
     // If this WebContents has not yet been set to be visible for the first
     // time, ignore any requests to make it hidden, since resources would
@@ -5999,17 +5984,21 @@ void WebContentsImpl::UpdateWebContentsVisibility(bool visible) {
     // this state the window content is undefined and can show garbage.
     // However, the page load mechanism requires an activation call through a
     // visibility call to (re)load.
-    if (visible) {
+    if (visibility == Visibility::VISIBLE) {
       did_first_set_visible_ = true;
+      visibility_ = Visibility::VISIBLE;
       WasShown();
     }
     return;
   }
-  if (visible == should_normally_be_visible_)
+
+  if (visibility == visibility_)
     return;
 
-  if (visible)
+  if (visibility == Visibility::VISIBLE)
     WasShown();
+  else if (visibility == Visibility::OCCLUDED)
+    WasOccluded();
   else
     WasHidden();
 }

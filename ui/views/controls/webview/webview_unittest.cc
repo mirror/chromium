@@ -8,10 +8,13 @@
 
 #include <memory>
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_command_line.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
@@ -142,6 +145,9 @@ class WebViewUnitTest : public views::test::WidgetTest {
     // dependencies from content.
     SetBrowserClientForTesting(&test_browser_client_);
 
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kDisableBackgroundingOccludedWindowsForTesting);
+
     // Create a top level widget and add a child, and give it a WebView as a
     // child.
     top_level_widget_ = CreateTopLevelFramelessPlatformWidget();
@@ -163,6 +169,10 @@ class WebViewUnitTest : public views::test::WidgetTest {
     // Flush the message loop to execute pending relase tasks as this would
     // upset ASAN and Valgrind.
     RunPendingMessages();
+
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kDisableBackgroundingOccludedWindowsForTesting);
+
     WidgetTest::TearDown();
   }
 
@@ -178,6 +188,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  base::test::ScopedCommandLine scoped_command_line_;
   std::unique_ptr<content::TestBrowserContext> browser_context_;
   content::TestContentBrowserClient test_browser_client_;
 
