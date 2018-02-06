@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86666339_ca32d8a6",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:24:03Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "df5f19e58e57c6a419b74a57a1e0fa0c4b933a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b199f3ff_63e6f91c",
+        "filename": "content/browser/loader/signed_exchange_signature_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T07:24:03Z",
+      "side": 1,
+      "message": "nit: should this compare be case-sensitive? (The spec doesn\u0027t say anything..)",
+      "revId": "df5f19e58e57c6a419b74a57a1e0fa0c4b933a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
