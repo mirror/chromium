@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b214ae9_4b33e555",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b832b3_dfb4d4f9",
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "413ce1fe_3a2d5cb2",
         "filename": "ui/views/widget/widget_observer.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "385bfac0_f50295b3",
+        "filename": "ui/views/widget/widget_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "413ce1fe_3a2d5cb2",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0afb1ed_eaab7a88",
         "filename": "ui/views/widget/widget_unittest.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827616e7_8dda2fda",
+        "filename": "ui/views/widget/widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-06T23:27:14Z",
+      "side": 1,
+      "message": "Done, I think as widget goes out of scope before the observer we\u0027re OK. Fingers crossed.",
+      "parentUuid": "d0afb1ed_eaab7a88",
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
