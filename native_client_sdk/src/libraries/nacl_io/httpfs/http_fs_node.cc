@@ -20,6 +20,15 @@
 #define snprintf _snprintf
 #endif
 
+// Macro for telling -Wimplicit-fallthrough that a fallthrough is intentional.
+#if !defined(FALLTHROUGH)  // https://crbug.com/805946
+#if defined(__clang__)
+#define FALLTHROUGH [[clang::fallthrough]]
+#else
+#define FALLTHROUGH
+#endif
+#endif
+
 namespace nacl_io {
 
 namespace {
@@ -63,7 +72,7 @@ StringMap_t ParseHeaders(const char* headers, int32_t headers_length) {
         start = &headers[i];
         state = FINDING_VALUE;
         // Fallthrough to start processing value without incrementing i.
-        [[clang::fallthrough]];
+        FALLTHROUGH;
 
       case FINDING_VALUE:
         if (headers[i] == '\n') {

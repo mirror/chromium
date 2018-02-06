@@ -341,7 +341,7 @@ POSIX_CFLAGS ?= -g -O0 -pthread -MMD -DNACL_SDK_DEBUG
 endif
 
 NACL_CFLAGS ?= -Wno-long-long -Werror
-NACL_CXXFLAGS ?= -Wno-long-long -Werror
+NACL_CXXFLAGS ?= -Wno-long-long -Werror -std=gnu++0x
 NACL_LDFLAGS += -Wl,-as-needed -pthread
 
 #
