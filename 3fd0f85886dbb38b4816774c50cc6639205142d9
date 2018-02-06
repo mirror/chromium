@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15705ea6_26b24b8f",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T20:51:37Z",
+      "side": 1,
+      "message": "It seems this could be simplified to:\n\n  if (!src_subrect.IsEmpty()) {\n    request-\u003eset_area(gfx::ScaleToRoundedRect(src_subrect, active_device_scale_factor_));\n  }",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 3
+      },
+      "revId": "3fd0f85886dbb38b4816774c50cc6639205142d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0839f4_f0bc4398",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T20:51:37Z",
+      "side": 1,
+      "message": "ditto: (simplify with one call to set_area())",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 3
+      },
+      "revId": "3fd0f85886dbb38b4816774c50cc6639205142d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0ba629_e3a6e687",
+        "filename": "content/browser/renderer_host/delegated_frame_host.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T20:51:37Z",
+      "side": 1,
+      "message": "Where is this value initialized? It seems that it would be possible to use this value before the first time it is set.",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 35
+      },
+      "revId": "3fd0f85886dbb38b4816774c50cc6639205142d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
