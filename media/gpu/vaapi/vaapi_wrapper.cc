@@ -160,12 +160,10 @@ class VADisplayState {
   base::Lock* va_lock() { return &va_lock_; }
   VADisplay va_display() const { return va_display_; }
 
+  void SetVAStubsInit() { va_stubs_initialized_ = true; }
   void SetDrmFd(base::PlatformFile fd) { drm_fd_.reset(HANDLE_EINTR(dup(fd))); }
 
  private:
-  // Returns false on init failure.
-  static bool PostSandboxInitialization();
-
   // Protected by |va_lock_|.
   int refcount_;
 
@@ -179,6 +177,9 @@ class VADisplayState {
 
   // The VADisplay handle.
   VADisplay va_display_;
+
+  // True if InitializeStubs() returned successfully.
+  bool va_stubs_initialized_;
 
   // True if vaInitialize() has been called successfully.
   bool va_initialized_;
@@ -200,41 +201,16 @@ void VADisplayState::PreSandboxInitialization() {
     VADisplayState::Get()->SetDrmFd(drm_file.GetPlatformFile());
 }
 
-// static
-bool VADisplayState::PostSandboxInitialization() {
-  const std::string va_suffix(std::to_string(VA_MAJOR_VERSION + 1));
-  StubPathMap paths;
-
-  paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
-  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
-#if defined(USE_X11)
-  // libva-x11 does not exist on libva >= 2
-  if (VA_MAJOR_VERSION == 0)
-    paths[kModuleVa_x11].push_back("libva-x11.so.1");
-#endif
-
-  const bool success = InitializeStubs(paths);
-  if (!success) {
-    static const char kErrorMsg[] = "Failed to initialize VAAPI libs";
-#if defined(OS_CHROMEOS)
-    // When Chrome runs on Linux with target_os="chromeos", do not log error
-    // message without VAAPI libraries.
-    LOG_IF(ERROR, base::SysInfo::IsRunningOnChromeOS()) << kErrorMsg;
-#else
-    DVLOG(1) << kErrorMsg;
-#endif
-  }
-  return success;
-}
-
 VADisplayState::VADisplayState()
-    : refcount_(0), va_display_(nullptr), va_initialized_(false) {}
+    : refcount_(0),
+      va_display_(nullptr),
+      va_stubs_initialized_(false),
+      va_initialized_(false) {}
 
 bool VADisplayState::Initialize() {
   va_lock_.AssertAcquired();
 
-  static bool result = PostSandboxInitialization();
-  if (!result)
+  if (!va_stubs_initialized_)
     return false;
 
   if (refcount_++ > 0)
@@ -1166,6 +1142,39 @@ bool VaapiWrapper::BlitSurface(
 // static
 void VaapiWrapper::PreSandboxInitialization() {
   VADisplayState::PreSandboxInitialization();
+
+  const std::string va_suffix(std::to_string(VA_MAJOR_VERSION + 1));
+  StubPathMap paths;
+
+  paths[kModuleVa].push_back(std::string("libva.so.") + va_suffix);
+  paths[kModuleVa_drm].push_back(std::string("libva-drm.so.") + va_suffix);
+#if defined(USE_X11)
+  paths[kModuleVa_x11].push_back(std::string("libva-x11.so.") + va_suffix);
+#endif
+
+  // InitializeStubs dlopen VA-API libraries
+  // libva.so
+  // libva-x11.so (X11)
+  // libva-drm.so (X11 and Ozone).
+  static bool result = InitializeStubs(paths);
+  if (!result) {
+    static const char kErrorMsg[] = "Failed to initialize VAAPI libs";
+#if defined(OS_CHROMEOS)
+    // When Chrome runs on Linux with target_os="chromeos", do not log error
+    // message without VAAPI libraries.
+    LOG_IF(ERROR, base::SysInfo::IsRunningOnChromeOS()) << kErrorMsg;
+#else
+    DVLOG(1) << kErrorMsg;
+#endif
+  } else
+    VADisplayState::Get()->SetVAStubsInit();
+
+  // VASupportedProfiles::Get creates VADisplayState and as such
+  // driver associated libraries are dlopen, to know:
+  // i965_drv_video.so
+  // hybrid_drv_video.so (platforms that support it)
+  // libcmrt.so (platforms that support it)
+  VASupportedProfiles::Get();
 }
 
 VaapiWrapper::VaapiWrapper()
