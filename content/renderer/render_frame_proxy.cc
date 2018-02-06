@@ -224,8 +224,7 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
 
   enable_surface_synchronization_ = features::IsSurfaceSynchronizationEnabled();
 
-  compositing_helper_.reset(
-      ChildFrameCompositingHelper::CreateForRenderFrameProxy(this));
+  compositing_helper_ = std::make_unique<ChildFrameCompositingHelper>(this);
 
   pending_resize_params_.screen_info = render_widget_->screen_info();
 
@@ -250,9 +249,9 @@ void RenderFrameProxy::ResendResizeParams() {
 }
 
 void RenderFrameProxy::WillBeginCompositorFrame() {
-  if (compositing_helper_->surface_id().is_valid()) {
+  if (compositing_helper_->primary_surface_id().is_valid()) {
     FrameHostMsg_HittestData_Params params;
-    params.surface_id = compositing_helper_->surface_id();
+    params.surface_id = compositing_helper_->primary_surface_id();
     params.ignored_for_hittest = web_frame_->IsIgnoredForHitTest();
     render_widget_->QueueMessage(
         new FrameHostMsg_HittestData(render_widget_->routing_id(), params),
@@ -262,6 +261,12 @@ void RenderFrameProxy::WillBeginCompositorFrame() {
 
 void RenderFrameProxy::OnScreenInfoChanged(const ScreenInfo& screen_info) {
   pending_resize_params_.screen_info = screen_info;
+  if (crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(local_frame_size(),
+                                        screen_info.device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
@@ -421,7 +426,9 @@ void RenderFrameProxy::OnDeleteProxy() {
 }
 
 void RenderFrameProxy::OnChildFrameProcessGone() {
-  compositing_helper_->ChildFrameGone();
+  crashed_ = true;
+  compositing_helper_->ChildFrameGone(local_frame_size(),
+                                      screen_info().device_scale_factor);
 }
 
 void RenderFrameProxy::OnSetChildFrameSurface(
@@ -551,7 +558,7 @@ void RenderFrameProxy::SetMusEmbeddedFrame(
 #endif
 
 void RenderFrameProxy::WasResized() {
-  if (!frame_sink_id_.is_valid())
+  if (!frame_sink_id_.is_valid() || crashed_)
     return;
 
   bool synchronized_params_changed =
@@ -694,6 +701,12 @@ void RenderFrameProxy::FrameRectsChanged(
   pending_resize_params_.local_frame_size =
       gfx::Size(local_frame_rect.width, local_frame_rect.height);
   pending_resize_params_.screen_info = render_widget_->screen_info();
+  if (crashed_) {
+    // Update the sad page to match the current ScreenInfo.
+    compositing_helper_->ChildFrameGone(local_frame_size(),
+                                        screen_info().device_scale_factor);
+    return;
+  }
   WasResized();
 }
 
@@ -763,5 +776,15 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
   ResendResizeParams();
 }
 #endif
+
+blink::WebLayer* RenderFrameProxy::GetLayer() {
+  return web_layer_.get();
+}
+
+void RenderFrameProxy::SetLayer(std::unique_ptr<blink::WebLayer> web_layer) {
+  if (web_frame())
+    web_frame()->SetWebLayer(web_layer.get());
+  web_layer_ = std::move(web_layer);
+}
 
 }  // namespace content
