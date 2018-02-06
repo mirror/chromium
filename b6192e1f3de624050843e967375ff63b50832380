@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db139a26_14e32bca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "In your implementation, the log is different based on the LogSeverity level and log is enabled in both of your cases.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccbaadf_1388ece2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "we typically use | around the variable name. ex: |high_|",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb44997_f2ca071e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "I think you are adapting ABCD..EFGH form? You printed 4 letters at the beginning and 4 letters and the end.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b80b43_294a19b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "You can use TEST\u003dLocalSurfaceIdTest.VerifyToString and remove the last sentence.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358db803_8c1dcd35",
+        "filename": "components/viz/common/surfaces/local_surface_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "why do you need a new method? You can get enough info from nonce_.ToString(); In this way, you don\u0027t need to worry about the length.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe3dc61_edbe9040",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "description missing.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f5543b_b6d726f7",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "add a description on what are you testing.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36c23f1_7698559c",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "As I mentioned earlier, the difference in ToString is caused by different LogSeverity level not by enable/disable log. I think your variable names should reflect that.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47b6ab5_735d8972",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-06T21:27:50Z",
+      "side": 1,
+      "message": "We need to remove the lu at the end.",
+      "revId": "b6192e1f3de624050843e967375ff63b50832380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
