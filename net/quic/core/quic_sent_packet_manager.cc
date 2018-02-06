@@ -173,17 +173,20 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
 void QuicSentPacketManager::ResumeConnectionState(
     const CachedNetworkParameters& cached_network_params,
     bool max_bandwidth_resumption) {
-  if (cached_network_params.has_min_rtt_ms()) {
-    SetInitialRtt(
-        QuicTime::Delta::FromMilliseconds(cached_network_params.min_rtt_ms()));
-  }
-
   QuicBandwidth bandwidth = QuicBandwidth::FromBytesPerSecond(
       max_bandwidth_resumption
           ? cached_network_params.max_bandwidth_estimate_bytes_per_second()
           : cached_network_params.bandwidth_estimate_bytes_per_second());
   QuicTime::Delta rtt =
       QuicTime::Delta::FromMilliseconds(cached_network_params.min_rtt_ms());
+  AdjustNetworkParameters(bandwidth, rtt);
+}
+
+void QuicSentPacketManager::AdjustNetworkParameters(QuicBandwidth bandwidth,
+                                                    QuicTime::Delta rtt) {
+  if (!rtt.IsZero()) {
+    SetInitialRtt(rtt);
+  }
   send_algorithm_->AdjustNetworkParameters(bandwidth, rtt);
 }
 
