@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "895b4ca7_b3b99067",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-06T19:14:05Z",
+      "side": 0,
+      "message": "Yay for TODO completion!",
+      "range": {
+        "startLine": 243,
+        "startChar": 5,
+        "endLine": 243,
+        "endChar": 9
+      },
+      "revId": "2bd0455cf4e95d6e877e50d90ca6282ac3cd244d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
