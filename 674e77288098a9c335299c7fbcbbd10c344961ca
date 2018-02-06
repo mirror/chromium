@@ -118,6 +118,30 @@
       "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9400f2e0_b6afc134",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-06T19:38:42Z",
+      "side": 1,
+      "message": "I would really appreciate your review of the code because of your expertise on lock-free algorithms.\nThe original code has a problem at lines 249, 251 as in fact we need these two stores happen atomically. Otherwise once I update the threshold for the next sample and it happens to be larger than the previous value, some thread could cross the threshold another time before the accumulated value was zeroed. Thus recording the sample twice with different call stacks.\n\nThat\u0027s why I replaced two variables (g_cumulative_counter, g_threshold) with just a single atomic (g_bytes_left) that counts towards zero and thresholds once it reaches zero.\n\nAnother atomic g_current_interval is to remember what is the currently sample size. Basically it holds the value g_bytes_left starts counting from.\n\nAll other atomics are read only and do not change during operation.\nSo the new code basically deals with just two atomic variables, so I find it simpler.",
+      "parentUuid": "a6538b2c_7ffe88c6",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 73
+      },
+      "revId": "674e77288098a9c335299c7fbcbbd10c344961ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
