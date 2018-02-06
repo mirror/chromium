@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4257ac8_24ba3792",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T21:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3672cba5_831056c0",
+      "revId": "f0b31af7ccc3f4cf7050296605d62cf52c0fc93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246f5820_086bed97",
         "filename": "third_party/sqlite/amalgamation/rename_exports.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f0b31af7ccc3f4cf7050296605d62cf52c0fc93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe1139c_81560422",
+        "filename": "third_party/sqlite/amalgamation/rename_exports.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T21:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246f5820_086bed97",
+      "revId": "f0b31af7ccc3f4cf7050296605d62cf52c0fc93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
