@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1033546_50cd4af2",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T01:49:13Z",
+      "side": 1,
+      "message": "I\u0027d imagine that this read loop will go away when we have the streaming parser; the streaming parser will take the ownership of the body stream, and will work like a (kind of) filter that produces a sequence of CBOR tokens or something.\n\nI think there\u0027s no reason to have this class being a FilterSourceStream, as it doesn\u0027t produce any output and all input will just go through into the streaming parser.\n\nLet\u0027s talk offline.",
+      "parentUuid": "48e62bf2_ab134e8a",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ac5151_3f677538",
         "filename": "content/browser/loader/signed_exchange_handler.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-05T14:57:19Z",
       "side": 1,
       "message": "Replacing some CHECKs to a simple failure handling code doesn\u0027t seem too tough, could we start doing that in this CL?",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1dec5c0_b3af56fe",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-06T01:49:13Z",
+      "side": 1,
+      "message": "Do you have any preference on how failures should be handled? Add an error callback?",
+      "parentUuid": "19ac5151_3f677538",
       "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
