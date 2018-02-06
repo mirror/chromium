@@ -165,6 +165,10 @@ class VIEWS_EXPORT SubmenuView : public View,
     resize_open_menu_ = resize_open_menu;
   }
 
+  void set_use_touchable_layout(bool use_touchable_layout) {
+    use_touchable_layout_ = use_touchable_layout;
+  }
+
  protected:
   // Overridden from View:
   const char* GetClassName() const override;
@@ -213,6 +217,8 @@ class VIEWS_EXPORT SubmenuView : public View,
 
   // Reposition open menu when contained views change size.
   bool resize_open_menu_;
+
+  bool use_touchable_layout_;
 
   // The submenu's scroll animator
   std::unique_ptr<ScrollAnimator> scroll_animator_;

@@ -47,7 +47,8 @@ class MenuHost : public Widget, public WidgetObserver {
   void InitMenuHost(Widget* parent,
                     const gfx::Rect& bounds,
                     View* contents_view,
-                    bool do_capture);
+                    bool do_capture,
+                    bool use_touchable_layout);
 
   // Returns true if the menu host is visible.
   bool IsMenuHostVisible();

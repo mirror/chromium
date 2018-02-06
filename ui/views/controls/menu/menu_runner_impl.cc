@@ -29,7 +29,9 @@ MenuRunnerImplInterface* MenuRunnerImplInterface::Create(
     ui::MenuModel* menu_model,
     int32_t run_types,
     const base::Closure& on_menu_closed_callback) {
-  return new MenuRunnerImplAdapter(menu_model, on_menu_closed_callback);
+  // todo -- reorder parameters.
+  return new MenuRunnerImplAdapter(menu_model, on_menu_closed_callback,
+                                   run_types);
 }
 #endif
 
@@ -130,12 +132,15 @@ void MenuRunnerImpl::RunMenuAt(Widget* parent,
       (run_types & MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER) != 0);
   controller_ = controller->AsWeakPtr();
   menu_->set_controller(controller_.get());
+  menu_->set_use_touchable_layout(
+      (run_types & MenuRunner::USE_TOUCHABLE_LAYOUT) != 0);
   menu_->PrepareForRun(owns_controller_, has_mnemonics,
                        !for_drop_ && ShouldShowMnemonics(button));
 
   controller->Run(parent, button, menu_, bounds, anchor,
                   (run_types & MenuRunner::CONTEXT_MENU) != 0,
-                  (run_types & MenuRunner::NESTED_DRAG) != 0);
+                  (run_types & MenuRunner::NESTED_DRAG) != 0,
+                  (run_types & MenuRunner::USE_TOUCHABLE_LAYOUT) != 0);
 }
 
 void MenuRunnerImpl::Cancel() {

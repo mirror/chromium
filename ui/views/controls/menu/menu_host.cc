@@ -110,15 +110,19 @@ MenuHost::~MenuHost() {
 void MenuHost::InitMenuHost(Widget* parent,
                             const gfx::Rect& bounds,
                             View* contents_view,
-                            bool do_capture) {
+                            bool do_capture,
+                            bool use_touchable_layout) {
   TRACE_EVENT0("views", "MenuHost::InitMenuHost");
   Widget::InitParams params(Widget::InitParams::TYPE_MENU);
   const MenuController* menu_controller =
       submenu_->GetMenuItem()->GetMenuController();
   const MenuConfig& menu_config = MenuConfig::instance();
-  bool rounded_border = menu_controller && menu_config.corner_radius > 0;
-  bool bubble_border = submenu_->GetScrollViewContainer() &&
-                       submenu_->GetScrollViewContainer()->HasBubbleBorder();
+  bool rounded_border = (menu_controller && menu_config.corner_radius > 0) ||
+                        use_touchable_layout;
+  bool bubble_border =
+      (submenu_->GetScrollViewContainer() &&
+       submenu_->GetScrollViewContainer()->HasBubbleBorder()) ||
+      use_touchable_layout;
   params.shadow_type = bubble_border ? Widget::InitParams::SHADOW_TYPE_NONE
                                      : Widget::InitParams::SHADOW_TYPE_DROP;
   params.opacity = (bubble_border || rounded_border) ?

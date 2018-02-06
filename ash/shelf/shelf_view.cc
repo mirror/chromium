@@ -1904,6 +1904,9 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
     run_types |=
         views::MenuRunner::CONTEXT_MENU | views::MenuRunner::FIXED_ANCHOR;
 
+  // if istcme
+  run_types |= views::MenuRunner::USE_TOUCHABLE_LAYOUT;
+
   // Only selected shelf items with context menu opened can be dragged.
   const ShelfItem* item = ShelfItemForView(source);
   if (context_menu && item && ShelfButtonIsInDrag(item->type, source) &&
@@ -1952,6 +1955,12 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
     else
       menu_alignment = views::MENU_ANCHOR_FIXED_SIDECENTER;
   }
+
+  ////
+  // temp for touchable.
+  menu_alignment = views::MENU_ANCHOR_BUBBLE_ABOVE;
+
+  ////
 
   // NOTE: if you convert to HAS_MNEMONICS be sure to update menu building code.
   launcher_menu_runner_->RunMenuAt(GetWidget(), nullptr, anchor, menu_alignment,

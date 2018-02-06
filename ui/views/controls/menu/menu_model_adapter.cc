@@ -13,15 +13,19 @@
 namespace views {
 
 MenuModelAdapter::MenuModelAdapter(ui::MenuModel* menu_model)
-    : MenuModelAdapter(menu_model, base::Closure() /*null callback*/) {}
+    : MenuModelAdapter(menu_model, base::Closure() /*null callback*/) {
+  LOG(ERROR) << "MenuModelAdapter -- constructing";
+}
 
 MenuModelAdapter::MenuModelAdapter(ui::MenuModel* menu_model,
-                                   const base::Closure& on_menu_closed_callback)
+                                   const base::Closure& on_menu_closed_callback,
+                                   const int run_types)
     : menu_model_(menu_model),
       triggerable_event_flags_(ui::EF_LEFT_MOUSE_BUTTON |
                                ui::EF_RIGHT_MOUSE_BUTTON),
       on_menu_closed_callback_(on_menu_closed_callback) {
   DCHECK(menu_model);
+  LOG(ERROR) << "MenuModelAdapter -- constructing";
 }
 
 MenuModelAdapter::~MenuModelAdapter() {
@@ -29,6 +33,8 @@ MenuModelAdapter::~MenuModelAdapter() {
 
 void MenuModelAdapter::BuildMenu(MenuItemView* menu) {
   DCHECK(menu);
+
+  LOG(ERROR) << "MenuModelAdapter -- Building Menu.";
 
   // Clear the menu.
   if (menu->HasSubmenu()) {
@@ -49,8 +55,13 @@ void MenuModelAdapter::BuildMenu(MenuItemView* menu) {
   menu->ChildrenChanged();
 }
 
-MenuItemView* MenuModelAdapter::CreateMenu() {
-  MenuItemView* item = new MenuItemView(this);
+MenuItemView* MenuModelAdapter::CreateMenu(bool use_touchable_layout) {
+  MenuItemView* item = new MenuItemView(this, use_touchable_layout);
+  // if ()
+
+  // todo:
+  // Find a cleaner way to propogate the bool.
+
   BuildMenu(item);
   return item;
 }
