@@ -3978,6 +3978,51 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, PasswordProtectionRiskTrigger) {
                 prefs::kPasswordProtectionRiskTrigger));
 }
 
+// Test that when password protection email domains are set by policy, chrome
+// password protection service gets the correct value.
+IN_PROC_BROWSER_TEST_F(PolicyTest, PasswordProtectionEmailDomains) {
+  // Without setting up the enterprise policy,
+  // |GetPasswordProtectionEmailDomainsPref(..) should return empty list.
+  const PrefService* const prefs = browser()->profile()->GetPrefs();
+  const safe_browsing::ChromePasswordProtectionService* const service =
+      safe_browsing::ChromePasswordProtectionService::
+          GetPasswordProtectionService(browser()->profile());
+  EXPECT_FALSE(prefs->FindPreference(prefs::kPasswordProtectionEmailDomains)
+                   ->IsManaged());
+  std::vector<std::string> canonicalized_email_domains;
+  service->GetPasswordProtectionEmailDomainsPref(&canonicalized_email_domains);
+  EXPECT_TRUE(canonicalized_email_domains.empty());
+
+  // Sets the enterprise policy to 1 (a.k.a PASSWORD_REUSE).
+  PolicyMap policies;
+  base::ListValue email_domains;
+  email_domains.AppendString("mydomain.com");
+  email_domains.AppendString("mydomain.net");
+  policies.Set(key::kPasswordProtectionEmailDomains, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               email_domains.CreateDeepCopy(), nullptr);
+  UpdateProviderPolicy(policies);
+  EXPECT_TRUE(prefs->FindPreference(prefs::kPasswordProtectionEmailDomains)
+                  ->IsManaged());
+  service->GetPasswordProtectionEmailDomainsPref(&canonicalized_email_domains);
+  EXPECT_EQ(2u, canonicalized_email_domains.size());
+  EXPECT_EQ("mydomain.com", canonicalized_email_domains[0]);
+  EXPECT_EQ("mydomain.net", canonicalized_email_domains[1]);
+
+  // Invalid domains will be skipped.
+  email_domains.Clear();
+  email_domains.AppendString(std::string("%EF%BF%BDzyx.com"));
+  policies.Set(key::kPasswordProtectionEmailDomains, POLICY_LEVEL_MANDATORY,
+               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+               email_domains.CreateDeepCopy(), nullptr);
+  UpdateProviderPolicy(policies);
+  EXPECT_TRUE(prefs->FindPreference(prefs::kPasswordProtectionEmailDomains)
+                  ->IsManaged());
+  canonicalized_email_domains.clear();
+  service->GetPasswordProtectionEmailDomainsPref(&canonicalized_email_domains);
+  EXPECT_TRUE(canonicalized_email_domains.empty());
+}
+
 // Sets the proper policy before the browser is started.
 template<bool enable>
 class MediaRouterPolicyTest : public PolicyTest {

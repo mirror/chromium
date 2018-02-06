@@ -829,4 +829,11 @@ ChromePasswordProtectionService::GetPasswordProtectionTriggerPref(
                            : PHISHING_REUSE;
 }
 
+void ChromePasswordProtectionService::GetPasswordProtectionEmailDomainsPref(
+    std::vector<std::string>* out_canonicalized_domain_list) const {
+  auto* pref_value =
+      profile_->GetPrefs()->GetList(prefs::kPasswordProtectionEmailDomains);
+  CanonicalizeDomainList(*pref_value, out_canonicalized_domain_list);
+}
+
 }  // namespace safe_browsing

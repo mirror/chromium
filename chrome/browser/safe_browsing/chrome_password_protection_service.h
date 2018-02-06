@@ -129,6 +129,12 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   PasswordProtectionTrigger GetPasswordProtectionTriggerPref(
       const std::string& pref_name) const override;
 
+  // Returns the pref value of password protection email domains.
+  // If password protection email domains is not managed by enterprise policy,
+  // this function should return an empty list.
+  void GetPasswordProtectionEmailDomainsPref(
+      std::vector<std::string>* out_canonicalized_domain_list) const override;
+
  protected:
   // PasswordProtectionService overrides.
   // Obtains referrer chain of |event_url| and |event_tab_id| and add this
