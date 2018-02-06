@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78fdd71e_4f6f936d",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-06T17:39:03Z",
+      "side": 1,
+      "message": "nit: add a comment about \u0027false\u0027?",
+      "range": {
+        "startLine": 360,
+        "startChar": 17,
+        "endLine": 360,
+        "endChar": 22
+      },
+      "revId": "b665cf0baa3387e7efe806935c76b420110ce2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d81935_899bc0a8",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2018-02-06T17:39:03Z",
+      "side": 1,
+      "message": "nit: expected_count",
+      "revId": "b665cf0baa3387e7efe806935c76b420110ce2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
