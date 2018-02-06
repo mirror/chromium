@@ -63,6 +63,13 @@ void DownloadManagerService::OnDownloadCanceled(
     return;
   }
 
+  DownloadController::RecordDownloadCancelReason(reason);
+
+  // If user pressed cancel on the dialog, do not show error message.
+  if (reason == DownloadController::CANCEL_REASON_USER_CANCELED) {
+    return;
+  }
+
   // Inform the user in Java UI about file writing failures.
   bool has_no_external_storage =
       (reason == DownloadController::CANCEL_REASON_NO_EXTERNAL_STORAGE);
@@ -71,7 +78,6 @@ void DownloadManagerService::OnDownloadCanceled(
       ConvertUTF8ToJavaString(env, download->GetURL().ExtractFileName());
   Java_DownloadManagerService_onDownloadItemCanceled(env, jname,
                                                      has_no_external_storage);
-  DownloadController::RecordDownloadCancelReason(reason);
 }
 
 // static
