@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a17ff8b7_cdb422b4",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-06T02:56:47Z",
+      "side": 1,
+      "message": "Just a suggestion that this may be clearer:\n\nif (URL.SchemeIs(url::kMailToScheme)) {\n  if (base::FeatureList::IsEnabled(...)) {\n    ...\n  } else {\n    ...\n  }\n  return YES;\n}",
+      "range": {
+        "startLine": 206,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 38
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c16a7dd_7407f57f",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-06T02:56:47Z",
+      "side": 1,
+      "message": "A comment here for why enabled case does not need \"detail item\" would be helpful.",
+      "range": {
+        "startLine": 190,
+        "startChar": 6,
+        "endLine": 190,
+        "endChar": 63
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69869cd_a618b0bd",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-06T02:56:47Z",
+      "side": 1,
+      "message": "You probably should check provider for nil-ness.",
+      "range": {
+        "startLine": 234,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 22
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

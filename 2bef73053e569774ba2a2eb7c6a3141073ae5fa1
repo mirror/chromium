@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8d21b4a7_58b323e8",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-06T02:56:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I fully understand what you mean by \"fall back on the normal URL handling code\". However, what I meant was having 2 mutually exclusive implementations controlled by this Feature flag for at least one and may be two release. This will allow us a fallback route in case we discover GrowthKit issues post-launch.",
+      "parentUuid": "b5d9402e_d31eeff5",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 62
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f3edfc_8dc7c106",
         "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
         "patchSetId": 5
