@@ -404,4 +404,18 @@ void MojoRenderer::CancelPendingCallbacks() {
     base::ResetAndReturn(&cdm_attached_cb_).Run(false);
 }
 
+void MojoRenderer::OnSelectedVideoTrackChanged(
+    base::Optional<MediaTrack::Id> selected_track_id,
+    base::OnceClosure change_completed_cb) {
+  // TODO(tmathmeyer) potentially support track changes for mojo.
+  std::move(change_completed_cb).Run();
+}
+
+void MojoRenderer::OnSelectedAudioTracksChanged(
+    std::vector<MediaTrack::Id> enabled_tracks_ids,
+    base::OnceClosure change_completed_cb) {
+  // TODO(tmathmeyer) potentially support track changes for mojo.
+  std::move(change_completed_cb).Run();
+}
+
 }  // namespace media

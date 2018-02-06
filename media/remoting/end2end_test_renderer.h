@@ -38,6 +38,14 @@ class End2EndTestRenderer final : public Renderer {
   void SetVolume(float volume) override;
   base::TimeDelta GetMediaTime() override;
 
+  void OnSelectedVideoTrackChanged(
+      base::Optional<MediaTrack::Id> selected_track_id,
+      base::OnceClosure callback) override;
+
+  void OnSelectedAudioTracksChanged(
+      std::vector<MediaTrack::Id> enabled_track_ids,
+      base::OnceClosure callback) override;
+
  private:
   // Called to send RPC messages to |receiver_|.
   void SendMessageToSink(const std::vector<uint8_t>& message);

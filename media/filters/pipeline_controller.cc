@@ -5,6 +5,7 @@
 #include "media/filters/pipeline_controller.h"
 
 #include "base/bind.h"
+#include "media/base/bind_to_current_loop.h"
 #include "media/base/demuxer.h"
 
 namespace media {
@@ -199,6 +200,32 @@ void PipelineController::Dispatch() {
     return;
   }
 
+  // Don't allow a track switch or seek if one is already in progress.
+  if (waiting_for_track_change_) {
+    return;
+  }
+
+  // Attempt to do a track change _before_ attempting a seek operation,
+  // otherwise the seek will apply to the old tracks instead of the new one(s).
+  if (pending_track_change_) {
+    if (pending_track_change_type_ == TrackChangeType::AUDIO) {
+      pipeline_->OnEnabledAudioTracksChanged(
+          pending_audio_track_changes_,
+          BindToCurrentLoop(base::BindOnce(
+              &PipelineController::OnTrackChangeComplete,
+              weak_factory_.GetWeakPtr(), pending_track_change_type_)));
+    } else {
+      pipeline_->OnSelectedVideoTrackChanged(
+          pending_video_track_changes_,
+          BindToCurrentLoop(base::BindOnce(
+              &PipelineController::OnTrackChangeComplete,
+              weak_factory_.GetWeakPtr(), pending_track_change_type_)));
+    }
+    waiting_for_track_change_ = true;
+    pending_track_change_ = false;
+    return;
+  }
+
   // If we have pending operations, and a seek is ongoing, abort it.
   if ((pending_seek_ || pending_suspend_) && waiting_for_seek_) {
     // If there is no pending seek, return the current seek to pending status.
@@ -309,12 +336,27 @@ void PipelineController::SetCdm(CdmContext* cdm_context,
 
 void PipelineController::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& enabledTrackIds) {
-  pipeline_->OnEnabledAudioTracksChanged(enabledTrackIds);
+  DCHECK(thread_checker_.CalledOnValidThread());
+  pending_track_change_ = true;
+  pending_track_change_type_ = TrackChangeType::AUDIO;
+  pending_audio_track_changes_ = enabledTrackIds;
+
+  Dispatch();
 }
 
 void PipelineController::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> selected_track_id) {
-  pipeline_->OnSelectedVideoTrackChanged(selected_track_id);
+  DCHECK(thread_checker_.CalledOnValidThread());
+  pending_track_change_ = true;
+  pending_track_change_type_ = TrackChangeType::VIDEO;
+  pending_video_track_changes_ = selected_track_id;
+
+  Dispatch();
+}
+
+void PipelineController::OnTrackChangeComplete(TrackChangeType type) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  waiting_for_track_change_ = false;
 }
 
 }  // namespace media

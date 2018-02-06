@@ -81,6 +81,12 @@ class CourierRenderer : public Renderer {
   void SetPlaybackRate(double playback_rate) final;
   void SetVolume(float volume) final;
   base::TimeDelta GetMediaTime() final;
+  void OnSelectedVideoTrackChanged(
+      base::Optional<MediaTrack::Id> selected_track_id,
+      base::OnceClosure callback) override;
+  void OnSelectedAudioTracksChanged(
+      std::vector<MediaTrack::Id> enabled_tracks_ids,
+      base::OnceClosure callback) override;
 
  private:
   friend class CourierRendererTest;

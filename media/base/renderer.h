@@ -8,10 +8,12 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "media/base/buffering_state.h"
 #include "media/base/cdm_context.h"
 #include "media/base/media_export.h"
+#include "media/base/media_track.h"
 #include "media/base/pipeline_status.h"
 
 namespace media {
@@ -56,6 +58,14 @@ class MEDIA_EXPORT Renderer {
 
   // Returns the current media time.
   virtual base::TimeDelta GetMediaTime() = 0;
+
+  virtual void OnSelectedVideoTrackChanged(
+      base::Optional<MediaTrack::Id> selected_track_id,
+      base::OnceClosure callback) = 0;
+
+  virtual void OnSelectedAudioTracksChanged(
+      std::vector<MediaTrack::Id> enabled_track_ids,
+      base::OnceClosure callback) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Renderer);

@@ -144,13 +144,15 @@ class MEDIA_EXPORT Demuxer : public MediaResource {
 
   virtual void OnEnabledAudioTracksChanged(
       const std::vector<MediaTrack::Id>& track_ids,
-      base::TimeDelta curr_time) = 0;
+      base::TimeDelta curr_time,
+      base::OnceClosure change_completed_cb) = 0;
 
   // |track_id| either contains the selected video track id or is null,
   // indicating that all video tracks are deselected/disabled.
   virtual void OnSelectedVideoTrackChanged(
       base::Optional<MediaTrack::Id> track_id,
-      base::TimeDelta curr_time) = 0;
+      base::TimeDelta curr_time,
+      base::OnceClosure change_completed_cb) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Demuxer);

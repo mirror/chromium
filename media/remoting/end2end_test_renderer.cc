@@ -218,5 +218,13 @@ void End2EndTestRenderer::OnMessageFromSink(
   shared_session_->OnMessageFromSink(*message);
 }
 
+void End2EndTestRenderer::OnSelectedVideoTrackChanged(
+    base::Optional<MediaTrack::Id> selected_track_id,
+    base::OnceClosure callback) {}
+
+void End2EndTestRenderer::OnSelectedAudioTracksChanged(
+    std::vector<MediaTrack::Id> enabled_track_ids,
+    base::OnceClosure callback) {}
+
 }  // namespace remoting
 }  // namespace media
