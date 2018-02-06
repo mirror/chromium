@@ -113,6 +113,7 @@ const char* const kKnownSettings[] = {
     kUnaffiliatedArcAllowed,
     kUpdateDisabled,
     kVariationsRestrictParameter,
+    kVirtualMachinesAllowed,
 };
 
 void DecodeLoginPolicies(
@@ -626,6 +627,16 @@ void DecodeGenericPolicies(
         !container.device_hostname_template().empty()) {
       new_values_cache->SetString(kDeviceHostnameTemplate,
                                   container.device_hostname_template());
+    }
+  }
+
+  if (policy.has_virtual_machines_allowed()) {
+    const em::VirtualMachinesAllowedProto& container(
+        policy.virtual_machines_allowed());
+    if (container.has_virtual_machines_allowed()) {
+      new_values_cache->SetValue(
+          kVirtualMachinesAllowed,
+          std::make_unique<base::Value>(container.virtual_machines_allowed()));
     }
   }
 }
