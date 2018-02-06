@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067e53f0_3fe8aaaa",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-06T20:58:44Z",
+      "side": 1,
+      "message": "style nit: Add a newline between the using decl and the ctor decl.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "29908bd485842a0ed467d7ca043c7b652093a1a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
