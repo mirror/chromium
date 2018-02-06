@@ -88,6 +88,7 @@ jumbo_source_set("browser") {
     "//device/gamepad",
     "//device/geolocation",
     "//device/geolocation/public/cpp",
+    "//device/usb/public/mojom",
     "//device/vr/public/mojom",
     "//google_apis",
     "//gpu",
