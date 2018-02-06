@@ -20,6 +20,7 @@
 #include "net/base/proxy_server.h"
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/proxy_resolution/proxy_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -70,8 +71,8 @@ class NET_EXPORT_PRIVATE ProxyConfigServiceLinux : public ProxyConfigService {
     virtual const scoped_refptr<base::SequencedTaskRunner>&
     GetNotificationTaskRunner() = 0;
 
-    // Returns the source of proxy settings.
-    virtual ProxyConfigSource GetConfigSource() = 0;
+    // Returns the traffic annotation of proxy settings.
+    virtual NetworkTrafficAnnotationTag GetTrafficAnnotation() = 0;
 
     // These are all the values that can be fetched. We used to just use the
     // corresponding paths in gconf for these, but gconf is now obsolete and
