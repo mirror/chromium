@@ -70,6 +70,30 @@
       "revId": "00cee9b4345bd6044647cd1e00245b62693ae2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6963e935_65032068",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-02-06T22:49:34Z",
+      "side": 1,
+      "message": "That is nicer. However I still need manually reset \nthis.wasPlayStoreEnabled_ \u003d false; on navigation.\ncurrentRouteChanged is called async anyway.",
+      "parentUuid": "68df0516_11793db7",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "00cee9b4345bd6044647cd1e00245b62693ae2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
