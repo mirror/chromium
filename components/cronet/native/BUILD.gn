@@ -51,8 +51,12 @@ source_set("cronet_native_impl") {
     "buffer.cc",
     "engine.cc",
     "engine.h",
+    "io_buffer_with_cronet_buffer.cc",
+    "io_buffer_with_cronet_buffer.h",
     "runnables.cc",
     "runnables.h",
+    "url_request.cc",
+    "url_request.h",
 
     # Generated from cronet.idl.
     "generated/cronet.idl_impl_interface.cc",
@@ -67,6 +71,7 @@ source_set("cronet_native_testutil") {
   deps = [
     ":cronet_native_headers",
     "//base",
+    "//net:test_support",
   ]
 
   configs += [ ":cronet_native_include_config" ]
@@ -121,5 +126,8 @@ source_set("cronet_native_tests") {
     "buffer_test.cc",
     "engine_test.cc",
     "executors_test.cc",
+    "test_url_request_callback.cc",
+    "test_url_request_callback.h",
+    "url_request_test.cc",
   ]
 }
