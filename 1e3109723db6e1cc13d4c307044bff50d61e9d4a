@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636c578d_f2c6c47c",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:16:50Z",
+      "side": 1,
+      "message": "Use StringBuilder. StringBuilder is faster to append strings.",
+      "revId": "1e3109723db6e1cc13d4c307044bff50d61e9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc20179_7535a2ea",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-06T04:16:50Z",
+      "side": 1,
+      "message": "Use StringBuilder.",
+      "revId": "1e3109723db6e1cc13d4c307044bff50d61e9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
