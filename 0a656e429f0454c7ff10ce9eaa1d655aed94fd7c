@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed699902_fae4f076",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000768
+      },
+      "writtenOn": "2018-02-06T19:53:53Z",
+      "side": 1,
+      "message": "you should fix your .git/config or ~/.gitconfig settings so user.name is set properly",
+      "revId": "0a656e429f0454c7ff10ce9eaa1d655aed94fd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
