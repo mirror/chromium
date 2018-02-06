@@ -2417,6 +2417,8 @@ void Document::UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(Node* node) {
   DCHECK(node);
   if (!node->InActiveDocument())
     return;
+  if (Lifecycle().LifecyclePostponed())
+    return;
   UpdateStyleAndLayoutIgnorePendingStylesheets();
 }
 

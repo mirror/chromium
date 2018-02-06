@@ -1899,6 +1899,7 @@ jumbo_source_set("unit_tests") {
     "input/ScrollSnapTest.cpp",
     "input/TouchActionTest.cpp",
     "input/TouchEventManagerTest.cpp",
+    "inspector/MainThreadDebuggerTest.cpp",
     "inspector/ProtocolParserTest.cpp",
     "intersection_observer/IntersectionObserverTest.cpp",
     "layout/CollapsedBorderValueTest.cpp",
