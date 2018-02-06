@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0faf4ce_76053aea",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t use `auto` here as it\u0027s not obvious which type GetTokenInvalidationInternal() returns when reading the code.",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3fb194_20f7db1a",
+        "filename": "components/gcm_driver/gcm_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "A value of zero would disable the feature, so we can simplify this check to:\n\n    if (!token_invalidation_period.is_zero()) { .. }\n\n(Right now it\u0027d be impossible to use the default invalidation period.)",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c05b5b_c0459342",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "nit: consistency (either use constexpr everywhere, or nowhere)",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea0932d_5f64a5e3",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "micro nit: std::move(params)\n\nRight now we\u0027re making a copy of |params| just to call |SetFeatureParams|. Since we\u0027re not using |params| anymore after this call, we can just pass ownership.",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72ce266_ae4e7acd",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "nit: like some of the other set-up steps, I\u0027d factor this out to InitializeInvalidationFieldTrail() and call it from here.",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff8c9f5_56810e9e",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "When using ASSERT_* in a method that\u0027s being called either by SetUp() or a test, GTest requires you to call it as follows:\n\nASSERT_NO_FATAL_FAILURE(SetFeatureParams(...));",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff31b41_accc8896",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "style: actualParams -\u003e actual_params",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b5c519_b4057ddd",
+        "filename": "components/gcm_driver/gcm_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T18:51:32Z",
+      "side": 1,
+      "message": "The reason that this is failing is that CompleteRegistration() assumes that we\u0027re hitting the server: it finds the request issued by the GCM Client (by getting the URL Fetcher) and responds to it in a certain way. However, because the token is fresh, we\u0027re *not* hitting the server, so there is no URL Fetcher.\n\nInstead, what I would suggest doing is this:\n\n  1) Clear |reset_last_event()| to make sure the |last_*()| methods are cleared.\n  2) Call Register(...) exactly like you do on line 948.\n  3) Instead of CompleteRegistration(), just make the following call:\n\n     PumpLoopUntilIdle();\n\n... and then leave the EXPECT_*s on lines 951-955 as they are.\n\nThen we actually verify that we don\u0027t hit the server. Because if we do, the URL Fetcher will time out, which won\u0027t yield GCMClient::SUCCESS as |last_result()|.",
+      "revId": "022ae0c98095c0fb9a9e61a4bae5fd6b480a3ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
