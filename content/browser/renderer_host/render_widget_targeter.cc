@@ -15,15 +15,6 @@ namespace content {
 
 namespace {
 
-bool MergeEventIfPossible(const blink::WebInputEvent& event,
-                          ui::WebScopedInputEvent* blink_event) {
-  if (ui::CanCoalesce(event, **blink_event)) {
-    ui::Coalesce(event, blink_event->get());
-    return true;
-  }
-  return false;
-}
-
 gfx::PointF ComputeEventLocation(const blink::WebInputEvent& event) {
   if (blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
       event.GetType() == blink::WebInputEvent::kMouseWheel) {
@@ -124,11 +115,6 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
                blink::WebGestureDevice::kWebGestureDeviceTouchpad)));
 
   if (request_in_flight_) {
-    if (!requests_.empty()) {
-      auto& request = requests_.back();
-      if (MergeEventIfPossible(event, &request.event))
-        return;
-    }
     TargetingRequest request;
     request.root_view = root_view->GetWeakPtr();
     request.event = ui::WebInputEventTraits::Clone(event);
