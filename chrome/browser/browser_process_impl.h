@@ -31,6 +31,7 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/network/public/interfaces/network_service.mojom.h"
+#include "ui/base/ui_features.h"
 
 class ChromeChildProcessWatcher;
 class ChromeDeviceClient;
@@ -264,7 +265,7 @@ class BrowserProcessImpl : public BrowserProcess,
       background_printing_manager_;
 #endif
 
-#if !defined(OS_ANDROID)
+#if BUILDFLAG(ENABLE_MESSAGE_CENTER)
   // Manager for desktop notification UI.
   bool created_notification_ui_manager_ = false;
   std::unique_ptr<NotificationUIManager> notification_ui_manager_;

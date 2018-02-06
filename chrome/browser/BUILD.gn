@@ -2984,6 +2984,8 @@ split_static_library("browser") {
     } else {
       sources += [ "global_keyboard_shortcuts_cocoa_mac.mm" ]
     }
+
+    sources -= [ "notifications/notification_ui_manager_desktop.cc" ]
   }
 
   if (is_linux) {

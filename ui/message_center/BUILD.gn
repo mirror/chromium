@@ -64,14 +64,6 @@ jumbo_component("message_center") {
     sources = [
       "change_queue.cc",
       "change_queue.h",
-      "cocoa/notification_controller.h",
-      "cocoa/notification_controller.mm",
-      "cocoa/opaque_views.h",
-      "cocoa/opaque_views.mm",
-      "cocoa/popup_collection.h",
-      "cocoa/popup_collection.mm",
-      "cocoa/popup_controller.h",
-      "cocoa/popup_controller.mm",
       "message_center.cc",
       "message_center.h",
       "message_center_export.h",
@@ -102,13 +94,6 @@ jumbo_component("message_center") {
       deps += [
         "//ui/aura",
         "//ui/wm/public",
-      ]
-    }
-
-    if (is_mac) {
-      libs = [
-        "AppKit.framework",
-        "Foundation.framework",
       ]
     }
 
@@ -198,9 +183,6 @@ if (enable_message_center) {
   test("message_center_unittests") {
     sources = [
       "change_queue_unittest.cc",
-      "cocoa/notification_controller_unittest.mm",
-      "cocoa/popup_collection_unittest.mm",
-      "cocoa/popup_controller_unittest.mm",
       "message_center_impl_unittest.cc",
       "notification_list_unittest.cc",
       "public/cpp/notification_delegate_unittest.cc",
