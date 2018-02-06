@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7693ef8_be199af1",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-06T18:18:42Z",
+      "side": 1,
+      "message": "Done. Also polished this test case a little more.",
+      "parentUuid": "78fdd71e_4f6f936d",
+      "range": {
+        "startLine": 360,
+        "startChar": 17,
+        "endLine": 360,
+        "endChar": 22
+      },
+      "revId": "b665cf0baa3387e7efe806935c76b420110ce2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d81935_899bc0a8",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "b665cf0baa3387e7efe806935c76b420110ce2d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be5324d_0ebdda1c",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-06T18:18:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d81935_899bc0a8",
+      "revId": "b665cf0baa3387e7efe806935c76b420110ce2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
