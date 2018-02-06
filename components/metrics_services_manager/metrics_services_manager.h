@@ -83,6 +83,10 @@ class MetricsServicesManager {
   // Gets the current state of metric reporting.
   bool IsMetricsReportingEnabled() const;
 
+  // Request UKM be prohibited for this browser session. Called for example by
+  // UKM setup, when service listeners could not be instantiated.
+  void PreventUKMInitializationForSession();
+
  private:
   // Update the managed services when permissions for recording/uploading
   // metrics change.
@@ -120,6 +124,9 @@ class MetricsServicesManager {
 
   // The current metrics setting reflecting if consent was given.
   bool consent_given_;
+
+  // Whether all UKM notification observers were connected successfully.
+  bool ukm_listeners_registered_;
 
   // The MetricsServiceClient. Owns the MetricsService.
   std::unique_ptr<metrics::MetricsServiceClient> metrics_service_client_;

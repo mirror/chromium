@@ -392,7 +392,7 @@ ChromeMetricsServiceClient::ChromeMetricsServiceClient(
       weak_ptr_factory_(this) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   RecordCommandLineMetrics();
-  RegisterForNotifications();
+  notification_listeners_active_ = RegisterForNotifications();
 #if defined(OS_ANDROID)
   incognito_observer_ = base::MakeUnique<AndroidIncognitoObserver>(this);
 #endif
@@ -813,7 +813,7 @@ void ChromeMetricsServiceClient::RecordCommandLineMetrics() {
                            switch_count - common_commands);
 }
 
-void ChromeMetricsServiceClient::RegisterForNotifications() {
+bool ChromeMetricsServiceClient::RegisterForNotifications() {
   registrar_.Add(this, chrome::NOTIFICATION_BROWSER_OPENED,
                  content::NotificationService::AllBrowserContextsAndSources());
   registrar_.Add(this, chrome::NOTIFICATION_BROWSER_CLOSED,
@@ -841,13 +841,18 @@ void ChromeMetricsServiceClient::RegisterForNotifications() {
                  content::NotificationService::AllBrowserContextsAndSources());
   registrar_.Add(this, chrome::NOTIFICATION_PROFILE_DESTROYED,
                  content::NotificationService::AllBrowserContextsAndSources());
+
+  bool all_profiles_succeeded = true;
   for (Profile* profile :
        g_browser_process->profile_manager()->GetLoadedProfiles()) {
-    RegisterForProfileEvents(profile);
+    if (!RegisterForProfileEvents(profile)) {
+      all_profiles_succeeded = false;
+    }
   }
+  return all_profiles_succeeded;
 }
 
-void ChromeMetricsServiceClient::RegisterForProfileEvents(Profile* profile) {
+bool ChromeMetricsServiceClient::RegisterForProfileEvents(Profile* profile) {
   // Register chrome://ukm handler
   content::URLDataSource::Add(
       profile, new ukm::debug::DebugPage(base::Bind(
@@ -857,17 +862,26 @@ void ChromeMetricsServiceClient::RegisterForProfileEvents(Profile* profile) {
   // deletion.
   if (chromeos::ProfileHelper::IsSigninProfile(profile) ||
       chromeos::ProfileHelper::IsLockScreenAppProfile(profile)) {
-    return;
+    // No listeners, but still a success case.
+    return true;
   }
 #endif
   history::HistoryService* history_service =
       HistoryServiceFactory::GetForProfile(profile,
                                            ServiceAccessType::IMPLICIT_ACCESS);
+  if (!history_service) {
+    return false;
+  }
+
   ObserveServiceForDeletions(history_service);
+
   browser_sync::ProfileSyncService* sync =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
-  if (sync)
-    ObserveServiceForSyncDisables(static_cast<syncer::SyncService*>(sync));
+  if (!sync) {
+    return false;
+  }
+  ObserveServiceForSyncDisables(static_cast<syncer::SyncService*>(sync));
+  return true;
 }
 
 void ChromeMetricsServiceClient::Observe(
@@ -893,6 +907,7 @@ void ChromeMetricsServiceClient::Observe(
       break;
 
     case chrome::NOTIFICATION_PROFILE_ADDED:
+      // BEFORE_CHECKIN(skare): handle this case.
       RegisterForProfileEvents(content::Source<Profile>(source).ptr());
       break;
     case chrome::NOTIFICATION_PROFILE_DESTROYED:
@@ -956,4 +971,9 @@ void ChromeMetricsServiceClient::SetIsProcessRunningForTesting(
 
 bool ChromeMetricsServiceClient::IsHistorySyncEnabledOnAllProfiles() {
   return SyncDisableObserver::IsHistorySyncEnabledOnAllProfiles();
+}
+
+bool ChromeMetricsServiceClient::
+    AreNotificationListenersEnabledOnAllProfiles() {
+  return notification_listeners_active_;
 }
