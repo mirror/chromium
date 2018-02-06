@@ -1129,9 +1129,11 @@ public class ContentViewCoreImpl
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && getSelectionPopupController().isActionModeValid()) {
             hidePopupsAndPreserveSelection();
-            getSelectionPopupController().showActionModeOrClearOnFailure();
+            if (mWebContents != null) {
+                getSelectionPopupController().showActionModeOrClearOnFailure();
+            }
         }
-        getTextSuggestionHost().hidePopups();
+        if (mWebContents != null) getTextSuggestionHost().hidePopups();
 
         int rotationDegrees = 0;
         switch (rotation) {
