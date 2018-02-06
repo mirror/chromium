@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "022ceee2_fdbf137b",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t the right style, I think. We only use this for trivial accessors.\n\nMaybe UpdateParentSequenceAndNonce?",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f3367e_11ffed0e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "nit: child_allocated_local_surface_id",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619f7e7d_0bf515a4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "WasResized is called in other cases too. We need to do this work in\n\nRenderWidgetHostViewAura::ResizeDueToAutoResize I think",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8018349a_394d6eef",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "GetLastChildAllocatedLocalSurfaceId?",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a94b934_6e67a196",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "nit: const viz::LocalSurfaceId\u0026",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65b4b6e_b86eda8d",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T00:07:46Z",
+      "side": 1,
+      "message": "Why would the LocalSurfaceId be invalid?",
+      "revId": "4e7f14adcdb809bcea81b04c1472b15b4291fec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749edfc1_479d762c",
         "filename": "ui/aura/local/window_port_local.cc",
         "patchSetId": 42
