@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74c36a0f_8b981ec0",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482add8f_2c257b76",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3ad1f75_6c279010",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "758848f85040edab839f59a3ed2002293b77b773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841aca55_0ae9b916",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3ad1f75_6c279010",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "68644803_b98366e9",
+        "filename": "components/offline_pages/core/move_and_add_results.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1843162a_b2583c0b",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77986a29_01709396",
         "filename": "components/offline_pages/core/offline_page_archiver.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cbf81186_2f6a091a",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77986a29_01709396",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a873d8_22284729",
         "filename": "components/offline_pages/core/offline_page_archiver.h",
         "patchSetId": 4
@@ -81,6 +153,41 @@
       "writtenOn": "2018-02-06T00:45:00Z",
       "side": 1,
       "message": "nit: sort all these",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06229b03_d88e6967",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a873d8_22284729",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77e509eb_216350a3",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "In the other changelist, you expressed a preference for a callback.  I think that the code is simpler without, but could be convinced otherwise.  Do you still want a callback passed into here, or is hardcoding the call to PublishArchiveDone ok by you?",
       "revId": "758848f85040edab839f59a3ed2002293b77b773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "cfb4ce55_f2b8cf1d",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "I think we may need to use a copy instead of a reference here because we are moving to a new thread, and I want to ensure the object remains valid for the lifetime of the callback.",
+      "parentUuid": "f4050c33_0bf39b45",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c4b9e51_52854cbf",
         "filename": "components/offline_pages/core/offline_page_archiver.h",
         "patchSetId": 4
@@ -115,6 +240,24 @@
       "writtenOn": "2018-02-06T00:45:00Z",
       "side": 1,
       "message": "nit: add \u0026",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c35bd0f_e659094b",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:01:59Z",
+      "side": 1,
+      "message": "Same here.",
+      "parentUuid": "3c4b9e51_52854cbf",
       "revId": "758848f85040edab839f59a3ed2002293b77b773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
