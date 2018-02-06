@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce31578_5fc76d05",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c12271_4167868c",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "When |registry| falls out of scope, the registration will be lost.\n\nIt also needs something to call into it, which you can get by overriding WebContentsObserver::OnInterfaceRequestFromFrame().",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3049171e_a2470587",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5308bb25_262a2199",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "You probably want to override RenderFrameObserver::OnInterfaceRequestForFrame() so you can handle interface requests.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0092228a_38d03c39",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "render_frame()-\u003eGetRemoteInterfaces()-\u003eGetInterface(\u0026phishing_detector)",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dcee63_20a74358",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_delegate_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "Does anything call this?",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dcbc02_f3038136",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "These should be gated by FULL_SAFE_BROWSING.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f09dd83_c65148db",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "SetPhishingModel is process-wide, but StartPhishingDetection is per-frame so they can\u0027t live in a single interface.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b70981_07a6c4a5",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "request_proto",
+      "range": {
+        "startLine": 83,
+        "startChar": 31,
+        "endLine": 83,
+        "endChar": 43
+      },
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2a5369_c37cd3f8",
+        "filename": "content/public/app/mojo/content_renderer_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 1,
+      "message": "This should be in the chrome layer manifest overlay. You\u0027ll also need a corresponding entry for the PhishingDetectorClient in the browser manifest overlay.",
+      "revId": "8be71fdee4d5b28abd6fe9e1e6ffda2f355e3049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

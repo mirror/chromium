@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8cce6b_3c3db0c0",
+        "filename": "chrome/browser/safe_browsing/client_side_detection_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 0,
+      "message": "This seems somewhat important to test.",
+      "revId": "3503377ca66909bdccd6a9d3c7514f2de3789452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4a5c27_d15d7af0",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-02-06T09:09:24Z",
+      "side": 0,
+      "message": "I suspect you\u0027ll need to bring something like this back once you split SetPhishingModel into its own mojo interface. In that case you could just use a StrongBinding.",
+      "revId": "3503377ca66909bdccd6a9d3c7514f2de3789452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
