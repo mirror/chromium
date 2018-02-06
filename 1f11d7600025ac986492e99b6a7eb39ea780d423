@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53574d2e_d9d506a4",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-02-06T22:14:31Z",
+      "side": 1,
+      "message": "What\u0027s the return value of browser-\u003eIsAttemptingToCloseBrowser() and web_contents-\u003eIsBeingDestroyed() when we come here? I wonder if using those would better document the intent.",
+      "revId": "1f11d7600025ac986492e99b6a7eb39ea780d423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
