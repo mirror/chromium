@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eccb62a7_0b017c5d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1333,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:00:59Z",
+      "side": 1,
+      "message": "Non-modifiable content, as used in this file, refers to content that did not come from Blink. That really means it\u0027s PDF. In which case, Print Preview does not bother generating 1-page PDFs, and just sends the source PDF directly instead.\n\nNow that I\u0027m thinking about this more, I need to check and see why this check is here, and not earlier.",
+      "parentUuid": "3b7ecb6b_0cf8c632",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b0090d_a323b1be",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "05373d5c_765f351a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35514,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95ba4056_e590edd1",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1892adb9_ae33e61c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -74,6 +110,30 @@
       "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8bbbd5_79f66904",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35517,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1892adb9_ae33e61c",
+      "range": {
+        "startLine": 35517,
+        "startChar": 61,
+        "endLine": 35517,
+        "endChar": 71
+      },
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +174,24 @@
       "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b59a41_dd693f1c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 35519,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-06T20:00:59Z",
+      "side": 1,
+      "message": "https://crrev.com/290822 removed it. That was 3 years ago. I\u0027ll update the enum here to reflect reality.",
+      "parentUuid": "d32f905d_bce1dc98",
+      "revId": "b9c3e15008101f2f5719a3b37e3d1ecd7e07d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
