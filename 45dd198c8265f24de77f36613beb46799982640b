@@ -16,6 +16,24 @@
       "revId": "45dd198c8265f24de77f36613beb46799982640b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805d6cc5_b2cbeada",
+        "filename": "base/logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-06T01:21:47Z",
+      "side": 1,
+      "message": "Without this patch a local Google Chrome build is:\n\nchrome.exe: 1,593,856\nchrome.dll: 52,259,840\nchrome_child.dll: 76,343,296\n\nand after the patch:\n\nchrome.exe: 1,593,344\nchrome.dll: 52,250,624\nchrome_child.dll: 76,200,448\n\n(Confirming how this affects the emitted instruction sequence will require some debugger-wrangling that I don\u0027t have time for right this minute. :)",
+      "parentUuid": "5f5c5f18_2f2f1033",
+      "revId": "45dd198c8265f24de77f36613beb46799982640b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
