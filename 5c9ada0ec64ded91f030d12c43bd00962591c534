@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e9ecbfbe_c87e9587",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-06T16:57:55Z",
+      "side": 1,
+      "message": "Ah, I see. The test on device should be simple. Could you add log here to see if the DCHECK failed if no policy is specified. If so, we may just remove the DCHECK here. Thanks!",
+      "parentUuid": "9d8288d0_32e10e69",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a0dfd64_fd65b46a",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
         "patchSetId": 12
