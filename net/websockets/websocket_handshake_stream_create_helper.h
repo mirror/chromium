@@ -17,6 +17,7 @@
 namespace net {
 
 class WebSocketStreamRequest;
+class SpdySession;
 class WebSocketBasicHandshakeStream;
 
 // Implementation of WebSocketHandshakeStreamBase::CreateHelper. This class is
@@ -37,10 +38,14 @@ class NET_EXPORT_PRIVATE WebSocketHandshakeStreamCreateHelper
 
   // WebSocketHandshakeStreamBase::CreateHelper methods
 
-  // Creates a WebSocketBasicHandshakeStream.
+  // Creates a WebSocketBasicHandshakeStream over an HTTP/1 connection.
   std::unique_ptr<WebSocketHandshakeStreamBase> CreateBasicStream(
       std::unique_ptr<ClientSocketHandle> connection,
       bool using_proxy) override;
+
+  // Creates a WebSocketBasicHandshakeStream over an HTTP/2 connection.
+  std::unique_ptr<WebSocketHandshakeStreamBase> CreateHttp2Stream(
+      base::WeakPtr<SpdySession> session) override;
 
   // WebSocketHandshakeStreamCreateHelper methods
 

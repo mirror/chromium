@@ -505,13 +505,13 @@ class SpdyTestUtil {
 
   void set_default_url(const GURL& url) { default_url_ = url; }
 
- private:
   // |content_length| may be NULL, in which case the content-length
   // header will be omitted.
   static SpdyHeaderBlock ConstructHeaderBlock(SpdyStringPiece method,
                                               SpdyStringPiece url,
                                               int64_t* content_length);
 
+ private:
   // Multiple SpdyFramers are required to keep track of header compression
   // state.
   // Use to serialize frames (request or response) without headers.
