@@ -17,6 +17,7 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebSelectElement.h"
 
+using autofill::FormFieldData;
 using blink::WebDocument;
 using blink::WebElement;
 using blink::WebFormControlElement;
@@ -26,6 +27,12 @@ using blink::WebLocalFrame;
 using blink::WebSelectElement;
 using blink::WebString;
 using blink::WebVector;
+
+struct AutofillFieldLabelSourceCase {
+  const char* description;
+  const char* html;
+  const FormFieldData::LabelSource label_source;
+};
 
 struct AutofillFieldUtilCase {
   const char* description;
@@ -199,8 +206,91 @@ TEST_F(FormAutofillUtilsTest, InferLabelForElementTest) {
         target.ToConst<WebFormControlElement>();
     ASSERT_FALSE(form_target.IsNull());
 
+    FormFieldData::LabelSource label_source;
     EXPECT_EQ(base::UTF8ToUTF16(test_case.expected_label),
-              autofill::form_util::InferLabelForElementForTesting(form_target,
-                                                                  stop_words));
+              autofill::form_util::InferLabelForElementForTesting(
+                  form_target, stop_words, &label_source));
+  }
+}
+
+TEST_F(FormAutofillUtilsTest, InferLabelSourceTest) {
+  const char kLabelSourceExample1[] =
+      "<div>"
+      "<div>label</div><div><input id='target'/></div>"
+      "</div>";
+  FormFieldData::LabelSource kLabelSourceExample1Expected =
+      FormFieldData::LabelSource::DIV_TABLE;
+
+  const char kLabelSourceExample2[] =
+      "<label>label</label><input id='target'/>";
+  FormFieldData::LabelSource kLabelSourceExample2Expected =
+      FormFieldData::LabelSource::LABEL_TAG;
+
+  const char kLabelSourceExample3[] =
+      "<b>l</b><strong>a</strong>bel<input id='target'/>";
+  FormFieldData::LabelSource kLabelSourceExample3Expected =
+      FormFieldData::LabelSource::COMBINED;
+
+  const char kLabelSourceExample4[] =
+      "<p><b>l</b><strong>a</strong>bel</p><input id='target'/>";
+  FormFieldData::LabelSource kLabelSourceExample4Expected =
+      FormFieldData::LabelSource::P_TAG;
+
+  const char kLabelSourceExample5[] =
+      "<input id='target' placeholder='label'/>";
+  FormFieldData::LabelSource kLabelSourceExample5Expected =
+      FormFieldData::LabelSource::PLACE_HOLDER;
+
+  const char kLabelSourceExample6[] = "<input id='target' value='label'/>";
+  FormFieldData::LabelSource kLabelSourceExample6Expected =
+      FormFieldData::LabelSource::VALUE;
+
+  const char kLabelSourceExample7[] =
+      "<li>label<div><input id='target'/></div></li>";
+  FormFieldData::LabelSource kLabelSourceExample7Expected =
+      FormFieldData::LabelSource::LI_TAG;
+
+  const char kLabelSourceExample8[] =
+      "<table><tr><td>label</td><td><input id='target'/></td></tr></table>";
+  FormFieldData::LabelSource kLabelSourceExample8Expected =
+      FormFieldData::LabelSource::TD_TAG;
+
+  const char kLabelSourceExample9[] =
+      "<dl><dt>label</dt><dd><input id='target'></dd></dl>";
+  FormFieldData::LabelSource kLabelSourceExample9Expected =
+      FormFieldData::LabelSource::DD_TAG;
+
+  const char kLabelSourceExpectedLabel[] = "label";
+
+  std::vector<base::char16> stop_words;
+  stop_words.push_back(static_cast<base::char16>('-'));
+  static const AutofillFieldLabelSourceCase test_cases[] = {
+      {"DIV_TABLE", kLabelSourceExample1, kLabelSourceExample1Expected},
+      {"LABEL_TAG", kLabelSourceExample2, kLabelSourceExample2Expected},
+      {"COMBINED", kLabelSourceExample3, kLabelSourceExample3Expected},
+      {"P_TAG", kLabelSourceExample4, kLabelSourceExample4Expected},
+      {"PLACE_HOLDER", kLabelSourceExample5, kLabelSourceExample5Expected},
+      {"VALUE", kLabelSourceExample6, kLabelSourceExample6Expected},
+      {"LI_TAG", kLabelSourceExample7, kLabelSourceExample7Expected},
+      {"TD_TAG", kLabelSourceExample8, kLabelSourceExample8Expected},
+      {"DD_TAG", kLabelSourceExample9, kLabelSourceExample9Expected},
+  };
+  for (auto test_case : test_cases) {
+    SCOPED_TRACE(test_case.description);
+    LoadHTML(test_case.html);
+    WebLocalFrame* web_frame = GetMainFrame();
+    ASSERT_NE(nullptr, web_frame);
+    WebElement target = web_frame->GetDocument().GetElementById("target");
+    ASSERT_FALSE(target.IsNull());
+    const WebFormControlElement form_target =
+        target.ToConst<WebFormControlElement>();
+    ASSERT_FALSE(form_target.IsNull());
+
+    FormFieldData::LabelSource label_source =
+        FormFieldData::LabelSource::UNKNOWN;
+    EXPECT_EQ(base::UTF8ToUTF16(kLabelSourceExpectedLabel),
+              autofill::form_util::InferLabelForElementForTesting(
+                  form_target, stop_words, &label_source));
+    EXPECT_EQ(test_case.label_source, label_source);
   }
 }
