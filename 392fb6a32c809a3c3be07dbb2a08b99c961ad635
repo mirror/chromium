@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "6677c23b_b0849857",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T17:00:34Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m having trouble understanding exactly what you mean. It seems like AddItems and PopulateMenuFromMojoMenuItems use a single SubmenuList to store all the submenu models on the top-level menu (ie. the \u0027global\u0027 ShelfContextMenuModel::submodels_ and AppListItemView::context_submenu_models_), right? And in both cases, the submenu item is added to the helper function\u0027s |model| argument (that\u0027s tree-like), via |model-\u003eAddSubMenu()|. Can you help me see what I\u0027m missing? The code looks identical, modulo the use of ShelfContextSubmenuModel, which just calls through to AddItems.\n\nIf there is a way to \u0027flatten\u0027 the shelf menu case (and eliminate ShelfContextSubmenuModel) that continue to support [nested] submenus, please do so in a new patch set; that might help me understand better. Feel free to ping me on chat if that\u0027d be easier.",
+      "parentUuid": "adb62663_0849daa3",
+      "revId": "392fb6a32c809a3c3be07dbb2a08b99c961ad635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d2987f4_a3d44ee7",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 10
