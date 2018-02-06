@@ -17,6 +17,9 @@ namespace exo {
 
 class FileHelper {
  public:
+  using GetUrlsFromPickleCallback =
+      base::Callback<void(const GURL& content_url)>;
+
   virtual ~FileHelper() {}
 
   // Returns mime type which is used for list of Uris returned by this
@@ -39,6 +42,11 @@ class FileHelper {
   virtual bool GetUrlsFromPickle(const std::string& app_id,
                                  const base::Pickle& pickle,
                                  std::vector<GURL>* out_urls) = 0;
+
+  virtual bool GetUrlFromPickleAsync(
+      const std::string& app_id,
+      const base::Pickle& pickle,
+      const base::Callback<void(const GURL& url)>& callback) = 0;
 };
 
 }  // namespace exo
