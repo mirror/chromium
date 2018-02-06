@@ -7037,7 +7037,7 @@ Element* Document::ActiveElement() const {
 }
 
 bool Document::hasFocus() const {
-  return GetPage() && GetPage()->GetFocusController().IsDocumentFocused(*this);
+  return GetPage() && GetPage()->GetFocusController().IsFocused();
 }
 
 const AtomicString& Document::BodyAttributeValue(
