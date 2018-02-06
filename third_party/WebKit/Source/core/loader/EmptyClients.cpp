@@ -144,7 +144,8 @@ NavigationPolicy EmptyLocalFrameClient::DecidePolicyForNavigation(
     bool,
     WebTriggeringEventInfo,
     HTMLFormElement*,
-    ContentSecurityPolicyDisposition) {
+    ContentSecurityPolicyDisposition,
+    network::mojom::blink::URLLoaderFactoryPtr) {
   return kNavigationPolicyIgnore;
 }
 

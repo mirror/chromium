@@ -27,6 +27,7 @@ component("cpp") {
     "simple_url_loader.cc",
     "simple_url_loader.h",
     "simple_url_loader_stream_consumer.h",
+    "url_loader_factory_mojom_traits.h",
   ]
 
   public_deps = [
