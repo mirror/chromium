@@ -16,6 +16,24 @@
       "revId": "621c505caae9f69b58bc69718296f9d2c039253c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac73c483_7a08a5dc",
+        "filename": "ash/magnifier/docked_magnifier_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-06T17:30:02Z",
+      "side": 1,
+      "message": "Noted. Thanks for explaining this. I can add you again as a reviewer when I implement this part.",
+      "parentUuid": "f09b0dde_3436eec1",
+      "revId": "621c505caae9f69b58bc69718296f9d2c039253c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
