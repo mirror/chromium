@@ -6841,7 +6841,7 @@ class RasterizeWithGpuRasterizationCreatesResources : public LayerTreeHostTest {
   DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* host_impl,
                                    LayerTreeHostImpl::FrameData* frame_data,
                                    DrawResult draw_result) override {
-    EXPECT_NE(0u, host_impl->resource_provider()->num_resources());
+    EXPECT_NE(0u, host_impl->resource_pool()->resource_count());
     EndTest();
     return draw_result;
   }
@@ -6882,7 +6882,7 @@ class GpuRasterizationRasterizesBorderTiles : public LayerTreeHostTest {
   DrawResult PrepareToDrawOnThread(LayerTreeHostImpl* host_impl,
                                    LayerTreeHostImpl::FrameData* frame_data,
                                    DrawResult draw_result) override {
-    EXPECT_EQ(15u, host_impl->resource_provider()->num_resources());
+    EXPECT_EQ(15u, host_impl->resource_pool()->resource_count());
     EndTest();
     return draw_result;
   }
