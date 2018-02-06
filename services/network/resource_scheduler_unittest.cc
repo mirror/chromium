@@ -1962,6 +1962,22 @@ TEST_F(ResourceSchedulerTest, SchedulerDisabled) {
   EXPECT_TRUE(request->started());
 }
 
+TEST_F(ResourceSchedulerTest, MultipleInstances) {
+  // In some circumstances There may exist multiple instances.
+  ResourceScheduler another_scheduler(false);
+
+  std::unique_ptr<TestRequest> high(
+      NewRequest("http://host/high", net::HIGHEST));
+  std::unique_ptr<TestRequest> low(NewRequest("http://host/req", net::LOWEST));
+
+  std::unique_ptr<TestRequest> request(
+      NewRequest("http://host/req", net::LOWEST));
+
+  // Though |another_scheduler| is disabled, this request should be throttled
+  // as it's handled by |scheduler_| which is active.
+  EXPECT_FALSE(request->started());
+}
+
 }  // unnamed namespace
 
 }  // namespace network
