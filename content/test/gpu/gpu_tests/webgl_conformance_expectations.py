@@ -477,6 +477,12 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     self.Flaky('conformance/textures/image/' +
                'tex-2d-rgb-rgb-unsigned_byte.html',
                ['linux', 'nvidia'], bug=596622)
+    self.Flaky('conformance/textures/canvas/' +
+           'tex-2d-alpha-alpha-unsigned_byte.html',
+           ['linux', 'nvidia', 'passthrough'], bug=809159)
+    self.Flaky('conformance/textures/canvas/' +
+       'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
+       ['linux', 'nvidia', 'passthrough'], bug=809159)
     self.Fail('conformance/glsl/bugs/unary-minus-operator-float-bug.html',
         ['linux', 'nvidia'], bug=672380)
 
