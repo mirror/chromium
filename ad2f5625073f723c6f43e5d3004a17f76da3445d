@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6c967c_cbb4f8aa",
+        "filename": "chrome/common/extensions/docs/examples/oauth_tutorial_complete/index.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:02:08Z",
+      "side": 1,
+      "message": "nit: indentation slightly off here",
+      "revId": "ad2f5625073f723c6f43e5d3004a17f76da3445d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c378266_96c8c1f6",
+        "filename": "chrome/common/extensions/docs/examples/oauth_tutorial_complete/oauth.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:02:08Z",
+      "side": 1,
+      "message": "nit: let\u0027s not mix var + let.  Since we use let below, let\u0027s use it here, too.",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "ad2f5625073f723c6f43e5d3004a17f76da3445d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2d1904_bd49b8e2",
+        "filename": "chrome/common/extensions/docs/examples/oauth_tutorial_complete/oauth.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-06T14:02:08Z",
+      "side": 1,
+      "message": "similar here, let\u0027s use let.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "ad2f5625073f723c6f43e5d3004a17f76da3445d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
