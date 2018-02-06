@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a755e0b0_f2f06ae8",
+        "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T04:03:42Z",
+      "side": 1,
+      "message": "nit: s/Node*/Node* const/",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "cdfef9bd527070217f0bb5147ed1031b1eba4a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc287025_2d5dc083",
+        "filename": "third_party/WebKit/Source/core/editing/finder/TextFinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-06T04:03:42Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to put this statement in else-clause since then-clause\nends with return-statement.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 3
+      },
+      "revId": "cdfef9bd527070217f0bb5147ed1031b1eba4a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
