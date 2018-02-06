@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "779ef357_da73fbd1",
+        "filename": "services/network/resource_scheduler_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1967,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-06T22:39:15Z",
+      "side": 1,
+      "message": "The case I\u0027m concerned about is multiple instances in which they are all enabled.  Basically: Is the largest throttling limit per-ResourceScheduler or global?  (I believe it should be per-ResourceScheduler).",
+      "range": {
+        "startLine": 1967,
+        "startChar": 20,
+        "endLine": 1967,
+        "endChar": 37
+      },
+      "revId": "f387a4adb36b94095e841372ca3c788b7764ec99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
