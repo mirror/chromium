@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f0485e_c5134922",
+        "filename": "build/toolchain/concurrent_links.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-06T01:35:28Z",
+      "side": 1,
+      "message": "nit: It would be good to add a comment here explaining with words what this tries to accomplish.\n\nE.g.: Increase the number of concurrent links for release bots. Debug builds make heavier use of ProGuard, and so should not be raised. Sanitizers also increase the memory overhead..\n\nBonus point if you add a comment to the previous block, saying that more symbol information makes for increased RAM requirements.\n\nDo we need both !is_debug and !is_component_build? My guess is that !is_component_build is enough.",
+      "revId": "ee2e0d8cc0cb17c7289f2fc017e3c63cc26273db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
