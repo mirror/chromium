@@ -6,6 +6,7 @@
 
 #include "ash/message_center/message_center_view.h"
 #include "base/macros.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/views/bubble/tray_bubble_view.h"
@@ -17,7 +18,12 @@ using message_center::MessageCenter;
 namespace ash {
 
 namespace {
-const int kDefaultMaxHeight = 400;
+constexpr int kDefaultMaxHeight = 400;
+
+constexpr SkColor kBackgroundColor = SkColorSetRGB(0xf0, 0xf0, 0xf2);
+constexpr float kBackgroundOpacityWithBlur = 0.8;
+constexpr float kBackgroundOpacity = 0.95;
+constexpr int kBackgroundBlurRadius = 30;
 }
 
 // ContentsView ////////////////////////////////////////////////////////////////
@@ -37,22 +43,37 @@ class ContentsView : public views::View {
 
  private:
   base::WeakPtr<MessageCenterBubble> bubble_;
+  views::View* contents_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentsView);
 };
 
 ContentsView::ContentsView(MessageCenterBubble* bubble, views::View* contents)
-    : bubble_(bubble->AsWeakPtr()) {
+    : bubble_(bubble->AsWeakPtr()), contents_(contents) {
   SetLayoutManager(std::make_unique<views::FillLayout>());
+
+  bool is_background_blur_enabled =
+      app_list::features::IsBackgroundBlurEnabled();
+
+  auto* background = new views::View;
+  background->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+  background->layer()->SetFillsBoundsOpaquely(false);
+  background->layer()->SetColor(kBackgroundColor);
+  background->layer()->SetOpacity(is_background_blur_enabled
+                                      ? kBackgroundOpacityWithBlur
+                                      : kBackgroundOpacity);
+  if (is_background_blur_enabled)
+    background->layer()->SetBackgroundBlur(kBackgroundBlurRadius);
+
+  AddChildView(background);
   AddChildView(contents);
 }
 
 ContentsView::~ContentsView() = default;
 
 int ContentsView::GetHeightForWidth(int width) const {
-  DCHECK_EQ(1, child_count());
   int contents_width = std::max(width - GetInsets().width(), 0);
-  int contents_height = child_at(0)->GetHeightForWidth(contents_width);
+  int contents_height = contents_->GetHeightForWidth(contents_width);
   return contents_height + GetInsets().height();
 }
 
