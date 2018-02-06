@@ -16,6 +16,8 @@
 #include "base/observer_list.h"
 #include "ui/base/class_property.h"
 
+#include "url/gurl.h"
+
 namespace base {
 class RefCountedMemory;
 }
@@ -73,6 +75,8 @@ class DataOffer final : public ui::PropertyHandler {
 
  private:
   DataOfferDelegate* const delegate_;
+
+  void OnContentUrlResolved(const GURL& content_url);
 
   // Map between mime type and drop data bytes.
   base::flat_map<std::string, scoped_refptr<base::RefCountedMemory>> data_;

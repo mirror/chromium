@@ -160,7 +160,27 @@ void DataOffer::SetDropData(FileHelper* file_helper,
       data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
                     RefCountedString16::TakeString(std::move(string_content)));
     }
+  } else {
+    static const char kFormatString[] = "chromium/x-file-system-files";
+    CR_DEFINE_STATIC_LOCAL(ui::Clipboard::FormatType, formatType,
+                           (ui::Clipboard::GetFormatType(kFormatString)));
+    base::Pickle pickle;
+    if (data.GetPickledData(formatType, &pickle)) {
+      file_helper->GetUrlFromPickleAsync(
+          /* app_id */ "", pickle,
+          base::Bind(&DataOffer::OnContentUrlResolved, base::Unretained(this)));
+    }
   }
+  for (const auto& pair : data_) {
+    delegate_->OnOffer(pair.first);
+  }
+}
+
+void DataOffer::OnContentUrlResolved(const GURL& content_url) {
+  base::string16 url_string = base::UTF8ToUTF16(content_url.spec());
+  LOG(ERROR) << "-------------------------OnContentUrlResolved: " << url_string;
+  data_.emplace("application/x-arc-uri-list",
+                RefCountedString16::TakeString(std::move(url_string)));
   for (const auto& pair : data_) {
     delegate_->OnOffer(pair.first);
   }
