@@ -17,6 +17,7 @@
 namespace chromeos {
 
 class ExistingUserController;
+class GaiaDialogDelegate;
 
 // A LoginDisplayHost instance that sends requests to the views-based signin
 // screen.
@@ -45,6 +46,9 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   void OnStartArcKiosk() override;
   void StartVoiceInteractionOobe() override;
   bool IsVoiceInteractionOobe() override;
+  void UpdateGaiaDialogVisibility(bool visible) override;
+  void UpdateGaiaDialogSize(int width, int height) override;
+  const user_manager::UserList GetUsers() override;
 
   // LoginScreenClient::Delegate:
   void HandleAuthenticateUser(
@@ -65,6 +69,12 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   void OnAuthFailure(const AuthFailure& error) override;
   void OnAuthSuccess(const UserContext& user_context) override;
 
+  // Called when the gaia dialog is destroyed.
+  void OnDialogDestroyed(const GaiaDialogDelegate* dialog);
+
+  // Set the users in the views login screen.
+  void SetUsers(const user_manager::UserList& users);
+
  private:
   // Callback that should be executed the authentication result is available.
   AuthenticateUserCallback on_authenticated_;
@@ -73,6 +83,12 @@ class LoginDisplayHostViews : public LoginDisplayHost,
 
   // Called after host deletion.
   std::vector<base::OnceClosure> completion_callbacks_;
+  GaiaDialogDelegate* dialog_ = nullptr;
+  std::unique_ptr<WizardController> wizard_controller_;
+
+  // Users that are visible in the views login screen.
+  // TODO(crbug.com/808277): consider remove user case.
+  user_manager::UserList users_;
 
   base::WeakPtrFactory<LoginDisplayHostViews> weak_factory_;
 
