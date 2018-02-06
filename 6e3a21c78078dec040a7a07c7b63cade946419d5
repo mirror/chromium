@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76b832b3_dfb4d4f9",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T23:20:27Z",
+      "side": 1,
+      "message": "I would still like this to call OnWidgetVisibilityChanged or have them both directly delegate to one method.",
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413ce1fe_3a2d5cb2",
+        "filename": "ui/views/widget/widget_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T23:20:27Z",
+      "side": 1,
+      "message": "Remove parenthetical. \"Called when this is added [etc]\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0afb1ed_eaab7a88",
+        "filename": "ui/views/widget/widget_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-06T23:20:27Z",
+      "side": 1,
+      "message": "Remove this line, if possible.",
+      "revId": "6e3a21c78078dec040a7a07c7b63cade946419d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
