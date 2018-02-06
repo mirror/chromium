@@ -256,6 +256,7 @@ void MirrorWindowController::UpdateWindow(
                        [iter](const display::ManagedDisplayInfo& info) {
                          return info.id() == iter->first;
                        }) == display_info_list.end()) {
+        LOG(ERROR) << "MSW UPDATE WINDOW"; 
         CloseAndDeleteHost(iter->second, true);
         iter = mirroring_host_info_map_.erase(iter);
       } else {
@@ -305,12 +306,14 @@ void MirrorWindowController::CloseIfNotNecessary() {
 }
 
 void MirrorWindowController::Close(bool delay_host_deletion) {
+  LOG(ERROR) << "MSW MirrorWindowController::Close A";
   if (reflector_) {
+    for (auto& info : mirroring_host_info_map_)
+      reflector_->RemoveMirroringLayer(info.second->mirror_window->layer());
     aura::Env::GetInstance()->context_factory_private()->RemoveReflector(
         reflector_.get());
     reflector_.reset();
   }
-
   for (auto& info : mirroring_host_info_map_)
     CloseAndDeleteHost(info.second, delay_host_deletion);
   mirroring_host_info_map_.clear();
@@ -416,12 +419,11 @@ void MirrorWindowController::CloseAndDeleteHost(MirroringHostInfo* host_info,
   host_info->ash_host->PrepareForShutdown();
   // TODO: |reflector_| should always be non-null here, but isn't in MUS yet
   // because of http://crbug.com/601869.
-  if (reflector_ && host_info->mirror_window->layer()->GetCompositor())
+  if (reflector_ && host_info->mirror_window->layer())
     reflector_->RemoveMirroringLayer(host_info->mirror_window->layer());
 
-  // EventProcessor may be accessed after this call if the mirroring window
-  // was deleted as a result of input event (e.g. shortcut), so don't delete
-  // now.
+  // EventProcessor may be accessed after this call if the mirroring window was
+  // deleted as a result of input event (e.g. shortcut), so don't delete now.
   if (delay_host_deletion)
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, host_info);
   else
