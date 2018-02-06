@@ -117,7 +117,18 @@ ServiceWorkerDispatcher::GetOrCreateServiceWorker(
     return found->second;
 
   // WebServiceWorkerImpl constructor calls AddServiceWorker.
-  return new WebServiceWorkerImpl(std::move(info), thread_safe_sender_.get());
+  if (WorkerThread::GetCurrentId()) {
+    DCHECK(io_thread_task_runner_);
+    return WebServiceWorkerImpl::CreateForServiceWorkerGlobalScope(
+        std::move(info), thread_safe_sender_.get(), io_thread_task_runner_);
+  }
+  return WebServiceWorkerImpl::CreateForServiceWorkerClient(
+      std::move(info), thread_safe_sender_.get());
+}
+
+void ServiceWorkerDispatcher::SetIOThreadTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner) {
+  io_thread_task_runner_ = std::move(io_thread_task_runner);
 }
 
 void ServiceWorkerDispatcher::OnServiceWorkerStateChanged(
