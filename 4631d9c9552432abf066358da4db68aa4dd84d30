@@ -176,6 +176,30 @@
       "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea843595_a5bef3d1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-06T20:08:41Z",
+      "side": 1,
+      "message": "Ohh I understand, sorry, I missed the default_for_enterprise_users addition.\n\nUnfortunately, IIUC default_for_enterprise_users works with user policy only and it\u0027s a noop for device policies like this one. Instead of that, I think what you want to do is to explicitly set the default based on an IsEnterpriseManaged check in device_settings_provider.cc, see this as an example:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/settings/device_settings_provider.cc?rcl\u003dcbd36495fc5ac6c3fc7eb59fa2eb667358336ced\u0026l\u003d484\nAlternatively, you could do the IsEnterpriseManaged check in virtual_machines_util.cc.\nAlso, please describe in the policy description that unmanaged users will be able to use VMs, but managed users will default to False if the policy is not set.\n\n\nDetails about default_for_enterprise_users:\ndefault_for_enterprise_users is used by the generate_policy_source.py script[1] to generate the SetEnterpriseUsersDefault[2] function. This function sets the defaults on a PolicyMap instance, but it\u0027s only called for user policy.\nI\u0027ve filed crbug.com/809653 for me to add a PRESUBMIT hook which would warn about this usage.\n\n[1] https://cs.chromium.org/chromium/src/components/policy/tools/generate_policy_source.py\n[2] https://cs.chromium.org/chromium/src/out/Debug/gen/components/policy/policy_constants.cc?rcl\u003d95f527753193a3ffafdd3bffeb3251ddd121eeea\u0026l\u003d978",
+      "parentUuid": "24d2e069_9fcbdb77",
+      "range": {
+        "startLine": 11149,
+        "startChar": 6,
+        "endLine": 11149,
+        "endChar": 112
+      },
+      "revId": "4631d9c9552432abf066358da4db68aa4dd84d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
