@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3708d5b_81562c76",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "Per discussion, proposed plan:\n- Remove the base::FilePaht interface.\n- Add base::File interface.\n- Make callers (MainGen() in zucchini_commands.cc and Apply() in zucchini_integration.cc) to manually open files, and do error checking.\n- Still have this class handle auto-delete, with Keep().\n- Store error message in status_ variable with status() accessor.\n- Let caller extract \u0026 print error message (with filename, which it has).",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 66
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595c72cf_7d049f37",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "See if base::File\u0026\u0026 would work here and throughout?",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 38
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71020aaa_f96fef4f",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "This can be in namespace {}.\n\nProposal:\n- Rename to ApplyCommon()?\n- Make this take 3 base::File.\n- Instantiate MappedFileReader inside.\n- Take extra |std::map\u003cstd::string, std::string\u003e names| param to store file names (as string) for error message, e.g. names[\"old\"], names[\"new\"], names[\"patch\"] storing stuff (or dummy).",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0727f383_9877f1d4",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "Proposal:\n- Open all files here, handle some open error.\n- Convert paths to strings, pass as param |name| to ApplyCommon().",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 52
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7a10a4_7278fed3",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "Proposal:\n- Make this thin wrapper of ApplyCommon(), passing dummy |name|.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f20fde7_3a26a661",
+        "filename": "chrome/installer/zucchini/zucchini_integration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-06T21:38:00Z",
+      "side": 1,
+      "message": "Make this come first (also in the .cc file), since it seems more low-level?  Also, add matching comments.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "a93c2a26a234e8445e5956e335282130da93be3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
