@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcbb18fa_209d6e12",
+        "filename": "content/public/browser/video_capture_device_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-06T00:21:56Z",
+      "side": 1,
+      "message": "It seems this is new compared to the old interface, but I don\u0027t see anyone calling this outside of content/ (or at all).  Does it need to be in the public interface?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
