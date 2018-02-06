@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/layout_constants.h"
@@ -16,7 +17,9 @@
 #include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "third_party/skia/include/pathops/SkPathOps.h"
 #include "ui/base/default_theme_provider.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/color_utils.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/views/widget/widget.h"
 
@@ -76,8 +79,9 @@ int NewTabButton::GetTopOffset() {
   // The vertical distance between the bottom of the new tab button and the
   // bottom of the tabstrip.
   const int kNewTabButtonBottomOffset = 4;
+  // Only interested in height.
   return Tab::GetMinimumInactiveSize().height() - kNewTabButtonBottomOffset -
-         GetLayoutSize(NEW_TAB_BUTTON).height();
+         GetLayoutSize(NEW_TAB_BUTTON, false).height();
 }
 
 // static
@@ -137,29 +141,47 @@ void NewTabButton::OnGestureEvent(ui::GestureEvent* event) {
 
 void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   gfx::ScopedCanvas scoped_canvas(canvas);
-  const int visible_height = GetLayoutSize(NEW_TAB_BUTTON).height();
+  const int visible_height =
+      GetLayoutSize(NEW_TAB_BUTTON, tab_strip_->IsIncognito()).height();
+  const float scale = canvas->image_scale();
   canvas->Translate(gfx::Vector2d(0, height() - visible_height));
 
   const bool pressed = state() == views::Button::STATE_PRESSED;
-  const float scale = canvas->image_scale();
 
   // Fill.
   SkPath fill;
-  const float fill_bottom = (visible_height - 2) * scale;
-  const float diag_height = fill_bottom - 3.5 * scale;
-  const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
-  fill.moveTo(diag_width + 4 * scale, fill_bottom);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                -1.5 * scale);
-  fill.rLineTo(-diag_width, -diag_height);
-  fill.rCubicTo(0, -0.5 * scale, 0.25 * scale, -scale, scale, -scale);
-  fill.lineTo((width() - 4) * scale - diag_width, scale);
-  fill.rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
-                1.5 * scale);
-  fill.rLineTo(diag_width, diag_height);
-  fill.rCubicTo(0, 0.5 * scale, -0.25 * scale, scale, -scale, scale);
-  fill.close();
+  if (ui::MaterialDesignController::IsTouchOptimizedUiEnabled()) {
+    fill.addCircle(12 * scale, 12 * scale, 11 * scale);
+    fill.close();
+  } else {
+    const float fill_bottom = (visible_height - 2) * scale;
+    const float diag_height = fill_bottom - 3.5 * scale;
+    const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
+    fill.moveTo(diag_width + 4 * scale, fill_bottom);
+    fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
+                  -1.5 * scale);
+    fill.rLineTo(-diag_width, -diag_height);
+    fill.rCubicTo(0, -0.5 * scale, 0.25 * scale, -scale, scale, -scale);
+    fill.lineTo((width() - 4) * scale - diag_width, scale);
+    fill.rCubicTo(0.75 * scale, 0, 1.625 * scale, 0.5 * scale, 2 * scale,
+                  1.5 * scale);
+    fill.rLineTo(diag_width, diag_height);
+    fill.rCubicTo(0, 0.5 * scale, -0.25 * scale, scale, -scale, scale);
+    fill.close();
+  }
+
   PaintFill(pressed, scale, fill, canvas);
+
+  // Icons
+  if (ui::MaterialDesignController::IsTouchOptimizedUiEnabled()) {
+    canvas->UndoDeviceScaleFactor();
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    const gfx::ImageSkia plus_icon =
+        gfx::CreateVectorIcon(kNewTabButtonPlusIcon, SK_ColorBLACK);
+    int x_y = 12 * scale - (plus_icon.width() / 2) * scale;
+    canvas->DrawImageInt(plus_icon, x_y, x_y, flags);
+  }
 
   // Stroke.
   canvas->UndoDeviceScaleFactor();
@@ -234,9 +256,18 @@ void NewTabButton::GetBorderPath(float button_y,
                                  float scale,
                                  bool extend_to_top,
                                  SkPath* path) const {
+  if (ui::MaterialDesignController::IsTouchOptimizedUiEnabled()) {
+    const float center_y = button_y + 12 * scale;
+    const float center_x = 12 * scale;
+    path->addCircle(center_x, center_y, 12 * scale);
+    path->close();
+    return;
+  }
+
   const float inverse_slope = Tab::GetInverseDiagonalSlope();
   const float fill_bottom =
-      (GetLayoutSize(NEW_TAB_BUTTON).height() - 2) * scale;
+      (GetLayoutSize(NEW_TAB_BUTTON, tab_strip_->IsIncognito()).height() - 2) *
+      scale;
   const float stroke_bottom = button_y + fill_bottom + 1;
   const float diag_height = fill_bottom - 3.5 * scale;
   const float diag_width = diag_height * inverse_slope;
@@ -294,7 +325,8 @@ void NewTabButton::PaintFill(bool pressed,
       // background should never be mirrored. Mirror it here to compensate.
       float x_scale = 1.0f;
       int x = GetMirroredX() + background_offset_.x();
-      const gfx::Size size(GetLayoutSize(NEW_TAB_BUTTON));
+      const gfx::Size size(
+          GetLayoutSize(NEW_TAB_BUTTON, tab_strip_->IsIncognito()));
       if (base::i18n::IsRTL()) {
         x_scale = -1.0f;
         // Offset by |width| such that the same region is painted as if there
@@ -311,9 +343,12 @@ void NewTabButton::PaintFill(bool pressed,
           new_tab_promo_observer_.IsObservingSources()
               ? GetNativeTheme()->GetSystemColor(
                     ui::NativeTheme::kColorId_ProminentButtonColor)
-              : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB);
+              : ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+                    ? SkColorSetRGB(0xFD, 0xFE, 0xFF)
+                    : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB);
       flags.setColor(color);
     }
+
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha =
         static_cast<SkAlpha>(std::round(SkColorGetA(stroke_color) * 0.59375f));
@@ -327,7 +362,11 @@ void NewTabButton::PaintFill(bool pressed,
   const SkAlpha hover_alpha =
       static_cast<SkAlpha>(hover_animation().CurrentValueBetween(0x00, 0x4D));
   if (hover_alpha != SK_AlphaTRANSPARENT) {
-    flags.setColor(SkColorSetA(SK_ColorWHITE, hover_alpha));
+    flags.setColor(
+        SkColorSetA(ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+                        ? SK_ColorGRAY
+                        : SK_ColorWHITE,
+                    hover_alpha));
     canvas->DrawPath(fill, flags);
   }
 

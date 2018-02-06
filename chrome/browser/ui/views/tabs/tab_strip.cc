@@ -116,8 +116,8 @@ const int kPinnedToNonPinnedOffset = 3;
 #endif
 
 // Returns the width needed for the new tab button (and padding).
-int GetNewTabButtonWidth() {
-  return GetLayoutSize(NEW_TAB_BUTTON).width() -
+int GetNewTabButtonWidth(bool is_incognito) {
+  return GetLayoutSize(NEW_TAB_BUTTON, is_incognito).width() -
          GetLayoutConstant(TABSTRIP_NEW_TAB_BUTTON_OVERLAP);
 }
 
@@ -370,6 +370,10 @@ bool TabStrip::TabHasNetworkError(int tab_index) const {
 
 TabAlertState TabStrip::GetTabAlertState(int tab_index) const {
   return tab_at(tab_index)->data().alert_state;
+}
+
+bool TabStrip::IsIncognito() const {
+  return controller_->IsIncognito();
 }
 
 void TabStrip::UpdateLoadingAnimations() {
@@ -1200,7 +1204,7 @@ gfx::Size TabStrip::CalculatePreferredSize() const {
     needed_tab_width = std::min(std::max(needed_tab_width, min_selected_width),
                                 largest_min_tab_width);
   }
-  return gfx::Size(needed_tab_width + GetNewTabButtonWidth(),
+  return gfx::Size(needed_tab_width + GetNewTabButtonWidth(IsIncognito()),
                    Tab::GetMinimumInactiveSize().height());
 }
 
@@ -1308,7 +1312,7 @@ void TabStrip::Init() {
   // So we get enter/exit on children to switch stacked layout on and off.
   set_notify_enter_exit_on_child(true);
 
-  new_tab_button_bounds_.set_size(GetLayoutSize(NEW_TAB_BUTTON));
+  new_tab_button_bounds_.set_size(GetLayoutSize(NEW_TAB_BUTTON, IsIncognito()));
   new_tab_button_bounds_.Inset(0, 0, 0, -NewTabButton::GetTopOffset());
   new_tab_button_ = new NewTabButton(this, this);
   new_tab_button_->SetTooltipText(
@@ -2145,7 +2149,7 @@ int TabStrip::GenerateIdealBoundsForPinnedTabs(int* first_non_pinned_index) {
 }
 
 int TabStrip::GetTabAreaWidth() const {
-  return width() - GetNewTabButtonWidth();
+  return width() - GetNewTabButtonWidth(IsIncognito());
 }
 
 void TabStrip::StartResizeLayoutAnimation() {
