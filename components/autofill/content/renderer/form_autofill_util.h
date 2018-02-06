@@ -285,7 +285,8 @@ base::string16 FindChildTextWithIgnoreListForTesting(
     const std::set<blink::WebNode>& divs_to_skip);
 base::string16 InferLabelForElementForTesting(
     const blink::WebFormControlElement& element,
-    const std::vector<base::char16>& stop_words);
+    const std::vector<base::char16>& stop_words,
+    FormFieldData::LabelSource* label_source);
 
 }  // namespace form_util
 }  // namespace autofill
