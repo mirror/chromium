@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbe8a3d_95f07a1c",
+        "filename": "components/safe_browsing/android/safe_browsing_api_handler_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-06T09:31:08Z",
+      "side": 1,
+      "message": "Prefered paradigm is to take SafeBrowsingApiHandler::URLCheckCallbackMeta callback by value and use base::Passed(\u0026callback) here (Callback is a moveable type -- and OnceCallback is move-only so you can\u0027t accidently copy it anyways)\n\nAvoids unnecessarily using the heap.\n\n(and base::Passed() is prefered to std::move() for Bind by some -- I don\u0027t feel strongly).",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "47ee2b19edebc6e061841b03c9a16b64af83585f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
