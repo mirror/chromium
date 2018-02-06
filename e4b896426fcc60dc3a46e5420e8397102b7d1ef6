@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb03955e_b09fe687",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-06T15:50:09Z",
+      "side": 1,
+      "message": "We can avoid the allocation by writing this like:\n\n    return notification_id.length() \u003e 0 \u0026\u0026\n           notification_id.front() \u003d\u003d kPersistentNotificationPrefix;\n\n(Same on line 34.)",
+      "revId": "e4b896426fcc60dc3a46e5420e8397102b7d1ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
