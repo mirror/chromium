@@ -331,7 +331,6 @@ void QuicTestClient::SendRequestsAndWaitForResponses(
   }
   while (client()->WaitForEvents()) {
   }
-  return;
 }
 
 ssize_t QuicTestClient::GetOrCreateStreamAndSendRequest(
