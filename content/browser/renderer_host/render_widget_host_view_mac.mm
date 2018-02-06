@@ -1103,7 +1103,7 @@ void RenderWidgetHostViewMac::DidNavigate() {
 }
 
 gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
-  return browser_compositor_->DelegatedFrameHostDesiredSizeInDIP();
+  return browser_compositor_->GetRendererSize();
 }
 
 bool RenderWidgetHostViewMac::SupportsSpeech() const {
@@ -1530,8 +1530,7 @@ RenderWidgetHostImpl* RenderWidgetHostViewMac::GetRenderWidgetHostImpl() const {
 }
 
 viz::LocalSurfaceId RenderWidgetHostViewMac::GetLocalSurfaceId() const {
-  // Call to the DelegatedFrameHost interface.
-  return browser_compositor_->GetLocalSurfaceId();
+  return browser_compositor_->GetRendererLocalSurfaceId();
 }
 
 viz::FrameSinkId RenderWidgetHostViewMac::GetFrameSinkId() {
