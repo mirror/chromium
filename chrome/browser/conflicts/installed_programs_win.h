@@ -91,7 +91,7 @@ class InstalledPrograms {
   };
 
   InstalledPrograms();
-  ~InstalledPrograms();
+  virtual ~InstalledPrograms();
 
   // Initializes this class on a background sequence.
   void Initialize(base::OnceClosure on_initialized_callback);
