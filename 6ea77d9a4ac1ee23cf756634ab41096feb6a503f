@@ -22,6 +22,30 @@
       "revId": "6ea77d9a4ac1ee23cf756634ab41096feb6a503f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904692c2_1c72e7b7",
+        "filename": "ios/web/web_state/navigation_and_load_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-02-06T15:51:20Z",
+      "side": 1,
+      "message": "Good point. Every DidStartNavigation should be paired with DidFinishNavigation. Filed a bug and added TODO.",
+      "parentUuid": "6a006548_df2cca17",
+      "range": {
+        "startLine": 1028,
+        "startChar": 43,
+        "endLine": 1028,
+        "endChar": 0
+      },
+      "revId": "6ea77d9a4ac1ee23cf756634ab41096feb6a503f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
