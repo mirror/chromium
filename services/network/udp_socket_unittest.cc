@@ -83,6 +83,7 @@ class SocketWrapperTestImpl : public UDPSocket::SocketWrapper {
     NOTREACHED();
     return net::ERR_NOT_IMPLEMENTED;
   }
+  void Close() override { NOTREACHED(); }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SocketWrapperTestImpl);
