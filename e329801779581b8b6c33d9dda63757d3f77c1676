@@ -33,6 +33,24 @@
       "revId": "e329801779581b8b6c33d9dda63757d3f77c1676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a904dfc5_264f39d1",
+        "filename": "chrome/browser/ui/views/proximity_auth/proximity_auth_error_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2018-02-06T21:27:28Z",
+      "side": 1,
+      "message": "I think even if there are plans to implement, we\u0027ll switch to MacViews before it happens, but *just in case*, tengs@ is this something that\u0027s in the pipeline?",
+      "parentUuid": "7bc80456_5862df84",
+      "revId": "e329801779581b8b6c33d9dda63757d3f77c1676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
