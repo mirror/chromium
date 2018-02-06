@@ -55,11 +55,8 @@ PropertyHandleSet KeyframeEffectModelBase::Properties() const {
 }
 
 void KeyframeEffectModelBase::SetFrames(KeyframeVector& keyframes) {
-  // TODO(samli): Should also notify/invalidate the animation
+  ResetFrames();
   keyframes_ = keyframes;
-  keyframe_groups_ = nullptr;
-  interpolation_effect_.Clear();
-  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
 }
 
 bool KeyframeEffectModelBase::Sample(
@@ -289,6 +286,14 @@ void KeyframeEffectModelBase::EnsureInterpolationEffectPopulated() const {
   }
 
   interpolation_effect_.SetPopulated();
+}
+
+void KeyframeEffectModelBase::ResetFrames() {
+  // TODO(samli): Should also notify/invalidate the animation
+  keyframes_.clear();
+  keyframe_groups_ = nullptr;
+  interpolation_effect_.Clear();
+  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
 }
 
 bool KeyframeEffectModelBase::IsReplaceOnly() const {
