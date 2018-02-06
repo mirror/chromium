@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f24546e_7edf6f10",
+        "filename": "sql/recovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T02:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9d5c1d_a99d8901",
+      "revId": "38c7e4011f5f08e53f666d7d23b827ec112360b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1b3879_8d71e34b",
         "filename": "third_party/sqlite/src/src/main.c",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "38c7e4011f5f08e53f666d7d23b827ec112360b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701c5ee2_75b0f60c",
+        "filename": "third_party/sqlite/src/src/main.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3055,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-06T02:04:39Z",
+      "side": 1,
+      "message": "It seems like it\u0027s used when building a test fixture. https://cs.chromium.org/chromium/src/third_party/sqlite/src/main.mk?q\u003dDEFAULT_ENABLE_RECOVER\n\nI haven\u0027t built nor ran the text fixture since I took over SQLite. Are you OK with leaving this in until I have time to figure it out?",
+      "parentUuid": "1d1b3879_8d71e34b",
+      "range": {
+        "startLine": 3055,
+        "startChar": 7,
+        "endLine": 3055,
+        "endChar": 29
+      },
+      "revId": "38c7e4011f5f08e53f666d7d23b827ec112360b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
