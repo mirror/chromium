@@ -3838,7 +3838,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   // it has the same FrameNavigationEntry structure.
   std::unique_ptr<NavigationEntryImpl> restored_entry =
       NavigationEntryImpl::FromNavigationEntry(
-          NavigationControllerImpl::CreateNavigationEntry(
+          NavigationController::CreateNavigationEntry(
               main_url_a, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
               std::string(), controller.GetBrowserContext()));
   EXPECT_EQ(0U, restored_entry->root_node()->children.size());
@@ -3908,7 +3908,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   // its default URL.
   std::unique_ptr<NavigationEntryImpl> restored_entry =
       NavigationEntryImpl::FromNavigationEntry(
-          NavigationControllerImpl::CreateNavigationEntry(
+          NavigationController::CreateNavigationEntry(
               main_url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
               std::string(), controller.GetBrowserContext()));
   restored_entry->SetPageState(PageState::CreateFromURL(main_url));
@@ -4891,7 +4891,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerOopifBrowserTest,
   // 3. Create a NavigationEntry with the same PageState as |entry2|.
   std::unique_ptr<NavigationEntryImpl> restored_entry =
       NavigationEntryImpl::FromNavigationEntry(
-          NavigationControllerImpl::CreateNavigationEntry(
+          NavigationController::CreateNavigationEntry(
               main_url_a, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
               std::string(), controller.GetBrowserContext()));
   EXPECT_EQ(0U, restored_entry->root_node()->children.size());

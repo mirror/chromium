@@ -2964,7 +2964,7 @@ TEST_F(NavigationControllerTest, RestoreNavigate) {
   GURL url("http://foo");
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   std::unique_ptr<NavigationEntry> entry =
-      NavigationControllerImpl::CreateNavigationEntry(
+      NavigationController::CreateNavigationEntry(
           url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false, std::string(),
           browser_context());
   entry->SetTitle(base::ASCIIToUTF16("Title"));
@@ -3033,7 +3033,7 @@ TEST_F(NavigationControllerTest, RestoreNavigateAfterFailure) {
   GURL url("http://foo");
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   std::unique_ptr<NavigationEntry> new_entry =
-      NavigationControllerImpl::CreateNavigationEntry(
+      NavigationController::CreateNavigationEntry(
           url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false, std::string(),
           browser_context());
   new_entry->SetTitle(base::ASCIIToUTF16("Title"));
@@ -4514,7 +4514,7 @@ TEST_F(NavigationControllerTest, CopyRestoredStateAndNavigate) {
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   for (size_t i = 0; i < arraysize(kRestoredUrls); ++i) {
     std::unique_ptr<NavigationEntry> entry =
-        NavigationControllerImpl::CreateNavigationEntry(
+        NavigationController::CreateNavigationEntry(
             kRestoredUrls[i], Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
             std::string(), browser_context());
     entries.push_back(std::move(entry));

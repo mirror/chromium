@@ -127,7 +127,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       bool should_replace_current_entry,
       bool user_gesture,
       blink::WebTriggeringEventInfo triggering_event_info,
-      const base::Optional<std::string>& suggested_filename) {}
+      const base::Optional<std::string>& suggested_filename,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {}
 
   // The RenderFrameHostImpl wants to transfer the request to a new renderer.
   // |redirect_chain| contains any redirect URLs (excluding |url|) that happened
@@ -145,7 +146,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       const std::string& method,
       scoped_refptr<network::ResourceRequestBody> post_body,
       const std::string& extra_headers,
-      const base::Optional<std::string>& suggested_filename) {}
+      const base::Optional<std::string>& suggested_filename,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {}
 
   // Called after receiving a BeforeUnloadACK IPC from the renderer. If
   // |frame_tree_node| has a NavigationRequest waiting for the renderer
