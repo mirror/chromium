@@ -682,7 +682,7 @@ SQLTransactionState SQLTransactionBackend::RunStatements() {
   SQLTransactionState next_state;
 
   // If there is a series of statements queued up that are all successful and
-  // have no associated SQLStatementCallback objects, then we can burn through
+  // have no associated V8SQLStatementCallback objects, then we can burn through
   // the queue.
   do {
     if (should_retry_current_statement_ &&

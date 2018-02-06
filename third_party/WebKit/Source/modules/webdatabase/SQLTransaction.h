@@ -42,8 +42,6 @@ namespace blink {
 class Database;
 class ExceptionState;
 class SQLErrorData;
-class SQLStatementCallback;
-class SQLStatementErrorCallback;
 class SQLTransactionBackend;
 class SQLTransactionCallback;
 class SQLTransactionErrorCallback;
@@ -68,15 +66,15 @@ class SQLTransaction final : public ScriptWrappable,
 
   void ExecuteSQL(const String& sql_statement,
                   const Vector<SQLValue>& arguments,
-                  SQLStatementCallback*,
-                  SQLStatementErrorCallback*,
+                  SQLStatement::OnSuccessCallback*,
+                  SQLStatement::OnErrorCallback*,
                   ExceptionState&);
   void executeSql(ScriptState*, const String& sql_statement, ExceptionState&);
   void executeSql(ScriptState*,
                   const String& sql_statement,
                   const Optional<Vector<ScriptValue>>& arguments,
-                  SQLStatementCallback*,
-                  SQLStatementErrorCallback*,
+                  V8SQLStatementCallback*,
+                  V8SQLStatementErrorCallback*,
                   ExceptionState&);
 
   Database* GetDatabase() { return database_.Get(); }

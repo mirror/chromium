@@ -37,8 +37,6 @@
 #include "modules/webdatabase/DatabaseContext.h"
 #include "modules/webdatabase/DatabaseThread.h"
 #include "modules/webdatabase/SQLError.h"
-#include "modules/webdatabase/SQLStatementCallback.h"
-#include "modules/webdatabase/SQLStatementErrorCallback.h"
 #include "modules/webdatabase/SQLTransactionBackend.h"
 #include "modules/webdatabase/SQLTransactionCallback.h"
 #include "modules/webdatabase/SQLTransactionClient.h"  // FIXME: Should be used in the backend only.
@@ -277,8 +275,8 @@ void SQLTransaction::PerformPendingCallback() {
 
 void SQLTransaction::ExecuteSQL(const String& sql_statement,
                                 const Vector<SQLValue>& arguments,
-                                SQLStatementCallback* callback,
-                                SQLStatementErrorCallback* callback_error,
+                                SQLStatement::OnSuccessCallback* callback,
+                                SQLStatement::OnErrorCallback* callback_error,
                                 ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   if (!execute_sql_allowed_) {
@@ -314,8 +312,8 @@ void SQLTransaction::executeSql(ScriptState* script_state,
 void SQLTransaction::executeSql(ScriptState* script_state,
                                 const String& sql_statement,
                                 const Optional<Vector<ScriptValue>>& arguments,
-                                SQLStatementCallback* callback,
-                                SQLStatementErrorCallback* callback_error,
+                                V8SQLStatementCallback* callback,
+                                V8SQLStatementErrorCallback* callback_error,
                                 ExceptionState& exception_state) {
   Vector<SQLValue> sql_values;
   if (arguments) {
@@ -330,7 +328,9 @@ void SQLTransaction::executeSql(ScriptState* script_state,
       }
     }
   }
-  ExecuteSQL(sql_statement, sql_values, callback, callback_error,
+  ExecuteSQL(sql_statement, sql_values,
+             SQLStatement::OnSuccessV8Impl::Create(callback),
+             SQLStatement::OnErrorV8Impl::Create(callback_error),
              exception_state);
 }
 
