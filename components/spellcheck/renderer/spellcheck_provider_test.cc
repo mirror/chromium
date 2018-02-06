@@ -31,12 +31,10 @@ void FakeTextCheckingCompletion::DidCancelCheckingText() {
 
 TestingSpellCheckProvider::TestingSpellCheckProvider()
     : SpellCheckProvider(nullptr, new SpellCheck(nullptr, nullptr), nullptr),
-      spelling_service_call_count_(0),
       binding_(this) {}
 
 TestingSpellCheckProvider::TestingSpellCheckProvider(SpellCheck* spellcheck)
     : SpellCheckProvider(nullptr, spellcheck, nullptr),
-      spelling_service_call_count_(0),
       binding_(this) {}
 
 TestingSpellCheckProvider::~TestingSpellCheckProvider() {
@@ -63,6 +61,7 @@ void TestingSpellCheckProvider::RequestDictionary() {}
 void TestingSpellCheckProvider::NotifyChecked(const base::string16& word,
                                               bool misspelled) {}
 
+#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 void TestingSpellCheckProvider::ToggleSpellCheck(bool, bool) {
   NOTREACHED();
 }
@@ -78,20 +77,24 @@ void TestingSpellCheckProvider::FillSuggestionList(const base::string16&,
   NOTREACHED();
 }
 
+void TestingSpellCheckProvider::RequestTextCheck(
+    const base::string16& text,
+    int,
+    RequestTextCheckCallback callback) {
+  text_check_requests_.push_back(std::make_pair(text, std::move(callback)));
+}
+#endif  // BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+
+#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 void TestingSpellCheckProvider::CallSpellingService(
     const base::string16& text,
     CallSpellingServiceCallback callback) {
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   OnCallSpellingService(text);
   std::move(callback).Run(true, std::vector<SpellCheckResult>());
-#else
-  NOTREACHED();
-#endif
 }
 
 void TestingSpellCheckProvider::OnCallSpellingService(
     const base::string16& text) {
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   ++spelling_service_call_count_;
   blink::WebTextCheckingCompletion* completion =
       text_check_completions_.Lookup(last_identifier_);
@@ -108,25 +111,12 @@ void TestingSpellCheckProvider::OnCallSpellingService(
   completion->DidFinishCheckingText(results);
   last_request_ = text;
   last_results_ = results;
-#else
-  NOTREACHED();
-#endif
-}
-
-void TestingSpellCheckProvider::RequestTextCheck(
-    const base::string16& text,
-    int,
-    RequestTextCheckCallback callback) {
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  text_check_requests_.push_back(std::make_pair(text, std::move(callback)));
-#else
-  NOTREACHED();
-#endif
 }
 
 void TestingSpellCheckProvider::ResetResult() {
   text_.clear();
 }
+#endif  // !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 
 void TestingSpellCheckProvider::SetLastResults(
     const base::string16 last_request,
