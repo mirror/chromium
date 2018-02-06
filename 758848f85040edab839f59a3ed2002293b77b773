@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "09bde0b2_d049da86",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-06T21:07:03Z",
+      "side": 1,
+      "message": "I got this to work with a const reference after all (base::Bind does some automagic here)",
+      "parentUuid": "cfb4ce55_f2b8cf1d",
+      "revId": "758848f85040edab839f59a3ed2002293b77b773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c4b9e51_52854cbf",
         "filename": "components/offline_pages/core/offline_page_archiver.h",
         "patchSetId": 4
