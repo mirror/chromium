@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b42fdb47_341cb1a3",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T15:31:39Z",
+      "side": 1,
+      "message": "Maybe move the notes about their size here parenthetically, (6 bytes) and (258 bytes)?  As I read down I hit the question about what these numbers were right here.",
+      "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35f0445d_ad770c97",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 3
@@ -13,6 +30,30 @@
       "writtenOn": "2018-02-05T05:12:41Z",
       "side": 1,
       "message": "A better name might be INFLATE_FAST_MIN_IN ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419e649e_dceeb5e5",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-06T15:31:39Z",
+      "side": 1,
+      "message": "Yeah, or even _INPUT_BYTES and _OUTPUT_BYTES?",
+      "parentUuid": "35f0445d_ad770c97",
       "range": {
         "startLine": 18,
         "startChar": 8,
