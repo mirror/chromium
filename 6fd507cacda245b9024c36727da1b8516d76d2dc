@@ -16,6 +16,24 @@
       "revId": "6fd507cacda245b9024c36727da1b8516d76d2dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcc5cf7_0d475908",
+        "filename": "content/browser/locks/lock_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-06T18:42:30Z",
+      "side": 1,
+      "message": "Ah yes, thanks!",
+      "parentUuid": "d0ec1b41_33760b71",
+      "revId": "6fd507cacda245b9024c36727da1b8516d76d2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
