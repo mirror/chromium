@@ -9,10 +9,31 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/task_scheduler/post_task.h"
+#include "components/offline_pages/core/offline_page_item.h"
+#include "components/offline_pages/core/offline_page_types.h"
 #include "url/gurl.h"
 
+namespace base {
+class SequencedTaskRunner;
+}  // namespace base
+
 namespace offline_pages {
+
+class ArchiveManager;
+class OfflinePageModelTaskified;
+class SystemDownloadManager;
+class SystemDownloadManager;
+
+// The results of attempting to move the offline page to a public directory, and
+// registering it with the system download manager.
+struct PublishArchiveResult {
+  SavePageResult move_result;
+  base::FilePath new_file_path;
+  int64_t download_id;
+};
 
 // Interface of a class responsible for creation of the archive for offline use.
 //
@@ -86,6 +107,24 @@ class OfflinePageArchiver {
   virtual void CreateArchive(const base::FilePath& archives_dir,
                              const CreateArchiveParams& create_archive_params,
                              const CreateArchiveCallback& callback) = 0;
+
+  // Publishes the page on a background thread, then returns to the
+  // OfflinePageModelTaskified to add the offline page item to the DB.
+  virtual void SavePageToDownloads(
+      const OfflinePageItem& offline_page,
+      const SavePageCallback& save_page_callback,
+      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      ArchiveManager* archive_manager,
+      SystemDownloadManager* download_manager,
+      base::WeakPtr<OfflinePageModelTaskified> model_weak_ptr);
+
+  // Move the page to a public directory, and add the page to any system
+  // download manager (for instance, on android).  Results will be put into
+  // the move_results object.
+  static void PublishArchive(const OfflinePageItem& offline_page,
+                             const base::FilePath& public_directory,
+                             SystemDownloadManager* download_manager,
+                             PublishArchiveResult* archive_result);
 };
 
 }  // namespace offline_pages
