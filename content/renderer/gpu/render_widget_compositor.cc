@@ -218,6 +218,7 @@ cc::LayerSelection ConvertWebSelection(const WebSelection& web_selection) {
   cc::LayerSelection cc_selection;
   cc_selection.start = ConvertWebSelectionBound(web_selection, true);
   cc_selection.end = ConvertWebSelectionBound(web_selection, false);
+  cc_selection.selection_id = web_selection.SelectionId();
   return cc_selection;
 }
 

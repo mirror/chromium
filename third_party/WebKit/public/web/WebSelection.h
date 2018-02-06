@@ -30,6 +30,8 @@ class BLINK_EXPORT WebSelection {
   bool IsCaret() const { return GetSelectionType() == kCaretSelection; }
   bool IsRange() const { return GetSelectionType() == kRangeSelection; }
 
+  int SelectionId() const { return selection_id_; }
+
  private:
   SelectionType GetSelectionType() const { return selection_type_; }
 
@@ -37,6 +39,8 @@ class BLINK_EXPORT WebSelection {
 
   WebSelectionBound start_;
   WebSelectionBound end_;
+
+  int selection_id_;
 };
 
 }  // namespace blink

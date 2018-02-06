@@ -39,6 +39,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollAlignment.h"
 #include "platform/wtf/Optional.h"
+#include "public/platform/WebSelectionSourceType.h"
 
 namespace blink {
 
@@ -181,6 +182,8 @@ class CORE_EXPORT FrameSelection final
   void SetUseSecureKeyboardEntryWhenActive(bool);
 
   bool IsHandleVisible() const { return is_handle_visible_; }
+  WebSelectionSourceType GetSourceType() const { return source_type_; }
+  int GetSelectionId() const { return selection_id_; }
   bool ShouldShrinkNextTap() const { return should_shrink_next_tap_; }
 
   void UpdateSecureKeyboardEntryIfActive();
@@ -274,6 +277,10 @@ class CORE_EXPORT FrameSelection final
   // TODO(editing-dev): We should change is_directional_ type to enum.
   // as directional can have three values forward, backward or directionless.
   bool is_directional_;
+  WebSelectionSourceType source_type_;
+
+  int selection_id_;
+
   bool should_shrink_next_tap_ = false;
 
   // Controls text granularity used to adjust the selection's extent in
