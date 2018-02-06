@@ -57,7 +57,6 @@ crbug.com/619427 [ Mac Linux ] virtual/spv2/fast/overflow/overflow-height-float-
 # Slimming paint V1.75
 crbug.com/771643 [ Mac Win Android ] virtual/spv175/ [ Skip ]
 
-crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clipping.html [ Failure ]
 crbug.com/807395 virtual/spv175/fast/multicol/mixed-opacity-test.html [ Failure ]
 crbug.com/807382 virtual/spv175/fast/multicol/multicol-svg.html [ Failure ]
 crbug.com/805049 [ Mac ] virtual/spv175/compositing/iframes/fixed-position-iframe.html [ Pass Crash ]
