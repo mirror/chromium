@@ -21,7 +21,6 @@
 #include "ui/events/ozone/evdev/event_converter_evdev_impl.h"
 #include "ui/events/ozone/evdev/event_device_info.h"
 #include "ui/events/ozone/evdev/gamepad_event_converter_evdev.h"
-#include "ui/events/ozone/evdev/tablet_event_converter_evdev.h"
 #include "ui/events/ozone/evdev/touch_event_converter_evdev.h"
 #include "ui/events/ozone/gamepad/gamepad_provider_ozone.h"
 
@@ -111,9 +110,9 @@ std::unique_ptr<EventConverterEvdev> CreateConverter(
 
   // Graphics tablet
   if (devinfo.HasTablet()) {
-    return base::WrapUnique<EventConverterEvdev>(new TabletEventConverterEvdev(
-        std::move(fd), params.path, params.id, params.cursor, devinfo,
-        params.dispatcher));
+    return base::WrapUnique<EventConverterEvdev>(
+        new EventConverterEvdevImpl(std::move(fd), params.path, params.id,
+                                    devinfo, params.cursor, params.dispatcher));
   }
 
   if (devinfo.HasGamepad()) {

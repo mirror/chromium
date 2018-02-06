@@ -49,7 +49,8 @@ EventConverterEvdevImpl::EventConverterEvdevImpl(
       has_caps_lock_led_(devinfo.HasLedEvent(LED_CAPSL)),
       controller_(FROM_HERE),
       cursor_(cursor),
-      dispatcher_(dispatcher) {}
+      dispatcher_(dispatcher),
+      tablet_handler_(id, cursor, devinfo, dispatcher) {}
 
 EventConverterEvdevImpl::~EventConverterEvdevImpl() {
 }
@@ -119,6 +120,10 @@ void EventConverterEvdevImpl::ProcessEvents(const input_event* inputs,
                                             int count) {
   for (int i = 0; i < count; ++i) {
     const input_event& input = inputs[i];
+
+    if (tablet_handler_.ProcessEvents(input))
+      continue;
+
     switch (input.type) {
       case EV_KEY:
         ConvertKeyEvent(input);
