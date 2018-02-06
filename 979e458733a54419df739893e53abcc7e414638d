@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa8993f6_f5e25adb",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T22:58:07Z",
+      "side": 1,
+      "message": "This DCHECK deserves a comment, perhaps just \"Support for vertical-border and horizontal-highlight modes is limited and may require additional polish.\" Actually, that same disclaimer could reasonably be part of the class comment in the header.",
+      "revId": "979e458733a54419df739893e53abcc7e414638d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
