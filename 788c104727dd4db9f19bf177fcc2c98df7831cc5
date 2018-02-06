@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b94e03e1_120aa0bf",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "Use test_util.createContentSettingTypeToValuePair?",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8fd463_2b57831f",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "This should be\n\ntest_util.createContentSettingTypeToValuePair(\n    settings.ContentSettingsTypes.COOKIES,\n    [\n       test_util.createRawSiteException(\u0027http://foo-allow.com\u0027, {\n          embeddingOrigin: \u0027\u0027,\n       }),\n       test_util.createRawSiteException(\u0027http://foo-session.com\u0027, {\n          embeddingOrigin: \u0027\u0027,\n          setting: settings.ContentSetting.SESSION_ONLY,\n       }),\n    ])\n\nThe type of this argument to createSiteSettingsPrefs should be {Array\u003c{setting: settings.ContentSettingsType, value: Array\u003cRawSiteException\u003e}\u003e}\n\nEach ContentSettingType should only be mentioned once.",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9919d376_d0fc9908",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a valid type annotation. The second param should be Object, the return type should be {setting: settings.ContentSettingsTypes, value: Object}",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e1e0d0_5d6c62a2",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "Array\u003c{setting: settings.ContentSettingsType, value: DefaultContentSetting}\u003e",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf873ff_df67a0a4",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "These comments are out of date.\n\n\u0027A list of RawSiteExceptions and the content settings they apply to\u0027",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc7eb31_e75c1bf8",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-06T00:48:33Z",
+      "side": 1,
+      "message": "Why Object.assign?\n\nsiteSettingsPref.defaults[defaultsList[i].setting] \u003d defaultsList[i].value;\n\nor better yet\n\nlet defaults \u003d {};\n// set up defaults\ndefaultsList.forEach((d) \u003d\u003e { defaults[d.setting] \u003d d.value; });\n\nlet exceptions \u003d {};\n// set up empty lists\nexceptionsList.forEach((e) \u003d\u003e { exceptions[e.settings] \u003d e.value; });\n\nreturn {\n  defaults: defaults,\n  exceptions: exceptions,\n};\n\nThere\u0027s no point in defining siteSettingsPref early, it makes everything super verbose.",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
