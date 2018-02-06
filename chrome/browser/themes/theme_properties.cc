@@ -97,6 +97,11 @@ const SkColor kDefaultToolbarBottomSeparatorIncognito =
     SkColorSetRGB(0x28, 0x28, 0x28);
 const SkColor kDefaultToolbarTopSeparator = SkColorSetA(SK_ColorBLACK, 0x40);
 
+constexpr SkColor kDefaultColorTabAlertRecordingIcon =
+    SkColorSetRGB(0xC5, 0x39, 0x29);
+constexpr SkColor kDefaultColorTabAlertCapturingIcon =
+    SkColorSetRGB(0x42, 0x85, 0xF4);
+
 #if defined(OS_MACOSX)
 const SkColor kDefaultColorFrameVibrancyOverlay =
     SkColorSetA(SK_ColorBLACK, 0x19);
@@ -124,6 +129,40 @@ const SkColor kDefaultColorToolbarStrokeTheme =
 const SkColor kDefaultColorToolbarStrokeThemeInactive =
     SkColorSetARGB(0x66, 0x4C, 0x4C, 0x4C);
 #endif  // OS_MACOSX
+
+// ----------------------------------------------------------------------------
+// Touch optimized UI color palette
+
+// Color palette
+// Grey
+constexpr SkColor kMD2ColorGrey900 = SkColorSetRGB(0x20, 0x21, 0x24);
+constexpr SkColor kMD2ColorGrey800 = SkColorSetRGB(0x3C, 0x40, 0x43);
+constexpr SkColor kMD2ColorGrey700 = SkColorSetRGB(0x5F, 0x63, 0x68);
+constexpr SkColor kMD2ColorGrey400 = SkColorSetRGB(0xBD, 0xC1, 0xC6);
+constexpr SkColor kMD2ColorGrey100 = SkColorSetRGB(0xF1, 0xF3, 0xF4);
+
+// Red
+constexpr SkColor kMD2ColorRed800 = SkColorSetRGB(0xB3, 0x14, 0x12);
+constexpr SkColor kMD2ColorRed600 = SkColorSetRGB(0xD9, 0x30, 0x25);
+
+// Red - dark
+constexpr SkColor kMD2ColorRedDark800 = SkColorSetRGB(0xB4, 0x1B, 0x1A);
+constexpr SkColor kMD2ColorRedDark600 = SkColorSetRGB(0xD3, 0x3B, 0x30);
+
+// Blue
+constexpr SkColor kMD2ColorBlue600 = SkColorSetRGB(0x1A, 0x73, 0xE8);
+
+constexpr SkColor kDefaultMD2ColorToolbar = SkColorSetRGB(0xFD, 0xFE, 0xFF);
+constexpr SkColor kDefaultMD2ColorActiveFrame = SkColorSetRGB(0xD0, 0xD2, 0xD6);
+constexpr SkColor kDefaultMD2ColorInactiveFrame =
+    SkColorSetRGB(0xE3, 0xE5, 0xE8);
+constexpr SkColor kDefaultMD2ColorInactiveFrameIncognito =
+    SkColorSetRGB(0x32, 0x36, 0x39);
+
+constexpr SkColor kDefaultMD2ColorTabBackgroundInactive =
+    SkColorSetRGB(0xED, 0xEF, 0xF2);
+constexpr SkColor kDefaultMD2ColorTabBackgroundInactiveIncognito =
+    SkColorSetRGB(0x28, 0x2C, 0x2F);
 // ----------------------------------------------------------------------------
 
 // Strings used in alignment properties.
@@ -139,18 +178,6 @@ constexpr char kTilingRepeatX[] = "repeat-x";
 constexpr char kTilingRepeatY[] = "repeat-y";
 constexpr char kTilingRepeat[] = "repeat";
 
-// ----------------------------------------------------------------------------
-// Defaults for properties when the touch-optimized UI is enabled.
-
-constexpr SkColor kActiveFrameColorTouchOptimized =
-    SkColorSetRGB(0xD0, 0xD2, 0xD6);
-constexpr SkColor kInactiveFrameColorTouchOptimized =
-    SkColorSetRGB(0xE3, 0xE5, 0xE8);
-constexpr SkColor kIncognitoActiveFrameColorTouchOptimized =
-    SkColorSetRGB(0x20, 0x21, 0x24);
-constexpr SkColor kIncognitoInactiveFrameColorTouchOptimized =
-    SkColorSetRGB(0x32, 0x36, 0x39);
-
 // Returns a |nullopt| if the touch-optimized UI is not enabled, or it's enabled
 // but for the given |id|, there's no touch-optimized specific colors, and we
 // should fall back to the default colors.
@@ -161,16 +188,44 @@ base::Optional<SkColor> MaybeGetDefaultColorForTouchOptimizedUi(
     return base::nullopt;
 
   switch (id) {
+    // Properties stored in theme pack.
     case ThemeProperties::COLOR_FRAME:
       // Active frame colors.
-      return incognito ? kIncognitoActiveFrameColorTouchOptimized
-                       : kActiveFrameColorTouchOptimized;
+      return incognito ? kMD2ColorGrey900 : kDefaultMD2ColorActiveFrame;
     case ThemeProperties::COLOR_FRAME_INACTIVE:
       // Inactive frame colors.
-      return incognito ? kIncognitoInactiveFrameColorTouchOptimized
-                       : kInactiveFrameColorTouchOptimized;
+      return incognito ? kDefaultMD2ColorInactiveFrameIncognito
+                       : kDefaultMD2ColorInactiveFrame;
 
-    // TODO: Place all touch-optimized UI related colors here.
+    case ThemeProperties::COLOR_TOOLBAR:
+      return incognito ? kDefaultMD2ColorInactiveFrameIncognito
+                       : kDefaultMD2ColorToolbar;
+    case ThemeProperties::COLOR_TAB_TEXT:
+    case ThemeProperties::COLOR_BOOKMARK_TEXT:
+      return incognito ? kMD2ColorGrey100 : kMD2ColorGrey800;
+    case ThemeProperties::COLOR_BACKGROUND_TAB_TEXT:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_ICON_HOVER:
+      return incognito ? kMD2ColorGrey100 : kDefaultMD2ColorToolbar;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE:
+      return incognito ? kMD2ColorGrey100 : kMD2ColorGrey800;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER:
+      return incognito ? kMD2ColorRedDark600 : kMD2ColorRed600;
+    case ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_PRESSED:
+      return incognito ? kMD2ColorRedDark800 : kMD2ColorRed800;
+    case ThemeProperties::COLOR_BACKGROUND_TAB:
+      return incognito ? kDefaultMD2ColorTabBackgroundInactiveIncognito
+                       : kDefaultMD2ColorTabBackgroundInactive;
+
+    // Properties not stored in theme pack.
+    case ThemeProperties::COLOR_TAB_ALERT_AUDIO:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorGrey700;
+    case ThemeProperties::COLOR_TAB_ALERT_RECORDING:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorRed600;
+    case ThemeProperties::COLOR_TAB_ALERT_CAPTURING:
+      return incognito ? kMD2ColorGrey400 : kMD2ColorBlue600;
 
     default:
       return base::nullopt;
@@ -319,6 +374,10 @@ SkColor ThemeProperties::GetDefaultColor(int id, bool incognito) {
     case COLOR_TOOLBAR_TOP_SEPARATOR:
     case COLOR_TOOLBAR_TOP_SEPARATOR_INACTIVE:
       return kDefaultToolbarTopSeparator;
+    case COLOR_TAB_ALERT_RECORDING:
+      return kDefaultColorTabAlertRecordingIcon;
+    case COLOR_TAB_ALERT_CAPTURING:
+      return kDefaultColorTabAlertCapturingIcon;
 #if defined(OS_MACOSX)
     case COLOR_FRAME_VIBRANCY_OVERLAY:
       return incognito ? kDefaultColorFrameVibrancyOverlayIncognito
