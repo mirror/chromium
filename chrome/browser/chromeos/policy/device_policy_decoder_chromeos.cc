@@ -1010,6 +1010,28 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                     nullptr);
     }
   }
+
+  if (policy.has_device_isolate_origins()) {
+    const em::DeviceIsolateOriginsProto& container(
+        policy.device_isolate_origins());
+    if (container.has_isolate_origins()) {
+      policies->Set(key::kDeviceIsolateOrigins, POLICY_LEVEL_MANDATORY,
+                    POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                    std::make_unique<base::Value>(container.isolate_origins()),
+                    nullptr);
+    }
+  }
+
+  if (policy.has_device_site_per_process()) {
+    const em::DeviceSitePerProcessProto& container(
+        policy.device_site_per_process());
+    if (container.has_site_per_process()) {
+      policies->Set(key::kDeviceSitePerProcess, POLICY_LEVEL_MANDATORY,
+                    POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                    std::make_unique<base::Value>(container.site_per_process()),
+                    nullptr);
+    }
+  }
 }
 
 }  // namespace

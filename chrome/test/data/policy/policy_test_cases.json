@@ -3518,6 +3518,16 @@
     "note": "Chrome OS device policy used by authpolicyd only, not used in Chrome"
   },
 
+  "DeviceIsolateOrigins": {
+    "os": ["chromeos"],
+    "note": "Chrome OS device policy used by session_manager only"
+  },
+
+  "DeviceSitePerProcess": {
+    "os": ["chromeos"],
+    "note": "Chrome OS device policy used by session_manager only"
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
