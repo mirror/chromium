@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "718061de_19a81835",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 91292,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-06T21:36:46Z",
+      "side": 1,
+      "message": "Nit: I think we usually don\u0027t capitalize the units value",
+      "range": {
+        "startLine": 91292,
+        "startChar": 69,
+        "endLine": 91292,
+        "endChar": 0
+      },
+      "revId": "f1283cfc3ccff6377cae5ccd12aa326b4ac6e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
