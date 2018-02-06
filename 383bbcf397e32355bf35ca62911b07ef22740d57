@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10ddaeac_74560554",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-02-06T11:20:08Z",
+      "side": 1,
+      "message": "ShouldRecordCPUTimeForTask already checks for base::ThreadTicks::IsSupported internally: https://chromium-review.googlesource.com/c/chromium/src/+/876363 :)",
+      "range": {
+        "startLine": 410,
+        "startChar": 6,
+        "endLine": 410,
+        "endChar": 32
+      },
+      "revId": "383bbcf397e32355bf35ca62911b07ef22740d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
