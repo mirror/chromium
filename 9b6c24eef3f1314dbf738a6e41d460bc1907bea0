@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac25361a_e45ac876",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44614bd9_d8831750",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43302e1b_44b910fa",
         "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.cpp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c5e384_e48b5342",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43302e1b_44b910fa",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "685c8eca_cd0b9eef",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7567ba8_fb35af3f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d460da6d_bfcec158",
         "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.h",
         "patchSetId": 3
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2727d854_afa1f4ea",
+        "filename": "third_party/WebKit/Source/modules/sensor/RemapSensorReading.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d460da6d_bfcec158",
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49cdf332_9b579bfd",
         "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2018-02-05T20:37:54Z",
       "side": 1,
       "message": "It\u0027s odd that we are doing this here instead of in the constructor which only seems to check the maximum frequency.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd080552_28d0dd34",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "here we clamp the frequency to the limits obtained from the platform side, we\u0027re not aware of them in the constructor.",
+      "parentUuid": "49cdf332_9b579bfd",
       "range": {
         "startLine": 161,
         "startChar": 0,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5866bdbe_7bf802c2",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05879492_bda95715",
+      "range": {
+        "startLine": 263,
+        "startChar": 42,
+        "endLine": 263,
+        "endChar": 65
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "601ca7a4_61bd2015",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.h",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2018-02-05T20:37:54Z",
       "side": 1,
       "message": "This comment seems out of date.",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "9b6c24eef3f1314dbf738a6e41d460bc1907bea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80edced8_7c655619",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2018-02-06T12:57:01Z",
+      "side": 1,
+      "message": "Updated",
+      "parentUuid": "601ca7a4_61bd2015",
       "range": {
         "startLine": 72,
         "startChar": 45,
