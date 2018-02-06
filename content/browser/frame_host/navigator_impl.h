@@ -74,7 +74,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
       bool should_replace_current_entry,
       bool user_gesture,
       blink::WebTriggeringEventInfo triggering_event_info,
-      const base::Optional<std::string>& suggested_filename) override;
+      const base::Optional<std::string>& suggested_filename,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) override;
   void RequestTransferURL(
       RenderFrameHostImpl* render_frame_host,
       const GURL& url,
@@ -87,7 +88,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
       const std::string& method,
       scoped_refptr<network::ResourceRequestBody> post_body,
       const std::string& extra_headers,
-      const base::Optional<std::string>& suggested_filename) override;
+      const base::Optional<std::string>& suggested_filename,
+      scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) override;
   void OnBeforeUnloadACK(FrameTreeNode* frame_tree_node,
                          bool proceed,
                          const base::TimeTicks& proceed_time) override;

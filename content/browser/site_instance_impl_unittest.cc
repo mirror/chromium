@@ -162,9 +162,9 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
   scoped_refptr<SiteInstanceImpl> instance = SiteInstanceImpl::Create(nullptr);
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());
 
-  NavigationEntryImpl* e1 = new NavigationEntryImpl(
-      instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
-      false);
+  NavigationEntryImpl* e1 =
+      new NavigationEntryImpl(instance, url, Referrer(), base::string16(),
+                              ui::PAGE_TRANSITION_LINK, false, nullptr);
 
   // Redundantly setting e1's SiteInstance shouldn't affect the ref count.
   e1->set_site_instance(instance);
@@ -172,9 +172,9 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
   EXPECT_EQ(0, browser_client()->GetAndClearBrowsingInstanceDeleteCount());
 
   // Add a second reference
-  NavigationEntryImpl* e2 = new NavigationEntryImpl(
-      instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
-      false);
+  NavigationEntryImpl* e2 =
+      new NavigationEntryImpl(instance, url, Referrer(), base::string16(),
+                              ui::PAGE_TRANSITION_LINK, false, nullptr);
 
   instance = nullptr;
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());
@@ -218,8 +218,8 @@ TEST_F(SiteInstanceTest, CloneNavigationEntry) {
 
   std::unique_ptr<NavigationEntryImpl> e1 =
       base::WrapUnique(new NavigationEntryImpl(
-          SiteInstanceImpl::Create(nullptr), url, Referrer(),
-          base::string16(), ui::PAGE_TRANSITION_LINK, false));
+          SiteInstanceImpl::Create(nullptr), url, Referrer(), base::string16(),
+          ui::PAGE_TRANSITION_LINK, false, nullptr));
 
   // Clone the entry.
   std::unique_ptr<NavigationEntryImpl> e2 = e1->Clone();
