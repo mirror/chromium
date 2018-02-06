@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dcbceb_4705dfb9",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-06T09:29:57Z",
+      "side": 0,
+      "message": "CancelAllRequests() schedules invocation of the callbacks (with notifier\u0027s timer), however, line 146-147 clears |one_shots_| and |watchers_| so all the callbacks are no longer owned by the geolocation.  I.e., no callbacks are guaranteed to be alive.  :(\n\nGiven that the previous patch had already disabled these callbacks, plus that, even before the previous patch, the scheduled callbacks never get fired because of no execution context (this is ContextDestroyed ;), it must be safe to remove this call to CancelAllRequests().",
+      "revId": "3b2c903a2e03e77f15ed2a16bf504dd7e929a10d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
