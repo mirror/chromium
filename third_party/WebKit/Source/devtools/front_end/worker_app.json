@@ -1,0 +1,14 @@
+{
+  "modules" : [
+    { "name": "cookie_table" },
+    { "name": "har_importer" },
+    { "name": "help" },
+    { "name": "network" },
+    { "name": "product_registry_impl" },
+    { "name": "resources" },
+    { "name": "timeline" },
+    { "name": "timeline_model" }
+  ],
+  "extends": "js_app",
+  "has_html": true
+}
