@@ -63,7 +63,6 @@ StringMap_t ParseHeaders(const char* headers, int32_t headers_length) {
         start = &headers[i];
         state = FINDING_VALUE;
         // Fallthrough to start processing value without incrementing i.
-        [[clang::fallthrough]];
 
       case FINDING_VALUE:
         if (headers[i] == '\n') {
