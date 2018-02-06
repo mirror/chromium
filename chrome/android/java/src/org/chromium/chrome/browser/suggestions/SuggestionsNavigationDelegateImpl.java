@@ -125,7 +125,9 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
         // We explicitly open an offline page only for offline page downloads. For all other
         // sections the URL is opened and it is up to Offline Pages whether to open its offline
         // page (e.g. when offline).
-        if (article.isDownload() && !article.isAssetDownload()) {
+        if ((article.isDownload() && !article.isAssetDownload())
+                || (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()
+                           && article.isPrefetched())) {
             assert article.getOfflinePageOfflineId() != null;
             assert windowOpenDisposition == WindowOpenDisposition.CURRENT_TAB
                     || windowOpenDisposition == WindowOpenDisposition.NEW_WINDOW
@@ -142,7 +144,7 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
 
         LoadUrlParams loadUrlParams =
                 new LoadUrlParams(article.mUrl, PageTransition.AUTO_BOOKMARK);
-        
+
         // For article suggestions, we set the referrer. This is exploited
         // to filter out these history entries for NTP tiles.
         // TODO(mastiz): Extend this with support for other categories.
