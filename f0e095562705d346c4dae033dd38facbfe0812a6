@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "6671253f_414e89b6",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-06T00:30:24Z",
+      "side": 1,
+      "message": "Done. Thanks :)",
+      "parentUuid": "3d92339f_007446b6",
+      "revId": "f0e095562705d346c4dae033dd38facbfe0812a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec606283_56813635",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 3
