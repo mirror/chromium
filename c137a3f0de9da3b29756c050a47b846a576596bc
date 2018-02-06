@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ff0859_1cadbdfc",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T22:07:48Z",
+      "side": 1,
+      "message": "Does it make sense to group the booleans together at the beginning of the private section?",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15bd71e_2ded1126",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T22:07:48Z",
+      "side": 1,
+      "message": "Should this be in the else? It may make sense to always call LDHC::Observe?",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d00a8e9_ecc9625c",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-06T22:07:48Z",
+      "side": 1,
+      "message": "Let\u0027s add \u0027Overridden from\u0027 for consistency",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
