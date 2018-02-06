@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87ce5fd0_3bad0057",
+        "filename": "components/filename_generation/filename_generation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-06T09:36:57Z",
+      "side": 1,
+      "message": "these seem related to some specific context, e.g. URLs or HTML or downloads (I can\u0027t tell exactly what), but the component name makes it seems like they\u0027re generic.",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "5a6d40f78ba63da035ed3d39e08c218e082873f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
