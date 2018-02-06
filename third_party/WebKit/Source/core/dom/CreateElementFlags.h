@@ -43,7 +43,7 @@ class CreateElementFlags {
     return CreateElementFlags().SetCreatedByParser().SetAsyncCustomElements();
   }
 
- private:
+  // Construct an instance indicating default behavior.
   CreateElementFlags()
       : created_by_parser_(false),
         async_custom_elements_(false),
@@ -55,6 +55,7 @@ class CreateElementFlags {
     return *this;
   }
 
+ private:
   CreateElementFlags& SetAsyncCustomElements() {
     async_custom_elements_ = true;
     return *this;
