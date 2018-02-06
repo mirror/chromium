@@ -40,6 +40,9 @@ interface ImeHost {
   OnTextInputTypeChanged@0(TextInputType type);
 
   // Notifies Chrome that the cursor poisition has changed.
+  //
+  // |rect| describes the coordinates in physical pixels, with
+  // the top-left of the primary display as origin.
   OnCursorRectChanged@1(Rect rect);
 
   // Notifies Chrome that the current composition is canceled.
@@ -50,6 +53,9 @@ interface ImeHost {
 
   // Notifies Chrome that the cursor position has changed and
   // also sends surrounding text.
+  //
+  // |rect| describes the coordinates in physical pixels, with
+  // the top-left of the primary display as origin.
   //
   // |text_range|, |text_in_range| and |selection_range| are piggy-backed
   // into this method because Chrome OS IME tries to retrieve these information
