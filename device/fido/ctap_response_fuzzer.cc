@@ -8,11 +8,23 @@
 #include <algorithm>
 #include <vector>
 
+#include "base/at_exit.h"
+#include "base/i18n/icu_util.h"
 #include "device/fido/authenticator_get_assertion_response.h"
 #include "device/fido/authenticator_get_info_response.h"
 #include "device/fido/authenticator_make_credential_response.h"
 #include "device/fido/ctap_constants.h"
 #include "device/fido/device_response_converter.h"
+
+namespace device {
+
+struct IcuEnvironment {
+  IcuEnvironment() { CHECK(base::i18n::InitializeICU()); }
+  // used by ICU integration.
+  base::AtExitManager at_exit_manager;
+};
+
+IcuEnvironment* env = new IcuEnvironment();
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   std::vector<uint8_t> input(data, data + size);
@@ -25,3 +37,5 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   return 0;
 }
+
+}  // namespace device
