@@ -103,6 +103,14 @@ uint32_t HistogramBase::FindCorruption(const HistogramSamples& samples) const {
   return NO_INCONSISTENCIES;
 }
 
+void HistogramBase::WriteHTMLGraph(std::string* output) const {
+  WriteAsciiImpl(true, output);
+}
+
+void HistogramBase::WriteAscii(std::string* output) const {
+  WriteAsciiImpl(false, output);
+}
+
 bool HistogramBase::ValidateHistogramContents(bool crash_if_invalid,
                                               int corrupted_count) const {
   return true;
@@ -140,32 +148,6 @@ void HistogramBase::FindAndRunCallback(HistogramBase::Sample sample) const {
     cb.Run(sample);
 }
 
-void HistogramBase::WriteAsciiBucketGraph(double current_size,
-                                          double max_size,
-                                          std::string* output) const {
-  const int k_line_length = 72;  // Maximal horizontal width of graph.
-  int x_count = static_cast<int>(k_line_length * (current_size / max_size)
-                                 + 0.5);
-  int x_remainder = k_line_length - x_count;
-
-  while (0 < x_count--)
-    output->append("-");
-  output->append("O");
-  while (0 < x_remainder--)
-    output->append(" ");
-}
-
-const std::string HistogramBase::GetSimpleAsciiBucketRange(
-    Sample sample) const {
-  return StringPrintf("%d", sample);
-}
-
-void HistogramBase::WriteAsciiBucketValue(Count current,
-                                          double scaled_sum,
-                                          std::string* output) const {
-  StringAppendF(output, " (%d = %3.1f%%)", current, current/scaled_sum);
-}
-
 // static
 char const* HistogramBase::GetPermanentName(const std::string& name) {
   // A set of histogram names that provides the "permanent" lifetime required
@@ -177,6 +159,91 @@ char const* HistogramBase::GetPermanentName(const std::string& name) {
   AutoLock lock(permanent_names_lock.Get());
   auto result = permanent_names.Get().insert(name);
   return result.first->c_str();
+}
+
+void HistogramBase::WriteAsciiImpl(const bool is_html,
+                                   std::string* const output) const {
+  // Get a local copy of the data so we are consistent.
+  std::unique_ptr<HistogramSamples> snapshot = SnapshotSamples();
+  Count sample_count = snapshot->TotalCount();
+
+  if (is_html) {
+    StringAppendF(output, "<div id=\"%s\"><h2>%s</h2><pre>", histogram_name(),
+                  histogram_name());
+  } else {
+    *output += histogram_name();
+    *output += "\n\n";
+  }
+
+  // If there are no samples, display the mean as 0.0 instead of NaN.
+  const double mean = sample_count != 0
+                          ? static_cast<double>(snapshot->sum()) / sample_count
+                          : 0.0;
+  StringAppendF(output, "Samples: %d, Mean: %.1f, Type: %s, Flags: 0x%x\n\n",
+                sample_count, mean,
+                HistogramTypeToString(GetHistogramType()).c_str(), flags());
+
+  if (sample_count != 0) {
+    *output +=
+        "+------------+------------+--------+------------+--------+\n"
+        "|     Bucket |      Count |      % |  Cumulated |      % |\n"
+        "+------------+------------+--------+------------+--------+\n";
+
+    // Determine how wide the largest bucket range is (how many digits to
+    // print), so that we'll be able to right-align starts for the graphical
+    // bars.
+    Count count_max = 0;
+    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
+         !it->Done(); it->Next()) {
+      Sample min;
+      int64_t max;
+      Count count;
+      it->Get(&min, &max, &count);
+      count_max = std::max(count_max, count);
+    }
+
+    const double bar_scaling = 50.0 / count_max;
+    const double percent_scaling = 100.0 / sample_count;
+
+    Count cumulated = 0;
+
+    // Output the actual histogram graph.
+    const auto print_line = [&cumulated, bar_scaling, percent_scaling, output](
+                                const int64_t bucket, const Count count) {
+      cumulated += count;
+      if (bucket > std::numeric_limits<Sample>::max()) {
+        StringAppendF(output, "| %10s ", "infinity");
+      } else {
+        StringAppendF(output, "| %10d ", static_cast<Sample>(bucket));
+      }
+      StringAppendF(output, "| %10d | %5.1f%% | %10d | %5.1f%% | ", count,
+                    count * percent_scaling, cumulated,
+                    cumulated * percent_scaling);
+
+      output->append(count * bar_scaling, '*');
+      *output += '\n';
+    };
+
+    int64_t previous_max = 0;
+    for (const std::unique_ptr<SampleCountIterator> it = snapshot->Iterator();
+         !it->Done(); it->Next()) {
+      Sample min;
+      int64_t max;
+      Count count;
+      it->Get(&min, &max, &count);
+      if (previous_max && previous_max != min)
+        print_line(previous_max, 0);
+      print_line(min, count);
+      previous_max = max;
+    }
+
+    DCHECK_EQ(sample_count, cumulated);
+    print_line(previous_max, 0);
+    *output += "+------------+------------+--------+------------+--------+\n";
+  }
+
+  if (is_html)
+    output->append("</pre></div>");
 }
 
 }  // namespace base

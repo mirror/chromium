@@ -219,8 +219,8 @@ class BASE_EXPORT HistogramBase {
   virtual std::unique_ptr<HistogramSamples> SnapshotFinalDelta() const = 0;
 
   // The following methods provide graphical histogram displays.
-  virtual void WriteHTMLGraph(std::string* output) const = 0;
-  virtual void WriteAscii(std::string* output) const = 0;
+  void WriteHTMLGraph(std::string* output) const;
+  void WriteAscii(std::string* output) const;
 
   // TODO(bcwhite): Remove this after crbug/736675.
   virtual bool ValidateHistogramContents(bool crash_if_invalid,
@@ -248,20 +248,6 @@ class BASE_EXPORT HistogramBase {
                                      int64_t* sum,
                                      ListValue* buckets) const = 0;
 
-  //// Produce actual graph (set of blank vs non blank char's) for a bucket.
-  void WriteAsciiBucketGraph(double current_size,
-                             double max_size,
-                             std::string* output) const;
-
-  // Return a string description of what goes in a given bucket.
-  const std::string GetSimpleAsciiBucketRange(Sample sample) const;
-
-  // Write textual description of the bucket contents (relative to histogram).
-  // Output is the count in the buckets, as well as the percentage.
-  void WriteAsciiBucketValue(Count current,
-                             double scaled_sum,
-                             std::string* output) const;
-
   // Retrieves the callback for this histogram, if one exists, and runs it
   // passing |sample| as the parameter.
   void FindAndRunCallback(Sample sample) const;
@@ -272,6 +258,9 @@ class BASE_EXPORT HistogramBase {
 
  private:
   friend class HistogramBaseTest;
+
+  // Helpers for emitting Ascii graphic.  Each method appends data to output.
+  void WriteAsciiImpl(bool is_html, std::string* output) const;
 
   // A pointer to permanent storage where the histogram name is held. This can
   // be code space or the output of GetPermanentName() or any other storage

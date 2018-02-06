@@ -54,8 +54,6 @@ class BASE_EXPORT SparseHistogram : public HistogramBase {
   std::unique_ptr<HistogramSamples> SnapshotSamples() const override;
   std::unique_ptr<HistogramSamples> SnapshotDelta() override;
   std::unique_ptr<HistogramSamples> SnapshotFinalDelta() const override;
-  void WriteHTMLGraph(std::string* output) const override;
-  void WriteAscii(std::string* output) const override;
 
  protected:
   // HistogramBase implementation:
@@ -78,15 +76,6 @@ class BASE_EXPORT SparseHistogram : public HistogramBase {
   void GetCountAndBucketData(Count* count,
                              int64_t* sum,
                              ListValue* buckets) const override;
-
-  // Helpers for emitting Ascii graphic.  Each method appends data to output.
-  void WriteAsciiImpl(bool graph_it,
-                      const std::string& newline,
-                      std::string* output) const;
-
-  // Write a common header message describing this histogram.
-  void WriteAsciiHeader(const Count total_count,
-                        std::string* output) const;
 
   // For constuctor calling.
   friend class SparseHistogramTest;
