@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "687ab0ca_beafb1f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Ah I think this is a misunderstanding--I meant that the checkbox is checked the first time the interstitial is shown (not that the checkbox disappears, rather, that the interstitial \"disappears\" or doesn\u0027t show again depending on the value of the checkbox and/or the user preference). Will update accordingly.",
+      "parentUuid": "319babc0_b43a2339",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbdd90a5_355d3c50",
         "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d50501a_59760e8b",
+        "filename": "chrome/android/java/res/layout/download_location_dialog.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdd90a5_355d3c50",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 45
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3297237_9efa8c78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "This makes it so that the user can\u0027t actually edit the text (keeping the styling consistent across the two fields but changing this one to be effectively a button instead of text field). Open to suggestions for other ways to do this!",
+      "parentUuid": "bae03911_9b531a03",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd344d9_6b56536b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eac2bb_e051831f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd344d9_6b56536b",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 93
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "89721345_15055dae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryPreference.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "There isn\u0027t a reason this should be null, removing to make it less confusing!",
+      "parentUuid": "c3600856_7cf0fb05",
+      "range": {
+        "startLine": 40,
+        "startChar": 9,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c06515d_a1ca3b6b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryUtil.java",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d779be0d_81ba190a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c06515d_a1ca3b6b",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 81
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ec52f7d2_5bfa83aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/download/DownloadDirectoryUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Nothing changed, only a few new methods are added (getFileForName/getNameForFile).",
+      "parentUuid": "27992665_eaabcb25",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95486c0f_38fb1986",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 7
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "42bb9d0e_0675cf84",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Thanks for that catch!",
+      "parentUuid": "95486c0f_38fb1986",
+      "range": {
+        "startLine": 1190,
+        "startChar": 11,
+        "endLine": 1190,
+        "endChar": 12
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e2385f_bfd350bb",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 7
@@ -206,6 +398,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724d5e94_ee9c2364",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-06T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e2385f_bfd350bb",
+      "range": {
+        "startLine": 1193,
+        "startChar": 8,
+        "endLine": 1193,
+        "endChar": 16
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
