@@ -27,6 +27,8 @@
 #include "cc/input/touch_action.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
+#include "cc/trees/render_frame_metadata.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "content/common/drag_event_source_info.h"
@@ -335,6 +337,110 @@ ui::TextInputMode ConvertWebTextInputMode(blink::WebTextInputMode mode) {
   return static_cast<ui::TextInputMode>(mode);
 }
 
+class RenderFrameMetadataObserverImpl : public cc::RenderFrameMetadataObserver {
+ public:
+  RenderFrameMetadataObserverImpl(int32_t routing_id);
+  ~RenderFrameMetadataObserverImpl() override;
+
+  void SetEnabled(bool enabled, int requested_routing_id);
+
+  void OnRenderFrameSubmission(cc::RenderFrameMetadata* metadata) override;
+  void SetCompositorTaskRunner(scoped_refptr<base::SingleThreadTaskRunner>
+                                   compositor_task_runner) override;
+
+ private:
+  class RenderWidgetMessageFilter : public IPC::MessageFilter {
+   public:
+    RenderWidgetMessageFilter(RenderFrameMetadataObserverImpl* impl)
+        : impl_(impl) {}
+
+    void SetCompositorTaskRunner(
+        scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner);
+
+    bool OnMessageReceived(const IPC::Message& message) override;
+
+   protected:
+    ~RenderWidgetMessageFilter() override {}
+
+   private:
+    void OnWaitNextFrameForTests(int routing_id);
+
+    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_ =
+        nullptr;
+    RenderFrameMetadataObserverImpl* impl_;
+    DISALLOW_COPY_AND_ASSIGN(RenderWidgetMessageFilter);
+  };
+
+  int32_t requested_routing_id_ = 0;
+  int32_t routing_id_;
+  void OnWaitNextFrameForTests(int routing_id);
+
+  scoped_refptr<RenderWidgetMessageFilter> message_filter_;
+  scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderFrameMetadataObserverImpl);
+};
+
+RenderFrameMetadataObserverImpl::RenderFrameMetadataObserverImpl(
+    int32_t routing_id)
+    : routing_id_(routing_id),
+      message_filter_(new RenderWidgetMessageFilter(this)),
+      sync_message_filter_(RenderThreadImpl::current()->sync_message_filter()) {
+  RenderThread::Get()->AddFilter(message_filter_.get());
+}
+
+RenderFrameMetadataObserverImpl::~RenderFrameMetadataObserverImpl() {
+  // Posts a task so no thread concern.
+  if (RenderThread::Get())
+    RenderThread::Get()->RemoveFilter(message_filter_.get());
+}
+
+void RenderFrameMetadataObserverImpl::SetEnabled(bool enabled,
+                                                 int requested_routing_id) {
+  RenderFrameMetadataObserver::SetEnabled(enabled);
+  requested_routing_id_ = requested_routing_id;
+}
+
+void RenderFrameMetadataObserverImpl::OnRenderFrameSubmission(
+    cc::RenderFrameMetadata* metadata) {
+  sync_message_filter_->Send(
+      new ViewHostMsg_OnRenderFrameSubmitted(routing_id_, *metadata));
+
+  if (requested_routing_id_) {
+    sync_message_filter_->Send(new ViewHostMsg_OnRenderFrameSubmitted(
+        requested_routing_id_, *metadata));
+  }
+}
+
+void RenderFrameMetadataObserverImpl::SetCompositorTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner) {
+  message_filter_->SetCompositorTaskRunner(compositor_task_runner);
+}
+
+void RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    SetCompositorTaskRunner(
+        scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner) {
+  compositor_task_runner_ = compositor_task_runner;
+}
+
+bool RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    OnMessageReceived(const IPC::Message& message) {
+  IPC_BEGIN_MESSAGE_MAP(RenderWidgetMessageFilter, message)
+    IPC_MESSAGE_HANDLER(ViewMsg_WaitForNextFrameForTests,
+                        OnWaitNextFrameForTests)
+  IPC_END_MESSAGE_MAP()
+  return false;
+}
+
+void RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    OnWaitNextFrameForTests(int routing_id) {
+  if (compositor_task_runner_) {
+    compositor_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&RenderFrameMetadataObserverImpl::SetEnabled,
+                                  base::Unretained(impl_), true, routing_id));
+  }
+}
+
 }  // namespace
 
 // RenderWidget ---------------------------------------------------------------
@@ -569,6 +675,11 @@ void RenderWidget::Init(const ShowCallback& show_callback,
   mouse_lock_dispatcher_.reset(new RenderWidgetMouseLockDispatcher(this));
 
   RenderThread::Get()->AddRoute(routing_id_, this);
+  // Create the observer before the main thread is blocked by javascript. So
+  // that test IPCs can still be handled.
+  render_frame_metadata_observer_.reset(
+      new RenderFrameMetadataObserverImpl(routing_id_));
+
   // Take a reference on behalf of the RenderThread.  This will be balanced
   // when we receive ViewMsg_Close.
   AddRef();
@@ -2572,6 +2683,10 @@ void RenderWidget::UnregisterBrowserPlugin(BrowserPlugin* browser_plugin) {
 void RenderWidget::OnWaitNextFrameForTests(int routing_id) {
   QueueMessage(new ViewHostMsg_WaitForNextFrameForTests_ACK(routing_id),
                MESSAGE_DELIVERY_POLICY_WITH_VISUAL_STATE);
+  if (render_frame_metadata_observer_) {
+    compositor_->SetRenderFrameObserver(
+        std::move(render_frame_metadata_observer_));
+  }
 }
 
 float RenderWidget::GetOriginalDeviceScaleFactor() const {

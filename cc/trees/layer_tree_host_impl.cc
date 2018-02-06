@@ -72,6 +72,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/render_frame_metadata.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
@@ -1915,6 +1916,12 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
 
   active_tree()->FinishSwapPromises(&metadata, &render_frame_metadata);
 
+  if (render_frame_metadata_observer_ &&
+      render_frame_metadata_observer_->enabled()) {
+    render_frame_metadata_observer_->OnRenderFrameSubmission(
+        &render_frame_metadata);
+  }
+
   metadata.latency_info.emplace_back(ui::SourceEventType::FRAME);
   ui::LatencyInfo& new_latency_info = metadata.latency_info.back();
   if (CommitToActiveTree()) {
@@ -1968,6 +1975,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
         base::StringPrintf("Compositing.%s.CompositorFrame.Quads", client_name),
         total_quad_count);
   }
+
   layer_tree_frame_sink_->SubmitCompositorFrame(std::move(compositor_frame));
 
   // Clears the list of swap promises after calling DidSwap on each of them to
@@ -3745,6 +3753,13 @@ void LayerTreeHostImpl::UpdateImageDecodingHints(
         decoding_mode_map) {
   tile_manager_.checker_image_tracker().UpdateImageDecodingHints(
       std::move(decoding_mode_map));
+}
+
+void LayerTreeHostImpl::SetRenderFrameObserver(
+    std::unique_ptr<RenderFrameMetadataObserver> observer) {
+  render_frame_metadata_observer_ = std::move(observer);
+  render_frame_metadata_observer_->SetCompositorTaskRunner(
+      task_runner_provider_->ImplThreadTaskRunner());
 }
 
 InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
