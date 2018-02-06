@@ -34,6 +34,24 @@
       "revId": "443fc2c74be4a97b4fdad213cccc9414a7391d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9841a7a1_26d01964",
+        "filename": "testing/libfuzzer/proto/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2018-02-06T20:44:57Z",
+      "side": 1,
+      "message": "Done\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/905224",
+      "parentUuid": "8c0d90d5_120ec289",
+      "revId": "443fc2c74be4a97b4fdad213cccc9414a7391d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
