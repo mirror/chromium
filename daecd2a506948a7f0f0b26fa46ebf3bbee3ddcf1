@@ -16,6 +16,24 @@
       "revId": "daecd2a506948a7f0f0b26fa46ebf3bbee3ddcf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a813a1_68cede9c",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-02-06T20:43:56Z",
+      "side": 1,
+      "message": "1. For the ui::Compositor we could have it call some HostFrameSinkManager method to destroy CFS first, although that would be different than renderer case...\n2. For renderer (the code change below) that would be harder, as it would require an extra IPC from renderer to browser. The renderer just requests a new mojom::CFS that replaces the old one for non-VizDisplayCompositor. We could change how the non-VizDisplayCompositor path works, but I\u0027m not sure if there is much value in it.\n3. The renderer process destroys/recreates ClientLayerTreeFrameSink and browser/gpu process (depending on if VizDisplayCompositor is on) destroys/recreates CompositorFrameSinkSupport.",
+      "parentUuid": "a899c557_59b4b8b5",
+      "revId": "daecd2a506948a7f0f0b26fa46ebf3bbee3ddcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
