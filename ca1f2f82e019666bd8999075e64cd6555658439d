@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c227b7c_1a1a3bf6",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T09:01:13Z",
+      "side": 1,
+      "message": "i think this is better documented as:\n  # The Chrome archive is compressed in official builds to reduce the size of\n  # the installer. Ccomponent builds, a build mode targeting developers, do not\n  # compress so as to provide quicker build-test cycles.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 65
+      },
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0465932d_23c844f0",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T09:01:13Z",
+      "side": 1,
+      "message": "nit: i prefer something like do_not_compress_archive, bypass_archive_compression, or skip_archive_compression",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b715ad03_f37e72b4",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T09:01:13Z",
+      "side": 1,
+      "message": "this and the conditional for WriteResourceToDirectory are both specific to the component build and are not needed for the \"don\u0027t compress the archive\" mode for static builds.",
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae36e19_b2a39621",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T09:01:13Z",
+      "side": 1,
+      "message": "// Archive compression may be bypassed for faster developer turnaround.",
+      "revId": "ca1f2f82e019666bd8999075e64cd6555658439d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
