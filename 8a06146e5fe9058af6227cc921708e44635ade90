@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0cf339e0_69dfea35",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-06T08:41:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the shadow page has to do with this... my suspicion is we currently just don\u0027t support ServiceWorker object in SharedWorker. \n\nTo get a ServiceWorkerRegistration or ServiceWorker object, I think you need to have a WebServiceWorkerProvider, which if I remember correctly we don\u0027t create for SharedWorker: we don\u0027t implement ServiceWorkerContainer/navigator.serviceWorker for SharedWorker, but we do implement request interception. See crbug.com/371690.\n\nI don\u0027t recall how shared worker clients run on the main thread due to the shadow page. The shadow page we only use for loading the worker script and maybe for doing resource requests from the worker (but I think that changed with off main thread fetch).\n\n+kinuko, horo if they can fill in details.",
+      "parentUuid": "58df3322_07cb056f",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48e19ecb_ffa9cd02",
         "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
         "patchSetId": 3
