@@ -110,6 +110,14 @@ void WinWindow::ReleaseCapture() {
     ::ReleaseCapture();
 }
 
+void WinWindow::LockKeys(const std::vector<int>& native_key_codes) {
+  NOTIMPLEMENTED();
+}
+
+void WinWindow::UnlockKeys() {
+  NOTIMPLEMENTED();
+}
+
 void WinWindow::ToggleFullscreen() {}
 
 void WinWindow::Maximize() {}

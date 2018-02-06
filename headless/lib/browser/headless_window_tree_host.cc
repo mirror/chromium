@@ -75,6 +75,11 @@ void HeadlessWindowTreeHost::SetCapture() {}
 
 void HeadlessWindowTreeHost::ReleaseCapture() {}
 
+void HeadlessWindowTreeHost::LockKeys(
+    const std::vector<int>& native_key_codes) {}
+
+void HeadlessWindowTreeHost::UnlockKeys() {}
+
 void HeadlessWindowTreeHost::SetCursorNative(gfx::NativeCursor cursor_type) {}
 
 void HeadlessWindowTreeHost::MoveCursorToScreenLocationInPixels(

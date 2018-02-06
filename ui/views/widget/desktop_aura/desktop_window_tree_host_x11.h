@@ -163,6 +163,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
   gfx::Point GetLocationOnScreenInPixels() const override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void SetCursorNative(gfx::NativeCursor cursor) override;
   void MoveCursorToScreenLocationInPixels(
       const gfx::Point& location_in_pixels) override;

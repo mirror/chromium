@@ -1291,6 +1291,15 @@ void DesktopWindowTreeHostX11::ReleaseCapture() {
   }
 }
 
+void DesktopWindowTreeHostX11::LockKeys(
+    const std::vector<int>& native_key_codes) {
+  NOTIMPLEMENTED();
+}
+
+void DesktopWindowTreeHostX11::UnlockKeys() {
+  NOTIMPLEMENTED();
+}
+
 void DesktopWindowTreeHostX11::SetCursorNative(gfx::NativeCursor cursor) {
   XDefineCursor(xdisplay_, xwindow_, cursor.platform());
 }

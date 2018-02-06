@@ -6,6 +6,7 @@
 #define UI_PLATFORM_WINDOW_PLATFORM_WINDOW_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/strings/string16.h"
 #include "ui/base/cursor/cursor.h"
@@ -44,6 +45,9 @@ class PlatformWindow {
 
   virtual void SetCapture() = 0;
   virtual void ReleaseCapture() = 0;
+
+  virtual void LockKeys(const std::vector<int>& native_key_codes) = 0;
+  virtual void UnlockKeys() = 0;
 
   virtual void ToggleFullscreen() = 0;
   virtual void Maximize() = 0;

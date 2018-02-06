@@ -47,6 +47,10 @@ void HeadlessWindow::SetCapture() {}
 
 void HeadlessWindow::ReleaseCapture() {}
 
+void HeadlessWindow::LockKeys(const std::vector<int>& native_key_codes) {}
+
+void HeadlessWindow::UnlockKeys() {}
+
 void HeadlessWindow::ToggleFullscreen() {}
 
 void HeadlessWindow::Maximize() {}

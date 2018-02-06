@@ -5,6 +5,10 @@
 #ifndef UI_VIEWS_WIDGET_DESKTOP_AURA_DESKTOP_WINDOW_TREE_HOST_WIN_H_
 #define UI_VIEWS_WIDGET_DESKTOP_AURA_DESKTOP_WINDOW_TREE_HOST_WIN_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/views/views_export.h"
@@ -127,6 +131,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostWin
   gfx::Point GetLocationOnScreenInPixels() const override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void SetCursorNative(gfx::NativeCursor cursor) override;
   void OnCursorVisibilityChangedNative(bool show) override;
   void MoveCursorToScreenLocationInPixels(

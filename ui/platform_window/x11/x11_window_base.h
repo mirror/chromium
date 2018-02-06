@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 
+#include <memory>
+#include <vector>
+
 #include "base/callback.h"
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
@@ -37,6 +40,8 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;
