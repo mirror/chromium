@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e18b386_fcd905f8",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-06T16:12:03Z",
+      "side": 1,
+      "message": "does this file need a header guard? We shouldn\u0027t actually include it more than once. Perhaps a check instead of an ifndef?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 12
+      },
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
