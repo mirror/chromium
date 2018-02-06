@@ -23,6 +23,7 @@ class GURL;
 namespace content {
 
 class FrameTreeNode;
+class MockNavigationClientImpl;
 class NavigationHandle;
 class NavigationHandleImpl;
 class RenderFrameHost;
@@ -384,6 +385,9 @@ class NavigationSimulator : public WebContentsObserver {
   // Temporarily holds a closure that will be called on navigation deferral
   // until the NavigationHandle for this navigation has been created.
   base::Closure on_defer_callback_;
+
+  // Unbound navigation request
+  std::unique_ptr<MockNavigationClientImpl> navigation_client_impl_;
 
   base::WeakPtrFactory<NavigationSimulator> weak_factory_;
 };

@@ -514,11 +514,6 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
       navigation_request_.get());
 
-  // The renderer should be informed if the caller allows to do so and the
-  // navigation came from a BeginNavigation IPC.
-  int need_to_inform_renderer =
-      inform_renderer && navigation_request_->from_begin_navigation();
-
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
   navigation_request_.reset();
@@ -536,16 +531,6 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   if (site_instance_type ==
       NavigationRequest::AssociatedSiteInstanceType::CURRENT) {
     current_frame_host()->ClearPendingWebUI();
-  }
-
-  // If the navigation is renderer-initiated, the renderer should also be
-  // informed that the navigation stopped if needed. In the case the renderer
-  // process asked for the navigation to be aborted, e.g. following a
-  // document.open, do not send an IPC to the renderer process as it already
-  // expects the navigation to stop.
-  if (need_to_inform_renderer) {
-    current_frame_host()->Send(
-        new FrameMsg_DroppedNavigation(current_frame_host()->GetRoutingID()));
   }
 }
 

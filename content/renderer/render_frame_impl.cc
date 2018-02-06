@@ -1674,7 +1674,6 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SwapIn, OnSwapIn)
     IPC_MESSAGE_HANDLER(FrameMsg_Delete, OnDeleteFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_Stop, OnStop)
-    IPC_MESSAGE_HANDLER(FrameMsg_DroppedNavigation, OnDroppedNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_ContextMenuClosed, OnContextMenuClosed)
     IPC_MESSAGE_HANDLER(FrameMsg_CustomContextMenuAction,
@@ -4576,7 +4575,6 @@ blink::WebString RenderFrameImpl::GetDevToolsFrameToken() {
 
 void RenderFrameImpl::AbortClientNavigation() {
   browser_side_navigation_pending_ = false;
-  Send(new FrameHostMsg_AbortNavigation(routing_id_));
 }
 
 void RenderFrameImpl::DidChangeSelection(bool is_empty_selection) {
@@ -5228,6 +5226,8 @@ void RenderFrameImpl::OnStop() {
 }
 
 void RenderFrameImpl::OnDroppedNavigation() {
+  LOG(ERROR) << "OnDroppedNavigationOnDroppedNavigationOnDroppedNavigationOnDro"
+                "ppedNavigation";
   browser_side_navigation_pending_ = false;
   browser_side_navigation_pending_url_ = GURL();
   frame_->ClientDroppedNavigation();
@@ -6715,8 +6715,28 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           is_form_submission, searchable_form_url, searchable_form_encoding,
           initiator_origin, client_side_redirect_url);
 
+  WebDocumentLoader* document_loader = frame_->GetProvisionalDocumentLoader();
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(document_loader);
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+
+  mojom::NavigationClientPtr navigation_client;
+  mojom::NavigationClientRequest navigation_client_request =
+      mojo::MakeRequest(&navigation_client);
+
+  auto navigation_client_binding(
+      std::make_unique<mojo::Binding<mojom::NavigationClient>>(
+          this, std::move(navigation_client_request)));
+  navigation_client_binding->set_connection_error_handler(base::BindOnce(
+      &RenderFrameImpl::OnDroppedNavigation, base::Unretained(this)));
+
+  navigation_state->set_navigation_client_binding(
+      std::move(navigation_client_binding));
+
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
-                                  std::move(begin_navigation_params));
+                                  std::move(begin_navigation_params),
+                                  std::move(navigation_client));
 }
 
 void RenderFrameImpl::LoadDataURL(

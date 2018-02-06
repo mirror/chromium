@@ -198,6 +198,8 @@ static_library("test_support") {
     "mock_keyboard.h",
     "mock_keyboard_driver_win.cc",
     "mock_keyboard_driver_win.h",
+    "mock_navigation_client.cc",
+    "mock_navigation_client.h",
     "mock_overscroll_observer.h",
     "mock_permission_manager.cc",
     "mock_permission_manager.h",

@@ -841,7 +841,8 @@ void NavigatorImpl::OnBeforeUnloadACK(FrameTreeNode* frame_tree_node,
 void NavigatorImpl::OnBeginNavigation(
     FrameTreeNode* frame_tree_node,
     const CommonNavigationParams& common_params,
-    mojom::BeginNavigationParamsPtr begin_params) {
+    mojom::BeginNavigationParamsPtr begin_params,
+    mojom::NavigationClientPtr navigation_client) {
   // TODO(clamy): the url sent by the renderer should be validated with
   // FilterURL.
   // This is a renderer-initiated navigation.
@@ -866,10 +867,6 @@ void NavigatorImpl::OnBeginNavigation(
   if (ongoing_navigation_request &&
       ongoing_navigation_request->browser_initiated() &&
       !common_params.has_user_gesture) {
-    RenderFrameHost* current_frame_host =
-        frame_tree_node->render_manager()->current_frame_host();
-    current_frame_host->Send(
-        new FrameMsg_DroppedNavigation(current_frame_host->GetRoutingID()));
     return;
   }
 
@@ -896,7 +893,8 @@ void NavigatorImpl::OnBeginNavigation(
       NavigationRequest::CreateRendererInitiated(
           frame_tree_node, pending_entry, common_params,
           std::move(begin_params), controller_->GetLastCommittedEntryIndex(),
-          controller_->GetEntryCount(), override_user_agent));
+          controller_->GetEntryCount(), override_user_agent,
+          std::move(navigation_client)));
   NavigationRequest* navigation_request = frame_tree_node->navigation_request();
 
   // For main frames, NavigationHandle will be created after the call to
