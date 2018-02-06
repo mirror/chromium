@@ -28,8 +28,6 @@ content::ResourceThrottle* MaybeCreateAwSafeBrowsingResourceThrottle(
     scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
     AwSafeBrowsingWhitelistManager* whitelist_manager);
 
-bool IsCancelledBySafeBrowsing(const net::URLRequest* request);
-
 // AwSafeBrowsingPrallelResourceThrottle uses a WebView-specific
 // safe_browsing::UrlCheckerDelegate implementation with its base class
 // safe_browsing::BaseParallelResourceThrottle.
@@ -53,11 +51,6 @@ class AwSafeBrowsingParallelResourceThrottle
       AwSafeBrowsingWhitelistManager* whitelist_manager);
 
   ~AwSafeBrowsingParallelResourceThrottle() override;
-
-  // safe_browsing::BaseParallelResourceThrottle overrides:
-  void CancelResourceLoad() override;
-
-  net::URLRequest* request_;
 
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingParallelResourceThrottle);
 };
