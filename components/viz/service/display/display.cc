@@ -207,14 +207,8 @@ void Display::InitializeRenderer() {
       output_surface_->context_provider(), bitmap_manager_);
 
   if (output_surface_->context_provider()) {
-    if (!settings_.use_skia_renderer) {
-      renderer_ = std::make_unique<GLRenderer>(
-          &settings_, output_surface_.get(), resource_provider_.get(),
-          current_task_runner_);
-    } else {
-      renderer_ = std::make_unique<SkiaRenderer>(
-          &settings_, output_surface_.get(), resource_provider_.get());
-    }
+    renderer_ = std::make_unique<SkiaRenderer>(
+        &settings_, output_surface_.get(), resource_provider_.get());
   } else if (output_surface_->vulkan_context_provider()) {
 #if BUILDFLAG(ENABLE_VULKAN)
     renderer_ = std::make_unique<SkiaRenderer>(
