@@ -2516,8 +2516,10 @@ void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
   WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 
-void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
+void RenderWidgetHostViewAura::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& surface_id) {
   WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
 }
 

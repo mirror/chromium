@@ -182,9 +182,10 @@ IPC_MESSAGE_CONTROL2(BrowserPluginMsg_AdvanceFocus,
 
 // When a guest resizes due to auto-resize, this message informs the
 // BrowserPlugin to request a new viz::LocalSurfaceId.
-IPC_MESSAGE_CONTROL2(BrowserPluginMsg_ResizeDueToAutoResize,
+IPC_MESSAGE_CONTROL3(BrowserPluginMsg_ResizeDueToAutoResize,
                      int /* browser_plugin_instance_id */,
-                     uint64_t /* sequence_number */)
+                     uint64_t /* sequence_number */,
+                     base::Optional<viz::LocalSurfaceId> /* surface_id */)
 
 // When the guest starts/stops listening to touch events, it needs to notify the
 // plugin in the embedder about it.

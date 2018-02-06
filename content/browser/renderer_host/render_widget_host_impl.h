@@ -583,6 +583,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       viz::mojom::CompositorFrameSinkRequest request,
       viz::mojom::CompositorFrameSinkClientPtr client);
 
+  const viz::LocalSurfaceId& last_local_surface_id() {
+    return last_local_surface_id_;
+  }
+
   const viz::CompositorFrameMetadata& last_frame_metadata() {
     return last_frame_metadata_;
   }
