@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d787069_429b8c5b",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "that\u0027s a very good point.  i hadn\u0027t considered final classes at all.\n\ni\u0027m afraid that i don\u0027t understand what you\u0027re proposing, though.  how does moving it to be a member help us?",
+      "parentUuid": "31de140d_15e51057",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eec57f64_3fd68f79",
         "filename": "media/base/post_only_owner.h",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2018-02-06T18:26:15Z",
       "side": 1,
       "message": "Why?",
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab25f56_c016d7df",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "just seemed natural, like an empty unique_ptr or scoped_refptr.\n\nit also helped the test for move-assignment.  otherwise, it would need to create-and-initialize a dummy object as the target of the move.\n\none might argue that we could omit move assignment entirely if we also omit the empty ctor.\n\ndo you have a preference?",
+      "parentUuid": "eec57f64_3fd68f79",
       "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "67121ac9_8533ef3f",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ab0fbc_bf85435c",
+      "range": {
+        "startLine": 52,
+        "startChar": 33,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76fae01e_143f1f3f",
         "filename": "media/base/post_only_owner.h",
         "patchSetId": 10
@@ -79,6 +145,24 @@
       "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ee4c25_b4d994c3",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "one example is mojo video decoder -- it creates a VideoFrameFactory for MCVD, and transfers ownership to MCVD.  tests send in a mock.",
+      "parentUuid": "76fae01e_143f1f3f",
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c5c9aa0a_00b85bfb",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "thanks, i didn\u0027t realize that!  done, here and elsewhere.",
+      "parentUuid": "834e8e1a_bab1c38d",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 16
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff7c7989_e9f5afb7",
         "filename": "media/base/post_only_owner.h",
         "patchSetId": 10
@@ -125,6 +233,30 @@
       "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f90e7c_02bdd087",
+        "filename": "media/base/post_only_owner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-06T21:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff7c7989_e9f5afb7",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 76
+      },
+      "revId": "23fb049bf61567d328c7c5da0f77080691603f84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
