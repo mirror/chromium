@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "221ebe29_9961d6cc",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-02-06T02:15:52Z",
+      "side": 1,
+      "message": "didn\u0027t notice this last time.. can we just move this out of content then? the rule of no implementation in content_public should still apply",
+      "revId": "fd72e72fd6c16f4cf1bd996266c074a67e8ee4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "201cbf42_96b01fc8",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/ContentViewCore.java",
         "patchSetId": 1
