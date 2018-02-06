@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "227fb4cf_4fe32287",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c40b052_ca416f50",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a59fe9a_ef5f17c1",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b5a353b_2d087a5b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a59fe9a_ef5f17c1",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 65
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1372bc47_cc17d7d2",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-27T02:13:59Z",
       "side": 1,
       "message": "It would also be nice to log just a general-purpose UMA for this right here in this file.  \"Detected card with valid expiration date\" vs. \"Detected card without valid expiration date\" would at least tell us how big this problem is.",
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca813e5_617ecc70",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Logging \"detection state\" (bitmap of fields detected) is good idea but does not \"CardUploadDecisionMetric\" already captures that ? This was my question on other day on whether we are logging \"state\" or \"actions taken based on state\". CardUploadDecisionMetric is already capturing both. Is there anything that this detection state captures that is not there in CardUploadDecisionMetric",
+      "parentUuid": "1372bc47_cc17d7d2",
       "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e8b0ad8f_13183fb9",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db88549_5400f734",
+      "range": {
+        "startLine": 326,
+        "startChar": 34,
+        "endLine": 326,
+        "endChar": 36
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95819ef_1acd1856",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 1
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "23a5eee0_7974016d",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95819ef_1acd1856",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "724533b2_2146f1aa",
         "filename": "components/autofill/core/browser/form_data_importer.cc",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-27T02:13:59Z",
       "side": 1,
       "message": "For instance, these two lines could now trigger for a card without expiration.  Please double-check that it wouldn\u0027t make them crash or overwrite existing cards with bad data.",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 58
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d12e04_2a1284b1",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Did check it (will test in canary too). Credit card expirt year and month are set to \"zero\". so this migration should not have any issue. Flag protected the change, so while we rampup we can make sure nothing is crashing.",
+      "parentUuid": "724533b2_2146f1aa",
       "range": {
         "startLine": 340,
         "startChar": 4,
@@ -154,6 +292,30 @@
       "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6a3793_78c66163",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-06T02:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea1bc1e_7b8dab53",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 374,
+        "endChar": 7
+      },
+      "revId": "cbbf7c3de7f582f04911e4b6b4ac20756c50f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
