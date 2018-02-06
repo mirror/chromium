@@ -22,6 +22,30 @@
       "revId": "18208c1eefee933402e7cad2ff33172f59e354bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b985a5_6c8986b3",
+        "filename": "base/android/java/src/org/chromium/base/ApiCompatibilityUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-02-06T10:25:44Z",
+      "side": 1,
+      "message": "I moved this so other calls (specifically in this case the call I add in Preferences) would benefit from the extra logic.\n\nMy understanding of the bug this code fixes is that on that certain Android version, FinishAndRemoveTaskWithRetry may not actually finish the Activity. It seems a good thing that \u0027finishAndRemoveTask\u0027 should definitely finish the activity, so doing it here should hopefully avoid bugs of a similar nature.\n\nI should update the comment though.",
+      "parentUuid": "bddf2328_5039e205",
+      "range": {
+        "startLine": 354,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 9
+      },
+      "revId": "18208c1eefee933402e7cad2ff33172f59e354bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
