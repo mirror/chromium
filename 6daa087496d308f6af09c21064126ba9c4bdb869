@@ -22,6 +22,30 @@
       "revId": "6daa087496d308f6af09c21064126ba9c4bdb869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430c50ca_891762e5",
+        "filename": "build/install-build-deps.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2018-02-06T23:59:49Z",
+      "side": 0,
+      "message": "I moved it a couple of lines up to be in alphabetical order.",
+      "parentUuid": "8d817c28_7d486ef0",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 12
+      },
+      "revId": "6daa087496d308f6af09c21064126ba9c4bdb869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
