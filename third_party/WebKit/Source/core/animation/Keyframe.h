@@ -187,6 +187,9 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
       double offset) const = 0;
 
   // Comparator function for sorting Keyframes based on their offsets.
+  //
+  // Both |a| and |b| must have non-null offsets, or the comparator output is
+  // undefined.
   static bool CompareOffsets(const scoped_refptr<Keyframe>&,
                              const scoped_refptr<Keyframe>&);
 

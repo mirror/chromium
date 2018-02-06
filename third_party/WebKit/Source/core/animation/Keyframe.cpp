@@ -37,8 +37,6 @@ void Keyframe::AddKeyframePropertiesToV8Object(
 
 bool Keyframe::CompareOffsets(const scoped_refptr<Keyframe>& a,
                               const scoped_refptr<Keyframe>& b) {
-  if (!a->Offset() || !b->Offset())
-    return false;
   return a->CheckedOffset() < b->CheckedOffset();
 }
 
