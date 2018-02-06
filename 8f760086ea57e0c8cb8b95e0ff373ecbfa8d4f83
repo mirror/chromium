@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7fc4352_470d70d0",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T21:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9abadcdf_4479142b",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "927dfbe7_db540a57",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0e2d9cad_a9640f28",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T21:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "927dfbe7_db540a57",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a1c929_a6cdd77e",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-06T16:21:45Z",
       "side": 1,
       "message": "I think this should just return a fixed number (16ms). Even if the display\u0027s frame rate is lower than 60, we still want to block for the same amount of time on the child, right?",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 537,
+        "endChar": 1
+      },
+      "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3b85eb_161d2bfa",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T21:27:00Z",
+      "side": 1,
+      "message": "I\u0027m assuming you mean higher? I guess it depends...one could argue that a user\u0027s expectations of smoothness go up as the frame rate goes up. In that case, having a pure, time-based deadline means more time relative to the frame count per unit of time is spent blocked as the FPS goes up.\n\nCertainly with this patch, maybe the deadline policy can allow for both frame count or time. Both should be relatively easy to implement. I don\u0027t want to make that decision here, though.",
+      "parentUuid": "c6a1c929_a6cdd77e",
       "range": {
         "startLine": 526,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0cbf631d_7f9d9f62",
+        "filename": "components/viz/service/surfaces/surface_dependency_deadline.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T21:27:00Z",
+      "side": 1,
+      "message": "Good catch, we should only do this if we don\u0027t have an existing deadline. Fixed.",
+      "parentUuid": "a7801f5c_9773551c",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "529e03c3_6d6a4a59",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e68d5c_9859a34f",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-06T21:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529e03c3_6d6a4a59",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "8f760086ea57e0c8cb8b95e0ff373ecbfa8d4f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
