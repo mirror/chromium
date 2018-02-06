@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9b8df9e1_1a4e1bac",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_common.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-06T23:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ff0859_1cadbdfc",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15bd71e_2ded1126",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
         "patchSetId": 11
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "a4aa553d_5acb1c1d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-06T23:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15bd71e_2ded1126",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d00a8e9_ecc9625c",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
         "patchSetId": 11
@@ -67,6 +103,24 @@
       "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b565f04_462310fb",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_webui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-06T23:08:20Z",
+      "side": 1,
+      "message": "I believe this is the new style, so I\u0027ve removed \u0027Overridden from \u0027 from all of the other entries instead.",
+      "parentUuid": "2d00a8e9_ecc9625c",
+      "revId": "c137a3f0de9da3b29756c050a47b846a576596bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
