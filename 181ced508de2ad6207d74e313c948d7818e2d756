@@ -118,6 +118,47 @@
       "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e575bc2d_f66130ab",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-06T14:55:33Z",
+      "side": 1,
+      "message": "Thanks for the background.",
+      "parentUuid": "9ffd3f03_0e8a9515",
+      "range": {
+        "startLine": 703,
+        "startChar": 27,
+        "endLine": 703,
+        "endChar": 55
+      },
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762f4a3f_f2b1fdc8",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-06T14:55:33Z",
+      "side": 1,
+      "message": "nit: I\u0027ll note that it\u0027s a bit confusing that the mojom condition is different than the C++ code. however i\u0027ll leave that up to you, and we can see how confusing this turns out to be once this is used in many places.",
+      "revId": "181ced508de2ad6207d74e313c948d7818e2d756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
