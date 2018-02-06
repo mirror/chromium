@@ -522,8 +522,6 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   MaybeRecordCTPolicyComplianceUseCounter(GetFrame(), resource->GetType(),
                                           response.GetCTPolicyCompliance());
 
-  ParseAndPersistClientHints(response);
-
   if (response_type == ResourceResponseType::kFromMemoryCache) {
     // Note: probe::willSendRequest needs to precede before this probe method.
     probe::markResourceAsCached(GetFrame(), MasterDocumentLoader(), identifier);
@@ -551,6 +549,14 @@ void FrameFetchContext::DispatchDidReceiveResponse(
     // haven't committed yet, and we cannot load resources, only preconnect.
     resource_loading_policy = LinkLoader::kDoNotLoadResources;
   }
+  // Client hints preferences should be persisted only for document-level
+  // resources.
+  KURL main_frame_url = Url();
+  if (main_frame_url == NullURL())
+    main_frame_url = document_loader_->Url();
+  if (response.Url().Host() == main_frame_url.Host())
+    ParseAndPersistClientHints(response);
+
   LinkLoader::LoadLinksFromHeader(
       response.HttpHeaderField(HTTPNames::Link), response.Url(), *GetFrame(),
       document_, NetworkHintsInterfaceImpl(), resource_loading_policy,
