@@ -782,6 +782,11 @@ void NavigationHandleImpl::DidCommitNavigation(
   DCHECK_EQ(frame_tree_node_, render_frame_host->frame_tree_node());
   CHECK_EQ(url_, params.url);
 
+  // Will crash when the transition was FORWARD_BACK and becomes something else
+  // for mysterious reasons.
+  CHECK(!(transition_ & ui::PAGE_TRANSITION_FORWARD_BACK) ||
+        params.transition & ui::PAGE_TRANSITION_FORWARD_BACK);
+
   did_replace_entry_ = did_replace_entry;
   method_ = params.method;
   has_user_gesture_ = (params.gesture == NavigationGestureUser);
