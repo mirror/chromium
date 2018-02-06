@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1bdc64b9_d48227f7",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-06T12:42:55Z",
+      "side": 1,
+      "message": "Now I know shared worker clients do not support navigator.ServiceWorker. So I suppose this function GetOrCreateServiceWorker() never runs on a shared worker thread, or perhaps even SWDispatcher itself does not exist at all on a shared worker thread?",
+      "parentUuid": "0aef3c7b_0ff9013a",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa683f9_4c6bf378",
         "filename": "content/renderer/service_worker/web_service_worker_impl.h",
         "patchSetId": 3
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "47afa14d_270a0942",
+        "filename": "content/renderer/service_worker/web_service_worker_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-06T12:42:55Z",
+      "side": 1,
+      "message": "I see. Thanks all! Shared worker clients won\u0027t never hold any {sw registration, sw} objects. Removed the \u0027shared worker\u0027 comments.",
+      "parentUuid": "80565df2_2984a712",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48e19ecb_ffa9cd02",
         "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
         "patchSetId": 3
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "48e19ecb_ffa9cd02",
+      "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35434978_3013ba4d",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_object.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-06T12:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a807638f_09d23451",
       "revId": "8a06146e5fe9058af6227cc921708e44635ade90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
