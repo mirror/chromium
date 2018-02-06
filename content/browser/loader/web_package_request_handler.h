@@ -7,16 +7,26 @@
 
 #include "base/memory/weak_ptr.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/public/common/resource_type.h"
+
+namespace net {
+class URLRequestContext;
+}  // namespace net
 
 namespace content {
 
+class ResourceContext;
+class URLLoaderFactoryGetter;
 class WebPackageLoader;
 
 class WebPackageRequestHandler final : public URLLoaderRequestHandler {
  public:
   static bool IsSupportedMimeType(const std::string& mime_type);
 
-  WebPackageRequestHandler();
+  WebPackageRequestHandler(
+      URLLoaderFactoryGetter* default_url_loader_factory_getter,
+      ResourceContext* resource_context,
+      net::URLRequestContext* request_context);
   ~WebPackageRequestHandler() override;
 
   // URLLoaderRequestHandler implementation
@@ -37,6 +47,10 @@ class WebPackageRequestHandler final : public URLLoaderRequestHandler {
   // the loader is re-bound to the new client for the redirected request in
   // StartResponse.
   std::unique_ptr<WebPackageLoader> web_package_loader_;
+
+  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  ResourceContext* resource_context_;
+  net::URLRequestContext* request_context_;
 
   base::WeakPtrFactory<WebPackageRequestHandler> weak_factory_;
 
