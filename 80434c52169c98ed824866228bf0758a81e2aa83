@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82018cfc_f2575989",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "nit: Rename this kTabTitleColor_ActiveHighlight, and optionally rename kTabTitleColor_Active to kTabTitleColor_ActiveBorder.",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab5a917_aec6e150",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "Some of these checks make me wonder about how the two unused modes should behave; should vertical border TabbedPanes still elide their tab text? Probably not? It would be nice, but not critical for these unused modes to work reasonably well (ie. test them manually and with automated tests, add views_examples, post screenshots to the bug)",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0807511_ed0ad85d",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "Generally, I would prefer simple accessors that return the alignment and the style, rather than helper functions that return equivalence with one value. While it\u0027s currently true that the !IsBorderStyle implies the highlight style, adding another style would complicate these kinds of checks. It\u0027s better to have the callers check the actual value against their intended target (ie. tabbed_pane_-\u003estyle() \u003d\u003d kHighlight)",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823d52a1_5936fe38",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "nit: \"Padding\", ditto below. Please take a moment to review your CLs yourself before asking for review, that\u0027ll save a lot of round-trip time for simple spelling and grammar issues.",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc2ad3d_aba4188a",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "Why shouldn\u0027t this apply to secondary UI MD?",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fecacbb_1c356162",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "Instead of painting a transparent round rect for each unselected tab, skip this whole block (ie. early return above if !selected())",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff77090_0fb9085e",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "This should be SetTabStyle, unix_hacker is for simple, inlined accessors.",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257982e8_d13c8f35",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "nit: \"style\", I\u0027d also say it\u0027s the style of the tab strip.",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe080dcb_71aab1f4",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "nit: TabStripStyle? Ditto for related accessor functions, identifiers and comments",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2345968a_24cd0d76",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "nit: \"Highlight\"",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1f1e63_569f9305",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-06T00:38:27Z",
+      "side": 1,
+      "message": "ditto: style of the tab strip",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
