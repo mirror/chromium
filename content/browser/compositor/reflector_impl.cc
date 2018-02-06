@@ -32,6 +32,10 @@ ReflectorImpl::ReflectorImpl(ui::Compositor* mirrored_compositor,
 }
 
 ReflectorImpl::~ReflectorImpl() {
+  LOG(ERROR) << "MSW ~ReflectorImpl layers: " << mirroring_layers_.size();
+  for (const auto& layer : mirroring_layers_) {
+    RemoveMirroringLayer(layer->layer);
+  }
 }
 
 void ReflectorImpl::Shutdown() {
@@ -73,6 +77,7 @@ void ReflectorImpl::OnMirroringCompositorResized() {
 }
 
 void ReflectorImpl::AddMirroringLayer(ui::Layer* layer) {
+  LOG(ERROR) << "MSW AddMirroringLayer " << layer; 
   DCHECK(layer->GetCompositor());
   DCHECK(mirroring_layers_.end() == FindLayerData(layer));
 
@@ -83,6 +88,7 @@ void ReflectorImpl::AddMirroringLayer(ui::Layer* layer) {
 }
 
 void ReflectorImpl::RemoveMirroringLayer(ui::Layer* layer) {
+  LOG(ERROR) << "MSW RemoveMirroringLayer " << layer; 
   DCHECK(layer->GetCompositor());
 
   auto iter = FindLayerData(layer);
