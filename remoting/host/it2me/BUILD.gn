@@ -43,12 +43,16 @@ source_set("common") {
 
   deps = [
     "//base:i18n",
+    "//components/policy:generated",
+    "//extensions/browser/api/messaging:messaging_host",
     "//net",
     "//remoting/base",
     "//remoting/host",
+    "//remoting/host/native_messaging",
     "//remoting/protocol",
     "//remoting/resources",
     "//remoting/signaling",
+    "//ui/base",
   ]
 
   if (is_desktop_linux) {
@@ -203,7 +207,10 @@ if (!is_chromeos && enable_remoting_host) {
 
       deps = [
         ":common",
+        "//base:i18n",
         "//build/config:exe_and_shlib_deps",
+        "//remoting/base",
+        "//remoting/base:breakpad",
         "//remoting/host",
         "//remoting/host/native_messaging",
         "//remoting/proto",
