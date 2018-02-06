@@ -10,66 +10,73 @@
 
 #include "base/logging.h"
 
-// Struct Cronet_Exception.
-Cronet_Exception::Cronet_Exception() {}
+// Struct Cronet_Error.
+Cronet_Error::Cronet_Error() {}
 
-Cronet_Exception::~Cronet_Exception() {}
+Cronet_Error::~Cronet_Error() {}
 
-Cronet_ExceptionPtr Cronet_Exception_Create() {
-  return new Cronet_Exception();
+Cronet_ErrorPtr Cronet_Error_Create() {
+  return new Cronet_Error();
 }
 
-void Cronet_Exception_Destroy(Cronet_ExceptionPtr self) {
+void Cronet_Error_Destroy(Cronet_ErrorPtr self) {
   delete self;
 }
 
-// Struct Cronet_Exception setters.
-void Cronet_Exception_set_error_code(Cronet_ExceptionPtr self,
-                                     Cronet_Exception_ERROR_CODE error_code) {
+// Struct Cronet_Error setters.
+void Cronet_Error_set_errorCode(Cronet_ErrorPtr self,
+                                Cronet_Error_ERROR_CODE errorCode) {
   DCHECK(self);
-  self->error_code = error_code;
+  self->errorCode = errorCode;
 }
 
-void Cronet_Exception_set_internal_error_code(Cronet_ExceptionPtr self,
-                                              int32_t internal_error_code) {
+void Cronet_Error_set_message(Cronet_ErrorPtr self, CharString message) {
   DCHECK(self);
-  self->internal_error_code = internal_error_code;
+  self->message = message;
 }
 
-void Cronet_Exception_set_immediately_retryable(Cronet_ExceptionPtr self,
-                                                bool immediately_retryable) {
+void Cronet_Error_set_internalErrorCode(Cronet_ErrorPtr self,
+                                        int32_t internalErrorCode) {
   DCHECK(self);
-  self->immediately_retryable = immediately_retryable;
+  self->internalErrorCode = internalErrorCode;
 }
 
-void Cronet_Exception_set_quic_detailed_error_code(
-    Cronet_ExceptionPtr self,
-    int32_t quic_detailed_error_code) {
+void Cronet_Error_set_immediatelyRetryable(Cronet_ErrorPtr self,
+                                           bool immediatelyRetryable) {
   DCHECK(self);
-  self->quic_detailed_error_code = quic_detailed_error_code;
+  self->immediatelyRetryable = immediatelyRetryable;
 }
 
-// Struct Cronet_Exception getters.
-Cronet_Exception_ERROR_CODE Cronet_Exception_get_error_code(
-    Cronet_ExceptionPtr self) {
+void Cronet_Error_set_quicDetailedErrorCode(Cronet_ErrorPtr self,
+                                            int32_t quicDetailedErrorCode) {
   DCHECK(self);
-  return self->error_code;
+  self->quicDetailedErrorCode = quicDetailedErrorCode;
 }
 
-int32_t Cronet_Exception_get_internal_error_code(Cronet_ExceptionPtr self) {
+// Struct Cronet_Error getters.
+Cronet_Error_ERROR_CODE Cronet_Error_get_errorCode(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->internal_error_code;
+  return self->errorCode;
 }
 
-bool Cronet_Exception_get_immediately_retryable(Cronet_ExceptionPtr self) {
+CharString Cronet_Error_get_message(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->immediately_retryable;
+  return self->message.c_str();
 }
 
-int32_t Cronet_Exception_get_quic_detailed_error_code(
-    Cronet_ExceptionPtr self) {
+int32_t Cronet_Error_get_internalErrorCode(Cronet_ErrorPtr self) {
   DCHECK(self);
-  return self->quic_detailed_error_code;
+  return self->internalErrorCode;
+}
+
+bool Cronet_Error_get_immediatelyRetryable(Cronet_ErrorPtr self) {
+  DCHECK(self);
+  return self->immediatelyRetryable;
+}
+
+int32_t Cronet_Error_get_quicDetailedErrorCode(Cronet_ErrorPtr self) {
+  DCHECK(self);
+  return self->quicDetailedErrorCode;
 }
 
 // Struct Cronet_QuicHint.
@@ -670,3 +677,20 @@ RawDataPtr Cronet_UrlRequestParams_get_annotationsAtIndex(
   DCHECK(index < self->annotations.size());
   return self->annotations[index];
 }
+
+// Struct Cronet_RequestFinishedInfo.
+Cronet_RequestFinishedInfo::Cronet_RequestFinishedInfo() {}
+
+Cronet_RequestFinishedInfo::~Cronet_RequestFinishedInfo() {}
+
+Cronet_RequestFinishedInfoPtr Cronet_RequestFinishedInfo_Create() {
+  return new Cronet_RequestFinishedInfo();
+}
+
+void Cronet_RequestFinishedInfo_Destroy(Cronet_RequestFinishedInfoPtr self) {
+  delete self;
+}
+
+// Struct Cronet_RequestFinishedInfo setters.
+
+// Struct Cronet_RequestFinishedInfo getters.
