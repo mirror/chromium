@@ -208,7 +208,7 @@ void BrowserPlugin::Attach() {
   }
 
   sent_resize_params_ = base::nullopt;
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 void BrowserPlugin::Detach() {
@@ -245,19 +245,26 @@ void BrowserPlugin::CreateMusWindowAndEmbed(
 }
 #endif
 
-void BrowserPlugin::WasResized() {
+void BrowserPlugin::WasResized(
+    const viz::LocalSurfaceId& surface_id_for_auto_resize) {
   bool size_changed = !sent_resize_params_ ||
                       sent_resize_params_->frame_rect.size() !=
                           pending_resize_params_.frame_rect.size() ||
                       sent_resize_params_->sequence_number !=
-                          pending_resize_params_.sequence_number;
+                          pending_resize_params_.sequence_number ||
+                      surface_id_for_auto_resize.is_valid();
 
   bool synchronized_params_changed =
       !sent_resize_params_ || size_changed ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info;
 
-  if (synchronized_params_changed)
+  if (surface_id_for_auto_resize.is_valid()) {
+    local_surface_id_ =
+        parent_local_surface_id_allocator_.set_child_sequence_number(
+            surface_id_for_auto_resize.child_sequence_number());
+  } else if (synchronized_params_changed) {
     local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  }
 
   if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
     compositing_helper_->SetPrimarySurfaceId(
@@ -271,6 +278,9 @@ void BrowserPlugin::WasResized() {
 
   if (resize_params_changed && attached()) {
     // Let the browser know about the updated view rect.
+    // TODO(ericrk): We can avoid sending this message in cases where we are
+    // just accepting a child-allocated LocalSurfaceId, rather than generating
+    // one. https://crbug.com/789259
     BrowserPluginManager::Get()->Send(
         new BrowserPluginHostMsg_UpdateResizeParams(
             browser_plugin_instance_id_, frame_rect(), screen_info(),
@@ -311,13 +321,16 @@ void BrowserPlugin::OnGuestReady(int browser_plugin_instance_id,
   guest_crashed_ = false;
   frame_sink_id_ = frame_sink_id;
   sent_resize_params_ = base::nullopt;
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
-void BrowserPlugin::OnResizeDueToAutoResize(int browser_plugin_instance_id,
-                                            uint64_t sequence_number) {
+void BrowserPlugin::OnResizeDueToAutoResize(
+    int browser_plugin_instance_id,
+    uint64_t sequence_number,
+    base::Optional<viz::LocalSurfaceId> surface_id) {
   pending_resize_params_.sequence_number = sequence_number;
-  WasResized();
+  WasResized(surface_id.has_value() ? surface_id.value()
+                                    : viz::LocalSurfaceId());
 }
 
 void BrowserPlugin::OnSetCursor(int browser_plugin_instance_id,
@@ -402,7 +415,7 @@ void BrowserPlugin::UpdateGuestFocusState(blink::WebFocusType focus_type) {
 
 void BrowserPlugin::ScreenInfoChanged(const ScreenInfo& screen_info) {
   pending_resize_params_.screen_info = screen_info;
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 bool BrowserPlugin::ShouldGuestBeFocused() const {
@@ -524,7 +537,7 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
 
   pending_resize_params_.frame_rect = frame_rect;
   pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
-  WasResized();
+  WasResized(viz::LocalSurfaceId());
 }
 
 void BrowserPlugin::UpdateFocus(bool focused, blink::WebFocusType focus_type) {

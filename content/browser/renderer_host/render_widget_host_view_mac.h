@@ -344,7 +344,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   gfx::Rect GetBoundsInRootWindow() override;
   void OnSynchronizedDisplayPropertiesChanged() override;
   void ResizeDueToAutoResize(const gfx::Size& new_size,
-                             uint64_t sequence_number) override;
+                             uint64_t sequence_number,
+                             const viz::LocalSurfaceId surface_id) override;
   void DidNavigate() override;
 
   bool LockMouse() override;

@@ -29,7 +29,7 @@ class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
   LocalSurfaceId GenerateId();
 
  private:
-  uint32_t next_parent_id_ = 1;
+  uint32_t current_parent_id_ = 0;
   uint32_t child_sequence_number_ = 1;
   base::UnguessableToken nonce_;
 

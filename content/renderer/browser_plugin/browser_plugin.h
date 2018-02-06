@@ -84,7 +84,7 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // currently attached to, if any.
   void Detach();
 
-  void WasResized();
+  void WasResized(const viz::LocalSurfaceId& surface_id_for_auto_resize);
 
   // Returns whether a message should be forwarded to BrowserPlugin.
   static bool ShouldForwardToBrowserPlugin(const IPC::Message& message);
@@ -184,7 +184,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   void OnGuestGone(int instance_id);
   void OnGuestReady(int instance_id, const viz::FrameSinkId& frame_sink_id);
   void OnResizeDueToAutoResize(int browser_plugin_instance_id,
-                               uint64_t sequence_number);
+                               uint64_t sequence_number,
+                               base::Optional<viz::LocalSurfaceId> surface_id);
   void OnSetChildFrameSurface(int instance_id,
                               const viz::SurfaceInfo& surface_info);
   void OnSetContentsOpaque(int instance_id, bool opaque);

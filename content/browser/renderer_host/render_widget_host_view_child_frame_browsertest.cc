@@ -180,7 +180,7 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewChildFrameTest, ChildFrameSinkId) {
 
   // Ensure that the IPC providing the new viz::FrameSinkId. If it does not then
   // this test will timeout.
-  set_expected_frame_sink_id(message_filter->GetOrWaitForId());
+  set_expected_frame_sink_id(message_filter->GetOrWaitForId().frame_sink_id());
 
   shell()->web_contents()->ForEachFrame(
       base::BindRepeating(&RenderWidgetHostViewChildFrameTest::CheckFrameSinkId,

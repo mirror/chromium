@@ -2480,7 +2480,8 @@ void RenderWidgetHostImpl::DelayedAutoResized() {
 
   if (delegate_) {
     delegate_->ResizeDueToAutoResize(this, new_size,
-                                     last_auto_resize_request_number_);
+                                     last_auto_resize_request_number_,
+                                     last_auto_resize_surface_id_);
   }
 }
 

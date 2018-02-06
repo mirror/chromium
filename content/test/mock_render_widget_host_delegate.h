@@ -36,7 +36,8 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
   // RenderWidgetHostDelegate:
   void ResizeDueToAutoResize(RenderWidgetHostImpl* render_widget_host,
                              const gfx::Size& new_size,
-                             uint64_t sequence_number) override;
+                             uint64_t sequence_number,
+                             const viz::LocalSurfaceId& surface_id) override;
   void ScreenInfoChanged() override;
   void GetScreenInfo(ScreenInfo* result) override;
   KeyboardEventProcessingResult PreHandleKeyboardEvent(
