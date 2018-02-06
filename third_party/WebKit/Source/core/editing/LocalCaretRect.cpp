@@ -58,7 +58,7 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
       ComputeInlineAdjustedPosition(position);
 
   if (adjusted.IsNotNull()) {
-    if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
       if (const LayoutBlockFlow* context =
               NGInlineFormattingContextOf(adjusted.GetPosition()))
         return ComputeNGLocalCaretRect(*context, adjusted);
