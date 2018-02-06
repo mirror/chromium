@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a41e73cd_58c978ab",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:20:11Z",
+      "side": 1,
+      "message": "Ok. Perhaps we should do this in a followup cleanup. Basically having N booleans implies (without further knowledge) that there 2^N total states, but not all of them are valid. A finite state machine makes it more obvious which states are valid.",
+      "parentUuid": "15e28938_58e6e50a",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 27
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7c7de6_0a3aec7c",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "No. Should I add it there as well? It was not really possible until the local printing change I landed near the end of last year.",
       "parentUuid": "8a7c7de6_0a3aec7c",
+      "range": {
+        "startLine": 256,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 72
+      },
+      "revId": "e27bd150c311f394d967197a19c8af7319bd3aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee6f737_e6d1fbc1",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:20:11Z",
+      "side": 1,
+      "message": "No need to add the TODO in the old UI. I was just wondering if this was referring to new technical debt because of the componetization, or just existing one.",
+      "parentUuid": "73b21855_6e02c766",
       "range": {
         "startLine": 256,
         "startChar": 5,

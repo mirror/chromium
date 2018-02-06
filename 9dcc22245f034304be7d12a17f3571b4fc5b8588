@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deba9286_ee07a674",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:20:11Z",
+      "side": 1,
+      "message": "I am trying to determine whether this condition would be simpler, if we broke onPrintRequested_ to two separate observers, as follows\n\nobservers: [\n  ...\n  \u0027onPrintRequestedChanged_(state_.printRequested)\u0027,\n  \u0027onPreviewLoadingChanged_(state_.previewLoading)\u0027,\n],\n\n...\n\nonPrintRequestedChanged_: function() {\n  if (!this.state.printRequested || this.state_.previewLoading)\n    return;\n\n  this.sendPrintRequest_();\n},\n\nonPreviewLoadingChanged_: function() {\n  if (!this.previewLoading || !this.printRequested ||\n      !this.destination || !this.destination.capabilities {\n    return;\n  }\n  this.sendPrintRequest_();\n},\n\nsendPrintRequest_: function() {\n  ...\n},\n\nBasically are the |destination| and |destination.capabilities| checks necessary in all cases, or just when previewLoading has changed?",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 173,
+        "endChar": 5
+      },
+      "revId": "9dcc22245f034304be7d12a17f3571b4fc5b8588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e3cced1_15c07399",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:20:11Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "range": {
+        "startLine": 508,
+        "startChar": 27,
+        "endLine": 508,
+        "endChar": 47
+      },
+      "revId": "9dcc22245f034304be7d12a17f3571b4fc5b8588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
