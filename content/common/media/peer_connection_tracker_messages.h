@@ -26,6 +26,8 @@ IPC_MESSAGE_CONTROL1(PeerConnectionTrackerHost_AddPeerConnection,
                      PeerConnectionInfo /* info */)
 IPC_MESSAGE_CONTROL1(PeerConnectionTrackerHost_RemovePeerConnection,
                      int /* lid */)
+IPC_MESSAGE_CONTROL1(PeerConnectionTrackerHost_StopPeerConnection,
+                     int /* lid */)
 IPC_MESSAGE_CONTROL3(PeerConnectionTrackerHost_UpdatePeerConnection,
                      int /* lid */,
                      std::string /* type */,
