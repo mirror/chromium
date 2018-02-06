@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442bea82_a42a175c",
+        "filename": "third_party/WebKit/Source/modules/picture_in_picture/PictureInPictureController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2018-02-06T03:26:01Z",
+      "side": 1,
+      "message": "The spec, https://wicg.github.io/picture-in-picture/#documentorshadowroot-extension, says:\n\n\u003e Return the Picture-in-Picture video element.\n\nHowever, the implementation here doesn\u0027t return the picture_in_picture_element_ as is.\nIt returns the *adjusted* element.\n\nI guess the spec\u0027s wording should be updated. Could you clarify what is intended behavior here?",
+      "revId": "f43d37838d46534aa33f54059825d5e9615a05ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
