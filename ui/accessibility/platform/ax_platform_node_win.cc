@@ -3407,8 +3407,19 @@ int AXPlatformNodeWin::MSAAState() {
   if (ShouldNodeHaveFocusableState(data))
     msaa_state |= STATE_SYSTEM_FOCUSABLE;
 
-  if (data.HasState(ax::mojom::State::kHaspopup))
-    msaa_state |= STATE_SYSTEM_HASPOPUP;
+  const auto has_popup = data.GetAriaHasPopup();
+  switch (has_popup) {
+    case ax::mojom::AriaHasPopup::kTrue:
+    case ax::mojom::AriaHasPopup::kMenu:
+    case ax::mojom::AriaHasPopup::kListbox:
+    case ax::mojom::AriaHasPopup::kTree:
+    case ax::mojom::AriaHasPopup::kGrid:
+    case ax::mojom::AriaHasPopup::kDialog:
+      msaa_state |= STATE_SYSTEM_HASPOPUP;
+      break;
+    default:
+      break;
+  }
 
   // TODO(dougt) unhandled ux::ax::mojom::State::kHorizontal
 

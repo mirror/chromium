@@ -64,6 +64,8 @@ std::string AccessibilityTreeFormatterBlink::IntAttrToString(
   }
 
   switch (attr) {
+    case ax::mojom::IntAttribute::kAriaHasPopup:
+      return ui::ToString(static_cast<ax::mojom::AriaHasPopup>(value));
     case ax::mojom::IntAttribute::kAriaCurrentState:
       return ui::ToString(static_cast<ax::mojom::AriaCurrentState>(value));
     case ax::mojom::IntAttribute::kCheckedState:

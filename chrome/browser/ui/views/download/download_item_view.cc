@@ -496,7 +496,7 @@ void DownloadItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (model_.IsDangerous()) {
     node_data->SetRestriction(ax::mojom::Restriction::kDisabled);
   } else {
-    node_data->AddState(ax::mojom::State::kHaspopup);
+    node_data->SetAriaHasPopup(ax::mojom::AriaHasPopup::kMenu);
   }
 }
 

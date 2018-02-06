@@ -436,11 +436,11 @@ WebAXObject WebAXObject::AriaActiveDescendant() const {
   return WebAXObject(private_->ActiveDescendant());
 }
 
-bool WebAXObject::AriaHasPopup() const {
+WebAXAriaHasPopup WebAXObject::AriaHasPopup() const {
   if (IsDetached())
-    return false;
+    return WebAXAriaHasPopup::kUndefined;
 
-  return private_->AriaHasPopup();
+  return static_cast<WebAXAriaHasPopup>(private_->AriaHasPopup());
 }
 
 bool WebAXObject::IsEditableRoot() const {

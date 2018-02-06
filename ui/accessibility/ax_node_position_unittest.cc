@@ -121,7 +121,8 @@ void AXPositionTest::SetUp() {
   root_.location = gfx::RectF(0, 0, 800, 600);
 
   button_.role = ax::mojom::Role::kButton;
-  button_.AddState(ax::mojom::State::kHaspopup);
+  // DJKim
+  //button_.AddState(ax::mojom::State::kHaspopup);
   button_.SetName("Button");
   button_.location = gfx::RectF(20, 20, 200, 30);
   button_.AddIntListAttribute(ax::mojom::IntListAttribute::kWordStarts,

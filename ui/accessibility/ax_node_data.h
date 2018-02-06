@@ -128,6 +128,12 @@ struct AX_EXPORT AXNodeData {
     return static_cast<ax::mojom::CheckedState>(
         GetIntAttribute(ax::mojom::IntAttribute::kCheckedState));
   }
+
+  ax::mojom::AriaHasPopup GetAriaHasPopup() const {
+    return static_cast<ax::mojom::AriaHasPopup>(
+        GetIntAttribute(ax::mojom::IntAttribute::kAriaHasPopup));
+  }
+
   ax::mojom::DefaultActionVerb GetDefaultActionVerb() const {
     return static_cast<ax::mojom::DefaultActionVerb>(
         GetIntAttribute(ax::mojom::IntAttribute::kDefaultActionVerb));
@@ -153,6 +159,10 @@ struct AX_EXPORT AXNodeData {
   void SetCheckedState(ax::mojom::CheckedState checked_state) {
     AddIntAttribute(ax::mojom::IntAttribute::kCheckedState,
                     static_cast<int32_t>(checked_state));
+  }
+  void SetAriaHasPopup(ax::mojom::AriaHasPopup has_popup) {
+    AddIntAttribute(ax::mojom::IntAttribute::kAriaHasPopup,
+                    static_cast<int32_t>(has_popup));
   }
   void SetDefaultActionVerb(ax::mojom::DefaultActionVerb default_action_verb) {
     AddIntAttribute(ax::mojom::IntAttribute::kDefaultActionVerb,

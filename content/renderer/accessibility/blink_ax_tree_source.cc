@@ -549,6 +549,12 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       dst->AddFloatAttribute(ax::mojom::FloatAttribute::kFontSize,
                              src.FontSize());
 
+    if (src.AriaHasPopup() != blink::WebAXAriaHasPopup::kUndefined) {
+      dst->AddIntAttribute(ax::mojom::IntAttribute::kAriaHasPopup,
+                           static_cast<int32_t>(AXAriaHasPopupFromBlink(
+                               src.AriaHasPopup())));
+    }
+
     if (src.AriaCurrentState()) {
       dst->AddIntAttribute(ax::mojom::IntAttribute::kAriaCurrentState,
                            static_cast<int32_t>(AXAriaCurrentStateFromBlink(

@@ -153,12 +153,13 @@ void FillWidgetProperties(AXObject& ax_object,
     properties.addItem(
         CreateProperty(AXPropertyNameEnum::Autocomplete,
                        CreateValue(autocomplete, AXValueTypeEnum::Token)));
-
+/*
   bool has_popup = ax_object.AriaHasPopup();
   if (has_popup || ax_object.HasAttribute(HTMLNames::aria_haspopupAttr)) {
     properties.addItem(CreateProperty(AXPropertyNameEnum::Haspopup,
                                       CreateBooleanValue(has_popup)));
   }
+*/
 
   int heading_level = ax_object.HeadingLevel();
   if (heading_level > 0) {

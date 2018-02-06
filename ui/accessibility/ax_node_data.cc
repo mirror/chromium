@@ -137,6 +137,7 @@ bool IsNodeIdIntAttribute(ax::mojom::IntAttribute attr) {
     case ax::mojom::IntAttribute::kPosInSet:
     case ax::mojom::IntAttribute::kColorValue:
     case ax::mojom::IntAttribute::kAriaCurrentState:
+    case ax::mojom::IntAttribute::kAriaHasPopup:
     case ax::mojom::IntAttribute::kBackgroundColor:
     case ax::mojom::IntAttribute::kColor:
     case ax::mojom::IntAttribute::kInvalidState:
@@ -719,6 +720,34 @@ std::string AXNodeData::ToString() const {
             break;
           case ax::mojom::AriaCurrentState::kTime:
             result += " aria_current_state=time";
+            break;
+          default:
+            break;
+        }
+        break;
+     case ax::mojom::IntAttribute::kAriaHasPopup:
+        switch (static_cast<ax::mojom::AriaHasPopup>(
+            int_attributes[i].second)) {
+          case ax::mojom::AriaHasPopup::kFalse:
+            result += " haspopup=false";
+            break;
+          case ax::mojom::AriaHasPopup::kTrue:
+            result += " haspopup=true";
+            break;
+          case ax::mojom::AriaHasPopup::kMenu:
+            result += " haspopup=menu";
+            break;
+          case ax::mojom::AriaHasPopup::kListbox:
+            result += " haspopup=listbox";
+            break;
+          case ax::mojom::AriaHasPopup::kTree:
+            result += " haspopup=tree";
+            break;
+          case ax::mojom::AriaHasPopup::kGrid:
+            result += " haspopup=grid";
+            break;
+          case ax::mojom::AriaHasPopup::kDialog:
+            result += " haspopup=dialog";
             break;
           default:
             break;

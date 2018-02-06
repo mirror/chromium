@@ -982,8 +982,20 @@ void AXPlatformNodeAuraLinux::GetAtkState(AtkStateSet* atk_state_set) {
     atk_state_set_add_state(atk_state_set, ATK_STATE_FOCUSABLE);
 #if defined(ATK_CHECK_VERSION)
 #if ATK_CHECK_VERSION(2, 11, 2)
-  if (data.HasState(ax::mojom::State::kHaspopup))
-    atk_state_set_add_state(atk_state_set, ATK_STATE_HAS_POPUP);
+  // aria-haspopup
+  const auto has_popup = data.GetAriaHasPopup();
+  switch (has_popup) {
+    case ax::mojom::AriaHasPopup::kTrue:
+    case ax::mojom::AriaHasPopup::kMenu:
+    case ax::mojom::AriaHasPopup::kListbox:
+    case ax::mojom::AriaHasPopup::kTree:
+    case ax::mojom::AriaHasPopup::kGrid:
+    case ax::mojom::AriaHasPopup::kDialog:
+      atk_state_set_add_state(atk_state_set, ATK_STATE_HAS_POPUP);
+      break;
+    default:
+      break;
+  }
 #endif
 #endif
   if (data.HasState(ax::mojom::State::kSelected))

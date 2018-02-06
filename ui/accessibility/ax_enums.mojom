@@ -220,7 +220,6 @@ enum State {
   kEditable,
   kExpanded,
   kFocusable,
-  kHaspopup,
    // Grows horizontally, e.g. most toolbars and separators.
   kHorizontal,
   kHovered,
@@ -463,6 +462,8 @@ enum IntAttribute {
    // or set of related elements.
   kAriaCurrentState,
 
+  kAriaHasPopup,
+
    // Text attributes.
 
    // Foreground and background color in RGBA.
@@ -693,6 +694,18 @@ enum AriaCurrentState {
   kDate,
   kTime,
   kLast = kTime,
+};
+
+enum AriaHasPopup {
+  kUndefined = 0,
+  kFalse,
+  kTrue,
+  kMenu,
+  kListbox,
+  kTree,
+  kGrid,
+  kDialog,
+  kLast = kDialog,
 };
 
 enum InvalidState {

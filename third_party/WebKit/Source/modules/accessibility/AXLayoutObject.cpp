@@ -258,8 +258,12 @@ AccessibilityRole AXLayoutObject::NativeAccessibilityRoleIgnoringAria() const {
   if (css_box && IsImageOrAltText(css_box, node)) {
     if (node && node->IsLink())
       return kImageMapRole;
-    if (IsHTMLInputElement(node))
-      return AriaHasPopup() ? kPopUpButtonRole : kButtonRole;
+    if (IsHTMLInputElement(node)) {
+      if (AriaHasPopup() == AriaHasPopup::kTrue ||
+          AriaHasPopup() == AriaHasPopup::kMenu)
+        return kPopUpButtonRole;
+      return kButtonRole;
+    }
     if (IsSVGImage())
       return kSVGRootRole;
     return kImageRole;
@@ -1357,14 +1361,32 @@ void AXLayoutObject::AriaDescribedbyElements(
                                        describedby);
 }
 
-bool AXLayoutObject::AriaHasPopup() const {
+AriaHasPopup AXLayoutObject::AriaHasPopup() const {
   const AtomicString& has_popup =
       GetAOMPropertyOrARIAAttribute(AOMStringProperty::kHasPopUp);
-  if (!has_popup.IsNull())
-    return !has_popup.IsEmpty() && !EqualIgnoringASCIICase(has_popup, "false");
 
-  return RoleValue() == kComboBoxMenuButtonRole ||
-         RoleValue() == kTextFieldWithComboBoxRole;
+  if (has_popup.IsNull())
+    return AriaHasPopup::kUndefined;
+  if (has_popup.IsEmpty() ||
+      EqualIgnoringASCIICase(has_popup, "false"))
+    return AriaHasPopup::kFalse;
+  if (EqualIgnoringASCIICase(has_popup, "true"))
+    return AriaHasPopup::kTrue;
+  if (EqualIgnoringASCIICase(has_popup, "menu"))
+    return AriaHasPopup::kMenu;
+  if (EqualIgnoringASCIICase(has_popup, "listbox"))
+    return AriaHasPopup::kListbox;
+  if (EqualIgnoringASCIICase(has_popup, "tree"))
+    return AriaHasPopup::kTree;
+  if (EqualIgnoringASCIICase(has_popup, "grid"))
+    return AriaHasPopup::kGrid;
+  if (EqualIgnoringASCIICase(has_popup, "dialog"))
+    return AriaHasPopup::kDialog;
+  // An unknown value should return false.
+  if (!has_popup.IsEmpty())
+    return AriaHasPopup::kFalse;
+
+  return AXObject::AriaHasPopup();
 }
 
 // TODO : Aria-dropeffect and aria-grabbed are deprecated in aria 1.1

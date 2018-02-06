@@ -1094,11 +1094,6 @@ bool WebAXObjectProxy::IsOffScreen() {
   return accessibility_object_.IsOffScreen();
 }
 
-bool WebAXObjectProxy::HasPopup() {
-  accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.AriaHasPopup();
-}
-
 bool WebAXObjectProxy::IsValid() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
   return !accessibility_object_.IsDetached();
@@ -1161,6 +1156,28 @@ std::string WebAXObjectProxy::Current() {
       return "date";
     case blink::kWebAXAriaCurrentStateTime:
       return "time";
+    default:
+      return std::string();
+  }
+}
+
+std::string WebAXObjectProxy::HasPopup() {
+  accessibility_object_.UpdateLayoutAndCheckValidity();
+  switch (accessibility_object_.AriaHasPopup()) {
+    case blink::WebAXAriaHasPopup::kFalse:
+      return "false";
+    case blink::WebAXAriaHasPopup::kTrue:
+      return "true";
+    case blink::WebAXAriaHasPopup::kMenu:
+      return "menu";
+    case blink::WebAXAriaHasPopup::kListbox:
+      return "listbox";
+    case blink::WebAXAriaHasPopup::kTree:
+      return "tree";
+    case blink::WebAXAriaHasPopup::kGrid:
+      return "grid";
+    case blink::WebAXAriaHasPopup::kDialog:
+      return "dialog";
     default:
       return std::string();
   }

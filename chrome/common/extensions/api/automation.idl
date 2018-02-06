@@ -205,7 +205,6 @@
     expanded,
     focusable,
     focused,
-    haspopup,
     horizontal,
     hovered,
     invisible,

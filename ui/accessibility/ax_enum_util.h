@@ -85,6 +85,10 @@ AX_EXPORT const char* ToString(ax::mojom::AriaCurrentState aria_current_state);
 AX_EXPORT ax::mojom::AriaCurrentState ParseAriaCurrentState(
     const char* aria_current_state);
 
+// ax::mojom::AriaHasPopup
+AX_EXPORT const char* ToString(ax::mojom::AriaHasPopup has_popup);
+AX_EXPORT ax::mojom::AriaHasPopup ParseAriaHasPopup(const char* has_popup);
+
 // ax::mojom::InvalidState
 AX_EXPORT const char* ToString(ax::mojom::InvalidState invalid_state);
 AX_EXPORT ax::mojom::InvalidState ParseInvalidState(const char* invalid_state);
