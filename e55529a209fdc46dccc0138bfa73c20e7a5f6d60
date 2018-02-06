@@ -22,6 +22,30 @@
       "revId": "e55529a209fdc46dccc0138bfa73c20e7a5f6d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a76cc4_bd05f9dc",
+        "filename": "chrome/browser/conflicts/proto/module_list.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-02-06T15:57:45Z",
+      "side": 1,
+      "message": "You can blame this one me.\n\nThe ship hasn\u0027t sailed, as we haven\u0027t actually started shipping protos with this data yet. But will be soon. (This is why it\u0027s okay for Pat to renumber some fields in this CL.)\n\n(IN which case, it should be fine to swap out all required fields for optional.)",
+      "parentUuid": "683f66a7_a20a2018",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 10
+      },
+      "revId": "e55529a209fdc46dccc0138bfa73c20e7a5f6d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
