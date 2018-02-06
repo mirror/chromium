@@ -193,7 +193,8 @@ class PipelineImplTest : public ::testing::Test {
     EXPECT_CALL(callbacks_, OnWaitingForDecryptionKey()).Times(0);
     pipeline_->Start(
         demuxer_.get(), std::move(scoped_renderer_), &callbacks_,
-        base::Bind(&CallbackHelper::OnStart, base::Unretained(&callbacks_)));
+        base::Bind(&CallbackHelper::OnStart, base::Unretained(&callbacks_)),
+        Pipeline::StartType::kNormal);
   }
 
   // Sets up expectations on the callback and initializes the pipeline. Called

@@ -38,12 +38,11 @@ PipelineController::~PipelineController() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-// TODO(sandersd): If there is a pending suspend, don't call pipeline_->Start()
-// until Resume().
 void PipelineController::Start(Demuxer* demuxer,
                                Pipeline::Client* client,
                                bool is_streaming,
-                               bool is_static) {
+                               bool is_static,
+                               Pipeline::StartType start_type) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STOPPED);
   DCHECK(demuxer);
@@ -58,7 +57,8 @@ void PipelineController::Start(Demuxer* demuxer,
   is_static_ = is_static;
   pipeline_->Start(demuxer, renderer_factory_cb_.Run(), client,
                    base::Bind(&PipelineController::OnPipelineStatus,
-                              weak_factory_.GetWeakPtr(), State::PLAYING));
+                              weak_factory_.GetWeakPtr(), State::PLAYING),
+                   start_type);
 }
 
 void PipelineController::Seek(base::TimeDelta time, bool time_updated) {
@@ -139,9 +139,18 @@ void PipelineController::OnPipelineStatus(State state,
 
     // TODO(avayvod): Remove resumed callback after https://crbug.com/678374 is
     // properly fixed.
-    if (old_state == State::RESUMING)
+    if (old_state == State::RESUMING) {
+      DCHECK(!pipeline_->IsSuspended());
       resumed_cb_.Run();
-  } else if (state == State::SUSPENDED) {
+    }
+
+    if (old_state == State::STARTING && pipeline_->IsSuspended())
+      state_ = State::SUSPENDED;
+  }
+
+  if (state == State::SUSPENDED) {
+    DCHECK(pipeline_->IsSuspended());
+
     // Warning: possibly reentrant. The state may change inside this callback.
     // It must be safe to call Dispatch() twice in a row here.
     suspended_cb_.Run();
@@ -233,7 +242,7 @@ void PipelineController::Dispatch() {
 
   // If |state_| is PLAYING and we didn't trigger an operation above then we
   // are in a stable state. If there is a seeked callback pending, emit it.
-  if (state_ == State::PLAYING) {
+  if (state_ == State::PLAYING || state_ == State::SUSPENDED) {
     if (pending_seeked_cb_) {
       // |seeked_cb_| may be reentrant, so update state first and return
       // immediately.

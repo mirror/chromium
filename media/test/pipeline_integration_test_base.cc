@@ -288,7 +288,8 @@ PipelineStatus PipelineIntegrationTestBase::StartInternal(
                                         prepend_audio_decoders_cb),
       this,
       base::Bind(&PipelineIntegrationTestBase::OnStatusCallback,
-                 base::Unretained(this), run_loop.QuitWhenIdleClosure()));
+                 base::Unretained(this), run_loop.QuitWhenIdleClosure()),
+      Pipeline::StartType::kNormal);
   RunUntilIdleOrEndedOrError(&run_loop);
   return pipeline_status_;
 }
@@ -638,7 +639,8 @@ PipelineStatus PipelineIntegrationTestBase::StartPipelineWithMediaSource(
                                         CreateAudioDecodersCB()),
       this,
       base::Bind(&PipelineIntegrationTestBase::OnStatusCallback,
-                 base::Unretained(this), run_loop.QuitWhenIdleClosure()));
+                 base::Unretained(this), run_loop.QuitWhenIdleClosure()),
+      Pipeline::StartType::kNormal);
 
   if (encrypted_media) {
     source->set_encrypted_media_init_data_cb(
