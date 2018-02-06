@@ -21,6 +21,7 @@ namespace content {
 UtilityThreadImpl::UtilityThreadImpl()
     : ChildThreadImpl(ChildThreadImpl::Options::Builder()
                           .AutoStartServiceManagerConnection(false)
+                          .ConnectToBrowser(true)
                           .Build()) {
   Init();
 }
@@ -29,6 +30,7 @@ UtilityThreadImpl::UtilityThreadImpl(const InProcessChildThreadParams& params)
     : ChildThreadImpl(ChildThreadImpl::Options::Builder()
                           .AutoStartServiceManagerConnection(false)
                           .InBrowserProcess(params)
+                          .ConnectToBrowser(true)
                           .Build()) {
   Init();
 }
