@@ -191,11 +191,6 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded(
     frame_view->SetScrollGestureRegionIsDirty(false);
   }
 
-  // TODO(wjmaclean): Make the stuff below this point work for OOPIFs too.
-  // https://crbug.com/680606
-  if (frame != frame_view->GetPage()->MainFrame())
-    return;
-
   if (!(touch_event_target_rects_are_dirty_ ||
         should_scroll_on_main_thread_dirty_ || FrameScrollerIsDirty())) {
     return;
@@ -229,6 +224,9 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded(
   }
 
   UpdateUserInputScrollable(&page_->GetVisualViewport());
+
+  if (frame != frame_view->GetPage()->MainFrame())
+    return;
 
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     const FrameTree& tree = frame_view->GetPage()->MainFrame()->Tree();
