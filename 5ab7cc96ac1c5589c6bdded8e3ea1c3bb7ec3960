@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8647b07_7c2825d0",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T18:36:23Z",
+      "side": 1,
+      "message": "Do we need to check this?\n\nIs it possible that this check is causing the bug, like maybe\n_command_line_ isn\u0027t updated the first time or something?",
+      "revId": "5ab7cc96ac1c5589c6bdded8e3ea1c3bb7ec3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28e1b9f_4414092d",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-06T18:36:23Z",
+      "side": 1,
+      "message": "Why is there a ! here? It matches the others but it looks wrong to me.",
+      "revId": "5ab7cc96ac1c5589c6bdded8e3ea1c3bb7ec3960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
