@@ -4333,6 +4333,7 @@ if (!is_android) {
       "../browser/permissions/permission_request_manager_test_api.h",
       "../browser/ssl/cert_verifier_browser_test.cc",
       "../browser/ssl/cert_verifier_browser_test.h",
+      "base/accessibility_checks.cc",
       "base/in_process_browser_test.cc",
       "base/in_process_browser_test.h",
       "base/in_process_browser_test_mac.cc",

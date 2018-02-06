@@ -48,6 +48,7 @@
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/chrome_content_renderer_client.h"
+#include "chrome/test/base/accessibility_checks.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/test_launcher_utils.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -62,6 +63,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/display/display_switches.h"
+#include "ui/views/view.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -157,6 +159,10 @@ void InProcessBrowserTest::SetUp() {
   // append switches::kEnableOfflineAutoReload, which will override the disable
   // here.
   command_line->AppendSwitch(switches::kDisableOfflineAutoReload);
+
+#if defined(AX_CHECKS)
+  views::View::TurnOnConstructorStackTracking();
+#endif
 
   // Turn off preconnects because they break the brittle python webserver;
   // see http://crbug.com/60035.
@@ -489,6 +495,15 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
 void InProcessBrowserTest::PostRunTestOnMainThread() {
 #if defined(OS_MACOSX)
   autorelease_pool_->Recycle();
+#endif
+
+#if defined(AX_CHECKS)
+  // Currently we always run UI accessibility checks.
+  std::string error_message;
+  EXPECT_TRUE(RunUIAccessibilityChecks(&error_message));
+  EXPECT_TRUE(error_message.empty());
+  if (!error_message.empty())
+    LOG(ERROR) << error_message;
 #endif
 
   // Sometimes tests leave Quit tasks in the MessageLoop (for shame), so let's
