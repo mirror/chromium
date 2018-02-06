@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb06e0a_27635553",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-06T15:45:40Z",
+      "side": 1,
+      "message": "If you\u0027re already here anyway: These constants are unused.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 86
+      },
+      "revId": "2c37f61dd29623b780348a3804a0215c1d2fd6c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
