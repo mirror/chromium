@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60b2a19f_6346ca25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/tools/spec.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-06T20:19:40Z",
+      "side": 1,
+      "message": "This needs to be updated to reflect your spec change.",
+      "range": {
+        "startLine": 589,
+        "startChar": 38,
+        "endLine": 589,
+        "endChar": 39
+      },
+      "revId": "80901bee7c8cffcb38cfaa4f6ca2562c3f178624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
