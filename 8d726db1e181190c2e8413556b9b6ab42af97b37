@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c2deda6a_432bd4c7",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "I was using it initially but it\u0027s now obsolete after a few round of changes. Removed.",
+      "parentUuid": "7ab28c24_b7177c06",
+      "range": {
+        "startLine": 96,
+        "startChar": 48,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fa1c1c2_ba1db03e",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
         "patchSetId": 5
@@ -62,6 +86,30 @@
       "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee3ea50_4ba5ad6f",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa1c1c2_ba1db03e",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "40f9d725_fb67a0fd",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc5cef3_a4ec427e",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64b4c4e4_cdb64a4c",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 5
@@ -108,6 +180,30 @@
       "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c292834_bee23a2b",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "This can\u0027t be null since if \"image\" is null, it would return \u0027chrome://...\u0027.",
+      "parentUuid": "64b4c4e4_cdb64a4c",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "d00b1438_1e5b43b6",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "I currently have the fall-back logic on the Javascript side, using the \"chrome://theme/IDR_...\" url to avoid base64-encoding/decoding the image N times (N \u003d number of accounts available).\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/894605/5/chrome/browser/resources/settings/people_page/sync_account_control.js#85",
+      "parentUuid": "788ce600_d2fa9d2d",
+      "range": {
+        "startLine": 477,
+        "startChar": 22,
+        "endLine": 477,
+        "endChar": 35
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af081ebe_b095f1c8",
         "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
         "patchSetId": 5
@@ -157,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "7baee2d2_7c8754b1",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "af081ebe_b095f1c8",
+      "range": {
+        "startLine": 479,
+        "startChar": 23,
+        "endLine": 479,
+        "endChar": 30
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65dcc62e_917fd086",
         "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
         "patchSetId": 5
@@ -177,6 +321,30 @@
       "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024c8530_d9ea6bc5",
+        "filename": "chrome/browser/ui/webui/settings/people_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-06T01:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65dcc62e_917fd086",
+      "range": {
+        "startLine": 481,
+        "startChar": 11,
+        "endLine": 481,
+        "endChar": 16
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
