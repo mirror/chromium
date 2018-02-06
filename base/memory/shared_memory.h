@@ -181,8 +181,13 @@ class BASE_EXPORT SharedMemory {
   size_t mapped_size() const { return mapped_size_; }
 
   // Gets a pointer to the opened memory space if it has been
-  // Mapped via Map().  Returns NULL if it is not mapped.
+  // Mapped via Map(). Returns NULL if it is not mapped.
   void* memory() const { return memory_; }
+
+  // Returns a pointer to the opened memory space if it has been Mapped via
+  // Map(). Returns nullptr if it is not mapped. The caller also gets ownership
+  // of the memory.
+  void* TakeMemory();
 
   // Returns the underlying OS handle for this segment.
   // Use of this handle for anything other than an opaque
