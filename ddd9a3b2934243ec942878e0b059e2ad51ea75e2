@@ -152,6 +152,24 @@
     },
     {
       "key": {
+        "uuid": "4a7c45ee_b641b8ca",
+        "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-02-06T06:49:52Z",
+      "side": 1,
+      "message": "Sorry, I just realize now that I did not express myself very clearly above. What I was trying to say is that I would like to generally discourage the use of RunUntilIdle() as well as RunAllPendingInMessageLoop(), and instead encourage the use of a base::RunLoop with one call to Run() for waiting and one call to Quit() for signaling.\n\nThis approach has several advantages:\n* It makes it explicit what event is waited on\n* It enforces a design where an event that can be waited on exists (or, equivalently, reveals a design issue if no such event exists)\n* It does not depend on assumptions on what and how many threads/message loops/delayed executions the implementation uses internally to do its asynchronous work.",
+      "parentUuid": "a458e2dd_9f6f5077",
+      "revId": "ddd9a3b2934243ec942878e0b059e2ad51ea75e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cfe1f91_9ed6842e",
         "filename": "chrome/browser/media/single_client_video_capture_host_unittest.cc",
         "patchSetId": 9
