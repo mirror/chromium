@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0678fc7b_fcf1713f",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d733563b_ab14a0fc",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4438b2ea_2a49e321",
         "filename": "content/common/service_worker/controller_service_worker.mojom",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T08:32:44Z",
       "side": 1,
       "message": "Would expand this as: \"The client being controlled, used for FetchEvent#clientId.\"",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a67f10_fcb17f24",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done.\n\nProbably I should put a comment to describe something like \"if you plan to add more parameters here for subresource loading, consider creating a separate struct.\" WDYT?",
+      "parentUuid": "4438b2ea_2a49e321",
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "16617187_c68a512a",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aafc8da_d305bd84",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76214f0d_c885dd81",
         "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6644e7_7e54b8f0",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76214f0d_c885dd81",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "46ddb70a_2f70a6f9",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98711d91_8e657938",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0723003f_6ba7280c",
         "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f78b036_6e5ff72f",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0723003f_6ba7280c",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a20321d4_c0566f06",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2c0ac4_535bae92",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679be351_228091c0",
         "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fafc130_802633d4",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679be351_228091c0",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "08502ace_501758b4",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Done.\n\nRegarding provider_id vs client_uuid, probably I should file a new bug to follow-up?",
+      "parentUuid": "b4f6793e_d9b61f94",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a4bf9b_f25b6baa",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0415b7_e5eca6e0",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Changed to pass |request| and |client_id| as suggested below.",
+      "parentUuid": "b3a4bf9b_f25b6baa",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "cb4db29e_bb2a0125",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "Yeah, agreed. Done.",
+      "parentUuid": "88825a17_c9cf4009",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef69b409_86325dbe",
         "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
         "patchSetId": 4
@@ -200,6 +398,24 @@
       "writtenOn": "2018-02-06T08:32:44Z",
       "side": 1,
       "message": "Q: Does std::move(fetch_callback_ptr) work instead?",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44da8970_21ade8de",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 1,
+      "message": "I tried std::move first but looks like InterfacePtrInfo cannot be created by moving an InterfacePtr.\n\nActually I\u0027m not 100% sure I\u0027m doing a right thing here. I think I should add a reviewer for mojo use. Probably dcheng@?",
+      "parentUuid": "ef69b409_86325dbe",
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

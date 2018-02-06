@@ -22,6 +22,30 @@
       "revId": "fd9b9e4576ddb57c371c80e5eb379903361d0495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de2ce18_509d0429",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-features\u003dNetworkService/external/wpt/service-workers/service-worker/fetch-event.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-06T09:27:07Z",
+      "side": 0,
+      "message": "Unfortunately I don\u0027t think so. With this CL, the result of this test will become the same as non-flag-specific (i.e. --disable-features\u003dNetworkService) one, which also fails this test.",
+      "parentUuid": "beaa531d_19fff693",
+      "range": {
+        "startLine": 17,
+        "startChar": 219,
+        "endLine": 17,
+        "endChar": 220
+      },
+      "revId": "fd9b9e4576ddb57c371c80e5eb379903361d0495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
