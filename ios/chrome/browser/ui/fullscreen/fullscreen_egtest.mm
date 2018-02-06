@@ -33,6 +33,8 @@
 #error "This file requires ARC support."
 #endif
 
+using chrome_test_util::TapWebViewElementWithId;
+
 namespace {
 
 // The page height of test pages. This must be big enough to triger fullscreen.
@@ -194,7 +196,7 @@ void AssertURLIs(const GURL& expectedURL) {
 
   // Test that the toolbar is visible when moving from one chrome:// link to
   // another chrome:// link.
-  chrome_test_util::TapWebViewElementWithId("version");
+  GREYAssert(TapWebViewElementWithId("version"), @"failed to tap \"version\"");
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
 }
 
@@ -240,7 +242,7 @@ void AssertURLIs(const GURL& expectedURL) {
   HideToolbarUsingUI();
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"failed to tap \"link\"");
 
   // Main test is here: Make sure the header is still visible!
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
@@ -282,7 +284,7 @@ void AssertURLIs(const GURL& expectedURL) {
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
   // Open new window.
-  chrome_test_util::TapWebViewElementWithId("link1");
+  GREYAssert(TapWebViewElementWithId("link1"), @"failed to tap \"link1\"");
 
   // Check that a new Tab was created.
   [ChromeEarlGrey waitForWebViewContainingText:"link2"];
@@ -295,7 +297,7 @@ void AssertURLIs(const GURL& expectedURL) {
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
   // Close the tab.
-  chrome_test_util::TapWebViewElementWithId("link2");
+  GREYAssert(TapWebViewElementWithId("link2"), @"failed to tap \"link2\"");
   [ChromeEarlGrey waitForWebViewContainingText:"link1"];
 
   // Make sure the toolbar is on the screen.
@@ -333,7 +335,7 @@ void AssertURLIs(const GURL& expectedURL) {
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
   // Navigate to the other page.
-  chrome_test_util::TapWebViewElementWithId("link1");
+  GREYAssert(TapWebViewElementWithId("link1"), @"failed to tap \"link1\"");
   [ChromeEarlGrey waitForWebViewContainingText:"link2"];
 
   // Make sure toolbar is shown since a new load has started.
@@ -344,7 +346,7 @@ void AssertURLIs(const GURL& expectedURL) {
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
   // Go back.
-  chrome_test_util::TapWebViewElementWithId("link2");
+  GREYAssert(TapWebViewElementWithId("link2"), @"failed to tap \"link2\"");
 
   // Make sure the toolbar has loaded now that a new page has loaded.
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
@@ -372,7 +374,7 @@ void AssertURLIs(const GURL& expectedURL) {
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
   // Go back to NTP, which is a native view.
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"failed to tap \"link\"");
 
   // Make sure the toolbar is visible now that a new page has loaded.
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
@@ -398,7 +400,7 @@ void AssertURLIs(const GURL& expectedURL) {
   HideToolbarUsingUI();
   [ChromeEarlGreyUI waitForToolbarVisible:NO];
 
-  chrome_test_util::TapWebViewElementWithId("link");
+  GREYAssert(TapWebViewElementWithId("link"), @"failed to tap \"link\"");
   AssertURLIs(ErrorPageResponseProvider::GetDnsFailureUrl());
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
 }
