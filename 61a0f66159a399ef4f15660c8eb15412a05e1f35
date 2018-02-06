@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2954d03_b6850091",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-06T10:19:16Z",
+      "side": 1,
+      "message": "looks like this broke the jumbo build (https://ci.chromium.org/buildbot/chromium.fyi/Jumbo%20Linux%20x64/12394):\n\nIn file included from gen/out/Rel/gen/content/browser/devtools/protocol/browser_jumbo_47.cc:7:\n.\\../../content/browser/loader/signed_exchange_signature_verifier.cc(19,16):  error: redefinition of \u0027kUrlKey\u0027\nconstexpr char kUrlKey[] \u003d \":url\";\n               ^\n.\\../../content/browser/loader/signed_exchange_handler.cc(31,16):  note: previous definition is here\nconstexpr char kUrlKey[] \u003d \":url\";\n\nIs a revert the norm for these sorts of things?",
+      "revId": "61a0f66159a399ef4f15660c8eb15412a05e1f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
