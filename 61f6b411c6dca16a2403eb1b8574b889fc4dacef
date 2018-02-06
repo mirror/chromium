@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60da7ef3_04310b27",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T06:07:48Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed given line 159.",
+      "revId": "61f6b411c6dca16a2403eb1b8574b889fc4dacef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c6d9b4_98253ad1",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T06:07:48Z",
+      "side": 1,
+      "message": "Ditto: this shouldn\u0027t be needed given line 125.",
+      "revId": "61f6b411c6dca16a2403eb1b8574b889fc4dacef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f168e4e_57a0f7b4",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T06:07:48Z",
+      "side": 1,
+      "message": "We generally avoid using statements in header files. Is this something that would be removed in the future?\n\n(Especially because this is aliasing a name from another namespace in that namespace: usually this aliasing would be done by the public headers for that namespace)",
+      "revId": "61f6b411c6dca16a2403eb1b8574b889fc4dacef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79817c37_f6026252",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T06:07:48Z",
+      "side": 1,
+      "message": "Ditto: if this type alias is desired, it should be declared in a central place—or we should just get rid of it.",
+      "revId": "61f6b411c6dca16a2403eb1b8574b889fc4dacef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56af24b3_800a5f6f",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-06T06:07:48Z",
+      "side": 1,
+      "message": "Nit: trailing whitespace. Also, call this kLast for consistency?",
+      "revId": "61f6b411c6dca16a2403eb1b8574b889fc4dacef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
