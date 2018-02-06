@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28ecb0fa_fc2d1ceb",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-06T00:29:25Z",
+      "side": 1,
+      "message": "Yeah, made a mistake here, however I now realize that I don\u0027t even need to call DidStartNavigation either, since it gets called from the NavigationHandle constructor, which was the reason the test kept passing even with the missing call to DidStartNavigation. Thanks for catching this!",
+      "parentUuid": "5a1339f9_a5b8a1fe",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 32
+      },
+      "revId": "fee7ab80058125dba7495145a370a4be219ebe17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8343e7_5043370f",
         "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-02T23:58:06Z",
       "side": 1,
       "message": "In addition to this unit test, it might be nice to have tests verifying that the security level logged is that of the form-sending page and not the form action page. One possibility would be to add a browser test that loads the form in one security level and submits to a page with a different security level. Another might be to check that the WebContents used for the navigation handle sent to DidStartNavigation is for the expected URL and not the URL of the form action.",
+      "range": {
+        "startLine": 145,
+        "startChar": 44,
+        "endLine": 145,
+        "endChar": 67
+      },
+      "revId": "fee7ab80058125dba7495145a370a4be219ebe17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9056f861_562b5074",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-06T00:29:25Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestion!",
+      "parentUuid": "1e8343e7_5043370f",
       "range": {
         "startLine": 145,
         "startChar": 44,
