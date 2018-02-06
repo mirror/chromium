@@ -22,6 +22,30 @@
       "revId": "fa3a78fca7133180e2a361b9837e203f4d0b386c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83577e8_a7058eb8",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-06T18:14:45Z",
+      "side": 1,
+      "message": "Yes, see https://cs.chromium.org/chromium/src/base/optional.h?sq\u003dpackage:chromium\u0026l\u003d486:\n\n  constexpr explicit operator bool() const { return storage_.is_populated_; }\n\n  constexpr bool has_value() const { return storage_.is_populated_; }",
+      "parentUuid": "0529ca89_d7030706",
+      "range": {
+        "startLine": 594,
+        "startChar": 10,
+        "endLine": 594,
+        "endChar": 19
+      },
+      "revId": "fa3a78fca7133180e2a361b9837e203f4d0b386c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
