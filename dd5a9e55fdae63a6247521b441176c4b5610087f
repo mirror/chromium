@@ -22,6 +22,30 @@
       "revId": "dd5a9e55fdae63a6247521b441176c4b5610087f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cc91d7_a633b7e5",
+        "filename": "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2018-02-06T17:03:27Z",
+      "side": 1,
+      "message": "If a scroll had begun while the navigation is pending, that means that the content of the previous page was being scrolled.  When the navigation is committed, the scrolling page\u0027s content is swapped out with the new page, the content is scrolled to the top, and any in-progress gestures are cancelled.",
+      "parentUuid": "8952b7ba_759d7423",
+      "range": {
+        "startLine": 109,
+        "startChar": 25,
+        "endLine": 109,
+        "endChar": 28
+      },
+      "revId": "dd5a9e55fdae63a6247521b441176c4b5610087f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
