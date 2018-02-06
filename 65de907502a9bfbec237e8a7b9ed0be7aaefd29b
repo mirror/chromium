@@ -16,6 +16,24 @@
       "revId": "65de907502a9bfbec237e8a7b9ed0be7aaefd29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ae6639_3396c8eb",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-02-06T17:10:40Z",
+      "side": 1,
+      "message": "saw your comment after landing :(\nwe may want to fix that and add those builders on -dev, to run some chromium builds on latest kitchen",
+      "parentUuid": "9711d0cc_dd83028e",
+      "revId": "65de907502a9bfbec237e8a7b9ed0be7aaefd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
