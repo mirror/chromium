@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b8b2d54_0ab4d698",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:31:22Z",
+      "side": 1,
+      "message": "Nit: Rather than comment this out and have to add it explicitly with a separate call below, you could have a \"hidden\" member on TestURLInfo, default it to false, and add \"true\" for it only on this line (leaving all other lines untouched).  This C++14ism is available to Chromium code as of a few weeks ago; see \"Aggregate member initialization\" in https://chromium-cpp.appspot.com/ .",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c5e616_b7936f0e",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:31:22Z",
+      "side": 1,
+      "message": "Nit: While here: This (and the above block, if you keep it) should use |now| instead of Time::Now().",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a9864b_4271665d",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-06T00:31:22Z",
+      "side": 1,
+      "message": "You know, seems like instead of manually adding this, we could just include it in the above list, with an \"age in days\" of history::kLowQualityMatchAgeLimitInDays - 1.  Probably that would require making that constant be constexpr, which is a good change anyway.",
+      "revId": "f8012e77f3756f835363ffacf2dd34f051ad2088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
