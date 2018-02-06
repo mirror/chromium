@@ -402,7 +402,7 @@ void ViewAndroid::OnSizeChanged(int width, int height) {
   DCHECK(!match_parent());
 
   float scale = GetDipScale();
-  gfx::Size size(std::ceil(width / scale), std::ceil(height / scale));
+  gfx::Size size(std::floor(width / scale), std::floor(height / scale));
   if (view_rect_.size() == size)
     return;
 
