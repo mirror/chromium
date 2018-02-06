@@ -113,9 +113,6 @@ constexpr base::TimeDelta
     OfflinePageModelTaskified::kInitialUpgradeSelectionDelay;
 
 // static
-constexpr base::TimeDelta OfflinePageModelTaskified::kInitializingTaskDelay;
-
-// static
 constexpr base::TimeDelta OfflinePageModelTaskified::kClearStorageInterval;
 
 OfflinePageModelTaskified::OfflinePageModelTaskified(
@@ -131,9 +128,6 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
       skip_clearing_original_url_for_testing_(false),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
-  PostClearLegacyTemporaryPagesTask();
-  PostClearCachedPagesTask(true /* is_initializing */);
-  PostCheckMetadataConsistencyTask(true /* is_initializing */);
   // TODO(fgorski): Call from here, when upgrade task is available:
   // PostSelectItemsMarkedForUpgrade();
 }
@@ -241,6 +235,7 @@ void OfflinePageModelTaskified::GetAllPages(
     const MultipleOfflinePageItemCallback& callback) {
   auto task = GetPagesTask::CreateTaskMatchingAllPages(store_.get(), callback);
   task_queue_.AddTask(std::move(task));
+  ScheduleMaintenanceTasks();
 }
 
 void OfflinePageModelTaskified::GetPageByOfflineId(
@@ -420,11 +415,9 @@ void OfflinePageModelTaskified::OnAddPageForSavePageDone(
     if (policy_controller_->GetPolicy(page_attempted.client_id.name_space)
             .pages_allowed_per_url != kUnlimitedPages) {
       RemovePagesMatchingUrlAndNamespace(page_attempted);
-      PostClearCachedPagesTask(false /* is_initializing */);
     }
-  } else {
-    PostClearCachedPagesTask(false /* is_initializing */);
   }
+  ScheduleMaintenanceTasks();
 }
 
 void OfflinePageModelTaskified::OnAddPageDone(const OfflinePageItem& page,
@@ -457,53 +450,38 @@ void OfflinePageModelTaskified::OnDeleteDone(
     callback.Run(result);
 }
 
-void OfflinePageModelTaskified::PostClearLegacyTemporaryPagesTask() {
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&OfflinePageModelTaskified::ClearLegacyTemporaryPages,
-                 weak_ptr_factory_.GetWeakPtr()),
-      kInitializingTaskDelay);
-}
-
-void OfflinePageModelTaskified::ClearLegacyTemporaryPages() {
-  // TODO(romax): When we have external directory, adding the support of getting
-  // 'legacy' directory and replace the persistent one here.
-  auto task = std::make_unique<ClearLegacyTemporaryPagesTask>(
-      store_.get(), policy_controller_.get(),
-      archive_manager_->GetPrivateArchivesDir());
-  task_queue_.AddTask(std::move(task));
-}
-
-void OfflinePageModelTaskified::PostClearCachedPagesTask(bool is_initializing) {
-  if (is_initializing) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&OfflinePageModelTaskified::PostClearCachedPagesTask,
-                   weak_ptr_factory_.GetWeakPtr(), false),
-        kInitializingTaskDelay);
+void OfflinePageModelTaskified::ScheduleMaintenanceTasks() {
+  // If not enough time has passed, don't queue maintenance tasks.
+  base::Time now = GetCurrentTime();
+  if (now - last_maintenance_tasks_schedule_time_ < kClearStorageInterval)
     return;
+
+  // If this is the first run of this session, enqueue the run-once tasks.
+  if (last_maintenance_tasks_schedule_time_.is_null()) {
+    // TODO(romax): When we have external directory, adding the support of
+    // getting 'legacy' directory and replace the persistent one here.
+    // TODO(carlosk): these tasks implementations look very similar so we should
+    // probably consolidate them all into a single one.
+    task_queue_.AddTask(std::make_unique<ClearLegacyTemporaryPagesTask>(
+        store_.get(), policy_controller_.get(),
+        archive_manager_->GetPrivateArchivesDir()));
+    task_queue_.AddTask(std::make_unique<TemporaryPagesConsistencyCheckTask>(
+        store_.get(), policy_controller_.get(),
+        archive_manager_->GetTemporaryArchivesDir()));
+    task_queue_.AddTask(std::make_unique<PersistentPagesConsistencyCheckTask>(
+        store_.get(), policy_controller_.get(),
+        archive_manager_->GetPrivateArchivesDir()));
   }
 
-  // If not enough time has passed, do not post the task.
-  if (GetCurrentTime() - last_clear_cached_pages_time_ <
-      kClearStorageInterval) {
-    return;
-  }
-
-  ClearCachedPages();
-}
-
-void OfflinePageModelTaskified::ClearCachedPages() {
-  auto task = std::make_unique<ClearStorageTask>(
-      store_.get(), archive_manager_.get(), policy_controller_.get(),
-      GetCurrentTime(),
+  task_queue_.AddTask(std::make_unique<ClearStorageTask>(
+      store_.get(), archive_manager_.get(), policy_controller_.get(), now,
       base::BindOnce(&OfflinePageModelTaskified::OnClearCachedPagesDone,
-                     weak_ptr_factory_.GetWeakPtr(), GetCurrentTime()));
-  task_queue_.AddTask(std::move(task));
+                     weak_ptr_factory_.GetWeakPtr())));
+
+  last_maintenance_tasks_schedule_time_ = now;
 }
 
 void OfflinePageModelTaskified::OnClearCachedPagesDone(
-    base::Time start_time,
     size_t deleted_page_count,
     ClearStorageResult result) {
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.ClearTemporaryPages.Result", result,
@@ -512,36 +490,6 @@ void OfflinePageModelTaskified::OnClearCachedPagesDone(
     UMA_HISTOGRAM_COUNTS("OfflinePages.ClearTemporaryPages.BatchSize",
                          deleted_page_count);
   }
-  last_clear_cached_pages_time_ = start_time;
-}
-
-void OfflinePageModelTaskified::PostCheckMetadataConsistencyTask(
-    bool is_initializing) {
-  if (is_initializing) {
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&OfflinePageModelTaskified::PostCheckMetadataConsistencyTask,
-                   weak_ptr_factory_.GetWeakPtr(), false),
-        kInitializingTaskDelay);
-    return;
-  }
-
-  CheckTemporaryPagesConsistency();
-  CheckPersistentPagesConsistency();
-}
-
-void OfflinePageModelTaskified::CheckTemporaryPagesConsistency() {
-  auto task = std::make_unique<TemporaryPagesConsistencyCheckTask>(
-      store_.get(), policy_controller_.get(),
-      archive_manager_->GetTemporaryArchivesDir());
-  task_queue_.AddTask(std::move(task));
-}
-
-void OfflinePageModelTaskified::CheckPersistentPagesConsistency() {
-  auto task = std::make_unique<PersistentPagesConsistencyCheckTask>(
-      store_.get(), policy_controller_.get(),
-      archive_manager_->GetPrivateArchivesDir());
-  task_queue_.AddTask(std::move(task));
 }
 
 void OfflinePageModelTaskified::PostSelectItemsMarkedForUpgrade() {
