@@ -4,6 +4,7 @@
 
 #include "chrome/installer/zucchini/target_pool.h"
 
+#include <cmath>
 #include <utility>
 #include <vector>
 
@@ -35,21 +36,28 @@ TEST(TargetPoolTest, InsertTargetsFromReferences) {
 }
 
 TEST(TargetPoolTest, KeyOffset) {
-  auto test_key_offset = [](OffsetVector&& targets) {
+  auto test_key_offset = [](OffsetVector&& targets,
+                            const std::string& nearest_offsets_key) {
     TargetPool target_pool(std::move(targets));
     for (offset_t offset : target_pool.targets()) {
       offset_t key = target_pool.KeyForOffset(offset);
       EXPECT_LT(key, target_pool.size());
       EXPECT_EQ(offset, target_pool.OffsetForKey(key));
     }
+    for (offset_t offset = 0; offset < nearest_offsets_key.size(); ++offset) {
+      key_t key = target_pool.KeyForNearestOffset(offset);
+      EXPECT_EQ(key, static_cast<key_t>(nearest_offsets_key[offset] - '0'));
+    }
   };
-  test_key_offset({0});
-  test_key_offset({1});
-  test_key_offset({0, 1});
-  test_key_offset({0, 2});
-  test_key_offset({1, 2});
-  test_key_offset({1, 3});
-  test_key_offset({1, 3, 7, 9, 13});
+  test_key_offset({}, "0000000000000000");
+  test_key_offset({0}, "0000000000000000");
+  test_key_offset({1}, "0000000000000000");
+  test_key_offset({0, 1}, "0111111111111111");
+  test_key_offset({0, 2}, "0011111111111111");
+  test_key_offset({1, 2}, "0011111111111111");
+  test_key_offset({1, 3}, "0001111111111111");
+  test_key_offset({1, 3, 7, 9, 13}, "0001112223334444");
+  test_key_offset({1, 7, 9, 13}, "0000011112223333");
 }
 
 }  // namespace zucchini
