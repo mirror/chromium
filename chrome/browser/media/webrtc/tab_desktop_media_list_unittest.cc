@@ -131,7 +131,8 @@ class TabDesktopMediaListTest : public testing::Test {
       std::unique_ptr<content::NavigationEntry> entry_new =
           content::NavigationController::CreateNavigationEntry(
               GURL("chrome://blank"), content::Referrer(),
-              ui::PAGE_TRANSITION_LINK, false, std::string(), profile_);
+              ui::PAGE_TRANSITION_LINK, false, std::string(), profile_,
+              nullptr);
 
       contents->GetController().SetTransientEntry(std::move(entry_new));
       entry = contents->GetController().GetTransientEntry();

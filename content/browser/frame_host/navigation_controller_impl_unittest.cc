@@ -2966,7 +2966,7 @@ TEST_F(NavigationControllerTest, RestoreNavigate) {
   std::unique_ptr<NavigationEntry> entry =
       NavigationControllerImpl::CreateNavigationEntry(
           url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false, std::string(),
-          browser_context());
+          browser_context(), nullptr);
   entry->SetTitle(base::ASCIIToUTF16("Title"));
   entry->SetPageState(PageState::CreateFromEncodedData("state"));
   const base::Time timestamp = base::Time::Now();
@@ -3035,7 +3035,7 @@ TEST_F(NavigationControllerTest, RestoreNavigateAfterFailure) {
   std::unique_ptr<NavigationEntry> new_entry =
       NavigationControllerImpl::CreateNavigationEntry(
           url, Referrer(), ui::PAGE_TRANSITION_RELOAD, false, std::string(),
-          browser_context());
+          browser_context(), nullptr);
   new_entry->SetTitle(base::ASCIIToUTF16("Title"));
   new_entry->SetPageState(PageState::CreateFromEncodedData("state"));
   entries.push_back(std::move(new_entry));
@@ -4516,7 +4516,7 @@ TEST_F(NavigationControllerTest, CopyRestoredStateAndNavigate) {
     std::unique_ptr<NavigationEntry> entry =
         NavigationControllerImpl::CreateNavigationEntry(
             kRestoredUrls[i], Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
-            std::string(), browser_context());
+            std::string(), browser_context(), nullptr);
     entries.push_back(std::move(entry));
   }
 

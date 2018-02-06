@@ -837,7 +837,7 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredSitelessUrl) {
   std::unique_ptr<NavigationEntry> new_entry =
       NavigationControllerImpl::CreateNavigationEntry(
           native_url, Referrer(), ui::PAGE_TRANSITION_LINK, false,
-          std::string(), browser_context());
+          std::string(), browser_context(), nullptr);
   entries.push_back(std::move(new_entry));
   controller().Restore(0, RestoreType::LAST_SESSION_EXITED_CLEANLY, &entries);
   ASSERT_EQ(0u, entries.size());
@@ -884,7 +884,7 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredRegularUrl) {
   std::unique_ptr<NavigationEntry> new_entry =
       NavigationControllerImpl::CreateNavigationEntry(
           regular_url, Referrer(), ui::PAGE_TRANSITION_LINK, false,
-          std::string(), browser_context());
+          std::string(), browser_context(), nullptr);
   entries.push_back(std::move(new_entry));
   controller().Restore(0, RestoreType::LAST_SESSION_EXITED_CLEANLY, &entries);
   ASSERT_EQ(0u, entries.size());

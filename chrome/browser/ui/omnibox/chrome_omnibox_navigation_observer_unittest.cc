@@ -219,7 +219,7 @@ TEST_F(ChromeOmniboxNavigationObserverTest, LoadStateAfterPendingNavigation) {
   std::unique_ptr<content::NavigationEntry> entry =
       content::NavigationController::CreateNavigationEntry(
           GURL(), content::Referrer(), ui::PAGE_TRANSITION_FROM_ADDRESS_BAR,
-          false, std::string(), profile());
+          false, std::string(), profile(), nullptr);
 
   content::NotificationService::current()->Notify(
       content::NOTIFICATION_NAV_ENTRY_PENDING,
@@ -261,7 +261,7 @@ TEST_F(ChromeOmniboxNavigationObserverTest, DeleteBrokenCustomSearchEngines) {
     auto navigation_entry =
         content::NavigationController::CreateNavigationEntry(
             GURL(), content::Referrer(), ui::PAGE_TRANSITION_FROM_ADDRESS_BAR,
-            false, std::string(), profile());
+            false, std::string(), profile(), nullptr);
     content::LoadCommittedDetails details;
     details.http_status_code = cases[i].status_code;
     details.entry = navigation_entry.get();
@@ -279,7 +279,7 @@ TEST_F(ChromeOmniboxNavigationObserverTest, DeleteBrokenCustomSearchEngines) {
           AutocompleteMatch());
   auto navigation_entry = content::NavigationController::CreateNavigationEntry(
       GURL(), content::Referrer(), ui::PAGE_TRANSITION_FROM_ADDRESS_BAR, false,
-      std::string(), profile());
+      std::string(), profile(), nullptr);
   content::LoadCommittedDetails details;
   details.http_status_code = 404;
   details.entry = navigation_entry.get();
@@ -391,7 +391,7 @@ TEST_F(ChromeOmniboxNavigationObserverTest, AlternateNavInfoBar) {
     auto navigation_entry =
         content::NavigationController::CreateNavigationEntry(
             GURL(), content::Referrer(), ui::PAGE_TRANSITION_FROM_ADDRESS_BAR,
-            false, std::string(), profile());
+            false, std::string(), profile(), nullptr);
     content::NotificationService::current()->Notify(
         content::NOTIFICATION_NAV_ENTRY_PENDING,
         content::Source<content::NavigationController>(navigation_controller()),
