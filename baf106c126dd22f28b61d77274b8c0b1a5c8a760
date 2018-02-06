@@ -39,6 +39,48 @@
       "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd80a439_5c361d0b",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T22:08:46Z",
+      "side": 1,
+      "message": "We currently trust the renderer with this information already, so we aren\u0027t worse off. Unless we go through the browser process to verify that the frame sending the request could have injected a content script, I don\u0027t see how we could avoid trusting the renderer.\nAlso, wouldn\u0027t modifying the request also happen in the renderer? If it does, it is no different. If it doesn\u0027t, then we could have put that logic there, but it likely would be a layering violation, no?",
+      "parentUuid": "7fb9f2bf_bf6b5a18",
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec2b0a1_4bcfc8e5",
+        "filename": "net/base/load_flags_list.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-06T22:08:46Z",
+      "side": 1,
+      "message": "I got the opposite guidance from jam@, so can we all agree on an approach before I make more changes? I had what you are suggesting in PS5 (or 6), so feel free to take a look at that version.",
+      "parentUuid": "cf6f028b_0539a652",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "baf106c126dd22f28b61d77274b8c0b1a5c8a760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
