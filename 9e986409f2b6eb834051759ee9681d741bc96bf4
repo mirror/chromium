@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "8a25cf1e_3a024042",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-02-06T15:39:21Z",
+      "side": 1,
+      "message": "I\u0027m definitely not the right reviewer for this at a high-level - you should probably get chrishtr@ or eae@ to confirm this is the right approach.\n\nMy feeling is that these early-outs are at the wrong level. FrameView shouldn\u0027t have to have special logic for dealing with devtools\u0027 state. If we\u0027re in a devtools breakpoint, we shouldn\u0027t even be getting to FrameView. But someone with better knowledge of lifecycle and painting should make that call.\n\nAside from that, what in SetLayoutSizeInternal causes us to enter a lifecycle update? I don\u0027t see anything there.",
+      "parentUuid": "2c963d82_9fd9e8f4",
+      "revId": "9e986409f2b6eb834051759ee9681d741bc96bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc47c18_00821e25",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
         "patchSetId": 3
