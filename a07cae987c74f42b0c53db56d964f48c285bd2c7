@@ -258,6 +258,30 @@
       "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cdc659e_5ae0418a",
+        "filename": "content/public/browser/video_capture_device_launcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-06T22:31:56Z",
+      "side": 1,
+      "message": "Ack, thanks. Typically new methods in the content public API should have at least one use outside of content/, so it\u0027s better to add it in your later CL when it\u0027s needed.",
+      "parentUuid": "1aa9e070_9e5b2143",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "a07cae987c74f42b0c53db56d964f48c285bd2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
