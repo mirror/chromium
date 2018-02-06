@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "ecc30d02_7b6db4db",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-06T04:46:56Z",
+      "side": 1,
+      "message": "Ooh, sure I\u0027ll take another look.",
+      "parentUuid": "37512ef3_5894a9c0",
+      "revId": "2c7c88046b5af10351e5a71f994ae2962f91d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc9c0e83_f8e9ce98",
         "filename": "content/browser/loader/web_package_loader.h",
         "patchSetId": 9
