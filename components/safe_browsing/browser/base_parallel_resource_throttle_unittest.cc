@@ -118,7 +118,9 @@ class TestUrlCheckerDelegate : public UrlCheckerDelegate {
   bool IsUrlWhitelisted(const GURL& url) override { return false; }
 
   bool IsRequestWhitelisted(content::ResourceContext* resource_context,
-                            const GURL& original_url) override {
+                            const GURL& original_url,
+                            int frame_tree_node_id,
+                            bool originated_from_service_worker) override {
     return false;
   }
 

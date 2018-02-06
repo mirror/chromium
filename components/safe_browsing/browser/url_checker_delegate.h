@@ -57,7 +57,9 @@ class UrlCheckerDelegate
   // If the method returns true, the entire request won't be checked, including
   // the original URL and redirects.
   virtual bool IsRequestWhitelisted(content::ResourceContext* resource_context,
-                                    const GURL& original_url) = 0;
+                                    const GURL& original_url,
+                                    int frame_tree_node_id,
+                                    bool originated_from_service_worker) = 0;
 
   virtual const SBThreatTypeSet& GetThreatTypes() = 0;
   virtual SafeBrowsingDatabaseManager* GetDatabaseManager() = 0;

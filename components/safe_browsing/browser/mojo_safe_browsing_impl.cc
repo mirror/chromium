@@ -108,9 +108,17 @@ void MojoSafeBrowsingImpl::CreateCheckerAndCheck(
     int32_t load_flags,
     content::ResourceType resource_type,
     bool has_user_gesture,
+    bool originated_from_service_worker,
     CreateCheckerAndCheckCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  if (delegate_->IsRequestWhitelisted(resource_context_, url)) {
+
+  int frame_tree_node_id =
+      content::RenderFrameHost::GetFrameTreeNodeIdForRoutingId(
+          render_process_id_, render_frame_id);
+
+  if (delegate_->IsRequestWhitelisted(resource_context_, url,
+                                      frame_tree_node_id,
+                                      originated_from_service_worker)) {
     // This will drop |request|. The result is that the renderer side will
     // consider all URLs in the redirect chain of this request as safe.
     return;
