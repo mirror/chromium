@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43102787_474688d7",
+        "filename": "components/offline_pages/core/move_and_add_results.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: add class comment",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb4eabe_9472dce9",
+        "filename": "components/offline_pages/core/move_and_add_results.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: add empty line\n\nAlso add const modified for all getters.",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e032de4_c76afe0a",
+        "filename": "components/offline_pages/core/move_and_add_results.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: add include for this",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561c3591_4d3fe69a",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: sort all these",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7aa8616_27299716",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: What do you mean by \"calls a task\"? If you mean for calling PostTask, you don\u0027t need to say that.",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a449a5bc_cd1fe675",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: const \u0026",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f69036_53599976",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "nit: TaskRunner should be good enough.",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e28e07_ffa2c090",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "Why not returning via a callback?",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b521d5_f5f8a726",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-06T00:03:47Z",
+      "side": 1,
+      "message": "Update enums.xml.",
+      "revId": "9423b189631a1a866b0405ef8501333042c06045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
