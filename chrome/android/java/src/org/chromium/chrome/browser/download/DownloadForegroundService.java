@@ -154,6 +154,10 @@ public class DownloadForegroundService extends Service {
                 // the task, which might result in the notification being unable to be relaunched
                 // where it needs to be. Relaunch the old notification before stopping the service.
                 if (stopForegroundNotification == StopForegroundNotification.DETACH_OR_ADJUST) {
+                    // Handle clearing pinned notification id and observers in case the service
+                    // stops before we can do this properly.
+                    onNotificationHandledProperly();
+
                     relaunchOldNotification(
                             getNewNotificationIdFor(pinnedNotificationId), pinnedNotification);
                     stopForegroundInternal(ServiceCompat.STOP_FOREGROUND_REMOVE);
@@ -163,6 +167,10 @@ public class DownloadForegroundService extends Service {
                 }
 
             } else {
+                // Handle clearing pinned notification id and observers in case the service stops
+                // before we can do this properly.
+                onNotificationHandledProperly();
+
                 // For pre-Lollipop phones (API < 21), we need to kill all notifications because
                 // otherwise the notification gets stuck in the ongoing state.
                 relaunchOldNotification(
@@ -174,11 +182,15 @@ public class DownloadForegroundService extends Service {
         // If the notification was handled properly (ie. killed or detached), clear observer and
         // stored pinned ID. Otherwise, continue persisting this information in case it is needed.
         if (notificationHandledProperly) {
-            removeObserver();
-            clearPinnedNotificationId();
+            onNotificationHandledProperly();
         }
 
         return notificationHandledProperly;
+    }
+
+    private void onNotificationHandledProperly() {
+        clearPinnedNotificationId();
+        removeObserver();
     }
 
     @VisibleForTesting
@@ -200,6 +212,7 @@ public class DownloadForegroundService extends Service {
             // that the observers can do any corrections (ie. relaunch notification) if needed.
             DownloadForegroundServiceObservers.alertObserversServiceRestarted(
                     getPinnedNotificationId());
+            clearPinnedNotificationId();
 
             // Allow observers to restart service on their own, if needed.
             stopSelf();

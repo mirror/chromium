@@ -33,6 +33,8 @@ public class DownloadSharedPreferenceHelper {
             new ArrayList<DownloadSharedPreferenceEntry>();
     private final ObserverList<Observer> mObservers = new ObserverList<>();
 
+    private boolean mIsChangesCommitted;
+
     private SharedPreferences mSharedPrefs;
 
     // "Initialization on demand holder idiom"
@@ -68,6 +70,11 @@ public class DownloadSharedPreferenceHelper {
      * @param pendingEntry A DownloadSharedPreferenceEntry to be added.
      */
     public void addOrReplaceSharedPreferenceEntry(DownloadSharedPreferenceEntry pendingEntry) {
+        addOrReplaceSharedPreferenceEntry(pendingEntry, false /* forceCommit */);
+    }
+
+    public void addOrReplaceSharedPreferenceEntry(
+            DownloadSharedPreferenceEntry pendingEntry, boolean forceCommit) {
         Iterator<DownloadSharedPreferenceEntry> iterator =
                 mDownloadSharedPreferenceEntries.iterator();
         while (iterator.hasNext()) {
@@ -79,7 +86,7 @@ public class DownloadSharedPreferenceHelper {
             }
         }
         mDownloadSharedPreferenceEntries.add(pendingEntry);
-        storeDownloadSharedPreferenceEntries();
+        storeDownloadSharedPreferenceEntries(forceCommit);
 
         for (Observer observer : mObservers) {
             observer.onAddOrReplaceDownloadSharedPreferenceEntry(pendingEntry.id);
@@ -103,7 +110,7 @@ public class DownloadSharedPreferenceHelper {
             }
         }
         if (found) {
-            storeDownloadSharedPreferenceEntries();
+            storeDownloadSharedPreferenceEntries(false);
         }
     }
 
@@ -165,12 +172,12 @@ public class DownloadSharedPreferenceHelper {
     /**
      * Helper method to store all the SharedPreferences entries.
      */
-    private void storeDownloadSharedPreferenceEntries() {
+    private void storeDownloadSharedPreferenceEntries(boolean forceCommit) {
         Set<String> entries = new HashSet<String>();
         for (int i = 0; i < mDownloadSharedPreferenceEntries.size(); ++i) {
             entries.add(mDownloadSharedPreferenceEntries.get(i).getSharedPreferenceString());
         }
         DownloadManagerService.storeDownloadInfo(
-                mSharedPrefs, KEY_PENDING_DOWNLOAD_NOTIFICATIONS, entries);
+                mSharedPrefs, KEY_PENDING_DOWNLOAD_NOTIFICATIONS, entries, forceCommit);
     }
 }
