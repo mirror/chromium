@@ -27,7 +27,7 @@ class TestSafeBrowsingDatabaseManager : public SafeBrowsingDatabaseManager {
   bool CanCheckSubresourceFilter() const override;
   bool ChecksAreAlwaysAsync() const override;
   bool CheckBrowseUrl(const GURL& url,
-                      const SBThreatTypeSet& threat_types,
+                      SBThreatTypeSet threat_types,
                       Client* client) override;
   AsyncMatch CheckCsdWhitelistUrl(const GURL& url, Client* client) override;
   bool CheckDownloadUrl(const std::vector<GURL>& url_chain,

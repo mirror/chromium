@@ -24,7 +24,7 @@ class TestSafeBrowsingApiHandler : public SafeBrowsingApiHandler {
  public:
   void StartURLCheck(const URLCheckCallbackMeta& callback,
                      const GURL& url,
-                     const SBThreatTypeSet& threat_types) override {}
+                     SBThreatTypeSet threat_types) override {}
 };
 
 }  // namespace

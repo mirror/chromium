@@ -259,7 +259,7 @@ void SafeBrowsingUrlCheckerImpl::ProcessUrls() {
     }
 
     if (database_manager_->CheckBrowseUrl(
-            url, url_checker_delegate_->GetThreatTypes(), this)) {
+            url, url_checker_delegate_->TakeThreatTypes(), this)) {
       if (!RunNextCallback(true, false))
         return;
 

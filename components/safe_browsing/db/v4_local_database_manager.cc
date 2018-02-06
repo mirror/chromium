@@ -135,7 +135,7 @@ ListIdentifier GetUrlIdFromSBThreatType(SBThreatType sb_threat_type) {
 }
 
 StoresToCheck CreateStoresToCheckFromSBThreatTypeSet(
-    const SBThreatTypeSet& threat_types) {
+    SBThreatTypeSet threat_types) {
   StoresToCheck stores_to_check;
   for (SBThreatType sb_threat_type : threat_types) {
     stores_to_check.insert(GetUrlIdFromSBThreatType(sb_threat_type));
@@ -300,7 +300,7 @@ bool V4LocalDatabaseManager::ChecksAreAlwaysAsync() const {
 }
 
 bool V4LocalDatabaseManager::CheckBrowseUrl(const GURL& url,
-                                            const SBThreatTypeSet& threat_types,
+                                            SBThreatTypeSet threat_types,
                                             Client* client) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!threat_types.empty());
@@ -312,7 +312,7 @@ bool V4LocalDatabaseManager::CheckBrowseUrl(const GURL& url,
 
   std::unique_ptr<PendingCheck> check = std::make_unique<PendingCheck>(
       client, ClientCallbackType::CHECK_BROWSE_URL,
-      CreateStoresToCheckFromSBThreatTypeSet(threat_types),
+      CreateStoresToCheckFromSBThreatTypeSet(std::move(threat_types)),
       std::vector<GURL>(1, url));
 
   return HandleCheck(std::move(check));

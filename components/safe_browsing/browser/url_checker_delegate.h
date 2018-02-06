@@ -53,7 +53,10 @@ class UrlCheckerDelegate
   // the SafeBrowsing database.
   virtual bool IsUrlWhitelisted(const GURL& url) = 0;
 
-  virtual const SBThreatTypeSet& GetThreatTypes() = 0;
+  // Gets the threat types for this UrlChecker. The caller should take ownership
+  // of the underlying set, so this method should only be called once.
+  virtual SBThreatTypeSet TakeThreatTypes() = 0;
+
   virtual SafeBrowsingDatabaseManager* GetDatabaseManager() = 0;
   virtual BaseUIManager* GetUIManager() = 0;
 

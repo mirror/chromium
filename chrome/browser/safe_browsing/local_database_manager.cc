@@ -467,7 +467,7 @@ bool LocalSafeBrowsingDatabaseManager::MatchDownloadWhitelistString(
 
 bool LocalSafeBrowsingDatabaseManager::CheckBrowseUrl(
     const GURL& url,
-    const SBThreatTypeSet& expected_threats,
+    SBThreatTypeSet expected_threats,
     Client* client) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!expected_threats.empty());

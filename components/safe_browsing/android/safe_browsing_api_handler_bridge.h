@@ -31,7 +31,7 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
   // Makes Native->Java call to check the URL against Safe Browsing lists.
   void StartURLCheck(const URLCheckCallbackMeta& callback,
                      const GURL& url,
-                     const SBThreatTypeSet& threat_types) override;
+                     SBThreatTypeSet threat_types) override;
 
  private:
   void Initialize();
@@ -45,7 +45,7 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
 
     void StartURLCheck(const URLCheckCallbackMeta& callback,
                        const GURL& url,
-                       const SBThreatTypeSet& threat_types);
+                       SBThreatTypeSet threat_types);
 
    private:
     // Creates the j_api_handler_ if it hasn't been already.  If the API is not

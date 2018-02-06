@@ -111,7 +111,7 @@ class FakeSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
   // result when it is ready.
   // Overrides SafeBrowsingDatabaseManager::CheckBrowseUrl.
   bool CheckBrowseUrl(const GURL& gurl,
-                      const SBThreatTypeSet& threat_types,
+                      SBThreatTypeSet threat_types,
                       Client* client) override {
     if (badurls.find(gurl.spec()) == badurls.end() ||
         badurls.at(gurl.spec()) == SB_THREAT_TYPE_SAFE)

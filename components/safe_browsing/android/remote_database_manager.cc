@@ -182,7 +182,7 @@ bool RemoteSafeBrowsingDatabaseManager::ChecksAreAlwaysAsync() const {
 
 bool RemoteSafeBrowsingDatabaseManager::CheckBrowseUrl(
     const GURL& url,
-    const SBThreatTypeSet& threat_types,
+    SBThreatTypeSet threat_types,
     Client* client) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!threat_types.empty());
@@ -205,7 +205,7 @@ bool RemoteSafeBrowsingDatabaseManager::CheckBrowseUrl(
   DCHECK(api_handler) << "SafeBrowsingApiHandler was never constructed";
   api_handler->StartURLCheck(
       base::Bind(&ClientRequest::OnRequestDoneWeak, req->GetWeakPtr()), url,
-      threat_types);
+      std::move(threat_types));
 
   current_requests_.push_back(req.release());
 

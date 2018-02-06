@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
@@ -164,7 +165,7 @@ void SafeBrowsingApiHandlerBridge::Initialize() {
 void SafeBrowsingApiHandlerBridge::StartURLCheck(
     const SafeBrowsingApiHandler::URLCheckCallbackMeta& callback,
     const GURL& url,
-    const SBThreatTypeSet& threat_types) {
+    SBThreatTypeSet threat_types) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Initialize on the first URL check, when the feature list API is ready to be
   // used.
@@ -179,7 +180,7 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
   // >100ms, so use base::MayBlock even though we aren't technically doing
   // blocking IO.
   if (!api_task_runner_) {
-    core_->StartURLCheck(callback, url, threat_types);
+    core_->StartURLCheck(callback, url, std::move(threat_types));
     return;
   }
   // Unretained is safe because the task to delete |core_| will be sequenced
@@ -188,7 +189,7 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
       FROM_HERE,
       base::BindOnce(&SafeBrowsingApiHandlerBridge::Core::StartURLCheck,
                      base::Unretained(core_.get()), callback, url,
-                     threat_types));
+                     base::Passed(&threat_types)));
 }
 
 SafeBrowsingApiHandlerBridge::Core::Core() {
@@ -213,7 +214,7 @@ bool SafeBrowsingApiHandlerBridge::Core::CheckApiIsSupported() {
 void SafeBrowsingApiHandlerBridge::Core::StartURLCheck(
     const URLCheckCallbackMeta& callback,
     const GURL& url,
-    const SBThreatTypeSet& threat_types) {
+    SBThreatTypeSet threat_types) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   TRACE_EVENT0("safe_browsing",
                "SafeBrowsingApiHandlerBridge::StartURLCheckAsync");

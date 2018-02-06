@@ -282,7 +282,7 @@ FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager() {}
 
 bool FakeSafeBrowsingDatabaseManager::CheckBrowseUrl(
     const GURL& gurl,
-    const safe_browsing::SBThreatTypeSet& threat_types,
+    safe_browsing::SBThreatTypeSet threat_types,
     Client* client) {
   if (bad_urls_.find(gurl.spec()) == bad_urls_.end() ||
       bad_urls_[gurl.spec()] == safe_browsing::SB_THREAT_TYPE_SAFE) {

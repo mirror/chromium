@@ -49,7 +49,7 @@ class TestDatabaseManager : public TestSafeBrowsingDatabaseManager {
   bool ChecksAreAlwaysAsync() const override { return false; }
 
   bool CheckBrowseUrl(const GURL& url,
-                      const SBThreatTypeSet& threat_types,
+                      SBThreatTypeSet threat_types,
                       Client* client) override {
     DCHECK(!last_client_);
 
@@ -117,7 +117,9 @@ class TestUrlCheckerDelegate : public UrlCheckerDelegate {
 
   bool IsUrlWhitelisted(const GURL& url) override { return false; }
 
-  const SBThreatTypeSet& GetThreatTypes() override { return threat_types_; }
+  SBThreatTypeSet TakeThreatTypes() override {
+    return std::move(threat_types_);
+  }
   SafeBrowsingDatabaseManager* GetDatabaseManager() override {
     return database_manager_.get();
   }

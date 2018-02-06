@@ -139,7 +139,7 @@ class SafeBrowsingDatabaseManager
   // result when it is ready. The URL will only be checked for the threat types
   // in |threat_types|.
   virtual bool CheckBrowseUrl(const GURL& url,
-                              const SBThreatTypeSet& threat_types,
+                              SBThreatTypeSet threat_types,
                               Client* client) = 0;
 
   // Check if the prefix for |url| is in safebrowsing download add lists.

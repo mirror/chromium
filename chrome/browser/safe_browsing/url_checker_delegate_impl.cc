@@ -86,8 +86,8 @@ bool UrlCheckerDelegateImpl::IsUrlWhitelisted(const GURL& url) {
   return false;
 }
 
-const SBThreatTypeSet& UrlCheckerDelegateImpl::GetThreatTypes() {
-  return threat_types_;
+SBThreatTypeSet UrlCheckerDelegateImpl::TakeThreatTypes() {
+  return std::move(threat_types_);
 }
 
 SafeBrowsingDatabaseManager* UrlCheckerDelegateImpl::GetDatabaseManager() {

@@ -31,7 +31,7 @@ class SafeBrowsingApiHandler {
   // Makes Native->Java call and invokes callback when check is done.
   virtual void StartURLCheck(const URLCheckCallbackMeta& callback,
                              const GURL& url,
-                             const SBThreatTypeSet& threat_types) = 0;
+                             SBThreatTypeSet threat_types) = 0;
 
   virtual ~SafeBrowsingApiHandler() {}
 
