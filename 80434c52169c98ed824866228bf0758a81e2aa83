@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2de412ec_13c825aa",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82018cfc_f2575989",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ab5a917_aec6e150",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e63b943_4ce35632",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "I tested manually and uploaded several images to the bug. I found that it is better to let vertical border style to elide the tab text. Because there might be another existing bug to calculate the preferred_title_size_ on line 139 above. Somehow the bolded title gets less width? I do not find a solution yet and would like to discuss with you first and fix it in the next cl.\n\nCurrent behavior with/out elide:\n1. side_tab_border_style_no_elide_1.png: please note, when selecting the first tab, the second tab title is cut. Is that because the preferred_title_size_ is wrong?\n2. side_tab_border_style_no_elide_1.png: similarly, when selecting the second tab, the first tab title is cut a little at the end.\n3. side_tab_border_style_elide_1.png\n4. side_tab_border_style_elide_2.png\n3 \u0026 4 are with elide, makes the title look a little better.",
+      "parentUuid": "5ab5a917_aec6e150",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "602ee47a_6e84f85e",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Made the change. Also did for alignment, although it will only be two states: horizontal and vertical.\nThanks!",
+      "parentUuid": "e0807511_ed0ad85d",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "823d52a1_5936fe38",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03d1ad1_d335c1e0",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Sorry about the spelling. Will be more careful.",
+      "parentUuid": "823d52a1_5936fe38",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a010b8ef_6607d307",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "For the MdTabStrip, it sets SetDefaultFlex(1), which will make the MdTabs take even space of available MdTabStrip height. E.g. if there are two MdTabs, each MdTab will take half of the height. If we highlight the MdTab, it is a huge blob. I uploaded an image (MdTabStrip_vertical.png) to the bug.",
+      "parentUuid": "3dc2ad3d_aba4188a",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fecacbb_1c356162",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5265c8_a579bbd0",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "6fecacbb_1c356162",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "56ad933b_2865601d",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Inlined this one.",
+      "parentUuid": "8ff77090_0fb9085e",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "257982e8_d13c8f35",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c542e99b_11ea40b3",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "257982e8_d13c8f35",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5d3252db_3d0000eb",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe080dcb_71aab1f4",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2345968a_24cd0d76",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b4f1860e_6eb9ac2e",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2345968a_24cd0d76",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1f1e63_569f9305",
         "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a26933_8813d735",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-06T09:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1f1e63_569f9305",
+      "revId": "80434c52169c98ed824866228bf0758a81e2aa83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
