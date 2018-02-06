@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42602353_398452b3",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T20:52:33Z",
+      "side": 1,
+      "message": "All rules matching a blacklist are also matched against a whitelist. If the URL matches a rule in the whitelist, that rule is returned over the blacklist rule.",
+      "revId": "ac6d9d4a2cde992cb5d13aaf205f64078aad14fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa595807_8ffb388c",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-06T20:52:33Z",
+      "side": 1,
+      "message": "pull these before line 162?",
+      "revId": "ac6d9d4a2cde992cb5d13aaf205f64078aad14fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
