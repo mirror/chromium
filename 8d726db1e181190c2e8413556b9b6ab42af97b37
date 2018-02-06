@@ -160,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "7866b4d9_47e2a282",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:54:17Z",
+      "side": 1,
+      "message": "Still see it at patch 10.",
+      "parentUuid": "40f9d725_fb67a0fd",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64b4c4e4_cdb64a4c",
         "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
         "patchSetId": 5
@@ -204,6 +228,30 @@
       "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc58e419_02e88635",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-06T18:54:17Z",
+      "side": 1,
+      "message": "Maybe add a comment about when can this be coming back as empty from C++.",
+      "parentUuid": "5c292834_bee23a2b",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "8d726db1e181190c2e8413556b9b6ab42af97b37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
