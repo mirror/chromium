@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e0b80ec_66da0292",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-07T22:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be360a30_c91864b8",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 56
+      },
+      "revId": "490d6eadefda8cafde32283c7157092c7be15122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee1060e1_83ea374b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "490d6eadefda8cafde32283c7157092c7be15122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0faa900b_3c9eb572",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-07T22:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee1060e1_83ea374b",
+      "range": {
+        "startLine": 910,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 34
+      },
+      "revId": "490d6eadefda8cafde32283c7157092c7be15122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
