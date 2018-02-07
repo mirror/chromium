@@ -260,6 +260,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f712162_3e5b3ea9",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2018-02-07T21:11:48Z",
+      "side": 1,
+      "message": "Actually currently I have a working prototype and I didn\u0027t see much issue with it. Could you say more about this \"there\u0027s only one set of absolute axes and at least 3 different input modalities that reuse those axes in incompatible ways.\" , I think I only use ABS_X and ABS_Y to indicate mouse pointer location. \n\nWhat I am actually is doing now:\n\n1. use goldfish event to provide abs mouse + keyboard, when chrome book is in laptop mode, I am using this.\n2. use a emulated usb tablet to provide touch events, when chrome book is in tablet mode, I am using this.",
+      "parentUuid": "24f6903f_1e6cefe6",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
