@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66014db0_8cc59eaa",
+        "filename": "content/browser/renderer_host/input/non_blocking_event_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "Switching this to check the RWHI value. Not using frame watcher here, as it does not work in the viz world.",
+      "parentUuid": "e7fdd727_33b879fb",
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423410bd_1da22ed4",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccb6dd0_babf0763",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "423410bd_1da22ed4",
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "529531d3_88bbdba2",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "One pairs to the RenderWidgetHostImpl that is tied to the RenderWidget which constructs this.\nOne is paired to the MainThreadFrameObserver which requests the update, so that it is able to exit its blocking loop.",
+      "parentUuid": "756a6158_4ca1287a",
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb942daa_455fb01b",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b404afb_953090a3",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb942daa_455fb01b",
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "7a48adc3_bca8ef8c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e43ae40_b9c16d76",
+      "range": {
+        "startLine": 436,
+        "startChar": 63,
+        "endLine": 436,
+        "endChar": 70
+      },
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12f78d87_f6d2dd65",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 8
@@ -104,6 +200,24 @@
       "writtenOn": "2018-02-07T17:56:06Z",
       "side": 1,
       "message": "Why do we need to check this isn\u0027t null in the destructor but not constructor?",
+      "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5be86c_4d7900cf",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T20:58:41Z",
+      "side": 1,
+      "message": "Updated comment.\n\nThis is created on the RenderThread, but deleted on the compositor one. So we need to check the object is there so that we can post the task back to that thread.",
+      "parentUuid": "12f78d87_f6d2dd65",
       "revId": "97843966ed1ea6aa3dcd1b405be5833a21f78513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
