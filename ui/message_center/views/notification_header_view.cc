@@ -201,6 +201,7 @@ NotificationHeaderView::NotificationHeaderView(
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   app_name_view_->SetEnabledColor(accent_color_);
   app_name_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
+  app_name_view_->SetSubpixelRenderingEnabled(false);
   DCHECK_EQ(kInnerHeaderHeight, app_name_view_->GetPreferredSize().height());
   app_info_container->AddChildView(app_name_view_);
 
@@ -211,6 +212,7 @@ NotificationHeaderView::NotificationHeaderView(
   summary_text_divider_->SetLineHeight(font_list_height);
   summary_text_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_divider_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
+  summary_text_divider_->SetSubpixelRenderingEnabled(false);
   summary_text_divider_->SetVisible(false);
   DCHECK_EQ(kInnerHeaderHeight,
             summary_text_divider_->GetPreferredSize().height());
@@ -222,6 +224,7 @@ NotificationHeaderView::NotificationHeaderView(
   summary_text_view_->SetLineHeight(font_list_height);
   summary_text_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
+  summary_text_view_->SetSubpixelRenderingEnabled(false);
   summary_text_view_->SetVisible(false);
   DCHECK_EQ(kInnerHeaderHeight,
             summary_text_view_->GetPreferredSize().height());
@@ -234,6 +237,7 @@ NotificationHeaderView::NotificationHeaderView(
   timestamp_divider_->SetLineHeight(font_list_height);
   timestamp_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_divider_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
+  timestamp_divider_->SetSubpixelRenderingEnabled(false);
   timestamp_divider_->SetVisible(false);
   DCHECK_EQ(kInnerHeaderHeight,
             timestamp_divider_->GetPreferredSize().height());
@@ -245,6 +249,7 @@ NotificationHeaderView::NotificationHeaderView(
   timestamp_view_->SetLineHeight(font_list_height);
   timestamp_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_view_->SetBorder(views::CreateEmptyBorder(kTextViewPadding));
+  timestamp_view_->SetSubpixelRenderingEnabled(false);
   timestamp_view_->SetVisible(false);
   DCHECK_EQ(kInnerHeaderHeight, timestamp_view_->GetPreferredSize().height());
   app_info_container->AddChildView(timestamp_view_);
