@@ -4,11 +4,18 @@
 
 #include "ash/system/power/power_event_observer.h"
 
+#include <map>
+#include <utility>
+
 #include "ash/public/cpp/config.h"
+#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/lock_state_controller.h"
+#include "ash/wm/lock_state_observer.h"
 #include "base/location.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "ui/aura/window.h"
@@ -21,33 +28,27 @@ namespace ash {
 
 namespace {
 
-// Tells the compositor for each of the displays to finish all pending
-// rendering requests and block any new ones.
-void StopRenderingRequests() {
-  for (aura::Window* window : Shell::GetAllRootWindows()) {
-    ui::Compositor* compositor = window->GetHost()->compositor();
-    compositor->SetVisible(false);
-  }
-}
-
-// Tells the compositor for each of the displays to resume sending rendering
-// requests to the GPU.
-void ResumeRenderingRequests() {
-  for (aura::Window* window : Shell::GetAllRootWindows())
-    window->GetHost()->compositor()->SetVisible(true);
-}
-
 void OnSuspendDisplaysCompleted(const base::Closure& suspend_callback,
                                 bool status) {
   suspend_callback.Run();
 }
 
+// Returns whether the screen should be locked when device is suspended.
+bool ShouldLockOnSuspend() {
+  SessionController* controller = ash::Shell::Get()->session_controller();
+
+  return controller->ShouldLockScreenAutomatically() &&
+         controller->CanLockScreen();
+}
+
 }  // namespace
 
 PowerEventObserver::PowerEventObserver()
-    : session_observer_(this),
-      screen_locked_(Shell::Get()->session_controller()->IsScreenLocked()),
-      waiting_for_lock_screen_animations_(false) {
+    : lock_state_(Shell::Get()->session_controller()->IsScreenLocked()
+                      ? LockState::kLocked
+                      : LockState::kNotLocked),
+      session_observer_(this),
+      compositor_observer_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
 }
@@ -59,58 +60,37 @@ PowerEventObserver::~PowerEventObserver() {
 
 void PowerEventObserver::OnLockAnimationsComplete() {
   VLOG(1) << "Screen locker animations have completed.";
-  waiting_for_lock_screen_animations_ = false;
+  if (lock_state_ != LockState::kLocking)
+    return;
 
-  if (!screen_lock_callback_.is_null()) {
-    StopRenderingRequests();
+  lock_state_ = LockState::kLockedCompositingPending;
 
-    screen_lock_callback_.Run();
-    screen_lock_callback_.Reset();
-  }
+  StartTrackingCompositingState();
 }
 
 void PowerEventObserver::SuspendImminent(
     power_manager::SuspendImminent::Reason reason) {
-  SessionController* controller = Shell::Get()->session_controller();
+  suspend_started_ = true;
 
-  // This class is responsible for disabling all rendering requests at suspend
-  // time and then enabling them at resume time.  When the
-  // auto-screen-lock pref is not set this is easy to do since
-  // StopRenderingRequests() is just called directly from this function.  If the
-  // auto-screen-lock pref _is_ set, then the suspend needs to be delayed
-  // until the lock screen is fully visible.  While it is sufficient from a
-  // security perspective to block only until the lock screen is ready, which
-  // guarantees that the contents of the user's screen are no longer visible,
-  // this leads to poor UX on the first resume since neither the user pod nor
-  // the header bar will be visible for a few hundred milliseconds until the GPU
-  // process starts rendering again.  To deal with this, the suspend is delayed
-  // until all the lock screen animations have completed and the suspend request
-  // is unblocked from OnLockAnimationsComplete().
-  if (!screen_locked_ && controller->ShouldLockScreenAutomatically() &&
-      controller->CanLockScreen()) {
-    screen_lock_callback_ = chromeos::DBusThreadManager::Get()
-                                ->GetPowerManagerClient()
-                                ->GetSuspendReadinessCallback(FROM_HERE);
-    VLOG(1) << "Requesting screen lock from PowerEventObserver";
-    // TODO(warx): once crbug.com/748732 is fixed, we probably can treat
-    // auto-screen-lock pref set and not set cases as the same. Also remove
-    // |waiting_for_lock_screen_animations_|.
-    Shell::Get()->lock_state_controller()->LockWithoutAnimation();
-  } else if (waiting_for_lock_screen_animations_) {
-    // The auto-screen-lock pref has been set and the lock screen is ready
-    // but the animations have not completed yet.  This can happen if a suspend
-    // request is canceled after the lock screen is ready but before the
-    // animations have completed and then another suspend request is immediately
-    // started.  In practice, it is highly unlikely that this will ever happen
-    // but it's better to be safe since the cost of not dealing with it properly
-    // is a memory leak in the GPU and weird artifacts on the screen.
-    screen_lock_callback_ = chromeos::DBusThreadManager::Get()
-                                ->GetPowerManagerClient()
-                                ->GetSuspendReadinessCallback(FROM_HERE);
+  // Stop compositing immediately if
+  // * the screen lock flow has already completed
+  //  * screen is not locked, and should remain unlocked during suspend
+  if (lock_state_ == LockState::kLocked ||
+      (lock_state_ == LockState::kNotLocked && !ShouldLockOnSuspend())) {
+    StopRootWindowCompositors();
   } else {
-    // The auto-screen-lock pref is not set or the screen has already been
-    // locked and the animations have completed.  Rendering can be stopped now.
-    StopRenderingRequests();
+    // If screen is getting locked during suspend, delay suspend until screen
+    // lock finishes, and post-lock frames get picked up by display compositors.
+    compositors_stopped_callback_ =
+        chromeos::DBusThreadManager::Get()
+            ->GetPowerManagerClient()
+            ->GetSuspendReadinessCallback(FROM_HERE);
+
+    if (lock_state_ == LockState::kNotLocked) {
+      VLOG(1) << "Requesting screen lock from PowerEventObserver";
+      lock_state_ = LockState::kLocking;
+      Shell::Get()->lock_state_controller()->LockWithoutAnimation();
+    }
   }
 
   ui::UserActivityDetector::Get()->OnDisplayPowerChanging();
@@ -127,6 +107,8 @@ void PowerEventObserver::SuspendImminent(
 }
 
 void PowerEventObserver::SuspendDone(const base::TimeDelta& sleep_duration) {
+  suspend_started_ = false;
+
   // TODO(derat): After mus exposes a method for resuming displays, call it
   // here: http://crbug.com/692193
   if (Shell::GetAshConfig() != Config::MASH)
@@ -137,26 +119,140 @@ void PowerEventObserver::SuspendDone(const base::TimeDelta& sleep_duration) {
   // animation to complete, clear the blocker since the suspend has already
   // completed.  This prevents rendering requests from being blocked after a
   // resume if the lock screen took too long to show.
-  screen_lock_callback_.Reset();
+  compositors_stopped_callback_.Reset();
 
-  ResumeRenderingRequests();
+  StartRootWindowCompositors();
 }
 
 void PowerEventObserver::OnLockStateChanged(bool locked) {
   if (locked) {
-    screen_locked_ = true;
-    waiting_for_lock_screen_animations_ = true;
+    lock_state_ = LockState::kLocking;
 
     // The screen is now locked but the pending suspend, if any, will be blocked
     // until all the animations have completed.
-    if (!screen_lock_callback_.is_null()) {
+    if (!compositors_stopped_callback_.is_null()) {
       VLOG(1) << "Screen locked due to suspend";
     } else {
       VLOG(1) << "Screen locked without suspend";
     }
   } else {
-    screen_locked_ = false;
+    lock_state_ = LockState::kNotLocked;
+    pending_compositing_.clear();
+    compositor_observer_.RemoveAll();
+
+    if (suspend_started_) {
+      LOG(WARNING) << "Screen locked during suspend";
+      // If screen gets unlocked during suspend, which could teoretically happen
+      // if the user initiated unlock just as device started unlocking (though,
+      // it seems unlikely this would be encountered in practice), relock the
+      // device if requred. Otherwise, if suspend is blocked due to screen
+      // locking, unblock it.
+      if (ShouldLockOnSuspend()) {
+        lock_state_ = LockState::kLocking;
+        Shell::Get()->lock_state_controller()->LockWithoutAnimation();
+      } else if (!compositors_stopped_callback_.is_null()) {
+        StopRootWindowCompositors();
+      }
+    }
   }
+}
+
+void PowerEventObserver::OnCompositingDidCommit(ui::Compositor* compositor) {
+  if (!pending_compositing_.count(compositor) ||
+      pending_compositing_[compositor] != CompositingState::kWaitingForCommit) {
+    return;
+  }
+  pending_compositing_[compositor] = CompositingState::kWaitingForStarted;
+}
+
+void PowerEventObserver::OnCompositingStarted(ui::Compositor* compositor,
+                                              base::TimeTicks start_time) {
+  if (!pending_compositing_.count(compositor) ||
+      pending_compositing_[compositor] !=
+          CompositingState::kWaitingForStarted) {
+    return;
+  }
+  pending_compositing_[compositor] = CompositingState::kWaitingForEnded;
+}
+
+void PowerEventObserver::OnCompositingEnded(ui::Compositor* compositor) {
+  if (!pending_compositing_.count(compositor) ||
+      pending_compositing_[compositor] != CompositingState::kWaitingForEnded) {
+    return;
+  }
+
+  compositor_observer_.Remove(compositor);
+  if (!compositors_stopped_callback_.is_null()) {
+    pending_compositing_.erase(compositor);
+    compositor->SetVisible(false);
+  } else {
+    pending_compositing_[compositor] = CompositingState::kEnded;
+  }
+
+  UpdateStateIfAllCompositingCyclesEnded();
+}
+
+void PowerEventObserver::OnCompositingLockStateChanged(
+    ui::Compositor* compositor) {}
+
+void PowerEventObserver::OnCompositingChildResizing(
+    ui::Compositor* compositor) {}
+
+void PowerEventObserver::OnCompositingShuttingDown(ui::Compositor* compositor) {
+  compositor_observer_.Remove(compositor);
+  pending_compositing_.erase(compositor);
+
+  UpdateStateIfAllCompositingCyclesEnded();
+}
+
+void PowerEventObserver::StartRootWindowCompositors() {
+  for (aura::Window* window : Shell::GetAllRootWindows()) {
+    ui::Compositor* compositor = window->GetHost()->compositor();
+    if (!compositor->IsVisible())
+      compositor->SetVisible(true);
+  }
+}
+
+void PowerEventObserver::StopRootWindowCompositors() {
+  pending_compositing_.clear();
+  compositor_observer_.RemoveAll();
+
+  for (aura::Window* window : Shell::GetAllRootWindows()) {
+    ui::Compositor* compositor = window->GetHost()->compositor();
+    compositor->SetVisible(false);
+  }
+
+  if (!compositors_stopped_callback_.is_null())
+    std::move(compositors_stopped_callback_).Run();
+}
+
+void PowerEventObserver::StartTrackingCompositingState() {
+  for (aura::Window* window : Shell::GetAllRootWindows()) {
+    ui::Compositor* compositor = window->GetHost()->compositor();
+    if (!compositor->IsVisible())
+      continue;
+
+    if (pending_compositing_.count(compositor))
+      continue;
+
+    pending_compositing_[compositor] = CompositingState::kWaitingForCommit;
+    compositor_observer_.Add(compositor);
+    compositor->ScheduleDraw();
+  }
+
+  UpdateStateIfAllCompositingCyclesEnded();
+}
+
+void PowerEventObserver::UpdateStateIfAllCompositingCyclesEnded() {
+  for (const auto& it : pending_compositing_) {
+    if (it.second != CompositingState::kEnded)
+      return;
+  }
+
+  lock_state_ = LockState::kLocked;
+
+  if (!compositors_stopped_callback_.is_null())
+    StopRootWindowCompositors();
 }
 
 }  // namespace ash
