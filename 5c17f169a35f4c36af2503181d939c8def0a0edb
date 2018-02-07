@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "2926baad_4eb1c5f3",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2018-02-07T16:11:20Z",
+      "side": 1,
+      "message": "Hmmm, that check is for getting the versionName from the info, the check of whether the browser is installed has been done in WebApkUtils.getHostBrwoserPackageName() (https://cs.chromium.org/chromium/src/chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java?rcl\u003d3d739276a42a3288fec6c6a08d2c63fa96311f73\u0026l\u003d88). If the cached host browser isn\u0027t installed anymore, the WebAPK will find another host browser. I think it is okay here to have the CCT check first, since it is safe to open a CCT even when Chrome is old.",
+      "parentUuid": "530a2e29_5be69179",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 21
+      },
+      "revId": "5c17f169a35f4c36af2503181d939c8def0a0edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a03275e3_fc03e93c",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
         "patchSetId": 14
