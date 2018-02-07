@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_widget.h"
 
+#include <iostream>
 #include <tuple>
 #include <vector>
 
@@ -404,6 +405,40 @@ TEST_F(RenderWidgetUnittest, AckResizeOnHide) {
   widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
   EXPECT_TRUE(widget()->sink()->GetUniqueMessageMatching(
       ViewHostMsg_ResizeOrRepaint_ACK::ID));
+}
+
+// Tests that if a RenderWidget is auto-resized, it allocates its own
+// viz::LocalSurfaceId
+TEST_F(RenderWidgetUnittest, AutoResizeAlloatedLocalSurfaceId) {
+  constexpr gfx::Size size(200, 200);
+  widget()->DidAutoResize(size);
+
+  widget()->sink()->ClearMessages();
+  widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
+  ASSERT_EQ(1u, widget()->sink()->message_count());
+  {
+    const IPC::Message* msg = widget()->sink()->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewHostMsg_ResizeOrRepaint_ACK::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    std::cout << std::get<5>(params);
+  }
+
+  constexpr gfx::Size size2(100, 100);
+  widget()->DidAutoResize(size2);
+
+  widget()->sink()->ClearMessages();
+  widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
+  ASSERT_EQ(1u, widget()->sink()->message_count());
+  {
+    const IPC::Message* msg = widget()->sink()->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewHostMsg_ResizeOrRepaint_ACK::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    std::cout << std::get<5>(params);
+  }
 }
 
 class PopupRenderWidget : public RenderWidget {
