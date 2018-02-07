@@ -243,8 +243,8 @@ bool HasOnlyTranslationTransforms(LayerType* layer) {
 }
 
 template <typename LayerType>
-bool AnimationsPreserveAxisAlignment(LayerType* layer) {
-  return layer->GetMutatorHost()->AnimationsPreserveAxisAlignment(
+bool KeyframeModelsPreserveAxisAlignment(LayerType* layer) {
+  return layer->GetMutatorHost()->KeyframeModelsPreserveAxisAlignment(
       layer->element_id());
 }
 
@@ -918,7 +918,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
       HasPotentiallyRunningFilterAnimation(layer);
 
   data_for_children->animation_axis_aligned_since_render_target &=
-      AnimationsPreserveAxisAlignment(layer);
+      KeyframeModelsPreserveAxisAlignment(layer);
   data_for_children->compound_transform_since_render_target *= Transform(layer);
   const bool should_create_render_surface = ShouldCreateRenderSurface(
       layer, data_for_children->compound_transform_since_render_target,
@@ -927,7 +927,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   bool not_axis_aligned_since_last_clip =
       data_from_ancestor.not_axis_aligned_since_last_clip
           ? true
-          : !AnimationsPreserveAxisAlignment(layer) ||
+          : !KeyframeModelsPreserveAxisAlignment(layer) ||
                 !Transform(layer).Preserves2dAxisAlignment();
   // A non-axis aligned clip may need a render surface. So, we create an effect
   // node.
@@ -1216,7 +1216,7 @@ void PropertyTreeBuilderContext<LayerType>::BuildPropertyTreesInternal(
   bool not_axis_aligned_since_last_clip =
       data_from_parent.not_axis_aligned_since_last_clip
           ? true
-          : !AnimationsPreserveAxisAlignment(layer) ||
+          : !KeyframeModelsPreserveAxisAlignment(layer) ||
                 !Transform(layer).Preserves2dAxisAlignment();
   bool has_non_axis_aligned_clip =
       not_axis_aligned_since_last_clip && LayerClipsSubtree(layer);

@@ -50,7 +50,7 @@ void LayerAnimatorTestController::StartThreadedAnimationsIfNeeded() {
 
     animator_->OnThreadedAnimationStarted(base::TimeTicks::Now(),
                                           threaded_properties[i],
-                                          element->animation_group_id());
+                                          element->keyframe_model_group_id());
   }
 }
 

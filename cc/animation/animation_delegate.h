@@ -6,25 +6,25 @@
 #define CC_ANIMATION_ANIMATION_DELEGATE_H_
 
 #include "base/time/time.h"
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_curve.h"
+#include "cc/animation/keyframe_model.h"
 
 namespace cc {
 
 class CC_ANIMATION_EXPORT AnimationDelegate {
  public:
-  virtual void NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                                      int target_property,
-                                      int group) = 0;
-  virtual void NotifyAnimationFinished(base::TimeTicks monotonic_time,
-                                       int target_property,
-                                       int group) = 0;
+  virtual void NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                          int target_property,
+                                          int group) = 0;
+  virtual void NotifyKeyframeModelFinished(base::TimeTicks monotonic_time,
+                                           int target_property,
+                                           int group) = 0;
 
-  virtual void NotifyAnimationAborted(base::TimeTicks monotonic_time,
-                                      int target_property,
-                                      int group) = 0;
+  virtual void NotifyKeyframeModelAborted(base::TimeTicks monotonic_time,
+                                          int target_property,
+                                          int group) = 0;
 
-  virtual void NotifyAnimationTakeover(
+  virtual void NotifyKeyframeModelTakeover(
       base::TimeTicks monotonic_time,
       int target_property,
       base::TimeTicks animation_start_time,
