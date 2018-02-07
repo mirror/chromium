@@ -60,6 +60,10 @@ struct StructTraits<viz::mojom::CopyOutputResultDataView,
     return result->rect();
   }
 
+  static bool at_top(const std::unique_ptr<viz::CopyOutputResult>& result) {
+    return result->at_top();
+  }
+
   static const SkBitmap& bitmap(
       const std::unique_ptr<viz::CopyOutputResult>& result) {
     // This will return a non-drawable bitmap if the result was not

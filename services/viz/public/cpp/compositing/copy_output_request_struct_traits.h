@@ -20,6 +20,10 @@ struct StructTraits<viz::mojom::CopyOutputRequestDataView,
     return request->result_format();
   }
 
+  static bool at_top(const std::unique_ptr<viz::CopyOutputRequest>& request) {
+    return request->at_top();
+  }
+
   static const gfx::Vector2d& scale_from(
       const std::unique_ptr<viz::CopyOutputRequest>& request) {
     return request->scale_from();

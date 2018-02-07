@@ -80,7 +80,7 @@ bool StructTraits<viz::mojom::CopyOutputResultDataView,
         return false;
 
       *out_p = std::make_unique<viz::CopyOutputSkBitmapResult>(
-          rect, std::move(bitmap));
+          rect, std::move(bitmap), data.at_top());
       return true;
     }
 
@@ -104,7 +104,7 @@ bool StructTraits<viz::mojom::CopyOutputResultDataView,
       if (!has_mailbox) {
         // Returns an empty result.
         *out_p = std::make_unique<viz::CopyOutputResult>(
-            viz::CopyOutputResult::Format::RGBA_TEXTURE, gfx::Rect());
+            viz::CopyOutputResult::Format::RGBA_TEXTURE, gfx::Rect(), false);
         return true;
       }
 
@@ -117,7 +117,7 @@ bool StructTraits<viz::mojom::CopyOutputResultDataView,
       // here and proxy the callback over mojo to the CopyOutputResult's
       // origin via the TextureReleaserPtr.
       *out_p = std::make_unique<viz::CopyOutputTextureResult>(
-          rect, *mailbox, *sync_token, *color_space,
+          rect, *mailbox, *sync_token, *color_space, data.at_top(),
           viz::SingleReleaseCallback::Create(
               base::Bind(&Release, base::Passed(&releaser))));
       return true;

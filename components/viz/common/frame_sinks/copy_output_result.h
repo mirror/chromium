@@ -40,7 +40,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
     I420_PLANES,
   };
 
-  CopyOutputResult(Format format, const gfx::Rect& rect);
+  CopyOutputResult(Format format, const gfx::Rect& rect, bool at_top);
 
   virtual ~CopyOutputResult();
 
@@ -62,6 +62,10 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
   // !readyToDraw() bitmap if this result is empty or if a conversion is not
   // possible in the current implementation.
   virtual const SkBitmap& AsSkBitmap() const;
+
+  // Returns whether the CopyOutputRequest was requested when the scroll offset
+  // is at 0.
+  bool at_top() const { return at_top_; }
 
   // Returns a pointer with the gpu::Mailbox referencing a RGBA_TEXTURE result,
   // or null if this is not a RGBA_TEXTURE result. Clients can either:
@@ -111,6 +115,7 @@ class VIZ_COMMON_EXPORT CopyOutputResult {
  private:
   const Format format_;
   const gfx::Rect rect_;
+  const bool at_top_;
 
   // Cached bitmap returned by the default implementation of AsSkBitmap().
   mutable SkBitmap cached_bitmap_;
@@ -124,8 +129,11 @@ class VIZ_COMMON_EXPORT CopyOutputSkBitmapResult : public CopyOutputResult {
  public:
   CopyOutputSkBitmapResult(Format format,
                            const gfx::Rect& rect,
-                           const SkBitmap& bitmap);
-  CopyOutputSkBitmapResult(const gfx::Rect& rect, const SkBitmap& bitmap);
+                           const SkBitmap& bitmap,
+                           bool at_top);
+  CopyOutputSkBitmapResult(const gfx::Rect& rect,
+                           const SkBitmap& bitmap,
+                           bool at_top);
   ~CopyOutputSkBitmapResult() override;
 
   const SkBitmap& AsSkBitmap() const override;
@@ -147,6 +155,7 @@ class VIZ_COMMON_EXPORT CopyOutputTextureResult : public CopyOutputResult {
       const gpu::Mailbox& mailbox,
       const gpu::SyncToken& sync_token,
       const gfx::ColorSpace& color_space,
+      bool at_top,
       std::unique_ptr<SingleReleaseCallback> release_callback);
   ~CopyOutputTextureResult() override;
 

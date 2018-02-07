@@ -173,7 +173,8 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   void SendNeedsBeginFramesEvent(content::DevToolsAgentHostClient* client);
   void PendingFrameReadbackComplete(PendingFrame* pending_frame,
                                     const SkBitmap& bitmap,
-                                    content::ReadbackResponse response);
+                                    content::ReadbackResponse response,
+                                    bool at_top);
 
   uint64_t begin_frame_source_id_ = viz::BeginFrameArgs::kManualSourceId;
   uint64_t begin_frame_sequence_number_ =
