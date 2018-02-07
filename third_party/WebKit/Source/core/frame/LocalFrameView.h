@@ -1188,6 +1188,8 @@ class CORE_EXPORT LocalFrameView final
 
   void LayoutFromRootObject(LayoutObject& root);
 
+  void RecordUkmUpdateTimes(TimerBase* = nullptr);
+
   LayoutSize size_;
 
   typedef HashSet<scoped_refptr<LayoutEmbeddedObject>> EmbeddedObjectSet;
@@ -1364,6 +1366,8 @@ class CORE_EXPORT LocalFrameView final
   // TODO(kenrb): Remove these when https://crbug.com/680606 is resolved.
   std::unique_ptr<CompositorAnimationTimeline> animation_timeline_;
   std::unique_ptr<CompositorAnimationHost> animation_host_;
+
+  std::unique_ptr<Timer<LocalFrameView>> ukm_flush_timer_;
 
   Member<PrintContext> print_context_;
 

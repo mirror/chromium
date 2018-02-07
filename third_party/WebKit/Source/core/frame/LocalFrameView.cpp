@@ -128,6 +128,9 @@
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebScrollIntoViewParams.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 // Used to check for dirty layouts violating document lifecycle rules.
@@ -142,6 +145,7 @@
     }                               \
   } while (false)
 
+namespace blink {
 namespace {
 
 // Page dimensions in pixels at 72 DPI.
@@ -150,9 +154,109 @@ constexpr int kA4PortraitPageHeight = 842;
 constexpr int kLetterPortraitPageWidth = 612;
 constexpr int kLetterPortraitPageHeight = 792;
 
+class UkmAggregator {
+ public:
+  static constexpr const char* kEventName = "Blink.UpdateTime";
+  enum Metric {
+    kCompositing,
+    kPaint,
+    kPrePaint,
+    kStyleAndLayout,
+    kMetricCount
+  };
+
+  class ScopedUkmUmaTimer {
+   public:
+    ScopedUkmUmaTimer(Metric metric, CustomCountHistogram& counter)
+        : metric_(std::move(metric)),
+          start_time_(CurrentTimeTicks()),
+          uma_counter_(counter) {}
+    ~ScopedUkmUmaTimer() {
+      TimeDelta elapsed = CurrentTimeTicks() - start_time_;
+      UkmAggregator::RecordSample(metric_, elapsed);
+      uma_counter_.Count(elapsed.InMicroseconds());
+    }
+
+   private:
+    Metric metric_;
+    const TimeTicks start_time_;
+    CustomCountHistogram& uma_counter_;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedUkmUmaTimer);
+  };
+
+  static void RecordUkmMetricsAndClear(ukm::UkmEntryBuilder* builder) {
+    DCHECK(builder);
+    for (int i = 0; i < kMetricCount; ++i) {
+      auto& record = Samples()[i];
+      if (record.sample_count == 0)
+        continue;
+
+      builder->AddMetric(GetMetricName(static_cast<Metric>(i)),
+                         record.GetAverageDurationUs());
+      record = AggregatedRecord();
+    }
+    has_samples_ = false;
+  }
+
+  static bool HasData() { return has_samples_; }
+
+ private:
+  struct AggregatedRecord {
+    int64_t GetAverageDurationUs() const {
+      DCHECK_GT(sample_count, 0u);
+      return total_duration.InMicroseconds() /
+             static_cast<int64_t>(sample_count);
+    }
+
+    TimeDelta total_duration;
+    size_t sample_count = 0;
+  };
+
+  static void RecordSample(Metric metric, TimeDelta duration) {
+    DCHECK_LT(metric, Metric::kMetricCount);
+    auto& record = Samples()[metric];
+    record.total_duration += duration;
+    record.sample_count++;
+    has_samples_ = true;
+  }
+
+  static AggregatedRecord* Samples() {
+    static AggregatedRecord* samples = new AggregatedRecord[kMetricCount];
+    return samples;
+  }
+
+  static const char* GetMetricName(Metric metric) {
+    // If these names change, then ukm.xml needs to be updated.
+    switch (metric) {
+      case kCompositing:
+        return "Compositing";
+      case kPaint:
+        return "Paint";
+      case kPrePaint:
+        return "PrePaint";
+      case kStyleAndLayout:
+        return "StyleAndLayout";
+      case kMetricCount:
+        break;
+    }
+    NOTREACHED();
+    return "";
+  }
+
+  static bool has_samples_;
+};
+
+bool UkmAggregator::has_samples_ = false;
+
 }  // namespace
 
-namespace blink {
+#define SCOPED_UMA_AND_UKM_TIMER(uma_name, ukm_enum)                 \
+  DEFINE_STATIC_LOCAL_IMPL(CustomCountHistogram, scoped_uma_counter, \
+                           (uma_name, 0, 10000000, 50), false);      \
+  UkmAggregator::ScopedUkmUmaTimer scoped_ukm_uma_timer(ukm_enum,    \
+                                                        scoped_uma_counter);
+
 using namespace HTMLNames;
 
 // The maximum number of updatePlugins iterations that should be done before
@@ -287,6 +391,7 @@ void LocalFrameView::Reset() {
   viewport_constrained_objects_.reset();
   layout_subtree_root_list_.Clear();
   orthogonal_writing_mode_root_list_.Clear();
+  ukm_flush_timer_.reset();
 }
 
 template <typename Function>
@@ -340,6 +445,13 @@ void LocalFrameView::Init() {
   if (frame_->Owner() &&
       frame_->Owner()->ScrollingMode() == kScrollbarAlwaysOff)
     SetCanHaveScrollbars(false);
+
+  if (frame_->IsLocalRoot()) {
+    // Record UKMs once every second.
+    ukm_flush_timer_.reset(
+        new Timer<LocalFrameView>(this, &LocalFrameView::RecordUkmUpdateTimes));
+    ukm_flush_timer_->StartRepeating(TimeDelta::FromSeconds(1), FROM_HERE);
+  }
 }
 
 void LocalFrameView::SetupRenderThrottling() {
@@ -413,6 +525,11 @@ void LocalFrameView::Dispose() {
     owner_element->SetEmbeddedContentView(nullptr);
 
   ClearPrintContext();
+
+  if (ukm_flush_timer_) {
+    ukm_flush_timer_.reset();
+    RecordUkmUpdateTimes();
+  }
 
 #if DCHECK_IS_ON()
   has_been_disposed_ = true;
@@ -3179,6 +3296,8 @@ bool LocalFrameView::UpdateLifecyclePhasesInternal(
                    InspectorUpdateLayerTreeEvent::Data(frame_.Get()));
 
       if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+        SCOPED_UMA_AND_UKM_TIMER("Blink.Compositing.UpdateTime",
+                                 UkmAggregator::kCompositing);
         layout_view->Compositor()->UpdateIfNeededRecursive(target_state);
       } else {
         ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
@@ -3290,7 +3409,8 @@ void LocalFrameView::PrePaint() {
   });
 
   {
-    SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
+    SCOPED_UMA_AND_UKM_TIMER("Blink.PrePaint.UpdateTime",
+                             UkmAggregator::kPrePaint);
     PrePaintTreeWalk().Walk(*this);
   }
 
@@ -3301,7 +3421,7 @@ void LocalFrameView::PrePaint() {
 
 void LocalFrameView::PaintTree() {
   TRACE_EVENT0("blink", "LocalFrameView::paintTree");
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Paint.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Paint.UpdateTime", UkmAggregator::kPaint);
 
   DCHECK(GetFrame() == GetPage()->MainFrame() ||
          (!GetFrame().Tree().Parent()->IsLocalFrame()));
@@ -3384,7 +3504,8 @@ void LocalFrameView::PushPaintArtifactToCompositor(
         paint_artifact_compositor_->GetWebLayer(), &GetFrame());
   }
 
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.Compositing.UpdateTime",
+                           UkmAggregator::kCompositing);
 
   paint_artifact_compositor_->Update(paint_controller_->GetPaintArtifact(),
                                      composited_element_ids);
@@ -3399,7 +3520,8 @@ std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
 }
 
 void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursive() {
-  SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
+  SCOPED_UMA_AND_UKM_TIMER("Blink.StyleAndLayout.UpdateTime",
+                           UkmAggregator::kStyleAndLayout);
   UpdateStyleAndLayoutIfNeededRecursiveInternal();
 }
 
@@ -5755,6 +5877,15 @@ ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
   DCHECK(page);
 
   return page->GetScrollbarTheme();
+}
+
+void LocalFrameView::RecordUkmUpdateTimes(TimerBase*) {
+  if (!UkmAggregator::HasData())
+    return;
+
+  auto builder = frame_->GetDocument()->UkmRecorder()->GetEntryBuilder(
+      frame_->GetDocument()->UkmSourceID(), UkmAggregator::kEventName);
+  UkmAggregator::RecordUkmMetricsAndClear(builder.get());
 }
 
 }  // namespace blink
