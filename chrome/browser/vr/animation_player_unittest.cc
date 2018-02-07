@@ -72,13 +72,13 @@ class TestAnimationTarget : public cc::AnimationTarget {
   SkColor background_color_ = SK_ColorRED;
 };
 
-TEST(AnimationPlayerTest, AddRemoveAnimations) {
+TEST(AnimationPlayerTest, AddRemoveKeyframeModels) {
   AnimationPlayer player;
   EXPECT_TRUE(player.animations().empty());
 
-  player.AddAnimation(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
-                                            gfx::SizeF(20, 200),
-                                            MicrosecondsToDelta(10000)));
+  player.AddKeyframeModel(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
+                                                gfx::SizeF(20, 200),
+                                                MicrosecondsToDelta(10000)));
   EXPECT_EQ(1ul, player.animations().size());
   EXPECT_EQ(BOUNDS, player.animations()[0]->target_property_id());
 
@@ -86,22 +86,22 @@ TEST(AnimationPlayerTest, AddRemoveAnimations) {
   from_operations.AppendTranslate(10, 100, 1000);
   cc::TransformOperations to_operations;
   to_operations.AppendTranslate(20, 200, 2000);
-  player.AddAnimation(CreateTransformAnimation(
+  player.AddKeyframeModel(CreateTransformAnimation(
       2, 2, from_operations, to_operations, MicrosecondsToDelta(10000)));
 
   EXPECT_EQ(2ul, player.animations().size());
   EXPECT_EQ(TRANSFORM, player.animations()[1]->target_property_id());
 
-  player.AddAnimation(CreateTransformAnimation(
+  player.AddKeyframeModel(CreateTransformAnimation(
       3, 3, from_operations, to_operations, MicrosecondsToDelta(10000)));
   EXPECT_EQ(3ul, player.animations().size());
   EXPECT_EQ(TRANSFORM, player.animations()[2]->target_property_id());
 
-  player.RemoveAnimations(TRANSFORM);
+  player.RemoveKeyframeModels(TRANSFORM);
   EXPECT_EQ(1ul, player.animations().size());
   EXPECT_EQ(BOUNDS, player.animations()[0]->target_property_id());
 
-  player.RemoveAnimation(player.animations()[0]->id());
+  player.RemoveKeyframeModel(player.animations()[0]->id());
   EXPECT_TRUE(player.animations().empty());
 }
 
@@ -110,9 +110,9 @@ TEST(AnimationPlayerTest, AnimationLifecycle) {
   AnimationPlayer player;
   player.set_target(&target);
 
-  player.AddAnimation(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
-                                            gfx::SizeF(20, 200),
-                                            MicrosecondsToDelta(10000)));
+  player.AddKeyframeModel(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
+                                                gfx::SizeF(20, 200),
+                                                MicrosecondsToDelta(10000)));
   EXPECT_EQ(1ul, player.animations().size());
   EXPECT_EQ(BOUNDS, player.animations()[0]->target_property_id());
   EXPECT_EQ(cc::Animation::WAITING_FOR_TARGET_AVAILABILITY,
@@ -138,9 +138,9 @@ TEST(AnimationPlayerTest, AnimationQueue) {
   AnimationPlayer player;
   player.set_target(&target);
 
-  player.AddAnimation(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
-                                            gfx::SizeF(20, 200),
-                                            MicrosecondsToDelta(10000)));
+  player.AddKeyframeModel(CreateBoundsAnimation(1, 1, gfx::SizeF(10, 100),
+                                                gfx::SizeF(20, 200),
+                                                MicrosecondsToDelta(10000)));
   EXPECT_EQ(1ul, player.animations().size());
   EXPECT_EQ(BOUNDS, player.animations()[0]->target_property_id());
   EXPECT_EQ(cc::Animation::WAITING_FOR_TARGET_AVAILABILITY,
@@ -151,15 +151,15 @@ TEST(AnimationPlayerTest, AnimationQueue) {
   EXPECT_EQ(cc::Animation::RUNNING, player.animations()[0]->run_state());
   EXPECT_SIZEF_EQ(gfx::SizeF(10, 100), target.size());
 
-  player.AddAnimation(CreateBoundsAnimation(2, 2, gfx::SizeF(10, 100),
-                                            gfx::SizeF(20, 200),
-                                            MicrosecondsToDelta(10000)));
+  player.AddKeyframeModel(CreateBoundsAnimation(2, 2, gfx::SizeF(10, 100),
+                                                gfx::SizeF(20, 200),
+                                                MicrosecondsToDelta(10000)));
 
   cc::TransformOperations from_operations;
   from_operations.AppendTranslate(10, 100, 1000);
   cc::TransformOperations to_operations;
   to_operations.AppendTranslate(20, 200, 2000);
-  player.AddAnimation(CreateTransformAnimation(
+  player.AddKeyframeModel(CreateTransformAnimation(
       3, 2, from_operations, to_operations, MicrosecondsToDelta(10000)));
 
   EXPECT_EQ(3ul, player.animations().size());
@@ -628,13 +628,13 @@ TEST(AnimationPlayerTest, CorrectTargetValue) {
       kEpsilon));
 
   // Add animations.
-  player.AddAnimation(
+  player.AddKeyframeModel(
       CreateOpacityAnimation(2, 1, from_opacity, to_opacity, duration));
-  player.AddAnimation(
+  player.AddKeyframeModel(
       CreateBoundsAnimation(1, 1, from_bounds, to_bounds, duration));
-  player.AddAnimation(
+  player.AddKeyframeModel(
       CreateBackgroundColorAnimation(3, 1, from_color, to_color, duration));
-  player.AddAnimation(
+  player.AddKeyframeModel(
       CreateTransformAnimation(4, 1, from_transform, to_transform, duration));
 
   base::TimeTicks start_time = MicrosecondsToTicks(1000000);

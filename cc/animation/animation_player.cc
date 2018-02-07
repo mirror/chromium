@@ -185,36 +185,36 @@ void AnimationPlayer::PushPropertiesToImplThread(AnimationPlayer* player_impl) {
   }
 }
 
-void AnimationPlayer::AddAnimationForTicker(
-    std::unique_ptr<Animation> animation,
+void AnimationPlayer::AddKeyframeModelForTicker(
+    std::unique_ptr<KeyframeModel> animation,
     TickerId ticker_id) {
   DCHECK(GetTickerById(ticker_id));
-  GetTickerById(ticker_id)->AddAnimation(std::move(animation));
+  GetTickerById(ticker_id)->AddKeyframeModel(std::move(animation));
 }
 
-void AnimationPlayer::PauseAnimationForTicker(int animation_id,
-                                              double time_offset,
-                                              TickerId ticker_id) {
+void AnimationPlayer::PauseKeyframeModelForTicker(int keyframe_model_id,
+                                                  double time_offset,
+                                                  TickerId ticker_id) {
   DCHECK(GetTickerById(ticker_id));
-  GetTickerById(ticker_id)->PauseAnimation(animation_id, time_offset);
+  GetTickerById(ticker_id)->PauseKeyframeModel(keyframe_model_id, time_offset);
 }
 
-void AnimationPlayer::RemoveAnimationForTicker(int animation_id,
-                                               TickerId ticker_id) {
+void AnimationPlayer::RemoveKeyframeModelForTicker(int keyframe_model_id,
+                                                   TickerId ticker_id) {
   DCHECK(GetTickerById(ticker_id));
-  GetTickerById(ticker_id)->RemoveAnimation(animation_id);
+  GetTickerById(ticker_id)->RemoveKeyframeModel(keyframe_model_id);
 }
 
-void AnimationPlayer::AbortAnimationForTicker(int animation_id,
-                                              TickerId ticker_id) {
+void AnimationPlayer::AbortKeyframeModelForTicker(int keyframe_model_id,
+                                                  TickerId ticker_id) {
   DCHECK(GetTickerById(ticker_id));
-  GetTickerById(ticker_id)->AbortAnimation(animation_id);
+  GetTickerById(ticker_id)->AbortKeyframeModel(keyframe_model_id);
 }
 
-void AnimationPlayer::AbortAnimations(TargetProperty::Type target_property,
-                                      bool needs_completion) {
+void AnimationPlayer::AbortKeyframeModels(TargetProperty::Type target_property,
+                                          bool needs_completion) {
   for (auto& ticker : tickers_)
-    ticker->AbortAnimations(target_property, needs_completion);
+    ticker->AbortKeyframeModels(target_property, needs_completion);
 }
 
 void AnimationPlayer::PushPropertiesTo(AnimationPlayer* player_impl) {
@@ -244,7 +244,7 @@ void AnimationPlayer::AddToTicking() {
   animation_host_->AddToTicking(this);
 }
 
-void AnimationPlayer::AnimationRemovedFromTicking() {
+void AnimationPlayer::KeyframeModelRemovedFromTicking() {
   DCHECK_GE(ticking_tickers_count, 0);
   if (!ticking_tickers_count)
     return;
@@ -256,43 +256,43 @@ void AnimationPlayer::AnimationRemovedFromTicking() {
   animation_host_->RemoveFromTicking(this);
 }
 
-void AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
+void AnimationPlayer::NotifyKeyframeModelStarted(const AnimationEvent& event) {
   if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationStarted(
+    animation_delegate_->NotifyKeyframeModelStarted(
         event.monotonic_time, event.target_property, event.group_id);
   }
 }
 
-void AnimationPlayer::NotifyAnimationFinished(const AnimationEvent& event) {
+void AnimationPlayer::NotifyKeyframeModelFinished(const AnimationEvent& event) {
   if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationFinished(
+    animation_delegate_->NotifyKeyframeModelFinished(
         event.monotonic_time, event.target_property, event.group_id);
   }
 }
 
-void AnimationPlayer::NotifyAnimationAborted(const AnimationEvent& event) {
+void AnimationPlayer::NotifyKeyframeModelAborted(const AnimationEvent& event) {
   if (animation_delegate_) {
-    animation_delegate_->NotifyAnimationAborted(
+    animation_delegate_->NotifyKeyframeModelAborted(
         event.monotonic_time, event.target_property, event.group_id);
   }
 }
 
-void AnimationPlayer::NotifyAnimationTakeover(const AnimationEvent& event) {
+void AnimationPlayer::NotifyKeyframeModelTakeover(const AnimationEvent& event) {
   DCHECK(event.target_property == TargetProperty::SCROLL_OFFSET);
 
   if (animation_delegate_) {
     DCHECK(event.curve);
     std::unique_ptr<AnimationCurve> animation_curve = event.curve->Clone();
-    animation_delegate_->NotifyAnimationTakeover(
+    animation_delegate_->NotifyKeyframeModelTakeover(
         event.monotonic_time, event.target_property, event.animation_start_time,
         std::move(animation_curve));
   }
 }
 
-size_t AnimationPlayer::TickingAnimationsCount() const {
+size_t AnimationPlayer::TickingKeyframeModelsCount() const {
   size_t count = 0;
   for (auto& ticker : tickers_)
-    count += ticker->TickingAnimationsCount();
+    count += ticker->TickingKeyframeModelsCount();
   return count;
 }
 
@@ -307,18 +307,18 @@ void AnimationPlayer::SetNeedsPushProperties() {
   animation_timeline_->SetNeedsPushProperties();
 }
 
-void AnimationPlayer::ActivateAnimations() {
+void AnimationPlayer::ActivateKeyframeModels() {
   for (auto& ticker : tickers_) {
-    ticker->ActivateAnimations();
+    ticker->ActivateKeyframeModels();
     ticker->UpdateTickingState(UpdateTickingType::NORMAL);
   }
 }
 
-Animation* AnimationPlayer::GetAnimationForTicker(
+KeyframeModel* AnimationPlayer::GetKeyframeModelForTicker(
     TargetProperty::Type target_property,
     TickerId ticker_id) const {
   DCHECK(GetTickerById(ticker_id));
-  return GetTickerById(ticker_id)->GetAnimation(target_property);
+  return GetTickerById(ticker_id)->GetKeyframeModel(target_property);
 }
 
 std::string AnimationPlayer::ToString() const {
@@ -326,7 +326,7 @@ std::string AnimationPlayer::ToString() const {
   for (const auto& ticker : tickers_) {
     output += base::StringPrintf(", element_id=%s, animations=[%s]",
                                  ticker->element_id().ToString().c_str(),
-                                 ticker->AnimationsToString().c_str());
+                                 ticker->KeyframeModelsToString().c_str());
   }
   return output + "}";
 }

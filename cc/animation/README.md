@@ -19,7 +19,7 @@ of Chromium interact with cc/animation, most prominently Blink and ui/.
 ## How cc/animation works
 
 The root concept in cc/animation is an
-[animation](https://codesearch.chromium.org/chromium/src/cc/animation/animation.h).
+[animation](https://codesearch.chromium.org/chromium/src/cc/animation/keyframe_model.h).
 Animations contain the state necessary to 'play' (interpolate values from) an
 [animation curve](https://codesearch.chromium.org/chromium/src/cc/animation/animation_curve.h),
 which is a function that returns a value given an input time. Aside from the

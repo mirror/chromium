@@ -21,7 +21,7 @@ LayerAnimationSequence::LayerAnimationSequence()
       is_cyclic_(false),
       last_element_(0),
       waiting_for_group_start_(false),
-      animation_group_id_(0),
+      keyframe_model_group_id_(0),
       last_progressed_fraction_(0.0),
       animation_metrics_reporter_(nullptr) {}
 
@@ -31,7 +31,7 @@ LayerAnimationSequence::LayerAnimationSequence(
       is_cyclic_(false),
       last_element_(0),
       waiting_for_group_start_(false),
-      animation_group_id_(0),
+      keyframe_model_group_id_(0),
       last_progressed_fraction_(0.0),
       animation_metrics_reporter_(nullptr) {
   AddElement(std::move(element));
@@ -49,7 +49,7 @@ void LayerAnimationSequence::Start(LayerAnimationDelegate* delegate) {
     return;
 
   elements_[0]->set_requested_start_time(start_time_);
-  elements_[0]->Start(delegate, animation_group_id_);
+  elements_[0]->Start(delegate, keyframe_model_group_id_);
 
   NotifyStarted();
 
@@ -86,8 +86,8 @@ void LayerAnimationSequence::Progress(base::TimeTicks now,
 
   if (is_cyclic_ || last_element_ < elements_.size()) {
     if (!elements_[current_index]->Started()) {
-      animation_group_id_ = cc::AnimationIdProvider::NextGroupId();
-      elements_[current_index]->Start(delegate, animation_group_id_);
+      keyframe_model_group_id_ = cc::AnimationIdProvider::NextGroupId();
+      elements_[current_index]->Start(delegate, keyframe_model_group_id_);
     }
     base::WeakPtr<LayerAnimationSequence> alive(AsWeakPtr());
     if (elements_[current_index]->Progress(now, delegate))
@@ -106,7 +106,7 @@ void LayerAnimationSequence::Progress(base::TimeTicks now,
   if (!is_cyclic_ && last_element_ == elements_.size()) {
     last_element_ = 0;
     waiting_for_group_start_ = false;
-    animation_group_id_ = 0;
+    keyframe_model_group_id_ = 0;
     NotifyEnded();
   }
 }
@@ -158,7 +158,7 @@ void LayerAnimationSequence::ProgressToEnd(LayerAnimationDelegate* delegate) {
   if (!is_cyclic_) {
     last_element_ = 0;
     waiting_for_group_start_ = false;
-    animation_group_id_ = 0;
+    keyframe_model_group_id_ = 0;
     NotifyEnded();
   }
 }
@@ -219,7 +219,7 @@ void LayerAnimationSequence::OnThreadedAnimationStarted(
     base::TimeTicks monotonic_time,
     cc::TargetProperty::Type target_property,
     int group_id) {
-  if (elements_.empty() || group_id != animation_group_id_)
+  if (elements_.empty() || group_id != keyframe_model_group_id_)
     return;
 
   size_t current_index = last_element_ % elements_.size();
@@ -308,7 +308,7 @@ std::string LayerAnimationSequence::ToString() const {
       "elements=[%s], is_cyclic=%d, group_id=%d}",
       size(),
       LayerAnimationElement::AnimatablePropertiesToString(properties_).c_str(),
-      ElementsToString().c_str(), is_cyclic_, animation_group_id_);
+      ElementsToString().c_str(), is_cyclic_, keyframe_model_group_id_);
 }
 
 }  // namespace ui

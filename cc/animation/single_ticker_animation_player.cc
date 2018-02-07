@@ -65,35 +65,36 @@ AnimationTicker* SingleTickerAnimationPlayer::animation_ticker() const {
   return GetTicker();
 }
 
-void SingleTickerAnimationPlayer::AddAnimation(
-    std::unique_ptr<Animation> animation) {
-  AddAnimationForTicker(std::move(animation), GetTicker()->id());
+void SingleTickerAnimationPlayer::AddKeyframeModel(
+    std::unique_ptr<KeyframeModel> animation) {
+  AddKeyframeModelForTicker(std::move(animation), GetTicker()->id());
 }
 
-void SingleTickerAnimationPlayer::PauseAnimation(int animation_id,
-                                                 double time_offset) {
-  PauseAnimationForTicker(animation_id, time_offset, GetTicker()->id());
+void SingleTickerAnimationPlayer::PauseKeyframeModel(int keyframe_model_id,
+                                                     double time_offset) {
+  PauseKeyframeModelForTicker(keyframe_model_id, time_offset,
+                              GetTicker()->id());
 }
 
-void SingleTickerAnimationPlayer::RemoveAnimation(int animation_id) {
-  RemoveAnimationForTicker(animation_id, GetTicker()->id());
+void SingleTickerAnimationPlayer::RemoveKeyframeModel(int keyframe_model_id) {
+  RemoveKeyframeModelForTicker(keyframe_model_id, GetTicker()->id());
 }
 
-void SingleTickerAnimationPlayer::AbortAnimation(int animation_id) {
-  AbortAnimationForTicker(animation_id, GetTicker()->id());
+void SingleTickerAnimationPlayer::AbortKeyframeModel(int keyframe_model_id) {
+  AbortKeyframeModelForTicker(keyframe_model_id, GetTicker()->id());
 }
 
-bool SingleTickerAnimationPlayer::NotifyAnimationFinishedForTesting(
+bool SingleTickerAnimationPlayer::NotifyKeyframeModelFinishedForTesting(
     TargetProperty::Type target_property,
     int group_id) {
   AnimationEvent event(AnimationEvent::FINISHED, GetTicker()->element_id(),
                        group_id, target_property, base::TimeTicks());
-  return GetTicker()->NotifyAnimationFinished(event);
+  return GetTicker()->NotifyKeyframeModelFinished(event);
 }
 
-Animation* SingleTickerAnimationPlayer::GetAnimation(
+KeyframeModel* SingleTickerAnimationPlayer::GetKeyframeModel(
     TargetProperty::Type target_property) const {
-  return GetAnimationForTicker(target_property, GetTicker()->id());
+  return GetKeyframeModelForTicker(target_property, GetTicker()->id());
 }
 
 }  // namespace cc

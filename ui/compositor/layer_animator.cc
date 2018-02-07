@@ -183,12 +183,12 @@ void LayerAnimator::DetachLayerFromAnimationPlayer() {
 }
 
 void LayerAnimator::AddThreadedAnimation(
-    std::unique_ptr<cc::Animation> animation) {
-  animation_player_->AddAnimation(std::move(animation));
+    std::unique_ptr<cc::KeyframeModel> animation) {
+  animation_player_->AddKeyframeModel(std::move(animation));
 }
 
-void LayerAnimator::RemoveThreadedAnimation(int animation_id) {
-  animation_player_->RemoveAnimation(animation_id);
+void LayerAnimator::RemoveThreadedAnimation(int keyframe_model_id) {
+  animation_player_->RemoveKeyframeModel(keyframe_model_id);
 }
 
 cc::SingleTickerAnimationPlayer* LayerAnimator::GetAnimationPlayerForTesting()
@@ -278,7 +278,7 @@ void LayerAnimator::StartTogether(
   // These animations (provided they don't animate any common properties) will
   // now animate together if trivially scheduled.
   for (iter = animations.begin(); iter != animations.end(); ++iter) {
-    (*iter)->set_animation_group_id(group_id);
+    (*iter)->set_keyframe_model_group_id(group_id);
     (*iter)->set_waiting_for_group_start(wait_for_group_start);
     ScheduleAnimation(*iter);
   }
@@ -316,7 +316,7 @@ void LayerAnimator::ScheduleTogether(
   // These animations (provided they don't animate any common properties) will
   // now animate together if trivially scheduled.
   for (iter = animations.begin(); iter != animations.end(); ++iter) {
-    (*iter)->set_animation_group_id(group_id);
+    (*iter)->set_keyframe_model_group_id(group_id);
     (*iter)->set_waiting_for_group_start(wait_for_group_start);
     ScheduleAnimation(*iter);
   }
@@ -402,7 +402,7 @@ void LayerAnimator::OnThreadedAnimationStarted(
     return;
   DCHECK(running->is_sequence_alive());
 
-  if (running->sequence()->animation_group_id() != group_id)
+  if (running->sequence()->keyframe_model_group_id() != group_id)
     return;
 
   running->sequence()->OnThreadedAnimationStarted(monotonic_time,
@@ -421,7 +421,7 @@ void LayerAnimator::OnThreadedAnimationStarted(
        iter != running_animations_.end(); ++iter) {
     // Ensure that each sequence is only Started once, regardless of the
     // number of sequences in the group that have threaded first elements.
-    if (((*iter).sequence()->animation_group_id() == group_id) &&
+    if (((*iter).sequence()->keyframe_model_group_id() == group_id) &&
         !(*iter).sequence()->IsFirstElementThreaded(delegate_) &&
         (*iter).sequence()->waiting_for_group_start()) {
       (*iter).sequence()->set_start_time(start_time);
@@ -571,10 +571,10 @@ LayerAnimationSequence* LayerAnimator::RemoveAnimation(
   // wait for a group start. If no other sequences in the group have a
   // threaded first element, the group no longer needs the additional wait.
   bool is_wait_still_needed = false;
-  int group_id = to_return->animation_group_id();
+  int group_id = to_return->keyframe_model_group_id();
   for (AnimationQueue::iterator queue_iter = animation_queue_.begin();
        queue_iter != animation_queue_.end(); ++queue_iter) {
-    if (((*queue_iter)->animation_group_id() == group_id) &&
+    if (((*queue_iter)->keyframe_model_group_id() == group_id) &&
         (*queue_iter)->IsFirstElementThreaded(delegate_)) {
       is_wait_still_needed = true;
       break;
@@ -586,7 +586,7 @@ LayerAnimationSequence* LayerAnimator::RemoveAnimation(
 
   for (AnimationQueue::iterator queue_iter = animation_queue_.begin();
        queue_iter != animation_queue_.end(); ++queue_iter) {
-    if ((*queue_iter)->animation_group_id() == group_id &&
+    if ((*queue_iter)->keyframe_model_group_id() == group_id &&
         (*queue_iter)->waiting_for_group_start()) {
       (*queue_iter)->set_waiting_for_group_start(false);
       if (is_running) {
@@ -861,8 +861,9 @@ bool LayerAnimator::StartSequenceImmediately(LayerAnimationSequence* sequence) {
   else
     start_time = base::TimeTicks::Now();
 
-  if (!sequence->animation_group_id())
-    sequence->set_animation_group_id(cc::AnimationIdProvider::NextGroupId());
+  if (!sequence->keyframe_model_group_id())
+    sequence->set_keyframe_model_group_id(
+        cc::AnimationIdProvider::NextGroupId());
 
   running_animations_.push_back(
       RunningAnimation(sequence->AsWeakPtr()));
@@ -937,9 +938,9 @@ LayerAnimatorCollection* LayerAnimator::GetLayerAnimatorCollection() {
   return delegate_ ? delegate_->GetLayerAnimatorCollection() : NULL;
 }
 
-void LayerAnimator::NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                                           int target_property,
-                                           int group) {
+void LayerAnimator::NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                               int target_property,
+                                               int group) {
   OnThreadedAnimationStarted(
       monotonic_time, static_cast<cc::TargetProperty::Type>(target_property),
       group);

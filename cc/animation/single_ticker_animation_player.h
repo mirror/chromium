@@ -11,11 +11,11 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_export.h"
 #include "cc/animation/animation_player.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/keyframe_model.h"
 #include "cc/trees/element_id.h"
 
 namespace cc {
@@ -42,14 +42,15 @@ class CC_ANIMATION_EXPORT SingleTickerAnimationPlayer : public AnimationPlayer {
   void AttachElement(ElementId element_id);
 
   AnimationTicker* animation_ticker() const;
-  void AddAnimation(std::unique_ptr<Animation> animation);
-  void PauseAnimation(int animation_id, double time_offset);
-  void RemoveAnimation(int animation_id);
-  void AbortAnimation(int animation_id);
+  void AddKeyframeModel(std::unique_ptr<KeyframeModel> keyframe_model);
+  void PauseKeyframeModel(int keyframe_model_id, double time_offset);
+  void RemoveKeyframeModel(int keyframe_model_id);
+  void AbortKeyframeModel(int keyframe_model_id);
 
-  bool NotifyAnimationFinishedForTesting(TargetProperty::Type target_property,
-                                         int group_id);
-  Animation* GetAnimation(TargetProperty::Type target_property) const;
+  bool NotifyKeyframeModelFinishedForTesting(
+      TargetProperty::Type target_property,
+      int group_id);
+  KeyframeModel* GetKeyframeModel(TargetProperty::Type target_property) const;
 
  private:
   friend class base::RefCounted<SingleTickerAnimationPlayer>;

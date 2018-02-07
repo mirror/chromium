@@ -316,7 +316,7 @@ TestAnimationDelegate::TestAnimationDelegate()
       takeover_(false),
       start_time_(base::TimeTicks()) {}
 
-void TestAnimationDelegate::NotifyAnimationStarted(
+void TestAnimationDelegate::NotifyKeyframeModelStarted(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
@@ -324,21 +324,21 @@ void TestAnimationDelegate::NotifyAnimationStarted(
   start_time_ = monotonic_time;
 }
 
-void TestAnimationDelegate::NotifyAnimationFinished(
+void TestAnimationDelegate::NotifyKeyframeModelFinished(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
   finished_ = true;
 }
 
-void TestAnimationDelegate::NotifyAnimationAborted(
+void TestAnimationDelegate::NotifyKeyframeModelAborted(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
   aborted_ = true;
 }
 
-void TestAnimationDelegate::NotifyAnimationTakeover(
+void TestAnimationDelegate::NotifyKeyframeModelTakeover(
     base::TimeTicks monotonic_time,
     int target_property,
     base::TimeTicks animation_start_time,

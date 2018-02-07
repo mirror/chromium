@@ -7,8 +7,6 @@ import("//cc/cc.gni")
 cc_component("animation") {
   output_name = "cc_animation"
   sources = [
-    "animation.cc",
-    "animation.h",
     "animation_curve.cc",
     "animation_curve.h",
     "animation_delegate.h",
@@ -28,6 +26,8 @@ cc_component("animation") {
     "animation_timeline.h",
     "element_animations.cc",
     "element_animations.h",
+    "keyframe_model.cc",
+    "keyframe_model.h",
     "keyframed_animation_curve.cc",
     "keyframed_animation_curve.h",
     "scroll_offset_animation_curve.cc",
