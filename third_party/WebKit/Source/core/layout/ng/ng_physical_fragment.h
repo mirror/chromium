@@ -17,6 +17,7 @@ namespace blink {
 class ComputedStyle;
 class LayoutObject;
 class Node;
+class NGPhysicalLineBoxFragment;
 struct NGPhysicalOffsetRect;
 struct NGPixelSnappedPhysicalBoxStrut;
 
@@ -144,6 +145,18 @@ class CORE_EXPORT NGPhysicalFragment
 
   // Unite visual rect to propagate to parent's ContentsVisualRect.
   void PropagateContentsVisualRect(NGPhysicalOffsetRect*) const;
+
+  // Returns true if this is an inline fragment, and is the logically first
+  // leaf that immediately follows a line wrap from the last line.
+  // TODO(xiaochengh): Try to avoid passing the seemingly redundant line boxes.
+  bool IsAfterLineWrap(const NGPhysicalLineBoxFragment& current_line,
+                       const NGPhysicalLineBoxFragment* last_line) const;
+
+  // Returns true if this is an inline fragment, and is the logically last
+  // leaf that immediately precedes a line wrap into the next line.
+  // TODO(xiaochengh): Try to avoid passing the seemingly redundant line box.
+  bool IsBeforeLineWrap(
+      const NGPhysicalLineBoxFragment& /* current_line*/) const;
 
   // Should only be used by the parent fragment's layout.
   void SetOffset(NGPhysicalOffset offset) {
