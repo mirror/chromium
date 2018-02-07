@@ -209,6 +209,24 @@
       "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6f6a95_f1d42a85",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T00:43:40Z",
+      "side": 1,
+      "message": "controller_info contains:\n- endpoint which is non-null when S13nServiceWorker is enabled, and\n- object info which is non-null when S13nServiceWorker or NavigationMojoResponse is enabled\n\nis what I wanted to clarify.",
+      "parentUuid": "f1024930_bcfe6758",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
