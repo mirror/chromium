@@ -20,6 +20,7 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/pickle.h"
 #include "base/process/process_handle.h"
+#include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
@@ -83,6 +84,34 @@ void HistogramBase::SetFlags(int32_t flags) {
 void HistogramBase::ClearFlags(int32_t flags) {
   HistogramBase::Count old_flags = subtle::NoBarrier_Load(&flags_);
   subtle::NoBarrier_Store(&flags_, old_flags & ~flags);
+}
+
+void HistogramBase::AddKilo(Sample value, int count) {
+  // Convert raw count to KiB and probabilistically round up/down if the
+  // remainder is more than a random number [0, 1KiB). This gives a more
+  // accurate count when there are a large number of records. RandInt is
+  // "inclusive", hence the -1 for the max value.
+  int64_t count_k = count / 1000;
+  if (count - (count_k * 1000) > base::RandInt(0, 1000 - 1))
+    count_k += 1;
+  if (count_k == 0)
+    return;
+
+  AddCount(value, count_k);
+}
+
+void HistogramBase::AddKiB(Sample value, int count) {
+  // Convert raw count to KiB and probabilistically round up/down if the
+  // remainder is more than a random number [0, 1KiB). This gives a more
+  // accurate count when there are a large number of records. RandInt is
+  // "inclusive", hence the -1 for the max value.
+  int64_t count_kb = count >> 10;
+  if (count - (count_kb << 10) > base::RandInt(0, (1 << 10) - 1))
+    count_kb += 1;
+  if (count_kb == 0)
+    return;
+
+  AddCount(value, count_kb);
 }
 
 void HistogramBase::AddTime(const TimeDelta& time) {

@@ -181,6 +181,12 @@ class BASE_EXPORT HistogramBase {
   // than or equal to 1.
   virtual void AddCount(Sample value, int count) = 0;
 
+  // Similar to above but divides |count| by 1000 or 1024. Probabilistic
+  // rounding is used to yield a reasonably accurate total when many samples
+  // are added.
+  void AddKilo(Sample value, int count);
+  void AddKiB(Sample value, int count);
+
   // 2 convenient functions that call Add(Sample).
   void AddTime(const TimeDelta& time);
   void AddBoolean(bool value);
