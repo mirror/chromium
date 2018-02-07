@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff88242f_d9be4d93",
+        "filename": "components/url_pattern_index/url_pattern.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-07T22:37:15Z",
+      "side": 1,
+      "message": "If this is necessary for correctness, shouldn\u0027t you add a unit test that\u0027s sensitive to it?\n\nFrom what I can tell, though, it is not necessary for correctness; I\u0027m guessing it\u0027s an optimization aimed at a pathological performance case like this:\n\n  url \u003d http://baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aa.a.com/\n  pattern \u003d \"aaaaaaaaaaaaaaaaaaa\"\n\n?\n\nIf so, it might be more natural to do this skip-ahead at the bottom of the loop with something like:\n\n  position \u003d sub_url.find(\u0027.\u0027, position + 1);\n  if (position \u003d\u003d std::string::npos) break;\n\n (note we\u0027d still need the position++ to skip the \u0027.\u0027)",
+      "revId": "aaf3e0cffa5b5f1005f44342a2ce353303ab06d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
