@@ -257,7 +257,9 @@ TEST_F(DirectLayerTreeFrameSinkTest, HitTestRegionList) {
   EXPECT_EQ(mojom::kHitTestChildSurface,
             hit_test_region_list1->regions[0]->flags);
   EXPECT_EQ(gfx::Rect(20, 20), hit_test_region_list1->regions[0]->rect);
-  EXPECT_EQ(transform2, hit_test_region_list1->regions[0]->transform);
+  gfx::Transform transform2_inverse;
+  EXPECT_TRUE(transform2.GetInverse(&transform2_inverse));
+  EXPECT_EQ(transform2_inverse, hit_test_region_list1->regions[0]->transform);
 }
 
 }  // namespace
