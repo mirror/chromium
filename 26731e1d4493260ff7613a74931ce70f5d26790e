@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d69fb419_4bfab674",
+        "filename": "components/autofill/content/renderer/form_autofill_util_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-02-07T05:54:02Z",
+      "side": 1,
+      "message": "You are right, I should put them together, but I am not a fan to use helper function, I think the former is more easy to read.",
+      "parentUuid": "57888373_6cdd7560",
+      "range": {
+        "startLine": 216,
+        "startChar": 30,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45453b27_5a2674f0",
         "filename": "components/autofill/core/common/autofill_features.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-07T00:15:49Z",
       "side": 1,
       "message": "How about kAutofillSkipComparingInferredLabel ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 64
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3700a02_b221fbd3",
+        "filename": "components/autofill/core/common/autofill_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-02-07T05:54:02Z",
+      "side": 1,
+      "message": "roger, I am ok with either name, any thought?",
+      "parentUuid": "45453b27_5a2674f0",
       "range": {
         "startLine": 21,
         "startChar": 36,
@@ -68,6 +116,30 @@
       "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e76f314_d7768dc8",
+        "filename": "components/autofill/core/common/form_field_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2018-02-07T05:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c61896_80d9dd77",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 168,
+        "endChar": 76
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
