@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c7e7a2_1295d051",
+        "filename": "chrome/browser/chromeos/assistant/assistant_browser_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1183314
+      },
+      "writtenOn": "2018-02-07T18:33:33Z",
+      "side": 1,
+      "message": "Is this a wrapper on AssistantManager?  Is there a dependent CL?",
+      "range": {
+        "startLine": 106,
+        "startChar": 40,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "6b41faaacde9c5c23b58f950f0defaf32ebf3c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
