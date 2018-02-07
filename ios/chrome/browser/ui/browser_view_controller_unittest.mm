@@ -39,8 +39,8 @@
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/page_not_available_controller.h"
+#import "ios/chrome/browser/ui/toolbar/public/omnibox_focuser.h"
 #include "ios/chrome/browser/ui/toolbar/test_toolbar_model_ios.h"
-#import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/web/error_page_content.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
@@ -149,7 +149,6 @@ using web::WebStateImpl;
 - (void)browserStateDestroyed;
 - (void)stop;
 
-- (ToolbarButtonUpdater*)buttonUpdater;
 - (void)setToolsMenuStateProvider:(id)provider;
 @property(nonatomic, readonly, weak) UIViewController* viewController;
 
@@ -182,9 +181,6 @@ using web::WebStateImpl;
 }
 - (UIViewController*)viewController {
   return self;
-}
-- (ToolbarButtonUpdater*)buttonUpdater {
-  return nil;
 }
 - (void)setToolsMenuStateProvider:(id)provider {
   return;
@@ -399,7 +395,7 @@ TEST_F(BrowserViewControllerTest, TestErrorController) {
 // TODO(altse): Needs a testing |Profile| that implements AutocompleteClassifier
 //             before enabling again.
 TEST_F(BrowserViewControllerTest, DISABLED_TestShieldWasTapped) {
-  [bvc_ testing_focusOmnibox];
+  [bvc_.dispatcher focusOmnibox];
   EXPECT_TRUE([[bvc_ typingShield] superview] != nil);
   EXPECT_FALSE([[bvc_ typingShield] isHidden]);
   [bvc_ shieldWasTapped:nil];

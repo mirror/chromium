@@ -6,7 +6,6 @@
 
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h"
-#import "ios/chrome/browser/ui/toolbar/web_toolbar_delegate.h"
 
 @interface ToolbarAdapter ()
 @property(nonatomic, strong) ToolbarCoordinator* toolbarCoordinator;
@@ -35,7 +34,7 @@
 
 #pragma mark - Properties
 
-- (void)setDelegate:(id<WebToolbarDelegate>)delegate {
+- (void)setDelegate:(id<ToolbarCoordinatorDelegate>)delegate {
   _delegate = delegate;
   self.toolbarCoordinator.delegate = delegate;
 }
@@ -182,18 +181,6 @@
   [self.toolbarCoordinator.QRScannerResultLoader
       receiveQRScannerResult:qrScannerResult
              loadImmediately:load];
-}
-
-#pragma mark - BubbleViewAnchorPointProvider
-
-- (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
-  // No-op. The Clean Toolbar uses named layout guides.
-  return CGPointZero;
-}
-
-- (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
-  // No-op. The Clean Toolbar uses named layout guides.
-  return CGPointZero;
 }
 
 #pragma mark - FullscreenUIElement

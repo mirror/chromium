@@ -11,7 +11,6 @@
 
 @class Tab;
 @class ToolbarButtonUpdater;
-@protocol WebToolbarDelegate;
 
 // WebToolbarController public interface.
 @protocol AbstractWebToolbar<AbstractToolbar>
@@ -37,8 +36,6 @@
 - (void)updateToolbarForSideSwipeSnapshot:(Tab*)tab;
 // Remove any formatting added by -updateToolbarForSideSwipeSnapshot.
 - (void)resetToolbarAfterSideSwipeSnapshot;
-// WebToolbarDelegate delegate.
-@property(nonatomic, weak) id<WebToolbarDelegate> delegate;
 // Convenience getter for the UIViewController.
 @property(nonatomic, readonly, weak) UIViewController* viewController;
 // Object handling the updates of the buttons.

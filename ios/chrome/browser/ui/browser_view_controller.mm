@@ -199,16 +199,17 @@
 #import "ios/chrome/browser/ui/toolbar/adaptive/primary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/secondary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/adaptive/toolbar_coordinator_adaptor.h"
+#include "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator_delegate.h"
 #include "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/legacy_toolbar_ui_updater.h"
 #import "ios/chrome/browser/ui/toolbar/public/primary_toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
+#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_ui.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_ui_broadcasting_util.h"
-#import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
@@ -411,7 +412,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
 @interface BrowserViewController ()<ActivityServicePresentation,
                                     AppRatingPromptDelegate,
-                                    BookmarkModelBridgeObserver,
                                     CaptivePortalDetectorTabHelperDelegate,
                                     CRWNativeContentProvider,
                                     CRWWebStateDelegate,
@@ -441,6 +441,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     TabHistoryPresentation,
                                     TabModelObserver,
                                     TabStripPresentation,
+                                    ToolbarCoordinatorDelegate,
                                     ToolsMenuConfigurationProvider,
                                     UIGestureRecognizerDelegate,
                                     UpgradeCenterClient,
@@ -537,9 +538,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // The image fetcher used to save images and perform image-based searches.
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> _imageFetcher;
-
-  // Bridge to register for bookmark changes.
-  std::unique_ptr<bookmarks::BookmarkModelBridge> _bookmarkModelBridge;
 
   // Cached pointer to the bookmarks model.
   bookmarks::BookmarkModel* _bookmarkModel;  // weak
@@ -706,12 +704,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 @property(nonatomic, strong)
     id<ToolbarCoordinating, ToolsMenuPresentationStateProvider>
         toolbarInterface;
-// TODO(crbug.com/788705): Removes this property and associated calls.
-// Returns the LegacyToolbarCoordinator. This property is here to separate
-// methods which will be removed during cleanup to other methods. Uses this
-// property only for deprecated methods.
-@property(nonatomic, readonly) id<LegacyToolbarCoordinator>
-    legacyToolbarCoordinator;
 
 // Vertical offset for fullscreen toolbar.
 @property(nonatomic, strong) NSLayoutConstraint* primaryToolbarOffsetConstraint;
@@ -977,8 +969,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [_dispatcher startDispatchingToTarget:self
                               forProtocol:@protocol(UrlLoader)];
     [_dispatcher startDispatchingToTarget:self
-                              forProtocol:@protocol(WebToolbarDelegate)];
-    [_dispatcher startDispatchingToTarget:self
                               forProtocol:@protocol(BrowserCommands)];
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
@@ -1049,12 +1039,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       FakeboxFocuser,
       SnackbarCommands,
       ToolbarCommands,
-      UrlLoader,
-      WebToolbarDelegate>)dispatcher {
+      UrlLoader>)dispatcher {
   return static_cast<
       id<ApplicationCommands, BrowserCommands, OmniboxFocuser, FakeboxFocuser,
-         SnackbarCommands, ToolbarCommands, UrlLoader, WebToolbarDelegate>>(
-      _dispatcher);
+         SnackbarCommands, ToolbarCommands, UrlLoader>>(_dispatcher);
 }
 
 - (void)setActive:(BOOL)active {
@@ -1331,10 +1319,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return [self headerHeightForTab:[_model currentTab]];
 }
 
-- (LegacyToolbarCoordinator*)legacyToolbarCoordinator {
-  return _toolbarCoordinator;
-}
-
 - (web::WebState*)currentWebState {
   return [[_model currentTab] webState];
 }
@@ -1370,7 +1354,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self setActive:NO];
   [_paymentRequestManager close];
   _paymentRequestManager = nil;
-  [self.legacyToolbarCoordinator browserStateDestroyed];
   [_model browserStateDestroyed];
 
   // Disconnect child coordinators.
@@ -1528,7 +1511,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
-  _bookmarkModelBridge.reset();
   [_model removeObserver:self];
   [[UpgradeCenter sharedInstance] unregisterClient:self];
   if (_voiceSearchController)
@@ -1610,9 +1592,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self installFakeStatusBar];
   [self buildToolbarAndTabStrip];
   [self setUpViewLayout:YES];
-  if (IsSafeAreaCompatibleToolbarEnabled()) {
-    [self addConstraintsToToolbar];
-  }
+  [self addConstraintsToToolbar];
+
   // If the tab model and browser state are valid, finish initialization.
   if (_model && _browserState)
     [self addUIFunctionalityForModelAndBrowserState];
@@ -1946,10 +1927,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // Register for bookmark changed notification (BookmarkModel may be null
   // during testing, so explicitly support this).
   _bookmarkModel = ios::BookmarkModelFactory::GetForBrowserState(_browserState);
-  if (_bookmarkModel) {
-    _bookmarkModelBridge.reset(
-        new bookmarks::BookmarkModelBridge(self, _bookmarkModel));
-  }
 }
 
 - (void)installFakeStatusBar {
@@ -2039,7 +2016,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                    forProtocol:@protocol(OmniboxFocuser)];
   [_dispatcher startDispatchingToTarget:self.primaryToolbarCoordinator
                             forProtocol:@protocol(FakeboxFocuser)];
-  [self.legacyToolbarCoordinator setTabCount:[_model count]];
   [self updateBroadcastState];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(
@@ -2099,8 +2075,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   } else {
     topAnchor = [self view].topAnchor;
   }
-
-  [self.legacyToolbarCoordinator adjustToolbarHeight];
 
   // Create a constraint for the vertical positioning of the toolbar.
   UIView* primaryView = self.primaryToolbarCoordinator.viewController.view;
@@ -2172,8 +2146,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       initWithBaseViewController:self
                     browserState:_browserState];
   _tabHistoryCoordinator.dispatcher = _dispatcher;
-  _tabHistoryCoordinator.positionProvider =
-      [self.legacyToolbarCoordinator tabHistoryPositioner];
   _tabHistoryCoordinator.tabModel = _model;
   _tabHistoryCoordinator.presentationProvider = self;
   _tabHistoryCoordinator.tabHistoryUIUpdater =
@@ -2218,7 +2190,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 // Set the frame for the various views. View must be loaded.
 - (void)setUpViewLayout:(BOOL)initialLayout {
   DCHECK([self isViewLoaded]);
-  CGFloat widthOfView = CGRectGetWidth([self view].bounds);
 
   // Update the fake toolbar background height.
   CGRect fakeStatusBarFrame = _fakeStatusBarView.frame;
@@ -2233,16 +2204,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     if (self.secondaryToolbarCoordinator)
       [self addChildViewController:self.secondaryToolbarCoordinator
                                        .viewController];
-  }
-  if (!IsSafeAreaCompatibleToolbarEnabled()) {
-    CGFloat minY = self.headerOffset;
-    if (self.tabStripView) {
-      minY += CGRectGetHeight([self.tabStripView frame]);
-    }
-    CGRect toolbarFrame = _toolbarCoordinator.viewController.view.frame;
-    toolbarFrame.origin = CGPointMake(0, minY);
-    toolbarFrame.size.width = widthOfView;
-    [_toolbarCoordinator.viewController.view setFrame:toolbarFrame];
   }
 
   // Place the infobar container above the content area.
@@ -2316,9 +2277,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
   [self updateToolbar];
 
-  if (newSelection)
-    [self.legacyToolbarCoordinator selectedTabChanged];
-
   // Notify the Tab that it was displayed.
   [tab wasShown];
 }
@@ -2361,8 +2319,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   Tab* tab = [_model currentTab];
   if (![tab navigationManager])
     return;
-  [self.legacyToolbarCoordinator updateToolbarState];
-  [self.legacyToolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
   if (_insertedTabWasPrerenderedTab && !_toolbarModelIOS->IsLoading())
     [self.primaryToolbarCoordinator showPrerenderingAnimation];
@@ -2459,8 +2415,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     // toolbar_view manages it's alpha changes would also need to be updated.
     // TODO(crbug.com/778822): This can be cleaned up when the new fullscreen
     // is enabled.
-    if (IsSafeAreaCompatibleToolbarEnabled() && isPrimaryToolbar &&
-        !IsIPadIdiom()) {
+    if (isPrimaryToolbar && !IsIPadIdiom()) {
       self.primaryToolbarOffsetConstraint.constant = yOrigin;
     }
     CGRect frame = [header.view frame];
@@ -2583,24 +2538,15 @@ bubblePresenterForFeature:(const base::Feature&)feature
       l10n_util::GetNSStringWithFixup(IDS_IOS_NEW_TAB_IPH_PROMOTION_TEXT);
   CGPoint tabSwitcherAnchor;
   if (IsIPadIdiom()) {
-    DCHECK([self.tabStripCoordinator
-        respondsToSelector:@selector(anchorPointForTabSwitcherButton:)]);
     tabSwitcherAnchor = [self.tabStripCoordinator
         anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
   } else {
-    if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-      UILayoutGuide* guide = FindNamedGuide(kTabSwitcherGuide, self.view);
-      CGPoint anchorPoint =
-          bubble_util::AnchorPoint(guide.layoutFrame, BubbleArrowDirectionUp);
-      tabSwitcherAnchor =
-          [guide.owningView convertPoint:anchorPoint
-                                  toView:guide.owningView.window];
-    } else {
-      DCHECK([self.legacyToolbarCoordinator
-          respondsToSelector:@selector(anchorPointForTabSwitcherButton:)]);
-      tabSwitcherAnchor = [self.legacyToolbarCoordinator
-          anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
-    }
+    UILayoutGuide* guide = FindNamedGuide(kTabSwitcherGuide, self.view);
+    DCHECK(guide);
+    CGPoint anchorPoint =
+        bubble_util::AnchorPoint(guide.layoutFrame, BubbleArrowDirectionUp);
+    tabSwitcherAnchor = [guide.owningView convertPoint:anchorPoint
+                                                toView:guide.owningView.window];
   }
 
   // If the feature engagement tracker does not consider it valid to display
@@ -2657,18 +2603,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
   NSString* text = l10n_util::GetNSStringWithFixup(
       IDS_IOS_NEW_INCOGNITO_TAB_IPH_PROMOTION_TEXT);
   CGPoint toolsButtonAnchor;
-  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-    UILayoutGuide* guide = FindNamedGuide(kToolsMenuGuide, self.view);
-    CGPoint anchorPoint =
-        bubble_util::AnchorPoint(guide.layoutFrame, BubbleArrowDirectionUp);
-    toolsButtonAnchor = [guide.owningView convertPoint:anchorPoint
-                                                toView:guide.owningView.window];
-  } else {
-    DCHECK([self.legacyToolbarCoordinator
-        respondsToSelector:@selector(anchorPointForToolsMenuButton:)]);
-    toolsButtonAnchor = [self.legacyToolbarCoordinator
-        anchorPointForToolsMenuButton:BubbleArrowDirectionUp];
-  }
+  UILayoutGuide* guide = FindNamedGuide(kToolsMenuGuide, self.view);
+  DCHECK(guide);
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(guide.layoutFrame, BubbleArrowDirectionUp);
+  toolsButtonAnchor = [guide.owningView convertPoint:anchorPoint
+                                              toView:guide.owningView.window];
 
   // If the feature engagement tracker does not consider it valid to display
   // the incognito tab tip, then end early to prevent the potential reassignment
@@ -2714,11 +2654,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   CGRect omniboxFrame;
-  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-    omniboxFrame = FindNamedGuide(kOmniboxGuide, self.view).layoutFrame;
-  } else {
-    omniboxFrame = [self.legacyToolbarCoordinator visibleOmniboxFrame];
-  }
+  omniboxFrame = FindNamedGuide(kOmniboxGuide, self.view).layoutFrame;
   [_findBarController addFindBarView:animate
                             intoView:self.view
                            withFrame:referenceFrame
@@ -4349,7 +4285,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   CHECK(true);
 }
 
-#pragma mark - WebToolbarDelegate (Public)
+#pragma mark - ToolbarCoordinatorDelegate (Public)
 
 - (void)locationBarDidBecomeFirstResponder {
   [[NSNotificationCenter defaultCenter]
@@ -4917,9 +4853,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)tabModel:(TabModel*)model didStartLoadingTab:(Tab*)tab {
   if (tab == [_model currentTab]) {
-    if (![self isTabNativePage:tab]) {
-      [self.legacyToolbarCoordinator currentPageLoadStarted];
-    }
     [self updateVoiceSearchBarVisibilityAnimated:NO];
   }
 }
@@ -5168,7 +5101,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)tabModel:(TabModel*)model willRemoveTab:(Tab*)tab {
   if (tab == [model currentTab]) {
     [_contentArea displayContentView:nil];
-    [self.legacyToolbarCoordinator selectedTabChanged];
   }
 
   [_paymentRequestManager stopTrackingWebState:tab.webState];
@@ -5177,12 +5109,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   if ([model count] == 1) {  // About to remove the last tab.
     [_paymentRequestManager setActiveWebState:nullptr];
   }
-}
-
-// Called when the number of tabs changes. Update the toolbar accordingly.
-- (void)tabModelDidChangeTabCount:(TabModel*)model {
-  DCHECK(model == _model);
-  [self.legacyToolbarCoordinator setTabCount:[_model count]];
 }
 
 #pragma mark - UpgradeCenterClient
@@ -5325,42 +5251,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (BOOL)preloadHasNativeControllerForURL:(const GURL&)url {
   return [self hasControllerForURL:url];
-}
-
-// TODO(crbug.com/788705): BVC doesn't need to implement
-// BookmarkModelBridgeObserver once the new toolbar is turned on.
-#pragma mark - BookmarkModelBridgeObserver
-
-// If an added or removed bookmark is the same as the current url, update the
-// toolbar so the star highlight is kept in sync.
-- (void)bookmarkNodeChildrenChanged:(const BookmarkNode*)bookmarkNode {
-  [self updateToolbar];
-}
-
-// If all bookmarks are removed, update the toolbar so the star highlight is
-// kept in sync.
-- (void)bookmarkModelRemovedAllNodes {
-  [self updateToolbar];
-}
-
-// In case we are on a bookmarked page before the model is loaded.
-- (void)bookmarkModelLoaded {
-  [self updateToolbar];
-}
-
-- (void)bookmarkNodeChanged:(const BookmarkNode*)bookmarkNode {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
-}
-
-- (void)bookmarkNode:(const BookmarkNode*)bookmarkNode
-     movedFromParent:(const BookmarkNode*)oldParent
-            toParent:(const BookmarkNode*)newParent {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
-}
-
-- (void)bookmarkNodeDeleted:(const BookmarkNode*)node
-                 fromFolder:(const BookmarkNode*)folder {
-  // No-op -- required by BookmarkModelBridgeObserver but not used.
 }
 
 #pragma mark - NetExportTabHelperDelegate

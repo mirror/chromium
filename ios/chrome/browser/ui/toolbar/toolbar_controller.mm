@@ -154,9 +154,7 @@ using ios::material::TimingFunction;
     }
 
     self.view = [[LegacyToolbarView alloc] initWithFrame:viewFrame];
-    if (IsSafeAreaCompatibleToolbarEnabled()) {
-      [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    }
+    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     UIViewAutoresizing autoresizingMask =
         UIViewAutoresizingFlexibleLeadingMargin() |
@@ -745,23 +743,6 @@ using ios::material::TimingFunction;
 
 - (UIView*)shareButtonView {
   return shareButton_;
-}
-
-#pragma mark - BubbleViewAnchorPointProvider methods.
-
-- (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
-  CGPoint anchorPoint =
-      bubble_util::AnchorPoint(stackButton_.imageView.frame, direction);
-  return [stackButton_.imageView.superview
-      convertPoint:anchorPoint
-            toView:stackButton_.imageView.window];
-}
-
-- (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
-  CGPoint anchorPoint =
-      bubble_util::AnchorPoint(toolsMenuButton_.frame, direction);
-  return [toolsMenuButton_.superview convertPoint:anchorPoint
-                                           toView:toolsMenuButton_.window];
 }
 
 #pragma mark - FullscreenUIElement

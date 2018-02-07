@@ -413,39 +413,21 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
 // method to load |searchURL| instead of the generated search URL.
 - (void)swizzleWebToolbarControllerLoadGURLFromLocationBar:
     (const GURL&)searchURL {
-  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-    void (^loadGURLFromLocationBarBlock)(ToolbarCoordinator*, const GURL&,
-                                         ui::PageTransition) =
-        ^void(ToolbarCoordinator* self, const GURL& url,
-              ui::PageTransition transition) {
-          [self.URLLoader loadURL:searchURL
-                         referrer:web::Referrer()
-                       transition:transition
-                rendererInitiated:NO];
-          [static_cast<LocationBarCoordinator*>(self) cancelOmniboxEdit];
-        };
+  void (^loadGURLFromLocationBarBlock)(WebToolbarController*, const GURL&,
+                                       ui::PageTransition) =
+      ^void(WebToolbarController* self, const GURL& url,
+            ui::PageTransition transition) {
+        [self.urlLoader loadURL:searchURL
+                       referrer:web::Referrer()
+                     transition:transition
+              rendererInitiated:NO];
+        [self cancelOmniboxEdit];
+      };
 
-    load_GURL_from_location_bar_swizzler_.reset(
-        new ScopedBlockSwizzler([LocationBarCoordinator class],
-                                @selector(loadGURLFromLocationBar:transition:),
-                                loadGURLFromLocationBarBlock));
-  } else {
-    void (^loadGURLFromLocationBarBlock)(WebToolbarController*, const GURL&,
-                                         ui::PageTransition) =
-        ^void(WebToolbarController* self, const GURL& url,
-              ui::PageTransition transition) {
-          [self.urlLoader loadURL:searchURL
-                         referrer:web::Referrer()
-                       transition:transition
-                rendererInitiated:NO];
-          [self cancelOmniboxEdit];
-        };
-
-    load_GURL_from_location_bar_swizzler_.reset(
-        new ScopedBlockSwizzler([WebToolbarController class],
-                                @selector(loadGURLFromLocationBar:transition:),
-                                loadGURLFromLocationBarBlock));
-  }
+  load_GURL_from_location_bar_swizzler_.reset(
+      new ScopedBlockSwizzler([WebToolbarController class],
+                              @selector(loadGURLFromLocationBar:transition:),
+                              loadGURLFromLocationBarBlock));
 }
 
 // Creates a new CameraController mock with camera permission granted if
