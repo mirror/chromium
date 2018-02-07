@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/main/main_presenting_view_controller.h"
 
 #import "base/logging.h"
+#import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.h"
 #import "ios/chrome/browser/ui/main/transitions/tab_switcher_to_bvc_container_animator.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher.h"
@@ -94,6 +95,7 @@
     UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, strong) BVCContainerViewController* bvcContainer;
+@property(nonatomic, weak) TabModel* tabModel;
 
 // Redeclared as readwrite.
 @property(nonatomic, readwrite, weak)
@@ -103,6 +105,7 @@
 
 @implementation MainPresentingViewController
 @synthesize animationsDisabledForTesting = _animationsDisabledForTesting;
+@synthesize tabModel = _tabModel;
 @synthesize tabSwitcher = _tabSwitcher;
 @synthesize bvcContainer = _bvcContainer;
 
@@ -179,6 +182,7 @@
 }
 
 - (void)showTabViewController:(UIViewController*)viewController
+                     tabModel:(TabModel*)tabModel
                    completion:(ProceduralBlock)completion {
   DCHECK(viewController);
 
@@ -192,6 +196,7 @@
     return;
   }
 
+  self.tabModel = tabModel;
   self.bvcContainer = [[BVCContainerViewController alloc] init];
   self.bvcContainer.currentBVC = viewController;
   self.bvcContainer.transitioningDelegate = self;
@@ -246,6 +251,7 @@ animationControllerForPresentedController:(UIViewController*)presented
   TabSwitcherToBVCContainerAnimator* animator =
       [[TabSwitcherToBVCContainerAnimator alloc] init];
   animator.tabSwitcher = self.tabSwitcher;
+  animator.tabModel = self.tabModel;
   return animator;
 }
 

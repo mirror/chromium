@@ -9,6 +9,7 @@
 
 #import "base/ios/block_types.h"
 
+@class TabModel;
 @protocol TabSwitcher;
 
 // ViewControllerSwapping defines a set of methods that allow an object to
@@ -28,6 +29,7 @@
 // controllers that may currently be visible.  Runs the given |completion| block
 // after the view controller is visible.
 - (void)showTabViewController:(UIViewController*)viewController
+                     tabModel:(TabModel*)tabModel
                    completion:(ProceduralBlock)completion;
 
 @end

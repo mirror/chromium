@@ -90,6 +90,10 @@
 // been presented.
 - (void)showWithSelectedTabAnimation;
 
+// Optinally performs an animation of the selected tab from its place in the tab
+// switcher to its presented state.
+- (void)dismissWithModel:(TabModel*)model animated:(BOOL)animated;
+
 // Performs an animation from the selected tab in the tab switcher to the
 // presented tab in the content area. When the animation completes, calls the
 // delegate methods:
@@ -108,10 +112,6 @@
 
 @optional
 @property(nonatomic, retain) TabSwitcherTransitionContext* transitionContext;
-
-// Dismisses the tab switcher using the given tab model. The dismissal of the
-// tab switcher will be animated if the |animated| parameter is set to YES.
-- (void)tabSwitcherDismissWithModel:(TabModel*)model animated:(BOOL)animated;
 
 @end
 

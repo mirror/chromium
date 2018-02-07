@@ -19,8 +19,8 @@
 @property(nonatomic, readonly, weak) UIViewController<TabSwitcher>* tabSwitcher;
 
 // If this property is YES, calls to |showTabSwitcher:completion:| and
-// |showTabViewController:completion:| will present the given view controllers
-// without animation.  This should only be used by unittests.
+// |showTabViewController:tabModel:completion:| will present the given view
+// controllers without animation.  This should only be used by unittests.
 @property(nonatomic, readwrite, assign) BOOL animationsDisabledForTesting;
 
 @end

@@ -178,8 +178,9 @@ enum class SnapshotViewOption {
 // Returns the tab model that was active when the tab switcher was toggled.
 - (TabModel*)onLoadActiveModel;
 
-// Dismisses the tab switcher using the currently selected tab's tab model.
-- (void)tabSwitcherDismissWithCurrentSelectedModel;
+// Tells the delegate the tab switcher should be dismissed using the currently
+// selected tab's tab model.
+- (void)shouldFinishWithCurrentSelectedModel;
 
 // Scrolls the scrollview to show the panel displaying the |selectedTabModel|.
 - (void)selectPanelForTabModel:(TabModel*)selectedTabModel;
@@ -860,11 +861,15 @@ enum class SnapshotViewOption {
   return nil;
 }
 
-- (void)tabSwitcherDismissWithModel:(TabModel*)model animated:(BOOL)animated {
+- (void)shouldFinishWithModel:(TabModel*)model {
   DCHECK(model);
   [[self presentedViewController] dismissViewControllerAnimated:NO
                                                      completion:nil];
   [self.delegate tabSwitcher:self shouldFinishWithActiveModel:model];
+}
+
+- (void)dismissWithModel:(TabModel*)model animated:(BOOL)animated {
+  DCHECK(model);
   [self performTabSwitcherTransition:TransitionType::TRANSITION_DISMISS
                            withModel:model
                             animated:animated
@@ -876,10 +881,10 @@ enum class SnapshotViewOption {
                       }];
 }
 
-- (void)tabSwitcherDismissWithCurrentSelectedModel {
+- (void)shouldFinishWithCurrentSelectedModel {
   TabModel* model = [self currentSelectedModel];
   base::RecordAction(base::UserMetricsAction("MobileTabSwitcherClose"));
-  [self tabSwitcherDismissWithModel:model animated:YES];
+  [self shouldFinishWithModel:model];
 }
 
 - (Tab*)dismissWithNewTabAnimation:(const GURL&)URL
@@ -899,7 +904,7 @@ enum class SnapshotViewOption {
                                        atIndex:tabIndex
                                   inBackground:NO];
 
-  [self tabSwitcherDismissWithModel:tabModel animated:YES];
+  [self shouldFinishWithModel:tabModel];
 
   return tab;
 }
@@ -933,7 +938,7 @@ enum class SnapshotViewOption {
 
     // Reenable touch events.
     [_tabSwitcherView setUserInteractionEnabled:YES];
-    [self tabSwitcherDismissWithModel:tabModel animated:YES];
+    [self shouldFinishWithModel:tabModel];
   }
 }
 
@@ -1099,7 +1104,7 @@ enum class SnapshotViewOption {
 #pragma mark - TabSwitcherHeaderViewDelegate
 
 - (void)tabSwitcherHeaderViewDismiss:(TabSwitcherHeaderView*)view {
-  [self tabSwitcherDismissWithCurrentSelectedModel];
+  [self shouldFinishWithCurrentSelectedModel];
 }
 
 - (void)tabSwitcherHeaderViewDidSelectSessionAtIndex:(NSInteger)index {
@@ -1227,7 +1232,7 @@ enum class SnapshotViewOption {
 }
 
 - (void)tabSwitcherViewDelegateDismissTabSwitcher:(TabSwitcherView*)view {
-  [self tabSwitcherDismissWithCurrentSelectedModel];
+  [self shouldFinishWithCurrentSelectedModel];
 }
 
 #pragma mark - TabSwitcherPanelControllerDelegate
@@ -1249,7 +1254,7 @@ enum class SnapshotViewOption {
       tabSwitcherPanelController.sessionType;
   TabModel* tabModel = [self tabModelForSessionType:panelSessionType];
   [tabModel setCurrentTab:tab];
-  [self tabSwitcherDismissWithModel:tabModel animated:YES];
+  [self shouldFinishWithModel:tabModel];
   if (panelSessionType == TabSwitcherSessionType::OFF_THE_RECORD_SESSION) {
     base::RecordAction(
         base::UserMetricsAction("MobileTabSwitcherOpenIncognitoTab"));

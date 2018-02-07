@@ -24,6 +24,7 @@
 }
 
 - (void)showTabViewController:(UIViewController*)viewController
+                     tabModel:(TabModel*)tabModel
                    completion:(ProceduralBlock)completion {
   [self setActiveViewController:viewController completion:completion];
 }

@@ -1801,6 +1801,7 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 
 - (void)displayCurrentBVC {
   [self.mainViewController showTabViewController:self.currentBVC
+                                        tabModel:self.currentBVC.tabModel
                                       completion:nil];
 }
 
@@ -1927,13 +1928,11 @@ void MainControllerAuthenticationServiceDelegate::ClearBrowsingData(
 - (void)dismissTabSwitcherWithoutAnimationInModel:(TabModel*)tabModel {
   DCHECK(_tabSwitcherIsActive);
   DCHECK(!_dismissingStackView);
-  if ([_tabSwitcherController
-          respondsToSelector:@selector(tabSwitcherDismissWithModel:
-                                                          animated:)]) {
+  [self beginDismissingStackViewWithCurrentModel:tabModel];
+  if (IsIPadIdiom()) {
     [self dismissModalDialogsWithCompletion:nil dismissOmnibox:YES];
-    [_tabSwitcherController tabSwitcherDismissWithModel:tabModel animated:NO];
+    [_tabSwitcherController dismissWithModel:tabModel animated:NO];
   } else {
-    [self beginDismissingStackViewWithCurrentModel:tabModel];
     [self finishDismissingStackView];
   }
 }

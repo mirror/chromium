@@ -61,6 +61,7 @@ TEST_F(MainPresentingViewControllerTest, NoActiveViewController) {
 // TabSwitcher.
 TEST_F(MainPresentingViewControllerTest, TabViewControllerBeforeTabSwitcher) {
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(normal_tab_view_controller_,
             main_view_controller_.activeViewController);
@@ -77,6 +78,7 @@ TEST_F(MainPresentingViewControllerTest, TabViewControllerAfterTabSwitcher) {
   EXPECT_EQ(tab_switcher_, main_view_controller_.activeViewController);
 
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(normal_tab_view_controller_,
             main_view_controller_.activeViewController);
@@ -89,11 +91,13 @@ TEST_F(MainPresentingViewControllerTest, TabViewControllerAfterTabSwitcher) {
 // Tests swapping between two TabViewControllers.
 TEST_F(MainPresentingViewControllerTest, SwapTabViewControllers) {
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(normal_tab_view_controller_,
             main_view_controller_.activeViewController);
 
   [main_view_controller_ showTabViewController:incognito_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(incognito_tab_view_controller_,
             main_view_controller_.activeViewController);
@@ -111,11 +115,13 @@ TEST_F(MainPresentingViewControllerTest, ShowTabSwitcherTwice) {
 // Tests calling showTabViewController twice in a row with the same VC.
 TEST_F(MainPresentingViewControllerTest, ShowTabViewControllerTwice) {
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(normal_tab_view_controller_,
             main_view_controller_.activeViewController);
 
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:nil];
   EXPECT_EQ(normal_tab_view_controller_,
             main_view_controller_.activeViewController);
@@ -139,6 +145,7 @@ TEST_F(MainPresentingViewControllerTest, CompletionHandlers) {
   // controller.
   completion_handler_was_called = NO;
   [main_view_controller_ showTabViewController:normal_tab_view_controller_
+                                      tabModel:nil
                                     completion:^{
                                       completion_handler_was_called = YES;
                                     }];
@@ -151,6 +158,7 @@ TEST_F(MainPresentingViewControllerTest, CompletionHandlers) {
   // view controller.
   completion_handler_was_called = NO;
   [main_view_controller_ showTabViewController:incognito_tab_view_controller_
+                                      tabModel:nil
                                     completion:^{
                                       completion_handler_was_called = YES;
                                     }];

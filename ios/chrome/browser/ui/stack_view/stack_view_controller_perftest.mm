@@ -106,6 +106,7 @@
 - (void)tabSwitcher:(id<TabSwitcher>)tabSwitcher
     shouldFinishWithActiveModel:(TabModel*)tabModel {
   [self setDismissAnimationStarted:YES];
+  [tabSwitcher dismissWithModel:tabModel animated:YES];
 }
 
 - (void)tabSwitcherDismissTransitionDidEnd:(id<TabSwitcher>)tabSwitcher {
