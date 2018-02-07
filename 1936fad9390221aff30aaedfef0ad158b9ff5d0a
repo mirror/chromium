@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce7e842_eaf22a2a",
+        "filename": "content/common/cache_storage/cache_storage_mojom_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:49:34Z",
+      "side": 1,
+      "message": "base::nullopt",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 79
+      },
+      "revId": "1936fad9390221aff30aaedfef0ad158b9ff5d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd781df_58a9ac96",
+        "filename": "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:49:34Z",
+      "side": 1,
+      "message": "should this be String16 instead? You seem to be reading/writing base::string16 in this field after all... That way you can avoid round-tripping these through UTF8.",
+      "revId": "1936fad9390221aff30aaedfef0ad158b9ff5d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
