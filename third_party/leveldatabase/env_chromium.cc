@@ -5,6 +5,7 @@
 #include "third_party/leveldatabase/env_chromium.h"
 
 #include <atomic>
+#include <limits>
 #include <utility>
 
 #if defined(OS_POSIX)
@@ -50,58 +51,9 @@ const base::Feature kLevelDBFileHandleEviction{
     "LevelDBFileHandleEviction", base::FEATURE_ENABLED_BY_DEFAULT};
 
 namespace leveldb_env {
-
-// Helper class to limit resource usage to avoid exhaustion. Currently used to
-// limit read-only file usage so that we do not end up running out of file
-// descriptors, or running into kernel performance problems for very large
-// databases.
-class Semaphore {
- public:
-  // Limit maximum number of resources to |n|.
-  explicit Semaphore(intptr_t n) { SetAvailable(n); }
-
-  // If another resource is available, acquire it and return true.
-  // Else return false.
-  bool TryAcquire() {
-    if (GetAvailable() <= 0)
-      return false;
-    leveldb::MutexLock l(&mutex_);
-    intptr_t x = GetAvailable();
-    if (x <= 0) {
-      return false;
-    } else {
-      SetAvailable(x - 1);
-      return true;
-    }
-  }
-
-  // Release a resource acquired by a previous call to TryAcquire() that
-  // returned true.
-  void Release() {
-    leveldb::MutexLock l(&mutex_);
-    SetAvailable(GetAvailable() + 1);
-  }
-
- private:
-  intptr_t GetAvailable() const {
-    return reinterpret_cast<intptr_t>(available_.Acquire_Load());
-  }
-
-  // REQUIRES: mutex_ must be held
-  void SetAvailable(intptr_t v) {
-    DCHECK_LE(0, v);
-    available_.Release_Store(reinterpret_cast<void*>(v));
-  }
-
-  leveldb::port::Mutex mutex_;
-  leveldb::port::AtomicPointer available_;
-
-  DISALLOW_COPY_AND_ASSIGN(Semaphore);
-};
-
 namespace {
 
-std::atomic<int32_t> g_num_files_opened_past_handle_limit = ATOMIC_VAR_INIT(0);
+std::atomic<int32_t> g_num_files_evicted = ATOMIC_VAR_INIT(0);
 
 const FilePath::CharType table_extension[] = FILE_PATH_LITERAL(".ldb");
 
@@ -278,38 +230,80 @@ class ChromiumSequentialFile : public leveldb::SequentialFile {
   DISALLOW_COPY_AND_ASSIGN(ChromiumSequentialFile);
 };
 
+class ChromiumEvictableRandomAccessFile : public leveldb::RandomAccessFile {
+ public:
+  ChromiumEvictableRandomAccessFile(base::FilePath file_path,
+                                    base::File file,
+                                    FileCache* file_cache,
+                                    const UMALogger* uma_logger)
+      : filepath_(std::move(file_path)),
+        uma_logger_(uma_logger),
+        file_cache_(file_cache) {
+    DCHECK(file_cache_);
+    file_cache_->Put(this, std::move(file));
+  }
+
+  virtual ~ChromiumEvictableRandomAccessFile() {
+    auto position = file_cache_->Peek(this);
+    if (position != file_cache_->end())
+      file_cache_->Erase(position);
+  }
+
+  Status Read(uint64_t offset,
+              size_t n,
+              Slice* result,
+              char* scratch) const override {
+    TRACE_EVENT2("leveldb", "ChromiumEvictableRandomAccessFile::Read", "offset",
+                 offset, "size", n);
+    auto position = file_cache_->Get(this);
+    if (position == file_cache_->end()) {
+      int flags = base::File::FLAG_READ | base::File::FLAG_OPEN;
+      base::File file;
+      file.Initialize(filepath_, flags);
+      if (!file.IsValid()) {
+        return MakeIOError(filepath_.AsUTF8Unsafe(), "Could not perform read",
+                           kRandomAccessFileRead);
+      }
+      if (file_cache_->size() == file_cache_->max_size()) {
+        int32_t num_evictions =
+            g_num_files_evicted.fetch_add(1, std::memory_order_relaxed) + 1;
+        TRACE_COUNTER1("leveldb",
+                       "ChromiumEvictableRandomAccessFile::NumFileEvictions",
+                       num_evictions);
+      }
+      position = file_cache_->Put(this, std::move(file));
+    }
+    base::File& file = position->second;
+    int bytes_read = file.Read(offset, scratch, n);
+    *result = Slice(scratch, (bytes_read < 0) ? 0 : bytes_read);
+    if (bytes_read < 0) {
+      uma_logger_->RecordErrorAt(kRandomAccessFileRead);
+      return MakeIOError(filepath_.AsUTF8Unsafe(), "Could not perform read",
+                         kRandomAccessFileRead);
+    }
+    if (bytes_read > 0)
+      uma_logger_->RecordBytesRead(bytes_read);
+    return Status::OK();
+  }
+
+ private:
+  const base::FilePath filepath_;
+  const UMALogger* uma_logger_;
+  mutable FileCache* file_cache_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromiumEvictableRandomAccessFile);
+};
+
 class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
  public:
   ChromiumRandomAccessFile(base::FilePath file_path,
                            base::File file,
-                           const UMALogger* uma_logger,
-                           Semaphore* file_semaphore)
+                           const UMALogger* uma_logger)
       : filepath_(std::move(file_path)),
         file_(std::move(file)),
-        uma_logger_(uma_logger),
-        file_semaphore_(file_semaphore),
-        open_before_read_(!file_semaphore->TryAcquire()) {
-    if (open_before_read_) {
-      file_.Close();  // Open file on every access.
-      int32_t result = g_num_files_opened_past_handle_limit.fetch_add(
-                           1, std::memory_order_relaxed) +
-                       1;
-      TRACE_COUNTER1("leveldb",
-                     "ChromiumRandomAccessFile::NumFilesPastHandleLimit",
-                     result);
-    }
-  }
-  virtual ~ChromiumRandomAccessFile() {
-    if (!open_before_read_) {
-      file_semaphore_->Release();
-      int32_t result = g_num_files_opened_past_handle_limit.fetch_sub(
-                           1, std::memory_order_relaxed) -
-                       1;
-      TRACE_COUNTER1("leveldb",
-                     "ChromiumRandomAccessFile::NumFilesPastHandleLimit",
-                     result);
-    }
-  }
+        uma_logger_(uma_logger) {}
+
+  virtual ~ChromiumRandomAccessFile() {}
 
   Status Read(uint64_t offset,
               size_t n,
@@ -317,18 +311,7 @@ class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
               char* scratch) const override {
     TRACE_EVENT2("leveldb", "ChromiumRandomAccessFile::Read", "offset", offset,
                  "size", n);
-    if (open_before_read_) {
-      DCHECK(!file_.IsValid());
-      int flags = base::File::FLAG_READ | base::File::FLAG_OPEN;
-      file_.Initialize(filepath_, flags);
-      if (!file_.IsValid()) {
-        return MakeIOError(filepath_.AsUTF8Unsafe(), "Could not perform read",
-                           kRandomAccessFileRead);
-      }
-    }
     int bytes_read = file_.Read(offset, scratch, n);
-    if (open_before_read_)
-      file_.Close();
     *result = Slice(scratch, (bytes_read < 0) ? 0 : bytes_read);
     if (bytes_read < 0) {
       uma_logger_->RecordErrorAt(kRandomAccessFileRead);
@@ -344,9 +327,6 @@ class ChromiumRandomAccessFile : public leveldb::RandomAccessFile {
   const base::FilePath filepath_;
   mutable base::File file_;
   const UMALogger* uma_logger_;
-  Semaphore* file_semaphore_;
-  // If true, file_ is closed and we open on every read.
-  bool open_before_read_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromiumRandomAccessFile);
 };
@@ -459,10 +439,9 @@ Status ChromiumWritableFile::Sync() {
 base::LazyInstance<ChromiumEnv>::Leaky default_env = LAZY_INSTANCE_INITIALIZER;
 
 // Return the maximum number of read-only files to keep open.
-int MaxOpenFiles() {
+size_t GetLevelDBFileLimit(size_t max_file_descriptors) {
   // Allow use of 20% of available file descriptors for read-only files.
-  int open_read_only_file_limit = base::GetMaxFds() / 5;
-  return open_read_only_file_limit;
+  return max_file_descriptors / 5;
 }
 
 std::string GetDumpNameForDB(const leveldb::DB* db) {
@@ -766,11 +745,13 @@ ChromiumEnv::ChromiumEnv(const std::string& name)
     : kMaxRetryTimeMillis(1000),
       name_(name),
       bgsignal_(&mu_),
-      started_bgthread_(false),
-      file_semaphore_(
-          new Semaphore(base::FeatureList::IsEnabled(kLevelDBFileHandleEviction)
-                            ? MaxOpenFiles()
-                            : std::numeric_limits<intptr_t>::max())) {
+      started_bgthread_(false) {
+  size_t max_open_files = base::GetMaxFds();
+  if (base::FeatureList::IsEnabled(kLevelDBFileHandleEviction) &&
+      max_open_files != std::numeric_limits<size_t>::max()) {
+    file_cache_ =
+        std::make_unique<FileCache>(GetLevelDBFileLimit(max_open_files));
+  }
   uma_ioerror_base_name_ = name_ + ".IOError.BFE";
 }
 
@@ -845,7 +826,7 @@ void ChromiumEnv::DeleteBackupFiles(const FilePath& dir) {
 
 // Test must call this *before* opening any random-access files.
 void ChromiumEnv::SetReadOnlyFileLimitForTesting(int max_open_files) {
-  file_semaphore_.reset(new Semaphore(max_open_files));
+  file_cache_.reset(new FileCache(max_open_files));
 }
 
 Status ChromiumEnv::GetChildren(const std::string& dir,
@@ -1072,8 +1053,13 @@ Status ChromiumEnv::NewRandomAccessFile(const std::string& fname,
   base::FilePath file_path = FilePath::FromUTF8Unsafe(fname);
   base::File file(file_path, flags);
   if (file.IsValid()) {
-    *result = new ChromiumRandomAccessFile(
-        std::move(file_path), std::move(file), this, file_semaphore_.get());
+    if (file_cache_) {
+      *result = new ChromiumEvictableRandomAccessFile(
+          std::move(file_path), std::move(file), file_cache_.get(), this);
+    } else {
+      *result = new ChromiumRandomAccessFile(std::move(file_path),
+                                             std::move(file), this);
+    }
     return Status::OK();
   }
   base::File::Error error_code = file.error_details();
