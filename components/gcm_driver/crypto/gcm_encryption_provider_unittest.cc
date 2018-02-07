@@ -330,21 +330,21 @@ TEST_F(GCMEncryptionProviderTest, VerifiesKeyRemovalGCMRegistration) {
   ASSERT_NO_FATAL_FAILURE(CheckHasKey(authorized_entity_gcm, true));
 
   encryption_provider()->RemoveEncryptionInfo(
-      kExampleAppId, authorized_entity_1, base::Bind(&base::DoNothing));
+      kExampleAppId, authorized_entity_1, base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
   ASSERT_NO_FATAL_FAILURE(CheckHasKey(authorized_entity_gcm, true));
 
   encryption_provider()->RemoveEncryptionInfo(kExampleAppId, "*",
-                                              base::Bind(&base::DoNothing));
+                                              base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
   ASSERT_NO_FATAL_FAILURE(CheckHasKey(authorized_entity_gcm, true));
 
   encryption_provider()->RemoveEncryptionInfo(
-      kExampleAppId, authorized_entity_gcm, base::Bind(&base::DoNothing));
+      kExampleAppId, authorized_entity_gcm, base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
@@ -404,7 +404,7 @@ TEST_F(GCMEncryptionProviderTest, VerifiesKeyRemovalInstanceIDToken) {
   EXPECT_EQ(auth_secret_1, read_auth_secret_1);
 
   encryption_provider()->RemoveEncryptionInfo(
-      kExampleAppId, authorized_entity_gcm, base::Bind(&base::DoNothing));
+      kExampleAppId, authorized_entity_gcm, base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
@@ -412,7 +412,7 @@ TEST_F(GCMEncryptionProviderTest, VerifiesKeyRemovalInstanceIDToken) {
   ASSERT_NO_FATAL_FAILURE(CheckHasKey(authorized_entity_2, true));
 
   encryption_provider()->RemoveEncryptionInfo(
-      kExampleAppId, authorized_entity_1, base::Bind(&base::DoNothing));
+      kExampleAppId, authorized_entity_1, base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 
@@ -440,7 +440,7 @@ TEST_F(GCMEncryptionProviderTest, VerifiesKeyRemovalInstanceIDToken) {
   ASSERT_NO_FATAL_FAILURE(CheckHasKey(authorized_entity_2, true));
 
   encryption_provider()->RemoveEncryptionInfo(kExampleAppId, "*",
-                                              base::Bind(&base::DoNothing));
+                                              base::DoNothing());
 
   base::RunLoop().RunUntilIdle();
 

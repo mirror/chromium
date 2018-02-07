@@ -113,9 +113,6 @@ ACTION_P(InvokeMalwareCallback, verdict) {
   ::std::tr1::get<2>(args).Run(true, std::move(request));
 }
 
-void EmptyUrlCheckCallback(bool processed) {
-}
-
 class MockClientSideDetectionService : public ClientSideDetectionService {
  public:
   MockClientSideDetectionService() : ClientSideDetectionService(NULL) {}
@@ -360,7 +357,7 @@ class ClientSideDetectionHostTest : public ChromeRenderViewHostTestHarness {
     resource.original_url = web_contents()->GetURL();
     resource.is_subresource = true;
     resource.threat_type = SB_THREAT_TYPE_URL_MALWARE;
-    resource.callback = base::Bind(&EmptyUrlCheckCallback);
+    resource.callback = base::DoNothing();
     resource.callback_thread =
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
     resource.web_contents_getter =
@@ -392,7 +389,7 @@ class ClientSideDetectionHostTest : public ChromeRenderViewHostTestHarness {
     resource.original_url = url;
     resource.is_subresource = false;
     resource.threat_type = SB_THREAT_TYPE_URL_MALWARE;
-    resource.callback = base::Bind(&EmptyUrlCheckCallback);
+    resource.callback = base::DoNothing();
     resource.callback_thread =
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
     resource.web_contents_getter =

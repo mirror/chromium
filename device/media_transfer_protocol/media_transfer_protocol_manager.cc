@@ -326,7 +326,7 @@ class MediaTransferProtocolManagerImpl : public MediaTransferProtocolManager {
         storage_name,
         base::Bind(&MediaTransferProtocolManagerImpl::OnGetStorageInfo,
                    weak_ptr_factory_.GetWeakPtr()),
-        base::Bind(&base::DoNothing));
+        base::DoNothing());
   }
 
   void OnStorageDetached(const std::string& storage_name) {
@@ -634,7 +634,7 @@ class MediaTransferProtocolManagerImpl : public MediaTransferProtocolManager {
     mtp_client_->EnumerateStorages(
         base::Bind(&MediaTransferProtocolManagerImpl::OnEnumerateStorages,
                    weak_ptr_factory_.GetWeakPtr()),
-        base::Bind(&base::DoNothing));
+        base::DoNothing());
   }
 
   // Mtpd DBus client.

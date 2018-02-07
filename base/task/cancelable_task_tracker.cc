@@ -8,6 +8,8 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
@@ -68,8 +70,7 @@ CancelableTaskTracker::TaskId CancelableTaskTracker::PostTask(
     OnceClosure task) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
 
-  return PostTaskAndReply(task_runner, from_here, std::move(task),
-                          BindOnce(&DoNothing));
+  return PostTaskAndReply(task_runner, from_here, std::move(task), DoNothing());
 }
 
 CancelableTaskTracker::TaskId CancelableTaskTracker::PostTaskAndReply(

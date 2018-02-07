@@ -269,7 +269,7 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRenderProcessHostKilled) {
   spare_renderer->AddObserver(this);  // For process_exit_callback.
 
   // Should reply with a bad message and cause process death.
-  service->DoSomething(base::BindOnce(&base::DoNothing));
+  service->DoSomething(base::DoNothing());
   run_loop.Run();
 
   // The spare RenderProcessHost should disappear when its process dies.
@@ -472,7 +472,7 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessOnBadMojoMessage) {
   set_process_exit_callback(run_loop.QuitClosure());
 
   // Should reply with a bad message and cause process death.
-  service->DoSomething(base::BindOnce(&base::DoNothing));
+  service->DoSomething(base::DoNothing());
 
   run_loop.Run();
 
@@ -547,7 +547,7 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessZerosAudioStreams) {
     // must run after these notifications have been delivered.
     base::RunLoop run_loop;
     set_process_exit_callback(media::BindToCurrentLoop(run_loop.QuitClosure()));
-    service->DoSomething(base::BindOnce(&base::DoNothing));
+    service->DoSomething(base::DoNothing());
     run_loop.Run();
   }
 
@@ -639,7 +639,7 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
     // Force a bad message event to occur which will terminate the renderer.
     base::RunLoop run_loop;
     set_process_exit_callback(media::BindToCurrentLoop(run_loop.QuitClosure()));
-    service->DoSomething(base::BindOnce(&base::DoNothing));
+    service->DoSomething(base::DoNothing());
     run_loop.Run();
   }
 
@@ -704,7 +704,7 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest,
     // Force a bad message event to occur which will terminate the renderer.
     base::RunLoop run_loop;
     set_process_exit_callback(media::BindToCurrentLoop(run_loop.QuitClosure()));
-    service->DoSomething(base::BindOnce(&base::DoNothing));
+    service->DoSomething(base::DoNothing());
     run_loop.Run();
   }
 

@@ -589,7 +589,7 @@ void OfflinePageModelTaskified::CreateArchivesDirectoryIfNeeded() {
   // No callback is required here.
   // TODO(romax): Remove the callback from the interface once the other
   // consumers of this API can also drop the callback.
-  archive_manager_->EnsureArchivesDirCreated(base::Bind([]() {}));
+  archive_manager_->EnsureArchivesDirCreated(base::DoNothing());
 }
 
 base::Time OfflinePageModelTaskified::GetCurrentTime() {

@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/files/file_descriptor_watcher_posix.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -75,7 +76,7 @@ TEST_F(TaskSchedulerTaskTrackerPosixTest, FileDescriptorWatcher) {
   ASSERT_EQ(0, pipe(fds));
   Task task(FROM_HERE,
             Bind(IgnoreResult(&FileDescriptorWatcher::WatchReadable), fds[0],
-                 Bind(&DoNothing)),
+                 DoNothing()),
             TaskTraits(), TimeDelta());
   // FileDescriptorWatcher::WatchReadable needs a SequencedTaskRunnerHandle.
   task.sequenced_task_runner_ref = MakeRefCounted<NullTaskRunner>();
