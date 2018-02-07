@@ -69,6 +69,24 @@
       "revId": "449546ec35676b065c54eb45a61d11b3ab8d8943",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01f1c36_c7f3159f",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4568,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T19:22:20Z",
+      "side": 1,
+      "message": "Ah ok, or just EXPECT that it is transparent and comment explaining why it matters to this test.",
+      "parentUuid": "db44b27c_15c114cf",
+      "revId": "449546ec35676b065c54eb45a61d11b3ab8d8943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
