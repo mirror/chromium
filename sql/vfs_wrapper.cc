@@ -284,84 +284,21 @@ int Open(sqlite3_vfs* vfs, const char* file_name, sqlite3_file* wrapper_file,
   }
 #endif
 
-  // The wrapper instances must support a specific |iVersion|, but there is no
-  // explicit guarantee that the wrapped VFS will always vend instances with the
-  // same |iVersion| (though I believe this is always the case in practice).
-  // Vend a distinct set of IO methods for each version supported.
-  //
   // |iVersion| determines what methods SQLite may call on the instance.  Having
   // the methods which can't be proxied return an error may cause SQLite to
-  // operate differently than if it didn't call those methods at all.  Another
-  // solution would be to fail if the wrapped file does not have the expected
-  // version, which may cause problems on platforms which use the system SQLite
-  // (iOS and some Linux distros).
+  // operate differently than if it didn't call those methods at all.
   VfsFile* file = AsVfsFile(wrapper_file);
   file->wrapped_file = wrapped_file;
-  if (wrapped_file->pMethods->iVersion == 1) {
-    static const sqlite3_io_methods io_methods = {
-      1,
-      Close,
-      Read,
-      Write,
-      Truncate,
-      Sync,
-      FileSize,
-      Lock,
-      Unlock,
-      CheckReservedLock,
-      FileControl,
-      SectorSize,
-      DeviceCharacteristics,
-    };
-    file->methods = &io_methods;
-  } else if (wrapped_file->pMethods->iVersion == 2) {
-    static const sqlite3_io_methods io_methods = {
-      2,
-      Close,
-      Read,
-      Write,
-      Truncate,
-      Sync,
-      FileSize,
-      Lock,
-      Unlock,
-      CheckReservedLock,
-      FileControl,
-      SectorSize,
-      DeviceCharacteristics,
+  DCHECK_GE(wrapped_file->pMethods->iVersion, 3);
+  static const sqlite3_io_methods io_methods = {
+      3, Close, Read, Write, Truncate, Sync, FileSize, Lock, Unlock,
+      CheckReservedLock, FileControl, SectorSize, DeviceCharacteristics,
       // Methods above are valid for version 1.
-      ShmMap,
-      ShmLock,
-      ShmBarrier,
-      ShmUnmap,
-    };
-    file->methods = &io_methods;
-  } else {
-    static const sqlite3_io_methods io_methods = {
-      3,
-      Close,
-      Read,
-      Write,
-      Truncate,
-      Sync,
-      FileSize,
-      Lock,
-      Unlock,
-      CheckReservedLock,
-      FileControl,
-      SectorSize,
-      DeviceCharacteristics,
-      // Methods above are valid for version 1.
-      ShmMap,
-      ShmLock,
-      ShmBarrier,
-      ShmUnmap,
+      ShmMap, ShmLock, ShmBarrier, ShmUnmap,
       // Methods above are valid for version 2.
-      Fetch,
-      Unfetch,
-    };
-    file->methods = &io_methods;
-  }
+      Fetch, Unfetch,
+  };
+  file->methods = &io_methods;
   return SQLITE_OK;
 }
 
@@ -504,11 +441,14 @@ sqlite3_vfs* VFSWrapper() {
   wrapper_vfs->xGetLastError = &GetLastError;
   // The methods above are in version 1 of sqlite_vfs.
   // There were VFS implementations with nullptr for |xCurrentTimeInt64|.
-  wrapper_vfs->xCurrentTimeInt64 =
-      (wrapped_vfs->xCurrentTimeInt64 ? &CurrentTimeInt64 : nullptr);
+  DCHECK(wrapped_vfs->xCurrentTimeInt64);
+  wrapper_vfs->xCurrentTimeInt64 = &CurrentTimeInt64;
   // The methods above are in version 2 of sqlite_vfs.
+  DCHECK(wrapped_vfs->xSetSystemCall);
   wrapper_vfs->xSetSystemCall = &SetSystemCall;
+  DCHECK(wrapped_vfs->xGetSystemCall);
   wrapper_vfs->xGetSystemCall = &GetSystemCall;
+  DCHECK(wrapped_vfs->xNextSystemCall);
   wrapper_vfs->xNextSystemCall = &NextSystemCall;
   // The methods above are in version 3 of sqlite_vfs.
 
