@@ -8,16 +8,18 @@ var selectedAddress = null;
 var selectedId = null;
 
 function updateAddress(tabId) {
-  chrome.tabs.sendRequest(tabId, {}, function(address) {
-    addresses[tabId] = address;
-    if (!address) {
-      chrome.pageAction.hide(tabId);
-    } else {
-      chrome.pageAction.show(tabId);
-      if (selectedId == tabId) {
-        updateSelected(tabId);
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabId, {}, function(address) {
+      addresses[tabId] = address;
+      if (!address) {
+        chrome.pageAction.hide(tabId);
+      } else {
+        chrome.pageAction.show(tabId);
+        if (selectedId == tabId) {
+          updateSelected(tabId);
+        }
       }
-    }
+    });
   });
 }
 
