@@ -8,6 +8,7 @@ namespace net {
 
 ProxyConfigServiceFixed::ProxyConfigServiceFixed(const ProxyConfig& pc)
     : pc_(pc) {
+  DCHECK(pc_.traffic_annotation().is_valid());
 }
 
 ProxyConfigServiceFixed::~ProxyConfigServiceFixed() = default;

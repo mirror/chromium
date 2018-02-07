@@ -22,6 +22,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/proxy_resolution/proxy_resolver.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -180,6 +181,9 @@ class NET_EXPORT_PRIVATE ProxyScriptDecider {
 
   // Whether we have an existing custom PAC URL.
   bool have_custom_pac_url_;
+
+  // Network traffic annotation from proxy config.
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   PacSourceList pac_sources_;
   State next_state_;

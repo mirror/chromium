@@ -106,6 +106,7 @@ int ProxyScriptDecider::Start(const ProxyConfig& config,
   DCHECK_EQ(STATE_NONE, next_state_);
   DCHECK(!callback.is_null());
   DCHECK(config.HasAutomaticSettings());
+  DCHECK(config.traffic_annotation().is_valid());
 
   net_log_.BeginEvent(NetLogEventType::PROXY_SCRIPT_DECIDER);
 
@@ -118,6 +119,8 @@ int ProxyScriptDecider::Start(const ProxyConfig& config,
 
   pac_mandatory_ = config.pac_mandatory();
   have_custom_pac_url_ = config.has_pac_url();
+
+  traffic_annotation_ = config.traffic_annotation();
 
   pac_sources_ = BuildPacSourcesFallbackList(config);
   DCHECK(!pac_sources_.empty());
@@ -381,8 +384,9 @@ int ProxyScriptDecider::DoVerifyPacScriptComplete(int result) {
   // Let the caller know which automatic setting we ended up initializing the
   // resolver for (there may have been multiple fallbacks to choose from.)
   if (current_pac_source().type == PacSource::CUSTOM) {
-    effective_config_ =
-        ProxyConfig::CreateFromCustomPacURL(current_pac_source().url);
+    effective_config_ = ProxyConfig::CreateFromCustomPacURL(
+        current_pac_source().url,
+        NetworkTrafficAnnotationTag(traffic_annotation_));
     effective_config_.set_pac_mandatory(pac_mandatory_);
   } else {
     if (fetch_pac_bytes_) {
@@ -401,8 +405,8 @@ int ProxyScriptDecider::DoVerifyPacScriptComplete(int result) {
           NOTREACHED();
       }
 
-      effective_config_ =
-          ProxyConfig::CreateFromCustomPacURL(auto_detected_url);
+      effective_config_ = ProxyConfig::CreateFromCustomPacURL(
+          auto_detected_url, NetworkTrafficAnnotationTag(traffic_annotation_));
     } else {
       // The resolver does its own resolution so we cannot know the
       // URL. Just do the best we can and state that the configuration

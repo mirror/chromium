@@ -66,7 +66,7 @@ TEST_F(URLRequestContextBuilderMojoTest, MojoProxyResolver) {
   builder_.set_proxy_config_service(
       std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateFromCustomPacURL(
-              test_server_.GetURL(kPacPath))));
+              test_server_.GetURL(kPacPath), TRAFFIC_ANNOTATION_FOR_TESTS)));
   builder_.SetMojoProxyResolverFactory(
       test_mojo_proxy_resolver_factory_.CreateFactoryInterface());
 
@@ -95,7 +95,7 @@ TEST_F(URLRequestContextBuilderMojoTest, ShutdownWithHungRequest) {
   builder_.set_proxy_config_service(
       std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateFromCustomPacURL(
-              test_server_.GetURL("/hung"))));
+              test_server_.GetURL("/hung"), TRAFFIC_ANNOTATION_FOR_TESTS)));
   builder_.SetMojoProxyResolverFactory(
       test_mojo_proxy_resolver_factory_.CreateFactoryInterface());
 

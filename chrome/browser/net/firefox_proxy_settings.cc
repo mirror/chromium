@@ -15,6 +15,7 @@
 #include "base/values.h"
 #include "chrome/common/importer/firefox_importer_utils.h"
 #include "net/proxy_resolution/proxy_config.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace {
 
@@ -33,6 +34,27 @@ const char* const kSOCKSVersionKey = "network.proxy.socks_version";
 const char* const kAutoconfigURL = "network.proxy.autoconfig_url";
 const char* const kNoProxyListKey = "network.proxy.no_proxies_on";
 const char* const kPrefFileName = "prefs.js";
+
+constexpr net::NetworkTrafficAnnotationTag kFirefoxProxyTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("firefox_proxy_settings", R"(
+        semantics {
+          sender: "Firefox Proxy Settings"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: YES/NO
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
 
 FirefoxProxySettings::ProxyConfig IntToProxyConfig(int type) {
   switch (type) {
@@ -185,7 +207,7 @@ bool FirefoxProxySettings::ToProxyConfig(net::ProxyConfig* config) {
       return true;
     case AUTO_FROM_URL:
       *config = net::ProxyConfig::CreateFromCustomPacURL(
-          GURL(autoconfig_url()));
+          GURL(autoconfig_url()), kFirefoxProxyTrafficAnnotation);
       return true;
     case SYSTEM:
       // Can't convert this directly to a ProxyConfig.

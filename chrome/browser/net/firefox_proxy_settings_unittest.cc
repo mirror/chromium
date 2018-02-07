@@ -8,6 +8,7 @@
 #include "base/path_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "net/proxy_resolution/proxy_config.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class FirefoxProxySettingsTest : public testing::Test {
@@ -96,5 +97,5 @@ TEST_F(FirefoxProxySettingsTest, TestParseAutoConfigUrl) {
   EXPECT_TRUE(settings.ToProxyConfig(&config));
 
   EXPECT_TRUE(config.Equals(net::ProxyConfig::CreateFromCustomPacURL(
-      GURL("http://custom-pac-url/"))));
+      GURL("http://custom-pac-url/"), TRAFFIC_ANNOTATION_FOR_TESTS)));
 }

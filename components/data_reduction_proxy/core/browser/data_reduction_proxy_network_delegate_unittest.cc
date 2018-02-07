@@ -365,8 +365,9 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     }
     context_.reset(new net::TestURLRequestContext(true));
     context_storage_.reset(new net::URLRequestContextStorage(context_.get()));
-    proxy_resolution_service_ = net::ProxyResolutionService::CreateFixedFromPacResult(
-        proxy_server.ToPacString());
+    proxy_resolution_service_ =
+        net::ProxyResolutionService::CreateFixedFromPacResult(
+            proxy_server.ToPacString(), TRAFFIC_ANNOTATION_FOR_TESTS);
     context_->set_proxy_resolution_service(proxy_resolution_service_.get());
     context_->set_network_quality_estimator(&test_network_quality_estimator_);
 
