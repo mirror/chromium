@@ -899,19 +899,10 @@ void MediaRouterMojoImpl::BindToMojoRequest(
 
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForRoute(
     const MediaRoute::Id& route_id) {
-  for (const auto& routes_query : routes_queries_) {
-    for (const auto& provider_to_routes :
-         routes_query.second->providers_to_routes()) {
-      const std::vector<MediaRoute>& routes = provider_to_routes.second;
-      if (std::find_if(routes.begin(), routes.end(),
-                       [&route_id](const MediaRoute& route) {
-                         return route.media_route_id() == route_id;
-                       }) != routes.end()) {
-        return provider_to_routes.first;
-      }
-    }
-  }
-  return base::nullopt;
+  const MediaRoute* route = GetRoute(route_id);
+  CHECK(route);  // TODO remove
+  return route ? base::make_optional<MediaRouteProviderId>(route->provider_id())
+               : base::nullopt;
 }
 
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
@@ -924,19 +915,9 @@ base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
 base::Optional<MediaRouteProviderId>
 MediaRouterMojoImpl::GetProviderIdForPresentation(
     const std::string& presentation_id) {
-  for (const auto& routes_query : routes_queries_) {
-    for (const auto& provider_to_routes :
-         routes_query.second->providers_to_routes()) {
-      const std::vector<MediaRoute>& routes = provider_to_routes.second;
-      if (std::find_if(routes.begin(), routes.end(),
-                       [&presentation_id](const MediaRoute& route) {
-                         return route.presentation_id() == presentation_id;
-                       }) != routes.end()) {
-        return provider_to_routes.first;
-      }
-    }
-  }
-  return base::nullopt;
+  const MediaRoute* route = GetRouteByPresentationId(presentation_id);
+  return route ? base::make_optional<MediaRouteProviderId>(route->provider_id())
+               : base::nullopt;
 }
 
 const MediaSink* MediaRouterMojoImpl::GetSinkById(
