@@ -63,6 +63,14 @@ SharedPrefRegistry::CreateConnectionBuilder(
     mojom::PrefRegistryPtr pref_registry,
     const service_manager::Identity& identity,
     mojom::PrefStoreConnector::ConnectCallback callback) {
+  // Empty pref registry could happen in tests.
+  if (pref_registry->public_registrations.empty() &&
+      pref_registry->private_registrations.empty() &&
+      pref_registry->foreign_registrations.empty()) {
+    return base::MakeRefCounted<ScopedPrefConnectionBuilder>(
+        std::vector<std::string>(), std::move(callback));
+  }
+
   bool is_initial_connection = connected_services_.insert(identity).second;
 #if DCHECK_IS_ON()
   if (is_initial_connection) {
