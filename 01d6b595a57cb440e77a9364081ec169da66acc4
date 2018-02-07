@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ea7504e_44c4f85e",
+        "filename": "net/cert/internal/name_constraints.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-02-07T21:24:14Z",
+      "side": 1,
+      "message": "Done (mostly).\nThe value is copied from the boringssl change: https://boringssl-review.googlesource.com/c/boringssl/+/19164\n\nDavid, do you have any context on that choice?",
+      "parentUuid": "bf09f5ef_0cd11dbd",
+      "range": {
+        "startLine": 247,
+        "startChar": 15,
+        "endLine": 247,
+        "endChar": 35
+      },
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1290e8eb_d5e9bd78",
         "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "524a09f0_e87cf3c9",
+        "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-02-07T21:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1290e8eb_d5e9bd78",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99fe7b1f_28b06175",
         "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f243c46_532969ad",
+        "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2018-02-07T21:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fe7b1f_28b06175",
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
