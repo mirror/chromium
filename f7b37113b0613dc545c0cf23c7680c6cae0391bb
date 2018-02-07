@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b76ded05_31d021cc",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4288,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T10:14:18Z",
+      "side": 1,
+      "message": "\"encryption\", so it\u0027s more specific",
+      "range": {
+        "startLine": 4288,
+        "startChar": 132,
+        "endLine": 4288,
+        "endChar": 140
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0688df74_a70fdf9c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T10:14:18Z",
+      "side": 1,
+      "message": "I think I\u0027d rather remove the default from the proto than using it to seed the UI. It concerns me that everything is derived from that default. If the default ever gets removed from the proto, it would change UI, but that\u0027s not documented in the proto at all. IMHO it would be better to be explicit here and say \"Strong\" is the default type.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b28df33_c70d07df",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T10:14:18Z",
+      "side": 1,
+      "message": "Nit: Would it make sense to use a function here?\n\nI know the function call would look a bit verbose with all the IDS_AD_ENCRYPTION_*. However, I think it\u0027s very useful to be able to search for IDS_ enums in code to see where UI strings are used (it gives you a good entry point if you\u0027re not familiar with the code). With the macro that\u0027s not possible.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 80
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
