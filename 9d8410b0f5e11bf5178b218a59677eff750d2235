@@ -22,6 +22,30 @@
       "revId": "9d8410b0f5e11bf5178b218a59677eff750d2235",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7955116_572d69ee",
+        "filename": "ui/chromeos/search_box/search_box_view_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-02-07T18:52:36Z",
+      "side": 1,
+      "message": "What we want to achieve in this change is to draw a different stuff when the button is focused, so we might now want to set the button unfocusable.",
+      "parentUuid": "86c8d263_a7d4907e",
+      "range": {
+        "startLine": 86,
+        "startChar": 36,
+        "endLine": 86,
+        "endChar": 42
+      },
+      "revId": "9d8410b0f5e11bf5178b218a59677eff750d2235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
