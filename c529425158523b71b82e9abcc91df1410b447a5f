@@ -68,6 +68,24 @@
       "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56865813_4c8bd71b",
+        "filename": "third_party/google_toolbox_for_mac/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-02-07T17:49:16Z",
+      "side": 1,
+      "message": "GTMSQlite.m uses direct sqlite calls, so I do think it is necessary.",
+      "parentUuid": "3780f1c8_589ee64c",
+      "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
