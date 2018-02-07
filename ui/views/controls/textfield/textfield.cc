@@ -38,6 +38,7 @@
 #include "ui/gfx/selection_bound.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/focus_ring.h"
 #include "ui/views/controls/focusable_border.h"
@@ -254,7 +255,7 @@ const gfx::FontList& Textfield::GetDefaultFontList() {
   return rb.GetFontListWithDelta(ui::kLabelFontSizeDelta);
 }
 
-Textfield::Textfield()
+Textfield::Textfield(const std::vector<Label*>& labels)
     : model_(new TextfieldModel(this)),
       controller_(NULL),
       scheduled_text_edit_command_(ui::TextEditCommand::INVALID_COMMAND),
@@ -270,6 +271,8 @@ Textfield::Textfield()
       selection_background_color_(SK_ColorBLUE),
       placeholder_text_draw_flags_(gfx::Canvas::DefaultCanvasTextAlignment()),
       invalid_(false),
+      label_ax_ids_(LabelAxIds(labels)),
+      accessible_name_(LabelText(labels)),
       text_input_type_(ui::TEXT_INPUT_TYPE_TEXT),
       text_input_flags_(0),
       performing_user_action_(false),
@@ -935,6 +938,11 @@ void Textfield::OnDragDone() {
 
 void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ax::mojom::Role::kTextField;
+  if (label_ax_ids_.size()) {
+    node_data->AddIntListAttribute(ax::mojom::IntListAttribute::kLabelledbyIds,
+                                   label_ax_ids_);
+  }
+
   node_data->SetName(accessible_name_);
   // Editable state indicates support of editable interface, and is always set
   // for a textfield, even if disabled or readonly.
@@ -2186,6 +2194,21 @@ void Textfield::OnCursorBlinkTimerFired() {
   DCHECK(ShouldBlinkCursor());
   UpdateCursorViewPosition();
   cursor_view_.SetVisible(!cursor_view_.visible());
+}
+
+base::string16 Textfield::LabelText(const std::vector<Label*>& labels) const {
+  base::string16 name;
+  for (Label* label : labels)
+    name += label->text();
+  return name;
+}
+
+std::vector<int32_t> Textfield::LabelAxIds(
+    const std::vector<Label*>& labels) const {
+  std::vector<int32_t> label_ids;
+  for (Label* label : labels)
+    label_ids.push_back(label->GetViewAccessibility().GetUniqueId().Get());
+  return label_ids;
 }
 
 }  // namespace views
