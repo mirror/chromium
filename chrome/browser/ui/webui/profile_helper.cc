@@ -15,7 +15,6 @@
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "components/keep_alive_registry/scoped_keep_alive.h"
@@ -24,14 +23,20 @@
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
 
+#if !defined(OS_CHROMEOS)
+#include "chrome/browser/ui/user_manager.h"
+#endif  // !defined(OS_CHROMEOS)
+
 namespace webui {
 namespace {
 
 void ShowUserManager(const ProfileManager::CreateCallback& callback) {
+#if !defined(OS_CHROMEOS)
   if (!UserManager::IsShowing()) {
     UserManager::Show(base::FilePath(),
                       profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
   }
+#endif  // !defined(OS_CHROMEOS)
 
   g_browser_process->profile_manager()->CreateProfileAsync(
       ProfileManager::GetSystemProfilePath(), callback, base::string16(),
@@ -50,8 +55,10 @@ std::string GetProfileUserName(Profile* profile) {
 void ShowReauthDialog(const std::string& user_name,
                       Profile* system_profile,
                       Profile::CreateStatus status) {
+#if !defined(OS_CHROMEOS)
   UserManagerProfileDialog::ShowReauthDialog(
       system_profile, user_name, signin_metrics::Reason::REASON_UNLOCK);
+#endif  // !defined(OS_CHROMEOS)
 }
 
 void DeleteProfileCallback(std::unique_ptr<ScopedKeepAlive> keep_alive,

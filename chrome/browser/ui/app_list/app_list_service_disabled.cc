@@ -18,11 +18,13 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
-#include "chrome/browser/ui/user_manager.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "ui/base/page_transition_types.h"
-#endif
+#if !defined(OS_CHROMEOS)
+#include "chrome/browser/ui/user_manager.h"
+#endif  // !defined(OS_CHROMEOS)
+#endif  // defined(TOOLKIT_VIEWS)
 
 #if defined(OS_MACOSX)
 #include "chrome/browser/ui/app_list/app_list_service_disabled_mac.h"
@@ -91,8 +93,10 @@ void OpenAppsPage(Profile* fallback_profile) {
   if (IsProfileSignedOut(app_list_profile) ||
       app_list_profile->IsSystemProfile() ||
       app_list_profile->IsGuestSession()) {
+#if !defined(OS_CHROMEOS)
     UserManager::Show(base::FilePath(),
                       profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
+#endif  // !defined(OS_CHROMEOS)
     return;
   }
 
