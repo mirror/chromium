@@ -465,7 +465,7 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
       pending_entry_->SetTransitionType(ui::PAGE_TRANSITION_RELOAD);
     }
 
-    NavigateToPendingEntry(reload_type);
+    NavigateToExistingEntry(pending_entry_);
   }
 }
 
@@ -508,7 +508,7 @@ void NavigationControllerImpl::LoadEntry(
   // end up leaving the current page.  The new page load could for example
   // result in a download or a 'no content' response (e.g., a mailto: URL).
   SetPendingEntry(std::move(entry));
-  NavigateToPendingEntry(ReloadType::NONE);
+  NavigateToNewEntry();
 }
 
 void NavigationControllerImpl::SetPendingEntry(
@@ -679,7 +679,7 @@ void NavigationControllerImpl::GoToIndex(int index) {
   pending_entry_index_ = index;
   pending_entry_->SetTransitionType(ui::PageTransitionFromInt(
       pending_entry_->GetTransitionType() | ui::PAGE_TRANSITION_FORWARD_BACK));
-  NavigateToPendingEntry(ReloadType::NONE);
+  NavigateToExistingEntry(pending_entry_);
 }
 
 void NavigationControllerImpl::GoToOffset(int offset) {
@@ -1994,126 +1994,6 @@ void NavigationControllerImpl::PruneOldestEntryIfFull() {
   }
 }
 
-void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
-  DCHECK(pending_entry_);
-  needs_reload_ = false;
-
-  // If we were navigating to a slow-to-commit page, and the user performs
-  // a session history navigation to the last committed page, RenderViewHost
-  // will force the throbber to start, but WebKit will essentially ignore the
-  // navigation, and won't send a message to stop the throbber. To prevent this
-  // from happening, we drop the navigation here and stop the slow-to-commit
-  // page from loading (which would normally happen during the navigation).
-  if (pending_entry_index_ != -1 &&
-      pending_entry_index_ == last_committed_entry_index_ &&
-      pending_entry_->restore_type() == RestoreType::NONE &&
-      pending_entry_->GetTransitionType() & ui::PAGE_TRANSITION_FORWARD_BACK) {
-    delegate_->Stop();
-
-    // If an interstitial page is showing, we want to close it to get back to
-    // what was showing before.
-    //
-    // There are two ways to get the interstitial page given a WebContents.
-    // Because WebContents::GetInterstitialPage() returns null between the
-    // interstitial's Show() method being called and the interstitial becoming
-    // visible, while InterstitialPage::GetInterstitialPage() returns the
-    // interstitial during that time, use the latter.
-    InterstitialPage* interstitial =
-        InterstitialPage::GetInterstitialPage(GetWebContents());
-    if (interstitial)
-      interstitial->DontProceed();
-
-    DiscardNonCommittedEntries();
-    return;
-  }
-
-  // If an interstitial page is showing, the previous renderer is blocked and
-  // cannot make new requests.  Unblock (and disable) it to allow this
-  // navigation to succeed.  The interstitial will stay visible until the
-  // resulting DidNavigate.
-  if (delegate_->GetInterstitialPage()) {
-    static_cast<InterstitialPageImpl*>(delegate_->GetInterstitialPage())
-        ->CancelForNavigation();
-  }
-
-  // Convert navigations to the current URL to a reload.
-  if (ShouldTreatNavigationAsReload(
-          pending_entry_->GetURL(), pending_entry_->GetVirtualURL(),
-          pending_entry_->GetBaseURLForDataURL(),
-          pending_entry_->GetTransitionType(),
-          pending_entry_->frame_tree_node_id() == -1 /* is_main_frame */,
-          pending_entry_->GetHasPostData() /* is _post */,
-          reload_type != ReloadType::NONE /* is_reload */,
-          pending_entry_index_ != -1 /* is_navigation_to_existing_entry */,
-          transient_entry_index_ != -1 /* has_interstitial */,
-          GetLastCommittedEntry())) {
-    reload_type = ReloadType::NORMAL;
-  }
-
-  // Any renderer-side debug URLs or javascript: URLs should be ignored if the
-  // renderer process is not live, unless it is the initial navigation of the
-  // tab.
-  if (IsRendererDebugURL(pending_entry_->GetURL())) {
-    // TODO(creis): Find the RVH for the correct frame.
-    if (!delegate_->GetRenderViewHost()->IsRenderViewLive() &&
-        !IsInitialNavigation()) {
-      DiscardNonCommittedEntries();
-      return;
-    }
-  }
-
-  // This call does not support re-entrancy.  See http://crbug.com/347742.
-  CHECK(!in_navigate_to_pending_entry_);
-  in_navigate_to_pending_entry_ = true;
-  bool success = NavigateToPendingEntryInternal(reload_type);
-  in_navigate_to_pending_entry_ = false;
-
-  if (!success)
-    DiscardNonCommittedEntries();
-}
-
-bool NavigationControllerImpl::NavigateToPendingEntryInternal(
-    ReloadType reload_type) {
-  DCHECK(pending_entry_);
-  FrameTreeNode* root = delegate_->GetFrameTree()->root();
-
-  // Compare FrameNavigationEntries to see which frames in the tree need to be
-  // navigated.
-  FrameLoadVector same_document_loads;
-  FrameLoadVector different_document_loads;
-  if (GetLastCommittedEntry()) {
-    FindFramesToNavigate(root, &same_document_loads, &different_document_loads);
-  }
-
-  if (same_document_loads.empty() && different_document_loads.empty()) {
-    // If we don't have any frames to navigate at this point, either
-    // (1) there is no previous history entry to compare against, or
-    // (2) we were unable to match any frames by name. In the first case,
-    // doing a different document navigation to the root item is the only valid
-    // thing to do. In the second case, we should have been able to find a
-    // frame to navigate based on names if this were a same document
-    // navigation, so we can safely assume this is the different document case.
-    different_document_loads.push_back(
-        std::make_pair(root, pending_entry_->GetFrameEntry(root)));
-  }
-
-  // If all the frame loads fail, we will discard the pending entry.
-  bool success = false;
-
-  // Send all the same document frame loads before the different document loads.
-  for (const auto& item : same_document_loads) {
-    FrameTreeNode* frame = item.first;
-    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
-                                                          reload_type, true);
-  }
-  for (const auto& item : different_document_loads) {
-    FrameTreeNode* frame = item.first;
-    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
-                                                          reload_type, false);
-  }
-  return success;
-}
-
 void NavigationControllerImpl::FindFramesToNavigate(
     FrameTreeNode* frame,
     FrameLoadVector* same_document_loads,
@@ -2276,6 +2156,116 @@ void NavigationControllerImpl::SetPendingNavigationSSLError(bool error) {
     pending_entry_->set_ssl_error(error);
 }
 
+bool NavigationControllerImpl::NavigateNewChildFrame(RenderFrameHostImpl* render_frame_host,const GURL& default_url) {
+  NavigationEntryImpl* entry =
+      GetEntryWithUniqueID(render_frame_host->nav_entry_id());
+  if (!entry)
+    return false;
+
+  FrameNavigationEntry* frame_entry =
+      entry->GetFrameEntry(render_frame_host->frame_tree_node());
+  if (!frame_entry)
+    return false;
+
+  // Track how often history navigations load a different URL into a subframe
+  // than the frame's default URL.
+  bool restoring_different_url = frame_entry->url() != default_url;
+  UMA_HISTOGRAM_BOOLEAN("SessionRestore.RestoredSubframeURL",
+                        restoring_different_url);
+  // If this frame's unique name uses a frame path, record the name length.
+  // If these names are long in practice, then a proposed plan to truncate
+  // unique names might affect restore behavior, since it is complex to deal
+  // with truncated names inside frame paths.
+  if (restoring_different_url) {
+    const std::string& unique_name =
+        render_frame_host->frame_tree_node()->unique_name();
+    const char kFramePathPrefix[] = "<!--framePath ";
+    if (base::StartsWith(unique_name, kFramePathPrefix,
+                         base::CompareCase::SENSITIVE)) {
+      UMA_HISTOGRAM_COUNTS("SessionRestore.RestoreSubframeFramePathLength",
+                           unique_name.size());
+    }
+  }
+
+  return NavigateToEntry(render_frame_host->frame_tree_node(), *frame_entry,
+                         *entry, ReloadType::NONE, false, true, false, nullptr);
+}
+
+void NavigationControllerImpl::NavigateSubframe(
+    RenderFrameHostImpl* render_frame_host,
+    const GURL& url,
+    bool is_renderer_initiated,
+    SiteInstance* source_site_instance,
+    const std::vector<GURL>& redirect_chain,
+    const Referrer& referrer,
+    ui::PageTransition page_transition,
+    const GlobalRequestID& transferred_global_request_id,
+    bool should_replace_current_entry,
+    const std::string& method,
+    scoped_refptr<network::ResourceRequestBody> post_body,
+    const std::string& extra_headers,
+    const base::Optional<std::string>& suggested_filename) {
+  FrameTreeNode* node = render_frame_host->frame_tree_node();
+  // Create a NavigationEntry for the transfer, without making it the pending
+  // entry.  Subframe transfers should only be possible in OOPIF-enabled modes,
+  // and should have a clone of the last committed entry with a
+  // FrameNavigationEntry for the target frame.  Main frame transfers should
+  // have a new NavigationEntry.
+  // TODO(creis): Make this unnecessary by creating (and validating) the params
+  // directly, passing them to the destination RenderFrameHost.  See
+  // https://crbug.com/536906.
+  std::unique_ptr<NavigationEntryImpl> entry;
+  // Subframe case: create FrameNavigationEntry.
+  if (GetLastCommittedEntry()) {
+    entry = GetLastCommittedEntry()->Clone();
+    entry->set_extra_headers(extra_headers);
+    // TODO(arthursonzogni): What about |is_renderer_initiated|?
+    // Renderer-initiated navigation that target a remote frame are currently
+    // classified as browser-initiated when this one has already navigated.
+    // See https://crbug.com/722251.
+  } else {
+    // If there's no last committed entry, create an entry for about:blank
+    // with a subframe entry for our destination.
+    // TODO(creis): Ensure this case can't exist in https://crbug.com/524208.
+    entry = NavigationEntryImpl::FromNavigationEntry(
+        CreateNavigationEntry(GURL(url::kAboutBlankURL),
+                                           referrer, page_transition,
+                                           is_renderer_initiated, extra_headers,
+                                           GetBrowserContext()));
+  }
+  entry->AddOrUpdateFrameEntry(
+      node, -1, -1, nullptr,
+      static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
+      referrer, redirect_chain, PageState(), method, -1);
+  entry->set_suggested_filename(suggested_filename);
+
+  // Don't allow an entry replacement if there is no entry to replace.
+  // http://crbug.com/457149
+  if (should_replace_current_entry && GetEntryCount() > 0)
+    entry->set_should_replace_entry(true);
+  if (GetLastCommittedEntry() &&
+      GetLastCommittedEntry()->GetIsOverridingUserAgent()) {
+    entry->SetIsOverridingUserAgent(true);
+  }
+  entry->set_transferred_global_request_id(transferred_global_request_id);
+  // TODO(creis): Set user gesture and intent received timestamp on Android.
+
+  // We may not have successfully added the FrameNavigationEntry to |entry|
+  // above (per https://crbug.com/608402), in which case we create it from
+  // scratch.  This works because we do not depend on |frame_entry| being inside
+  // |entry| during NavigateToEntry.  This will go away when we shortcut this
+  // further in https://crbug.com/536906.
+  scoped_refptr<FrameNavigationEntry> frame_entry(entry->GetFrameEntry(node));
+  if (!frame_entry) {
+    frame_entry = new FrameNavigationEntry(
+        node->unique_name(), -1, -1, nullptr,
+        static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
+        referrer, redirect_chain, PageState(), method, -1);
+  }
+  NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE, false,
+                  false, false, post_body);
+}
+
 void NavigationControllerImpl::DiscardTransientEntry() {
   if (transient_entry_index_ == -1)
     return;
@@ -2339,6 +2329,232 @@ void NavigationControllerImpl::InsertEntriesFrom(
 void NavigationControllerImpl::SetGetTimestampCallbackForTest(
     const base::Callback<base::Time()>& get_timestamp_callback) {
   get_timestamp_callback_ = get_timestamp_callback;
+}
+
+void NavigationControllerImpl::NavigateToExistingEntry(NavigationEntryImpl* entry) {
+  DCHECK_EQ(pending_entry_, entry);
+  DCHECK_NE(-1, pending_entry_index_);
+
+  // If we were navigating to a slow-to-commit page, and the user performs
+  // a session history navigation to the last committed page, RenderViewHost
+  // will force the throbber to start, but WebKit will essentially ignore the
+  // navigation, and won't send a message to stop the throbber. To prevent this
+  // from happening, we drop the navigation here and stop the slow-to-commit
+  // page from loading (which would normally happen during the navigation).
+  if (pending_entry_index_ == last_committed_entry_index_ &&
+      pending_entry_->restore_type() == RestoreType::NONE &&
+      pending_entry_->GetTransitionType() & ui::PAGE_TRANSITION_FORWARD_BACK) {
+    delegate_->Stop();
+
+    // If an interstitial page is showing, we want to close it to get back to
+    // what was showing before.
+    //
+    // There are two ways to get the interstitial page given a WebContents.
+    // Because WebContents::GetInterstitialPage() returns null between the
+    // interstitial's Show() method being called and the interstitial becoming
+    // visible, while InterstitialPage::GetInterstitialPage() returns the
+    // interstitial during that time, use the latter.
+    InterstitialPage* interstitial =
+        InterstitialPage::GetInterstitialPage(GetWebContents());
+    if (interstitial)
+      interstitial->DontProceed();
+
+    DiscardNonCommittedEntries();
+    return;
+  }
+
+  FrameTreeNode* root = delegate_->GetFrameTree()->root();
+
+  // Compare FrameNavigationEntries to see which frames in the tree need to be
+  // navigated.
+  FrameLoadVector same_document_loads;
+  FrameLoadVector different_document_loads;
+  if (GetLastCommittedEntry()) {
+    FindFramesToNavigate(root, &same_document_loads, &different_document_loads);
+  }
+
+  if (same_document_loads.empty() && different_document_loads.empty()) {
+    // If we don't have any frames to navigate at this point, either
+    // (1) there is no previous history entry to compare against, or
+    // (2) we were unable to match any frames by name. In the first case,
+    // doing a different document navigation to the root item is the only valid
+    // thing to do. In the second case, we should have been able to find a
+    // frame to navigate based on names if this were a same document
+    // navigation, so we can safely assume this is the different document case.
+    different_document_loads.push_back(
+        std::make_pair(root, pending_entry_->GetFrameEntry(root)));
+  }
+
+  // If all the frame loads fail, we will discard the pending entry.
+  bool success = false;
+
+  // Send all the same document frame loads before the different document loads.
+  for (const auto& item : same_document_loads) {
+    FrameTreeNode* frame = item.first;
+    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
+                                                          reload_type, true);
+  }
+  for (const auto& item : different_document_loads) {
+    FrameTreeNode* frame = item.first;
+    success |= frame->navigator()->NavigateToPendingEntry(frame, *item.second,
+                                                          reload_type, false);
+  }
+  return success;
+}
+
+void NavigationControllerImpl::NavigateToNewEntry(const LoadURLParams& load_params) {
+  // This is not a real navigation. Send the URL to the renderer process
+  // immediately for handling.
+  // Note: this includes navigations to JavaScript URLs, which are considered
+  // renderer-debug URLs.
+  if (IsRendererDebugURL(dest_url)) {
+    RenderFrameHostImpl* render_frame_host =
+        frame_tree_node->current_frame_host();
+    frame_tree_node->render_manager()->InitializeRenderFrameIfNecessary(
+        render_frame_host);
+    render_frame_host->HandleRendererDebugURL(dest_url);
+    return;
+  }
+
+  // Convert navigations to the current URL to a reload.
+  if (ShouldTreatNavigationAsReload(
+          pending_entry_->GetURL(), pending_entry_->GetVirtualURL(),
+          pending_entry_->GetBaseURLForDataURL(),
+          pending_entry_->GetTransitionType(),
+          pending_entry_->frame_tree_node_id() == -1 /* is_main_frame */,
+          pending_entry_->GetHasPostData() /* is _post */,
+          reload_type != ReloadType::NONE /* is_reload */,
+          pending_entry_index_ != -1 /* is_navigation_to_existing_entry */,
+          transient_entry_index_ != -1 /* has_interstitial */,
+          GetLastCommittedEntry())) {
+    Reload();
+    return;
+  }
+}
+
+void NavigationControllerImpl::NavigateFrames() {
+  // If an interstitial page is showing, the previous renderer is blocked and
+  // cannot make new requests.  Unblock (and disable) it to allow this
+  // navigation to succeed.  The interstitial will stay visible until the
+  // resulting DidNavigate.
+  if (delegate_->GetInterstitialPage()) {
+    static_cast<InterstitialPageImpl*>(delegate_->GetInterstitialPage())
+        ->CancelForNavigation();
+  }
+  needs_reload_ = false;
+  last_transient_entry_index_ = -1;
+
+  // This call does not support re-entrancy.  See http://crbug.com/347742.
+  CHECK(!in_navigate_to_pending_entry_);
+  in_navigate_to_pending_entry_ = true;
+  in_navigate_to_pending_entry_ = false;
+
+}
+
+bool NavigationControllerImpl::NavigateFrame(
+    FrameTreeNode* frame_tree_node,
+    std::unique_ptr<NavigationRequest> request) {
+  return frame_tree_node->navigator()->Navigate(request);
+}
+
+void NavigationControllerImpl::HandleRendererDebugURL() {
+
+  // Any renderer-side debug URLs or javascript: URLs should be ignored if the
+  // renderer process is not live, unless it is the initial navigation of the
+  // tab.
+  if (IsRendererDebugURL(pending_entry_->GetURL())) {
+    // TODO(creis): Find the RVH for the correct frame.
+    if (!delegate_->GetRenderViewHost()->IsRenderViewLive() &&
+        !IsInitialNavigation()) {
+      DiscardNonCommittedEntries();
+      return;
+    }
+  }
+  if (!success)
+    DiscardNonCommittedEntries();
+}
+
+std::unique_ptr<NavigationRequest>
+NavigationControllerImpl::CreateNavigationRequestForFrame(
+    FrameTreeNode* frame_tree_node) {
+  GURL dest_url = frame_entry.url();
+  Referrer dest_referrer = frame_entry.referrer();
+  if ((reload_type == ReloadType::ORIGINAL_REQUEST_URL ||
+       reload_type == ReloadType::DISABLE_PREVIEWS) &&
+      entry.GetOriginalRequestURL().is_valid() && !entry.GetHasPostData()) {
+    // We may have been redirected when navigating to the current URL.
+    // Use the URL the user originally intended to visit as signaled by the
+    // ReloadType, if it's valid and if a POST wasn't involved; the latter
+    // case avoids issues with sending data to the wrong page. The
+    // DISABLE_PREVIEWS case is triggered from a user action to view the
+    // original URL without any preview intervention treatment.
+    dest_url = entry.GetOriginalRequestURL();
+    dest_referrer = Referrer();
+  }
+
+  // Don't attempt to navigate if the virtual URL is non-empty and invalid.
+  if (frame_tree_node->IsMainFrame()) {
+    const GURL& virtual_url = entry.GetVirtualURL();
+    if (!virtual_url.is_valid() && !virtual_url.is_empty()) {
+      LOG(WARNING) << "Refusing to load for invalid virtual URL: "
+                   << virtual_url.possibly_invalid_spec();
+      return false;
+    }
+  }
+
+  // Don't attempt to navigate to non-empty invalid URLs.
+  if (!dest_url.is_valid() && !dest_url.is_empty()) {
+    LOG(WARNING) << "Refusing to load invalid URL: "
+                 << dest_url.possibly_invalid_spec();
+    return false;
+  }
+
+  // The renderer will reject IPC messages with URLs longer than
+  // this limit, so don't attempt to navigate with a longer URL.
+  if (dest_url.spec().size() > url::kMaxURLChars) {
+    LOG(WARNING) << "Refusing to load URL as it exceeds " << url::kMaxURLChars
+                 << " characters.";
+    return false;
+  }
+
+  // Determine if Previews should be used for the navigation.
+  PreviewsState previews_state = PREVIEWS_UNSPECIFIED;
+  if (!frame_tree_node->IsMainFrame()) {
+    // For subframes, use the state of the top-level frame.
+    previews_state = frame_tree_node->frame_tree()
+                         ->root()
+                         ->current_frame_host()
+                         ->last_navigation_previews_state();
+  } else if (reload_type == ReloadType::DISABLE_PREVIEWS) {
+    // Disable LoFi when asked for it explicitly.
+    previews_state = PREVIEWS_NO_TRANSFORM;
+  }
+
+  // Give the delegate an opportunity to adjust the previews state.
+  if (delegate_)
+    delegate_->AdjustPreviewsStateForNavigation(&previews_state);
+
+  // This value must be set here because creating a NavigationRequest might
+  // change the renderer live/non-live status and change this result.
+  // We don't want to dispatch a beforeunload handler if
+  // is_history_navigation_in_new_child is true. This indicates a newly created
+  // child frame which does not have a beforunload handler.
+  FrameMsg_Navigate_Type::Value navigation_type = GetNavigationType(
+      frame_tree_node->current_url(),  // old_url
+      dest_url,                        // new_url
+      reload_type,                     // reload_type
+      entry,                           // entry
+      frame_entry,                     // frame_entry
+      is_same_document_history_load);  // is_same_document_history_load
+  bool is_same_document =
+      FrameMsg_Navigate_Type::IsSameDocument(navigation_type);
+  std::unique_ptr<NavigationRequest> scoped_request =
+      NavigationRequest::CreateBrowserInitiated(
+          frame_tree_node, dest_url, dest_referrer, frame_entry, entry,
+          navigation_type, previews_state, is_same_document_history_load,
+          is_history_navigation_in_new_child, post_body, navigation_start,
+          controller_);
+
 }
 
 }  // namespace content

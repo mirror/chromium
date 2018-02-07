@@ -84,22 +84,6 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       std::unique_ptr<NavigationHandleImpl> navigation_handle,
       bool was_within_same_document) {}
 
-  // Called by the NavigationController to cause the Navigator to navigate
-  // to the current pending entry. The NavigationController should be called
-  // back with RendererDidNavigate on success or DiscardPendingEntry on failure.
-  // The callbacks can be inside of this function, or at some future time.
-  //
-  // If this method returns false, then the navigation is discarded (equivalent
-  // to calling DiscardPendingEntry on the NavigationController).
-  //
-  // TODO(nasko): Remove this method from the interface, since Navigator and
-  // NavigationController know about each other. This will be possible once
-  // initialization of Navigator and NavigationController is properly done.
-  virtual bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
-                                      const FrameNavigationEntry& frame_entry,
-                                      ReloadType reload_type,
-                                      bool is_same_document_history_load);
-
   // Called on a newly created subframe during a history navigation. The browser
   // process looks up the corresponding FrameNavigationEntry for the new frame
   // navigates it in the correct process. Returns false if the
@@ -202,6 +186,19 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
  protected:
   friend class base::RefCounted<Navigator>;
   virtual ~Navigator() {}
+
+ private:
+  // Called by the NavigationController to cause the Navigator to navigate to
+  // |navigation_request|. The NavigationController should be called back with
+  // RendererDidNavigate on success or DiscardPendingEntry on failure. The
+  // callbacks can be inside of this function, or at some future time.
+  //
+  // Private because all callers should be in NavigationController, which is a
+  // friend of this class.
+  virtual void Navigate(std::unique_ptr<NavigationRequest> request,
+                        ReloadType reload_type,
+                        RestoreType restore_type,
+                        bool is_history_navigation_in_new_child) {}
 };
 
 }  // namespace content

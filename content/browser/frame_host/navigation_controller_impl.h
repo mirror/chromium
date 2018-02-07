@@ -205,6 +205,23 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // navigation failed due to an SSL error.
   void SetPendingNavigationSSLError(bool error);
 
+  bool NavigateNewChildFrame(RenderFrameHostImpl* render_frame_host,
+                             const GURL& default_url);
+  void NavigateSubframe(
+      RenderFrameHostImpl* render_frame_host,
+      const GURL& url,
+      bool is_renderer_initiated,
+      SiteInstance* source_site_instance,
+      const std::vector<GURL>& redirect_chain,
+      const Referrer& referrer,
+      ui::PageTransition page_transition,
+      const GlobalRequestID& transferred_global_request_id,
+      bool should_replace_current_entry,
+      const std::string& method,
+      scoped_refptr<network::ResourceRequestBody> post_body,
+      const std::string& extra_headers,
+      const base::Optional<std::string>& suggested_filename);
+
  private:
   friend class RestoreHelper;
 
@@ -217,7 +234,7 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
 
   // Used for identifying which frames need to navigate.
   using FrameLoadVector =
-      std::vector<std::pair<FrameTreeNode*, FrameNavigationEntry*>>;
+      std::vector<std::pair<FrameTreeNode*, NavigationRequest*>>;
 
   // Helper class to smooth out runs of duplicate timestamps while still
   // allowing time to jump backwards.
@@ -349,6 +366,16 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // Returns the navigation index that differs from the current entry by the
   // specified |offset|.  The index returned is not guaranteed to be valid.
   int GetIndexForOffset(int offset) const;
+
+  // TODO(clamy): Comments + appropriate parameters for these functions.
+  void NavigateToExistingEntry(NavigationEntryImpl* entry);
+  void NavigateToNewEntry();
+  void NavigateFrames();
+  void NavigateFrame(FrameTreeNode* frame_tree_node,
+                     std::unique_ptr<NavigationRequest> request);
+  void HandleRendererDebugURL();
+  std::unique_ptr<NavigationRequest> CreateNavigationRequestForFrame(
+      FrameTreeNode* frame_tree_node);
 
   // ---------------------------------------------------------------------------
 

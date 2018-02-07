@@ -57,10 +57,6 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
                    std::unique_ptr<NavigationHandleImpl> navigation_handle,
                    bool was_within_same_document) override;
-  bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
-                              const FrameNavigationEntry& frame_entry,
-                              ReloadType reload_type,
-                              bool is_same_document_history_load) override;
   bool NavigateNewChildFrame(RenderFrameHostImpl* render_frame_host,
                              const GURL& default_url) override;
   void RequestOpenURL(
@@ -113,33 +109,11 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
   friend class NavigatorTestWithBrowserSideNavigation;
   ~NavigatorImpl() override;
 
-  // Navigates to the given entry, which might be the pending entry (if
-  // |is_pending_entry| is true).  Private because all callers should use either
-  // NavigateToPendingEntry or NavigateToNewChildFrame.
-  bool NavigateToEntry(
-      FrameTreeNode* frame_tree_node,
-      const FrameNavigationEntry& frame_entry,
-      const NavigationEntryImpl& entry,
-      ReloadType reload_type,
-      bool is_same_document_history_load,
-      bool is_history_navigation_in_new_child,
-      bool is_pending_entry,
-      const scoped_refptr<network::ResourceRequestBody>& post_body);
-
-  // If needed, sends a BeforeUnload IPC to the renderer to ask it to execute
-  // the beforeUnload event. Otherwise, the navigation request will be started.
-  void RequestNavigation(
-      FrameTreeNode* frame_tree_node,
-      const GURL& dest_url,
-      const Referrer& dest_referrer,
-      const FrameNavigationEntry& frame_entry,
-      const NavigationEntryImpl& entry,
-      ReloadType reload_type,
-      PreviewsState previews_state,
-      bool is_same_document_history_load,
-      bool is_history_navigation_in_new_child,
-      const scoped_refptr<network::ResourceRequestBody>& post_body,
-      base::TimeTicks navigation_start);
+  // Navigator implementation.
+  void Navigate(std::unique_ptr<NavigationRequest> request,
+                ReloadType reload_type,
+                RestoreType restore_type,
+                bool is_history_navigation_in_new_child) override;
 
   void RecordNavigationMetrics(
       const LoadCommittedDetails& details,
