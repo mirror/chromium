@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2a7b3deb_d8b0dcf9",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "\u003e Right, I didn\u0027t feel like using a function starting with \"Unsafe\", but didn\u0027t find other alternatives.\n\u003e \n\u003e The passed in ContentToProxyIdMap is generated during painting the main frame -- where the content is embedded. \n\nTo be clear, this is done in any frame and not just the main frame, right?  If you have a page with nested iframes A(B(C)), then both A and B will have to do this step.  I didn\u0027t see a test for this case-- maybe it\u0027s worth adding that, as well as an A(B(A)) case?  Those have raised fun issues for us in the past.\n\n\u003e Since the actual content is remote, we can only record the render frame proxy routing id for the content. Since this is done in a renderer, we can not convert directly here.\n\u003e \n\u003e Before sending to compositor service, we need to know which actual render frame this content will be rendered. So we need to map the render frame proxy id to render frame (host) id (along with its render frame process id to be globally unique). \n\u003e \n\u003e In this way, when the actual content is rendered from a render frame in another process. It will be able to be associated the actual content to its embedder/holder.\n\nRight, the RenderFrame in the renderer process only knows the proxy ID.  We\u0027ve generally tried to avoid leaking the knowledge of proxies outside the content/ layer, though there\u0027s a few places they\u0027ve leaked through already (e.g., RenderFrameHost::GetFrameTreeNodeIdForRoutingId).  This is why I\u0027m looking to see if there\u0027s a place within content/ that can do the proxy ID -\u003e active frame ID conversion for us before this code in components/ ever sees it.\n\nIt\u0027s kind of tricky in this case because the IPC seems to go straight to chrome/browser/printing/print_preview_message_handler.cc (not to a handler in content/) and because it\u0027s a non-trivial feature-specific data structure.\n\nI don\u0027t see a great answer here, so let\u0027s try to expose a better API to use instead.  This seems like a cross between FromID and GetFrameTreeNodeIdForRoutingId in RenderFrameHost.  I\u0027ll suggest something like:\n\n// Returns the current RenderFrameHost corresponding to the |placeholder_routing_id| in the given |render_process_id|.  The returned RenderFrameHost will always be in a different process.  It may be null if the placeholder is not found in the given process, which may happen if the frame was recently deleted or swapped to |render_process_id| itself.\nstatic RenderFrameHost* RenderFrameHost::FromPlaceholderId(int render_process_id, int placeholder_routing_id);\n\nThe implementation would basically be a call to RenderFrameProxyHost::FromID, which is not otherwise exposed publicly.  (The term \"proxy\" also isn\u0027t really used in the content/public API, hence the placeholder terminology.)\n\nThis would be a good CL for introducing such an API, since it shows a good use case for it.",
+      "parentUuid": "1329d75a_5c049a28",
+      "revId": "20a8696878e43fabfdb184b8c14efae981d31cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebd9d953_b11e2005",
         "filename": "components/printing/browser/print_composite_client.h",
         "patchSetId": 46

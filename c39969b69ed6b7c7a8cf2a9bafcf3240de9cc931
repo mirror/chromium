@@ -2,6 +2,281 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbd6fff3_712cfd7a",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "minor nit: semicolon",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a17c7e_dc2e15bd",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "nit: Move this above OnDidPrintFrameContent to be consistent with the .h file and other IPC handler blocks.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0593efb9_c1742b79",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "(See my comments in the previous patchset.)",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656832a9_b9817eb7",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "nit: Drop \"frame\" and \"routing\" here, so that it says render process id.",
+      "range": {
+        "startLine": 78,
+        "startChar": 41,
+        "endLine": 78,
+        "endChar": 46
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c997802f_26fcf1db",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "nit: iframe (just to be consistent with other places in content).",
+      "range": {
+        "startLine": 353,
+        "startChar": 41,
+        "endLine": 353,
+        "endChar": 49
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570557be_c2121ac3",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "High level question: Is this skipped for same-process subframes?  What about the A(B(A)) case, where I suspect it\u0027s still used?\n\nIt feels like the granularity might be closer to widgets than frames if that\u0027s the case.  I\u0027m not sure if that makes things any easier in the code, though, so I\u0027m ok with keeping it frame-based if that\u0027s simpler.  We may want to update the comment to something like \"Requests printing a frame that is in a different process than its parent\" and call it PrintCrossProcessSubframe, though?",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc95eb2d_c29a670a",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "Is document_cookie an existing term in the printing logic?  I\u0027m finding it confusing vs document.cookie, which isn\u0027t an int.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed67db3_299b63f5",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "Please elaborate what document cookie is, since it\u0027s not clear in this context.",
+      "range": {
+        "startLine": 1720,
+        "startChar": 7,
+        "endLine": 1720,
+        "endChar": 22
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165df14c_b8017740",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "nit: Drop \"And\"",
+      "range": {
+        "startLine": 1720,
+        "startChar": 24,
+        "endLine": 1720,
+        "endChar": 27
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9418c96a_2c1830cf",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "This area is determined by the parent, right?  We wouldn\u0027t want an OOPIF to claim that it covers the whole page, for example.",
+      "range": {
+        "startLine": 1721,
+        "startChar": 3,
+        "endLine": 1721,
+        "endChar": 19
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea302f7_39308092",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "What is coordinate printing?  I\u0027m not familiar with that term, so it might not be clear to others.",
+      "range": {
+        "startLine": 557,
+        "startChar": 5,
+        "endLine": 557,
+        "endChar": 24
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568c90b0_46d7ffbd",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "nit: iframe",
+      "range": {
+        "startLine": 557,
+        "startChar": 43,
+        "endLine": 557,
+        "endChar": 51
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13146476_8110914a",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-02-07T00:54:11Z",
+      "side": 1,
+      "message": "Maybe it would be clearer to call this |subframe|?  That would distinguish whether we expect the parent frame or child frame to be passed (each of which could be anywhere in the tree).",
+      "range": {
+        "startLine": 566,
+        "startChar": 46,
+        "endLine": 566,
+        "endChar": 63
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0543db6_2f16f509",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 47
