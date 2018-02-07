@@ -38,6 +38,14 @@ class GFX_EXPORT SequentialIDGenerator {
 
   void ResetForTest();
 
+  // Tools for verifying that all of the ID's are active.
+  // |BeginTrackingReferences()| captures a snapshot of all numbers
+  // that are currently tracked.
+  void BeginTrackingReferences();
+  // Returns all numbers that have not been referenced (via a call to
+  // |GetGeneratedID()| since the last call to |BeginTrackingReferences()|
+  base::hash_set<uint32_t> GetUntrackedReferences();
+
  private:
   typedef base::hash_map<uint32_t, uint32_t> IDMap;
 
@@ -50,6 +58,8 @@ class GFX_EXPORT SequentialIDGenerator {
 
   const uint32_t min_id_;
   uint32_t min_available_id_;
+
+  base::hash_set<uint32_t> untracked_references_;
 
   DISALLOW_COPY_AND_ASSIGN(SequentialIDGenerator);
 };

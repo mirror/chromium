@@ -35,8 +35,10 @@ SequentialIDGenerator::~SequentialIDGenerator() {
 
 uint32_t SequentialIDGenerator::GetGeneratedID(uint32_t number) {
   IDMap::iterator find = number_to_id_.find(number);
-  if (find != number_to_id_.end())
+  if (find != number_to_id_.end()) {
+    untracked_references_.erase(find->first);
     return find->second;
+  }
 
   int id = GetNextAvailableID();
   number_to_id_.insert(std::make_pair(number, id));
@@ -77,6 +79,17 @@ void SequentialIDGenerator::UpdateNextAvailableIDAfterRelease(uint32_t id) {
     min_available_id_ = id;
     DCHECK_GE(min_available_id_, min_id_);
   }
+}
+
+void SequentialIDGenerator::BeginTrackingReferences() {
+  untracked_references_.clear();
+  for (auto i : number_to_id_) {
+    untracked_references_.insert(i.first);
+  }
+}
+
+base::hash_set<uint32_t> SequentialIDGenerator::GetUntrackedReferences() {
+  return untracked_references_;
 }
 
 }  // namespace ui
