@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65c37db_0f1fa4ad",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Let\u0027s return error if it\u0027s set to anything non-negative then.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7f2e9a_f6ffa426",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Other stream implementations allow overlapping read requests (i.e. you can issue another read request before the previous one completes), this one apparently doesn\u0027t. Let\u0027s be consistent with other stream implementations (we found having overlapping requests actually improves transfer rates greatly).",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c067c37e_30c19498",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "You already have it initialized inline at declaration.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a307e5_36bd34b3",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "add NOTREACHED()?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf61e64_a4ad1b78",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Are we quietly returning without ever invoking callback here? That\u0027s a bit rough...",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0e9478_08ec2826",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2b36ce_f032f2bb",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "is it ever true?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18ec4df_003312b7",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "use std::min()?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169e57b5_90ac11b5",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Rather than copying from the buffer allocated by stream to buffer allocated by client, perhaps just pass the client\u0027s buffer through here? Buffers are generally for passing around tiny structures as opposed to copying bytes.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decc63ad_def1d3c3",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "style: move break within {}",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546f3de9_1fd9b930",
+        "filename": "content/browser/devtools/protocol/devtools_download_item.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "I wonder whether we really should try to fulfill the amount of bytes reader requested. How about just returning the data immediately available?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579af49f_88d931c8",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this -- DevToolsDownloadItem has sequence_checker_ which will do the same in destructor. So perhaps the entire function could be inlined as lambda instead.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912651a7_a688bcf9",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Are you accessing downloads_by_guid_ both on UI and on the download task runner? This doesn\u0027t look good.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12efb22_88042a30",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "nit: drop this (no need to DCHECK() on pointers you\u0027re about to dereference)",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5666944f_ae0c3e72",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "style: here and below, s/{};/ {}/",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38b51fa_ac97f18a",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Having unique_ptr\u003c\u003e as a value type is quite confusing here, because you explicitly don\u0027t want unique_ptr to do its job and destroy the value automatically. So perhaps either keep raw DevToolsDownloadItem* or make it unique_ptr\u003cDevToolsDownloadItem,  OnTaskRunnerDeleter\u003e -- the latter will likely remove the need for explicit shutdown.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298d3cde_8ce149fd",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Note there may be more than one PageHandler attached to a given WebContents. Also, what happens when the session is terminated and page handler is gone?",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08665cfa_f1426ae6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 25
+      },
+      "lineNbr": 4953,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T01:44:36Z",
+      "side": 1,
+      "message": "Should this rather be in Network? Long-term, I think support for getting downloads as stream should perhaps be exposed consistently with getting bodies of network resources in general -- i.e. we should perhaps be able to indicate we want data as a stream in response to something like ResponseReceived.",
+      "revId": "c74ff0c534100211e4e94c7ff561b88c0b09b035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
