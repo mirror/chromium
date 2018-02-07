@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5e159865_73206817",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-07T01:05:54Z",
+      "side": 1,
+      "message": "The DCHECK is removed. Verified on device that it\u0027s never hit whether policy is specified or not. Thanks!",
+      "parentUuid": "e9ecbfbe_c87e9587",
+      "revId": "5c9ada0ec64ded91f030d12c43bd00962591c534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a0dfd64_fd65b46a",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
         "patchSetId": 12
