@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39657015_5e993688",
+        "filename": "ui/chromeos/ksv/views/bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T20:04:41Z",
+      "side": 1,
+      "message": "As mentioned in the other CL, inline the `constexpr kFoo` definitions in the local scopes (if they\u0027re not used in multiple functions. Keep them as constexprs.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "8ebc598c6626269c7ef1bdc4a4b98572c000d623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5430f0_65958532",
+        "filename": "ui/chromeos/ksv/views/bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T20:04:41Z",
+      "side": 1,
+      "message": "Add comment explaining what you are doing here.",
+      "revId": "8ebc598c6626269c7ef1bdc4a4b98572c000d623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5916c65e_01d9e455",
+        "filename": "ui/chromeos/ksv/views/bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T20:04:41Z",
+      "side": 1,
+      "message": "Do you need this include here?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "8ebc598c6626269c7ef1bdc4a4b98572c000d623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f0c4ea_51f35047",
+        "filename": "ui/chromeos/ksv/views/bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T20:04:41Z",
+      "side": 1,
+      "message": "Please document. What is a bubble view? the name bubble implies that it bubbles up on a particular event, such as click or hover. Is that the case?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "8ebc598c6626269c7ef1bdc4a4b98572c000d623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553fbb9b_3bd41431",
+        "filename": "ui/chromeos/ksv/views/bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T20:04:41Z",
+      "side": 1,
+      "message": "The comment below says that only one can be set at the same time. How do you enforce that? What happens when caller sets both? Which one has the priority to be displayed?\n\nThese questions merit that you add documentations to explain.\n\nHonestly, I would advice against this restriction, and instead make it possible to have both at the same time, and the client code should decide what to do. But here we can paint both\n\n+-------+\n| @ foo |  Icon + text\n+-------+\n\n+---+\n| @ |  Icon only\n+---+\n\n+-----+\n| foo |  Text only\n+-----+",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "8ebc598c6626269c7ef1bdc4a4b98572c000d623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
