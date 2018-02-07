@@ -196,7 +196,7 @@ void XRWebGLLayer::OnFrameEnd() {
     session()->device()->frameProvider()->SubmitWebGLLayer(this);
   } else if (session()->outputContext()) {
     ImageBitmap* image_bitmap =
-        ImageBitmap::Create(TransferToStaticBitmapImage());
+        ImageBitmap::Create(TransferToStaticBitmapImage(nullptr));
     session()->outputContext()->SetImage(image_bitmap);
   }
 }
@@ -210,8 +210,9 @@ void XRWebGLLayer::OnResize() {
   viewports_dirty_ = true;
 }
 
-scoped_refptr<StaticBitmapImage> XRWebGLLayer::TransferToStaticBitmapImage() {
-  return drawing_buffer_->TransferToStaticBitmapImage();
+scoped_refptr<StaticBitmapImage> XRWebGLLayer::TransferToStaticBitmapImage(
+    std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback) {
+  return drawing_buffer_->TransferToStaticBitmapImage(out_release_callback);
 }
 
 void XRWebGLLayer::Trace(blink::Visitor* visitor) {

@@ -316,7 +316,9 @@ void XRFrameProvider::SubmitWebGLLayer(XRWebGLLayer* layer) {
 
   frame_transport_->FramePreImage(webgl_context->ContextGL());
 
-  scoped_refptr<Image> image_ref = layer->TransferToStaticBitmapImage();
+  std::unique_ptr<viz::SingleReleaseCallback> image_release_callback;
+  scoped_refptr<Image> image_ref =
+      layer->TransferToStaticBitmapImage(&image_release_callback);
   if (!image_ref)
     return;
 
@@ -335,7 +337,8 @@ void XRFrameProvider::SubmitWebGLLayer(XRWebGLLayer* layer) {
   // recycled.
   frame_transport_->FrameSubmit(
       presentation_provider_.get(), webgl_context->ContextGL(), webgl_context,
-      std::move(image_ref), nullptr, frame_id_, needs_copy);
+      std::move(image_ref), std::move(image_release_callback), frame_id_,
+      needs_copy);
 
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
   // no-longer happen to this frame.
