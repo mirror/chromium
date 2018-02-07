@@ -54,7 +54,7 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
 
   void CreateShelfWidget(aura::Window* root);
   void ShutdownShelfWidget();
-  void DestroyShelfWidget();
+  void CloseShelfWidget();
 
   ShelfLayoutManager* shelf_layout_manager() const {
     return shelf_layout_manager_;

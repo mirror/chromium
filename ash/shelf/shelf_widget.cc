@@ -73,7 +73,8 @@ class ShelfWidget::DelegateView : public views::WidgetDelegate,
     default_last_focusable_child_ = default_last_focusable_child;
   }
 
-  // views::WidgetDelegateView:
+  // views::WidgetDelegate:
+  void DeleteDelegate() override { delete this; }
   views::Widget* GetWidget() override { return View::GetWidget(); }
   const views::Widget* GetWidget() const override { return View::GetWidget(); }
 
@@ -106,6 +107,8 @@ ShelfWidget::DelegateView::DelegateView(ShelfWidget* shelf_widget)
       focus_cycler_(nullptr),
       opaque_background_(ui::LAYER_SOLID_COLOR) {
   DCHECK(shelf_widget_);
+  set_owned_by_client();  // Deleted by DeleteDelegate().
+
   SetLayoutManager(std::make_unique<views::FillLayout>());
   set_allow_deactivate_on_esc(true);
   opaque_background_.SetBounds(GetLocalBounds());
@@ -217,8 +220,6 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
 ShelfWidget::~ShelfWidget() {
   // Must call Shutdown() before destruction.
   DCHECK(!status_area_widget_);
-  background_animator_.RemoveObserver(delegate_view_);
-  background_animator_.RemoveObserver(this);
   Shell::Get()->focus_cycler()->RemoveWidget(this);
   SetFocusCycler(nullptr);
   RemoveObserver(this);
@@ -304,7 +305,9 @@ void ShelfWidget::Shutdown() {
     status_area_widget_.reset();
   }
 
-  CloseNow();
+  // Don't need to update the shelf background during shutdown.
+  background_animator_.RemoveObserver(delegate_view_);
+  background_animator_.RemoveObserver(this);
 }
 
 void ShelfWidget::UpdateIconPositionForPanel(aura::Window* panel) {

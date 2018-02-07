@@ -102,7 +102,7 @@ void Shelf::ShutdownShelfWidget() {
     shelf_widget_->Shutdown();
 }
 
-void Shelf::DestroyShelfWidget() {
+void Shelf::CloseShelfWidget() {
   // May be called multiple times during shutdown.
   shelf_widget_.reset();
 }
