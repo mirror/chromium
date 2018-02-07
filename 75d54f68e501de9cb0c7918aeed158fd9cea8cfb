@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038b782a_de50697a",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-02-07T01:21:22Z",
+      "side": 1,
+      "message": "needs a removeEventListener, IMO",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "75d54f68e501de9cb0c7918aeed158fd9cea8cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
