@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0007850_02235f35",
+        "filename": "components/unzip_service/BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-07T21:54:01Z",
+      "side": 1,
+      "message": "Super nit, feel free to ignore. It\u0027s now 2018 :-)",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "a10f2042bd8627939b7a0c380d1ef94afb625625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1db074_159e4b81",
+        "filename": "components/update_client/action_runner.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-02-07T21:54:01Z",
+      "side": 1,
+      "message": "Nit: is this include needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "a10f2042bd8627939b7a0c380d1ef94afb625625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
