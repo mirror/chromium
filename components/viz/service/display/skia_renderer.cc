@@ -507,8 +507,8 @@ void SkiaRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
 
 void SkiaRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   if (IsSoftwareResource(quad->resource_id())) {
-    DrawUnsupportedQuad(quad);
-    return;
+    // DrawUnsupportedQuad(quad);
+    // return;
   }
 
   // TODO(skaslev): Add support for non-premultiplied alpha.
@@ -553,7 +553,12 @@ void SkiaRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   // |resource_provider_| can be NULL in resourceless software draws, which
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);
-  DCHECK(!IsSoftwareResource(quad->resource_id()));
+
+  if (IsSoftwareResource(quad->resource_id())) {
+    // DrawUnsupportedQuad(quad);
+    // return
+  }
+
   cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
                                                           quad->resource_id());
   if (!lock.sk_image())
