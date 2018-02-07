@@ -504,7 +504,7 @@ int OmniboxResultView::DrawRenderText(
     int x,
     int y,
     int max_width) const {
-  DCHECK(!render_text->text().empty());
+  // DCHECK(!render_text->text().empty());
 
   int right_x = x + max_width;
 
