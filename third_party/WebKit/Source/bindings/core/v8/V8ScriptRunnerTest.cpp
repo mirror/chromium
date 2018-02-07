@@ -123,31 +123,12 @@ TEST_F(V8ScriptRunnerTest, resourcelessShouldPass) {
   EXPECT_TRUE(CompileScript(scope.GetIsolate(), scope.GetScriptState(),
                             source_code, kV8CacheOptionsNone));
   EXPECT_TRUE(CompileScript(scope.GetIsolate(), scope.GetScriptState(),
-                            source_code, kV8CacheOptionsParse));
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), scope.GetScriptState(),
                             source_code, kV8CacheOptionsCode));
 }
 
 TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
   Resource* resource = CreateEmptyResource();
   EXPECT_FALSE(resource->CacheHandler());
-}
-
-TEST_F(V8ScriptRunnerTest, parseOption) {
-  V8TestingScope scope;
-  ScriptSourceCode source_code(nullptr, CreateResource(UTF8Encoding()));
-  EXPECT_TRUE(CompileScript(scope.GetIsolate(), scope.GetScriptState(),
-                            source_code, kV8CacheOptionsParse));
-  CachedMetadataHandler* cache_handler = source_code.CacheHandler();
-  EXPECT_TRUE(
-      cache_handler->GetCachedMetadata(TagForParserCache(cache_handler)));
-  EXPECT_FALSE(
-      cache_handler->GetCachedMetadata(TagForCodeCache(cache_handler)));
-  // The cached data is associated with the encoding.
-  ScriptResource* another_resource =
-      CreateResource(UTF16LittleEndianEncoding());
-  EXPECT_FALSE(cache_handler->GetCachedMetadata(
-      TagForParserCache(another_resource->CacheHandler())));
 }
 
 TEST_F(V8ScriptRunnerTest, codeOption) {
