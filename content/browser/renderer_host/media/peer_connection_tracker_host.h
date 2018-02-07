@@ -45,6 +45,7 @@ class PeerConnectionTrackerHost : public BrowserMessageFilter,
   // Handlers for peer connection messages coming from the renderer.
   void OnAddPeerConnection(const PeerConnectionInfo& info);
   void OnRemovePeerConnection(int lid);
+  void OnStopPeerConnection(int lid);
   void OnUpdatePeerConnection(
       int lid, const std::string& type, const std::string& value);
   void OnAddStats(int lid, const base::ListValue& value);
