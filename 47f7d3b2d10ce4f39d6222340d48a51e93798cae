@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dec4e83_9c2a4fcb",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T15:17:59Z",
+      "side": 1,
+      "message": "Done. Neat!",
+      "parentUuid": "3bf0fd5b_a6f7eba0",
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd1317a_ae197fb3",
         "filename": "extensions/browser/api/socket/socket_api.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b2309f_218d2090",
+        "filename": "extensions/browser/api/socket/socket_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T15:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd1317a_ae197fb3",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 50
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5d930515_cfc6617f",
+        "filename": "extensions/browser/api/socket/udp_socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T15:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a632bb2_09c6ddfe",
+      "range": {
+        "startLine": 344,
+        "startChar": 32,
+        "endLine": 344,
+        "endChar": 45
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288a956e_bccc9643",
         "filename": "extensions/browser/api/sockets_udp/sockets_udp_api.cc",
         "patchSetId": 4
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "3ff8840f_7889c780",
+        "filename": "extensions/browser/api/sockets_udp/sockets_udp_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T15:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288a956e_bccc9643",
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94ce9488_dbcd3fae",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 4
@@ -93,6 +177,30 @@
       "writtenOn": "2018-02-06T22:56:03Z",
       "side": 1,
       "message": "This cast should be implicit.",
+      "range": {
+        "startLine": 309,
+        "startChar": 39,
+        "endLine": 309,
+        "endChar": 58
+      },
+      "revId": "47f7d3b2d10ce4f39d6222340d48a51e93798cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630846f8_3be42a4f",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T15:17:59Z",
+      "side": 1,
+      "message": "Unfortunately, net::IOBuffer has a deprecated net::IOBuffer(int) constructor. net::IOBuffer(size_t) is prefered. The compiler complains that there is ambiguity in choosing which constructor to use when we are passing uint32_t here.",
+      "parentUuid": "94ce9488_dbcd3fae",
       "range": {
         "startLine": 309,
         "startChar": 39,
