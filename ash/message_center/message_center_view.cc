@@ -52,10 +52,6 @@ using message_center::NotificationList;
 namespace ash {
 
 // static
-const SkColor MessageCenterView::kBackgroundColor =
-    SkColorSetARGB(0xF2, 0xf0, 0xf0, 0xf2);
-
-// static
 const size_t MessageCenterView::kMaxVisibleNotifications = 100;
 
 // static
@@ -99,7 +95,11 @@ class EmptyNotificationView : public views::View {
     label->SetFontList(
         gfx::FontList().DeriveWithWeight(gfx::Font::Weight::MEDIUM));
     label->SetHorizontalAlignment(gfx::ALIGN_CENTER);
+    label->SetSubpixelRenderingEnabled(false);
     AddChildView(label);
+
+    SetPaintToLayer();
+    layer()->SetFillsBoundsOpaquely(false);
   }
 
   // views::View:
@@ -144,8 +144,6 @@ MessageCenterView::MessageCenterView(
 
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
-  if (!switches::IsSidebarEnabled())
-    SetBackground(views::CreateSolidBackground(kBackgroundColor));
   SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
   button_bar_ = new MessageCenterButtonBar(
@@ -155,13 +153,9 @@ MessageCenterView::MessageCenterView(
   const int button_height = button_bar_->GetPreferredSize().height();
 
   scroller_ = new MessageCenterScrollView();
-  if (!switches::IsSidebarEnabled()) {
-    scroller_->SetBackgroundColor(kBackgroundColor);
-  } else {
-    // Need to set the transparent background explicitly, since ScrollView has
-    // set the default opaque background color.
-    scroller_->SetBackgroundColor(SK_ColorTRANSPARENT);
-  }
+  // Need to set the transparent background explicitly, since ScrollView has
+  // set the default opaque background color.
+  scroller_->SetBackgroundColor(SK_ColorTRANSPARENT);
   scroller_->ClipHeightTo(kMinScrollViewHeight, max_height - button_height);
   scroller_->SetVerticalScrollBar(new views::OverlayScrollBar(false));
   scroller_->SetHorizontalScrollBar(new views::OverlayScrollBar(true));
@@ -190,9 +184,9 @@ MessageCenterView::MessageCenterView(
   settings_view_->SetVisible(mode_ == Mode::SETTINGS);
   no_notifications_view_->SetVisible(mode_ == Mode::NO_NOTIFICATIONS);
 
+  AddChildView(no_notifications_view_);
   AddChildView(scroller_);
   AddChildView(settings_view_);
-  AddChildView(no_notifications_view_);
   AddChildView(button_bar_);
 
   if (switches::IsSidebarEnabled())
