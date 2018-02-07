@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b0f932_7cdcbe5a",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T20:25:21Z",
+      "side": 1,
+      "message": "Where does this 160 come from, and why are we counting quads smaller than it?",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48a780c_07d6c201",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T20:25:21Z",
+      "side": 1,
+      "message": "Do you mean not drawn? This is area that was skipped right?",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8807e661_76924792",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T20:25:21Z",
+      "side": 1,
+      "message": "Maybe a (total area saved / total area drawn) would be useful? What will we understand from these 2 areas when they are separate?",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c01cc53_a383abff",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T20:25:21Z",
+      "side": 1,
+      "message": "This is the same as origin_rect !\u003d visible_rect, I think, which is easier to think about?",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
