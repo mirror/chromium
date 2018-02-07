@@ -23,15 +23,17 @@ class ContentCapabilitiesManifestTest : public ManifestTest {
   }
 };
 
-TEST_F(ContentCapabilitiesManifestTest, RejectDomainWildcards) {
-  scoped_refptr<Extension> extension(LoadAndExpectWarning(
-      "content_capabilities_domain_wildcard.json",
-      manifest_errors::kInvalidContentCapabilitiesMatchOrigin));
-  const ContentCapabilitiesInfo& info = ContentCapabilitiesInfo::Get(
-      extension.get());
-  // Make sure the wildcard is not included in the pattern set.
-  EXPECT_FALSE(info.url_patterns.MatchesURL(GURL("https://bar.example.com/")));
-  EXPECT_TRUE(info.url_patterns.MatchesURL(GURL("https://foo.example.com/")));
+TEST_F(ContentCapabilitiesManifestTest, AllowSubdomainWildcards) {
+  scoped_refptr<Extension> extension(
+      LoadAndExpectSuccess("content_capabilities_subdomain_wildcard.json"));
+  const ContentCapabilitiesInfo& info =
+      ContentCapabilitiesInfo::Get(extension.get());
+  // Make sure the wildcard subdomain is included in the pattern set.
+  EXPECT_TRUE(info.url_patterns.MatchesURL(GURL("https://example.com/")));
+  EXPECT_TRUE(info.url_patterns.MatchesURL(GURL("https://bar.example.com/")));
+  EXPECT_TRUE(
+      info.url_patterns.MatchesURL(GURL("https://foo.bar.example.com/")));
+  EXPECT_FALSE(info.url_patterns.MatchesURL(GURL("https://chromium.org/")));
 }
 
 TEST_F(ContentCapabilitiesManifestTest, RejectedAllHosts) {
@@ -42,6 +44,19 @@ TEST_F(ContentCapabilitiesManifestTest, RejectedAllHosts) {
       extension.get());
   // Make sure the wildcard is not included in the pattern set.
   EXPECT_FALSE(info.url_patterns.MatchesURL(GURL("https://nonspecific.com/")));
+  EXPECT_TRUE(info.url_patterns.MatchesURL(GURL("https://example.com/")));
+}
+
+TEST_F(ContentCapabilitiesManifestTest, RejectedETLDWildcard) {
+  scoped_refptr<Extension> extension(LoadAndExpectWarning(
+      "content_capabilities_all_hosts.json",
+      manifest_errors::kInvalidContentCapabilitiesMatchOrigin));
+  const ContentCapabilitiesInfo& info = ContentCapabilitiesInfo::Get(
+      extension.get());
+  // Make sure the wildcard is not included in the pattern set.
+  EXPECT_FALSE(info.url_patterns.MatchesURL(GURL("https://example.co.uk/")));
+  EXPECT_FALSE(
+      info.url_patterns.MatchesURL(GURL("https://example.appspot.com/")));
   EXPECT_TRUE(info.url_patterns.MatchesURL(GURL("https://example.com/")));
 }
 

@@ -81,10 +81,10 @@ bool ContentCapabilitiesHandler::Parse(Extension* extension,
     return false;
   }
 
-  // Filter wildcard URL patterns and emit warnings for them.
+  // Filter URL patterns that imply all hosts and emit warnings for them.
   std::set<URLPattern> valid_url_patterns;
   for (const URLPattern& pattern : potential_url_patterns) {
-    if (pattern.match_subdomains() || pattern.ImpliesAllHosts()) {
+    if (pattern.ImpliesAllHosts()) {
       extension->AddInstallWarning(InstallWarning(
           errors::kInvalidContentCapabilitiesMatchOrigin));
     } else {
