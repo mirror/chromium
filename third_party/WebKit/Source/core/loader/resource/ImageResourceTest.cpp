@@ -48,6 +48,7 @@
 #include "platform/loader/testing/MockFetchContext.h"
 #include "platform/loader/testing/MockResourceClient.h"
 #include "platform/network/http_names.h"
+#include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/test/fake_web_task_runner.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/ScopedMockedURL.h"
@@ -60,6 +61,7 @@
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -354,7 +356,8 @@ TEST(ImageResourceTest, MultipartImage) {
 
   // Emulate starting a real load, but don't expect any "real"
   // WebURLLoaderClient callbacks.
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      test_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetIdentifier(CreateUniqueIdentifier());
   fetcher->StartLoad(image_resource);
 
@@ -438,7 +441,8 @@ TEST(ImageResourceTest, BitmapMultipartImage) {
   KURL test_url(kTestURL);
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
   ImageResource* image_resource =
-      ImageResource::Create(ResourceRequest(test_url));
+      ImageResource::Create(ResourceRequest(test_url),
+                            scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetIdentifier(CreateUniqueIdentifier());
   fetcher->StartLoad(image_resource);
 
@@ -475,7 +479,8 @@ TEST(ImageResourceTest, CancelOnRemoveObserver) {
   task_runner->SetTime(1);
 
   // Emulate starting a real load.
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      test_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetIdentifier(CreateUniqueIdentifier());
 
   fetcher->StartLoad(image_resource);
@@ -526,7 +531,8 @@ TEST(ImageResourceTest, CancelWithImageAndFinishObserver) {
   ResourceFetcher* fetcher = CreateFetcher();
 
   // Emulate starting a real load.
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      test_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetIdentifier(CreateUniqueIdentifier());
 
   fetcher->StartLoad(image_resource);
@@ -556,7 +562,8 @@ TEST(ImageResourceTest, CancelWithImageAndFinishObserver) {
 }
 
 TEST(ImageResourceTest, DecodedDataRemainsWhileHasClients) {
-  ImageResource* image_resource = ImageResource::CreateForTest(NullURL());
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      NullURL(), scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -597,7 +604,8 @@ TEST(ImageResourceTest, DecodedDataRemainsWhileHasClients) {
 }
 
 TEST(ImageResourceTest, UpdateBitmapImages) {
-  ImageResource* image_resource = ImageResource::CreateForTest(NullURL());
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      NullURL(), scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -635,7 +643,8 @@ class ImageResourceReloadTest
 TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderAfterFinished) {
   KURL test_url(kTestURL);
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      test_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -683,7 +692,8 @@ TEST_P(ImageResourceReloadTest,
        ReloadIfLoFiOrPlaceholderAfterFinishedWithOldHeaders) {
   KURL test_url(kTestURL);
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      test_url, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -733,7 +743,8 @@ TEST_P(ImageResourceReloadTest,
   ResourceRequest request(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
   request.SetFetchCredentialsMode(network::mojom::FetchCredentialsMode::kOmit);
-  ImageResource* image_resource = ImageResource::Create(request);
+  ImageResource* image_resource = ImageResource::Create(
+      request, scheduler::GetSingleThreadTaskRunnerForTesting());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -779,7 +790,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderViaResourceFetcher) {
   ResourceRequest request = ResourceRequest(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
   FetchParameters fetch_params(request);
-  ImageResource* image_resource = ImageResource::Fetch(fetch_params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      fetch_params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   ImageResourceContent* content = image_resource->GetContent();
 
   std::unique_ptr<MockImageResourceObserver> observer =
@@ -821,7 +833,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderBeforeResponse) {
   FetchParameters fetch_params(request);
   ResourceFetcher* fetcher = CreateFetcher();
 
-  ImageResource* image_resource = ImageResource::Fetch(fetch_params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      fetch_params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -853,7 +866,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderDuringResponse) {
   FetchParameters fetch_params(request);
   ResourceFetcher* fetcher = CreateFetcher();
 
-  ImageResource* image_resource = ImageResource::Fetch(fetch_params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      fetch_params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -902,7 +916,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderForPlaceholder) {
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kAllowPlaceholder,
             params.GetPlaceholderImageRequestType());
   std::unique_ptr<MockImageResourceObserver> observer =
@@ -927,14 +942,16 @@ TEST_P(ImageResourceReloadTest, ReloadLoFiImagesWithDuplicateURLs) {
   FetchParameters placeholder_params{ResourceRequest(test_url)};
   placeholder_params.SetAllowImagePlaceholder();
   ImageResource* placeholder_resource =
-      ImageResource::Fetch(placeholder_params, fetcher);
+      ImageResource::Fetch(placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kAllowPlaceholder,
             placeholder_params.GetPlaceholderImageRequestType());
   EXPECT_TRUE(placeholder_resource->ShouldShowPlaceholder());
 
   FetchParameters full_image_params{ResourceRequest(test_url)};
   ImageResource* full_image_resource =
-      ImageResource::Fetch(full_image_params, fetcher);
+      ImageResource::Fetch(full_image_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kDisallowPlaceholder,
             full_image_params.GetPlaceholderImageRequestType());
   EXPECT_FALSE(full_image_resource->ShouldShowPlaceholder());
@@ -955,7 +972,8 @@ INSTANTIATE_TEST_CASE_P(/* no prefix */,
 
 TEST(ImageResourceTest, SVGImage) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -972,7 +990,8 @@ TEST(ImageResourceTest, SVGImage) {
 
 TEST(ImageResourceTest, SVGImageWithSubresource) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1017,7 +1036,8 @@ TEST(ImageResourceTest, SVGImageWithSubresource) {
 
 TEST(ImageResourceTest, SuccessfulRevalidationJpeg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1054,7 +1074,8 @@ TEST(ImageResourceTest, SuccessfulRevalidationJpeg) {
 
 TEST(ImageResourceTest, SuccessfulRevalidationSvg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1087,7 +1108,8 @@ TEST(ImageResourceTest, SuccessfulRevalidationSvg) {
 
 TEST(ImageResourceTest, FailedRevalidationJpegToJpeg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1122,7 +1144,8 @@ TEST(ImageResourceTest, FailedRevalidationJpegToJpeg) {
 
 TEST(ImageResourceTest, FailedRevalidationJpegToSvg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1156,7 +1179,8 @@ TEST(ImageResourceTest, FailedRevalidationJpegToSvg) {
 
 TEST(ImageResourceTest, FailedRevalidationSvgToJpeg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1190,7 +1214,8 @@ TEST(ImageResourceTest, FailedRevalidationSvgToJpeg) {
 
 TEST(ImageResourceTest, FailedRevalidationSvgToSvg) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1224,7 +1249,8 @@ TEST(ImageResourceTest, FailedRevalidationSvgToSvg) {
 
 TEST(ImageResourceTest, Prune) {
   KURL url("http://127.0.0.1:8000/foo");
-  ImageResource* image_resource = ImageResource::CreateForTest(url);
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      url, scheduler::GetSingleThreadTaskRunnerForTesting());
 
   ReceiveResponse(image_resource, url, "image/jpeg",
                   reinterpret_cast<const char*>(kJpegImage),
@@ -1257,7 +1283,8 @@ TEST(ImageResourceTest, CancelOnDecodeError) {
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
-  ImageResource* image_resource = ImageResource::Fetch(params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1283,7 +1310,8 @@ TEST(ImageResourceTest, DecodeErrorWithEmptyBody) {
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
-  ImageResource* image_resource = ImageResource::Fetch(params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1315,7 +1343,8 @@ TEST(ImageResourceTest, PartialContentWithoutDimensions) {
   resource_request.SetHTTPHeaderField("range", "bytes=0-2");
   FetchParameters params(resource_request);
   ResourceFetcher* fetcher = CreateFetcher();
-  ImageResource* image_resource = ImageResource::Fetch(params, fetcher);
+  ImageResource* image_resource = ImageResource::Fetch(
+      params, fetcher, scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1355,7 +1384,9 @@ TEST(ImageResourceTest, FetchDisallowPlaceholder) {
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
 
   FetchParameters params{ResourceRequest(test_url)};
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kDisallowPlaceholder,
             params.GetPlaceholderImageRequestType());
   std::unique_ptr<MockImageResourceObserver> observer =
@@ -1371,7 +1402,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderDataURL) {
                              sizeof(kJpegImage)));
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kDisallowPlaceholder,
             params.GetPlaceholderImageRequestType());
   EXPECT_EQ(g_null_atom,
@@ -1386,7 +1419,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPostRequest) {
   resource_request.SetHTTPMethod(HTTPNames::POST);
   FetchParameters params(resource_request);
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kDisallowPlaceholder,
             params.GetPlaceholderImageRequestType());
   EXPECT_EQ(g_null_atom,
@@ -1403,7 +1438,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderExistingRangeHeader) {
   resource_request.SetHTTPHeaderField("range", "bytes=128-255");
   FetchParameters params(resource_request);
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kDisallowPlaceholder,
             params.GetPlaceholderImageRequestType());
   EXPECT_EQ("bytes=128-255",
@@ -1419,7 +1456,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderSuccessful) {
 
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kAllowPlaceholder,
             params.GetPlaceholderImageRequestType());
   std::unique_ptr<MockImageResourceObserver> observer =
@@ -1435,7 +1474,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderUnsuccessful) {
 
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kAllowPlaceholder,
             params.GetPlaceholderImageRequestType());
   EXPECT_EQ("bytes=0-2047",
@@ -1477,7 +1518,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderUnsuccessfulClientLoFi) {
   request.SetPreviewsState(WebURLRequest::kClientLoFiOn);
   FetchParameters params{request};
   params.SetAllowImagePlaceholder();
-  ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
+  ImageResource* image_resource =
+      ImageResource::Fetch(params, CreateFetcher(),
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   EXPECT_EQ(FetchParameters::kAllowPlaceholder,
             params.GetPlaceholderImageRequestType());
   EXPECT_EQ("bytes=0-2047",
@@ -1538,7 +1581,8 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPartialContentWithoutDimensions) {
 
     params.SetAllowImagePlaceholder();
     ImageResource* image_resource =
-        ImageResource::Fetch(params, CreateFetcher());
+        ImageResource::Fetch(params, CreateFetcher(),
+                             scheduler::GetSingleThreadTaskRunnerForTesting());
     EXPECT_EQ(FetchParameters::kAllowPlaceholder,
               params.GetPlaceholderImageRequestType());
     EXPECT_EQ("bytes=0-2047",
@@ -1591,18 +1635,21 @@ TEST(ImageResourceTest, FetchAllowPlaceholderThenDisallowPlaceholder) {
   FetchParameters placeholder_params{ResourceRequest(test_url)};
   placeholder_params.SetAllowImagePlaceholder();
   ImageResource* image_resource =
-      ImageResource::Fetch(placeholder_params, fetcher);
+      ImageResource::Fetch(placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
   FetchParameters non_placeholder_params{ResourceRequest(test_url)};
   ImageResource* image_resource2 =
-      ImageResource::Fetch(non_placeholder_params, fetcher);
+      ImageResource::Fetch(non_placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer2 =
       MockImageResourceObserver::Create(image_resource2->GetContent());
 
   ImageResource* image_resource3 =
-      ImageResource::Fetch(non_placeholder_params, fetcher);
+      ImageResource::Fetch(non_placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer3 =
       MockImageResourceObserver::Create(image_resource3->GetContent());
 
@@ -1641,7 +1688,8 @@ TEST(ImageResourceTest,
   FetchParameters placeholder_params{ResourceRequest(test_url)};
   placeholder_params.SetAllowImagePlaceholder();
   ImageResource* image_resource =
-      ImageResource::Fetch(placeholder_params, fetcher);
+      ImageResource::Fetch(placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1650,12 +1698,14 @@ TEST(ImageResourceTest,
 
   FetchParameters non_placeholder_params{ResourceRequest(test_url)};
   ImageResource* image_resource2 =
-      ImageResource::Fetch(non_placeholder_params, fetcher);
+      ImageResource::Fetch(non_placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer2 =
       MockImageResourceObserver::Create(image_resource2->GetContent());
 
   ImageResource* image_resource3 =
-      ImageResource::Fetch(non_placeholder_params, fetcher);
+      ImageResource::Fetch(non_placeholder_params, fetcher,
+                           scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> observer3 =
       MockImageResourceObserver::Create(image_resource3->GetContent());
 
@@ -1688,7 +1738,8 @@ TEST(ImageResourceTest, FetchAllowPlaceholderFullResponseDecodeSuccess) {
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
     ImageResource* image_resource =
-        ImageResource::Fetch(params, CreateFetcher());
+        ImageResource::Fetch(params, CreateFetcher(),
+                             scheduler::GetSingleThreadTaskRunnerForTesting());
     EXPECT_EQ(FetchParameters::kAllowPlaceholder,
               params.GetPlaceholderImageRequestType());
     EXPECT_EQ("bytes=0-2047",
@@ -1746,7 +1797,8 @@ TEST(ImageResourceTest,
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
     ImageResource* image_resource =
-        ImageResource::Fetch(params, CreateFetcher());
+        ImageResource::Fetch(params, CreateFetcher(),
+                             scheduler::GetSingleThreadTaskRunnerForTesting());
     EXPECT_EQ(FetchParameters::kAllowPlaceholder,
               params.GetPlaceholderImageRequestType());
     EXPECT_EQ("bytes=0-2047",
@@ -1778,7 +1830,8 @@ TEST(ImageResourceTest,
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
     ImageResource* image_resource =
-        ImageResource::Fetch(params, CreateFetcher());
+        ImageResource::Fetch(params, CreateFetcher(),
+                             scheduler::GetSingleThreadTaskRunnerForTesting());
     EXPECT_EQ(FetchParameters::kAllowPlaceholder,
               params.GetPlaceholderImageRequestType());
     EXPECT_EQ("bytes=0-2047",
@@ -1811,7 +1864,9 @@ TEST(ImageResourceTest, PeriodicFlushTest) {
       platform;
   KURL test_url(kTestURL);
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
-  ImageResource* image_resource = ImageResource::CreateForTest(test_url);
+  scheduler::RendererScheduler* scheduler = platform->GetRendererScheduler();
+  ImageResource* image_resource =
+      ImageResource::CreateForTest(test_url, scheduler->DefaultTaskRunner());
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
 
@@ -1892,7 +1947,8 @@ TEST(ImageResourceTest, PeriodicFlushTest) {
 }
 
 TEST(ImageResourceTest, DeferredInvalidation) {
-  ImageResource* image_resource = ImageResource::CreateForTest(NullURL());
+  ImageResource* image_resource = ImageResource::CreateForTest(
+      NullURL(), scheduler::GetSingleThreadTaskRunnerForTesting());
   std::unique_ptr<MockImageResourceObserver> obs =
       MockImageResourceObserver::Create(image_resource->GetContent());
 
@@ -1939,7 +1995,8 @@ class ImageResourceCounterTest : public ::testing::Test {
     }
 
     // Fetch the ImageResource.
-    ImageResource::Fetch(fetch_params, fetcher);
+    ImageResource::Fetch(fetch_params, fetcher,
+                         scheduler::GetSingleThreadTaskRunnerForTesting());
     task_runner->RunUntilIdle();
   }
 

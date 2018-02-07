@@ -116,7 +116,10 @@ ImageResourceContent* ImageResourceContent::Fetch(FetchParameters& params,
                                                   ResourceFetcher* fetcher) {
   // TODO(hiroshige): Remove direct references to ImageResource by making
   // the dependencies around ImageResource and ImageResourceContent cleaner.
-  ImageResource* resource = ImageResource::Fetch(params, fetcher);
+  // TODO(hajimehoshi): Replace ThreadTaskRunnerHandle::Get() with per-frame
+  // task runner.
+  ImageResource* resource = ImageResource::Fetch(
+      params, fetcher, base::ThreadTaskRunnerHandle::Get());
   if (!resource)
     return nullptr;
   return resource->GetContent();
