@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47ecd6b_2d574d13",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T19:00:42Z",
+      "side": 1,
+      "message": "Nit: constexpr?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "783f0f4569889575e11f42a54329d37909036d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988b328c_22d78da5",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T19:00:42Z",
+      "side": 1,
+      "message": "Nit: I believe you can do\nfor (const auto\u0026 enc_types : kEncryptionTypes)",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 64
+      },
+      "revId": "783f0f4569889575e11f42a54329d37909036d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98fc8ee_eb85e0e1",
+        "filename": "chromeos/login/auth/authpolicy_login_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2018-02-07T19:00:42Z",
+      "side": 1,
+      "message": "Did you run your tests? ;-)",
+      "range": {
+        "startLine": 62,
+        "startChar": 52,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "783f0f4569889575e11f42a54329d37909036d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
