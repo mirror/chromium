@@ -39,6 +39,40 @@
       "revId": "6705be968b0e1566cb06dd76c1e73b3940aacac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aefaa7d_965053d5",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T11:46:19Z",
+      "side": 1,
+      "message": "The member names here tend to follow the convention of using the Web IDL name of the type followed by \"Member\", so this should be \"testEnumOrNullOrTestEnumSequenceMember\".",
+      "revId": "6705be968b0e1566cb06dd76c1e73b3940aacac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b396b878_c3faa31f",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T11:46:19Z",
+      "side": 1,
+      "message": "And this one should be \"testEnumOrTestEnumOrNullSequenceMember\".",
+      "revId": "6705be968b0e1566cb06dd76c1e73b3940aacac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
