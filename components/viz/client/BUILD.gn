@@ -17,6 +17,8 @@ viz_component("client") {
     "hit_test_data_provider.h",
     "local_surface_id_provider.cc",
     "local_surface_id_provider.h",
+    "texture_allocation.cc",
+    "texture_allocation.h",
   ]
 
   defines = [ "VIZ_CLIENT_IMPLEMENTATION" ]

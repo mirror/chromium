@@ -4,12 +4,16 @@ include_rules = [
   "+cc",
   "-cc/blink",
   "-cc/test",
+  "+components/viz/common",
   "-components/viz/common/features.h",
   "-components/viz/common/switches.h",
-  "+components/viz/client",
+  "+gpu/command_buffer/client",
+  "+gpu/command_buffer/common",
+  "+gpu/GLES2/gl2extchromium.h",
   "+mojo/public/cpp/bindings",
   "+mojo/public/cpp/system",
   "+services/viz/public/interfaces",
+  "+third_party/khronos/GLES2/gl2.h",
 ]
 
 specific_include_rules = {
