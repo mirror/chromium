@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd3594c3_b68979ff",
+        "filename": "chromecast/media/cma/pipeline/stream_decryptor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2018-02-07T06:21:43Z",
+      "side": 1,
+      "message": "I would prefer to have a callback once a decrypted buffer is ready, instead of polling. A delegate interface might be nice:\n\n// All methods and delegate methods are called on the same thread.\nclass StreamDecryptor {\n  class Delegate {\n   virtual void OnDecryptedBuffer(scoped_refptr\u003cDecoderBufferBase\u003e buffer) \u003d 0;\n   virtual void OnDecryptionError() \u003d 0;\n   virtual void CanDecryptMoreData() \u003d 0;\n  };\n\n  virtual void Initialize(Delegate* delegate) \u003d 0;\n\n  // The delegate\u0027s CanDecryptMoreData() method will be called once\n  // the decryptor is ready to accept another buffer.\n  virtual void Decrypt(scoped_refptr\u003cDecoderBufferBase\u003e buffer) \u003d 0;\n};",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "2439b8de9bccb127b7b919865f5650b25bcc4b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
