@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec3a800d_b597905b",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "combine the two if (enable_cros_assistant) blocks.",
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374766bd_7fdbcbe6",
+        "filename": "ash/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "chromeos/services/public",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b643e6ad_c7c26c66",
+        "filename": "ash/voice_interaction/voice_interaction_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "We should probably not overload VIC since we will need to support both the new and old assistant at the same time.  It\u0027s cleaner to have a new class for new assistant and leave the old code alone.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9536ff_d8015e36",
+        "filename": "ash/voice_interaction/voice_interaction_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "when the feature is off, the observer should not be registered.",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15c9521_6f69e20f",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "update the comment. or why we only used in classic ash.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efb368c_c2ad6a16",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "v1 has no value and v2 has no value would return true, seems strange.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19776798_59f3dfbd",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "Let\u0027s not support multi users for now.  It has bigger implications.  Let\u0027s start with only primary profile.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81eb2e6b_0ef45616",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "We also need to call this before expiration, right?",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 19
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b59d35_17e3740b",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "\"RefreshToken\" has special meaning.  Let\u0027s call it something else, e.g. UpdateAccessToken",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 26
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3604de_5655b57b",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "we need to check if the bind request failed, right?",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d4740e_961bb0b3",
+        "filename": "chromeos/services/assistant/service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T01:01:20Z",
+      "side": 1,
+      "message": "We need to retry here based on the actual error.  You don\u0027t have to do it in this cl but need to add a TODO",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 3
+      },
+      "revId": "d45de8f1032273db8947409988ed44878f9e2b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
