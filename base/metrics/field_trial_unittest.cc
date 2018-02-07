@@ -1128,32 +1128,43 @@ TEST(FieldTrialDeathTest, OneTimeRandomizedTrialWithoutFieldTrialList) {
   EXPECT_DEATH_IF_SUPPORTED(
       FieldTrialList::FactoryGetFieldTrial(
           "OneTimeRandomizedTrialWithoutFieldTrialList", 100, kDefaultGroupName,
-          base::FieldTrialList::kNoExpirationYear, 1, 1,
-          base::FieldTrial::ONE_TIME_RANDOMIZED, nullptr),
+          FieldTrialList::kNoExpirationYear, 1, 1,
+          FieldTrial::ONE_TIME_RANDOMIZED, nullptr),
       "");
 }
 
-#if defined(OS_WIN)
 TEST(FieldTrialListTest, TestCopyFieldTrialStateToFlags) {
-  base::FieldTrialList field_trial_list(
-      std::make_unique<base::MockEntropyProvider>());
-  test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.Init();
+  constexpr char kFieldTrialHandleSwitch[] = "test-field-trial-handle";
+  constexpr char kEnableFeaturesSwitch[] = "test-enable-features";
+  constexpr char kDisableFeaturesSwitch[] = "test-disable-features";
 
-  base::FieldTrialList::CreateFieldTrial("Trial1", "Group1");
-  base::FilePath test_file_path = base::FilePath(FILE_PATH_LITERAL("Program"));
-  base::CommandLine cmd_line = base::CommandLine(test_file_path);
-  const char field_trial_handle[] = "test-field-trial-handle";
-  const char enable_features_switch[] = "test-enable-features";
-  const char disable_features_switch[] = "test-disable-features";
+  FieldTrialList field_trial_list(std::make_unique<MockEntropyProvider>());
+
+  std::unique_ptr<FeatureList> feature_list(new FeatureList);
+  feature_list->InitializeFromCommandLine("A,B", "C");
+
+  FieldTrial* trial = FieldTrialList::CreateFieldTrial("Trial1", "Group1");
+  feature_list->RegisterFieldTrialOverride(
+      "MyFeature", FeatureList::OVERRIDE_ENABLE_FEATURE, trial);
+
+  test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitWithFeatureList(std::move(feature_list));
+
+  FilePath test_file_path = base::FilePath(FILE_PATH_LITERAL("Program"));
+  CommandLine command_line = base::CommandLine(test_file_path);
 
   base::FieldTrialList::CopyFieldTrialStateToFlags(
-      field_trial_handle, enable_features_switch, disable_features_switch,
-      &cmd_line);
-  EXPECT_TRUE(cmd_line.HasSwitch(field_trial_handle) ||
-              cmd_line.HasSwitch(switches::kForceFieldTrials));
+      kFieldTrialHandleSwitch, kEnableFeaturesSwitch, kDisableFeaturesSwitch,
+      &command_line);
+  EXPECT_TRUE(command_line.HasSwitch(kFieldTrialHandleSwitch));
+
+  // Explictly specified enabled/disabled features should be specified.
+  EXPECT_EQ("A,B", command_line.GetSwitchValueASCII(kEnableFeaturesSwitch));
+  EXPECT_EQ("C", command_line.GetSwitchValueASCII(kDisableFeaturesSwitch));
 }
-#endif
+
+void InitFromCommandLine(const std::string& enable_features,
+                         const std::string& disable_features);
 
 TEST(FieldTrialListTest, InstantiateAllocator) {
   test::ScopedFeatureList scoped_feature_list;
