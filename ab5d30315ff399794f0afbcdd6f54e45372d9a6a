@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "108543fb_65f118f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:35Z",
+      "side": 1,
+      "message": "Update in light of changes?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9cd324e_52c7f407",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 3
