@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b16a4fe_c665bc54",
+        "filename": "chrome/browser/chromeos/accessibility/magnification_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T20:18:50Z",
+      "side": 1,
+      "message": "If the magnification level happens to be set to 2.0,\nwill magnification_controller()-\u003eSetScale() never get\ncalled?\n\nIf we know the pref handlers will always get called,\nmaybe we should initialize scale_ to 0.0, or else load\nthe correct value from the prefs on construction if\npossible.",
+      "revId": "55ddaa9d88bf2efb628a9e74dbc4126521c62611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
