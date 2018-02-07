@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03b77f7_63a4042e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-02-07T17:04:54Z",
+      "side": 1,
+      "message": "The bit should be set in here. Why is that not working?",
+      "range": {
+        "startLine": 1105,
+        "startChar": 34,
+        "endLine": 1105,
+        "endChar": 50
+      },
+      "revId": "dff2ea079699958c349ac76b6a2c38693d744f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
