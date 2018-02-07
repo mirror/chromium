@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b128dc5_14c8a6f8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-07T04:26:11Z",
+      "side": 1,
+      "message": "How about returning \"selection_is_contiguous\"?",
+      "revId": "5ad8c90c444845d6881c0fee0d308fda5fe522d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
