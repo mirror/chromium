@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c816a0_30d72a66",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T02:07:17Z",
+      "side": 1,
+      "message": "My understanding is that rather than parameterize the app name in generated_resources.grd we\u0027re supposed to add separate strings to each of chromium_strings.grd and google_chrome_strings.grd.  (Many pre-existing strings still do it the old way.)  I guess this is easier for l10n.\n\nI don\u0027t know if there\u0027s anything special about accessibility strings that would make this different, though.",
+      "revId": "a8786bb7a9007f38d6c6076e61c622127f154165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e543761b_7eee2565",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T02:07:17Z",
+      "side": 1,
+      "message": "Nit: Note about GetAvatarNameForProfile could be split off and placed in a comment just above the \"profile_name.empty()\" check below.",
+      "revId": "a8786bb7a9007f38d6c6076e61c622127f154165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6c68c1_5b7495c6",
+        "filename": "chrome/browser/ui/views/frame/browser_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T02:07:17Z",
+      "side": 1,
+      "message": "Nit: Could just inline below (also for incognito case)",
+      "revId": "a8786bb7a9007f38d6c6076e61c622127f154165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
