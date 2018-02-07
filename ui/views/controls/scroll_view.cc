@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/compositor/overscroll/ui_scroll_input_manager.h"
 #include "ui/events/event.h"
 #include "ui/gfx/canvas.h"
 #include "ui/native_theme/native_theme.h"
@@ -557,9 +558,13 @@ void ScrollView::OnScrollEvent(ui::ScrollEvent* event) {
   if (!contents_)
     return;
 
-  // TODO(tapted): Send |event| to a cc::InputHandler. For now, there's nothing
-  // to do because Widget::OnScrollEvent() will automatically process an
-  // unhandled ScrollEvent as a MouseWheelEvent.
+  ui::UIScrollInputManager* compositor_scroller =
+      GetWidget()->GetCompositor()->scroll_input_manager();
+  DCHECK(compositor_scroller);
+  if (compositor_scroller->OnScrollEvent(*event, contents_->layer())) {
+    event->SetHandled();
+    event->StopPropagation();
+  }
 
   // A direction might not be known when the event stream starts, notify both
   // scrollbars that they may be about scroll, or that they may need to cancel
@@ -664,6 +669,17 @@ void ScrollView::UpdateViewportLayerForClipping() {
     EnableViewPortLayer();
   else
     contents_viewport_->DestroyLayer();
+}
+
+void ScrollView::OnScrollEventFromScrollBar(ui::ScrollEvent* event) {
+  // Note that |event| can't be used for hit-testing in the cc::InputHandler
+  // as-is, since it will hit a scroll bar Layer. Layer scrolling supports
+  // that, but only if the scroll bar track and thumb Layers implement
+  // cc::ScrollbarLayerInterface. Creating one of those requires a
+  // cc::ScrollBar instance which is more than views:: really needs to care
+  // about. The following works because ScrollView explicitly passes the Layer
+  // to scroll.
+  OnScrollEvent(event);
 }
 
 void ScrollView::SetHeaderOrContents(View* parent,

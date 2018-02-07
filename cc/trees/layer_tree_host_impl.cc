@@ -3752,9 +3752,21 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
   DCHECK(scroll_state);
 
   TRACE_EVENT0("cc", "LayerTreeHostImpl::ScrollBy");
-  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
-  ScrollNode* scroll_node = scroll_tree.CurrentlyScrollingNode();
 
+  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
+
+  if (!scroll_tree.CurrentlyScrollingNode()) {
+    // If the InputHandlerClient didn't call ScrollBegin() to re-perform a
+    // hit-test but provided an element to scroll instead, scroll that.
+    ElementId provided_element =
+        scroll_state->data()->current_native_scrolling_element();
+    if (provided_element) {
+      active_tree_->SetCurrentlyScrollingNode(
+          scroll_tree.FindNodeFromElementId(provided_element));
+    }
+  }
+
+  ScrollNode* scroll_node = scroll_tree.CurrentlyScrollingNode();
   if (!scroll_node)
     return InputHandlerScrollResult();
 

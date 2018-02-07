@@ -174,6 +174,10 @@ bool BaseScrollBar::OnMouseWheel(const ui::MouseWheelEvent& event) {
   return true;
 }
 
+void BaseScrollBar::OnScrollEvent(ui::ScrollEvent* event) {
+  controller()->OnScrollEventFromScrollBar(event);
+}
+
 void BaseScrollBar::OnGestureEvent(ui::GestureEvent* event) {
   // If a fling is in progress, then stop the fling for any incoming gesture
   // event (except for the GESTURE_END event that is generated at the end of the

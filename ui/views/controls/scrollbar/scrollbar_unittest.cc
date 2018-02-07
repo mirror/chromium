@@ -33,6 +33,8 @@ class TestScrollBarController : public views::ScrollBarController {
     return 10;
   }
 
+  void OnScrollEventFromScrollBar(ui::ScrollEvent* event) override {}
+
   // We save the last values in order to assert the correctness of the scroll
   // operation.
   views::ScrollBar* last_source;

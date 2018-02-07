@@ -123,6 +123,7 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   int GetScrollIncrement(ScrollBar* source,
                          bool is_page,
                          bool is_positive) override;
+  void OnScrollEventFromScrollBar(ui::ScrollEvent* event) override;
 
  private:
   friend class test::ScrollViewTestApi;
