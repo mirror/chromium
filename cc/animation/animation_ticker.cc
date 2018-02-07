@@ -16,6 +16,71 @@
 
 namespace cc {
 
+namespace {
+
+bool NeedsFinishedEvent(Animation* animation) {
+  // The controlling instance (i.e., impl instance), sends the finish event.
+  // Impl only animations don't need any finished notifications either.
+  if (animation->is_controlling_instance() || animation->is_impl_only())
+    return false;
+
+  return !animation->received_finished_event();
+}
+
+std::vector<size_t> FindAnimationsWithSameGroupId(
+    const std::vector<std::unique_ptr<Animation>>& animations,
+    int group_id) {
+  std::vector<size_t> indecies;
+  for (size_t i = 0; i < animations.size(); ++i) {
+    if (animations[i]->group() == group_id)
+      indecies.push_back(i);
+  }
+  return indecies;
+}
+
+void NotifyEvent(AnimationEvents* events,
+                 AnimationPlayer* player,
+                 Animation* animation,
+                 AnimationEvent::Type type,
+                 base::TimeTicks monotonic_time,
+                 ElementId element_id) {
+  if (!events)
+    return;
+
+  AnimationEvent event(type, element_id, animation->group(),
+                       animation->target_property_id(), monotonic_time);
+  event.is_impl_only = animation->is_impl_only();
+  if (event.is_impl_only) {
+    // TODO(majidvp): why are we doing this only for finish??
+    if (type == AnimationEvent::FINISHED) {
+      // Notify delegate directly, do not record the event.
+      player->NotifyAnimationFinished(event);
+    }
+  } else {
+    events->events_.push_back(event);
+  }
+}
+
+void NotifyTakeoverEvent(AnimationEvents* events,
+                         AnimationPlayer* player,
+                         Animation* animation,
+                         base::TimeTicks monotonic_time,
+                         ElementId element_id) {
+  AnimationEvent takeover_event(
+      AnimationEvent::TAKEOVER, element_id, animation->group(),
+      animation->target_property_id(), monotonic_time);
+  takeover_event.animation_start_time = animation->start_time();
+  const ScrollOffsetAnimationCurve* scroll_offset_animation_curve =
+      animation->curve()->ToScrollOffsetAnimationCurve();
+  takeover_event.curve = scroll_offset_animation_curve->Clone();
+  // Notify the compositor that the animation is finished.
+  player->NotifyAnimationFinished(takeover_event);
+  // Notify main thread.
+  events->events_.push_back(takeover_event);
+}
+
+}  // namespace
+
 AnimationTicker::AnimationTicker(TickerId id)
     : animation_player_(),
       id_(id),
@@ -895,125 +960,90 @@ void AnimationTicker::PromoteStartedAnimations(AnimationEvents* events) {
 
 void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
                                                 AnimationEvents* events) {
-  bool marked_animations_for_deletions = false;
-  std::vector<size_t> animations_with_same_group_id;
+  // TODO(majidvp): The old logic is assuming that the existence of |events| is
+  // a proxy for being on compositor. This is brittle. Instead we should use
+  // |Animaiton::is_controlling_instance()|. See:
+  // https://codereview.chromium.org/1151763011
+  bool on_compositor = !!events;
 
-  animations_with_same_group_id.reserve(animations_.size());
+  bool marked_animation_for_deletion = false;
+  auto MarkForDeletion = [&](Animation* animation) {
+    animation->SetRunState(Animation::WAITING_FOR_DELETION, monotonic_time);
+    marked_animation_for_deletion = true;
+  };
+
   // Non-aborted animations are marked for deletion after a corresponding
   // AnimationEvent::FINISHED event is sent or received. This means that if
   // we don't have an events vector, we must ensure that non-aborted animations
   // have received a finished event before marking them for deletion.
   for (size_t i = 0; i < animations_.size(); i++) {
-    auto& animation = animations_[i];
-    int group_id = animation->group();
+    Animation* animation = animations_[i].get();
     if (animation->run_state() == Animation::ABORTED) {
-      if (events && !animation->is_impl_only()) {
-        AnimationEvent aborted_event(AnimationEvent::ABORTED, element_id_,
-                                     group_id, animation->target_property_id(),
-                                     monotonic_time);
-        events->events_.push_back(aborted_event);
-      }
+      NotifyEvent(events, animation_player_, animation, AnimationEvent::ABORTED,
+                  monotonic_time, element_id_);
       // If on the compositor or on the main thread and received finish event,
       // animation can be marked for deletion.
-      if (events || animation->received_finished_event()) {
-        animation->SetRunState(Animation::WAITING_FOR_DELETION, monotonic_time);
-        marked_animations_for_deletions = true;
+      if (on_compositor || animation->received_finished_event()) {
+        MarkForDeletion(animation);
       }
       continue;
     }
 
     // If running on the compositor and need to complete an aborted animation
     // on the main thread.
-    if (events &&
+    if (on_compositor &&
         animation->run_state() == Animation::ABORTED_BUT_NEEDS_COMPLETION) {
-      AnimationEvent aborted_event(AnimationEvent::TAKEOVER, element_id_,
-                                   group_id, animation->target_property_id(),
-                                   monotonic_time);
-      aborted_event.animation_start_time = animation->start_time();
-      const ScrollOffsetAnimationCurve* scroll_offset_animation_curve =
-          animation->curve()->ToScrollOffsetAnimationCurve();
-      aborted_event.curve = scroll_offset_animation_curve->Clone();
-      // Notify the compositor that the animation is finished.
-      animation_player_->NotifyAnimationFinished(aborted_event);
-      // Notify main thread.
-      events->events_.push_back(aborted_event);
-
+      NotifyTakeoverEvent(events, animation_player_, animation, monotonic_time,
+                          element_id_);
       // Remove the animation from the compositor.
-      animation->SetRunState(Animation::WAITING_FOR_DELETION, monotonic_time);
-      marked_animations_for_deletions = true;
+      MarkForDeletion(animation);
       continue;
     }
 
-    bool all_anims_with_same_id_are_finished = false;
+    if (animation->run_state() != Animation::FINISHED)
+      continue;
 
     // Since deleting an animation on the main thread leads to its deletion
     // on the impl thread, we only mark a FINISHED main thread animation for
     // deletion once it has received a FINISHED event from the impl thread.
-    bool animation_i_will_send_or_has_received_finish_event =
-        animation->is_controlling_instance() || animation->is_impl_only() ||
-        animation->received_finished_event();
+    if (NeedsFinishedEvent(animation))
+      continue;
+
     // If an animation is finished, and not already marked for deletion,
     // find out if all other animations in the same group are also finished.
-    if (animation->run_state() == Animation::FINISHED &&
-        animation_i_will_send_or_has_received_finish_event) {
-      // Clear the animations_with_same_group_id if it was added for
-      // the previous animation's iteration.
-      if (animations_with_same_group_id.size() > 0)
-        animations_with_same_group_id.clear();
-      all_anims_with_same_id_are_finished = true;
-      for (size_t j = 0; j < animations_.size(); ++j) {
-        auto& animation_j = animations_[j];
-        bool animation_j_will_send_or_has_received_finish_event =
-            animation_j->is_controlling_instance() ||
-            animation_j->is_impl_only() ||
-            animation_j->received_finished_event();
-        if (group_id == animation_j->group()) {
-          if (!animation_j->is_finished() ||
-              (animation_j->run_state() == Animation::FINISHED &&
-               !animation_j_will_send_or_has_received_finish_event)) {
-            all_anims_with_same_id_are_finished = false;
-            break;
-          } else if (j >= i && animation_j->run_state() != Animation::ABORTED) {
-            // Mark down the animations which belong to the same group
-            // and is not yet aborted. If this current iteration finds that all
-            // animations with same ID are finished, then the marked
-            // animations below will be set to WAITING_FOR_DELETION in next
-            // iteration.
-            animations_with_same_group_id.push_back(j);
-          }
-        }
-      }
-    }
+    std::vector<size_t> animations_in_same_group =
+        FindAnimationsWithSameGroupId(animations_, animation->group());
 
-    if (all_anims_with_same_id_are_finished) {
-      // We now need to remove all animations with the same group id as
-      // group_id (and send along animation finished notifications, if
-      // necessary).
-      for (size_t j = 0; j < animations_with_same_group_id.size(); j++) {
-        size_t animation_index = animations_with_same_group_id[j];
-        auto& grouped_animation = animations_[animation_index];
-        if (events) {
-          AnimationEvent finished_event(
-              AnimationEvent::FINISHED, element_id_, grouped_animation->group(),
-              grouped_animation->target_property_id(), monotonic_time);
-          finished_event.is_impl_only = grouped_animation->is_impl_only();
-          if (finished_event.is_impl_only) {
-            // Notify delegate directly, do not record the event.
-            animation_player_->NotifyAnimationFinished(finished_event);
-          } else {
-            events->events_.push_back(finished_event);
-          }
-        }
-        grouped_animation->SetRunState(Animation::WAITING_FOR_DELETION,
-                                       monotonic_time);
-      }
-      marked_animations_for_deletions = true;
+    bool an_anim_in_same_group_is_not_finished =
+        std::any_of(animations_in_same_group.cbegin(),
+                    animations_in_same_group.cend(), [&](size_t index) {
+                      Animation* animation = animations_[index].get();
+                      return !animation->is_finished() ||
+                             (animation->run_state() == Animation::FINISHED &&
+                              NeedsFinishedEvent(animation));
+                    });
+
+    if (an_anim_in_same_group_is_not_finished)
+      continue;
+
+    // Now remove all the animations which belong to the same group and are not
+    // yet aborted. These will be set to set to WAITING_FOR_DELETION.
+    for (size_t j = 0; j < animations_in_same_group.size(); ++j) {
+      size_t animation_index = animations_in_same_group[j];
+      Animation* animation = animations_[animation_index].get();
+
+      if (animation_index < i || animation->run_state() == Animation::ABORTED)
+        continue;
+
+      NotifyEvent(events, animation_player_, animation,
+                  AnimationEvent::FINISHED, monotonic_time, element_id_);
+      MarkForDeletion(animation);
     }
   }
 
   // We need to purge animations marked for deletion, which happens in
   // PushPropertiesTo().
-  if (marked_animations_for_deletions)
+  if (marked_animation_for_deletion)
     SetNeedsPushProperties();
 }
 
