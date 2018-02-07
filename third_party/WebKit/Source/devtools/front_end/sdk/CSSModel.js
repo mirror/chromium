@@ -529,6 +529,10 @@ SDK.CSSModel = class extends SDK.SDKModel {
     this.dispatchEventToListeners(SDK.CSSModel.Events.FontsUpdated);
   }
 
+  fontLoaded(font) {
+    this.dispatchEventToListeners(SDK.CSSModel.Event.FontLoaded, {font: font});
+  }
+
   /**
    * @param {!Protocol.CSS.StyleSheetId} id
    * @return {?SDK.CSSStyleSheetHeader}
@@ -757,6 +761,7 @@ SDK.CSSModel.ContrastInfo;
 /** @enum {symbol} */
 SDK.CSSModel.Events = {
   FontsUpdated: Symbol('FontsUpdated'),
+  FontLoaded: Symbol('FontLoaded'),
   MediaQueryResultChanged: Symbol('MediaQueryResultChanged'),
   ModelWasEnabled: Symbol('ModelWasEnabled'),
   PseudoStateForced: Symbol('PseudoStateForced'),
@@ -841,6 +846,13 @@ SDK.CSSDispatcher = class {
    */
   fontsUpdated() {
     this._cssModel.fontsUpdated();
+  }
+
+  /**
+   * @override
+   */
+  fontLoaded(font) {
+    this._cssModel.fontLoaded(font);
   }
 
   /**

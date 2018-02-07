@@ -43,6 +43,7 @@
 #include "core/css/CSSStyleRule.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/CSSVariableData.h"
+#include "core/css/FontFace.h"
 #include "core/css/FontSizeFunctions.h"
 #include "core/css/MediaList.h"
 #include "core/css/MediaQuery.h"
@@ -751,6 +752,27 @@ void InspectorCSSAgent::MediaQueryResultChanged() {
 void InspectorCSSAgent::FontsUpdated() {
   FlushPendingProtocolNotifications();
   GetFrontend()->fontsUpdated();
+}
+
+void InspectorCSSAgent::FontLoaded(const FontFace& font,
+                                   const String& src,
+                                   const String& platformFontFamily) {
+  FlushPendingProtocolNotifications();
+
+  // blink::FontFace returns sane property defaults per the web fonts spec,
+  // so we don't perform null checks here.
+  std::unique_ptr<protocol::CSS::FontFace> font_face =
+      protocol::CSS::FontFace::create()
+          .setFontFamily(font.family())
+          .setFontStyle(font.style())
+          .setFontVariant(font.variant())
+          .setFontWeight(font.weight())
+          .setFontStretch(font.stretch())
+          .setUnicodeRange(font.unicodeRange())
+          .setSrc(src)
+          .setPlatformFontFamily(platformFontFamily)
+          .build();
+  GetFrontend()->fontLoaded(std::move(font_face));
 }
 
 void InspectorCSSAgent::ActiveStyleSheetsUpdated(Document* document) {

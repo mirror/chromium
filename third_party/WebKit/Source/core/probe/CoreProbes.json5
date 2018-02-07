@@ -27,6 +27,7 @@
         "activeStyleSheetsUpdated",
         "documentDetached",
         "fontsUpdated",
+        "fontLoaded",
         "forcePseudoState",
         "mediaQueryResultChanged",
         "willChangeStyleElement",

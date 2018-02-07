@@ -9,6 +9,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/Histogram.h"
 #include "platform/fonts/FontCache.h"
@@ -132,8 +133,29 @@ void RemoteFontFaceSource::NotifyFinished(Resource* resource) {
   ClearResource();
 
   PruneTable();
-  if (face_->FontLoaded(this))
+  if (face_->FontLoaded(this)) {
     font_selector_->FontFaceInvalidated();
+
+    scoped_refptr<FontCustomPlatformData> customFontData =
+        font->GetCustomFontData();
+    DCHECK(customFontData);
+    sk_sp<SkTypeface> typeface = customFontData->Typeface();
+    DCHECK(typeface);
+
+    SkTypeface::LocalizedStrings* font_family_iterator =
+        typeface->createFamilyNameIterator();
+    SkTypeface::LocalizedString localized_string;
+    while (font_family_iterator->next(&localized_string) &&
+           !localized_string.fString.size()) {
+    }
+    font_family_iterator->unref();
+
+    String platformFontFamily =
+        String::FromUTF8(localized_string.fString.c_str());
+    blink::probe::fontLoaded(font_selector_->GetExecutionContext(),
+                             *face_->GetFontFace(), resource->Url(),
+                             platformFontFamily);
+  }
 }
 
 void RemoteFontFaceSource::FontLoadShortLimitExceeded(FontResource*) {

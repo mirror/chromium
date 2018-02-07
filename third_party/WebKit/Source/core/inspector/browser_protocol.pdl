@@ -804,6 +804,28 @@ experimental domain CSS
       # Amount of glyphs that were rendered with this font.
       number glyphCount
 
+  # Properties of a web font: https://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#font-descriptions
+  type FontFace extends object
+    properties
+      # The font-family.
+      string fontFamily
+      # The font-style.
+      optional string fontStyle
+      # The font-variant.
+      optional string fontVariant
+      # The font-weight.
+      optional string fontWeight
+      # The font-stretch.
+      optional string fontStretch
+      # The font-size.
+      optional string fontSize
+      # The unicode-range.
+      optional string unicodeRange
+      # The src.
+      string src
+      # The resolved platform font family
+      optional string platformFontFamily
+
   # CSS keyframes rule representation.
   type CSSKeyframesRule extends object
     properties
@@ -1031,8 +1053,14 @@ experimental domain CSS
     returns
       array of RuleUsage coverage
 
-  # Fires whenever a web font gets loaded.
+  # Fires whenever a web font is updated, including fallback after unsuccessful load.
   event fontsUpdated
+
+  # Fires whenever a web font has successfully loaded.
+  event fontLoaded
+    parameters
+      # The web font that has loaded.
+      FontFace font
 
   # Fires whenever a MediaQuery result changes (for example, after a browser window has been
   # resized.) The current implementation considers only viewport-dependent media features.
