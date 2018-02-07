@@ -3395,6 +3395,14 @@ are declared in build/common.gypi.
         Undo
       </message>
 
+      <!-- Critical Notification bubble -->
+      <message name="IDS_CRITICAL_NOTIFICATION_RESTART" desc="The restart button label">
+        Restart now
+      </message>
+      <message name="IDS_CRITICAL_NOTIFICATION_DISMISS" desc="The dismiss button label">
+        Don't restart
+      </message>
+
       <!-- Extension/App disabled notification -->
       <message name="IDS_EXTENSION_DISABLED_ERROR_LABEL" desc="Text displayed when an extension was disabled due to a new upgrade requiring an explicit permission check from the user.">
         To re-enable it, accept the new permissions:

@@ -9,9 +9,11 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/upgrade_detector.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
 #include "components/prefs/pref_service.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -126,8 +128,10 @@ void CriticalNotificationBubbleView::Init() {
   message->SetMultiLine(true);
   message->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   message->SetText(l10n_util::GetStringUTF16(IDS_CRITICAL_NOTIFICATION_TEXT));
-  message->SizeToFit(views::Widget::GetLocalizedContentsWidth(
-      IDS_CRUCIAL_NOTIFICATION_BUBBLE_WIDTH_CHARS));
+  message->SizeToFit(
+      ChromeLayoutProvider::Get()->GetDistanceMetric(
+          ChromeDistanceMetric::DISTANCE_BUBBLE_PREFERRED_WIDTH) -
+      margins().width());
   AddChildView(message);
 
   refresh_timer_.Start(FROM_HERE,
