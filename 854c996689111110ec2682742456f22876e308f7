@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b46959ee_c2893ca8",
+        "filename": "chrome/browser/android/cookies/cookies_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:46:42Z",
+      "side": 1,
+      "message": "I\u0027d leave this comment out.  I suspect the cookie_store() comment is outdated, and I don\u0027t think any docs say this about the cookie_manager.  I don\u0027t think it\u0027s worth trying to confirm that the code can change in this CL, but I think copying the comment is misleading.\n\n(If you actually have a doc pointer, please just point me at it rather than removing the comment.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "854c996689111110ec2682742456f22876e308f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91b18ec_0d8092b5",
+        "filename": "chrome/browser/android/cookies/cookies_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:46:42Z",
+      "side": 1,
+      "message": "See other comments; you don\u0027t want to access or use the cookie manager Mojo pointer on the IO thread.",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "854c996689111110ec2682742456f22876e308f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ad2d21_2c41066b",
+        "filename": "chrome/browser/android/profiles/profile_manager_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:46:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this works.  Mojo pointers are bound to the thread on which they are first used, and I think this pointer is likely to have been used on the UI thread.\n\nMore generally, one of the bonuses of shifting to Mojo is being able to use the client end of the Mojo pipe on a different thread than the server.  So conversion to Mojo can get rid of the \"Jump to IO thread, do cookie operation, jump back to the UI thread\" pattern that is common in our code.  So I think you can simplify this code and completely get rid of this function.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "854c996689111110ec2682742456f22876e308f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81d3215_a17c458d",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:46:42Z",
+      "side": 1,
+      "message": "See other note; you can\u0027t use a cookie_manager_ retrieved from GetDefaultStoragePartition() on the IO thread, and in general, you don\u0027t want/need to.  You probably need to refactor this class s.t. the cookie fetching happens directly from the UI thread.",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 49
+      },
+      "revId": "854c996689111110ec2682742456f22876e308f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
