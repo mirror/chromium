@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8a8456_97f306d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-07T12:07:24Z",
+      "side": 1,
+      "message": "The commit message need to be updated.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 3
+      },
+      "revId": "1a4223c2b8beee660473fee6b0a73d7447d8b852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6d58b5_45d611fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-07T12:07:24Z",
+      "side": 1,
+      "message": "nit: private final?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "1a4223c2b8beee660473fee6b0a73d7447d8b852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1fda1e_766160b9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTriggerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-07T12:07:24Z",
+      "side": 1,
+      "message": "nit: and onload?",
+      "range": {
+        "startLine": 67,
+        "startChar": 35,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "1a4223c2b8beee660473fee6b0a73d7447d8b852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

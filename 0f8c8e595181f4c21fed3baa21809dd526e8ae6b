@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "48139b15_b34e569a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2018-02-07T12:07:24Z",
+      "side": 1,
+      "message": "Ah, sorry, my parsing failed :-)",
+      "parentUuid": "cc1728a7_bc1e1f15",
+      "revId": "0f8c8e595181f4c21fed3baa21809dd526e8ae6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f6f99bd_92d464b7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/NavigationInfoCaptureTrigger.java",
         "patchSetId": 7
