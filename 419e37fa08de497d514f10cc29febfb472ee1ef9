@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "d689c85a_e81f4d22",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-07T20:16:56Z",
+      "side": 1,
+      "message": "I think there\u0027s two points against this (not trying to coerce you into an opinion here):\n\n1. The Widget/WidgetObserver pairing already provides a familiar API, anyone writing the call site knows that widget-\u003eAddObserver(observer) is a supported pattern. You don\u0027t need to look up the specific observer API for every single observer (was it observer-\u003eAttachToWidget(widget) or observer-\u003eOnWidgetCreated(widget) or observer-\u003eOnBubbleCreated(...)).\n\n2. The private internal class will likely end up being written for every single observer and is hence less well tested than Widget -\u003e WidgetObserver:\n\n2.1. It contains more nested / complicated callbacks (parent_-\u003eOnWidgetVisibilityChanged() forwarding for every WidgetObserver method we care about).\n\n2.2. Any incorrect redirecting of OnWidgetVisibilityChanging -\u003e OnWidgetVisibilityChanged is very hard to spot in a list of forwarding declarations that look very similar. We (at least I) would get this wrong \u003e1 times.\n\nAnother option is to move class members (in this case InkDrop) into a nested WidgetObserverProxy class, but this doesn\u0027t semantically make sense / is very hairy. It also prevents subclasses from overriding any behavior (StarView currently overrides OnWidgetDestroying).\n\n(2) here is significant enough for me to not want to write this boilerplate/proxy dispatch code, and instead DCHECK(attach_using_correct_method_); to best-effort prevent direct widget-\u003eAddObserver(observer) calls. It\u0027s more brittle as this won\u0027t enforce that no AddObserver calls are made after initial attachment though, so it\u0027s just a best effort way to tell callers to use the other API.\n\nI think reusing the WidgetObserver API makes sense to use for the call site. It keeps the code simpler, avoids proxies and prevents inventing new APIs on the fly. I don\u0027t think having an OnAttach() method is that bad / shoehorned into the API.",
+      "parentUuid": "4b7d0c2f_780f32c5",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
