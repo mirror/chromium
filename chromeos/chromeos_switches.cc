@@ -28,13 +28,17 @@ const char kTestCrosGaiaIdMigration[] = "test-cros-gaia-id-migration";
 // all stored user keys will be converted to GaiaId)
 const char kTestCrosGaiaIdMigrationStarted[] = "started";
 
-// Controls whether enable voice interaction feature.
-const base::Feature kVoiceInteractionFeature{"ChromeOSVoiceInteraction",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
+// Controls whether enable Google Assistant feature.
+const base::Feature kAssistantFeature{"ChromeOSAssistant",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Controls whether enable assistant for locale.
 const base::Feature kAssistantFeatureForLocale{
     "ChromeOSAssistantForLocale", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Controls whether enable voice interaction feature.
+const base::Feature kVoiceInteractionFeature{"ChromeOSVoiceInteraction",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace
 
@@ -296,6 +300,9 @@ const char kEnableAndroidWallpapersApp[] = "enable-android-wallpapers-app";
 // DEPRECATED. Please use --arc-availability=officially-supported.
 // Enables starting the ARC instance upon session start.
 const char kEnableArc[] = "enable-arc";
+
+// Enables the Google Assistant feature.
+const char kEnableAssistant[] = "enable-assistant";
 
 // Enables using a random url for captive portal detection.
 const char kEnableCaptivePortalRandomUrl[] = "enable-captive-portal-random-url";
@@ -655,13 +662,25 @@ bool IsVoiceInteractionLocalesSupported() {
 
 bool IsVoiceInteractionFlagsEnabled() {
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  return command_line->HasSwitch(kEnableVoiceInteraction) ||
-         base::FeatureList::IsEnabled(kVoiceInteractionFeature);
+  return !IsAssistantFlagsEnabled() &&
+         (command_line->HasSwitch(kEnableVoiceInteraction) ||
+          base::FeatureList::IsEnabled(kVoiceInteractionFeature));
 }
 
 bool IsVoiceInteractionEnabled() {
   return IsVoiceInteractionLocalesSupported() &&
          IsVoiceInteractionFlagsEnabled();
+}
+
+bool IsAssistantFlagsEnabled() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  return command_line->HasSwitch(kEnableAssistant) ||
+         base::FeatureList::IsEnabled(kAssistantFeature);
+}
+
+bool IsAssistantEnabled() {
+  // TODO(xiaohuic): We will add locale restrictions later.
+  return IsAssistantFlagsEnabled();
 }
 
 bool IsZipArchiverUnpackerEnabled() {

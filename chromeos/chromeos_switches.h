@@ -89,6 +89,7 @@ CHROMEOS_EXPORT extern const char kDisableWakeOnWifi[];
 CHROMEOS_EXPORT extern const char kDisableZipArchiverUnpacker[];
 CHROMEOS_EXPORT extern const char kEnableAndroidWallpapersApp[];
 CHROMEOS_EXPORT extern const char kEnableArc[];
+CHROMEOS_EXPORT extern const char kEnableAssistant[];
 CHROMEOS_EXPORT extern const char kEnableCaptivePortalRandomUrl[];
 CHROMEOS_EXPORT extern const char kEnableCastReceiver[];
 CHROMEOS_EXPORT extern const char kEnableChromeVoxArcSupport[];
@@ -183,6 +184,12 @@ CHROMEOS_EXPORT bool IsVoiceInteractionFlagsEnabled();
 
 // Returns true if voice interaction is enabled.
 CHROMEOS_EXPORT bool IsVoiceInteractionEnabled();
+
+// Returns true if Google Assistant flags are enabled.
+CHROMEOS_EXPORT bool IsAssistantFlagsEnabled();
+
+// Returns true if Google Assistant is enabled.
+CHROMEOS_EXPORT bool IsAssistantEnabled();
 
 // Returns true if Settings based network configuration is enabled.
 CHROMEOS_EXPORT bool IsNetworkSettingsConfigEnabled();
