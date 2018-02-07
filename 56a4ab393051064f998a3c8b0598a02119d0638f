@@ -80,6 +80,23 @@
       "revId": "56a4ab393051064f998a3c8b0598a02119d0638f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a0f632_12a0e6fa",
+        "filename": "ui/webui/resources/cr_components/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T19:55:09Z",
+      "side": 1,
+      "message": "[[i18n()]]",
+      "revId": "56a4ab393051064f998a3c8b0598a02119d0638f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

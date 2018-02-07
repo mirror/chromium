@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfd8e38_512d66d8",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T19:55:09Z",
+      "side": 1,
+      "message": "Just delete this file and include this import where it is needed directly.",
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ff2b4c_4c6fd3ea",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T19:55:09Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 6,
+        "startChar": 82,
+        "endLine": 6,
+        "endChar": 83
+      },
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
