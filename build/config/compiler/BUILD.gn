@@ -2023,7 +2023,7 @@ config("minimal_symbols") {
       # TODO(thakis): Remove this again once dump_syms is fixed.
       cflags += [ "-gdwarf-3" ]
     }
-    if (!using_sanitizer) {
+    if (!using_sanitizer && !is_chromeos) {
       # minimal_symbols needs to only produce valid stack traces, and -g0 does
       # that, even though you might think it'd produce no symbols at all.
       # Not using -g1 allows us to speed up link time and save disk space.
@@ -2031,6 +2031,8 @@ config("minimal_symbols") {
     } else {
       # If sanitizer detects some failure, symbolizer tries to show files and
       # line number from debug symbols.
+      # ChromeOS wants to get files and line numbers from debug symbols so
+      # that breakpad can generate valid stacktrace.
       cflags += [ "-g1" ]
     }
     ldflags = []
