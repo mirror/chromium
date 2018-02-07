@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "72461e90_75934e5a",
+        "filename": "base/android/java/templates/BuildConfig.template",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2018-02-07T21:18:49Z",
+      "side": 1,
+      "message": "til",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 13
+      },
+      "revId": "0b201c440bd1c98a9f83fbb42c5f65ca67e9f126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb75d11_02e07c52",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2018-02-07T21:18:49Z",
+      "side": 1,
+      "message": "Might be worth explaining what this is (I have no idea)?",
+      "range": {
+        "startLine": 1691,
+        "startChar": 49,
+        "endLine": 1691,
+        "endChar": 64
+      },
+      "revId": "0b201c440bd1c98a9f83fbb42c5f65ca67e9f126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa97371a_f2fce08b",
         "filename": "components/crash/content/app/breakpad_linux.cc",
         "patchSetId": 1
