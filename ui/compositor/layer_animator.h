@@ -26,7 +26,7 @@ namespace cc {
 class Animation;
 class AnimationTimeline;
 class Layer;
-class SingleTickerAnimationPlayer;
+class SingleKeyframeEffectAnimationPlayer;
 }
 
 namespace gfx {
@@ -119,7 +119,7 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   // Detach AnimationPlayer from Layer and AnimationTimeline
   void DetachLayerAndTimeline(Compositor* compositor);
 
-  cc::SingleTickerAnimationPlayer* GetAnimationPlayerForTesting() const;
+  cc::SingleKeyframeEffectAnimationPlayer* GetAnimationPlayerForTesting() const;
 
   // Sets the animation preemption strategy. This determines the behaviour if
   // a property is set during an animation. The default is
@@ -355,24 +355,25 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   LayerAnimatorCollection* GetLayerAnimatorCollection();
 
   // cc::AnimationDelegate implementation.
-  void NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group_id) override;
-  void NotifyAnimationFinished(base::TimeTicks monotonic_time,
-                               int target_property,
-                               int group_id) override {}
-  void NotifyAnimationAborted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group_id) override {}
-  void NotifyAnimationTakeover(
+  void NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group_id) override;
+  void NotifyKeyframeModelFinished(base::TimeTicks monotonic_time,
+                                   int target_property,
+                                   int group_id) override {}
+  void NotifyKeyframeModelAborted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group_id) override {}
+  void NotifyKeyframeModelTakeover(
       base::TimeTicks monotonic_time,
       int target_property,
       base::TimeTicks animation_start_time,
       std::unique_ptr<cc::AnimationCurve> curve) override {}
 
   // Implementation of LayerThreadedAnimationDelegate.
-  void AddThreadedAnimation(std::unique_ptr<cc::Animation> animation) override;
-  void RemoveThreadedAnimation(int animation_id) override;
+  void AddThreadedAnimation(
+      std::unique_ptr<cc::KeyframeModel> keyframe_model) override;
+  void RemoveThreadedAnimation(int keyframe_model_id) override;
 
   void AttachLayerToAnimationPlayer(int layer_id);
   void DetachLayerFromAnimationPlayer();
@@ -388,7 +389,7 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   LayerAnimationDelegate* delegate_;
 
   // Plays CC animations.
-  scoped_refptr<cc::SingleTickerAnimationPlayer> animation_player_;
+  scoped_refptr<cc::SingleKeyframeEffectAnimationPlayer> animation_player_;
 
   // The currently running animations.
   RunningAnimations running_animations_;

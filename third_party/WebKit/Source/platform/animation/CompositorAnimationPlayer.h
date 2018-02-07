@@ -9,7 +9,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/scroll_timeline.h"
-#include "cc/animation/single_ticker_animation_player.h"
+#include "cc/animation/single_keyframe_effect_animation_player.h"
 #include "cc/animation/worklet_animation_player.h"
 #include "platform/PlatformExport.h"
 #include "platform/graphics/CompositorElementId.h"
@@ -38,10 +38,10 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
       std::unique_ptr<CompositorScrollTimeline>);
 
   explicit CompositorAnimationPlayer(
-      scoped_refptr<cc::SingleTickerAnimationPlayer>);
+      scoped_refptr<cc::SingleKeyframeEffectAnimationPlayer>);
   ~CompositorAnimationPlayer();
 
-  cc::SingleTickerAnimationPlayer* CcAnimationPlayer() const;
+  cc::SingleKeyframeEffectAnimationPlayer* CcAnimationPlayer() const;
 
   // An animation delegate is notified when animations are started and stopped.
   // The CompositorAnimationPlayer does not take ownership of the delegate, and
@@ -60,21 +60,22 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
 
  private:
   // cc::AnimationDelegate implementation.
-  void NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override;
-  void NotifyAnimationFinished(base::TimeTicks monotonic_time,
-                               int target_property,
-                               int group) override;
-  void NotifyAnimationAborted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override;
-  void NotifyAnimationTakeover(base::TimeTicks monotonic_time,
-                               int target_property,
-                               base::TimeTicks animation_start_time,
-                               std::unique_ptr<cc::AnimationCurve>) override;
+  void NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override;
+  void NotifyKeyframeModelFinished(base::TimeTicks monotonic_time,
+                                   int target_property,
+                                   int group) override;
+  void NotifyKeyframeModelAborted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override;
+  void NotifyKeyframeModelTakeover(
+      base::TimeTicks monotonic_time,
+      int target_property,
+      base::TimeTicks animation_start_time,
+      std::unique_ptr<cc::AnimationCurve>) override;
 
-  scoped_refptr<cc::SingleTickerAnimationPlayer> animation_player_;
+  scoped_refptr<cc::SingleKeyframeEffectAnimationPlayer> animation_player_;
   CompositorAnimationDelegate* delegate_;
 };
 

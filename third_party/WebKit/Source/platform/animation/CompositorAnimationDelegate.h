@@ -16,6 +16,10 @@ class PLATFORM_EXPORT CompositorAnimationDelegate {
  public:
   virtual ~CompositorAnimationDelegate() = default;
 
+  // TODO(yigu): The following methods should be renamed because they don't
+  // really operate on "Animation". Currently the cc side counterparts are
+  // named NotifyKeyframeModelStarted/Finished/Aborted but blink doesn't
+  // have that detailed concepts on Animations.
   virtual void NotifyAnimationStarted(double monotonic_time, int group) = 0;
   virtual void NotifyAnimationFinished(double monotonic_time, int group) = 0;
   virtual void NotifyAnimationAborted(double monotonic_time, int group) = 0;

@@ -113,20 +113,20 @@ class TestHooks : public AnimationDelegate {
   virtual void DidActivateSyncTree() {}
 
   // AnimationDelegate implementation.
-  void NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override {}
-  void NotifyAnimationFinished(base::TimeTicks monotonic_time,
-                               int target_property,
-                               int group) override {}
-  void NotifyAnimationAborted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override {}
-  void NotifyAnimationTakeover(base::TimeTicks monotonic_time,
-                               int target_property,
-                               base::TimeTicks animation_start_time,
-                               std::unique_ptr<AnimationCurve> curve) override {
-  }
+  void NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override {}
+  void NotifyKeyframeModelFinished(base::TimeTicks monotonic_time,
+                                   int target_property,
+                                   int group) override {}
+  void NotifyKeyframeModelAborted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override {}
+  void NotifyKeyframeModelTakeover(
+      base::TimeTicks monotonic_time,
+      int target_property,
+      base::TimeTicks animation_start_time,
+      std::unique_ptr<AnimationCurve> curve) override {}
 
   // OutputSurface indirections to the LayerTreeTest, that can be further
   // overridden.
