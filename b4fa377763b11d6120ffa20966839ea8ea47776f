@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "921f9b2b_e02aedff",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T20:30:36Z",
+      "side": 1,
+      "message": "Wow, this is all very confusing. The fact that we have both \"pin_keyboard.html\" and \"md_pin_keyboard.html\" but they use the same Polymer element name \u003cpin-keyboard\u003e is a potential problem. We really should be setting a variable in loadTimeData and using that to select the correct CSS for the MD styling instead of maintaining two nearly identical files.\n\nThe hackery in oobe_ui.cc to load either this file or md_pin_keyboard.html based on a flag is also... challenging to maintain. \n\nShouldn\u0027t we be using the same pin_keyboard UI in Settings that we are using in oobe/login? i.e. md_pin_keyboard?\n\n+jdufalut@ - Can we deprecate kShowNonMdLogin? Then we could merge pin_keyboard and md_pin_keyboard which would simplify this a lot.",
+      "parentUuid": "5d70f4f1_7ab19461",
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59ff2b4c_4c6fd3ea",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 3
