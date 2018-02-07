@@ -16,6 +16,24 @@
       "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6ed796_9c826c8a",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-02-07T16:04:22Z",
+      "side": 1,
+      "message": "I wonder if that suffice. If a test has both this type of input and also a normal mouse move event I don\u0027t seem to find where we set this to true again.",
+      "parentUuid": "1d98aef3_05cd4c83",
+      "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
