@@ -86,6 +86,7 @@ def print_landmines():
   if platform() == 'win':
     print 'Clobber Windows to fix strange PCH-not-rebuilt errors.'
   print 'CLobber all to fix GN breakage (crbug.com/736215)'
+  print 'Clobber to CanvasContextCreationAttribute build changes'
 
 def main():
   print_landmines()
