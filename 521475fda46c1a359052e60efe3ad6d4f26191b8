@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad8da4a8_db5295b4",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "Flagging that this will apply for subframe form submissions too. I think that\u0027s WAI, right? i.e. if an EV page contains a frame with a form, we do want to record this histogram for submissions on that form.",
+      "range": {
+        "startLine": 84,
+        "startChar": 46,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "371ce9ce_cdc52723",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "Huh, I\u0027m confused how this works. I would think that submitting the form triggers an interstitial and that (without committed interstitials enabled, at least) Wait() hangs while the interstitial is showing.",
+      "range": {
+        "startLine": 2700,
+        "startChar": 2,
+        "endLine": 2700,
+        "endChar": 21
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f0d388_1e021cc8",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "You should be able to use the enum value here (security_state::DANGEROUS or whatever) instead of the magic values. But even easier, you can combine lines 2703-2705 into:\n\nhistograms.ExpectUniqueSample(kHistogramName, security_state::SECURE, 1);",
+      "range": {
+        "startLine": 2704,
+        "startChar": 47,
+        "endLine": 2704,
+        "endChar": 48
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e15ce6_1053a513",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "ditto about ExpectUniqueSample",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f153cae_6a6fac14",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 79136,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "You can add yourself as an owner here too, it\u0027s good to have multiple owners. (sometimes automated emails get sent about these things and it\u0027s less that 2 people will miss it than that one person will)",
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9713826_5581b11c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 79141,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-02-07T18:25:03Z",
+      "side": 1,
+      "message": "nit: I\u0027d rephrase this slightly to be a little lighter on implementation detail, e.g.\n\"This histogram is recorded whenever a form submission navigation begins. The recorded security level is the level of the page the form was submitted from, not the one that the form targets.\"\n(just so this description doesn\u0027t go stale if, for example, we change the method name at some point)",
+      "range": {
+        "startLine": 79138,
+        "startChar": 65,
+        "endLine": 79141,
+        "endChar": 37
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
