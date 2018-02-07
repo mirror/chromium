@@ -8,6 +8,7 @@
 
 #include "build/build_config.h"
 #include "content/common/frame_messages.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/renderer/menu_item_builder.h"
 #include "content/renderer/render_frame_impl.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
@@ -31,7 +32,7 @@ void ExternalPopupMenu::SetOriginScaleForEmulation(float scale) {
 
 void ExternalPopupMenu::Show(const blink::WebRect& bounds) {
   blink::WebRect rect = bounds;
-  if (origin_scale_for_emulation_) {
+  if (!IsUseZoomForDSFEnabled() && origin_scale_for_emulation_) {
     rect.x *= origin_scale_for_emulation_;
     rect.y *= origin_scale_for_emulation_;
   }
