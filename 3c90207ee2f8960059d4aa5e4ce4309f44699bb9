@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "74aba8ce_6d00db02",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T23:14:03Z",
+      "side": 1,
+      "message": "Why is this done in the StyleAdjuster? Does it rely on display type adjustment? Otherwise, I think it would belong somewhere else. Typically the same place where we call SetOriginalDisplay().\n\nWill this state be affected by something triggering a style recalc without otherwise modify the computed style?",
+      "revId": "3c90207ee2f8960059d4aa5e4ce4309f44699bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37b4868_72469bfa",
         "filename": "third_party/WebKit/Source/core/layout/custom/PendingLayoutRegistry.cpp",
         "patchSetId": 7
@@ -13,6 +30,41 @@
       "writtenOn": "2018-02-07T17:54:21Z",
       "side": 1,
       "message": "Is accessing node-\u003eComputedStyle safe? E.g. will is be better to do:\n\nif (node \u0026\u0026 node-\u003eGetComputedStyle() \u0026\u0026 node-\u003eGetComputedStyle()-\u003eDisplay() \u003d\u003d kLayoutCustom \u0026\u0026 node-\u003eGetComputedStyle()-\u003eDisplayLayoutCustomName() \u003d\u003d name)\n\n?",
+      "revId": "3c90207ee2f8960059d4aa5e4ce4309f44699bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682440df_88eca719",
+        "filename": "third_party/WebKit/Source/core/layout/custom/PendingLayoutRegistry.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T23:14:03Z",
+      "side": 1,
+      "message": "Should be safe in the sense that the object is alive. It might not be up-to-date, though.\n\nCan this pending set become really large if you have a subtree with hundreds of nodes which all use custom layout? Would it be better to do this invalidation as part of the lifecycle update instead?",
+      "parentUuid": "f37b4868_72469bfa",
+      "revId": "3c90207ee2f8960059d4aa5e4ce4309f44699bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9156efd4_a3000d4d",
+        "filename": "third_party/WebKit/Source/core/layout/custom/PendingLayoutRegistry.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T23:14:03Z",
+      "side": 1,
+      "message": "Would LazyReattachIfAttached() be more appropriate here?\n\nA bit unsure if LazyReattachIfAttached is actually something we\u0027d like to get rid of as part of Squad. Anyway, if you have a subtree full of custom layout, it seems unnecessary to walk a bunch of nodes from the set here instead of triggering re-attachment of the root.\n\nIf a custom layout type is pending, does it render anything in its subtree?",
       "revId": "3c90207ee2f8960059d4aa5e4ce4309f44699bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
