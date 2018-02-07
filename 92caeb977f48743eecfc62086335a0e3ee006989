@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64ca6400_538926ec",
+        "filename": "base/files/dir_reader_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-07T09:44:05Z",
+      "side": 1,
+      "message": "use C++11 alignas keyword:\n\nalignas(linux_dirent) unsigned char buf_[512];",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "92caeb977f48743eecfc62086335a0e3ee006989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
