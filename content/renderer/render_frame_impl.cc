@@ -4054,6 +4054,9 @@ void RenderFrameImpl::DidStartProvisionalLoad(
     info.source_location = pending_navigation_info_->source_location;
     info.devtools_initiator_info =
         pending_navigation_info_->devtools_initiator_info;
+    info.blob_url_loader_factory =
+        pending_navigation_info_->blob_url_loader_factory.PassInterface()
+            .PassHandle();
 
     pending_navigation_info_.reset(nullptr);
     BeginNavigation(info);
@@ -6763,6 +6766,16 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
   if (info.is_client_redirect)
     client_side_redirect_url = frame_->GetDocument().Url();
 
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory;
+  if (info.blob_url_loader_factory.is_valid()) {
+    network::mojom::URLLoaderFactoryPtr factory(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            mojo::ScopedMessagePipeHandle(info.blob_url_loader_factory.get()),
+            network::mojom::URLLoaderFactory::Version_));
+    factory->Clone(MakeRequest(&blob_url_loader_factory));
+    ignore_result(factory.PassInterface().PassHandle().release());
+  }
+
   int load_flags = GetLoadFlagsForWebURLRequest(info.url_request);
   std::unique_ptr<base::DictionaryValue> initiator;
   if (!info.devtools_initiator_info.IsNull()) {
@@ -6780,7 +6793,8 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           initiator_origin, client_side_redirect_url, std::move(initiator));
 
   GetFrameHost()->BeginNavigation(MakeCommonNavigationParams(info, load_flags),
-                                  std::move(begin_navigation_params));
+                                  std::move(begin_navigation_params),
+                                  std::move(blob_url_loader_factory));
 }
 
 void RenderFrameImpl::LoadDataURL(
@@ -7350,7 +7364,18 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       triggering_event_info(info.triggering_event_info),
       form(info.form),
       source_location(info.source_location),
-      devtools_initiator_info(info.devtools_initiator_info) {}
+      devtools_initiator_info(info.devtools_initiator_info) {
+  if (info.blob_url_loader_factory.is_valid()) {
+    network::mojom::URLLoaderFactoryPtr factory(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            mojo::ScopedMessagePipeHandle(info.blob_url_loader_factory.get()),
+            network::mojom::URLLoaderFactory::Version_));
+    factory->Clone(MakeRequest(&blob_url_loader_factory));
+    ignore_result(factory.PassInterface().PassHandle().release());
+  }
+}
+
+RenderFrameImpl::PendingNavigationInfo::~PendingNavigationInfo() = default;
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));

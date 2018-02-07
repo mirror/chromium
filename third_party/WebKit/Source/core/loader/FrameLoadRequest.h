@@ -115,6 +115,25 @@ struct CORE_EXPORT FrameLoadRequest {
     return devtools_navigation_token_;
   }
 
+  void SetBlobURLLoaderFactory(
+      network::mojom::blink::URLLoaderFactoryPtr factory) {
+    if (factory) {
+      blob_url_loader_factory_ = base::MakeRefCounted<
+          base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>>(
+          std::move(factory));
+    } else {
+      blob_url_loader_factory_ = nullptr;
+    }
+  }
+
+  network::mojom::blink::URLLoaderFactoryPtr GetBlobURLLoaderFactory() const {
+    if (!blob_url_loader_factory_)
+      return nullptr;
+    network::mojom::blink::URLLoaderFactoryPtr result;
+    blob_url_loader_factory_->data->Clone(MakeRequest(&result));
+    return result;
+  }
+
  private:
   FrameLoadRequest(Document* origin_document,
                    const ResourceRequest&,
@@ -136,6 +155,9 @@ struct CORE_EXPORT FrameLoadRequest {
   ContentSecurityPolicyDisposition
       should_check_main_world_content_security_policy_;
   base::UnguessableToken devtools_navigation_token_;
+  scoped_refptr<
+      base::RefCountedData<network::mojom::blink::URLLoaderFactoryPtr>>
+      blob_url_loader_factory_;
 };
 
 }  // namespace blink
