@@ -6439,6 +6439,16 @@ void RenderFrameImpl::OpenURL(const NavigationPolicyInfo& info,
           ? base::Optional<std::string>(
                 info.url_request.GetSuggestedFilename()->Utf8())
           : base::nullopt;
+  if (info.blob_url_loader_factory.is_valid()) {
+    network::mojom::URLLoaderFactoryPtrInfo clone;
+    network::mojom::URLLoaderFactoryPtr factory(
+        network::mojom::URLLoaderFactoryPtrInfo(
+            mojo::ScopedMessagePipeHandle(info.blob_url_loader_factory.get()),
+            network::mojom::URLLoaderFactory::Version_));
+    factory->Clone(MakeRequest(&clone));
+    ignore_result(factory.PassInterface().PassHandle().release());
+    params.blob_url_loader_factory = clone.PassHandle().release();
+  }
 
   if (IsBrowserInitiated(pending_navigation_params_.get())) {
     // This is necessary to preserve the should_replace_current_entry value on

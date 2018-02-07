@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/strings/string_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -26,6 +27,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "services/network/public/cpp/features.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -1216,6 +1218,52 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginLongListTest, Test) {
   EXPECT_NE(main_frame->GetSiteInstance(), subframe2->GetSiteInstance());
   EXPECT_NE(subframe1->GetProcess()->GetID(), subframe2->GetProcess()->GetID());
   EXPECT_NE(subframe1->GetSiteInstance(), subframe2->GetSiteInstance());
+}
+
+class IsolatedOriginTestWithMojoBlobURLs : public IsolatedOriginTest {
+ public:
+  IsolatedOriginTestWithMojoBlobURLs() {
+    scoped_feature_list_.InitAndEnableFeature(
+        network::features::kNetworkService);
+  }
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    IsolatedOriginTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kEnableBlinkFeatures,
+                                    "MojoBlobURLs");
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTestWithMojoBlobURLs, NavigateToBlobURL) {
+  GURL top_url(
+      embedded_test_server()->GetURL("www.foo.com", "/page_with_iframe.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), top_url));
+
+  GURL isolated_url(embedded_test_server()->GetURL("isolated.foo.com",
+                                                   "/page_with_iframe.html"));
+
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  NavigateIframeToURL(web_contents(), "test_iframe", isolated_url);
+  EXPECT_EQ(child->current_url(), isolated_url);
+  EXPECT_TRUE(child->current_frame_host()->IsCrossProcessSubframe());
+
+  // Now navigate the child frame to a Blob URL.
+  TestNavigationObserver load_observer(shell()->web_contents());
+  EXPECT_TRUE(ExecuteScript(shell()->web_contents()->GetMainFrame(),
+                            "const b = new Blob(['foo']);\n"
+                            "const u = URL.createObjectURL(b);\n"
+                            "frames[0].location = u;\n"
+                            "URL.revokeObjectURL(u);"));
+  load_observer.Wait();
+  EXPECT_TRUE(base::StartsWith(child->current_url().spec(),
+                               "blob:http://www.foo.com",
+                               base::CompareCase::SENSITIVE));
+  EXPECT_TRUE(load_observer.last_navigation_succeeded());
 }
 
 }  // namespace content

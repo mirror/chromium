@@ -18,6 +18,7 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/referrer.h"
+#include "content/public/common/shared_url_loader_factory.h"
 #include "ipc/ipc_message.h"
 #include "services/network/public/cpp/resource_request_body.h"
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
@@ -110,6 +111,9 @@ struct CONTENT_EXPORT OpenURLParams {
   // attribute, |suggested_filename| will contain the (possibly empty) value of
   // that attribute.
   base::Optional<std::string> suggested_filename;
+
+  // Optional URLLoaderFactory to facilitate blob URL loading.
+  scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory;
 
  private:
   OpenURLParams();

@@ -2562,7 +2562,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   // https://crbug.com/620261.
   std::unique_ptr<NavigationEntryImpl> cloned_entry =
       NavigationEntryImpl::FromNavigationEntry(
-          NavigationControllerImpl::CreateNavigationEntry(
+          NavigationController::CreateNavigationEntry(
               url1, Referrer(), ui::PAGE_TRANSITION_RELOAD, false,
               std::string(), shell()->web_contents()->GetBrowserContext()));
   prev_entry = shell()->web_contents()->GetController().GetEntryAtIndex(0);
