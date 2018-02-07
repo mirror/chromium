@@ -22,6 +22,29 @@
       "revId": "cb2d080cf65a55b9027e889ff5fb6c8a0ce72484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebb4fe0_5b2f83dd",
+        "filename": "notification_helper/run_all_unittests.cc",
+        "patchSetId": 90
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T12:18:56Z",
+      "side": 1,
+      "message": "it just occurred to me that you probably need LaunchUnitTestsSerially here since these tests will mutate machine state -- they\u0027ll stomp all over one another if they run in parallel.",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "cb2d080cf65a55b9027e889ff5fb6c8a0ce72484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
