@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f795b480_e2474704",
+        "filename": "extensions/docs/new_api_proposal.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T19:47:45Z",
+      "side": 1,
+      "message": "Was trying to address that component extensions are often given a pass for this.  Changed phrasing to be \"non-component\"",
+      "parentUuid": "4048ddf6_0e84ea59",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "68fe9d7a28abdad22968def69a099540d79ddfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f6967bb_d797e887",
         "filename": "extensions/docs/new_api_proposal.md",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f998c7bf_3d31eb64",
+        "filename": "extensions/docs/new_api_proposal.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T19:47:45Z",
+      "side": 1,
+      "message": "Whoops!  Done.",
+      "parentUuid": "7f6967bb_d797e887",
+      "range": {
+        "startLine": 100,
+        "startChar": 46,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "68fe9d7a28abdad22968def69a099540d79ddfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302da74a_fb0e68bc",
         "filename": "extensions/docs/new_api_proposal.md",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "68fe9d7a28abdad22968def69a099540d79ddfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54624a35_9734a829",
+        "filename": "extensions/docs/new_api_proposal.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T19:47:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302da74a_fb0e68bc",
+      "range": {
+        "startLine": 103,
+        "startChar": 41,
+        "endLine": 103,
+        "endChar": 44
+      },
+      "revId": "68fe9d7a28abdad22968def69a099540d79ddfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
