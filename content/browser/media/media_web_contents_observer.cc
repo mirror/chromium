@@ -120,18 +120,19 @@ bool MediaWebContentsObserver::OnMessageReceived(
   return handled;
 }
 
-void MediaWebContentsObserver::WasShown() {
-  // Restore wake lock if there are active video players running.
-  if (!active_video_players_.empty())
-    LockVideo();
-}
-
-void MediaWebContentsObserver::WasHidden() {
-  // If there are entities capturing screenshots or video (e.g., mirroring),
-  // don't release the wake lock.
-  if (!web_contents()->IsBeingCaptured()) {
-    GetVideoWakeLock()->CancelWakeLock();
-    has_video_wake_lock_for_testing_ = false;
+void MediaWebContentsObserver::OnVisibilityChanged(
+    content::Visibility visibility) {
+  if (visibility == content::Visibility::VISIBLE) {
+    // Restore wake lock if there are active video players running.
+    if (!active_video_players_.empty())
+      LockVideo();
+  } else {
+    // If there are entities capturing screenshots or video (e.g., mirroring),
+    // don't release the wake lock.
+    if (!web_contents()->IsBeingCaptured()) {
+      GetVideoWakeLock()->CancelWakeLock();
+      has_video_wake_lock_for_testing_ = false;
+    }
   }
 }
 

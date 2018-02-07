@@ -63,8 +63,9 @@ class WebContentsModalDialogManager
 
     void CloseAllDialogs() { manager_->CloseAllDialogs(); }
     void DidAttachInterstitialPage() { manager_->DidAttachInterstitialPage(); }
-    void WebContentsWasShown() { manager_->WasShown(); }
-    void WebContentsWasHidden() { manager_->WasHidden(); }
+    void WebContentsVisibilityChanged(content::Visibility visibility) {
+      manager_->OnVisibilityChanged(visibility);
+    }
 
    private:
     WebContentsModalDialogManager* manager_;
@@ -100,8 +101,7 @@ class WebContentsModalDialogManager
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
   void DidGetIgnoredUIEvent() override;
-  void WasShown() override;
-  void WasHidden() override;
+  void OnVisibilityChanged(content::Visibility visibility) override;
   void WebContentsDestroyed() override;
   void DidAttachInterstitialPage() override;
 
