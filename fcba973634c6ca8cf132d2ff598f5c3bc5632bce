@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52568dbb_3f3f7ccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-07T19:42:23Z",
+      "side": 1,
+      "message": "Update the title",
+      "revId": "fcba973634c6ca8cf132d2ff598f5c3bc5632bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29bf6b9_c0ea9d5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-07T19:42:23Z",
+      "side": 1,
+      "message": "Please explain what the cl does here (some details).",
+      "revId": "fcba973634c6ca8cf132d2ff598f5c3bc5632bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
