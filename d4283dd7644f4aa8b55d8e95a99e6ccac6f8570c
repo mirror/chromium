@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6caccdfc_ac7c210a",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2724,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T20:48:58Z",
+      "side": 1,
+      "message": "nit: please change to a more descriptive name than l",
+      "range": {
+        "startLine": 2724,
+        "startChar": 0,
+        "endLine": 2724,
+        "endChar": 24
+      },
+      "revId": "d4283dd7644f4aa8b55d8e95a99e6ccac6f8570c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd89081_d6dca411",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2727,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T20:48:58Z",
+      "side": 1,
+      "message": "nit: same as above",
+      "revId": "d4283dd7644f4aa8b55d8e95a99e6ccac6f8570c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a029de6_94e09e3f",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2745,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T20:48:58Z",
+      "side": 1,
+      "message": "Can you use an absolute path here unless it isn\u0027t possible? (changes based on the build bot).",
+      "revId": "d4283dd7644f4aa8b55d8e95a99e6ccac6f8570c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
