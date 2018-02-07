@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cb23dc1_de1f6576",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T02:16:18Z",
+      "side": 1,
+      "message": "The normal ToolbarModelImpl is created within the Browser constructor. If we were to make it dependency injected in some way, it would be an added complication to the production code. \n\nCurrently we use the swap_toolbar_models method that\u0027s compiled into the test code only. It\u0027s a little awkward, but it\u0027s only used in two places (here and zoom_decoration_browsertest.mm) and it\u0027s very explicit in what it does. I generally like test code to be really \u0027dumb\u0027.",
+      "parentUuid": "bed807eb_e9908dd4",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f79b1d79_6276d8eb",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7f15e2_36ad8f28",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79b1d79_6276d8eb",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a6702a2b_e79698d9",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a32b82_7492da03",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7a5e211_0cd69f9f",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 15
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "476a7a38_e9b5f727",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a5e211_0cd69f9f",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4d89e7e_ca6e3a1f",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
         "patchSetId": 15
@@ -84,6 +156,24 @@
       "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2c7eeb_a17ede95",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T02:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4d89e7e_ca6e3a1f",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
