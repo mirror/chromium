@@ -19,6 +19,7 @@
 class AppDistributionProvider;
 class BrandedImageProvider;
 class ExternalSearchProvider;
+class MailtoHandlerProvider;
 class OmahaServiceProvider;
 class SpotlightProvider;
 class UserFeedbackProvider;
@@ -153,6 +154,9 @@ class ChromeBrowserProvider {
 
   // Returns an instance of the spotlight provider.
   virtual SpotlightProvider* GetSpotlightProvider() const;
+
+  // Returns an instance of the mailto handler provider.
+  virtual MailtoHandlerProvider* GetMailtoHandlerProvider() const;
 
   // Returns an instance of the External Search provider.
   virtual ExternalSearchProvider* GetExternalSearchProvider() const;
