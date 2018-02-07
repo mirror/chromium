@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "2d3ed84c_5e6f2857",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T06:54:15Z",
+      "side": 1,
+      "message": "Good idea, done!",
+      "parentUuid": "c44a7e1c_3bf77f8b",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15a0e40_7b4c4978",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 6
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Note that GC can collect Members.\n\nclass A : GC\u003cA\u003e {\n  WeakMember\u003cB\u003e b_;\n};\n\nmakes sense if and only if A outlives B.\n\nAs far as I understand, the promise resolver won\u0027t outlive the element.",
       "parentUuid": "a1c6b408_24207674",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8948f585_e04810fe",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T06:54:15Z",
+      "side": 1,
+      "message": "Ok, I made it a Member\u003cElement\u003e and I also pass in a reference (since it\u0027s DCHECK-ed to be non-null at the call site).",
+      "parentUuid": "160cf46e_39b1e312",
       "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
