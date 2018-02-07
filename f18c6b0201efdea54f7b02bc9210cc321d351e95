@@ -139,6 +139,24 @@
       "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce9d90c9_f366bf99",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2018-02-07T04:18:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aba38a38_1df65406",
+      "revId": "f18c6b0201efdea54f7b02bc9210cc321d351e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
