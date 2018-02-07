@@ -72,7 +72,7 @@ TEST(LayerAnimationElementTest, TransformElement) {
 
   std::unique_ptr<LayerAnimationElement> element =
       LayerAnimationElement::CreateTransformElement(target_transform, delta);
-  element->set_animation_group_id(1);
+  element->set_keyframe_model_group_id(1);
 
   for (int i = 0; i < 2; ++i) {
     start_time = effective_start_time + delta;
@@ -485,13 +485,13 @@ TEST(LayerAnimationElementTest, ToString) {
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   std::unique_ptr<LayerAnimationElement> element =
       LayerAnimationElement::CreateOpacityElement(target, delta);
-  element->set_animation_group_id(42);
+  element->set_keyframe_model_group_id(42);
   // TODO(wkorman): Test varying last_progressed_fraction.
   EXPECT_EQ(
       base::StringPrintf("LayerAnimationElement{name=ThreadedOpacityTransition,"
                          " id=%d, group=42, "
                          "last_progressed_fraction=0.00}",
-                         element->animation_id()),
+                         element->keyframe_model_id()),
       element->ToString());
 }
 
