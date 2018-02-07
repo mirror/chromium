@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "517c3bfd_efd0e832",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T16:36:50Z",
+      "side": 1,
+      "message": "nit: curlies\n\noptional nit: I might rewrite this as\n\ntop_down \u003d\u003d (GetBaselineForToast(toasts_.back()) \u003c\n                     last_removed_notification_baseline_)",
+      "range": {
+        "startLine": 334,
+        "startChar": 57,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "cc3b217fc7bc64cc57ce2440b4be172bb6f9ed42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083d2b05_b3a2b797",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T16:36:50Z",
+      "side": 1,
+      "message": "nit: curlies",
+      "range": {
+        "startLine": 343,
+        "startChar": 79,
+        "endLine": 343,
+        "endChar": 0
+      },
+      "revId": "cc3b217fc7bc64cc57ce2440b4be172bb6f9ed42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f13ceee_481da018",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T16:36:50Z",
+      "side": 1,
+      "message": "minor nit: seems easier to see the similarity here if you use toast-\u003ebounds().y() and toast-\u003ebounds().bottom()",
+      "range": {
+        "startLine": 381,
+        "startChar": 18,
+        "endLine": 383,
+        "endChar": 23
+      },
+      "revId": "cc3b217fc7bc64cc57ce2440b4be172bb6f9ed42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
