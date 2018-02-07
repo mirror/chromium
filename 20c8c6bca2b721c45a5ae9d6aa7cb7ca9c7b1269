@@ -216,6 +216,24 @@
     },
     {
       "key": {
+        "uuid": "df3a6d2c_5b4c00fe",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2018-02-07T15:44:22Z",
+      "side": 1,
+      "message": "This is a much better fix! Thanks - LGTM.",
+      "parentUuid": "52f06a64_a35cb658",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2445864_4f58a29c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
