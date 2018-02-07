@@ -603,10 +603,7 @@ LayoutRect PaintLayerClipper::LocalVisualRect(
   // At this point layer_bounds_with_visual_overflow only includes the visual
   // overflow induced by paint, prior to applying filters. This function is
   // expected the return the final visual rect after filtering.
-  if (layer_.PaintsWithFilters() &&
-      // If we use GeometryMapper to map to an ancestor layer, GeometryMapper
-      // will handle filter effects.
-      (!use_geometry_mapper_ || context.root_layer == &layer_)) {
+  if (layer_.PaintsWithFilters()) {
     layer_bounds_with_visual_overflow =
         layer_.MapLayoutRectForFilter(layer_bounds_with_visual_overflow);
   }
