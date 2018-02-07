@@ -1192,6 +1192,10 @@ config("default_warnings") {
       # destruction happens in such cases).
       "/wd4611",
 
+      # We use some clang:: attribute specifiers that MSVC does not recognize
+      # and should ignore. Disable warning about those.
+      "/wd5030",
+
       # Warnings to evaluate and possibly fix/reenable later:
 
       "/wd4100",  # Unreferenced formal function parameter.
