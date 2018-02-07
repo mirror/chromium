@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ded7eae_ddefa7af",
+        "filename": "third_party/WebKit/LayoutTests/css3/blending/background-blend-mode-gif-color-2.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T23:38:50Z",
+      "side": 0,
+      "message": "Isn\u0027t this test useful even without testing the second animation frame?",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d114164_18fd086a",
+        "filename": "third_party/WebKit/LayoutTests/images/animated-png.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T23:38:50Z",
+      "side": 0,
+      "message": "Double-checking: is this use-case unittested in cc?",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ae4198_2f35aa70",
+        "filename": "third_party/WebKit/LayoutTests/images/dispose-previous.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T23:38:50Z",
+      "side": 0,
+      "message": "Double-checking: is crbug.com/722072 tested sufficiently elsewhere?",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
