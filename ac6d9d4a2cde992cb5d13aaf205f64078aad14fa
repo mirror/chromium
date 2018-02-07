@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "031a8930_22f58eb6",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-02-07T17:56:43Z",
+      "side": 1,
+      "message": "Slightly different wording, but done.",
+      "parentUuid": "42602353_398452b3",
+      "revId": "ac6d9d4a2cde992cb5d13aaf205f64078aad14fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa595807_8ffb388c",
         "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ac6d9d4a2cde992cb5d13aaf205f64078aad14fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473bf08b_caac13cd",
+        "filename": "components/subresource_filter/core/common/tools/filter_tool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2018-02-07T17:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa595807_8ffb388c",
+      "revId": "ac6d9d4a2cde992cb5d13aaf205f64078aad14fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
