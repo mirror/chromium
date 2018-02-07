@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a2e35eb_986797ee",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab03d5f8_7a76816e",
+      "range": {
+        "startLine": 2483,
+        "startChar": 37,
+        "endLine": 2483,
+        "endChar": 69
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ab56ac_99ba6f74",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 53
@@ -45,6 +69,30 @@
       "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004bd8c1_f96e4ca4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ab56ac_99ba6f74",
+      "range": {
+        "startLine": 2505,
+        "startChar": 20,
+        "endLine": 2505,
+        "endChar": 47
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "574a9f1f_de6342c3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 53
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Porque no los dos?\n\nThere is a funky extra indirection to be aware of.\nI can make these private both here and in the overrides.\nBut they then call window_-\u003eSetAllocationPendingFlag(), for example:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/861643/54/content/browser/renderer_host/render_widget_host_view_aura.cc#2513\n\nSo then to keep following this guideline I could make those private in Window and make RWHVA a friend...\nBut that step makes it feel like we\u0027re taking it too far to me.\n\nI\u0027ll do just this first step you suggested.\n\n\nIf we wanted to make things ultra clear: These two functions are the only two we want the lock to have access to. So we could put them in an interface, make the lock a friend of that interface, and make RWHVB derive from that interface.\n\nWe could then do the same on the indirection and it wouldn\u0027t feel so weird.",
+      "parentUuid": "634f6368_79d8047b",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 39
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad74b89_f936d059",
         "filename": "content/browser/renderer_host/scoped_allocation_pending_lock.cc",
         "patchSetId": 53
@@ -91,6 +163,30 @@
       "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e884f327_c4caa017",
+        "filename": "content/browser/renderer_host/scoped_allocation_pending_lock.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Whoops.",
+      "parentUuid": "2ad74b89_f936d059",
+      "range": {
+        "startLine": 5,
+        "startChar": 40,
+        "endLine": 5,
+        "endChar": 68
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3b2d0950_d3b9112e",
+        "filename": "content/browser/renderer_host/scoped_allocation_pending_lock.h",
+        "patchSetId": 53
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8708fe63_078874b4",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cfe06a_cf31e799",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 53
@@ -137,6 +257,30 @@
       "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08484c52_cba5dd83",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2887,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Whoops x2.\nThat was a copy pasta mistake from when I moved the if (view) { chunk back below the if (delegate_) chunk.\n\nThank you.",
+      "parentUuid": "11cfe06a_cf31e799",
+      "range": {
+        "startLine": 2887,
+        "startChar": 19,
+        "endLine": 2887,
+        "endChar": 26
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6625c293_7e19a60f",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "Not sure. Probably I wasn\u0027t paying close attention.",
+      "parentUuid": "59e36ac4_37cfe303",
+      "range": {
+        "startLine": 683,
+        "startChar": 4,
+        "endLine": 683,
+        "endChar": 24
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1f24052_7a74e5f9",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 53
@@ -183,6 +351,30 @@
       "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84134c0b_4254f528",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-02-07T09:11:19Z",
+      "side": 1,
+      "message": "You\u0027re right. Since HandlePotentialLocalSurfaceIdConflict() already sets local_surface_id_, I don\u0027t need to set it again. And this would be setting it to the non-merged version anyway.",
+      "parentUuid": "e1f24052_7a74e5f9",
+      "range": {
+        "startLine": 1415,
+        "startChar": 4,
+        "endLine": 1415,
+        "endChar": 21
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
