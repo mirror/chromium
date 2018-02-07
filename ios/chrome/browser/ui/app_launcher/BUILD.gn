@@ -20,6 +20,7 @@ source_set("app_launcher") {
     "//ios/chrome/app/strings:ios_strings_grit",
     "//ios/chrome/browser",
     "//ios/chrome/browser/app_launcher",
+    "//ios/chrome/browser/mailto:features",
     "//ios/chrome/browser/ui/collection_view",
     "//ios/chrome/browser/web",
     "//ios/third_party/material_components_ios",
