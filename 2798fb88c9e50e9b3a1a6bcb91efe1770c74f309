@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2b80b182_9868f729",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:20:20Z",
+      "side": 1,
+      "message": "Could you also add an explanation for the reason for this change? I think it\u0027s a good change whether it fixes 795369 or not, but at present it is only a speculative fix right?",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74401e65_a07af493",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 1
