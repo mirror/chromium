@@ -380,6 +380,29 @@
       "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bd85cea_a3ffb6d8",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T22:10:16Z",
+      "side": 1,
+      "message": "In looking at this code I think this is a perfect example of what I was saying. That BubbleIconView directly implements WidgetObserver is an implementation detail. Only BubbleIconView should be the one attaching the observer by way of a function like you have here. At which point BubbleIconView can query for the state. It\u0027s unfortunate that the style guide doesn\u0027t allow private inheritance, which would prevent problems like you\u0027ve outlined.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
