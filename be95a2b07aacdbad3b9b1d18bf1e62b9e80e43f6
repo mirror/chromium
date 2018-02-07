@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4244157_e42b81d4",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T23:18:25Z",
+      "side": 1,
+      "message": "Does this trigger when avatarImage is not defined? Should we change the C++ to always provide the |avatarImage| field, populated with null in cases where no such image exists?",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "be95a2b07aacdbad3b9b1d18bf1e62b9e80e43f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
