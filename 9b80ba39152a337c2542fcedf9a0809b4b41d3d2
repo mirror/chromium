@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c1bb11c_f343d019",
+        "filename": "net/dns/dns_reloader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "817b7ce0_fab564ce",
+      "range": {
+        "startLine": 98,
+        "startChar": 35,
+        "endLine": 98,
+        "endChar": 56
+      },
+      "revId": "9b80ba39152a337c2542fcedf9a0809b4b41d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c484f5ec_a5b19ce6",
         "filename": "third_party/crashpad/crashpad/util/thread/thread_log_messages.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9b80ba39152a337c2542fcedf9a0809b4b41d3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b0871c_302f9380",
+        "filename": "third_party/crashpad/crashpad/util/thread/thread_log_messages.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c484f5ec_a5b19ce6",
+      "range": {
+        "startLine": 75,
+        "startChar": 35,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "9b80ba39152a337c2542fcedf9a0809b4b41d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

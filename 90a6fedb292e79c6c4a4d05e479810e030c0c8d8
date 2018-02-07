@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40e97145_98bb8fe8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6415b255_42a73463",
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45220601_64f67804",
         "filename": "base/debug/thread_heap_usage_tracker.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2671110d_c95eaabe",
+        "filename": "base/debug/thread_heap_usage_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45220601_64f67804",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "aac85471_77687f6a",
+        "filename": "base/debug/thread_heap_usage_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05f80ec_779b5977",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d43ec2_403809d9",
         "filename": "base/threading/thread_local_storage.cc",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857722bc_485dc787",
+        "filename": "base/threading/thread_local_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d43ec2_403809d9",
+      "range": {
+        "startLine": 326,
+        "startChar": 6,
+        "endLine": 326,
+        "endChar": 43
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "60eefb4e_be6d1543",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Done\nAny reason for the preference?",
+      "parentUuid": "a21587a8_fca14a91",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a353e839_ebf3a1fe",
         "filename": "base/threading/thread_local_storage.h",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a745cb1_8ed1e75d",
+        "filename": "base/threading/thread_local_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "DCHECK done immediately before the slot_ assignment in Initialize",
+      "parentUuid": "a353e839_ebf3a1fe",
+      "range": {
+        "startLine": 129,
+        "startChar": 13,
+        "endLine": 129,
+        "endChar": 14
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +437,30 @@
       "writtenOn": "2018-02-05T11:17:25Z",
       "side": 1,
       "message": "Move this up to line 33 instead of fwd-declaring it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 1
+      },
+      "revId": "90a6fedb292e79c6c4a4d05e479810e030c0c8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f37d17_1c571091",
+        "filename": "base/threading/thread_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1146127
+      },
+      "writtenOn": "2018-02-07T15:46:34Z",
+      "side": 1,
+      "message": "Not much point in this. We\u0027d have to forward declare TLSSlot() before ThreadLocalStorageCleanup",
+      "parentUuid": "38cc335b_cdaa34fe",
       "range": {
         "startLine": 69,
         "startChar": 0,
