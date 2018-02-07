@@ -1613,7 +1613,7 @@ void RenderWidgetHostImpl::GetSnapshotFromBrowser(
     pending_surface_browser_snapshots_.insert(std::make_pair(id, callback));
     ui::LatencyInfo latency_info;
     latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
-                                  0, id);
+                                  id);
     Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
     return;
   }
@@ -1627,7 +1627,7 @@ void RenderWidgetHostImpl::GetSnapshotFromBrowser(
 #endif
   pending_browser_snapshots_.insert(std::make_pair(id, callback));
   ui::LatencyInfo latency_info;
-  latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT, 0,
+  latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
                                 id);
   Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
 }
@@ -1929,8 +1929,8 @@ void RenderWidgetHostImpl::OnGpuSwapBuffersCompletedInternal(
   if (latency_info.FindLatency(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
                                GetLatencyComponentId(),
                                &window_snapshot_component)) {
-    int sequence_number =
-        static_cast<int>(window_snapshot_component.sequence_number);
+    static int snapshot_id = 0;
+    ++snapshot_id;
 #if defined(OS_MACOSX) || defined(OS_WIN)
     // On Mac, when using CoreAnimation, or Win32 when using GDI, there is a
     // delay between when content is drawn to the screen, and when the
@@ -1940,10 +1940,10 @@ void RenderWidgetHostImpl::OnGpuSwapBuffersCompletedInternal(
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
         base::Bind(&RenderWidgetHostImpl::WindowSnapshotReachedScreen,
-                   weak_factory_.GetWeakPtr(), sequence_number),
+                   weak_factory_.GetWeakPtr(), snapshot_id),
         base::TimeDelta::FromSecondsD(1. / 6));
 #else
-    WindowSnapshotReachedScreen(sequence_number);
+    WindowSnapshotReachedScreen(snapshot_id);
 #endif
   }
 

@@ -127,10 +127,6 @@ enum SourceEventType {
 class LatencyInfo {
  public:
   struct LatencyComponent {
-    // Nondecreasing number that can be used to determine what events happened
-    // in the component at the time this struct was sent on to the next
-    // component.
-    int64_t sequence_number;
     // Average time of events that happened in this component.
     base::TimeTicks event_time;
     // Count of events that happened in this component
@@ -179,23 +175,19 @@ class LatencyInfo {
 
   // Modifies the current sequence number for a component, and adds a new
   // sequence number with the current timestamp.
-  void AddLatencyNumber(LatencyComponentType component,
-                        int64_t id,
-                        int64_t component_sequence_number);
+  void AddLatencyNumber(LatencyComponentType component, int64_t id);
 
   // Similar to |AddLatencyNumber|, and also appends |trace_name_str| to
   // the trace event's name.
   // This function should only be called when adding a BEGIN component.
   void AddLatencyNumberWithTraceName(LatencyComponentType component,
                                      int64_t id,
-                                     int64_t component_sequence_number,
                                      const char* trace_name_str);
 
   // Modifies the current sequence number and adds a certain number of events
   // for a specific component.
   void AddLatencyNumberWithTimestamp(LatencyComponentType component,
                                      int64_t id,
-                                     int64_t component_sequence_number,
                                      base::TimeTicks time,
                                      uint32_t event_count);
 
@@ -245,7 +237,6 @@ class LatencyInfo {
  private:
   void AddLatencyNumberWithTimestampImpl(LatencyComponentType component,
                                          int64_t id,
-                                         int64_t component_sequence_number,
                                          base::TimeTicks time,
                                          uint32_t event_count,
                                          const char* trace_name_str);

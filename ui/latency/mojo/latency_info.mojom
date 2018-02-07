@@ -99,10 +99,6 @@ struct LatencyComponentId {
 };
 
 struct LatencyComponent {
-  // Nondecreasing number that can be used to determine what events happened
-  // in the component at the time this struct was sent on to the next
-  // component.
-  int64 sequence_number;
   // Average time of events that happened in this component.
   mojo.common.mojom.TimeTicks event_time;
   // Count of events that happened in this component
