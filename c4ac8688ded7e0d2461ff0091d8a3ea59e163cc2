@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec957a6b_485790e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-07T08:46:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d83781f6_d0c71327",
+      "range": {
+        "startLine": 9,
+        "startChar": 126,
+        "endLine": 9,
+        "endChar": 138
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9116fbaf_17a3b618",
         "filename": "chrome/installer/mini_installer/BUILD.gn",
         "patchSetId": 14
@@ -152,6 +176,30 @@
       "side": 1,
       "message": "We should try hard to avoid differences between trybots and waterfall bots, because then you get waterfall-specific build failures that don\u0027t reproduce on the trybots.\n\nCan we only do the compression in official builds? We already expect those to be significantly slower, and we do catch those failures on the waterfall.",
       "parentUuid": "90e3d17c_2c434674",
+      "range": {
+        "startLine": 2096,
+        "startChar": 44,
+        "endLine": 2096,
+        "endChar": 76
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa255ea_f32d710b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 14
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-07T08:46:47Z",
+      "side": 1,
+      "message": "Changed to enable compression only for chrome branded build.",
+      "parentUuid": "07feba15_867ebd25",
       "range": {
         "startLine": 2096,
         "startChar": 44,
