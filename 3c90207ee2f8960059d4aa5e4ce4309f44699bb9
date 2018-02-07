@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f37b4868_72469bfa",
+        "filename": "third_party/WebKit/Source/core/layout/custom/PendingLayoutRegistry.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-02-07T17:54:21Z",
+      "side": 1,
+      "message": "Is accessing node-\u003eComputedStyle safe? E.g. will is be better to do:\n\nif (node \u0026\u0026 node-\u003eGetComputedStyle() \u0026\u0026 node-\u003eGetComputedStyle()-\u003eDisplay() \u003d\u003d kLayoutCustom \u0026\u0026 node-\u003eGetComputedStyle()-\u003eDisplayLayoutCustomName() \u003d\u003d name)\n\n?",
+      "revId": "3c90207ee2f8960059d4aa5e4ce4309f44699bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
