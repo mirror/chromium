@@ -12,8 +12,9 @@
       "provides": {
         "renderer": [
           "autofill::mojom::AutofillDriver",
-          "autofill::mojom::PasswordManagerDriver",
+          "autofill::mojom::PasswordManagerDriver",          
           "blink::mojom::TextSuggestionHost",
+          "blink::mojom::UnhandledTapNotifier",
           "web_restrictions::mojom::WebRestrictions"
         ]
       }
