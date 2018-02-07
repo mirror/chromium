@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "75810bec_fb7c8291",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:43:30Z",
+      "side": 1,
+      "message": "nit: have a reference to the spec number and section?",
+      "revId": "3105435e35361274ac1f392507734080254378f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4066f6c_2b7439ff",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:43:30Z",
+      "side": 1,
+      "message": "nit: user\u0027s -\u003e users\u0027",
+      "revId": "3105435e35361274ac1f392507734080254378f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1331687c_c0b96da5",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_perftest.cc",
         "patchSetId": 2

@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "97c20db4_7394bb0f",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:43:30Z",
+      "side": 1,
+      "message": "Ack. Right, a briefly codesearch lead me to this if-conditional and I wasn\u0027t sure why InitTable() is used here. Makes sense. I will wait for next patch.",
+      "parentUuid": "e2ce4555_7936746c",
+      "range": {
+        "startLine": 1044,
+        "startChar": 9,
+        "endLine": 1044,
+        "endChar": 18
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "396a4fd9_f595fc76",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
