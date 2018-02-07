@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "226ca183_53b6abab",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "It seems this doesn\u0027t support multiple DialMediaRouteProvider instances (i.e. multiple profiles). I think with the current architecture, it will be a bit challenging to make MediaRouter / DialMediaRouteProvider singletons, so an alternative is to support multiple callbacks here.",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d5a9278_2f9b7b99",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 2
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "3030cca9_6f1b719c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "DCHECK(!app_name.empty());",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e07be25_a9826e92",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 2
@@ -30,6 +64,166 @@
       "writtenOn": "2018-02-06T23:05:41Z",
       "side": 1,
       "message": "It seems like the results for all media sources that match a given app name will be identical.\n\nMaybe this class doesn\u0027t need to worry about keeping track of all the media sources passed in and can just invoke the sinks observer with dial:\u003cappname\u003e?\n\nWhat do you think as well Derek?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5a9689_4e998a32",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "Either this class or DialMediaRouteProvider will have to do the app to MediaSources mapping. I think there\u0027s a slightly advantage of doing this in DialMediaRouteProvider in order to make this class less complicated.",
+      "parentUuid": "9e07be25_a9826e92",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f764f6be_43b3bc08",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "Should we only invoke the cb if the entry exists in cached_available_sinks_ and it is not empty?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f16b23_fee9f68f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "We\u0027d only want to stop monitoring if there are no more sources that corresponds to the app name?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4109ea80_2b67af4d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "registered_media_sources_.erase(media_sources_it) if the set is empty after the erase?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba5441e_cc272310",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "You can drop the const ref qualifier here.",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845683fa_c31870a9",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "This can be removed now.",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4b55ee_a35c62a2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "Since Cast also uses this definition, it will be better to move this to a common place, maybe media_sink_service_util.h.",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e41ba2_b120bbc9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "SinkAvailability is something we implemented a while ago to prevent waking up the extension on a sink query when there are no sinks.  I think there is still value for in-browser MRPs. As a temp workaround (with TODO to implement it properly), can we make DialMediaRouteProvider call OnSinkAvailabilityUpdated(PER_SOURCE) at the start?",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac292a84_2b33298d",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T19:37:52Z",
+      "side": 1,
+      "message": "This is probably not needed since it is only called by SearchSinks, which isn\u0027t supported by the DIAL MRP.",
       "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
