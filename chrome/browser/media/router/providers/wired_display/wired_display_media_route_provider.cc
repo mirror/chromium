@@ -117,9 +117,10 @@ void WiredDisplayMediaRouteProvider::CreateRoute(
                    true, true);
   route.set_local_presentation(true);
   route.set_incognito(profile_->IsOffTheRecord());
+  route.set_provider_id(kProviderId);
+
   Presentation presentation =
       CreatePresentation(presentation_id, *display, route);
-
   presentation.receiver->Start(presentation_id, GURL(media_source));
   presentations_.emplace(presentation_id, std::move(presentation));
   std::move(callback).Run(route, base::nullopt, RouteRequestResult::OK);

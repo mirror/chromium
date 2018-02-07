@@ -32,12 +32,14 @@ const int kInvalidTabId = -1;
 const int kTimeoutMillis = 5 * 1000;
 const uint8_t kBinaryMessage[] = {0x01, 0x02, 0x03, 0x04};
 
-// Creates a media route whose ID is |kRouteId|.
-MediaRoute CreateMediaRoute() {
+// Creates a media route whose ID is |kRouteId| and provider ID is
+// |provider_id|.
+MediaRoute CreateMediaRoute(MediaRouteProviderId provider_id) {
   MediaRoute route(kRouteId, MediaSource(kSource), kSinkId, kDescription, true,
                    true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
+  route.set_provider_id(provider_id);
   return route;
 }
 
@@ -207,9 +209,9 @@ void MediaRouterMojoTest::ProvideTestRoute(MediaRouteProviderId provider_id,
                                            const MediaRoute::Id& route_id) {
   if (!routes_observer_)
     routes_observer_ = std::make_unique<MediaRoutesObserver>(router(), kSource);
-  MediaRoute route = CreateMediaRoute();
+  MediaRoute route = CreateMediaRoute(provider_id);
   route.set_media_route_id(route_id);
-  router()->OnRoutesUpdated(provider_id, {route}, kSource, {});
+  router()->OnRoutesUpdated(provider_id, {route}, "", {});
 }
 
 void MediaRouterMojoTest::ProvideTestSink(MediaRouteProviderId provider_id,
@@ -243,8 +245,8 @@ void MediaRouterMojoTest::TestCreateRoute() {
                           const url::Origin& origin, int tab_id,
                           base::TimeDelta timeout, bool incognito,
                           mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-        std::move(cb).Run(CreateMediaRoute(), std::string(),
-                          RouteRequestResult::OK);
+        std::move(cb).Run(CreateMediaRoute(MediaRouteProviderId::EXTENSION),
+                          std::string(), RouteRequestResult::OK);
       }));
 
   RouteResponseCallbackHandler handler;
@@ -264,7 +266,7 @@ void MediaRouterMojoTest::TestJoinRoute(const std::string& presentation_id) {
   MediaSource media_source(kSource);
   MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, false);
 
-  MediaRoute route = CreateMediaRoute();
+  MediaRoute route = CreateMediaRoute(MediaRouteProviderId::EXTENSION);
   // Make sure the MR has received an update with the route, so it knows there
   // is a route to join.
   std::vector<MediaRoute> routes;
@@ -307,7 +309,7 @@ void MediaRouterMojoTest::TestConnectRouteByRouteId() {
   MediaSource media_source(kSource);
   MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, false);
   expected_route.set_incognito(false);
-  MediaRoute route = CreateMediaRoute();
+  MediaRoute route = CreateMediaRoute(MediaRouteProviderId::EXTENSION);
   ProvideTestRoute(MediaRouteProviderId::EXTENSION, kRouteId);
 
   // Use a lambda function as an invocation target here to work around
@@ -435,8 +437,8 @@ void MediaRouterMojoTest::TestCreateMediaRouteController() {
   media_status.title = "test title";
 
   router()->OnRoutesUpdated(MediaRouteProviderId::EXTENSION,
-                            {CreateMediaRoute()}, std::string(),
-                            std::vector<std::string>());
+                            {CreateMediaRoute(MediaRouteProviderId::EXTENSION)},
+                            std::string(), std::vector<std::string>());
 
   EXPECT_CALL(mock_extension_provider_,
               CreateMediaRouteControllerInternal(kRouteId, _, _, _))
@@ -478,7 +480,7 @@ void MediaRouterMojoTest::TestCreateHangoutsMediaRouteController() {
   MockMediaController mock_media_controller;
   mojom::MediaStatusObserverPtr route_controller_as_observer;
 
-  MediaRoute route = CreateMediaRoute();
+  MediaRoute route = CreateMediaRoute(MediaRouteProviderId::EXTENSION);
   route.set_controller_type(RouteControllerType::kHangouts);
   router()->OnRoutesUpdated(MediaRouteProviderId::EXTENSION, {route},
                             std::string(), std::vector<std::string>());
