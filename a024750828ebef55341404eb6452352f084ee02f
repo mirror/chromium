@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9548ff12_342b8e0b",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b089610_34bf42ca",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adce8f0f_2f22dda9",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_factory.h",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "a024750828ebef55341404eb6452352f084ee02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd910fbf_5266ebff",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:43:24Z",
+      "side": 1,
+      "message": "Right now this is not virtual inheritance so it\u0027s not needed (or allowed).\n\nThis class is split between two components, to preserve the current hierarchy. I\u0027m not sure it\u0027s warranted, but this is a question for gpu/ipc OWNERS.",
+      "parentUuid": "adce8f0f_2f22dda9",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "db0e2e19_446c624c",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:43:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure what we would want to rearrange. The dmabuf implementation is completely shared already, the only difference is how we select it. All this says is that under ozone we will let the platform code make the choice instead of assuming.",
+      "parentUuid": "bfa1f9ae_8ff05374",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0597b15_99a339f5",
         "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "65155686_8e07405d",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0597b15_99a339f5",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0fe33c3_c572d189",
         "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
         "patchSetId": 2
@@ -101,6 +173,24 @@
       "revId": "a024750828ebef55341404eb6452352f084ee02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0506ef4e_34a260cf",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0fe33c3_c572d189",
+      "revId": "a024750828ebef55341404eb6452352f084ee02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
