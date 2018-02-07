@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3da5371_c4fd7837",
+        "filename": "ash/wm/overview/overview_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "maybe CanCoverAvailableWorkspace()?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b76823_bc0b1c78",
+        "filename": "ash/wm/overview/overview_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "q: Why not checking its window state type but instead checking its show state?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ce552f_0a8935eb",
+        "filename": "ash/wm/overview/overview_window_animation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "check if it exists in the map first, if not, then add it.",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbc2f3c_9b829e91",
+        "filename": "ash/wm/overview/overview_window_animation_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "typo: OverviewWindowAnimaitonObserver -\u003e OverviewWindowAnimationObserver",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1dbe23_7f0773e3",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "Don\u0027t you need also modify the animation setting here?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b536f1a_7aaabdbc",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "the same. rename it to has_covered_available_workspace?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfd7f7a_2e13b4f4",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "You can put it inside of the for loop \nUpdateWindowSelectorItemAnimationState(item, \u0026has_fullscreen_coverred,\n                                       (item \u003d\u003d selected_item) /* selected */);",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d38cfe0_a64ac334",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "DCHECK the |item| is contained in the grid?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68006515_e116169a",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "I don\u0027t understand how it works with the split screen case? Suppose the following scenario:\n1. Have at least 3 maximized windows open, and they are all capable of snapping (i.e. resizable)\n2. Enter overview, snap one window to left\n3. there should be at least 2 windows in the right side of the screen. \n4. Drag the second one in the grid to snap to right\n\nExpected: the second one should be animated to snapped window state while the others stay in the old position until the animation is done\n\nHowever, from the code, seems like it\u0027s the first one that animates?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ad1b0e_70b61a88",
+        "filename": "ash/wm/overview/window_grid.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "I think it may be easier to understand to change fullscreen to available workspace.",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cfebcc_ba858c00",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "why this change?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5b9e92_f2a1b99d",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "Seems to me that it may break some existing animation. for example, https://cs.chromium.org/chromium/src/ash/wm/overview/window_selector_item.cc?rcl\u003dd904dbf238dd93f373100da6a80fb5233e52e5bf\u0026l\u003d1087 or https://cs.chromium.org/chromium/src/ash/wm/overview/window_selector_item.cc?rcl\u003dd904dbf238dd93f373100da6a80fb5233e52e5bf\u0026l\u003d724 and possible other places.",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93ff5d0_ab44d2e8",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "why move this part of codes here?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58e1780_df8a10dc",
+        "filename": "ash/wm/overview/window_selector_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "The name is a bit weird. How about |should_animate_|?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94315418_ee62e396",
+        "filename": "chromeos/assistant/internal",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-02-07T07:26:47Z",
+      "side": 1,
+      "message": "why this file?",
+      "revId": "3e922471420207d533dc19ad4797af9a3f2e0ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
