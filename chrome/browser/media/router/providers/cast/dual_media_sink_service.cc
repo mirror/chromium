@@ -14,11 +14,23 @@
 
 namespace media_router {
 
+std::unique_ptr<DualMediaSinkService> DualMediaSinkService::instance_for_test_ =
+    nullptr;
+
 // static
 DualMediaSinkService* DualMediaSinkService::GetInstance() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (instance_for_test_)
+    return instance_for_test_.get();
+
   static DualMediaSinkService* instance = new DualMediaSinkService();
   return instance;
+}
+
+// static
+void DualMediaSinkService::SetInstanceForTest(
+    std::unique_ptr<DualMediaSinkService> instance_for_test) {
+  instance_for_test_ = std::move(instance_for_test);
 }
 
 DualMediaSinkService::Subscription
