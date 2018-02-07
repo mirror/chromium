@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "9651d386_53a6a2bb",
+        "filename": "device/fido/u2f_register_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T05:04:25Z",
+      "side": 1,
+      "message": "After some thought, I think it may be easier and logically more intuitive to have U2f{Register, Sign} Param classes. This is mainly because relationship between CTAP{MakeCredential, GetAssertion}RequestParam and U2f{Register, Sign}Param is not always bijective. That is, for a single CTAPMakeCredentialRequestParam object, there may be multiple corresponding U2fRegisterParam objects. \n\nIn CTAP protocol, MakeCredential and GetAssertion requests are usually done in a single round trip. Given a requests parameter, the authenticator loops through all the credentials in |exclude_list| , checks all options and extensions and returns a single response. \n\nFor U2F protocol, however, Register and Sign operations are usually done after multiple round trips. For example, in sign operation, it is the client\u0027s responsibility to loop through all the provided key handles, send \"check_only\" sign with each of the key handles, and wait for user touch. Thus, depending on parameter passed from the relying party, a single {MakeCredential, GetAssertion}Request can be converted to multiple U2F{Register, Sign} operations. \n\nFor the concern about having U2F specific logic in CtapRequestParam interface, how about moving all U2F specific functions (e.g. CheckU2fInteropCriteria() / GetU2fApplicationParameter() etc.. ) to a private member function of U2fRequest class (which will be introduced in a follow up CL) ? This way, CtapRequestParam will only contain Encode() as virtual function, and all logic of converting Ctap{MakeCredential, GetAssertion}RequestParam to U2f{Register,Sign}Param would be contained in U2FRequest class.  \n\nLet me know what your thought are on this! :)",
+      "parentUuid": "36a29abe_520b5e38",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0305929_eebc9252",
         "filename": "device/fido/u2f_sign_param.h",
         "patchSetId": 13
