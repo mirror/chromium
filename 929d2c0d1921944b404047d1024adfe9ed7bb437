@@ -46,6 +46,29 @@
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396a4fd9_f595fc76",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-07T21:29:24Z",
+      "side": 1,
+      "message": "Random question:  we seem to be missing a field?  When we load cookies, we want to load them based on their registry controlled name (i.e., www.google.com -\u003e google.com), which I think is host_key, but cookies can be set on subdomains, too, and only sent on exact domain matches (like www.google.com and not google.com)...So where\u0027s the domain that a cookie is acutally set on?",
+      "range": {
+        "startLine": 1060,
+        "startChar": 40,
+        "endLine": 1060,
+        "endChar": 54
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
