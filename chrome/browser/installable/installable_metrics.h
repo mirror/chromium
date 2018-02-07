@@ -42,6 +42,9 @@ enum class AddToHomescreenTimeoutStatus {
   COUNT,
 };
 
+#define DEBUG 128
+#undef DEBUG
+
 // Sources for triggering webapp installation.
 // NOTE: each enum entry which is reportable must be added to
 // InstallableMetrics::IsReportableInstallSource().

@@ -57,14 +57,24 @@ class NetworkTrafficAnnotationChecker():
 
   def _FindPossibleBuildPath(self):
     """Returns the first folder in //out that looks like a build dir."""
-    out = os.path.abspath(os.path.join(self.this_dir, '..', '..', 'out'))
+    out = os.path.abspath(os.path.join(self.this_dir, '..',
+                                       '..', '..', 'out'))
     if os.path.exists(out):
       for folder in os.listdir(out):
         candidate = os.path.join(out, folder)
         if (os.path.isdir(candidate) and
             self._CheckIfDirectorySeemsAsBuild(candidate)):
           return candidate
-    return None
+    raise IOError('Unable to locate the build directory')
+
+  def _IsJumboBuild(self):
+    """Determines if the build is built using jumbo, in which case
+    it will be incompatible with cached annotations.xml."""
+    # The only safe way is to figure out is the gn variable
+    # use_jumbo_build was set to True, but failing to do that, this is
+    # a heuristic.
+    with open(os.path.join(self.build_path, 'toolchain.ninja')) as f:
+      return "merge_for_jumbo.py" in f.read()
 
   def _CheckIfDirectorySeemsAsBuild(self, path):
     """Checks to see if a directory seems to be a compiled build directory by
@@ -96,6 +106,11 @@ class NetworkTrafficAnnotationChecker():
     """
 
     if not TEST_IS_ENABLED:
+      return 0
+
+    if self._IsJumboBuild():
+      # annotations.xml is built in a non-jumbo build so comparisons
+      # will not give a relevant result.
       return 0
 
     if not self.build_path:
