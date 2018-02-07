@@ -435,8 +435,10 @@ size_t QuicSpdySession::WriteHeadersImpl(
 
 size_t QuicSpdySession::WritePriority(QuicStreamId id,
                                       QuicStreamId parent_stream_id,
-                                      int weight,
+                                      SpdyPriority priority,
                                       bool exclusive) {
+  DCHECK(connection()->transport_version() > QUIC_VERSION_42);
+  int weight = Spdy3PriorityToHttp2Weight(priority);
   SpdyPriorityIR priority_frame(id, parent_stream_id, weight, exclusive);
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(priority_frame));
   headers_stream_->WriteOrBufferData(
