@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81bb837_e261cc49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "Nit: `in which case, we transform the window accordingly` sounds better?",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939365ae_753615a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "Add `or when bounds changed by user`?",
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0df9655_22e00472",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "This implies that we keep the first persisted info so long until they\u0027re valid to restore, or until they\u0027re cleared by user-invoked changes. This merits a comment to explain this behavior.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774eadd3_3e61d554",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "so const ref",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3780e52_fe1f7e9a",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "Nit: DCHECK_NE()\n\nAnd let\u0027s discuss with marcheu to see if this is actually possible.",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 10
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501a9928_1c12edf8",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "Nit: use full `accelerators`.",
+      "range": {
+        "startLine": 247,
+        "startChar": 38,
+        "endLine": 247,
+        "endChar": 44
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d370ce_9fbcb862",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:45:16Z",
+      "side": 1,
+      "message": "Nit: add comments explaining the expected behavior.",
+      "range": {
+        "startLine": 248,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 25
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
