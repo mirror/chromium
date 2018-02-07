@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecf48055_bedd9b84",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-07T19:19:48Z",
+      "side": 1,
+      "message": "g_sampling_interval is the main parameter of the sampling. It is set by the client before starting the sampling. Theoretically the client may want change the interval during sampling session (we don\u0027t do it for now). In this case a single sample could be spoiled (if the change made by client thread races with a thread recording a sample running lines between 240-251). But it is quite rare and I think we can afford that.\n\nWe have to randomize intervals between samples to fight repetitive pattern, so basically g_sampling_interval is the mean value for sampling intervals. The GetNextSampleInterval is used to generate random intervals based on mean.",
+      "parentUuid": "fca996d4_294f754b",
+      "range": {
+        "startLine": 238,
+        "startChar": 58,
+        "endLine": 238,
+        "endChar": 77
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f503388_3cf4ae17",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "adbce4cf_4b9be7c4",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-07T19:19:48Z",
+      "side": 1,
+      "message": "Yes, this statement is true.\n\nAre you saying Acquire_Load + Release_Store is faster than NoBarrier_AtomicExchange + MemoryBarrier? At least it looks less scary. I\u0027ll change it.",
+      "parentUuid": "9f503388_3cf4ae17",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f093ce00_803cd0aa",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-07T11:59:59Z",
       "side": 1,
       "message": "some though reached this point, I am still not 100% sure I am reading your intents correctly.\nIt seems that you are trying very hard to make sure that g_bytes_left and g_sampling_interval are in sync (I still can\u0027t tell 100% what is the purpose of the two).\nIf that\u0027s the case isn\u0027t easier to do:\n\nspinlock {\n  nobarrier load g_sampling_interval\n  nobarrier load g_bytes_left\n}\n\nmath for computing accumulated\n\nspinlock {\n  nobarrier store ...\n  nobarrier store ...\n}\n\n?\nThat would be easier to read and reason about (but I suspect I am still misreading your intentions somehow)",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 1
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c1e120_dc4f4fc5",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-07T19:19:48Z",
+      "side": 1,
+      "message": "Let me outline the basics of the algorithm.\n\nWe\u0027re accumulating incoming memory allocation sizes and once the accumulated value reaches the current sample size we record a sample, attributing it with the stack of the thread that hit the threshold.\n\nThe problem with accumulating the value and comparing to the threshold is that I\u0027d have to keep these two in sync.\nSo instead I do it by counting down towards zero. In the beginning I put the next sample size into g_bytes_left and start subtracting incoming allocation sizes. Once it reaches zero the sample is finished (check at 227). Then all the threads start to pass the check at 227, so 232 makes sure only the thread that in fact responsible for crossing threshold is going to record the sample. Others will just bail out at this point.\n\nI could do it with spin locks, but I believe my version is much faster. The fast path (where most allocation will end up) is just a single atomic increment and then a check.",
+      "parentUuid": "f093ce00_803cd0aa",
       "range": {
         "startLine": 254,
         "startChar": 0,
