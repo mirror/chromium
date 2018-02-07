@@ -807,7 +807,7 @@ class QuicNetworkTransactionTest : public PlatformTest,
     session_context_.proxy_delegate = &test_proxy_delegate;
     proxy_resolution_service_ =
         ProxyResolutionService::CreateFixedFromPacResult(
-            "HTTPS myproxy.org:443");
+            "HTTPS myproxy.org:443", TRAFFIC_ANNOTATION_FOR_TESTS);
 
     CreateSession();
     EXPECT_TRUE(test_proxy_delegate.alternative_proxy_server().is_valid());
@@ -1223,7 +1223,7 @@ TEST_P(QuicNetworkTransactionTest, ForceQuicForAll) {
 TEST_P(QuicNetworkTransactionTest, QuicProxy) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC mail.example.org:70");
+      "QUIC mail.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -1265,7 +1265,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyWithCert) {
 
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC " + proxy_host + ":70");
+      "QUIC " + proxy_host + ":70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   client_maker_.set_hostname(origin_host);
   MockQuicData mock_quic_data;
@@ -3462,7 +3462,7 @@ TEST_P(QuicNetworkTransactionTest, UseExistingQUICAlternativeProxy) {
   TestProxyDelegate test_proxy_delegate;
 
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "HTTPS mail.example.org:443");
+      "HTTPS mail.example.org:443", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   test_proxy_delegate.set_alternative_proxy_server(
       ProxyServer::FromPacString("QUIC mail.example.org:443"));
@@ -3859,7 +3859,7 @@ TEST_P(QuicNetworkTransactionTest, UseAlternativeServiceForQuicForHttps) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyWithRacing) {
   base::HistogramTester histogram_tester;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "HTTPS mail.example.org:443");
+      "HTTPS mail.example.org:443", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -4024,8 +4024,8 @@ TEST_P(QuicNetworkTransactionTest, ZeroRTTWithNoHttpRace) {
 }
 
 TEST_P(QuicNetworkTransactionTest, ZeroRTTWithProxy) {
-  proxy_resolution_service_ =
-      ProxyResolutionService::CreateFixedFromPacResult("PROXY myproxy:70");
+  proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
+      "PROXY myproxy:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   // Since we are using a proxy, the QUIC job will not succeed.
   MockWrite http_writes[] = {
@@ -4751,8 +4751,8 @@ TEST_P(QuicNetworkTransactionTest, ConnectionCloseDuringConnectProxy) {
   EXPECT_TRUE(test_proxy_delegate.alternative_proxy_server().is_quic());
 
   session_context_.proxy_delegate = &test_proxy_delegate;
-  proxy_resolution_service_ =
-      ProxyResolutionService::CreateFixedFromPacResult("HTTPS myproxy.org:443");
+  proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
+      "HTTPS myproxy.org:443", TRAFFIC_ANNOTATION_FOR_TESTS);
   request_.url = GURL("http://mail.example.org/");
 
   // In order for a new QUIC session to be established via alternate-protocol
@@ -4807,7 +4807,7 @@ TEST_P(QuicNetworkTransactionTest,
        DISABLED_QuicUploadToAlternativeProxyServer) {
   base::HistogramTester histogram_tester;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "HTTPS mail.example.org:443");
+      "HTTPS mail.example.org:443", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   TestProxyDelegate test_proxy_delegate;
 
@@ -6063,7 +6063,7 @@ TEST_P(QuicNetworkTransactionTest, QuicServerPushWithEmptyHostname) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectHttpsServer) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6132,7 +6132,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectHttpsServer) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectSpdyServer) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6205,7 +6205,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectSpdyServer) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseTransportSocket) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6320,7 +6320,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseTransportSocket) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseQuicSession) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset client_header_stream_offset = 0;
@@ -6444,7 +6444,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectReuseQuicSession) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectFailure) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6486,7 +6486,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectFailure) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyQuicConnectionError) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6521,7 +6521,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyQuicConnectionError) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyConnectBadCertificate) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset client_header_stream_offset = 0;
@@ -6615,7 +6615,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyConnectBadCertificate) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyUserAgent) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockQuicData mock_quic_data;
   QuicStreamOffset header_stream_offset = 0;
@@ -6657,7 +6657,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyUserAgent) {
 TEST_P(QuicNetworkTransactionTest, QuicProxyRequestPriority) {
   session_params_.enable_quic = true;
   proxy_resolution_service_ = ProxyResolutionService::CreateFixedFromPacResult(
-      "QUIC proxy.example.org:70");
+      "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
   const RequestPriority request_priority = MEDIUM;
 
@@ -6712,7 +6712,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyAuth) {
     session_params_.enable_quic = true;
     proxy_resolution_service_ =
         ProxyResolutionService::CreateFixedFromPacResult(
-            "QUIC proxy.example.org:70");
+            "QUIC proxy.example.org:70", TRAFFIC_ANNOTATION_FOR_TESTS);
 
     MockQuicData mock_quic_data;
     QuicStreamOffset client_header_stream_offset = 0;

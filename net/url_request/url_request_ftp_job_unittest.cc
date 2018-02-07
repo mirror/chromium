@@ -333,7 +333,8 @@ TEST_F(URLRequestFtpJobTest, FtpProxyRequestOrphanJob) {
   request_context()->set_proxy_resolution_service(
       std::make_unique<ProxyResolutionService>(
           std::make_unique<ProxyConfigServiceFixed>(
-              ProxyConfig::CreateFromCustomPacURL(GURL("http://foo"))),
+              ProxyConfig::CreateFromCustomPacURL(
+                  GURL("http://foo"), TRAFFIC_ANNOTATION_FOR_TESTS)),
           std::move(owned_resolver_factory), nullptr));
 
   TestDelegate request_delegate;
@@ -366,7 +367,8 @@ TEST_F(URLRequestFtpJobTest, FtpProxyRequestCancelRequest) {
   request_context()->set_proxy_resolution_service(
       std::make_unique<ProxyResolutionService>(
           std::make_unique<ProxyConfigServiceFixed>(
-              ProxyConfig::CreateFromCustomPacURL(GURL("http://foo"))),
+              ProxyConfig::CreateFromCustomPacURL(
+                  GURL("http://foo"), TRAFFIC_ANNOTATION_FOR_TESTS)),
           std::move(owned_resolver_factory), nullptr));
 
   TestDelegate request_delegate;

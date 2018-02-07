@@ -227,6 +227,8 @@ struct MutableNetworkTrafficAnnotationTag {
     return NetworkTrafficAnnotationTag({unique_id_hash_code});
   }
 
+  void reset() { unique_id_hash_code = TRAFFIC_ANNOTATION_UNINITIALIZED; }
+
   bool is_valid() const {
     return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;
   }
@@ -252,6 +254,11 @@ struct MutablePartialNetworkTrafficAnnotationTag {
         {unique_id_hash_code, completing_id_hash_code});
   }
 
+  void reset() {
+    unique_id_hash_code = TRAFFIC_ANNOTATION_UNINITIALIZED;
+    completing_id_hash_code = TRAFFIC_ANNOTATION_UNINITIALIZED;
+  }
+
   bool is_valid() const {
     return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED &&
            completing_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;
@@ -269,6 +276,8 @@ struct MutablePartialNetworkTrafficAnnotationTag {
     CHECK(is_valid());
     return PartialNetworkTrafficAnnotationTag({unique_id_hash_code});
   }
+
+  void reset() { unique_id_hash_code = TRAFFIC_ANNOTATION_UNINITIALIZED; }
 
   bool is_valid() const {
     return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;

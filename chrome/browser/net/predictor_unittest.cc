@@ -29,6 +29,7 @@
 #include "net/http/transport_security_state.h"
 #include "net/proxy_resolution/proxy_config_service_fixed.h"
 #include "net/proxy_resolution/proxy_service.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -547,8 +548,8 @@ TEST_F(PredictorTest, ProxyMaybeEnabled) {
   Predictor::set_max_parallel_resolves(0);
 
   Predictor testing_master(true);
-  net::ProxyConfig config = net::ProxyConfig::CreateFromCustomPacURL(GURL(
-      "http://foopy/proxy.pac"));
+  net::ProxyConfig config = net::ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS);
   std::unique_ptr<net::ProxyResolutionService> proxy_resolution_service(
       net::ProxyResolutionService::CreateFixed(config));
   testing_master.proxy_resolution_service_ = proxy_resolution_service.get();

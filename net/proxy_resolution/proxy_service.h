@@ -24,6 +24,7 @@
 #include "net/base/proxy_server.h"
 #include "net/proxy_resolution/proxy_config_service.h"
 #include "net/proxy_resolution/proxy_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 class GURL;
@@ -276,7 +277,8 @@ class NET_EXPORT ProxyResolutionService
   static std::unique_ptr<ProxyResolutionService> CreateFixed(
       const ProxyConfig& pc);
   static std::unique_ptr<ProxyResolutionService> CreateFixed(
-      const std::string& proxy);
+      const std::string& proxy,
+      const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Creates a proxy service that uses a DIRECT connection for all requests.
   static std::unique_ptr<ProxyResolutionService> CreateDirect();
@@ -290,7 +292,8 @@ class NET_EXPORT ProxyResolutionService
   // |pac_string| is a list of proxy servers, in the format that a PAC script
   // would return it. For example, "PROXY foobar:99; SOCKS fml:2; DIRECT"
   static std::unique_ptr<ProxyResolutionService> CreateFixedFromPacResult(
-      const std::string& pac_string);
+      const std::string& pac_string,
+      const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Creates a config service appropriate for this platform that fetches the
   // system proxy settings.

@@ -31,6 +31,7 @@
 #include "net/proxy_resolution/proxy_config_service.h"
 #include "net/proxy_resolution/proxy_resolver.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -144,8 +145,9 @@ class MockProxyConfigService: public ProxyConfigService {
 
   explicit MockProxyConfigService(const std::string& pac_url)
       : availability_(CONFIG_VALID),
-        config_(ProxyConfig::CreateFromCustomPacURL(GURL(pac_url))) {
-  }
+        config_(ProxyConfig::CreateFromCustomPacURL(
+            GURL(pac_url),
+            TRAFFIC_ANNOTATION_FOR_TESTS)) {}
 
   void AddObserver(Observer* observer) override {
     observers_.AddObserver(observer);
@@ -371,6 +373,8 @@ TEST_F(ProxyServiceTest, OnResolveProxyCallbackAddProxy) {
   config.proxy_rules().ParseFromString("badproxy:8080,foopy1:8080");
   config.set_auto_detect(false);
   config.proxy_rules().bypass_rules.ParseFromString("*.org");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ProxyResolutionService service(
       std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -438,6 +442,8 @@ TEST_F(ProxyServiceTest, OnResolveProxyCallbackRemoveProxy) {
   config.proxy_rules().ParseFromString("foopy1:8080");
   config.set_auto_detect(false);
   config.proxy_rules().bypass_rules.ParseFromString("*.org");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ProxyResolutionService service(
       std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -755,9 +761,10 @@ TEST_F(ProxyServiceTest, PAC_FailoverAfterDirect) {
 TEST_F(ProxyServiceTest, PAC_ConfigSourcePropagates) {
   // Test whether the ProxyConfigSource set by the ProxyConfigService is applied
   // to ProxyInfo after the proxy is resolved via a PAC script.
-  ProxyConfig config =
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac"));
-  config.set_source(PROXY_CONFIG_SOURCE_TEST);
+  ProxyConfig config = ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolver resolver;
@@ -781,7 +788,8 @@ TEST_F(ProxyServiceTest, PAC_ConfigSourcePropagates) {
   resolver.pending_jobs()[0]->CompleteNow(OK);
 
   EXPECT_THAT(callback.WaitForResult(), IsOk());
-  EXPECT_EQ(PROXY_CONFIG_SOURCE_TEST, info.config_source());
+  EXPECT_EQ(MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS),
+            info.traffic_annotation());
   EXPECT_TRUE(info.did_use_pac_script());
 
   EXPECT_FALSE(info.proxy_resolve_start_time().is_null());
@@ -995,9 +1003,11 @@ TEST_F(ProxyServiceTest, ProxyScriptFetcherFailsDownloadingMandatoryPac) {
   // Test what happens when the ProxyScriptResolver fails to download a
   // mandatory PAC script.
 
-  ProxyConfig config(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac")));
+  ProxyConfig config(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
   config.set_pac_mandatory(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
 
@@ -1042,9 +1052,11 @@ TEST_F(ProxyServiceTest, ProxyResolverFailsParsingJavaScriptMandatoryPac) {
   // mandatory PAC script. The download of the PAC script has already
   // succeeded but the PAC script contains no valid javascript.
 
-  ProxyConfig config(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac")));
+  ProxyConfig config(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
   config.set_pac_mandatory(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
 
@@ -1092,9 +1104,11 @@ TEST_F(ProxyServiceTest, ProxyResolverFailsInJavaScriptMandatoryPac) {
   // already succeeded, so this corresponds with a javascript runtime error
   // while calling FindProxyForURL().
 
-  ProxyConfig config(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac")));
+  ProxyConfig config(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
   config.set_pac_mandatory(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
 
@@ -1413,8 +1427,8 @@ TEST_F(ProxyServiceTest, ProxyFallback_NewSettings) {
   EXPECT_EQ("foopy1:8080", info.proxy_server().ToURI());
 
   // Fake an error on the proxy, and also a new configuration on the proxy.
-  config_service->SetConfig(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy-new/proxy.pac")));
+  config_service->SetConfig(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy-new/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
 
   TestCompletionCallback callback2;
   rv = service.ReconsiderProxyAfterError(
@@ -1446,9 +1460,8 @@ TEST_F(ProxyServiceTest, ProxyFallback_NewSettings) {
   EXPECT_EQ("foopy2:9090", info.proxy_server().ToURI());
 
   // We simulate a new configuration.
-  config_service->SetConfig(
-      ProxyConfig::CreateFromCustomPacURL(
-          GURL("http://foopy-new2/proxy.pac")));
+  config_service->SetConfig(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy-new2/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
 
   // We fake another error. It should go back to the first proxy.
   TestCompletionCallback callback4;
@@ -1574,8 +1587,8 @@ TEST_F(ProxyServiceTest, ProxyFallback_BadConfig) {
 TEST_F(ProxyServiceTest, ProxyFallback_BadConfigMandatory) {
   // Test proxy failover when the configuration is bad.
 
-  ProxyConfig config(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac")));
+  ProxyConfig config(ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS));
 
   config.set_pac_mandatory(true);
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
@@ -1675,6 +1688,8 @@ TEST_F(ProxyServiceTest, ProxyBypassList) {
   config.proxy_rules().ParseFromString("foopy1:8080;foopy2:9090");
   config.set_auto_detect(false);
   config.proxy_rules().bypass_rules.ParseFromString("*.org");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ProxyResolutionService service(
       std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -1703,6 +1718,8 @@ TEST_F(ProxyServiceTest, MarkProxiesAsBadTests) {
   config.proxy_rules().ParseFromString(
       "http=foopy1:8080;http=foopy2:8080;http=foopy3.8080;http=foopy4:8080");
   config.set_auto_detect(false);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   ProxyList proxy_list;
   std::vector<ProxyServer> additional_bad_proxies;
@@ -1737,6 +1754,8 @@ TEST_F(ProxyServiceTest, PerProtocolProxyTests) {
   ProxyConfig config;
   config.proxy_rules().ParseFromString("http=foopy1:8080;https=foopy2:8080");
   config.set_auto_detect(false);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   {
     ProxyResolutionService service(
         std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -1798,7 +1817,8 @@ TEST_F(ProxyServiceTest, ProxyConfigSourcePropagates) {
   // any of the rules were applied.
   {
     ProxyConfig config;
-    config.set_source(PROXY_CONFIG_SOURCE_TEST);
+    config.set_traffic_annotation(
+        MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
     config.proxy_rules().ParseFromString("https=foopy2:8080");
     ProxyResolutionService service(
         std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -1809,12 +1829,14 @@ TEST_F(ProxyServiceTest, ProxyConfigSourcePropagates) {
                                   callback.callback(), nullptr, nullptr,
                                   NetLogWithSource());
     ASSERT_THAT(rv, IsOk());
-    // Should be SOURCE_TEST, even if there are no HTTP proxies configured.
-    EXPECT_EQ(PROXY_CONFIG_SOURCE_TEST, info.config_source());
+    // Should be test annotation, even if there are no HTTP proxies configured.
+    EXPECT_EQ(MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS),
+              info.traffic_annotation());
   }
   {
     ProxyConfig config;
-    config.set_source(PROXY_CONFIG_SOURCE_TEST);
+    config.set_traffic_annotation(
+        MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
     config.proxy_rules().ParseFromString("https=foopy2:8080");
     ProxyResolutionService service(
         std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
@@ -1825,12 +1847,14 @@ TEST_F(ProxyServiceTest, ProxyConfigSourcePropagates) {
                                   callback.callback(), nullptr, nullptr,
                                   NetLogWithSource());
     ASSERT_THAT(rv, IsOk());
-    // Used the HTTPS proxy. So source should be TEST.
-    EXPECT_EQ(PROXY_CONFIG_SOURCE_TEST, info.config_source());
+    // Used the HTTPS proxy. So annotation should be TEST.
+    EXPECT_EQ(MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS),
+              info.traffic_annotation());
   }
   {
     ProxyConfig config;
-    config.set_source(PROXY_CONFIG_SOURCE_TEST);
+    config.set_traffic_annotation(
+        MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
     ProxyResolutionService service(
         std::make_unique<MockProxyConfigService>(config), nullptr, nullptr);
     GURL test_url("http://www.google.com");
@@ -1840,8 +1864,9 @@ TEST_F(ProxyServiceTest, ProxyConfigSourcePropagates) {
                                   callback.callback(), nullptr, nullptr,
                                   NetLogWithSource());
     ASSERT_THAT(rv, IsOk());
-    // ProxyConfig is empty. Source should still be TEST.
-    EXPECT_EQ(PROXY_CONFIG_SOURCE_TEST, info.config_source());
+    // ProxyConfig is empty. Annotation should still be TEST.
+    EXPECT_EQ(MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS),
+              info.traffic_annotation());
   }
 }
 
@@ -1851,6 +1876,8 @@ TEST_F(ProxyServiceTest, DefaultProxyFallbackToSOCKS) {
   ProxyConfig config;
   config.proxy_rules().ParseFromString("http=foopy1:8080;socks=foopy2:1080");
   config.set_auto_detect(false);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   EXPECT_EQ(ProxyConfig::ProxyRules::Type::PROXY_LIST_PER_SCHEME,
             config.proxy_rules().type);
 
@@ -2254,6 +2281,8 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomPac) {
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://foopy/proxy.pac"));
   config.proxy_rules().ParseFromString("http=foopy:80");  // Won't be used.
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolver resolver;
@@ -2338,6 +2367,8 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomPac2) {
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://foopy/proxy.pac"));
   config.proxy_rules().ParseFromString("http=foopy:80");  // Won't be used.
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolver resolver;
@@ -2416,6 +2447,8 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomToManual) {
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://foopy/proxy.pac"));
   config.proxy_rules().ParseFromString("http=foopy:80");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolverFactory* factory =
@@ -2478,6 +2511,8 @@ TEST_F(ProxyServiceTest, BypassDoesntApplyToPac) {
   config.set_pac_url(GURL("http://foopy/proxy.pac"));
   config.proxy_rules().ParseFromString("http=foopy:80");  // Not used.
   config.proxy_rules().bypass_rules.ParseFromString("www.google.com");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolver resolver;
@@ -2547,8 +2582,8 @@ TEST_F(ProxyServiceTest, BypassDoesntApplyToPac) {
 // have any memory errors (used to be that the ProxyScriptFetcher was
 // being deleted prior to the InitProxyResolver).
 TEST_F(ProxyServiceTest, DeleteWhileInitProxyResolverHasOutstandingFetch) {
-  ProxyConfig config =
-    ProxyConfig::CreateFromCustomPacURL(GURL("http://foopy/proxy.pac"));
+  ProxyConfig config = ProxyConfig::CreateFromCustomPacURL(
+      GURL("http://foopy/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS);
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolverFactory* factory =
@@ -2609,6 +2644,8 @@ TEST_F(ProxyServiceTest, ResetProxyConfigService) {
   ProxyConfig config1;
   config1.proxy_rules().ParseFromString("foopy1:8080");
   config1.set_auto_detect(false);
+  config1.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   ProxyResolutionService service(
       std::make_unique<MockProxyConfigService>(config1), nullptr, nullptr);
 
@@ -2623,6 +2660,8 @@ TEST_F(ProxyServiceTest, ResetProxyConfigService) {
   ProxyConfig config2;
   config2.proxy_rules().ParseFromString("foopy2:8080");
   config2.set_auto_detect(false);
+  config2.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   service.ResetConfigService(std::make_unique<MockProxyConfigService>(config2));
   TestCompletionCallback callback2;
   rv = service.ResolveProxy(GURL("http://request2"), std::string(), &info,
@@ -2636,6 +2675,8 @@ TEST_F(ProxyServiceTest, ResetProxyConfigService) {
 // that does NOT, we unset the variable |should_use_proxy_resolver_|.
 TEST_F(ProxyServiceTest, UpdateConfigFromPACToDirect) {
   ProxyConfig config = ProxyConfig::CreateAutoDetect();
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockProxyConfigService* config_service = new MockProxyConfigService(config);
   MockAsyncProxyResolver resolver;
@@ -3441,6 +3482,8 @@ TEST_F(ProxyServiceTest, SynchronousWithFixedConfiguration) {
   ProxyConfig config;
   config.proxy_rules().ParseFromString("foopy1:8080");
   config.set_auto_detect(false);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   MockAsyncProxyResolverFactory* factory =
       new MockAsyncProxyResolverFactory(false);

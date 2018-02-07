@@ -14,6 +14,7 @@
 #include "net/proxy_resolution/mock_proxy_resolver.h"
 #include "net/proxy_resolution/proxy_config_service.h"
 #include "net/proxy_resolution/proxy_service.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -24,7 +25,8 @@ class MockProxyConfigService : public net::ProxyConfigService {
   void AddObserver(Observer* observer) override {}
   void RemoveObserver(Observer* observer) override {}
   ConfigAvailability GetLatestProxyConfig(net::ProxyConfig* results) override {
-    *results = net::ProxyConfig::CreateFromCustomPacURL(GURL("http://pac"));
+    *results = net::ProxyConfig::CreateFromCustomPacURL(
+        GURL("http://pac"), TRAFFIC_ANNOTATION_FOR_TESTS);
     return CONFIG_VALID;
   }
 };
