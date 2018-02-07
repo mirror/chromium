@@ -69,6 +69,30 @@
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0014c432_6c182da1",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:49:38Z",
+      "side": 1,
+      "message": "Yeah, I tripped over that too.  host_key is actually the full domain; the registry controlled domain is derived from it.  Look at the assignments to and uses of keys_to_load_ in this file.",
+      "parentUuid": "396a4fd9_f595fc76",
+      "range": {
+        "startLine": 1060,
+        "startChar": 40,
+        "endLine": 1060,
+        "endChar": 54
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
