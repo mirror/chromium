@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad077a08_6e83ca9f",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-07T09:50:20Z",
+      "side": 1,
+      "message": "I wonder if instead of deleting it it will be better to do the same as above and modify the installation type to [BLOCKED]foce_installed or [BLOCKED]normal_installed. WDYT?",
+      "range": {
+        "startLine": 175,
+        "startChar": 10,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "264610a5c371918b4a2c212c857ab71248403132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
