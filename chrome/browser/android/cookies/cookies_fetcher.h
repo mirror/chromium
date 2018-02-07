@@ -32,7 +32,7 @@ class CookiesFetcher {
                       const base::android::JavaParamRef<jobject>& obj);
 
  private:
-  void PersistCookiesInternal(net::URLRequestContextGetter* getter);
+  void PersistCookiesInternal();
 
   // Callback used after the cookie jar populate the cookie list for us.
   void OnCookiesFetchFinished(const net::CookieList& cookies);
