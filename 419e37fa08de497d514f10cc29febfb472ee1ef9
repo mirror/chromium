@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "beb4cd24_c913797f",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T18:38:03Z",
+      "side": 1,
+      "message": "I need to study this code a bit more. My knee jerk reaction is the problem stems from having an object other than the observer responsible for attaching it. I would expect the observer implementation itself to attach itself to the appropriate object. Basically the ObserverWidget() implementation you have on the WidgetObserver impl. You mention that is error prone. Why?",
+      "parentUuid": "9b2fa376_9f883460",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
