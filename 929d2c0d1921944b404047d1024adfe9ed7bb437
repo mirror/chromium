@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb5f9c28_dd7432d6",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T22:02:45Z",
+      "side": 1,
+      "message": "Whoops, thanks for that catch.  Done.",
+      "parentUuid": "772c9916_2b18cc0c",
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "130ff6b8_657bb041",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
@@ -90,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "75fa9370_9069bf66",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T22:02:45Z",
+      "side": 1,
+      "message": "If you\u0027re willing to do that analysis, I\u0027d be grateful.  FWIW (\"Leading the witness, your honor!\") I suspect the right ordering is name first, because the primary use for this implicit index is going to be cookie deletion and access time updating, so we want the \"most unique\" of the columns first.  Having said that, having host_key first would speed up DB load-in in parallel with startup.",
+      "parentUuid": "3030c270_f19ee418",
+      "range": {
+        "startLine": 452,
+        "startChar": 31,
+        "endLine": 452,
+        "endChar": 35
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "338b361f_6a877edb",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
@@ -101,6 +143,24 @@
       "writtenOn": "2018-02-07T21:52:37Z",
       "side": 1,
       "message": "The indexes being dropped aren\u0027t re-created. Is this intentional?\n\nSame comment about query pattern analysis as above.",
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe2e062_f3db3b8b",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T22:02:45Z",
+      "side": 1,
+      "message": "They\u0027re being re-created in InitTable, at least as I read the code?  I can\u0027t just leave them alone as they now refer to the renamed table.\n\nThis analysis I don\u0027t have any urge for you to do; optimizing these indices doesn\u0027t strike me as being part of this CL, so I\u0027d be reluctant to incorporate the results of any such analysis.",
+      "parentUuid": "338b361f_6a877edb",
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -165,6 +225,24 @@
       "writtenOn": "2018-02-07T21:52:37Z",
       "side": 1,
       "message": "I really like that you have this test!",
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90c66e7d_5bd9be94",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T22:02:45Z",
+      "side": 1,
+      "message": "Oh, there\u0027s no way I\u0027d do this change after this post-mortem without putting in this test! :-}",
+      "parentUuid": "70eb7201_ccbee4de",
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
