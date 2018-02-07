@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e83b2f5_eb15f45b",
+        "filename": "ash/default_wallpaper_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T15:20:01Z",
+      "side": 1,
+      "message": "Not for this CL: This file should move into //ash/wallpaper, to be next to WallpaperDelegate. That will also let wallpaper owners review it. :-)",
+      "revId": "268483b41052dfbaf306ff445d7593ba090afb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a16ee0_a87a34f3",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T15:20:01Z",
+      "side": 1,
+      "message": "nit: const user_manager::User* user\n\n(I only use auto when the type is complicated. In this case it\u0027s not trivially obvious what the type of \"UserList\" is.)",
+      "revId": "268483b41052dfbaf306ff445d7593ba090afb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f53050_0b6df76f",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T15:20:01Z",
+      "side": 1,
+      "message": "nit: Could FindPublicSession return a User* or null, rather than an index? It doesn\u0027t seem like you use the index except to look up a User.",
+      "revId": "268483b41052dfbaf306ff445d7593ba090afb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12645330_23ca7dac",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T15:20:01Z",
+      "side": 1,
+      "message": "optional: \"namespace util \u003d chromeos::customization_wallpaper_util\" or \"namespace customization_wallpaper_util \u003d chromeos::customization_wallpaper_util\" might improve line wrapping here.",
+      "revId": "268483b41052dfbaf306ff445d7593ba090afb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
