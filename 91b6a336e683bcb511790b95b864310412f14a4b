@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c46978f5_73261008",
+        "filename": "tools/gn/bootstrap/bootstrap.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-02-07T20:49:05Z",
+      "side": 1,
+      "message": "I\u0027m talking about the gn rule from the build.ninja file.  This is what mine looks like on a regular build:\n\nrule gn\n  command \u003d ../../buildtools/linux64/gn --root\u003d../.. -q gen .\n  description \u003d Regenerating ninja files\n\nThe path to gn in the cmd comes from (relativizing) /proc/self/exe when gn runs, not from the bootstrap script.",
+      "parentUuid": "f17162fd_e8c49ad6",
+      "revId": "91b6a336e683bcb511790b95b864310412f14a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3f4cd56_e11d1639",
         "filename": "tools/gn/filesystem_utils.cc",
         "patchSetId": 1
