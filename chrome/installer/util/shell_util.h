@@ -469,6 +469,8 @@ class ShellUtil {
                                 const base::FilePath& chrome_exe,
                                 bool elevate_if_not_admin);
 
+  static bool LaunchUninstallAppsSettings();
+
   // Windows 8: Shows and waits for the "How do you want to open webpages?"
   // dialog if Chrome is not already the default HTTP/HTTPS handler. Also does
   // XP-era registrations if Chrome is chosen or was already the default. Do

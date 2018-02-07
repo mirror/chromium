@@ -1558,6 +1558,8 @@ split_static_library("browser") {
     "win/titlebar_config.h",
     "win/ui_automation_util.cc",
     "win/ui_automation_util.h",
+    "win/uninstall_app_controller.cc",
+    "win/uninstall_app_controller.h",
   ]
 
   configs += [

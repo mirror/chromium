@@ -2030,6 +2030,25 @@ bool ShellUtil::MakeChromeDefault(BrowserDistribution* dist,
   return ret;
 }
 
+// static
+bool ShellUtil::LaunchUninstallAppsSettings() {
+  static const wchar_t kControlPanelAppModelId[] =
+      L"windows.immersivecontrolpanel_cw5n1h2txyewy"
+      L"!microsoft.windows.immersivecontrolpanel";
+
+  Microsoft::WRL::ComPtr<IApplicationActivationManager> activator;
+  HRESULT hr = ::CoCreateInstance(CLSID_ApplicationActivationManager, nullptr,
+                                  CLSCTX_ALL, IID_PPV_ARGS(&activator));
+  if (FAILED(hr))
+    return false;
+
+  DWORD pid = 0;
+  CoAllowSetForegroundWindow(activator.Get(), nullptr);
+  hr = activator->ActivateApplication(
+      kControlPanelAppModelId, L"page=SettingsPageAppsSizes", AO_NONE, &pid);
+  return SUCCEEDED(hr);
+}
+
 bool ShellUtil::ShowMakeChromeDefaultSystemUI(
     BrowserDistribution* dist,
     const base::FilePath& chrome_exe) {
