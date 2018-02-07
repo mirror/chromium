@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a637dc34_a4d524db",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T20:28:32Z",
+      "side": 1,
+      "message": "Can these be moved with user_manager_view.* and excluded from ChromeOS as well?",
+      "range": {
+        "startLine": 1537,
+        "startChar": 0,
+        "endLine": 1539,
+        "endChar": 0
+      },
+      "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
