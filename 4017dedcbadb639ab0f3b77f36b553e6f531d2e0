@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70c10df8_df587304",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35aff43a_82e54691",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc7af744_523c72e6",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7d141f55_3e814006",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc7af744_523c72e6",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77439c0a_b4639e94",
         "filename": "ash/wm/overview/overview_window_drag_controller.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-06T21:59:31Z",
       "side": 1,
       "message": "Do not have to be in this CL, but the term phantom window is often used as a\n\"mirrored copy\" of the original window in ash, so it\u0027d be nice if you can come up with beffer namefor it. (Overlay is also overused,so something more specific would be better)",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca349ac8_f54863f3",
+        "filename": "ash/wm/overview/overview_window_drag_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "77439c0a_b4639e94",
       "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8a981b95_2ca732de",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c307af2_db41b153",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2c2d58_88c4f89c",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c03b307d_35d1b5f9",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c2c2d58_88c4f89c",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d4dd38_9434985a",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-06T21:59:31Z",
       "side": 1,
       "message": "can\u0027t you just apply the rotation at the end?",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745214ae_3b5a27df",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "is this the rotation for the text labels? those are on a child view which has its own layer.",
+      "parentUuid": "e0d4dd38_9434985a",
       "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7e85c736_4ad45696",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768430f7_9328f668",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af43f3a8_05eee803",
         "filename": "ash/wm/splitview/split_view_overview_overlay.h",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4905e114_76dd3995",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T00:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af43f3a8_05eee803",
+      "revId": "4017dedcbadb639ab0f3b77f36b553e6f531d2e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
