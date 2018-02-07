@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "69c084b6_111ad2fc",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T21:49:40Z",
+      "side": 1,
+      "message": "+1 on removing kShowNonMdLogin, thanks for proposing this Steven.",
+      "parentUuid": "f0304d45_e70a06cb",
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59ff2b4c_4c6fd3ea",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 3
