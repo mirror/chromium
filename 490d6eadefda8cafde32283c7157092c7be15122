@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be360a30_c91864b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-02-07T02:16:52Z",
+      "side": 1,
+      "message": "Nit: check for null mCompositorView here too?  There are a couple of other places in this file that check for a null mCompositorView, so I have a hunch that it\u0027s wise to add a check.",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 472,
+        "endChar": 56
+      },
+      "revId": "490d6eadefda8cafde32283c7157092c7be15122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1060e1_83ea374b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2018-02-07T02:16:52Z",
+      "side": 1,
+      "message": "Nit: Check for null mCompositorView here too?",
+      "range": {
+        "startLine": 910,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 34
+      },
+      "revId": "490d6eadefda8cafde32283c7157092c7be15122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
