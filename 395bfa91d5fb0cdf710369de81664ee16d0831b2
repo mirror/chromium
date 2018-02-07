@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a0302e3_c98dbd2d",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-02-07T01:54:48Z",
+      "side": 1,
+      "message": "Consequence of :sort on these params, I\u0027ll undo the change that swapped them",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "395bfa91d5fb0cdf710369de81664ee16d0831b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
