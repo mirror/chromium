@@ -58,10 +58,6 @@ class MEDIA_EXPORT MediaResource {
   // exists or a null pointer if there is no streams of that type.
   DemuxerStream* GetFirstStream(DemuxerStream::Type type);
 
-  // The StreamStatusChangeCB allows clients to receive notifications about one
-  // of the streams being disabled or enabled.
-  virtual void SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) = 0;
-
   // For Type::URL:
   //   Returns the URL parameters of the media to play. Empty URLs are legal,
   //   and should be handled appropriately by the caller.

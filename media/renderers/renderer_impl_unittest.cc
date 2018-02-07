@@ -101,8 +101,6 @@ class RendererImplTest : public ::testing::Test {
       DemuxerStream::Type type) {
     std::unique_ptr<StrictMock<MockDemuxerStream>> stream(
         new StrictMock<MockDemuxerStream>(type));
-    EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-        .Times(testing::AnyNumber());
     return stream;
   }
 
@@ -772,8 +770,6 @@ TEST_F(RendererImplTest, StreamStatusNotificationHandling) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -805,8 +801,6 @@ TEST_F(RendererImplTest, PostponedStreamStatusNotificationHandling) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -846,8 +840,6 @@ TEST_F(RendererImplTest, FlushDuringAudioReinit) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -888,8 +880,6 @@ TEST_F(RendererImplTest, FlushDuringAudioReinitWhileWaiting) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -935,8 +925,6 @@ TEST_F(RendererImplTest, FlushDuringVideoReinit) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -977,8 +965,6 @@ TEST_F(RendererImplTest, FlushDuringVideoReinitWhileWaiting) {
   CreateAudioAndVideoStream();
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -1031,8 +1017,6 @@ TEST_F(RendererImplTest, AudioTrackSwitchDuringFlush) {
   audio_stream_ = std::move(primary_audio_stream);
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);
@@ -1085,8 +1069,6 @@ TEST_F(RendererImplTest, VideoTrackSwitchDuringFlush) {
   video_stream_ = std::move(primary_video_stream);
 
   StreamStatusChangeCB stream_status_change_cb;
-  EXPECT_CALL(*demuxer_, SetStreamStatusChangeCB(_))
-      .WillOnce(SaveArg<0>(&stream_status_change_cb));
   SetAudioRendererInitializeExpectations(PIPELINE_OK);
   SetVideoRendererInitializeExpectations(PIPELINE_OK);
   InitializeAndExpect(PIPELINE_OK);

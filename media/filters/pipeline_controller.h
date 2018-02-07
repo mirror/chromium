@@ -39,6 +39,8 @@ class MEDIA_EXPORT PipelineController {
     RESUMING,
   };
 
+  enum class TrackChangeType { VIDEO, AUDIO };
+
   using RendererFactoryCB = base::Callback<std::unique_ptr<Renderer>(void)>;
   using SeekedCB = base::Callback<void(bool time_updated)>;
   using SuspendedCB = base::Callback<void()>;
@@ -134,6 +136,8 @@ class MEDIA_EXPORT PipelineController {
   // PipelineStaus callback that also carries the target state.
   void OnPipelineStatus(State state, PipelineStatus pipeline_status);
 
+  void OnTrackChangeComplete(TrackChangeType type);
+
   // The Pipeline we are managing state for.
   std::unique_ptr<Pipeline> pipeline_;
 
@@ -160,6 +164,7 @@ class MEDIA_EXPORT PipelineController {
   // State for handling StartWaitingForSeek()/CancelPendingSeek().
   Demuxer* demuxer_ = nullptr;
   bool waiting_for_seek_ = false;
+  bool waiting_for_track_change_ = false;
 
   // When true, Resume() will start at time zero instead of seeking to the
   // current time.
@@ -182,12 +187,20 @@ class MEDIA_EXPORT PipelineController {
   // The target time of the active seek; valid while SEEKING or RESUMING.
   base::TimeDelta seek_time_;
 
-  // Target state which we will work to achieve. |pending_seek_time_| is only
-  // valid when |pending_seek_| is true.
+  // Target state which we will work to achieve.
   bool pending_seek_ = false;
-  base::TimeDelta pending_seek_time_;
   bool pending_suspend_ = false;
   bool pending_resume_ = false;
+  bool pending_track_change_ = false;
+
+  // |pending_seek_time_| is only valid when |pending_seek_| is true.
+  // |pending_track_change_type_| is only valid when |pending_track_change_|.
+  // |pending_audio_track_changes_| is only valid when |pending_track_change_|.
+  // |pending_video_track_changes_| is only valid when |pending_track_change_|.
+  base::TimeDelta pending_seek_time_;
+  TrackChangeType pending_track_change_type_;
+  std::vector<MediaTrack::Id> pending_audio_track_changes_;
+  base::Optional<MediaTrack::Id> pending_video_track_changes_;
 
   base::ThreadChecker thread_checker_;
   base::WeakPtrFactory<PipelineController> weak_factory_;

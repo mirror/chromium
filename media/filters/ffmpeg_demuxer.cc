@@ -763,14 +763,6 @@ void FFmpegDemuxerStream::SetEnabled(bool enabled, base::TimeDelta timestamp) {
     DVLOG(1) << "Read from disabled stream, returning EOS";
     base::ResetAndReturn(&read_cb_).Run(kOk, DecoderBuffer::CreateEOSBuffer());
   }
-  if (!stream_status_change_cb_.is_null())
-    stream_status_change_cb_.Run(this, is_enabled_, timestamp);
-}
-
-void FFmpegDemuxerStream::SetStreamStatusChangeCB(
-    const StreamStatusChangeCB& cb) {
-  DCHECK(!cb.is_null());
-  stream_status_change_cb_ = cb;
 }
 
 void FFmpegDemuxerStream::SetLiveness(Liveness liveness) {
@@ -1066,13 +1058,6 @@ std::vector<DemuxerStream*> FFmpegDemuxer::GetAllStreams() {
       result.push_back(stream.get());
   }
   return result;
-}
-
-void FFmpegDemuxer::SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) {
-  for (const auto& stream : streams_) {
-    if (stream)
-      stream->SetStreamStatusChangeCB(cb);
-  }
 }
 
 FFmpegDemuxerStream* FFmpegDemuxer::GetFirstEnabledFFmpegStream(
@@ -1704,7 +1689,8 @@ void FFmpegDemuxer::OnSeekFrameDone(int result) {
 
 void FFmpegDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   std::set<FFmpegDemuxerStream*> enabled_streams;
@@ -1736,11 +1722,15 @@ void FFmpegDemuxer::OnEnabledAudioTracksChanged(
     DVLOG(1) << __func__ << ": enabling stream " << stream;
     stream->SetEnabled(true, curr_time);
   }
+
+  // TODO(tmathmeyer): make this async.
+  std::move(callback).Run();
 }
 
 void FFmpegDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> track_id,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   FFmpegDemuxerStream* selected_stream = nullptr;
@@ -1763,6 +1753,9 @@ void FFmpegDemuxer::OnSelectedVideoTrackChanged(
     DVLOG(1) << __func__ << ": enabling stream " << selected_stream;
     selected_stream->SetEnabled(true, curr_time);
   }
+
+  // TODO(tmathmeyer): make this async.
+  std::move(callback).Run();
 }
 
 void FFmpegDemuxer::ReadFrameIfNeeded() {

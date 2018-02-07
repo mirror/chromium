@@ -4726,32 +4726,6 @@ TEST_P(ChunkDemuxerTest,
   CheckExpectedBuffers(video_stream, "71K 81");
 }
 
-void OnStreamStatusChanged(base::WaitableEvent* event,
-                           DemuxerStream* stream,
-                           bool enabled,
-                           base::TimeDelta) {
-  event->Signal();
-}
-
-void CheckStreamStatusNotifications(MediaResource* media_resource,
-                                    ChunkDemuxerStream* stream) {
-  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                            base::WaitableEvent::InitialState::NOT_SIGNALED);
-
-  ASSERT_TRUE(stream->IsEnabled());
-  media_resource->SetStreamStatusChangeCB(
-      base::Bind(&OnStreamStatusChanged, base::Unretained(&event)));
-
-  stream->SetEnabled(false, base::TimeDelta());
-  base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(event.IsSignaled());
-
-  event.Reset();
-  stream->SetEnabled(true, base::TimeDelta());
-  base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(event.IsSignaled());
-}
-
 TEST_P(ChunkDemuxerTest, StreamStatusNotifications) {
   ASSERT_TRUE(InitDemuxer(HAS_AUDIO | HAS_VIDEO));
   ChunkDemuxerStream* audio_stream =
@@ -4761,18 +4735,12 @@ TEST_P(ChunkDemuxerTest, StreamStatusNotifications) {
       static_cast<ChunkDemuxerStream*>(GetStream(DemuxerStream::VIDEO));
   EXPECT_NE(nullptr, video_stream);
 
-  // Verify stream status changes without pending read.
-  CheckStreamStatusNotifications(demuxer_.get(), audio_stream);
-  CheckStreamStatusNotifications(demuxer_.get(), video_stream);
-
   // Verify stream status changes with pending read.
   bool read_done = false;
   audio_stream->Read(base::Bind(&OnReadDone_EOSExpected, &read_done));
-  CheckStreamStatusNotifications(demuxer_.get(), audio_stream);
   EXPECT_TRUE(read_done);
   read_done = false;
   video_stream->Read(base::Bind(&OnReadDone_EOSExpected, &read_done));
-  CheckStreamStatusNotifications(demuxer_.get(), video_stream);
   EXPECT_TRUE(read_done);
 }
 

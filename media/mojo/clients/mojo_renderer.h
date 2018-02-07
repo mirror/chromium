@@ -60,6 +60,13 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   void SetPlaybackRate(double playback_rate) override;
   void SetVolume(float volume) override;
   base::TimeDelta GetMediaTime() override;
+  void OnSelectedVideoTrackChanged(
+      base::Optional<MediaTrack::Id> selected_track_id,
+      base::OnceClosure callback) override;
+
+  void OnSelectedAudioTracksChanged(
+      std::vector<MediaTrack::Id> enabled_tracks_ids,
+      base::OnceClosure callback) override;
 
   using ReceiveSurfaceRequestTokenCB =
       base::Callback<void(const base::UnguessableToken&)>;

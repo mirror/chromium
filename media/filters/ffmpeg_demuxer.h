@@ -119,8 +119,6 @@ class MEDIA_EXPORT FFmpegDemuxerStream : public DemuxerStream {
   bool IsEnabled() const;
   void SetEnabled(bool enabled, base::TimeDelta timestamp);
 
-  void SetStreamStatusChangeCB(const StreamStatusChangeCB& cb);
-
   void SetLiveness(Liveness liveness);
 
   // Returns the range of buffered data in this stream.
@@ -224,7 +222,6 @@ class MEDIA_EXPORT FFmpegDemuxer : public Demuxer {
   void Seek(base::TimeDelta time, const PipelineStatusCB& cb) override;
   base::Time GetTimelineOffset() const override;
   std::vector<DemuxerStream*> GetAllStreams() override;
-  void SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) override;
   base::TimeDelta GetStartTime() const override;
   int64_t GetMemoryUsage() const override;
 
@@ -242,11 +239,13 @@ class MEDIA_EXPORT FFmpegDemuxer : public Demuxer {
   void NotifyDemuxerError(PipelineStatus error);
 
   void OnEnabledAudioTracksChanged(const std::vector<MediaTrack::Id>& track_ids,
-                                   base::TimeDelta curr_time) override;
+                                   base::TimeDelta curr_time,
+                                   base::OnceClosure callback) override;
   // |track_id| either contains the selected video track id or is null,
   // indicating that all video tracks are deselected/disabled.
   void OnSelectedVideoTrackChanged(base::Optional<MediaTrack::Id> track_id,
-                                   base::TimeDelta curr_time) override;
+                                   base::TimeDelta curr_time,
+                                   base::OnceClosure callback) override;
 
   // The lowest demuxed timestamp.  If negative, DemuxerStreams must use this to
   // adjust packet timestamps such that external clients see a zero-based

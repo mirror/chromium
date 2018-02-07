@@ -23,11 +23,6 @@ std::vector<DemuxerStream*> MediaUrlDemuxer::GetAllStreams() {
   return std::vector<DemuxerStream*>();
 }
 
-// Should never be called since MediaResource::Type is URL.
-void MediaUrlDemuxer::SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) {
-  NOTREACHED();
-}
-
 MediaUrlParams MediaUrlDemuxer::GetMediaUrlParams() const {
   return params_;
 }
@@ -75,9 +70,16 @@ int64_t MediaUrlDemuxer::GetMemoryUsage() const {
 
 void MediaUrlDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {}
+    base::TimeDelta curr_time,
+    base::OnceClosure change_completed_cb) {
+  NOTREACHED();
+}
+
 void MediaUrlDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> selected_track_id,
-    base::TimeDelta curr_time) {}
+    base::TimeDelta curr_time,
+    base::OnceClosure change_completed_cb) {
+  NOTREACHED();
+}
 
 }  // namespace media

@@ -62,6 +62,12 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   void SetPlaybackRate(double playback_rate) final;
   void SetVolume(float volume) final;
   base::TimeDelta GetMediaTime() final;
+  void OnSelectedVideoTrackChanged(
+      base::Optional<MediaTrack::Id> selected_track_id,
+      base::OnceClosure change_completed_cb) final;
+  void OnSelectedAudioTracksChanged(
+      std::vector<MediaTrack::Id> enabled_track_ids,
+      base::OnceClosure change_completed_cb) final;
 
   // Helper functions for testing purposes. Must be called before Initialize().
   void DisableUnderflowForTesting();
@@ -106,12 +112,11 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   void FlushVideoRenderer();
   void OnVideoRendererFlushDone();
 
-  // This function notifies the renderer that the status of the demuxer |stream|
-  // has been changed, the new status is |enabled| and the change occured while
-  // playback position was |time|.
-  void OnStreamStatusChanged(DemuxerStream* stream,
-                             bool enabled,
-                             base::TimeDelta time);
+  // Helper functions for track switching.
+  void OnVideoFlushedAfterTrackChange(base::OnceClosure change_completed_cb);
+  void OnAudioFlushedAfterTrackChange(base::OnceClosure change_completed_cb);
+  void SeekAudioAfterFlushing(base::OnceClosure cb);
+  void SeekVideoAfterFlushing(base::TimeDelta timestamp, base::OnceClosure cb);
 
   // Reinitialize audio/video renderer during a demuxer stream switching. The
   // renderer must be flushed first, and when the re-init is completed the
@@ -217,6 +222,9 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   // Whether we've received the audio/video ended events.
   bool audio_ended_;
   bool video_ended_;
+
+  // Whether the flush event should also pause.
+  bool only_stop_video_;
 
   CdmContext* cdm_context_;
 

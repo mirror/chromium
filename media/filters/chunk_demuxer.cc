@@ -351,14 +351,6 @@ void ChunkDemuxerStream::SetEnabled(bool enabled, base::TimeDelta timestamp) {
     base::ResetAndReturn(&read_cb_).Run(kOk,
                                         StreamParserBuffer::CreateEOSBuffer());
   }
-  if (!stream_status_change_cb_.is_null())
-    stream_status_change_cb_.Run(this, is_enabled_, timestamp);
-}
-
-void ChunkDemuxerStream::SetStreamStatusChangeCB(
-    const StreamStatusChangeCB& cb) {
-  DCHECK(!cb.is_null());
-  stream_status_change_cb_ = BindToCurrentLoop(cb);
 }
 
 TextTrackConfig ChunkDemuxerStream::text_track_config() {
@@ -567,15 +559,6 @@ std::vector<DemuxerStream*> ChunkDemuxer::GetAllStreams() {
   return result;
 }
 
-void ChunkDemuxer::SetStreamStatusChangeCB(const StreamStatusChangeCB& cb) {
-  base::AutoLock auto_lock(lock_);
-  DCHECK(!cb.is_null());
-  for (const auto& stream : audio_streams_)
-    stream->SetStreamStatusChangeCB(cb);
-  for (const auto& stream : video_streams_)
-    stream->SetStreamStatusChangeCB(cb);
-}
-
 TimeDelta ChunkDemuxer::GetStartTime() const {
   return TimeDelta();
 }
@@ -769,7 +752,8 @@ base::TimeDelta ChunkDemuxer::GetHighestPresentationTimestamp(
 
 void ChunkDemuxer::OnEnabledAudioTracksChanged(
     const std::vector<MediaTrack::Id>& track_ids,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   base::AutoLock auto_lock(lock_);
   std::set<ChunkDemuxerStream*> enabled_streams;
   for (const auto& id : track_ids) {
@@ -800,11 +784,14 @@ void ChunkDemuxer::OnEnabledAudioTracksChanged(
     DVLOG(1) << __func__ << ": enabling stream " << stream;
     stream->SetEnabled(true, curr_time);
   }
+
+  std::move(callback).Run();
 }
 
 void ChunkDemuxer::OnSelectedVideoTrackChanged(
     base::Optional<MediaTrack::Id> track_id,
-    base::TimeDelta curr_time) {
+    base::TimeDelta curr_time,
+    base::OnceClosure callback) {
   base::AutoLock auto_lock(lock_);
   ChunkDemuxerStream* selected_stream = nullptr;
   if (track_id) {
@@ -829,6 +816,7 @@ void ChunkDemuxer::OnSelectedVideoTrackChanged(
     DVLOG(1) << __func__ << ": enabling stream " << selected_stream;
     selected_stream->SetEnabled(true, curr_time);
   }
+  std::move(callback).Run();
 }
 
 void ChunkDemuxer::OnMemoryPressure(
