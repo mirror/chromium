@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883c4c90_05e5a7c6",
+        "filename": "chromecast/browser/extensions/cast_extension_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-02-07T17:43:02Z",
+      "side": 1,
+      "message": "nit, nullptr",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "3d6417e844ad424f60afdbec88b4dbdcca417a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
