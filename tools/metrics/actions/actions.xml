@@ -1700,7 +1700,34 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Android.InstantApps.InstantAppsEligiblePageLoaded">
+<action name="Android.InstantApps.DirectInstantAppsIntentOther"
+    not_user_triggered="true">
+  <owner>mariakhomenko@chromium.org</owner>
+  <description>
+    Recorded when a user clicks on an instant apps intent from a page that's not
+    SERP.
+  </description>
+</action>
+
+<action name="Android.InstantApps.DirectInstantAppsIntentSearch"
+    not_user_triggered="true">
+  <owner>mariakhomenko@chromium.org</owner>
+  <description>
+    Recorded when a user clicks on an instant apps intent from Google SERP page.
+  </description>
+</action>
+
+<action name="Android.InstantApps.FallbackToUrlFromIntent"
+    not_user_triggered="true">
+  <owner>mariakhomenko@chromium.org</owner>
+  <description>
+    Instant apps was invoked via an intent:// URL, but could not be resolved and
+    was handled by a fallback url. Happens on Android N and below only.
+  </description>
+</action>
+
+<action name="Android.InstantApps.InstantAppsEligiblePageLoaded"
+    not_user_triggered="true">
   <owner>mariakhomenko@chromium.org</owner>
   <description>
     A page finished loading in Chrome that could have been loaded in an Instant

@@ -136,6 +136,10 @@ public class ExternalNavigationHandler {
                 && (params.getRedirectHandler() == null
                         // For instance, if this is a chained fallback URL, we ignore it.
                         || !params.getRedirectHandler().shouldNotOverrideUrlLoading())) {
+            if (InstantAppsHandler.isIntentToInstantApp(intent)) {
+                RecordUserAction.record("Android.InstantApps.FallbackToUrlFromIntent");
+            }
+
             return clobberCurrentTabWithFallbackUrl(browserFallbackUrl, params);
         }
         return result;
@@ -478,11 +482,13 @@ public class ExternalNavigationHandler {
         boolean shouldProxyForInstantApps = isDirectInstantAppsIntent
                 && mDelegate.isSerpReferrer(params.getTab());
         if (shouldProxyForInstantApps) {
+            RecordUserAction.record("Android.InstantApps.DirectInstantAppsIntentSearch");
             intent.putExtra(InstantAppsHandler.IS_GOOGLE_SEARCH_REFERRER, true);
         } else if (isDirectInstantAppsIntent) {
             // For security reasons, we disable all intent:// URLs to Instant Apps that are
             // not coming from SERP.
             if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Intent URL to an Instant App");
+            RecordUserAction.record("Android.InstantApps.DirectInstantAppsIntentOther");
             return OverrideUrlLoadingResult.NO_OVERRIDE;
         } else {
             // Make sure this extra is not sent unless we've done the verification.
