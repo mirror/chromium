@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea80af74_473e33b2",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T19:09:16Z",
+      "side": 1,
+      "message": "You might be able to simplify the positioning of \"slash\" and \"pagelength-spacer\" elements, if you turn this to \"display: none;\" instead (maybe it will eliminate the need for bottom margin and padding). As it is now, paper-input\u0027s underline is still taking up 1px space, but it is not visible, making the centering of elements more complicated than necessary.\n\nAlso having said that, I don\u0027t see any benefit of using \u003cpaper-input-container\u003e here, since the UI does not look like a \u003cpaper-input\u003e at all. Using only a properly styled native \u003cinput\u003e would probably make things easier. \n\n+hnakashima,dsinclair any thoughts on this^",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "395bfa91d5fb0cdf710369de81664ee16d0831b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0302e3_c98dbd2d",
         "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
         "patchSetId": 7
@@ -18,6 +41,53 @@
         "startChar": 0,
         "endLine": 20,
         "endChar": 60
+      },
+      "revId": "395bfa91d5fb0cdf710369de81664ee16d0831b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806176bf_4f5308b5",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T19:09:16Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s undo this.",
+      "parentUuid": "0a0302e3_c98dbd2d",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "395bfa91d5fb0cdf710369de81664ee16d0831b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f34275c_e79cacfd",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T19:09:16Z",
+      "side": 1,
+      "message": "top-level as a name is a bit confusing (too generic?). Maybe just remove that class, and use the following instead.\n\n#pageselector, #slash, #pagelength-spacer {...}",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 16
       },
       "revId": "395bfa91d5fb0cdf710369de81664ee16d0831b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
