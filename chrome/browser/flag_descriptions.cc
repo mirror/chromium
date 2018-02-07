@@ -878,10 +878,6 @@ const char kMemoryCoordinatorName[] = "Memory coordinator";
 const char kMemoryCoordinatorDescription[] =
     "Enable memory coordinator instead of memory pressure listeners.";
 
-const char kMessageCenterNewStyleNotificationName[] = "New style notification";
-const char kMessageCenterNewStyleNotificationDescription[] =
-    "Enables the experiment style of material-design notification";
-
 const char kMhtmlGeneratorOptionName[] = "MHTML Generation Option";
 const char kMhtmlGeneratorOptionDescription[] =
     "Provides experimental options for MHTML file generator.";
