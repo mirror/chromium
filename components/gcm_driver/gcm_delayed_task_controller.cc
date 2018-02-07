@@ -7,33 +7,29 @@
 #include <stddef.h>
 
 #include "base/logging.h"
+#include "base/single_thread_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 
 namespace gcm {
 
-GCMDelayedTaskController::GCMDelayedTaskController() : ready_(false) {
-}
+GCMDelayedTaskController::GCMDelayedTaskController() = default;
 
-GCMDelayedTaskController::~GCMDelayedTaskController() {
-}
+GCMDelayedTaskController::~GCMDelayedTaskController() = default;
 
-void GCMDelayedTaskController::AddTask(const base::Closure& task) {
-  delayed_tasks_.push_back(task);
+void GCMDelayedTaskController::AddTask(base::OnceClosure task) {
+  if (ready_)
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
+  else
+    delayed_tasks_.push_back(std::move(task));
 }
 
 void GCMDelayedTaskController::SetReady() {
+  DCHECK(!ready_);
   ready_ = true;
-  RunTasks();
-}
 
-bool GCMDelayedTaskController::CanRunTaskWithoutDelay() const {
-  return ready_;
-}
+  for (auto& callback : delayed_tasks_)
+    std::move(callback).Run();
 
-void GCMDelayedTaskController::RunTasks() {
-  DCHECK(ready_);
-
-  for (size_t i = 0; i < delayed_tasks_.size(); ++i)
-    delayed_tasks_[i].Run();
   delayed_tasks_.clear();
 }
 

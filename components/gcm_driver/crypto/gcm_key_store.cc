@@ -267,13 +267,8 @@ void GCMKeyStore::DidRemoveKeys(const base::Closure& callback, bool success) {
 }
 
 void GCMKeyStore::LazyInitialize(const base::Closure& done_closure) {
-  if (delayed_task_controller_.CanRunTaskWithoutDelay()) {
-    done_closure.Run();
-    return;
-  }
-
   delayed_task_controller_.AddTask(done_closure);
-  if (state_ == State::INITIALIZING)
+  if (state_ != State::UNINITIALIZED)
     return;
 
   state_ = State::INITIALIZING;

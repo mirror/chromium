@@ -13,51 +13,61 @@ namespace gcm {
 
 class GCMDelayedTaskControllerTest : public testing::Test {
  public:
-  GCMDelayedTaskControllerTest();
-  ~GCMDelayedTaskControllerTest() override;
+  GCMDelayedTaskControllerTest()
+      : controller_(std::make_unique<GCMDelayedTaskController>()) {}
+  ~GCMDelayedTaskControllerTest() override = default;
 
-  void TestTask();
+  void TestTask() { ++number_of_triggered_tasks_; }
 
-  GCMDelayedTaskController* controller() { return controller_.get(); }
+  bool CanRunTaskWithoutDelay() const {
+    return controller_->CanRunTaskWithoutDelayForTesting();
+  }
 
-  int number_of_triggered_tasks() const { return number_of_triggered_tasks_; }
-
- private:
+ protected:
   std::unique_ptr<GCMDelayedTaskController> controller_;
-  int number_of_triggered_tasks_;
+  int number_of_triggered_tasks_ = 0;
 };
-
-GCMDelayedTaskControllerTest::GCMDelayedTaskControllerTest()
-    : controller_(new GCMDelayedTaskController), number_of_triggered_tasks_(0) {
-}
-
-GCMDelayedTaskControllerTest::~GCMDelayedTaskControllerTest() {
-}
-
-void GCMDelayedTaskControllerTest::TestTask() {
-  ++number_of_triggered_tasks_;
-}
 
 // Tests that a newly created controller forced tasks to be delayed, while
 // calling SetReady allows tasks to execute.
 TEST_F(GCMDelayedTaskControllerTest, SetReadyWithNoTasks) {
-  EXPECT_FALSE(controller()->CanRunTaskWithoutDelay());
-  EXPECT_EQ(0, number_of_triggered_tasks());
+  EXPECT_FALSE(CanRunTaskWithoutDelay());
+  EXPECT_EQ(0, number_of_triggered_tasks_);
 
-  controller()->SetReady();
-  EXPECT_TRUE(controller()->CanRunTaskWithoutDelay());
-  EXPECT_EQ(0, number_of_triggered_tasks());
+  controller_->SetReady();
+  EXPECT_TRUE(CanRunTaskWithoutDelay());
+  EXPECT_EQ(0, number_of_triggered_tasks_);
 }
 
-// Tests that tasks are triggered when controlles is set to ready.
+// Tests that tasks are triggered when controller is set to ready.
 TEST_F(GCMDelayedTaskControllerTest, PendingTasksTriggeredWhenSetReady) {
-  controller()->AddTask(base::Bind(&GCMDelayedTaskControllerTest::TestTask,
-                                   base::Unretained(this)));
-  controller()->AddTask(base::Bind(&GCMDelayedTaskControllerTest::TestTask,
-                                   base::Unretained(this)));
+  controller_->AddTask(base::BindOnce(&GCMDelayedTaskControllerTest::TestTask,
+                                      base::Unretained(this)));
+  controller_->AddTask(base::BindOnce(&GCMDelayedTaskControllerTest::TestTask,
+                                      base::Unretained(this)));
 
-  controller()->SetReady();
-  EXPECT_EQ(2, number_of_triggered_tasks());
+  controller_->SetReady();
+  EXPECT_EQ(2, number_of_triggered_tasks_);
+}
+
+// Tests that tasks are triggered immediately when the controller already has
+// been set to ready.
+TEST_F(GCMDelayedTaskControllerTest, TasksTriggerImmediatelyWhenReady) {
+  ASSERT_FALSE(CanRunTaskWithoutDelay());
+  EXPECT_EQ(0, number_of_triggered_tasks_);
+
+  controller_->AddTask(base::BindOnce(&GCMDelayedTaskControllerTest::TestTask,
+                                      base::Unretained(this)));
+
+  controller_->SetReady();
+
+  ASSERT_TRUE(CanRunTaskWithoutDelay());
+  EXPECT_EQ(1, number_of_triggered_tasks_);
+
+  controller_->AddTask(base::BindOnce(&GCMDelayedTaskControllerTest::TestTask,
+                                      base::Unretained(this)));
+
+  EXPECT_EQ(2, number_of_triggered_tasks_);
 }
 
 }  // namespace gcm

@@ -68,8 +68,8 @@ InstanceIDImpl::~InstanceIDImpl() {
 }
 
 void InstanceIDImpl::GetID(const GetIDCallback& callback) {
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoGetID,
-                          weak_ptr_factory_.GetWeakPtr(), callback));
+  delayed_task_controller_.AddTask(base::BindOnce(
+      &InstanceIDImpl::DoGetID, weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void InstanceIDImpl::DoGetID(const GetIDCallback& callback) {
@@ -78,8 +78,9 @@ void InstanceIDImpl::DoGetID(const GetIDCallback& callback) {
 }
 
 void InstanceIDImpl::GetCreationTime(const GetCreationTimeCallback& callback) {
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoGetCreationTime,
-                          weak_ptr_factory_.GetWeakPtr(), callback));
+  delayed_task_controller_.AddTask(
+      base::BindOnce(&InstanceIDImpl::DoGetCreationTime,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void InstanceIDImpl::DoGetCreationTime(
@@ -95,9 +96,9 @@ void InstanceIDImpl::GetToken(
   DCHECK(!authorized_entity.empty());
   DCHECK(!scope.empty());
 
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoGetToken,
-                          weak_ptr_factory_.GetWeakPtr(), authorized_entity,
-                          scope, options, callback));
+  delayed_task_controller_.AddTask(base::BindOnce(
+      &InstanceIDImpl::DoGetToken, weak_ptr_factory_.GetWeakPtr(),
+      authorized_entity, scope, options, callback));
 }
 
 void InstanceIDImpl::DoGetToken(
@@ -120,9 +121,9 @@ void InstanceIDImpl::ValidateToken(const std::string& authorized_entity,
   DCHECK(!scope.empty());
   DCHECK(!token.empty());
 
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoValidateToken,
-                          weak_ptr_factory_.GetWeakPtr(), authorized_entity,
-                          scope, token, callback));
+  delayed_task_controller_.AddTask(base::BindOnce(
+      &InstanceIDImpl::DoValidateToken, weak_ptr_factory_.GetWeakPtr(),
+      authorized_entity, scope, token, callback));
 }
 
 void InstanceIDImpl::DoValidateToken(const std::string& authorized_entity,
@@ -143,9 +144,9 @@ void InstanceIDImpl::DeleteTokenImpl(const std::string& authorized_entity,
   DCHECK(!authorized_entity.empty());
   DCHECK(!scope.empty());
 
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoDeleteToken,
-                          weak_ptr_factory_.GetWeakPtr(), authorized_entity,
-                          scope, callback));
+  delayed_task_controller_.AddTask(base::BindOnce(
+      &InstanceIDImpl::DoDeleteToken, weak_ptr_factory_.GetWeakPtr(),
+      authorized_entity, scope, callback));
 }
 
 void InstanceIDImpl::DoDeleteToken(
@@ -164,8 +165,8 @@ void InstanceIDImpl::DoDeleteToken(
 }
 
 void InstanceIDImpl::DeleteIDImpl(const DeleteIDCallback& callback) {
-  RunWhenReady(base::Bind(&InstanceIDImpl::DoDeleteID,
-                          weak_ptr_factory_.GetWeakPtr(), callback));
+  delayed_task_controller_.AddTask(base::BindOnce(
+      &InstanceIDImpl::DoDeleteID, weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void InstanceIDImpl::DoDeleteID(const DeleteIDCallback& callback) {
@@ -261,13 +262,6 @@ gcm::InstanceIDHandler* InstanceIDImpl::Handler() {
       gcm_driver()->GetInstanceIDHandlerInternal();
   DCHECK(handler);
   return handler;
-}
-
-void InstanceIDImpl::RunWhenReady(base::Closure task) {
-  if (!delayed_task_controller_.CanRunTaskWithoutDelay())
-    delayed_task_controller_.AddTask(task);
-  else
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
 }
 
 }  // namespace instance_id

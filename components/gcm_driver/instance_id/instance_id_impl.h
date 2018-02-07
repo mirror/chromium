@@ -77,9 +77,6 @@ class InstanceIDImpl : public InstanceID {
 
   gcm::InstanceIDHandler* Handler();
 
-  // Asynchronously runs task once delayed_task_controller_ is ready.
-  void RunWhenReady(base::Closure task);
-
   gcm::GCMDelayedTaskController delayed_task_controller_;
 
   // The generated Instance ID.

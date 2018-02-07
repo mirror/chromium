@@ -170,6 +170,9 @@ class GCMDriverDesktop : public GCMDriver,
   void DoDeleteToken(const std::string& app_id,
                      const std::string& authorized_entity,
                      const std::string& scope);
+  void DoWakeFromSuspendForHeartbeat();
+  void DoAddHeartbeatInterval(const std::string& scope, int interval_ms);
+  void DoRemoveHeartbeatInterval(const std::string& scope);
 
   // Callbacks posted from IO thread to UI thread.
   void MessageReceived(const std::string& app_id,
