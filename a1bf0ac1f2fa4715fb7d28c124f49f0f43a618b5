@@ -491,6 +491,24 @@
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2ae323_5723c283",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T23:15:06Z",
+      "side": 1,
+      "message": "What kinuko said. rockot changed this behavior awhile back, because it was painful to pass Mojo structs across threads otherwise. See https://chromium-review.googlesource.com/c/chromium/src/+/764988.",
+      "parentUuid": "0ab25932_afefc3cd",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
