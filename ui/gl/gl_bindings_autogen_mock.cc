@@ -315,8 +315,8 @@ MockGLInterface::Mock_glBlitFramebufferANGLE(GLint srcX0,
                                              GLbitfield mask,
                                              GLenum filter) {
   MakeFunctionUnique("glBlitFramebufferANGLE");
-  interface_->BlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1,
-                              dstY1, mask, filter);
+  interface_->BlitFramebufferES2(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                 dstX1, dstY1, mask, filter);
 }
 
 void GL_BINDING_CALL MockGLInterface::Mock_glBlitFramebufferEXT(GLint srcX0,
@@ -330,8 +330,8 @@ void GL_BINDING_CALL MockGLInterface::Mock_glBlitFramebufferEXT(GLint srcX0,
                                                                 GLbitfield mask,
                                                                 GLenum filter) {
   MakeFunctionUnique("glBlitFramebufferEXT");
-  interface_->BlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1,
-                              dstY1, mask, filter);
+  interface_->BlitFramebufferES2(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                 dstX1, dstY1, mask, filter);
 }
 
 void GL_BINDING_CALL MockGLInterface::Mock_glBufferData(GLenum target,

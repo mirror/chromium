@@ -87,6 +87,16 @@ typedef void(GL_BINDING_CALL* glBlitFramebufferProc)(GLint srcX0,
                                                      GLint dstY1,
                                                      GLbitfield mask,
                                                      GLenum filter);
+typedef void(GL_BINDING_CALL* glBlitFramebufferES2Proc)(GLint srcX0,
+                                                        GLint srcY0,
+                                                        GLint srcX1,
+                                                        GLint srcY1,
+                                                        GLint dstX0,
+                                                        GLint dstY0,
+                                                        GLint dstX1,
+                                                        GLint dstY1,
+                                                        GLbitfield mask,
+                                                        GLenum filter);
 typedef void(GL_BINDING_CALL* glBufferDataProc)(GLenum target,
                                                 GLsizeiptr size,
                                                 const void* data,
@@ -1608,6 +1618,7 @@ struct ProcsGL {
   glBlendFuncProc glBlendFuncFn;
   glBlendFuncSeparateProc glBlendFuncSeparateFn;
   glBlitFramebufferProc glBlitFramebufferFn;
+  glBlitFramebufferES2Proc glBlitFramebufferES2Fn;
   glBufferDataProc glBufferDataFn;
   glBufferSubDataProc glBufferSubDataFn;
   glCheckFramebufferStatusEXTProc glCheckFramebufferStatusEXTFn;
@@ -2062,6 +2073,16 @@ class GL_EXPORT GLApi {
                                    GLint dstY1,
                                    GLbitfield mask,
                                    GLenum filter) = 0;
+  virtual void glBlitFramebufferES2Fn(GLint srcX0,
+                                      GLint srcY0,
+                                      GLint srcX1,
+                                      GLint srcY1,
+                                      GLint dstX0,
+                                      GLint dstY0,
+                                      GLint dstX1,
+                                      GLint dstY1,
+                                      GLbitfield mask,
+                                      GLenum filter) = 0;
   virtual void glBufferDataFn(GLenum target,
                               GLsizeiptr size,
                               const void* data,
@@ -3363,6 +3384,7 @@ class GL_EXPORT GLApi {
 #define glBlendFunc ::gl::g_current_gl_context->glBlendFuncFn
 #define glBlendFuncSeparate ::gl::g_current_gl_context->glBlendFuncSeparateFn
 #define glBlitFramebuffer ::gl::g_current_gl_context->glBlitFramebufferFn
+#define glBlitFramebufferES2 ::gl::g_current_gl_context->glBlitFramebufferES2Fn
 #define glBufferData ::gl::g_current_gl_context->glBufferDataFn
 #define glBufferSubData ::gl::g_current_gl_context->glBufferSubDataFn
 #define glCheckFramebufferStatusEXT \

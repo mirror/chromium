@@ -8367,6 +8367,14 @@ void GLES2DecoderImpl::DoBlitFramebufferCHROMIUM(
   const char* func_name = "glBlitFramebufferCHROMIUM";
   DCHECK(!ShouldDeferReads() && !ShouldDeferDraws());
 
+  // OpenGL ES 2.0 supports blitFramebuffer through extensions which have
+  // different limitations from OpenGL ES 3.0 blitFramebuffer.
+  if (feature_info_->IsWebGL1OrES2Context()) {
+    api()->glBlitFramebufferES2Fn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                  dstX1, dstY1, mask, filter);
+    return;
+  }
+
   if (!CheckBoundFramebufferValid(func_name)) {
     return;
   }

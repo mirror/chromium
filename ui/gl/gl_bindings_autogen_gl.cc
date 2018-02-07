@@ -542,6 +542,14 @@ void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
         GetGLProcAddress("glBlitFramebufferEXT"));
   }
 
+  if (ext.b_GL_ANGLE_framebuffer_blit) {
+    fn.glBlitFramebufferES2Fn = reinterpret_cast<glBlitFramebufferES2Proc>(
+        GetGLProcAddress("glBlitFramebufferANGLE"));
+  } else if (ext.b_GL_EXT_framebuffer_blit) {
+    fn.glBlitFramebufferES2Fn = reinterpret_cast<glBlitFramebufferES2Proc>(
+        GetGLProcAddress("glBlitFramebufferEXT"));
+  }
+
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
     fn.glCheckFramebufferStatusEXTFn =
         reinterpret_cast<glCheckFramebufferStatusEXTProc>(
@@ -2390,6 +2398,20 @@ void GLApiBase::glBlitFramebufferFn(GLint srcX0,
                                     GLenum filter) {
   driver_->fn.glBlitFramebufferFn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
                                   dstX1, dstY1, mask, filter);
+}
+
+void GLApiBase::glBlitFramebufferES2Fn(GLint srcX0,
+                                       GLint srcY0,
+                                       GLint srcX1,
+                                       GLint srcY1,
+                                       GLint dstX0,
+                                       GLint dstY0,
+                                       GLint dstX1,
+                                       GLint dstY1,
+                                       GLbitfield mask,
+                                       GLenum filter) {
+  driver_->fn.glBlitFramebufferES2Fn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                     dstX1, dstY1, mask, filter);
 }
 
 void GLApiBase::glBufferDataFn(GLenum target,
@@ -5030,6 +5052,21 @@ void TraceGLApi::glBlitFramebufferFn(GLint srcX0,
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glBlitFramebuffer")
   gl_api_->glBlitFramebufferFn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1,
                                dstY1, mask, filter);
+}
+
+void TraceGLApi::glBlitFramebufferES2Fn(GLint srcX0,
+                                        GLint srcY0,
+                                        GLint srcX1,
+                                        GLint srcY1,
+                                        GLint dstX0,
+                                        GLint dstY0,
+                                        GLint dstX1,
+                                        GLint dstY1,
+                                        GLbitfield mask,
+                                        GLenum filter) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glBlitFramebufferES2")
+  gl_api_->glBlitFramebufferES2Fn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                  dstX1, dstY1, mask, filter);
 }
 
 void TraceGLApi::glBufferDataFn(GLenum target,
@@ -8145,6 +8182,25 @@ void DebugGLApi::glBlitFramebufferFn(GLint srcX0,
                  << GLEnums::GetStringEnum(filter) << ")");
   gl_api_->glBlitFramebufferFn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1,
                                dstY1, mask, filter);
+}
+
+void DebugGLApi::glBlitFramebufferES2Fn(GLint srcX0,
+                                        GLint srcY0,
+                                        GLint srcX1,
+                                        GLint srcY1,
+                                        GLint dstX0,
+                                        GLint dstY0,
+                                        GLint dstX1,
+                                        GLint dstY1,
+                                        GLbitfield mask,
+                                        GLenum filter) {
+  GL_SERVICE_LOG("glBlitFramebufferES2"
+                 << "(" << srcX0 << ", " << srcY0 << ", " << srcX1 << ", "
+                 << srcY1 << ", " << dstX0 << ", " << dstY0 << ", " << dstX1
+                 << ", " << dstY1 << ", " << mask << ", "
+                 << GLEnums::GetStringEnum(filter) << ")");
+  gl_api_->glBlitFramebufferES2Fn(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0,
+                                  dstX1, dstY1, mask, filter);
 }
 
 void DebugGLApi::glBufferDataFn(GLenum target,
@@ -12151,6 +12207,19 @@ void NoContextGLApi::glBlitFramebufferFn(GLint srcX0,
                                          GLbitfield mask,
                                          GLenum filter) {
   NoContextHelper("glBlitFramebuffer");
+}
+
+void NoContextGLApi::glBlitFramebufferES2Fn(GLint srcX0,
+                                            GLint srcY0,
+                                            GLint srcX1,
+                                            GLint srcY1,
+                                            GLint dstX0,
+                                            GLint dstY0,
+                                            GLint dstX1,
+                                            GLint dstY1,
+                                            GLbitfield mask,
+                                            GLenum filter) {
+  NoContextHelper("glBlitFramebufferES2");
 }
 
 void NoContextGLApi::glBufferDataFn(GLenum target,
