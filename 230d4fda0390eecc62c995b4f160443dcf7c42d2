@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5973f652_eeeb9639",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:09:27Z",
+      "side": 1,
+      "message": "This too?",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e4b79f_ae9b6f41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:09:27Z",
+      "side": 1,
+      "message": "And this?",
+      "range": {
+        "startLine": 18,
+        "startChar": 54,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b25bd01_7b1e8e96",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:09:27Z",
+      "side": 1,
+      "message": "If they\u0027re TouchUi specific, why aren\u0027t they next to the others after line 135?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05eb890_65d91fa8",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T19:09:27Z",
+      "side": 1,
+      "message": "Maybe move these to the `default:` case?",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 80
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
