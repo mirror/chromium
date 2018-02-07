@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152e86f1_31187de7",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T17:48:49Z",
+      "side": 1,
+      "message": "can we use ScopedObserver for this?",
+      "revId": "e68a0407408cb75f1c2ac5421036a55972885bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
