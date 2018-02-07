@@ -1688,6 +1688,7 @@ if (enable_java_templates) {
   #   generate_buildconfig_java: If defined and false, skip generating the
   #     BuildConfig java class describing the build configuration. The default
   #     is true for non-test APKs.
+  #   firebase_app_id: The value for BuildConfig.FIREBASE_APP_ID (optional).
   #   requires_sdk_api_level_23: If defined and true, the apk is intended for
   #     installation only on Android M or later. In these releases the system
   #     linker does relocation unpacking, so we can enable it unconditionally.
@@ -2109,7 +2110,7 @@ if (enable_java_templates) {
           ":$_build_config_target",
         ]
 
-        defines = []
+        defines = [ "USE_FINAL" ]
         if (_enable_multidex) {
           defines += [ "ENABLE_MULTIDEX" ]
         }
@@ -2125,6 +2126,9 @@ if (enable_java_templates) {
           "UNCOMPRESSED_LOCALE_LIST=" +
               "@FileArg($_rebased_build_config:uncompressed_locales_java_list)",
         ]
+        if (defined(invoker.firebase_app_id)) {
+          defines += [ "_FIREBASE_APP_ID=${invoker.firebase_app_id}" ]
+        }
       }
       _srcjar_deps += [ ":${_template_name}__build_config_java" ]
     }

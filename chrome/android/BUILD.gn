@@ -1051,6 +1051,7 @@ chrome_public_apk_tmpl_shared("chrome_public_apk") {
   android_manifest_dep = ":chrome_public_android_manifest"
   apk_name = "ChromePublic"
   shared_libraries = [ ":libchrome" ]
+  firebase_app_id = "asdfasdfasdf"
 }
 
 chrome_public_apk_tmpl_shared("chrome_public_apk_for_test") {
