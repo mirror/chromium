@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20cbe3c_1e197949",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-02-07T19:14:33Z",
+      "side": 1,
+      "message": "IIRC on Android we respect the system volume and prefer not using the media element volume. Media controls on Android barely have a volume slider. Please check this decision with mlamouri@.",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 25
+      },
+      "revId": "320ec5b6133744c38144ff4af5e10ccadee6fb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb70ffb8_cb20d8db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2018-02-07T19:14:33Z",
+      "side": 1,
+      "message": "seek?",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 36
+      },
+      "revId": "320ec5b6133744c38144ff4af5e10ccadee6fb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
