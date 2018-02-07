@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93aa11bf_027d6ca5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-07T21:37:08Z",
+      "side": 1,
+      "message": "Intention is to clarify that content layer on Android needs Android.view.View object to perform view-related functionality, and get information/events from it. But the object itself doesn\u0027t have to be a part of content layer, and it can be a component provided by embedders. Suggestion on better phrasing it would be welcome.",
+      "parentUuid": "b8b2acdf_f283ce7b",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acd5c13a_e065d4df",
         "filename": "content/shell/DEPS",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2018-02-07T21:28:31Z",
       "side": 1,
       "message": "bikeshedding: I\u0027d say components/content_view is too generic for android-specific stuff. WDYT about android_content_view?",
+      "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9160d366_a1ece7d8",
+        "filename": "content/shell/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-07T21:37:08Z",
+      "side": 1,
+      "message": "Also thought of naming it as such. But looking around other components I find that the convention is to name the class as same as the component. And I wanted to avoid having a java class of a name AndroidContentView. I\u0027m okay to rename the component if the class name can be kept as ContentView.",
+      "parentUuid": "acd5c13a_e065d4df",
       "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
