@@ -22,6 +22,30 @@
       "revId": "5e5feca166777b4e5a974dfb5c4766caed0e35fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4daa496_034cb662",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T19:00:42Z",
+      "side": 1,
+      "message": "Done. Very good point. I capped it at 64KiB (which is the max datagram size + 1).\nThank you.",
+      "parentUuid": "b4db7601_8276444a",
+      "range": {
+        "startLine": 147,
+        "startChar": 1,
+        "endLine": 147,
+        "endChar": 59
+      },
+      "revId": "5e5feca166777b4e5a974dfb5c4766caed0e35fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
