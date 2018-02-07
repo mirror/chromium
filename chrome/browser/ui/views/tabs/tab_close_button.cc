@@ -4,11 +4,20 @@
 
 #include "chrome/browser/ui/views/tabs/tab_close_button.h"
 
+#include <map>
 #include <memory>
+#include <vector>
 
+#include "base/hash.h"
+#include "base/no_destructor.h"
+#include "base/stl_util.h"
 #include "chrome/app/vector_icons/vector_icons.h"
+#include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/tabs/tab.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
+#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/rect_based_targeting_utils.h"
 
@@ -23,15 +32,17 @@ TabCloseButton::TabCloseButton(views::ButtonListener* listener,
   SetEventTargeter(std::make_unique<views::ViewTargeter>(this));
   SetAccessibleName(l10n_util::GetStringUTF16(IDS_ACCNAME_CLOSE));
 
-  // The normal image is set by OnButtonColorMaybeChanged() because it depends
-  // on the current theme and active state.  The hovered and pressed images
-  // don't depend on the these, so we can set them here.
-  const gfx::ImageSkia& hovered = gfx::CreateVectorIcon(
-      kTabCloseHoveredPressedIcon, SkColorSetRGB(0xDB, 0x44, 0x37));
-  const gfx::ImageSkia& pressed = gfx::CreateVectorIcon(
-      kTabCloseHoveredPressedIcon, SkColorSetRGB(0xA8, 0x35, 0x2A));
-  SetImage(views::Button::STATE_HOVERED, &hovered);
-  SetImage(views::Button::STATE_PRESSED, &pressed);
+  if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled()) {
+    // The normal image is set by OnButtonColorMaybeChanged() because it depends
+    // on the current theme and active state.  The hovered and pressed images
+    // don't depend on the these, so we can set them here.
+    const gfx::ImageSkia& hovered = gfx::CreateVectorIcon(
+        kTabCloseHoveredPressedIcon, SkColorSetRGB(0xDB, 0x44, 0x37));
+    const gfx::ImageSkia& pressed = gfx::CreateVectorIcon(
+        kTabCloseHoveredPressedIcon, SkColorSetRGB(0xA8, 0x35, 0x2A));
+    SetImage(views::Button::STATE_HOVERED, &hovered);
+    SetImage(views::Button::STATE_PRESSED, &pressed);
+  }
 
   // Disable animation so that the red danger sign shows up immediately
   // to help avoid mis-clicks.
@@ -44,6 +55,25 @@ void TabCloseButton::SetTabColor(SkColor color) {
   const gfx::ImageSkia& close_button_normal_image =
       gfx::CreateVectorIcon(kTabCloseNormalIcon, color);
   SetImage(views::Button::STATE_NORMAL, &close_button_normal_image);
+}
+
+void TabCloseButton::ActiveStateChanged(const Tab* parent_tab) {
+  const std::vector<views::Button::ButtonState> states = {
+      views::Button::STATE_NORMAL, views::Button::STATE_HOVERED,
+      views::Button::STATE_PRESSED};
+
+  for (const auto& state : states) {
+    std::pair<SkColor, SkColor> pair_color =
+        parent_tab->GetCloseTabButtonColors(state);
+
+    const gfx::ImageSkia base =
+        gfx::CreateVectorIcon(kTabCloseButtonBaseIcon, pair_color.first);
+    const gfx::ImageSkia icon =
+        gfx::CreateVectorIcon(kTabCloseButtonTouchIcon, pair_color.second);
+
+    SetImage(state,
+             gfx::ImageSkiaOperations::CreateSuperimposedImage(base, icon));
+  }
 }
 
 views::View* TabCloseButton::GetTooltipHandlerForPoint(
