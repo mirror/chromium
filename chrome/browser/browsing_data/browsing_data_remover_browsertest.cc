@@ -153,19 +153,26 @@ class BrowsingDataRemoverBrowserTest : public InProcessBrowserTest {
   // deleted and the cookie counter is back to zero.
   void TestSiteData(const std::string& type) {
     EXPECT_EQ(0, GetSiteDataCount());
+
+    DLOG(ERROR) << "Start test: " << type;
     GURL url = embedded_test_server()->GetURL("/browsing_data/site_data.html");
     ui_test_utils::NavigateToURL(browser(), url);
 
+    DLOG(ERROR) << " navigated to URL...";
     EXPECT_EQ(0, GetSiteDataCount());
     EXPECT_FALSE(HasDataForType(type));
 
+    DLOG(ERROR) << " Creating: " << type;
     SetDataForType(type);
     EXPECT_EQ(1, GetSiteDataCount());
     EXPECT_TRUE(HasDataForType(type));
 
+    DLOG(ERROR) << " deleting: " << type;
     RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA);
+    DLOG(ERROR) << " deleted, checking count is 0.";
     EXPECT_EQ(0, GetSiteDataCount());
     EXPECT_FALSE(HasDataForType(type));
+    DLOG(ERROR) << " end of test.";
   }
 
   // Test that storage systems like filesystem and websql, where just an access
