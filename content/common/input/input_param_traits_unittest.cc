@@ -91,14 +91,14 @@ TEST_F(InputParamTraitsTest, InitializedEvents) {
       blink::WebInputEvent::kMouseWheel, blink::WebInputEvent::kNoModifiers,
       blink::WebInputEvent::kTimeStampForTesting);
   wheel_event.delta_x = 10;
-  latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1, 1);
+  latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1);
   events.push_back(std::make_unique<InputEvent>(wheel_event, latency));
 
   blink::WebMouseEvent mouse_event(blink::WebInputEvent::kMouseDown,
                                    blink::WebInputEvent::kNoModifiers,
                                    blink::WebInputEvent::kTimeStampForTesting);
   mouse_event.SetPositionInWidget(10, 0);
-  latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 2, 2);
+  latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 2);
   events.push_back(std::make_unique<InputEvent>(mouse_event, latency));
 
   blink::WebGestureEvent gesture_event(

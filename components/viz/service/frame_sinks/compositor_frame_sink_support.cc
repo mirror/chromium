@@ -203,7 +203,7 @@ void CompositorFrameSinkSupport::SubmitCompositorFrame(
   for (ui::LatencyInfo& latency : frame.metadata.latency_info) {
     if (latency.latency_components().size() > 0) {
       latency.AddLatencyNumber(ui::DISPLAY_COMPOSITOR_RECEIVED_FRAME_COMPONENT,
-                               0, 0);
+                               0);
     }
   }
 

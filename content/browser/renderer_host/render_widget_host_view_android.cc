@@ -969,7 +969,7 @@ bool RenderWidgetHostViewAndroid::OnTouchEvent(
     return false;
 
   ui::LatencyInfo latency_info(ui::SourceEventType::TOUCH);
-  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   if (host_->delegate()->GetInputEventRouter()) {
     host_->delegate()->GetInputEventRouter()->RouteTouchEvent(this, &web_event,
                                                               latency_info);
@@ -1014,7 +1014,7 @@ void RenderWidgetHostViewAndroid::ResetGestureDetection() {
   if (gesture_provider_.OnTouchEvent(*cancel_event).succeeded) {
     bool causes_scrolling = false;
     ui::LatencyInfo latency_info(ui::SourceEventType::TOUCH);
-    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
     blink::WebTouchEvent web_event =
         ui::CreateWebTouchEventFromMotionEvent(*cancel_event, causes_scrolling);
     if (host_->delegate()->GetInputEventRouter()) {
@@ -1861,7 +1861,7 @@ void RenderWidgetHostViewAndroid::SendKeyEvent(
       event.GetType() == blink::WebInputEvent::kChar) {
     latency_info.set_source_event_type(ui::SourceEventType::KEY_PRESS);
   }
-  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   target_host->ForwardKeyboardEventWithLatencyInfo(event, latency_info);
 }
 
@@ -1929,7 +1929,7 @@ void RenderWidgetHostViewAndroid::SendMouseWheelEvent(
     return;
 
   ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
-  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   blink::WebMouseWheelEvent wheel_event(event);
   bool should_route_event = !!host_->delegate()->GetInputEventRouter();
   if (wheel_scroll_latching_enabled()) {
