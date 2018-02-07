@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "949da3da_da131e6d",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 1,
+      "message": "I think it\u0027s not needed since this struct is used only for subresource loading anyway. Maybe I\u0027m missing something.",
+      "parentUuid": "36a67f10_fcb17f24",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6aafc8da_d305bd84",
         "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
         "patchSetId": 4
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "5e96edc4_21a63f7c",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 1,
+      "message": "Mmm, either way is fine. There\u0027s no immediately easy solution since provider_id is also used for non-clients, and we mint a provider_id by incrementing/decrementing a counter (and sometimes it\u0027s created by the renderer, and sometimes by the browser).",
+      "parentUuid": "08502ace_501758b4",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a4bf9b_f25b6baa",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -416,6 +452,24 @@
       "side": 1,
       "message": "I tried std::move first but looks like InterfacePtrInfo cannot be created by moving an InterfacePtr.\n\nActually I\u0027m not 100% sure I\u0027m doing a right thing here. I think I should add a reviewer for mojo use. Probably dcheng@?",
       "parentUuid": "ef69b409_86325dbe",
+      "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db16e367_de9145a9",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 1,
+      "message": "Hm, I\u0027m not sure. dcheng@ do you know why std::move(fetch_callback_ptr) works before this patch, but we need to do fetch_callback_ptr.PassInterface() now? See the related change in controller_service_worker.mojom, we just moved `ServiceWorkerFetchResponseCallback response_callback` from a direct method param to a member of a struct of params.\n\nIn any case, we could just revert that change for this CL, and keep FetchResposneCallback as a direct method param separate from the struct.",
+      "parentUuid": "44da8970_21ade8de",
       "revId": "a1bf0ac1f2fa4715fb7d28c124f49f0f43a618b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

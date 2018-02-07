@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81af787a_1331f63a",
+        "filename": "content/common/service_worker/dispatch_fetch_event_params.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 1,
+      "message": "add \u0027.\u0027 to end for consistency",
+      "revId": "79cd368d91716396fdab66df6295aa0322e09ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be2bd5e_c5478f3a",
+        "filename": "content/renderer/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 1,
+      "message": "can you add DCHECK(client_id.empty()) here? Once set it should never change.",
+      "revId": "79cd368d91716396fdab66df6295aa0322e09ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

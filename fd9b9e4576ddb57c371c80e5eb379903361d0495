@@ -46,6 +46,30 @@
       "revId": "fd9b9e4576ddb57c371c80e5eb379903361d0495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72305a20_23e6cd7d",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-features\u003dNetworkService/external/wpt/service-workers/service-worker/fetch-event.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T03:53:01Z",
+      "side": 0,
+      "message": "Ack, that makes sense.",
+      "parentUuid": "9de2ce18_509d0429",
+      "range": {
+        "startLine": 17,
+        "startChar": 219,
+        "endLine": 17,
+        "endChar": 220
+      },
+      "revId": "fd9b9e4576ddb57c371c80e5eb379903361d0495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
