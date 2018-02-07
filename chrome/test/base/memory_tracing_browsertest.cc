@@ -149,6 +149,11 @@ IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest,
 }
 
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(OS_MACOSX)
+#define MAYBE_TestHeapProfilingPseudo DISABLED_TestHeapProfilingPseudo
+#else
+#define MAYBE_TestHeapProfilingPseudo TestHeapProfilingPseudo
+#endif
 IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestHeapProfilingPseudo) {
   should_test_memory_dump_success_ = true;
   // TODO(ssid): Enable heap profiling on all processes once the
