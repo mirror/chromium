@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7de445_490eb152",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:40:32Z",
+      "side": 1,
+      "message": "This function name and OnDirectoryCreated() don\u0027t quite match what\u0027s happening anymore. Do you think SelectSaveDirectory() and OnDirectorySelected() would be better?",
+      "revId": "939966d6fd0bf72500f75fc5bb8d73767d6132bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4841463f_7a0f6ddf",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:40:32Z",
+      "side": 1,
+      "message": "Move this closer to where it\u0027s used.",
+      "revId": "939966d6fd0bf72500f75fc5bb8d73767d6132bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87810dc1_c21abd38",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:40:32Z",
+      "side": 1,
+      "message": "Is the previous |path| now split into |directory| + |filename|? Or something else? It\u0027s no longer obvious what\u0027s what here without reading the implementation.",
+      "revId": "939966d6fd0bf72500f75fc5bb8d73767d6132bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281d8aea_cb048902",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:40:32Z",
+      "side": 1,
+      "message": "const ref",
+      "revId": "939966d6fd0bf72500f75fc5bb8d73767d6132bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
