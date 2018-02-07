@@ -466,7 +466,10 @@ PaymentsClient::PaymentsClient(net::URLRequestContextGetter* context_getter,
       unmask_delegate_(unmask_delegate),
       save_delegate_(save_delegate),
       has_retried_authorization_(false),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (!identity_provider_) {
+  }
+}
 
 PaymentsClient::~PaymentsClient() {}
 
@@ -687,13 +690,17 @@ void PaymentsClient::StartTokenFetch(bool invalidate_old) {
   payments_scopes.insert(kPaymentsOAuth2Scope);
   if (invalidate_old) {
     DCHECK(!access_token_.empty());
+#if 0
     identity_provider_->GetTokenService()->InvalidateAccessToken(
         identity_provider_->GetActiveAccountId(), payments_scopes,
         access_token_);
+#endif
   }
   access_token_.clear();
+#if 0
   access_token_request_ = identity_provider_->GetTokenService()->StartRequest(
       identity_provider_->GetActiveAccountId(), payments_scopes, this);
+#endif
 }
 
 void PaymentsClient::SetOAuth2TokenAndStartRequest() {
