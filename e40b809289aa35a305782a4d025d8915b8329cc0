@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b399d733_86901ffc",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-02-07T04:31:10Z",
+      "side": 1,
+      "message": "This isn\u0027t really correct. PWA is a concept that is independent of bookmark apps. What you could say is \"When Progressive Web Apps are installed on desktop a bookmark app is created. The bookmark app in this case will capture....\"",
+      "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
