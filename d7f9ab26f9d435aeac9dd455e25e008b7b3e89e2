@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8f953c5_e234757a",
+        "filename": "chrome/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T21:26:00Z",
+      "side": 1,
+      "message": "It seems like this code shouldn\u0027t be limited to only Android as DRP can be enabled on any platform.",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5003b8bd_cf02f8fb",
+        "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T21:26:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem safe because there are plenty of reasons that the Data Reduction Proxy logic may later decide not to send a request through Google servers and we shouldn\u0027t let the fact that DRP is enabled let all non-cryptographic URLs past Safe Browsing.",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c3e4c4_b42bbaff",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T21:26:00Z",
+      "side": 1,
+      "message": "Combine onto a single line.",
+      "range": {
+        "startLine": 866,
+        "startChar": 44,
+        "endLine": 867,
+        "endChar": 16
+      },
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
