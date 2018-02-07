@@ -105,6 +105,12 @@ A bookmark app's `manifest.json` identifies it as a hosted app. However, in the
 C++ code, the `Extension` object will return true from its `from_bookmark()`
 method.
 
+### Progressive Web App (PWA)
+
+A Progressive Web App is a Bookmark app that captures navigations to its scope
+and opens them in a dedicated app window instead of the existing browser
+context.
+
 ## Ambiguity surrounding the term "Extension"
 
 In the C++ code, all of the above flavors of extensions and apps are implemented
