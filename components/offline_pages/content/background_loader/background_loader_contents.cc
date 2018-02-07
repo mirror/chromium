@@ -10,7 +10,8 @@ namespace background_loader {
 
 BackgroundLoaderContents::BackgroundLoaderContents(
     content::BrowserContext* browser_context)
-    : browser_context_(browser_context) {
+    : browser_context_(browser_context),
+      delegate_(nullptr) {
   web_contents_.reset(content::WebContents::Create(
       content::WebContents::CreateParams(browser_context_)));
   web_contents_->SetAudioMuted(true);
@@ -29,6 +30,10 @@ void BackgroundLoaderContents::LoadPage(const GURL& url) {
 
 void BackgroundLoaderContents::Cancel() {
   web_contents_->Close();
+}
+
+void BackgroundLoaderContents::SetDelegate(Delegate* delegate) {
+  delegate_ = delegate;
 }
 
 bool BackgroundLoaderContents::IsNeverVisible(
@@ -57,8 +62,12 @@ void BackgroundLoaderContents::CanDownload(
     const GURL& url,
     const std::string& request_method,
     const base::Callback<void(bool)>& callback) {
-  // Do not download anything.
-  callback.Run(false);
+  if (delegate_) {
+    delegate_->CanDownload(callback);
+  } else {
+    // Do not download anything if there's no delegate.
+    callback.Run(false);
+  }
 }
 
 bool BackgroundLoaderContents::ShouldCreateWebContents(
