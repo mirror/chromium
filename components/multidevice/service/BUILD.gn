@@ -10,6 +10,8 @@ if (!is_ios && !is_android) {
 
   static_library("service") {
     sources = [
+      "cryptauth_token_fetcher_impl.cc",
+      "cryptauth_token_fetcher_impl.h",
       "device_sync_impl.cc",
       "device_sync_impl.h",
       "fake_device_sync.cc",
@@ -33,6 +35,33 @@ if (!is_ios && !is_android) {
   service_manifest("multidevice_manifest") {
     name = "multidevice"
     source = "multidevice_service_manifest.json"
+  }
+
+  source_set("unit_tests") {
+    testonly = true
+    sources = [
+      "cryptauth_token_fetcher_impl_unittest.cc",
+    ]
+    deps = [
+      ":service",
+      ":test_support",
+      "//base",
+      "//components/cryptauth",
+      "//components/cryptauth:test_support",
+      "//components/multidevice/service/public/interfaces",
+      "//mojo/common",
+      "//services/service_manager/public/cpp:service_test_support",
+      "//testing/gmock",
+      "//testing/gtest",
+    ]
+  }
+
+  static_library("test_support") {
+    testonly = true
+    deps = [
+      "//components/cryptauth",
+      "//mojo/common",
+    ]
   }
 
   service("multidevice") {
