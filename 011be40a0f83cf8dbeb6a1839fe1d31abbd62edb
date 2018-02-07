@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c6c45d17_1a90a47b",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T04:42:36Z",
+      "side": 1,
+      "message": "SG.",
+      "parentUuid": "71086ffb_4c75e057",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6526a42_c3201d74",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 3

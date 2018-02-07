@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e053cdc3_586b770f",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T04:42:36Z",
+      "side": 1,
+      "message": "Saw that this is the same as BrowserExtensionWindowController::GetWindowTypeText(). This can also be exposed on ExtensionTabUtils and removed from WindowController subsequently.",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 36
+      },
+      "revId": "756390353793d6fc99abafef3264e3b0674c0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

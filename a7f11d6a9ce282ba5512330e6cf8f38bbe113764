@@ -93,6 +93,30 @@
       "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2929a669_1d92d188",
+        "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T04:42:36Z",
+      "side": 0,
+      "message": "I thought it did, but seems it\u0027s not the case.",
+      "parentUuid": "7f125d57_9496b80a",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
