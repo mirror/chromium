@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd3ffa1a_e0961c89",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T18:36:08Z",
+      "side": 1,
+      "message": "the class is marked as available(10.13), meaning it can only be used from 10.13+ code, so you can just do\n\n  landmarks_request_.reset([[VNDetectFaceLandmarksRequest] alloc] init]);\n\nhere I think.",
+      "revId": "9401b8ccf33dfeebd927fb32e761fdb11edcb427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
