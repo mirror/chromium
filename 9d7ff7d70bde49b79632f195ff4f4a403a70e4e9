@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab40b917_af5c139b",
+        "filename": "third_party/WebKit/Source/core/messaging/BUILD.gn",
+        "patchSetId": 39
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "It seems a bit unusual that the struct traits themselves are part of the unit_tests source set.",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3722faea_590eaddf",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.typemap",
+        "patchSetId": 39
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "Ditto here: is it possible to include this header directly in the BlinkTransferableMessageStructTraits.h, or is that insufficient?\n\n(Our conventions here are a bit messy, so any feedback you have here would be useful for improving the documentation \u003d)",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2164c2_51d5437c",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "Would it be possible to move the logic to convert between these two into helper functions in the unnamed namespace?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6984da93_110e58d8",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "Is it possible to use mojo::test::SerializeAndDeserialize in these tests?",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315e4d41_09cb7681",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 39
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "What is the typical size for these array buffers? Mojo messages have a max size, so I\u0027m wondering how likely we are to run up against it.",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881e86d0_850338a9",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "It\u0027s a bit dangerous to write StructPtr directly: internally, Mojo can select StructPtr or InlinedStructPtr depending on what it thinks is the most appropriate.\n\nIs it possible to declare this in a separate mojom so we can include the generated mojom without causing a circular dependency?",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09df219_707d31af",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.typemap",
+        "patchSetId": 39
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T08:08:31Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit more common to #include the necessary struct traits in transferable_message_struct_traits.h. Does that work here?",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
