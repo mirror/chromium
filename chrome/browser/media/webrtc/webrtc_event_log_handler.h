@@ -1,9 +1,12 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+#if 0
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_MEDIA_WEBRTC_AUDIO_DEBUG_RECORDINGS_HANDLER_H_
-#define CHROME_BROWSER_MEDIA_WEBRTC_AUDIO_DEBUG_RECORDINGS_HANDLER_H_
+#ifndef CHROME_BROWSER_MEDIA_WEBRTC_WEBRTC_EVENT_LOG_HANDLER_H_
+#define CHROME_BROWSER_MEDIA_WEBRTC_WEBRTC_EVENT_LOG_HANDLER_H_
+
+// TODO: !!!
 
 #include <stddef.h>
 #include <stdint.h>
@@ -23,24 +26,18 @@ class BrowserContext;
 class RenderProcessHost;
 }
 
-namespace media {
-class AudioDebugRecordingSession;
-}
-
-// AudioDebugRecordingsHandler provides an interface to start and stop
-// AudioDebugRecordings, including WebRTC AEC dumps. Lives on the UI thread.
-class AudioDebugRecordingsHandler
-    : public base::RefCountedThreadSafe<AudioDebugRecordingsHandler> {
+// TODO: !!!
+class WebRtcEventLogHandler
+    : public base::RefCountedThreadSafe<WebRtcEventLogHandler> {
  public:
+  // TODO: !!!
   typedef base::Callback<void(bool, const std::string&)> GenericDoneCallback;
   typedef base::Callback<void(const std::string&)> RecordingErrorCallback;
-  typedef base::Callback<void(const std::string&, bool, bool)>
-      RecordingDoneCallback;
 
   // Key used to attach the handler to the RenderProcessHost
-  static const char kAudioDebugRecordingsHandlerKey[];
+  // static const char kAudioDebugRecordingsHandlerKey[];  // TODO: !!!
 
-  explicit AudioDebugRecordingsHandler(
+  explicit WebRtcEventLogHandler(
       content::BrowserContext* browser_context);
 
   // Starts an audio debug recording. The recording lasts the given |delay|,
@@ -95,4 +92,5 @@ class AudioDebugRecordingsHandler
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingsHandler);
 };
 
-#endif  // CHROME_BROWSER_MEDIA_WEBRTC_AUDIO_DEBUG_RECORDINGS_HANDLER_H_
+#endif  // CHROME_BROWSER_MEDIA_WEBRTC_WEBRTC_EVENT_LOG_HANDLER_H_
+#endif

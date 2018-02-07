@@ -69,6 +69,8 @@ namespace StartAudioDebugRecordings =
     api::webrtc_logging_private::StartAudioDebugRecordings;
 namespace StopAudioDebugRecordings =
     api::webrtc_logging_private::StopAudioDebugRecordings;
+namespace StartEventLogging =
+    api::webrtc_logging_private::StartEventLogging;
 namespace GetLogsDirectory = api::webrtc_logging_private::GetLogsDirectory;
 
 namespace {
@@ -522,6 +524,45 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
                      FireErrorCallback,
                  this));
   return true;
+}
+
+bool WebrtcLoggingPrivateStartEventLoggingFunction::RunAsync() {
+  printf("ELAD!!! WebrtcLoggingPrivateStartEventLoggingFunction::RunAsync\n");
+
+  std::unique_ptr<StartEventLogging::Params> params(
+    StartEventLogging::Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params.get());
+
+  printf("ELAD!!! Haven't crashed yet. %d [%s]\n", params->max_log_size_bytes, params->metadata.c_str());
+
+  scoped_refptr<WebRtcLoggingHandlerHost> webrtc_event_log_handler_host(
+      base::UserDataAdapter<WebRtcLoggingHandlerHost>::Get(
+          host, WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey));
+
+  WebRtcLoggingHandlerHost::GenericDoneCallback callback = base::Bind(
+      &WebrtcLoggingPrivateStopRtpDumpFunction::FireCallback, this);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&WebRtcLoggingHandlerHost::StopRtpDump,
+                     webrtc_logging_handler_host, type, callback));
+
+
+
+  // WebRtcLoggingHandlerHost::GenericDoneCallback callback;
+  // scoped_refptr<WebRtcLoggingHandlerHost> webrtc_logging_handler_host =
+  //     PrepareTask(params->request, params->security_origin, &callback);
+  // if (!webrtc_logging_handler_host.get())
+  //   return false;
+
+  // BrowserThread::PostTask(
+  //     BrowserThread::IO, FROM_HERE,
+  //     base::BindOnce(&WebRtcLoggingHandlerHost::StartLogging,
+  //                    webrtc_logging_handler_host, callback));
+
+  // TODO: !!!
+  return false;
+  // return true;
 }
 
 bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
