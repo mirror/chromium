@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "storage/browser/fileapi/file_system_url.h"
 
 class GURL;
 class Profile;
@@ -42,9 +43,19 @@ bool MigratePathFromOldFormat(Profile* profile,
 // The canonical mount point name for "Downloads" folder.
 std::string GetDownloadsMountPointName(Profile* profile);
 
-// Converts a Chrome OS file path to an ARC file URL. Returns true if the path
-// was converted successfully and false otherwise.
+// DEPRECATED
+// While this function can convert paths under Downloads, /media/removable
+// and /special/drive, this CANNOT convert paths under ARC media directories
+// (/special/arc-documents-provider).
+// Use |ConvertFileSystemUrlToContentUrl| instead.
 bool ConvertPathToArcUrl(const base::FilePath& path, GURL* arc_url_out);
+
+// Asynchronously converts a Chrome OS file system URL to a content:// URL.
+// If this function returns false, that means |file_system_url| is not
+// convertible and |callback| will be never called.
+bool ConvertFileSystemUrlToContentUrl(
+    const storage::FileSystemURL& file_system_url,
+    const base::Callback<void(const GURL& content_url)>& callback);
 
 }  // namespace util
 }  // namespace file_manager
