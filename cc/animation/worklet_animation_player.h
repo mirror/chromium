@@ -46,8 +46,8 @@ class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
                      const ScrollTree& scroll_tree);
 
   // AnimationTicker::AnimationTimeProvider:
-  base::TimeTicks GetTimeForAnimation(
-      const Animation& animation) const override;
+  base::TimeTicks GetTimeForKeyframeModel(
+      const KeyframeModel& keyframe_model) const override;
 
   void PushPropertiesTo(AnimationPlayer* animation_player_impl) override;
 

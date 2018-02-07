@@ -13,8 +13,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_export.h"
+#include "cc/animation/keyframe_model.h"
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/mutator_host_client.h"
 #include "ui/gfx/geometry/box_f.h"
@@ -100,7 +100,7 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   void SetSupportsScrollAnimations(bool supports_scroll_animations) override;
   bool NeedsTickAnimations() const override;
 
-  bool ActivateAnimations() override;
+  bool ActivateKeyframeModels() override;
   bool TickAnimations(base::TimeTicks monotonic_time,
                       const ScrollTree& scroll_tree) override;
   void TickScrollAnimations(base::TimeTicks monotonic_time,
@@ -136,17 +136,17 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
 
   bool HasOnlyTranslationTransforms(ElementId element_id,
                                     ElementListType list_type) const override;
-  bool AnimationsPreserveAxisAlignment(ElementId element_id) const override;
+  bool KeyframeModelsPreserveAxisAlignment(ElementId element_id) const override;
 
   bool MaximumTargetScale(ElementId element_id,
                           ElementListType list_type,
                           float* max_scale) const override;
-  bool AnimationStartScale(ElementId element_id,
-                           ElementListType list_type,
-                           float* start_scale) const override;
+  bool KeyframeModelStartScale(ElementId element_id,
+                               ElementListType list_type,
+                               float* start_scale) const override;
 
-  bool HasAnyAnimation(ElementId element_id) const override;
-  bool HasTickingAnimationForTesting(ElementId element_id) const override;
+  bool HasAnyKeyframeModel(ElementId element_id) const override;
+  bool HasTickingKeyframeModelForTesting(ElementId element_id) const override;
 
   void ImplOnlyScrollAnimationCreate(
       ElementId element_id,

@@ -58,7 +58,7 @@ class MutatorHost {
   virtual void SetSupportsScrollAnimations(bool supports_scroll_animations) = 0;
   virtual bool NeedsTickAnimations() const = 0;
 
-  virtual bool ActivateAnimations() = 0;
+  virtual bool ActivateKeyframeModels() = 0;
   // TODO(smcgruer): Once we only tick scroll-based animations on scroll, we
   // don't need to pass the scroll tree in here.
   virtual bool TickAnimations(base::TimeTicks monotonic_time,
@@ -100,17 +100,19 @@ class MutatorHost {
   virtual bool HasOnlyTranslationTransforms(
       ElementId element_id,
       ElementListType list_type) const = 0;
-  virtual bool AnimationsPreserveAxisAlignment(ElementId element_id) const = 0;
+  virtual bool KeyframeModelsPreserveAxisAlignment(
+      ElementId element_id) const = 0;
 
   virtual bool MaximumTargetScale(ElementId element_id,
                                   ElementListType list_type,
                                   float* max_scale) const = 0;
-  virtual bool AnimationStartScale(ElementId element_id,
-                                   ElementListType list_type,
-                                   float* start_scale) const = 0;
+  virtual bool KeyframeModelStartScale(ElementId element_id,
+                                       ElementListType list_type,
+                                       float* start_scale) const = 0;
 
-  virtual bool HasAnyAnimation(ElementId element_id) const = 0;
-  virtual bool HasTickingAnimationForTesting(ElementId element_id) const = 0;
+  virtual bool HasAnyKeyframeModel(ElementId element_id) const = 0;
+  virtual bool HasTickingKeyframeModelForTesting(
+      ElementId element_id) const = 0;
 
   virtual void ImplOnlyScrollAnimationCreate(
       ElementId element_id,

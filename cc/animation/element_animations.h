@@ -74,10 +74,10 @@ class CC_ANIMATION_EXPORT ElementAnimations
 
   // Returns true if there are any animations that have neither finished nor
   // aborted.
-  bool HasTickingAnimation() const;
+  bool HasTickingKeyframeModel() const;
 
   // Returns true if there are any animations at all to process.
-  bool HasAnyAnimation() const;
+  bool HasAnyKeyframeModel() const;
 
   bool HasAnyAnimationTargetingProperty(TargetProperty::Type property) const;
 
@@ -92,11 +92,11 @@ class CC_ANIMATION_EXPORT ElementAnimations
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
-  void NotifyAnimationStarted(const AnimationEvent& event);
-  void NotifyAnimationFinished(const AnimationEvent& event);
-  void NotifyAnimationAborted(const AnimationEvent& event);
-  void NotifyAnimationPropertyUpdate(const AnimationEvent& event);
-  void NotifyAnimationTakeover(const AnimationEvent& event);
+  void NotifyKeyframeModelStarted(const AnimationEvent& event);
+  void NotifyKeyframeModelFinished(const AnimationEvent& event);
+  void NotifyKeyframeModelAborted(const AnimationEvent& event);
+  void NotifyKeyframeModelPropertyUpdate(const AnimationEvent& event);
+  void NotifyKeyframeModelTakeover(const AnimationEvent& event);
 
   bool has_element_in_active_list() const {
     return has_element_in_active_list_;
@@ -120,12 +120,13 @@ class CC_ANIMATION_EXPORT ElementAnimations
 
   bool HasOnlyTranslationTransforms(ElementListType list_type) const;
 
-  bool AnimationsPreserveAxisAlignment() const;
+  bool KeyframeModelsPreserveAxisAlignment() const;
 
   // Sets |start_scale| to the maximum of starting animation scale along any
   // dimension at any destination in active animations. Returns false if the
   // starting scale cannot be computed.
-  bool AnimationStartScale(ElementListType list_type, float* start_scale) const;
+  bool KeyframeModelStartScale(ElementListType list_type,
+                               float* start_scale) const;
 
   // Sets |max_scale| to the maximum scale along any dimension at any
   // destination in active animations. Returns false if the maximum scale cannot
@@ -141,17 +142,17 @@ class CC_ANIMATION_EXPORT ElementAnimations
 
   void NotifyClientFloatAnimated(float opacity,
                                  int target_property_id,
-                                 Animation* animation) override;
+                                 KeyframeModel* keyframe_model) override;
   void NotifyClientFilterAnimated(const FilterOperations& filter,
                                   int target_property_id,
-                                  Animation* animation) override;
+                                  KeyframeModel* keyframe_model) override;
   void NotifyClientTransformOperationsAnimated(
       const TransformOperations& operations,
       int target_property_id,
-      Animation* animation) override;
+      KeyframeModel* keyframe_model) override;
   void NotifyClientScrollOffsetAnimated(const gfx::ScrollOffset& scroll_offset,
                                         int target_property_id,
-                                        Animation* animation) override;
+                                        KeyframeModel* keyframe_model) override;
 
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
 
@@ -174,8 +175,8 @@ class CC_ANIMATION_EXPORT ElementAnimations
   void UpdateTickersTickingState(UpdateTickingType update_ticking_type) const;
   void RemoveTickersFromTicking() const;
 
-  bool AnimationAffectsActiveElements(Animation* animation) const;
-  bool AnimationAffectsPendingElements(Animation* animation) const;
+  bool KeyframeModelAffectsActiveElements(KeyframeModel* keyframe_model) const;
+  bool KeyframeModelAffectsPendingElements(KeyframeModel* keyframe_model) const;
 
   TickersList tickers_list_;
   AnimationHost* animation_host_;

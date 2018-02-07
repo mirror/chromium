@@ -280,14 +280,14 @@ bool AnimationHost::NeedsTickAnimationPlayers() const {
   return !ticking_players_.empty();
 }
 
-bool AnimationHost::ActivateAnimations() {
+bool AnimationHost::ActivateKeyframeModels() {
   if (!NeedsTickAnimationPlayers())
     return false;
 
-  TRACE_EVENT0("cc", "AnimationHost::ActivateAnimations");
+  TRACE_EVENT0("cc", "AnimationHost::ActivateKeyframeModels");
   PlayersList ticking_players_copy = ticking_players_;
   for (auto& it : ticking_players_copy)
-    it->ActivateAnimations();
+    it->ActivateKeyframeModels();
 
   return true;
 }
@@ -389,19 +389,23 @@ void AnimationHost::SetAnimationEvents(
     if (iter != all_element_animations.end()) {
       switch (events->events_[event_index].type) {
         case AnimationEvent::STARTED:
-          (*iter).second->NotifyAnimationStarted(events->events_[event_index]);
+          (*iter).second->NotifyKeyframeModelStarted(
+              events->events_[event_index]);
           break;
 
         case AnimationEvent::FINISHED:
-          (*iter).second->NotifyAnimationFinished(events->events_[event_index]);
+          (*iter).second->NotifyKeyframeModelFinished(
+              events->events_[event_index]);
           break;
 
         case AnimationEvent::ABORTED:
-          (*iter).second->NotifyAnimationAborted(events->events_[event_index]);
+          (*iter).second->NotifyKeyframeModelAborted(
+              events->events_[event_index]);
           break;
 
         case AnimationEvent::TAKEOVER:
-          (*iter).second->NotifyAnimationTakeover(events->events_[event_index]);
+          (*iter).second->NotifyKeyframeModelTakeover(
+              events->events_[event_index]);
           break;
       }
     }
@@ -494,11 +498,11 @@ bool AnimationHost::HasOnlyTranslationTransforms(
              : true;
 }
 
-bool AnimationHost::AnimationsPreserveAxisAlignment(
+bool AnimationHost::KeyframeModelsPreserveAxisAlignment(
     ElementId element_id) const {
   auto element_animations = GetElementAnimationsForElementId(element_id);
   return element_animations
-             ? element_animations->AnimationsPreserveAxisAlignment()
+             ? element_animations->KeyframeModelsPreserveAxisAlignment()
              : true;
 }
 
@@ -512,24 +516,26 @@ bool AnimationHost::MaximumTargetScale(ElementId element_id,
              : true;
 }
 
-bool AnimationHost::AnimationStartScale(ElementId element_id,
-                                        ElementListType list_type,
-                                        float* start_scale) const {
+bool AnimationHost::KeyframeModelStartScale(ElementId element_id,
+                                            ElementListType list_type,
+                                            float* start_scale) const {
   *start_scale = 0.f;
   auto element_animations = GetElementAnimationsForElementId(element_id);
-  return element_animations
-             ? element_animations->AnimationStartScale(list_type, start_scale)
-             : true;
+  return element_animations ? element_animations->KeyframeModelStartScale(
+                                  list_type, start_scale)
+                            : true;
 }
 
-bool AnimationHost::HasAnyAnimation(ElementId element_id) const {
+bool AnimationHost::HasAnyKeyframeModel(ElementId element_id) const {
   auto element_animations = GetElementAnimationsForElementId(element_id);
-  return element_animations ? element_animations->HasAnyAnimation() : false;
+  return element_animations ? element_animations->HasAnyKeyframeModel() : false;
 }
 
-bool AnimationHost::HasTickingAnimationForTesting(ElementId element_id) const {
+bool AnimationHost::HasTickingKeyframeModelForTesting(
+    ElementId element_id) const {
   auto element_animations = GetElementAnimationsForElementId(element_id);
-  return element_animations ? element_animations->HasTickingAnimation() : false;
+  return element_animations ? element_animations->HasTickingKeyframeModel()
+                            : false;
 }
 
 void AnimationHost::ImplOnlyScrollAnimationCreate(
@@ -626,7 +632,7 @@ void AnimationHost::SetMutationUpdate(
 size_t AnimationHost::CompositedAnimationsCount() const {
   size_t composited_animations_count = 0;
   for (const auto& it : ticking_players_)
-    composited_animations_count += it->TickingAnimationsCount();
+    composited_animations_count += it->TickingKeyframeModelsCount();
   return composited_animations_count;
 }
 
@@ -635,11 +641,11 @@ void AnimationHost::SetAnimationCounts(
     size_t main_thread_compositable_animations_count) {
   // The |total_animations_count| is the total number of blink::Animations.
   // A blink::Animation holds a CompositorAnimationPlayerHolder, which holds
-  // a CompositorAnimationPlayer, which holds a cc::AnimationPlayer. In other
+  // a CompositorAnimationPlayer, which holds a AnimationPlayer. In other
   // words, if a blink::Animation can be accelerated on compositor, it would
-  // have a 1:1 mapping to a cc::AnimationPlayer.
+  // have a 1:1 mapping to a AnimationPlayer.
   // So to check how many main thread animations there are, we subtract the
-  // number of cc::AnimationPlayer from |total_animations_count|.
+  // number of AnimationPlayer from |total_animations_count|.
   size_t ticking_players_count = ticking_players_.size();
   if (main_thread_animations_count_ !=
       total_animations_count - ticking_players_count) {

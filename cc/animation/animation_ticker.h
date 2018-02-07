@@ -22,26 +22,29 @@
 
 namespace cc {
 
-class Animation;
+class KeyframeModel;
 class AnimationPlayer;
 struct PropertyAnimationState;
 
 typedef size_t TickerId;
 
-// An AnimationTicker owns a group of Animations for a single target (identified
-// by a ElementId). It is responsible for managing the animations' running
-// states (starting, running, paused, etc), as well as ticking the animations
-// when it is requested to produce new outputs for a given time.
+// An AnimationTicker owns a group of KeyframeModels for a single target
+// (identified by a ElementId). It is responsible for managing the
+// keyframe_models' running states (starting, running, paused, etc), as well as
+// ticking the keyframe_models when it is requested to produce new outputs for a
+// given time.
 //
-// Note that a single AnimationTicker may not own all the animations for a given
-// target. AnimationTicker is only a grouping mechanism for related animations.
-// The commonality between animations on the same target is found via
-// ElementAnimations - there is only one ElementAnimations for a given target.
+// Note that a single AnimationTicker may not own all the keyframe_models for a
+// given target. AnimationTicker is only a grouping mechanism for related
+// keyframe_models. The commonality between keyframe_models on the same target
+// is found via ElementAnimations - there is only one ElementAnimations for a
+// given target.
 class CC_ANIMATION_EXPORT AnimationTicker {
  public:
   class AnimationTimeProvider {
    public:
-    virtual base::TimeTicks GetTimeForAnimation(const Animation&) const = 0;
+    virtual base::TimeTicks GetTimeForKeyframeModel(
+        const KeyframeModel&) const = 0;
   };
 
   explicit AnimationTicker(TickerId id);
@@ -61,8 +64,8 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   ElementId element_id() const { return element_id_; }
 
-  // Returns true if there are any animations at all to process.
-  bool has_any_animation() const { return !animations_.empty(); }
+  // Returns true if there are any keyframe_models at all to process.
+  bool has_any_keyframe_model() const { return !keyframe_models_.empty(); }
 
   // When a scroll animation is removed on the main thread, its compositor
   // thread counterpart continues producing scroll deltas until activation.
@@ -86,97 +89,98 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   void Tick(base::TimeTicks monotonic_time,
             const AnimationTimeProvider* tick_provider);
-  static void TickAnimation(base::TimeTicks monotonic_time,
-                            Animation* animation,
-                            AnimationTarget* target);
+  static void TickKeyframeModel(base::TimeTicks monotonic_time,
+                                KeyframeModel* animation,
+                                AnimationTarget* target);
   void RemoveFromTicking();
   bool is_ticking() const { return is_ticking_; }
 
-  void UpdateState(bool start_ready_animations, AnimationEvents* events);
+  void UpdateState(bool start_ready_keyframe_models, AnimationEvents* events);
   void UpdateTickingState(UpdateTickingType type);
 
-  void AddAnimation(std::unique_ptr<Animation> animation);
-  void PauseAnimation(int animation_id, double time_offset);
-  void RemoveAnimation(int animation_id);
-  void AbortAnimation(int animation_id);
-  void AbortAnimations(TargetProperty::Type target_property,
-                       bool needs_completion);
+  void AddKeyframeModel(std::unique_ptr<KeyframeModel> animation);
+  void PauseKeyframeModel(int keyframe_model_id, double time_offset);
+  void RemoveKeyframeModel(int keyframe_model_id);
+  void AbortKeyframeModel(int keyframe_model_id);
+  void AbortKeyframeModels(TargetProperty::Type target_property,
+                           bool needs_completion);
 
-  void ActivateAnimations();
+  void ActivateKeyframeModels();
 
-  void AnimationAdded();
+  void KeyframeModelAdded();
 
   // The following methods should be called to notify the AnimationTicker that
   // an animation event has been received for the same target (ElementId) as
-  // this ticker. If the event matches an Animation owned by this
+  // this ticker. If the event matches a KeyframeModel owned by this
   // AnimationTicker the call will return true, else it will return false.
-  bool NotifyAnimationStarted(const AnimationEvent& event);
-  bool NotifyAnimationFinished(const AnimationEvent& event);
-  void NotifyAnimationTakeover(const AnimationEvent& event);
-  bool NotifyAnimationAborted(const AnimationEvent& event);
+  bool NotifyKeyframeModelStarted(const AnimationEvent& event);
+  bool NotifyKeyframeModelFinished(const AnimationEvent& event);
+  void NotifyKeyframeModelTakeover(const AnimationEvent& event);
+  bool NotifyKeyframeModelAborted(const AnimationEvent& event);
 
-  // Returns true if there are any animations that have neither finished nor
-  // aborted.
-  bool HasTickingAnimation() const;
-  size_t TickingAnimationsCount() const;
+  // Returns true if there are any keyframe_models that have neither finished
+  // nor aborted.
+  bool HasTickingKeyframeModel() const;
+  size_t TickingKeyframeModelsCount() const;
 
-  bool HasNonDeletedAnimation() const;
+  bool HasNonDeletedKeyframeModel() const;
 
   bool HasOnlyTranslationTransforms(ElementListType list_type) const;
 
-  bool AnimationsPreserveAxisAlignment() const;
+  bool KeyframeModelsPreserveAxisAlignment() const;
 
-  // Sets |start_scale| to the maximum of starting animation scale along any
-  // dimension at any destination in active animations. Returns false if the
-  // starting scale cannot be computed.
-  bool AnimationStartScale(ElementListType, float* start_scale) const;
+  // Sets |start_scale| to the maximum of starting keyframe_model scale along
+  // any dimension at any destination in active keyframe_models. Returns false
+  // if the starting scale cannot be computed.
+  bool KeyframeModelStartScale(ElementListType, float* start_scale) const;
 
   // Sets |max_scale| to the maximum scale along any dimension at any
-  // destination in active animations. Returns false if the maximum scale cannot
-  // be computed.
+  // destination in active keyframe_models. Returns false if the maximum scale
+  // cannot be computed.
   bool MaximumTargetScale(ElementListType, float* max_scale) const;
 
-  // Returns true if there is an animation that is either currently animating
-  // the given property or scheduled to animate this property in the future, and
-  // that affects the given tree type.
+  // Returns true if there is a keyframe_model that is either currently
+  // animating the given property or scheduled to animate this property in the
+  // future, and that affects the given tree type.
   bool IsPotentiallyAnimatingProperty(TargetProperty::Type target_property,
                                       ElementListType list_type) const;
 
-  // Returns true if there is an animation that is currently animating the given
-  // property and that affects the given tree type.
+  // Returns true if there is a keyframe_model that is currently animating the
+  // given property and that affects the given tree type.
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
-  Animation* GetAnimation(TargetProperty::Type target_property) const;
-  Animation* GetAnimationById(int animation_id) const;
+  KeyframeModel* GetKeyframeModel(TargetProperty::Type target_property) const;
+  KeyframeModel* GetKeyframeModelById(int keyframe_model_id) const;
 
   void GetPropertyAnimationState(PropertyAnimationState* pending_state,
                                  PropertyAnimationState* active_state) const;
 
-  void MarkAbortedAnimationsForDeletion(AnimationTicker* element_ticker_impl);
-  void PurgeAnimationsMarkedForDeletion(bool impl_only);
-  void PushNewAnimationsToImplThread(
+  void MarkAbortedKeyframeModelsForDeletion(
+      AnimationTicker* element_ticker_impl);
+  void PurgeKeyframeModelsMarkedForDeletion(bool impl_only);
+  void PushNewKeyframeModelsToImplThread(
       AnimationTicker* element_ticker_impl) const;
-  void RemoveAnimationsCompletedOnMainThread(
+  void RemoveKeyframeModelsCompletedOnMainThread(
       AnimationTicker* element_ticker_impl) const;
   void PushPropertiesTo(AnimationTicker* animation_ticker_impl);
 
   void SetAnimationPlayer(AnimationPlayer* animation_player);
 
-  std::string AnimationsToString() const;
+  std::string KeyframeModelsToString() const;
   TickerId id() const { return id_; }
 
  private:
-  void StartAnimations(base::TimeTicks monotonic_time);
-  void PromoteStartedAnimations(AnimationEvents* events);
+  void StartKeyframeModels(base::TimeTicks monotonic_time);
+  void PromoteStartedKeyframeModels(AnimationEvents* events);
 
-  void MarkAnimationsForDeletion(base::TimeTicks, AnimationEvents* events);
-  void MarkFinishedAnimations(base::TimeTicks monotonic_time);
+  void MarkKeyframeModelsForDeletion(base::TimeTicks, AnimationEvents* events);
+  void MarkFinishedKeyframeModels(base::TimeTicks monotonic_time);
 
   bool HasElementInActiveList() const;
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
 
-  std::vector<std::unique_ptr<Animation>> animations_;
+  std::vector<std::unique_ptr<KeyframeModel>> keyframe_models_;
   AnimationPlayer* animation_player_;
 
   TickerId id_;
@@ -185,9 +189,10 @@ class CC_ANIMATION_EXPORT AnimationTicker {
   // element_animations_ is non-null if controller is attached to an element.
   scoped_refptr<ElementAnimations> element_animations_;
 
-  // Only try to start animations when new animations are added or when the
-  // previous attempt at starting animations failed to start all animations.
-  bool needs_to_start_animations_;
+  // Only try to start keyframe_models when new keyframe_models are added or
+  // when the previous attempt at starting keyframe_models failed to start all
+  // keyframe_models.
+  bool needs_to_start_keyframe_models_;
 
   bool scroll_offset_animation_was_interrupted_;
 

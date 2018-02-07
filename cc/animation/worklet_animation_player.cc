@@ -59,11 +59,11 @@ double WorkletAnimationPlayer::CurrentTime(base::TimeTicks monotonic_time,
   return (monotonic_time - base::TimeTicks()).InMillisecondsF();
 }
 
-base::TimeTicks WorkletAnimationPlayer::GetTimeForAnimation(
-    const Animation& animation) const {
+base::TimeTicks WorkletAnimationPlayer::GetTimeForKeyframeModel(
+    const KeyframeModel& keyframe_model) const {
   // Animation player local time is equivalent to animation active time. So
   // we have to convert it from active time to monotonic time.
-  return animation.ConvertFromActiveTime(local_time_);
+  return keyframe_model.ConvertFromActiveTime(local_time_);
 }
 
 void WorkletAnimationPlayer::PushPropertiesTo(

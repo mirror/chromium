@@ -18,7 +18,7 @@
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
 
-using cc::Animation;
+using cc::KeyframeModel;
 using cc::AnimationCurve;
 using cc::FloatKeyframe;
 using cc::KeyframedFloatAnimationCurve;
@@ -46,15 +46,15 @@ int AddOpacityTransition(SingleTickerAnimationPlayer* target,
   curve->AddKeyframe(FloatKeyframe::Create(
       base::TimeDelta::FromSecondsD(duration), end_opacity, nullptr));
 
-  int id = AnimationIdProvider::NextAnimationId();
+  int id = AnimationIdProvider::NextKeyframeModelId();
 
-  std::unique_ptr<Animation> animation(Animation::Create(
+  std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
       std::move(curve), id, AnimationIdProvider::NextGroupId(),
       TargetProperty::OPACITY));
-  animation->set_needs_synchronized_start_time(true);
+  keyframe_model->set_needs_synchronized_start_time(true);
 
-  target->AddAnimationForTicker(std::move(animation),
-                                target->animation_ticker()->id());
+  target->AddKeyframeModelForTicker(std::move(keyframe_model),
+                                    target->animation_ticker()->id());
   return id;
 }
 
@@ -73,15 +73,15 @@ int AddAnimatedTransform(SingleTickerAnimationPlayer* target,
   curve->AddKeyframe(TransformKeyframe::Create(
       base::TimeDelta::FromSecondsD(duration), operations, nullptr));
 
-  int id = AnimationIdProvider::NextAnimationId();
+  int id = AnimationIdProvider::NextKeyframeModelId();
 
-  std::unique_ptr<Animation> animation(Animation::Create(
+  std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
       std::move(curve), id, AnimationIdProvider::NextGroupId(),
       TargetProperty::TRANSFORM));
-  animation->set_needs_synchronized_start_time(true);
+  keyframe_model->set_needs_synchronized_start_time(true);
 
-  target->AddAnimationForTicker(std::move(animation),
-                                target->animation_ticker()->id());
+  target->AddKeyframeModelForTicker(std::move(keyframe_model),
+                                    target->animation_ticker()->id());
   return id;
 }
 
@@ -119,15 +119,15 @@ int AddAnimatedFilter(SingleTickerAnimationPlayer* target,
   curve->AddKeyframe(FilterKeyframe::Create(
       base::TimeDelta::FromSecondsD(duration), filters, nullptr));
 
-  int id = AnimationIdProvider::NextAnimationId();
+  int id = AnimationIdProvider::NextKeyframeModelId();
 
-  std::unique_ptr<Animation> animation(Animation::Create(
+  std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
       std::move(curve), id, AnimationIdProvider::NextGroupId(),
       TargetProperty::FILTER));
-  animation->set_needs_synchronized_start_time(true);
+  keyframe_model->set_needs_synchronized_start_time(true);
 
-  target->AddAnimationForTicker(std::move(animation),
-                                target->animation_ticker()->id());
+  target->AddKeyframeModelForTicker(std::move(keyframe_model),
+                                    target->animation_ticker()->id());
   return id;
 }
 
@@ -226,15 +226,15 @@ int AddScrollOffsetAnimationToPlayer(SingleTickerAnimationPlayer* player,
                             CubicBezierTimingFunction::EaseType::EASE_IN_OUT)));
   curve->SetInitialValue(initial_value);
 
-  int id = AnimationIdProvider::NextAnimationId();
+  int id = AnimationIdProvider::NextKeyframeModelId();
 
-  std::unique_ptr<Animation> animation(Animation::Create(
+  std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
       std::move(curve), id, AnimationIdProvider::NextGroupId(),
       TargetProperty::SCROLL_OFFSET));
-  animation->set_is_impl_only(impl_only);
+  keyframe_model->set_is_impl_only(impl_only);
 
-  player->AddAnimationForTicker(std::move(animation),
-                                player->animation_ticker()->id());
+  player->AddKeyframeModelForTicker(std::move(keyframe_model),
+                                    player->animation_ticker()->id());
 
   return id;
 }
@@ -285,66 +285,67 @@ int AddOpacityStepsToPlayer(SingleTickerAnimationPlayer* player,
   curve->AddKeyframe(FloatKeyframe::Create(
       base::TimeDelta::FromSecondsD(duration), end_opacity, nullptr));
 
-  int id = AnimationIdProvider::NextAnimationId();
+  int id = AnimationIdProvider::NextKeyframeModelId();
 
-  std::unique_ptr<Animation> animation(Animation::Create(
+  std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
       std::move(curve), id, AnimationIdProvider::NextGroupId(),
       TargetProperty::OPACITY));
-  animation->set_needs_synchronized_start_time(true);
+  keyframe_model->set_needs_synchronized_start_time(true);
 
-  player->AddAnimationForTicker(std::move(animation),
-                                player->animation_ticker()->id());
+  player->AddKeyframeModelForTicker(std::move(keyframe_model),
+                                    player->animation_ticker()->id());
   return id;
 }
 
-void AddAnimationToElementWithPlayer(ElementId element_id,
-                                     scoped_refptr<AnimationTimeline> timeline,
-                                     std::unique_ptr<Animation> animation) {
+void AddKeyframeModelToElementWithPlayer(
+    ElementId element_id,
+    scoped_refptr<AnimationTimeline> timeline,
+    std::unique_ptr<KeyframeModel> keyframe_model) {
   scoped_refptr<SingleTickerAnimationPlayer> player =
       SingleTickerAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->animation_ticker()->element_animations());
-  player->AddAnimation(std::move(animation));
+  player->AddKeyframeModel(std::move(keyframe_model));
 }
 
-void AddAnimationToElementWithExistingTicker(
+void AddKeyframeModelToElementWithExistingTicker(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    std::unique_ptr<Animation> animation) {
+    std::unique_ptr<KeyframeModel> keyframe_model) {
   scoped_refptr<ElementAnimations> element_animations =
       timeline->animation_host()->GetElementAnimationsForElementId(element_id);
   DCHECK(element_animations);
   DCHECK(element_animations->tickers_list().might_have_observers());
   AnimationTicker* ticker = &*element_animations->tickers_list().begin();
   DCHECK(ticker);
-  ticker->AddAnimation(std::move(animation));
+  ticker->AddKeyframeModel(std::move(keyframe_model));
 }
 
-void RemoveAnimationFromElementWithExistingTicker(
+void RemoveKeyframeModelFromElementWithExistingTicker(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    int animation_id) {
+    int keyframe_model_id) {
   scoped_refptr<ElementAnimations> element_animations =
       timeline->animation_host()->GetElementAnimationsForElementId(element_id);
   DCHECK(element_animations);
   DCHECK(element_animations->tickers_list().might_have_observers());
   AnimationTicker* ticker = &*element_animations->tickers_list().begin();
   DCHECK(ticker);
-  ticker->RemoveAnimation(animation_id);
+  ticker->RemoveKeyframeModel(keyframe_model_id);
 }
 
-Animation* GetAnimationFromElementWithExistingTicker(
+KeyframeModel* GetKeyframeModelFromElementWithExistingTicker(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    int animation_id) {
+    int keyframe_model_id) {
   scoped_refptr<ElementAnimations> element_animations =
       timeline->animation_host()->GetElementAnimationsForElementId(element_id);
   DCHECK(element_animations);
   DCHECK(element_animations->tickers_list().might_have_observers());
   AnimationTicker* ticker = &*element_animations->tickers_list().begin();
   DCHECK(ticker);
-  return ticker->GetAnimationById(animation_id);
+  return ticker->GetKeyframeModelById(keyframe_model_id);
 }
 
 int AddAnimatedFilterToElementWithPlayer(
