@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3635fd87_03b6be63",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-02-07T02:30:51Z",
+      "side": 1,
+      "message": "drop condition",
+      "revId": "68e9217a7b490b4e3fe668d4594f32ae8bcfe917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
