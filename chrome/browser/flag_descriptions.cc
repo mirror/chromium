@@ -45,6 +45,10 @@ const char kAppBannersDescription[] =
     "Enable the display of Progressive Web App banners, which prompt a user to "
     "add a web app to their shelf, or other platform-specific equivalent.";
 
+const char kArrayPrototypeValuesName[] = "Array.prototype.values ES6 method";
+const char kArrayPrototypeValuesDescription[] =
+    "Enables Array.prototype.values method";
+
 const char kAsyncImageDecodingName[] = "AsyncImageDecoding";
 const char kAsyncImageDecodingDescription[] =
     "Enables asynchronous decoding of images from raster for web content";

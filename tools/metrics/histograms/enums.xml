@@ -24236,6 +24236,7 @@ from previous Chrome versions.
   <int value="-1607691647" label="MojoVideoEncodeAccelerator:disabled"/>
   <int value="-1605567628" label="disable-overlay-scrollbar"/>
   <int value="-1604051051" label="SpecialLocale:disabled"/>
+  <int value="-1603404047" label="ArrayPrototypeValues:disabled"/>
   <int value="-1603404046" label="V8VmFuture:disabled"/>
   <int value="-1599538279" label="enable-md-policy-page"/>
   <int value="-1596559650" label="max-tiles-for-interest-area"/>
@@ -25549,6 +25550,7 @@ from previous Chrome versions.
   <int value="2137599770" label="enable-win32k-renderer-lockdown"/>
   <int value="2141463681" label="enable-offer-upload-credit-cards"/>
   <int value="2142979536" label="EnableManualFallbacksFilling:disabled"/>
+  <int value="2142979539" label="ArrayPrototypeValues:enabled"/>
 </enum>
 
 <enum name="LoginDatabaseInitError">

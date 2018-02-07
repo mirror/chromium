@@ -30,6 +30,10 @@ const base::Feature kAsmJsToWebAssembly{"AsmJsToWebAssembly",
 const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables Array.prototype.values method
+const base::Feature kArrayPrototypeValues{"ArrayPrototypeValues",
+                                          base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Block subresource requests whose URLs contain embedded credentials (e.g.
 // `https://user:pass@example.com/resource`).
 const base::Feature kBlockCredentialedSubresources{

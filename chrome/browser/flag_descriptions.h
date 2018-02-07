@@ -63,6 +63,9 @@ extern const char kAutoplayPolicyNoUserGestureRequired[];
 extern const char kAutoplayPolicyUserGestureRequired[];
 extern const char kAutoplayPolicyDocumentUserActivation[];
 
+extern const char kArrayPrototypeValuesName[];
+extern const char kArrayPrototypeValuesDescription[];
+
 extern const char kBackgroundVideoTrackOptimizationName[];
 extern const char kBackgroundVideoTrackOptimizationDescription[];
 

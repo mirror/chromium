@@ -3569,6 +3569,11 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kEnableMultiMirroring)},
 #endif  // defined(OS_CHROMEOS)
 
+    {"enable-array-prototype-values",
+     flag_descriptions::kArrayPrototypeValuesName,
+     flag_descriptions::kArrayPrototypeValuesDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kArrayPrototypeValues)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
