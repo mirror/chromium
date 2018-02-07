@@ -27,6 +27,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/signin/core/account_id/account_id.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -737,6 +738,25 @@ void ProfileInfoCache::AddProfile(
     const std::string& supervised_user_id) {
   AddProfileToCache(
       profile_path, name, gaia_id, user_name, icon_index, supervised_user_id);
+}
+
+void ProfileInfoCache::RemoveProfileByAccountId(const AccountId& account_id) {
+  // Just a warning.
+  if (account_id.GetAccountType() == AccountType::ACTIVE_DIRECTORY)
+    NOTIMPLEMENTED();
+
+  for (size_t i = 0; i < GetNumberOfProfiles(); i++) {
+    std::string gaia_id;
+    std::string user_name;
+    const base::DictionaryValue* info = GetInfoForProfileAtIndex(i);
+    if ((info->GetString(kGAIAIdKey, &gaia_id) && !gaia_id.empty() &&
+         account_id.GetGaiaId() == gaia_id) ||
+        (info->GetString(ProfileAttributesEntry::kUserNameKey, &user_name) &&
+         !user_name.empty() && account_id.GetUserEmail() == user_name)) {
+      RemoveProfile(GetPathOfProfileAtIndex(i));
+      return;
+    }
+  }
 }
 
 void ProfileInfoCache::RemoveProfile(const base::FilePath& profile_path) {
