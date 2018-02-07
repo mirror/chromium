@@ -50,6 +50,24 @@
       "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3780f1c8_589ee64c",
+        "filename": "third_party/google_toolbox_for_mac/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-07T02:54:08Z",
+      "side": 1,
+      "message": "It builds without it, so I would assume no?  Happy to add it if there\u0027s an invisible dependency here.",
+      "parentUuid": "205af2bc_34230548",
+      "revId": "c529425158523b71b82e9abcc91df1410b447a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
