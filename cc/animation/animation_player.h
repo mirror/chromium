@@ -11,11 +11,11 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_export.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/keyframe_model.h"
 #include "cc/trees/element_id.h"
 
 namespace cc {
@@ -26,8 +26,8 @@ class AnimationHost;
 class AnimationTimeline;
 struct AnimationEvent;
 
-// An AnimationPlayer manages grouped sets of animations (each set of which are
-// stored in an AnimationTicker), and handles the interaction with the
+// An AnimationPlayer manages grouped sets of keyframe_models (each set of which
+// are stored in an AnimationTicker), and handles the interaction with the
 // AnimationHost and AnimationTimeline.
 //
 // This class is a CC counterpart for blink::Animation, currently in a 1:1
@@ -77,42 +77,42 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void DetachElementForTicker(ElementId element_id, TickerId ticker_id);
   virtual void DetachElement();
 
-  void AddAnimationForTicker(std::unique_ptr<Animation> animation,
-                             TickerId ticker_id);
-  void PauseAnimationForTicker(int animation_id,
-                               double time_offset,
-                               TickerId ticker_id);
-  void RemoveAnimationForTicker(int animation_id, TickerId ticker_id);
-  void AbortAnimationForTicker(int animation_id, TickerId ticker_id);
-  void AbortAnimations(TargetProperty::Type target_property,
-                       bool needs_completion);
+  void AddKeyframeModelForTicker(std::unique_ptr<KeyframeModel> animation,
+                                 TickerId ticker_id);
+  void PauseKeyframeModelForTicker(int animation_id,
+                                   double time_offset,
+                                   TickerId ticker_id);
+  void RemoveKeyframeModelForTicker(int animation_id, TickerId ticker_id);
+  void AbortKeyframeModelForTicker(int animation_id, TickerId ticker_id);
+  void AbortKeyframeModels(TargetProperty::Type target_property,
+                           bool needs_completion);
 
   virtual void PushPropertiesTo(AnimationPlayer* player_impl);
 
-  void UpdateState(bool start_ready_animations, AnimationEvents* events);
+  void UpdateState(bool start_ready_keyframe_models, AnimationEvents* events);
   virtual void Tick(base::TimeTicks monotonic_time);
 
   void AddToTicking();
-  void AnimationRemovedFromTicking();
+  void KeyframeModelRemovedFromTicking();
 
   // AnimationDelegate routing.
-  void NotifyAnimationStarted(const AnimationEvent& event);
-  void NotifyAnimationFinished(const AnimationEvent& event);
-  void NotifyAnimationAborted(const AnimationEvent& event);
-  void NotifyAnimationTakeover(const AnimationEvent& event);
-  size_t TickingAnimationsCount() const;
+  void NotifyKeyframeModelStarted(const AnimationEvent& event);
+  void NotifyKeyframeModelFinished(const AnimationEvent& event);
+  void NotifyKeyframeModelAborted(const AnimationEvent& event);
+  void NotifyKeyframeModelTakeover(const AnimationEvent& event);
+  size_t TickingKeyframeModelsCount() const;
 
   void SetNeedsPushProperties();
 
-  // Make animations affect active elements if and only if they affect
-  // pending elements. Any animations that no longer affect any elements
+  // Make keyframe_models affect active elements if and only if they affect
+  // pending elements. Any keyframe_models that no longer affect any elements
   // are deleted.
-  void ActivateAnimations();
+  void ActivateKeyframeModels();
 
-  // Returns the animation animating the given property that is either
-  // running, or is next to run, if such an animation exists.
-  Animation* GetAnimationForTicker(TargetProperty::Type target_property,
-                                   TickerId ticker_id) const;
+  // Returns the keyframe model animating the given property that is either
+  // running, or is next to run, if such a keyframe model exists.
+  KeyframeModel* GetKeyframeModelForTicker(TargetProperty::Type target_property,
+                                           TickerId ticker_id) const;
 
   std::string ToString() const;
 

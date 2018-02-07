@@ -8,9 +8,9 @@
 #include <memory>
 #include <unordered_map>
 
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_host.h"
+#include "cc/animation/keyframe_model.h"
 #include "cc/trees/mutator_host_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/scroll_offset.h"
@@ -195,19 +195,20 @@ class TestAnimationDelegate : public AnimationDelegate {
  public:
   TestAnimationDelegate();
 
-  void NotifyAnimationStarted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override;
-  void NotifyAnimationFinished(base::TimeTicks monotonic_time,
-                               int target_property,
-                               int group) override;
-  void NotifyAnimationAborted(base::TimeTicks monotonic_time,
-                              int target_property,
-                              int group) override;
-  void NotifyAnimationTakeover(base::TimeTicks monotonic_time,
-                               int target_property,
-                               base::TimeTicks animation_start_time,
-                               std::unique_ptr<AnimationCurve> curve) override;
+  void NotifyKeyframeModelStarted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override;
+  void NotifyKeyframeModelFinished(base::TimeTicks monotonic_time,
+                                   int target_property,
+                                   int group) override;
+  void NotifyKeyframeModelAborted(base::TimeTicks monotonic_time,
+                                  int target_property,
+                                  int group) override;
+  void NotifyKeyframeModelTakeover(
+      base::TimeTicks monotonic_time,
+      int target_property,
+      base::TimeTicks animation_start_time,
+      std::unique_ptr<AnimationCurve> curve) override;
 
   bool started() { return started_; }
 

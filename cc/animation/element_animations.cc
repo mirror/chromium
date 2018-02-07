@@ -159,35 +159,39 @@ void ElementAnimations::RemoveTickersFromTicking() const {
     ticker.RemoveFromTicking();
 }
 
-void ElementAnimations::NotifyAnimationStarted(const AnimationEvent& event) {
+void ElementAnimations::NotifyKeyframeModelStarted(
+    const AnimationEvent& event) {
   DCHECK(!event.is_impl_only);
   for (auto& ticker : tickers_list_) {
-    if (ticker.NotifyAnimationStarted(event))
+    if (ticker.NotifyKeyframeModelStarted(event))
       break;
   }
 }
 
-void ElementAnimations::NotifyAnimationFinished(const AnimationEvent& event) {
+void ElementAnimations::NotifyKeyframeModelFinished(
+    const AnimationEvent& event) {
   DCHECK(!event.is_impl_only);
   for (auto& ticker : tickers_list_) {
-    if (ticker.NotifyAnimationFinished(event))
+    if (ticker.NotifyKeyframeModelFinished(event))
       break;
   }
 }
 
-void ElementAnimations::NotifyAnimationTakeover(const AnimationEvent& event) {
+void ElementAnimations::NotifyKeyframeModelTakeover(
+    const AnimationEvent& event) {
   DCHECK(!event.is_impl_only);
   DCHECK(event.target_property == TargetProperty::SCROLL_OFFSET);
 
   for (auto& ticker : tickers_list_)
-    ticker.NotifyAnimationTakeover(event);
+    ticker.NotifyKeyframeModelTakeover(event);
 }
 
-void ElementAnimations::NotifyAnimationAborted(const AnimationEvent& event) {
+void ElementAnimations::NotifyKeyframeModelAborted(
+    const AnimationEvent& event) {
   DCHECK(!event.is_impl_only);
 
   for (auto& ticker : tickers_list_) {
-    if (ticker.NotifyAnimationAborted(event))
+    if (ticker.NotifyKeyframeModelAborted(event))
       break;
   }
 
@@ -203,21 +207,22 @@ bool ElementAnimations::HasOnlyTranslationTransforms(
   return true;
 }
 
-bool ElementAnimations::AnimationsPreserveAxisAlignment() const {
+bool ElementAnimations::KeyframeModelsPreserveAxisAlignment() const {
   for (auto& ticker : tickers_list_) {
-    if (!ticker.AnimationsPreserveAxisAlignment())
+    if (!ticker.KeyframeModelsPreserveAxisAlignment())
       return false;
   }
   return true;
 }
 
-bool ElementAnimations::AnimationStartScale(ElementListType list_type,
-                                            float* start_scale) const {
+bool ElementAnimations::KeyframeModelStartScale(ElementListType list_type,
+                                                float* start_scale) const {
   *start_scale = 0.f;
 
   for (auto& ticker : tickers_list_) {
     float ticker_start_scale = 0.f;
-    bool success = ticker.AnimationStartScale(list_type, &ticker_start_scale);
+    bool success =
+        ticker.KeyframeModelStartScale(list_type, &ticker_start_scale);
     if (!success)
       return false;
     // Union: a maximum.
@@ -251,45 +256,46 @@ bool ElementAnimations::ScrollOffsetAnimationWasInterrupted() const {
   return false;
 }
 
-void ElementAnimations::NotifyClientFloatAnimated(float opacity,
-                                                  int target_property_id,
-                                                  Animation* animation) {
-  DCHECK(animation->target_property_id() == TargetProperty::OPACITY);
+void ElementAnimations::NotifyClientFloatAnimated(
+    float opacity,
+    int target_property_id,
+    KeyframeModel* keyframe_model) {
+  DCHECK(keyframe_model->target_property_id() == TargetProperty::OPACITY);
   opacity = base::ClampToRange(opacity, 0.0f, 1.0f);
-  if (AnimationAffectsActiveElements(animation))
+  if (KeyframeModelAffectsActiveElements(keyframe_model))
     OnOpacityAnimated(ElementListType::ACTIVE, opacity);
-  if (AnimationAffectsPendingElements(animation))
+  if (KeyframeModelAffectsPendingElements(keyframe_model))
     OnOpacityAnimated(ElementListType::PENDING, opacity);
 }
 
 void ElementAnimations::NotifyClientFilterAnimated(
     const FilterOperations& filters,
     int target_property_id,
-    Animation* animation) {
-  if (AnimationAffectsActiveElements(animation))
+    KeyframeModel* keyframe_model) {
+  if (KeyframeModelAffectsActiveElements(keyframe_model))
     OnFilterAnimated(ElementListType::ACTIVE, filters);
-  if (AnimationAffectsPendingElements(animation))
+  if (KeyframeModelAffectsPendingElements(keyframe_model))
     OnFilterAnimated(ElementListType::PENDING, filters);
 }
 
 void ElementAnimations::NotifyClientTransformOperationsAnimated(
     const TransformOperations& operations,
     int target_property_id,
-    Animation* animation) {
+    KeyframeModel* keyframe_model) {
   gfx::Transform transform = operations.Apply();
-  if (AnimationAffectsActiveElements(animation))
+  if (KeyframeModelAffectsActiveElements(keyframe_model))
     OnTransformAnimated(ElementListType::ACTIVE, transform);
-  if (AnimationAffectsPendingElements(animation))
+  if (KeyframeModelAffectsPendingElements(keyframe_model))
     OnTransformAnimated(ElementListType::PENDING, transform);
 }
 
 void ElementAnimations::NotifyClientScrollOffsetAnimated(
     const gfx::ScrollOffset& scroll_offset,
     int target_property_id,
-    Animation* animation) {
-  if (AnimationAffectsActiveElements(animation))
+    KeyframeModel* keyframe_model) {
+  if (KeyframeModelAffectsActiveElements(keyframe_model))
     OnScrollOffsetAnimated(ElementListType::ACTIVE, scroll_offset);
-  if (AnimationAffectsPendingElements(animation))
+  if (KeyframeModelAffectsPendingElements(keyframe_model))
     OnScrollOffsetAnimated(ElementListType::PENDING, scroll_offset);
 }
 
@@ -337,18 +343,18 @@ void ElementAnimations::UpdateClientAnimationState() {
   }
 }
 
-bool ElementAnimations::HasTickingAnimation() const {
+bool ElementAnimations::HasTickingKeyframeModel() const {
   for (auto& ticker : tickers_list_) {
-    if (ticker.HasTickingAnimation())
+    if (ticker.HasTickingKeyframeModel())
       return true;
   }
 
   return false;
 }
 
-bool ElementAnimations::HasAnyAnimation() const {
+bool ElementAnimations::HasAnyKeyframeModel() const {
   for (auto& ticker : tickers_list_) {
-    if (ticker.has_any_animation())
+    if (ticker.has_any_keyframe_model())
       return true;
   }
 
@@ -358,7 +364,7 @@ bool ElementAnimations::HasAnyAnimation() const {
 bool ElementAnimations::HasAnyAnimationTargetingProperty(
     TargetProperty::Type property) const {
   for (auto& ticker : tickers_list_) {
-    if (ticker.GetAnimation(property))
+    if (ticker.GetKeyframeModel(property))
       return true;
   }
   return false;
@@ -433,22 +439,26 @@ gfx::ScrollOffset ElementAnimations::ScrollOffsetForAnimation() const {
   return gfx::ScrollOffset();
 }
 
-bool ElementAnimations::AnimationAffectsActiveElements(
-    Animation* animation) const {
-  // When we force an animation update due to a notification, we do not have an
-  // Animation instance. In this case, we force an update of active elements.
-  if (!animation)
+bool ElementAnimations::KeyframeModelAffectsActiveElements(
+    KeyframeModel* keyframe_model) const {
+  // When we force a keyframe_model update due to a notification, we do not have
+  // a KeyframeModel instance. In this case, we force an update of active
+  // elements.
+  if (!keyframe_model)
     return true;
-  return animation->affects_active_elements() && has_element_in_active_list();
+  return keyframe_model->affects_active_elements() &&
+         has_element_in_active_list();
 }
 
-bool ElementAnimations::AnimationAffectsPendingElements(
-    Animation* animation) const {
-  // When we force an animation update due to a notification, we do not have an
-  // Animation instance. In this case, we force an update of pending elements.
-  if (!animation)
+bool ElementAnimations::KeyframeModelAffectsPendingElements(
+    KeyframeModel* keyframe_model) const {
+  // When we force a keyframe_model update due to a notification, we do not have
+  // a KeyframeModel instance. In this case, we force an update of pending
+  // elements.
+  if (!keyframe_model)
     return true;
-  return animation->affects_pending_elements() && has_element_in_pending_list();
+  return keyframe_model->affects_pending_elements() &&
+         has_element_in_pending_list();
 }
 
 }  // namespace cc

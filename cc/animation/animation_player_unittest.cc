@@ -24,14 +24,14 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
   AnimationPlayerTest()
       : player_(AnimationPlayer::Create(player_id_)),
         group_id_(100),
-        animation_id_(100) {
+        keyframe_model_id_(100) {
     ticker_id_ = player_->NextTickerId();
   }
   ~AnimationPlayerTest() override = default;
 
   int NextGroupId() { return ++group_id_; }
 
-  int NextAnimationId() { return ++animation_id_; }
+  int NextKeyframeModelId() { return ++keyframe_model_id_; }
 
   int AddOpacityTransition(AnimationPlayer* target,
                            double duration,
@@ -52,13 +52,13 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
     curve->AddKeyframe(FloatKeyframe::Create(
         base::TimeDelta::FromSecondsD(duration), end_opacity, nullptr));
 
-    int id = NextAnimationId();
+    int id = NextKeyframeModelId();
 
-    std::unique_ptr<Animation> animation(Animation::Create(
+    std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
         std::move(curve), id, NextGroupId(), TargetProperty::OPACITY));
-    animation->set_needs_synchronized_start_time(true);
+    keyframe_model->set_needs_synchronized_start_time(true);
 
-    target->AddAnimationForTicker(std::move(animation), ticker_id);
+    target->AddKeyframeModelForTicker(std::move(keyframe_model), ticker_id);
     return id;
   }
 
@@ -78,13 +78,13 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
     curve->AddKeyframe(TransformKeyframe::Create(
         base::TimeDelta::FromSecondsD(duration), operations, nullptr));
 
-    int id = NextAnimationId();
+    int id = NextKeyframeModelId();
 
-    std::unique_ptr<Animation> animation(Animation::Create(
+    std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
         std::move(curve), id, NextGroupId(), TargetProperty::TRANSFORM));
-    animation->set_needs_synchronized_start_time(true);
+    keyframe_model->set_needs_synchronized_start_time(true);
 
-    target->AddAnimationForTicker(std::move(animation), ticker_id);
+    target->AddKeyframeModelForTicker(std::move(keyframe_model), ticker_id);
     return id;
   }
 
@@ -125,13 +125,13 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
     curve->AddKeyframe(FilterKeyframe::Create(
         base::TimeDelta::FromSecondsD(duration), filters, nullptr));
 
-    int id = NextAnimationId();
+    int id = NextKeyframeModelId();
 
-    std::unique_ptr<Animation> animation(Animation::Create(
+    std::unique_ptr<KeyframeModel> keyframe_model(KeyframeModel::Create(
         std::move(curve), id, NextGroupId(), TargetProperty::FILTER));
-    animation->set_needs_synchronized_start_time(true);
+    keyframe_model->set_needs_synchronized_start_time(true);
 
-    target->AddAnimationForTicker(std::move(animation), ticker_id);
+    target->AddKeyframeModelForTicker(std::move(keyframe_model), ticker_id);
     return id;
   }
 
@@ -147,7 +147,7 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
   scoped_refptr<AnimationPlayer> player_impl_;
   int group_id_;
   TickerId ticker_id_;
-  int animation_id_;
+  int keyframe_model_id_;
 };
 // See element_animations_unittest.cc for active/pending observers tests.
 
@@ -306,7 +306,7 @@ TEST_F(AnimationPlayerTest, PropertiesMutate) {
   EXPECT_FALSE(client_impl_.IsPropertyMutated(
       element_id_, ElementListType::ACTIVE, TargetProperty::FILTER));
 
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
 
   base::TimeTicks time;
   time += base::TimeDelta::FromSecondsD(0.1);
@@ -386,7 +386,7 @@ TEST_F(AnimationPlayerTest, AttachTwoPlayersToOneLayer) {
                        ticker_id2);
 
   host_->PushPropertiesTo(host_impl_);
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
 
   EXPECT_FALSE(delegate1.started());
   EXPECT_FALSE(delegate1.finished());
@@ -456,7 +456,7 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
 
   EXPECT_FALSE(player_->GetTickerById(ticker_id_)->needs_push_properties());
   EXPECT_FALSE(player_->GetTickerById(ticker_id_)->element_animations());
-  player_->RemoveAnimationForTicker(filter_id, ticker_id_);
+  player_->RemoveKeyframeModelForTicker(filter_id, ticker_id_);
   EXPECT_FALSE(player_->GetTickerById(ticker_id_)->needs_push_properties());
 
   player_->AttachElementForTicker(element_id_, ticker_id_);
@@ -482,7 +482,7 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
   EXPECT_FALSE(client_impl_.IsPropertyMutated(
       element_id_, ElementListType::ACTIVE, TargetProperty::FILTER));
 
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
 
   base::TimeTicks time;
   time += base::TimeDelta::FromSecondsD(0.1);
@@ -515,17 +515,17 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationCausesSetNeedsCommit) {
 
   EXPECT_FALSE(client_.mutators_need_commit());
 
-  const int animation_id =
+  const int keyframe_model_id =
       AddOpacityTransition(player_.get(), 1., .7f, .3f, false, ticker_id_);
 
   EXPECT_TRUE(client_.mutators_need_commit());
   client_.set_mutators_need_commit(false);
 
-  player_->PauseAnimationForTicker(animation_id, 1., ticker_id_);
+  player_->PauseKeyframeModelForTicker(keyframe_model_id, 1., ticker_id_);
   EXPECT_TRUE(client_.mutators_need_commit());
   client_.set_mutators_need_commit(false);
 
-  player_->RemoveAnimationForTicker(animation_id, ticker_id_);
+  player_->RemoveKeyframeModelForTicker(keyframe_model_id, ticker_id_);
   EXPECT_TRUE(client_.mutators_need_commit());
   client_.set_mutators_need_commit(false);
 }
@@ -582,32 +582,32 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 TEST_F(AnimationPlayerTest, ToString) {
   player_->AddTicker(base::MakeUnique<AnimationTicker>(ticker_id_));
   player_->AttachElementForTicker(element_id_, ticker_id_);
-  EXPECT_EQ(
-      base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, animations=[]}",
-                         player_->id(), element_id_.ToString().c_str()),
-      player_->ToString());
+  EXPECT_EQ(base::StringPrintf(
+                "AnimationPlayer{id=%d, element_id=%s, keyframe_models=[]}",
+                player_->id(), element_id_.ToString().c_str()),
+            player_->ToString());
 
-  player_->AddAnimationForTicker(
-      Animation::Create(std::make_unique<FakeFloatAnimationCurve>(15), 42, 73,
-                        TargetProperty::OPACITY),
+  player_->AddKeyframeModelForTicker(
+      KeyframeModel::Create(std::make_unique<FakeFloatAnimationCurve>(15), 42,
+                            73, TargetProperty::OPACITY),
       ticker_id_);
   EXPECT_EQ(base::StringPrintf("AnimationPlayer{id=%d, element_id=%s, "
-                               "animations=[Animation{id=42, "
+                               "keyframe_models=[KeyframeModel{id=42, "
                                "group=73, target_property_id=1, "
                                "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
                                player_->id(), element_id_.ToString().c_str()),
             player_->ToString());
 
-  player_->AddAnimationForTicker(
-      Animation::Create(std::make_unique<FakeFloatAnimationCurve>(18), 45, 76,
-                        TargetProperty::BOUNDS),
+  player_->AddKeyframeModelForTicker(
+      KeyframeModel::Create(std::make_unique<FakeFloatAnimationCurve>(18), 45,
+                            76, TargetProperty::BOUNDS),
       ticker_id_);
   EXPECT_EQ(
       base::StringPrintf(
           "AnimationPlayer{id=%d, element_id=%s, "
-          "animations=[Animation{id=42, "
+          "keyframe_models=[KeyframeModel{id=42, "
           "group=73, target_property_id=1, "
-          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, "
+          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, KeyframeModel{id=45, "
           "group=76, "
           "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
           player_->id(), element_id_.ToString().c_str()),
@@ -617,20 +617,20 @@ TEST_F(AnimationPlayerTest, ToString) {
   ElementId second_element_id(NextTestLayerId());
   player_->AddTicker(base::MakeUnique<AnimationTicker>(second_ticker_id));
   player_->AttachElementForTicker(second_element_id, second_ticker_id);
-  player_->AddAnimationForTicker(
-      Animation::Create(std::make_unique<FakeFloatAnimationCurve>(20), 48, 78,
-                        TargetProperty::OPACITY),
+  player_->AddKeyframeModelForTicker(
+      KeyframeModel::Create(std::make_unique<FakeFloatAnimationCurve>(20), 48,
+                            78, TargetProperty::OPACITY),
       second_ticker_id);
   EXPECT_EQ(
       base::StringPrintf(
           "AnimationPlayer{id=%d, element_id=%s, "
-          "animations=[Animation{id=42, "
+          "keyframe_models=[KeyframeModel{id=42, "
           "group=73, target_property_id=1, "
-          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, "
+          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, KeyframeModel{id=45, "
           "group=76, "
           "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]"
           ", element_id=%s, "
-          "animations=[Animation{id=48, "
+          "keyframe_models=[KeyframeModel{id=48, "
           "group=78, target_property_id=1, "
           "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
           player_->id(), element_id_.ToString().c_str(),
@@ -863,7 +863,7 @@ TEST_F(AnimationPlayerTest, TickingAnimationsFromTwoTickers) {
   AddAnimatedTransform(player_.get(), duration, transform_x, transform_y,
                        ticker_id2);
   host_->PushPropertiesTo(host_impl_);
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
 
   EXPECT_FALSE(delegate1.started());
   EXPECT_FALSE(delegate1.finished());

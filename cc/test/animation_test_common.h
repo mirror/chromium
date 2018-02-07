@@ -5,9 +5,9 @@
 #ifndef CC_TEST_ANIMATION_TEST_COMMON_H_
 #define CC_TEST_ANIMATION_TEST_COMMON_H_
 
-#include "cc/animation/animation.h"
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_timeline.h"
+#include "cc/animation/keyframe_model.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/paint/filter_operations.h"
 #include "cc/test/geometry_test_utils.h"
@@ -105,23 +105,24 @@ int AddOpacityStepsToPlayer(SingleTickerAnimationPlayer* player,
                             float end_opacity,
                             int num_steps);
 
-void AddAnimationToElementWithPlayer(ElementId element_id,
-                                     scoped_refptr<AnimationTimeline> timeline,
-                                     std::unique_ptr<Animation> animation);
-void AddAnimationToElementWithExistingTicker(
+void AddKeyframeModelToElementWithPlayer(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    std::unique_ptr<Animation> animation);
+    std::unique_ptr<KeyframeModel> keyframe_model);
+void AddKeyframeModelToElementWithExistingTicker(
+    ElementId element_id,
+    scoped_refptr<AnimationTimeline> timeline,
+    std::unique_ptr<KeyframeModel> keyframe_model);
 
-void RemoveAnimationFromElementWithExistingTicker(
+void RemoveKeyframeModelFromElementWithExistingTicker(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    int animation_id);
+    int keyframe_model_id);
 
-Animation* GetAnimationFromElementWithExistingTicker(
+KeyframeModel* GetKeyframeModelFromElementWithExistingTicker(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
-    int animation_id);
+    int keyframe_model_id);
 
 int AddAnimatedFilterToElementWithPlayer(
     ElementId element_id,
