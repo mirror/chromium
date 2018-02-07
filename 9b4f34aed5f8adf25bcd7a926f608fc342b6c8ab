@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a826122d_05585742",
+        "filename": "cc/trees/render_frame_metadata_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4494c164_645daf44",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fbaa6cb_f41c47b8",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "75ff3340_adcdb5cb",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fbaa6cb_f41c47b8",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c65d8a58_55ab7bef",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-02-07T01:25:11Z",
       "side": 1,
       "message": "Why not just have this always injected? I don\u0027t see the point of only enabling this for a test message.",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ceae564_021dfe5e",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Switched to always injecting this.",
+      "parentUuid": "c65d8a58_55ab7bef",
       "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3f4dc1f1_9e84a0b7",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Switched to only creating this when the impl thread exists. As this observer serves no purpose if the gpu process isn\u0027t going to be used. As no compositor frames are ever being made.\n\nAs a result this is now just in the init list above.",
+      "parentUuid": "918f6626_841f62cf",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ea6a69b_819ac228",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2018-02-07T01:25:11Z",
       "side": 1,
       "message": "So all this code is only for tests? Maybe move this to a separate file? Perhaps in content/tests?",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1bf878_ef42fa40",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "The initial signal to use this is only for tests. However there will be other uses from within the browser soon.",
+      "parentUuid": "0ea6a69b_819ac228",
       "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c979c6e7_f79e8b37",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Switched to directly creating it while setting it on the compositor_",
+      "parentUuid": "18a81293_ac4f871c",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9d7a587_82bd339a",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8883c5e_62ff79cf",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2018-02-07T17:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d7a587_82bd339a",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
