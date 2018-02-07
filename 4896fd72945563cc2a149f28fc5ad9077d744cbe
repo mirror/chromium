@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab03d5f8_7a76816e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:09:38Z",
+      "side": 1,
+      "message": "This is the other half of where I was saying you could pass in last_auto_resize_surface_id_. You probably still want to save the variable on this class, but you don\u0027t need to expose it via a getter.",
+      "range": {
+        "startLine": 2483,
+        "startChar": 37,
+        "endLine": 2483,
+        "endChar": 69
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ab56ac_99ba6f74",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:09:38Z",
+      "side": 1,
+      "message": "You could just plumb this through from the host to this function (only a couple fns), but this is fine for now.",
+      "range": {
+        "startLine": 2505,
+        "startChar": 20,
+        "endLine": 2505,
+        "endChar": 47
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
