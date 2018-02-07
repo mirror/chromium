@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a8a00e5_370df728",
+        "filename": "content/renderer/media/peer_connection_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-07T12:23:25Z",
+      "side": 1,
+      "message": "Please remove the comment now that you\u0027ve removed the parameter.",
+      "revId": "5ae8cbfe293afae67b5ace618f2f24d558aa5e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660da10d_0b787150",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-02-07T12:23:25Z",
+      "side": 1,
+      "message": "Update comment here too.",
+      "revId": "5ae8cbfe293afae67b5ace618f2f24d558aa5e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
