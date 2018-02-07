@@ -729,6 +729,35 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
   form_signature_ = cached_form.form_signature_;
 }
 
+void FormStructure::RetrieveServerDataFromCache(
+    const FormStructure& cached_form) {
+  // Map from field signatures to cached fields.
+  std::map<base::string16, const AutofillField*> cached_fields;
+  for (size_t i = 0; i < cached_form.field_count(); ++i) {
+    auto* const field = cached_form.field(i);
+    cached_fields[field->unique_name()] = field;
+  }
+  for (auto& field : *this) {
+    const auto& cached_field = cached_fields.find(field->unique_name());
+    if (cached_field != cached_fields.end()) {
+      field->set_overall_server_type(
+          cached_field->second->overall_server_type());
+    }
+  }
+
+  UpdateAutofillCount();
+
+  // Update form parsed timestamp
+  set_form_parsed_timestamp(cached_form.form_parsed_timestamp());
+
+  // The form signature should match between query and upload requests to the
+  // server. On many websites, form elements are dynamically added, removed, or
+  // rearranged via JavaScript between page load and form submission, so we
+  // copy over the |form_signature_field_names_| corresponding to the query
+  // request.
+  form_signature_ = cached_form.form_signature_;
+}
+
 void FormStructure::LogQualityMetrics(
     const base::TimeTicks& load_time,
     const base::TimeTicks& interaction_time,
