@@ -147,16 +147,19 @@ ParsedQuicVersionVector FilterSupportedVersions(
     if (version.transport_version == QUIC_VERSION_99) {
       if (GetQuicFlag(FLAGS_quic_enable_version_99) &&
           GetQuicFlag(FLAGS_quic_enable_version_43) &&
-          GetQuicFlag(FLAGS_quic_enable_version_42)) {
+          GetQuicReloadableFlag(quic_enable_version_42) &&
+          GetQuicReloadableFlag(quic_allow_receiving_overlapping_data)) {
         filtered_versions.push_back(version);
       }
     } else if (version.transport_version == QUIC_VERSION_43) {
       if (GetQuicFlag(FLAGS_quic_enable_version_43) &&
-          GetQuicFlag(FLAGS_quic_enable_version_42)) {
+          GetQuicReloadableFlag(quic_enable_version_42) &&
+          GetQuicReloadableFlag(quic_allow_receiving_overlapping_data)) {
         filtered_versions.push_back(version);
       }
     } else if (version.transport_version == QUIC_VERSION_42) {
-      if (GetQuicFlag(FLAGS_quic_enable_version_42)) {
+      if (GetQuicReloadableFlag(quic_enable_version_42) &&
+          GetQuicReloadableFlag(quic_allow_receiving_overlapping_data)) {
         filtered_versions.push_back(version);
       }
     } else {

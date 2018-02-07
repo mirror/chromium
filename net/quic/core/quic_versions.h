@@ -33,8 +33,7 @@ enum QuicTransportVersion {
                          // WINDOW_UPDATE every 20 sent packets which do not
                          // contain retransmittable frames.
   QUIC_VERSION_41 = 41,  // RST_STREAM, ACK and STREAM frames match IETF format.
-  QUIC_VERSION_42 = 42,  // Initial packet number is randomly chosen from
-                         // [1:2^31],
+  QUIC_VERSION_42 = 42,  // Allows receiving overlapping stream data.
   QUIC_VERSION_43 = 43,  // Use IETF packet header format.
   QUIC_VERSION_99 = 99,  // Dumping ground for IETF QUIC changes which are not
                          // yet ready for production.

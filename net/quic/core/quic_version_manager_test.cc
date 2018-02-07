@@ -21,7 +21,7 @@ TEST_F(QuicVersionManagerTest, QuicVersionManager) {
                 "Supported versions out of sync");
   SetQuicFlag(&FLAGS_quic_enable_version_99, false);
   SetQuicFlag(&FLAGS_quic_enable_version_43, false);
-  SetQuicFlag(&FLAGS_quic_enable_version_42, false);
+  SetQuicReloadableFlag(quic_enable_version_42, false);
   QuicVersionManager manager(AllSupportedVersions());
 
   EXPECT_EQ(FilterSupportedTransportVersions(AllSupportedTransportVersions()),
@@ -33,7 +33,8 @@ TEST_F(QuicVersionManagerTest, QuicVersionManager) {
   EXPECT_EQ(QUIC_VERSION_37, manager.GetSupportedTransportVersions()[3]);
   EXPECT_EQ(QUIC_VERSION_35, manager.GetSupportedTransportVersions()[4]);
 
-  SetQuicFlag(&FLAGS_quic_enable_version_42, true);
+  SetQuicReloadableFlag(quic_enable_version_42, true);
+  SetQuicReloadableFlag(quic_allow_receiving_overlapping_data, true);
   ASSERT_EQ(6u, manager.GetSupportedTransportVersions().size());
   EXPECT_EQ(QUIC_VERSION_42, manager.GetSupportedTransportVersions()[0]);
   EXPECT_EQ(QUIC_VERSION_41, manager.GetSupportedTransportVersions()[1]);

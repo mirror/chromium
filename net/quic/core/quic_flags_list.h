@@ -179,3 +179,8 @@ QUIC_FLAG(
 
 // If true, enable QUIC v99.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_99, false)
+
+// If both this flag and
+// gfe2_reloadable_flag_quic_allow_receiving_overlapping_data are
+// true, enable QUIC version 42.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_42, false)
