@@ -1288,7 +1288,6 @@ crbug.com/591099 external/wpt/css/css-rhythm/line-height-step-boundary-001.html 
 crbug.com/591099 external/wpt/css/css-rhythm/line-height-step-dynamic-001.html [ Failure ]
 crbug.com/591099 external/wpt/css/css-rhythm/line-height-step-valign-001.html [ Failure ]
 crbug.com/591099 external/wpt/css/css-rhythm/line-height-step-writing-mode-vrl-001.html [ Failure ]
-crbug.com/591099 external/wpt/css/css-scroll-anchoring/anchoring-with-bounds-clamping.html [ Failure ]
 crbug.com/591099 external/wpt/css/css-scroll-anchoring/clipped-scrollers-skipped.html [ Failure ]
 crbug.com/591099 external/wpt/css/css-scroll-anchoring/opt-out.html [ Failure ]
 crbug.com/591099 external/wpt/css/css-scroll-anchoring/position-change-heuristic.html [ Failure ]
