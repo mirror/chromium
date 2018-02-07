@@ -69,6 +69,24 @@
       "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31688ba8_fcfd7dc1",
+        "filename": "pdf/pdfium/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:05:34Z",
+      "side": 1,
+      "message": "Yes, all the way from the root DEPS file.",
+      "parentUuid": "e1a02ff0_90780549",
+      "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
