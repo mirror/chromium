@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8bb2e8d_d22a4468",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T22:12:49Z",
+      "side": 1,
+      "message": "nit: I\u0027d combine this with the early return in maybeAddSectionForHeader() so that if we have other expandable headers in the future the logic for which sections to show headers for is contained in that one method.",
+      "range": {
+        "startLine": 79,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 59
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9467ba13_56ca2fd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T22:12:49Z",
+      "side": 1,
+      "message": "When the header is expanded -\u003e collapsed -\u003e expanded again, do we re-fetch articles from the backend? I think that\u0027s probably OK (especially for a v1), but I\u0027d like to make sure I understand the flow.",
+      "range": {
+        "startLine": 639,
+        "startChar": 13,
+        "endLine": 639,
+        "endChar": 32
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1064ad73_34b6ab9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T22:12:49Z",
+      "side": 1,
+      "message": "nit: This can go back to ((SectionHeaderViewHolder) holder).onBindViewHolder(this);",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d82411_9179e962",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T22:12:49Z",
+      "side": 1,
+      "message": "Can this be called from the #onClick() method in this class rather than having SectionHeader call it?",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efda926d_032a4849",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T22:12:49Z",
+      "side": 1,
+      "message": "We check for a null icon view in onBindViewHolder, but not here. Is mIconView guaranteed to be non-null?",
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
