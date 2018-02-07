@@ -284,6 +284,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fcd233_1f9d8e50",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:15:13Z",
+      "side": 1,
+      "message": "Well, does your workstation have a touchscreen?\n\nFor developers, why wouldn\u0027t hooking up a touchscreen allow them to provide touch input to the touch apps they\u0027re working on? I would expect this to work, and it seems pretty useful for testing multitouch apps.",
+      "parentUuid": "2f712162_3e5b3ea9",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
