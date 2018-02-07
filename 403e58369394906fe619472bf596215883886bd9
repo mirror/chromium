@@ -22,6 +22,30 @@
       "revId": "403e58369394906fe619472bf596215883886bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec1c3de9_c8bf4eb2",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-02-07T00:34:32Z",
+      "side": 1,
+      "message": "Please ignore; I hadn\u0027t followed your helpful link :) I think no period is appropriate here.",
+      "parentUuid": "7efbe68a_a3c67527",
+      "range": {
+        "startLine": 682,
+        "startChar": 39,
+        "endLine": 682,
+        "endChar": 0
+      },
+      "revId": "403e58369394906fe619472bf596215883886bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
