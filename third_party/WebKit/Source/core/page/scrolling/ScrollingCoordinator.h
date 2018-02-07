@@ -132,7 +132,7 @@ class CORE_EXPORT ScrollingCoordinator final
   Region ComputeShouldHandleScrollGestureOnMainThreadRegion(
       const LocalFrame*) const;
 
-  void UpdateTouchEventTargetRectsIfNeeded();
+  void UpdateTouchEventTargetRectsIfNeeded(LocalFrame*);
 
   void UpdateUserInputScrollable(ScrollableArea*);
 
@@ -169,8 +169,8 @@ class CORE_EXPORT ScrollingCoordinator final
 
   void SetShouldHandleScrollGestureOnMainThreadRegion(const Region&,
                                                       LocalFrameView*);
-  void SetTouchEventTargetRects(LayerHitTestRects&);
-  void ComputeTouchEventTargetRects(LayerHitTestRects&);
+  void SetTouchEventTargetRects(LocalFrame*, LayerHitTestRects&);
+  void ComputeTouchEventTargetRects(LocalFrame*, LayerHitTestRects&);
 
   WebScrollbarLayer* AddWebScrollbarLayer(ScrollableArea*,
                                           ScrollbarOrientation,
