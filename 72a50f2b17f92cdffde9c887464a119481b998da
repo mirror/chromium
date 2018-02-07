@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61326db_2cb5b76d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/cssimportrule.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T09:03:37Z",
+      "side": 1,
+      "message": "\"should be updated due to [PutForwards]\" would make it easier to understand your point, I think.  Ditto for below test cases.",
+      "range": {
+        "startLine": 91,
+        "startChar": 58,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "72a50f2b17f92cdffde9c887464a119481b998da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
