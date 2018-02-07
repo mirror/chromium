@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a378ff3_3d561c6a",
+        "filename": "device/fido/ctap_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b2a921_22385935",
+      "range": {
+        "startLine": 97,
+        "startChar": 45,
+        "endLine": 97,
+        "endChar": 55
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d222167b_76ef3901",
         "filename": "device/fido/ctap_get_assertion_request_param.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8e4ba708_03dd5660",
+        "filename": "device/fido/ctap_get_assertion_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d222167b_76ef3901",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f567f4_88eaa310",
         "filename": "device/fido/ctap_get_assertion_request_param.cc",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1566aa0e_2b2b4e47",
+        "filename": "device/fido/ctap_get_assertion_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f567f4_88eaa310",
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b8ce681b_dc4e3a0b",
+        "filename": "device/fido/ctap_get_assertion_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a93dd64_917b8933",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9755206a_c23e4bcc",
         "filename": "device/fido/ctap_make_credential_request_param.cc",
         "patchSetId": 13
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f32a50d1_b4c51fdb",
+        "filename": "device/fido/ctap_make_credential_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9755206a_c23e4bcc",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26ef2790_6585f5af",
         "filename": "device/fido/ctap_make_credential_request_param.cc",
         "patchSetId": 13
@@ -125,6 +239,24 @@
       "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c93ee0_7fddae94",
+        "filename": "device/fido/ctap_make_credential_request_param.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ef2790_6585f5af",
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "ccb5492d_994eb0cf",
+        "filename": "device/fido/ctap_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81f4ac3_3f2c07e9",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25855e6_e3f0825d",
         "filename": "device/fido/ctap_request_param.h",
         "patchSetId": 13
@@ -194,6 +350,30 @@
       "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9efad5_fd63c7d1",
+        "filename": "device/fido/ctap_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c25855e6_e3f0825d",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +436,30 @@
       "side": 1,
       "message": "Yes, that sounds good. Another idea I just had is to create another interface called `U2fRequestParam` (or similar). This would only be implemented by CtapMakeCredentialRequestParam and CtapGetAssertionRequestParam and would hide U2F specific logic from the CtapRequestParam interface.\n\nMy main problem with having U2f{Register,Sign}Param implement CtapRequestParam is that CTAP in general shouldn\u0027t really know about U2F specific logic and that it breaks the nice bijection between CtapRequestParam\u0027s subclasses and the APIs defined in https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api.\n\nI hope I\u0027m making sense :)",
       "parentUuid": "9bb45f0d_01a204d1",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "c4560baf5203635fa7277025616191dcf6b7b27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a29abe_520b5e38",
+        "filename": "device/fido/u2f_register_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-02-07T00:47:14Z",
+      "side": 1,
+      "message": "The concern or challenge that comes from consolidating U2F{Register, Sign}Param with CTAP{MakeCredential, GetAssertion}ReqeustParam OR creating a new interface is that as we refactor current U2fDevice to FidoDevice, we should change signature of function U2FDevice::DeviceTransact(APDUCommand) to something that is more generic in terms of protocol/transport specific details. \n\nIdeally this would be FidoDevice::DeviceTransact(CTAPRequestParam),and in each implementation of FidoDevice (eg.FidoHidDevice), we would have writeMessage(CTAPRequestParam) which will in turn call virtual CTAPRequestParam::Encode() method that serializes parameter in to right format according to protocol. \n\nMy concern is that once we get rid of U2FRegisterParam and U2FSignParam, then we would \n\n1) have to store some \"state\" in CTAPMakeCredentialRequestParam and CTAPGetAssertionRequestParam that tells us which protocol is being used and Encode() will serialize based on that state.\n\nOR\n\n2) Have CTAPRequestParam interface have both EncodeToCBOR() and EncodeToAPDU(). In this case CtapRequestParam interface will still contain some U2F specific logic. \n\nI wasn\u0027t sure whether this is a the best way. :| \n\nPlease let me know if I\u0027m misunderstanding your comment! This decision does impact the overall design in a non-trivial way, so we can also get on hangouts we needed.",
+      "parentUuid": "7f3267cb_af44d634",
       "range": {
         "startLine": 17,
         "startChar": 6,
