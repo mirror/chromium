@@ -5,6 +5,7 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_INTEGRATION_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_INTEGRATION_H_
 
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "chrome/installer/zucchini/zucchini.h"
 
@@ -17,6 +18,15 @@ namespace zucchini {
 status::Code Apply(const base::FilePath& old_path,
                    const base::FilePath& patch_path,
                    const base::FilePath& new_path);
+
+// Applies the patch in |patch_file| to the bytes in |old_file| and writes the
+// result to |new_file|. Since this uses memory mapped files, crashes are
+// expected in case of I/O errors. On windows |new_file| is kept iff returned
+// code is kStatusSuccess, and is deleted otherwise. For UNIX systems the
+// caller needs to do cleanup since the FilePath is unknown.
+status::Code Apply(base::File old_file,
+                   base::File patch_file,
+                   base::File new_file);
 
 }  // namespace zucchini
 
