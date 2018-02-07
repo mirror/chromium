@@ -212,6 +212,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c01472_6cc9ae4a",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2018-02-07T20:58:13Z",
+      "side": 1,
+      "message": "There is a bug on this CL. basically, users are expecting same behavior like \"mouse hover\" like a real Chrome book. So it have to be mouse like behavior. Actually, I am just trying to simulate a real chromebook with current android emulator as close as possible. I could just add some new emulated input hardware at emulator side to make Chrome OS happy, but it seems the current goldfish devices almost fulfill my request: I just need to let Chrome handle ABS events from it. I don\u0027t know how X input driver work with it since I never tried run linux inside Android Emulator.",
+      "parentUuid": "5e2325b0_b6c49488",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
