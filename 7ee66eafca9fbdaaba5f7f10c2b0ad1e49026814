@@ -188,6 +188,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2325b0_b6c49488",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T20:51:20Z",
+      "side": 1,
+      "message": "Why do you want that behavior, though? Aren\u0027t you mostly concerned with running Android apps, which means touch input would be fine?\n\nWith axes like ABS_MT_TOUCH_MAJOR and ABS_MT_PRESSURE, this seems like a touch device and should generate touch events. Except, apparently it also has a full set of mouse buttons. And it doesn\u0027t report BTN_TOUCH unlike all touch screens.\n\nI\u0027m not sure we should try to handle this device in the general probing path at all. We might just have to look at the driver name and configure it that way because the reported capabilities are just too crazy.\n\nHow does the X input driver handle this device? What about libinput?",
+      "parentUuid": "9d9ba765_b96f30b2",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
