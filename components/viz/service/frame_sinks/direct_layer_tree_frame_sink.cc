@@ -57,8 +57,12 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     Display* display,
     mojom::DisplayClient* display_client,
     scoped_refptr<VulkanContextProvider> vulkan_context_provider,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    SharedBitmapManager* shared_bitmap_manager,
     bool use_viz_hit_test)
-    : LayerTreeFrameSink(std::move(vulkan_context_provider)),
+    : LayerTreeFrameSink(std::move(vulkan_context_provider),
+                         gpu_memory_buffer_manager,
+                         shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),
       support_manager_(support_manager),
       frame_sink_manager_(frame_sink_manager),
