@@ -61,7 +61,7 @@ void UkmEntryChecker::ExpectNewEntries(
   const size_t num_entries = entries.size();
   num_entries_[entry_name] += num_new_entries;
 
-  EXPECT_EQ(NumEntries(entry_name), entries.size());
+  EXPECT_EQ(num_entries, num_entries_[entry_name]);
   std::set<ukm::SourceId> found_source_ids;
 
   for (size_t i = 0; i < num_new_entries; ++i) {
@@ -88,16 +88,18 @@ void UkmEntryChecker::ExpectNewEntries(
 
 int UkmEntryChecker::NumNewEntriesRecorded(
     const std::string& entry_name) const {
-  const size_t current_ukm_entries =
-      ukm_recorder_.GetEntriesByName(entry_name).size();
-  const size_t previous_num_entries = NumEntries(entry_name);
-  CHECK(current_ukm_entries >= previous_num_entries);
-  return current_ukm_entries - previous_num_entries;
+  const size_t current_num_entries = NumEntries(entry_name);
+
+  if (!num_entries_.count(entry_name))
+    return current_num_entries;
+
+  const size_t previous_num_entries = num_entries_.at(entry_name);
+  CHECK(current_num_entries >= previous_num_entries);
+  return current_num_entries - previous_num_entries;
 }
 
 size_t UkmEntryChecker::NumEntries(const std::string& entry_name) const {
-  const auto it = num_entries_.find(entry_name);
-  return it != num_entries_.end() ? it->second : 0;
+  return ukm_recorder_.GetEntriesByName(entry_name).size();
 }
 
 const ukm::mojom::UkmEntry* UkmEntryChecker::LastUkmEntry(

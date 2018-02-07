@@ -665,6 +665,7 @@ test("browser_tests") {
       "../browser/renderer_host/render_process_host_chrome_browsertest.cc",
       "../browser/repost_form_warning_browsertest.cc",
       "../browser/resource_coordinator/resource_coordinator_render_process_probe_browsertest.cc",
+      "../browser/resource_coordinator/tab_activity_watcher_browsertest.cc",
       "../browser/resource_coordinator/tab_lifecycle_observer_browsertest.cc",
       "../browser/resource_coordinator/tab_manager_browsertest.cc",
       "../browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
@@ -687,6 +688,8 @@ test("browser_tests") {
       "../browser/ui/blocked_content/popup_tracker_browsertest.cc",
       "../browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
       "../browser/ui/blocked_content/tab_under_blocker_browsertest.cc",
+      "../browser/ui/tabs/tab_ukm_test_helper.cc",
+      "../browser/ui/tabs/tab_ukm_test_helper.h",
 
       # If this list is used on Android in the future, these browser/speech/*
       # files will probably not be applicable.
