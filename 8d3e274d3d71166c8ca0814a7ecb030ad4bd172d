@@ -22,6 +22,30 @@
       "revId": "8d3e274d3d71166c8ca0814a7ecb030ad4bd172d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8424c7a6_5e66ca76",
+        "filename": "third_party/WebKit/LayoutTests/fast/js/webidl-type-mapping.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T10:20:28Z",
+      "side": 1,
+      "message": "Argh, I was trying out a new editor and let this slip in. Thanks for noticing.",
+      "parentUuid": "0b1a5afb_36a5141d",
+      "range": {
+        "startLine": 642,
+        "startChar": 50,
+        "endLine": 642,
+        "endChar": 54
+      },
+      "revId": "8d3e274d3d71166c8ca0814a7ecb030ad4bd172d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

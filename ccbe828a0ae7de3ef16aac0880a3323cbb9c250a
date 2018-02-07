@@ -176,6 +176,24 @@
       "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3ecfe1_df67720f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T10:20:28Z",
+      "side": 1,
+      "message": "Hmm, looking at the code there DivideExtAttrsIntoApplicableAndNonApplicable() seems to be used for dictionary members, method arguments and namespace members, but not attributes.\n\nI tried removing the next 4 lines and only handling idl_type.extended_attributes but the generated code changed. CSSStyleDeclaration.idl has\n\n    [CEReactions, SetterCallWith\u003dExecutionContext, RaisesException\u003dSetter, TreatNullAs\u003dEmptyString] attribute DOMString cssFloat;\n\nand the attribute setter lost the kTreatNullAsEmptyString if I don\u0027t handle |extended_attributes| here.",
+      "parentUuid": "d3c37de0_0cd5d4b8",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
