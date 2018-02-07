@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -200,7 +201,23 @@ void PrintJobWorker::SetSettings(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
           &HoldRefCallback, base::WrapRefCounted(owner_),
-          base::BindOnce(&PrintJobWorker::UpdatePrintSettings,
+          base::BindOnce(static_cast<void (PrintJobWorker::*)(
+                             std::unique_ptr<base::DictionaryValue>)>(
+                             &PrintJobWorker::UpdatePrintSettings),
+                         base::Unretained(this), std::move(new_settings))));
+}
+
+void PrintJobWorker::SetSettings(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &HoldRefCallback, base::WrapRefCounted(owner_),
+          base::BindOnce(static_cast<void (PrintJobWorker::*)(
+                             std::unique_ptr<printing::PrintSettings>)>(
+                             &PrintJobWorker::UpdatePrintSettings),
                          base::Unretained(this), std::move(new_settings))));
 }
 
@@ -209,6 +226,14 @@ void PrintJobWorker::UpdatePrintSettings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PrintingContext::Result result =
       printing_context_->UpdatePrintSettings(*new_settings);
+  GetSettingsDone(result);
+}
+
+void PrintJobWorker::UpdatePrintSettings(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  PrintingContext::Result result =
+      printing_context_->UpdatePrintSettings(std::move(new_settings));
   GetSettingsDone(result);
 }
 
