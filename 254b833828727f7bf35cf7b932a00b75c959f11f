@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "70c3883d_a0bb73e7",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T01:14:22Z",
+      "side": 1,
+      "message": "technically not true for the 2 new, but i suppose true in spirit still",
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60be282b_6f2a1ed0",
         "filename": "base/files/file_util_posix.cc",
         "patchSetId": 2
@@ -13,6 +30,30 @@
       "writtenOn": "2018-02-07T00:45:01Z",
       "side": 1,
       "message": "This feels generous; is there a sanity-check value that we could use instead, e.g. 1MB?",
+      "range": {
+        "startLine": 1005,
+        "startChar": 9,
+        "endLine": 1005,
+        "endChar": 41
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d534fc_5bbfd896",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T01:14:22Z",
+      "side": 1,
+      "message": "1MB seems very large to me too. How about something more in the vicinity of 1024?",
+      "parentUuid": "60be282b_6f2a1ed0",
       "range": {
         "startLine": 1005,
         "startChar": 9,
@@ -41,6 +82,53 @@
         "startChar": 2,
         "endLine": 648,
         "endChar": 30
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7df8d36_09368312",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T01:14:22Z",
+      "side": 1,
+      "message": "mind putting this bit in a different cl? that\u0027s the only part that looks potentially risky.",
+      "parentUuid": "032931a7_b9d3e2cf",
+      "range": {
+        "startLine": 648,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77d198c_ae4c1d6e",
+        "filename": "base/threading/platform_thread_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T01:14:22Z",
+      "side": 1,
+      "message": "s/\u0026/and/",
+      "range": {
+        "startLine": 237,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 9
       },
       "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
