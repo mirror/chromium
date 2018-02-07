@@ -17,7 +17,8 @@
 #include "chrome/browser/notifications/notification_display_service_impl.h"
 #include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/common/chrome_switches.h"
-#include "content/public/browser/download_item.h"
+#include "components/download/public/common/download_item.h"
+#include "content/public/browser/content_download_item_delegate.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/message_center/public/cpp/notification.h"
 #include "ui/message_center/public/cpp/notification_delegate.h"
@@ -82,8 +83,9 @@ void DownloadNotificationManager::OnAllDownloadsRemoving(Profile* profile) {
 }
 
 void DownloadNotificationManager::OnNewDownloadReady(
-    content::DownloadItem* download) {
-  Profile* profile = Profile::FromBrowserContext(download->GetBrowserContext());
+    download::DownloadItem* download) {
+  Profile* profile = Profile::FromBrowserContext(
+      content::ContentDownloadItemDelegate::GetBrowserContext(download));
 
   if (manager_for_profile_.find(profile) == manager_for_profile_.end()) {
     manager_for_profile_[profile] =
@@ -124,19 +126,19 @@ DownloadNotificationManagerForProfile::
 }
 
 void DownloadNotificationManagerForProfile::OnDownloadUpdated(
-    content::DownloadItem* changed_download) {
+    download::DownloadItem* changed_download) {
   DCHECK(items_.find(changed_download) != items_.end());
 
   items_[changed_download]->OnDownloadUpdated(changed_download);
 }
 
 void DownloadNotificationManagerForProfile::OnDownloadOpened(
-    content::DownloadItem* changed_download) {
+    download::DownloadItem* changed_download) {
   items_[changed_download]->OnDownloadUpdated(changed_download);
 }
 
 void DownloadNotificationManagerForProfile::OnDownloadRemoved(
-    content::DownloadItem* download) {
+    download::DownloadItem* download) {
   DCHECK(items_.find(download) != items_.end());
 
   std::unique_ptr<DownloadItemNotification> item = std::move(items_[download]);
@@ -158,7 +160,7 @@ void DownloadNotificationManagerForProfile::OnDownloadRemoved(
 }
 
 void DownloadNotificationManagerForProfile::OnDownloadDestroyed(
-    content::DownloadItem* download) {
+    download::DownloadItem* download) {
   // Do nothing. Cleanup is done in OnDownloadRemoved().
   std::unique_ptr<DownloadItemNotification> item = std::move(items_[download]);
   items_.erase(download);
@@ -176,16 +178,18 @@ void DownloadNotificationManagerForProfile::OnDownloadDestroyed(
 }
 
 void DownloadNotificationManagerForProfile::OnNewDownloadReady(
-    content::DownloadItem* download) {
-  DCHECK_EQ(profile_,
-            Profile::FromBrowserContext(download->GetBrowserContext()));
+    download::DownloadItem* download) {
+  DCHECK_EQ(
+      profile_,
+      Profile::FromBrowserContext(
+          content::ContentDownloadItemDelegate::GetBrowserContext(download)));
 
   download->AddObserver(this);
 
   for (auto& item : items_) {
-    content::DownloadItem* download_item = item.first;
+    download::DownloadItem* download_item = item.first;
     DownloadItemNotification* download_notification = item.second.get();
-    if (download_item->GetState() == content::DownloadItem::IN_PROGRESS)
+    if (download_item->GetState() == download::DownloadItem::IN_PROGRESS)
       download_notification->DisablePopup();
   }
 
