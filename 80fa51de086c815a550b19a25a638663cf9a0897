@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04a221c_39e27a32",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Likely don\u0027t need this comment any more. same below.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62245b7b_848bd233",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Can combine?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58840110_2be19375",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Use file_path, or placeholder if absent?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00819fe6_dc7f45eb",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "//... Also validates |file|, so caller can immediately pass instantiate |file|, and check error via [[whatever new name is]] HasStatus() and status().",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01699da_af68d393",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Subsumed by !HasStatus() / !HasError()?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49a9a12_bb6b5413",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "!status_.empty()",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b38c2c_d938de74",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "NIT: Maybe \"Error\" instead of \"Status\"??  I\u0027ll continue to use \"status\" in my comments here though, but those should be changed if you decide to follow this.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44839aa7_9a3fc784",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "const std::string\u0026\n\nSame below.",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001a8ca7_8530156c",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "NIT: Accessors are typically lower case.",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bcb75b_813e9e99",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Redundant: std::string is initialized to empty.",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bde40e_eecfe300",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "//... |file_path| is needed for auto delete (Linux), but can be empty if auto delete is not needed.",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 39
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88512d25_b03f8435",
+        "filename": "chrome/installer/zucchini/mapped_file_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Why did ErrorCreating get removed?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 6
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a884b3b_12b2f663",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Maybe |is_dummy| ?",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982e0b32_979daf5b",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "Why not have just have caller call .value() ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc499f7c_e8ced313",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T20:37:55Z",
+      "side": 1,
+      "message": "base::File\u0026\u0026",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
