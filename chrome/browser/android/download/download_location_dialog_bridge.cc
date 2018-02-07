@@ -6,6 +6,8 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "chrome/browser/android/download/download_controller.h"
+#include "chrome/browser/android/download/download_manager_service.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/DownloadLocationDialogBridge_jni.h"
 
@@ -57,6 +59,19 @@ void DownloadLocationDialogBridge::OnComplete(
     base::ResetAndReturn(&dialog_complete_callback_)
         .Run(DownloadConfirmationResult::CONFIRMED,
              base::FilePath(FILE_PATH_LITERAL(path_string)));
+  }
+
+  is_dialog_showing_ = false;
+}
+
+void DownloadLocationDialogBridge::OnCanceled(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  if (!dialog_complete_callback_.is_null()) {
+    DownloadController::RecordDownloadCancelReason(
+        DownloadController::CANCEL_REASON_USER_CANCELED);
+    base::ResetAndReturn(&dialog_complete_callback_)
+        .Run(DownloadConfirmationResult::CANCELED, base::FilePath());
   }
 
   is_dialog_showing_ = false;
