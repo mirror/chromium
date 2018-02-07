@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f521bd_55f25444",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T18:57:40Z",
+      "side": 1,
+      "message": "nit: ..., which must have a tablet mode switch or report accelerometer data before user actions.",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba0f9bc_978e584e",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T18:57:40Z",
+      "side": 1,
+      "message": "i\u0027d simplify this and make it point at the bug, e.g.\n\n  // TODO(minch): Remove this if/when all applicable devices expose a tablet\n  // mode switch: https://crbug.com/798646",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07701235_55637ee7",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T18:57:40Z",
+      "side": 1,
+      "message": "nit: observe_accelerometer_events_?",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
