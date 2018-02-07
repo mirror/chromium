@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bb4532f_21671a14",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Please add a TODO with a link to the bug that is used to keep track of the task of adding a real icon.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 56
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6612d02_bba3f10c",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "FWIW, I\u0027m doubtful that a destructor is the correct place to make an IPC call, especially since the app is supposed to have control of whether the abort was successful. I would prefer to remove everything inside of the destructor, but you might know this code better.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6bf419_d4f72d66",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "std::vector\u003cstd::string\u003e(1, installable_enabled_method_)",
+      "range": {
+        "startLine": 196,
+        "startChar": 49,
+        "endLine": 196,
+        "endChar": 77
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a5d26d_7071ce81",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "supported_methods.emplace_back(installable_enabled_method_);",
+      "range": {
+        "startLine": 225,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 65
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f19e06c_7a3259b2",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Please add a TODO to make installable payment apps return \"true\" for PaymentRequest.canMakePayment().",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 18
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f764001_c1ea0c5a",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "return base::UTF8ToUTF16(needs_installation_ ? installable_web_app_info_-\u003ename : stored_payment_app_info_-\u003ename);",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 59
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913a7bff_fc49baed",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Installable payment apps will always return false because of this statement: they don\u0027t have any stored_payment_app_info_-\u003eenabled_methods. Please fix the logic so that installable_enabled_method_ is taken into consideration for installable payment apps.",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1efd295_52006151",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Installable payment apps will always return false because of this statement: they don\u0027t have any stored_payment_app_info_-\u003eenabled_methods. Please fix the logic so that installable_enabled_method_ is taken into consideration for installable payment apps.",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75eb8f83_ba09508d",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "app that needs",
+      "range": {
+        "startLine": 334,
+        "startChar": 13,
+        "endLine": 334,
+        "endChar": 22
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3fcb28_ae9b4f3a",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Can you add a comment that explains this logic, please? I don\u0027t follow it, sorry...",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 72
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2194fa_4d023b56",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "Please add comments about the different purposes of these two constructors.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70117d55_101e162e",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2018-02-07T16:12:50Z",
+      "side": 1,
+      "message": "This vector only ever contains 1 element. Let\u0027s make this parameter a string instead.",
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
