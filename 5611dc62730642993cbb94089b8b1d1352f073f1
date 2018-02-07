@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e97b1e8_f53d67f5",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T20:15:24Z",
+      "side": 1,
+      "message": "optional: I think this would be clearer if you did it inside the one function that uses it.",
+      "revId": "5611dc62730642993cbb94089b8b1d1352f073f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
