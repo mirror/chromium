@@ -7,8 +7,11 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/views/relaunch_notification/relaunch_recommended_bubble_view.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "ui/views/widget/widget.h"
 
 namespace {
 
@@ -41,7 +44,8 @@ RelaunchNotificationController::RelaunchNotificationController(
     UpgradeDetector* upgrade_detector)
     : upgrade_detector_(upgrade_detector),
       last_notification_style_(NotificationStyle::kNone),
-      last_level_(UpgradeDetector::UPGRADE_ANNOYANCE_NONE) {
+      last_level_(UpgradeDetector::UPGRADE_ANNOYANCE_NONE),
+      recommended_widget_(nullptr) {
   PrefService* local_state = g_browser_process->local_state();
   if (local_state) {
     pref_change_registrar_.Init(local_state);
@@ -53,8 +57,6 @@ RelaunchNotificationController::RelaunchNotificationController(
     // Synchronize the instance with the current state of the preference.
     HandleCurrentStyle();
   }
-
-  // Watch for changes to the UpgradeNotificationAnnoyanceLevel.
 }
 
 RelaunchNotificationController::~RelaunchNotificationController() {
@@ -171,11 +173,27 @@ void RelaunchNotificationController::CloseRelaunchNotification() {
 }
 
 void RelaunchNotificationController::ShowRelaunchRecommendedBubble() {
-  // TODO(grt): implement.
+  // Nothing to do if the bubble is visible.
+  if (recommended_widget_)
+    return;
+
+  // Show the bubble in the most recently active browser.
+  Browser* browser = chrome::FindLastActive();
+
+  // TODO(grt): What to do in this case? How could this happen? If in bg mode,
+  // just restart? Can there be only app windows open; no browsers?
+  DCHECK(browser);
+
+  recommended_widget_ = RelaunchRecommendedBubbleView::ShowBubble(
+      browser, upgrade_detector_->upgrade_detected_time());
 }
 
 void RelaunchNotificationController::CloseRelaunchRecommendedBubble() {
-  // TODO(grt): implement.
+  if (!recommended_widget_)
+    return;
+
+  recommended_widget_->Close();
+  recommended_widget_ = nullptr;
 }
 
 void RelaunchNotificationController::ShowRelaunchRequiredDialog() {

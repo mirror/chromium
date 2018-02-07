@@ -11269,6 +11269,12 @@ For more information, visit our <ph name="BEGIN_LINK">&lt;a target="_blank" href
         Move the controller to reposition. Click to finish.
       </message>
     </if>
+    <!-- Relaunch notification bubble and dialog. -->
+    <if expr="not is_android and not chromeos">
+      <message name="IDS_RELAUNCH_RECOMMENDED_ACCEPT_BUTTON" desc="">
+        Relaunch now
+      </message>
+    </if>
   </messages>
  </release>
 </grit>

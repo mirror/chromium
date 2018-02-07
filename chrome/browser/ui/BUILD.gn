@@ -3305,6 +3305,8 @@ split_static_library("ui") {
       sources += [
         "views/relaunch_notification/relaunch_notification_controller.cc",
         "views/relaunch_notification/relaunch_notification_controller.h",
+        "views/relaunch_notification/relaunch_recommended_bubble_view.cc",
+        "views/relaunch_notification/relaunch_recommended_bubble_view.h",
       ]
     }
   }
