@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a09e761e_357f639e",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T04:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e91c44a2_0d070fe1",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "453a04df_a7fe676a",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 4
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "220d0422_63c7e42f",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T04:53:20Z",
+      "side": 1,
+      "message": "Actually - I\u0027m not sure what the right solution is here, because the only state where I would want to resolve immediately would be where both the layout *and* the snapshot were already up to date.",
+      "parentUuid": "c3a7dbeb_01fbd641",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfb2bbb4_852e1f8b",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 4
@@ -122,6 +158,24 @@
       "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aedd5b66_3c1526c1",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T04:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb2bbb4_852e1f8b",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "ea8cd388_5ebb4410",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T04:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5385d0a5_9784b5b4",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8477052a_835d1bfd",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 4
@@ -153,6 +225,24 @@
       "writtenOn": "2018-02-06T02:15:19Z",
       "side": 1,
       "message": "I\u0027m not sure about chromium naming practices here, but instantiating an object from a class that starts with an verb sounds strange to me.",
+      "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4cd4f11_fd66e8e8",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T04:53:20Z",
+      "side": 1,
+      "message": "Yeah it\u0027s tough cause it\u0027s \"GetComputedAccessibleNode\" Promise Resolver, but I agree it\u0027s confusing. Changed to ComputedAccessibleNodePromiseResolver (which also makes it shorter).",
+      "parentUuid": "8477052a_835d1bfd",
       "revId": "62f8672a3cddbb0e4af8116f09a81450a75fc51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
