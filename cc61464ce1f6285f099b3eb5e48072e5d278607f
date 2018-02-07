@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663be557_6461bc8d",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-02-07T12:45:22Z",
+      "side": 1,
+      "message": "Hmm, some android.security.cts.StagefrightTest tests failed with this code.\nI confirmed all the tests passed if this is replaced with \"decoder_state_ !\u003d kInitialized\".\nI couldn\u0027t understand the difference between them right now.\nI will look into it tomorrow.",
+      "range": {
+        "startLine": 1658,
+        "startChar": 44,
+        "endLine": 1658,
+        "endChar": 65
+      },
+      "revId": "cc61464ce1f6285f099b3eb5e48072e5d278607f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
