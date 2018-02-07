@@ -23,6 +23,7 @@
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/test/mock_download_item.h"
+#include "content/public/test/mock_download_item_delegate.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/ui_base_features.h"
@@ -86,6 +87,10 @@ class DownloadDangerPromptTest
     else
       scoped_feature_list_.InitAndDisableFeature(features::kSecondaryUiMd);
     SafeBrowsingService::RegisterFactory(test_safe_browsing_factory_.get());
+    std::unique_ptr<content::MockDownloadItemDelegate> delegate =
+        base::MakeUnique<
+            ::testing::NiceMock<content::MockDownloadItemDelegate>>();
+    download_.SetDelegate(std::move(delegate));
     InProcessBrowserTest::SetUp();
   }
 
@@ -224,7 +229,9 @@ IN_PROC_BROWSER_TEST_P(DownloadDangerPromptTest, MAYBE_TestAll) {
   ON_CALL(download(), GetURL()).WillByDefault(ReturnRef(download_url));
   ON_CALL(download(), GetReferrerUrl())
       .WillByDefault(ReturnRef(GURL::EmptyGURL()));
-  ON_CALL(download(), GetBrowserContext())
+  ON_CALL(*static_cast<content::MockDownloadItemDelegate*>(
+              download().GetDelegate()),
+          GetBrowserContext())
       .WillByDefault(Return(browser()->profile()));
   base::FilePath empty_file_path;
   ON_CALL(download(), GetTargetFilePath())
@@ -351,8 +358,6 @@ class DownloadDangerPromptBrowserTest : public DialogBrowserTest {
     ON_CALL(download_, GetURL()).WillByDefault(ReturnRef(download_url_));
     ON_CALL(download_, GetReferrerUrl())
         .WillByDefault(ReturnRef(GURL::EmptyGURL()));
-    ON_CALL(download_, GetBrowserContext())
-        .WillByDefault(Return(browser()->profile()));
     ON_CALL(download_, GetTargetFilePath())
         .WillByDefault(ReturnRef(empty_file_path_));
     ON_CALL(download_, IsDangerous()).WillByDefault(Return(true));
@@ -361,7 +366,12 @@ class DownloadDangerPromptBrowserTest : public DialogBrowserTest {
 
     // Set up test-specific parameters
     ON_CALL(download_, GetDangerType()).WillByDefault(Return(danger_type_));
-
+    std::unique_ptr<content::MockDownloadItemDelegate> delegate =
+        base::MakeUnique<
+            ::testing::NiceMock<content::MockDownloadItemDelegate>>();
+    ON_CALL(*delegate, GetBrowserContext())
+        .WillByDefault(Return(browser()->profile()));
+    download_.SetDelegate(std::move(delegate));
     DownloadDangerPrompt::Create(
         &download_, browser()->tab_strip_model()->GetActiveWebContents(),
         invocation_type_ == FROM_DOWNLOAD_API, DownloadDangerPrompt::OnDone());
