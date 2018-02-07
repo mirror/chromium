@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45af1d10_2aa91fff",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T05:36:16Z",
+      "side": 1,
+      "message": "Would you help me understand why you need to use a timer?",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4246457_558b9e19",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T05:36:16Z",
+      "side": 1,
+      "message": "If element_ is weak, you need to check nullness every time you use it.",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4576ee_0f312fda",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T05:36:16Z",
+      "side": 1,
+      "message": "Why do you need to inherit from ContextLifecycleObserver.",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15a0e40_7b4c4978",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T05:36:16Z",
+      "side": 1,
+      "message": "Does this need to be a weak member?",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
