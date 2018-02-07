@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "958070c3_d4facde5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-02-07T09:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34863173_2f889df7",
+      "revId": "ba9efc964efc8e2bb4aea14db8e9a853535044e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43458a10_3b5cafad",
         "filename": "ui/message_center/views/notification_header_view.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "52667d72_d33cadca",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-02-07T09:09:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43458a10_3b5cafad",
+      "revId": "ba9efc964efc8e2bb4aea14db8e9a853535044e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26bfc3e_2083a0c9",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ba9efc964efc8e2bb4aea14db8e9a853535044e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172eb387_0dbc8a4e",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1260022
+      },
+      "writtenOn": "2018-02-07T09:09:35Z",
+      "side": 1,
+      "message": "Sorry, I just forgot to remove this line.",
+      "parentUuid": "a26bfc3e_2083a0c9",
+      "revId": "ba9efc964efc8e2bb4aea14db8e9a853535044e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
