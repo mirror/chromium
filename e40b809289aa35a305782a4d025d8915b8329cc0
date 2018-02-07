@@ -52,6 +52,24 @@
       "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d41a62_e9434e5b",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-02-07T08:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e946b6be_9f0212dc",
+      "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
