@@ -41,7 +41,7 @@ class ModelTypeStoreBackendTest : public testing::Test {
         ModelTypeStoreBackend::GetOrCreateBackend(
             path, std::move(in_memory_env), &result);
     EXPECT_TRUE(backend.get());
-    EXPECT_EQ(result, ModelTypeStore::Result::SUCCESS);
+    EXPECT_FALSE(error) << error->ToString();
     return backend;
   }
 
@@ -69,9 +69,10 @@ class ModelTypeStoreBackendTest : public testing::Test {
     return backend->path_;
   }
 
-  ModelTypeStore::Result Migrate(scoped_refptr<ModelTypeStoreBackend> backend,
-                                 int64_t current_version,
-                                 int64_t desired_version) {
+  base::Optional<ModelError> Migrate(
+      scoped_refptr<ModelTypeStoreBackend> backend,
+      int64_t current_version,
+      int64_t desired_version) {
     return backend->Migrate(current_version, desired_version);
   }
 
@@ -104,14 +105,14 @@ TEST_F(ModelTypeStoreBackendTest, WriteThenRead) {
   // Write record.
   std::unique_ptr<leveldb::WriteBatch> write_batch(new leveldb::WriteBatch());
   write_batch->Put("prefix:id1", "data1");
-  ModelTypeStore::Result result =
+  base::Optional<ModelError> error =
       backend->WriteModifications(std::move(write_batch));
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  ASSERT_FALSE(error) << error->ToString();
 
   // Read all records with prefix.
   ModelTypeStore::RecordList record_list;
-  result = backend->ReadAllRecordsWithPrefix("prefix:", &record_list);
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->ReadAllRecordsWithPrefix("prefix:", &record_list);
+  ASSERT_FALSE(error) << error->ToString();
   ASSERT_EQ(1ul, record_list.size());
   ASSERT_EQ("id1", record_list[0].id);
   ASSERT_EQ("data1", record_list[0].value);
@@ -119,8 +120,8 @@ TEST_F(ModelTypeStoreBackendTest, WriteThenRead) {
 
   // Recreate backend and read all records with prefix.
   backend = GetOrCreateBackend();
-  result = backend->ReadAllRecordsWithPrefix("prefix:", &record_list);
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->ReadAllRecordsWithPrefix("prefix:", &record_list);
+  ASSERT_FALSE(error) << error->ToString();
   ASSERT_EQ(1ul, record_list.size());
   ASSERT_EQ("id1", record_list[0].id);
   ASSERT_EQ("data1", record_list[0].value);
@@ -133,13 +134,13 @@ TEST_F(ModelTypeStoreBackendTest, ReadAllRecordsWithPrefix) {
   std::unique_ptr<leveldb::WriteBatch> write_batch(new leveldb::WriteBatch());
   write_batch->Put("prefix1:id1", "data1");
   write_batch->Put("prefix2:id2", "data2");
-  ModelTypeStore::Result result =
+  base::Optional<ModelError> error =
       backend->WriteModifications(std::move(write_batch));
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  ASSERT_FALSE(error) << error->ToString();
 
   ModelTypeStore::RecordList record_list;
-  result = backend->ReadAllRecordsWithPrefix("prefix1:", &record_list);
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->ReadAllRecordsWithPrefix("prefix1:", &record_list);
+  ASSERT_FALSE(error) << error->ToString();
   ASSERT_EQ(1UL, record_list.size());
   ASSERT_EQ("id1", record_list[0].id);
   ASSERT_EQ("data1", record_list[0].value);
@@ -154,33 +155,33 @@ TEST_F(ModelTypeStoreBackendTest, ReadDeletedRecord) {
   std::unique_ptr<leveldb::WriteBatch> write_batch(new leveldb::WriteBatch());
   write_batch->Put("prefix:id1", "data1");
   write_batch->Put("prefix:id2", "data2");
-  ModelTypeStore::Result result =
+  base::Optional<ModelError> error =
       backend->WriteModifications(std::move(write_batch));
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  ASSERT_FALSE(error) << error->ToString();
 
   ModelTypeStore::IdList id_list;
   ModelTypeStore::IdList missing_id_list;
   ModelTypeStore::RecordList record_list;
   id_list.push_back("id1");
   id_list.push_back("id2");
-  result = backend->ReadRecordsWithPrefix("prefix:", id_list, &record_list,
-                                          &missing_id_list);
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->ReadRecordsWithPrefix("prefix:", id_list, &record_list,
+                                         &missing_id_list);
+  ASSERT_FALSE(error) << error->ToString();
   ASSERT_EQ(2UL, record_list.size());
   ASSERT_TRUE(missing_id_list.empty());
 
   // Delete one record.
   write_batch = std::make_unique<leveldb::WriteBatch>();
   write_batch->Delete("prefix:id2");
-  result = backend->WriteModifications(std::move(write_batch));
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->WriteModifications(std::move(write_batch));
+  ASSERT_FALSE(error) << error->ToString();
 
   // Ensure deleted record id is returned in missing_id_list.
   record_list.clear();
   missing_id_list.clear();
-  result = backend->ReadRecordsWithPrefix("prefix:", id_list, &record_list,
-                                          &missing_id_list);
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  error = backend->ReadRecordsWithPrefix("prefix:", id_list, &record_list,
+                                         &missing_id_list);
+  ASSERT_FALSE(error) << error->ToString();
   ASSERT_EQ(1UL, record_list.size());
   ASSERT_EQ("id1", record_list[0].id);
   ASSERT_EQ(1UL, missing_id_list.size());
@@ -248,9 +249,9 @@ TEST_F(ModelTypeStoreBackendTest, Migrate0To1Test) {
 
   std::unique_ptr<leveldb::WriteBatch> write_batch(new leveldb::WriteBatch());
   write_batch->Delete(SchemaId());
-  ModelTypeStore::Result result =
+  base::Optional<ModelError> error =
       backend->WriteModifications(std::move(write_batch));
-  ASSERT_EQ(ModelTypeStore::Result::SUCCESS, result);
+  ASSERT_FALSE(error) << error->ToString();
 
   ASSERT_TRUE(Migrate0To1(backend));
   ASSERT_EQ(1, GetStoreVersion(backend));
