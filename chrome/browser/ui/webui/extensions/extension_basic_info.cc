@@ -26,6 +26,7 @@ const char kOptionsUrlKey[] = "optionsUrl";
 const char kDetailsUrlKey[] = "detailsUrl";
 const char kVersionKey[] = "version";
 const char kPackagedAppKey[] = "packagedApp";
+const char kBookmarkAppKey[] = "bookmarkApp";
 
 }  // namespace
 
@@ -55,6 +56,8 @@ void GetExtensionBasicInfo(const Extension* extension,
       kDetailsUrlKey,
       ManifestURL::GetDetailsURL(extension).possibly_invalid_spec());
   info->SetBoolean(kPackagedAppKey, extension->is_platform_app());
+  info->SetBoolean(kBookmarkAppKey,
+                   extension->is_hosted_app() && extension->from_bookmark());
 }
 
 }  // namespace extensions

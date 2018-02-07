@@ -64,6 +64,7 @@ cr.define('ntp', function() {
       menu.appendChild(this.launchTypeMenuSeparator_);
       this.options_ = this.appendMenuItem_('appoptions');
       this.uninstall_ = this.appendMenuItem_('appuninstall');
+      this.siteSettings_ = this.appendMenuItem_('appsitesettings');
 
       if (loadTimeData.getBoolean('canShowAppInfoDialog')) {
         this.appinfo_ = this.appendMenuItem_('appinfodialog');
@@ -79,6 +80,8 @@ cr.define('ntp', function() {
           'activate', this.onShowOptions_.bind(this));
       this.uninstall_.addEventListener(
           'activate', this.onUninstall_.bind(this));
+      this.siteSettings_.addEventListener(
+          'activate', this.onSiteSettings_.bind(this));
 
       if (!cr.isChromeOS) {
         this.createShortcutSeparator_ =
@@ -164,6 +167,17 @@ cr.define('ntp', function() {
         this.details_.disabled = !app.appData.detailsUrl;
       this.uninstall_.disabled = !app.appData.mayDisable;
 
+      // App info/details don't make sense for website based apps so show
+      // site settings instead.
+      // TODO(alancutter): Consider making the button text/behaviour
+      // configurable from the appData instead of hard coding it in presentation
+      // code.
+      this.siteSettings_.hidden = !app.appData.bookmarkApp;
+      if (this.appinfo_)
+        this.appinfo_.hidden = app.appData.bookmarkApp;
+      if (this.details_)
+        this.details_.hidden = app.appData.bookmarkApp;
+
       if (cr.isMac) {
         // On Windows and Linux, these should always be visible. On ChromeOS,
         // they are never created. On Mac, shortcuts can only be created for
@@ -218,6 +232,11 @@ cr.define('ntp', function() {
     /** @private */
     onUninstall_: function() {
       chrome.send('uninstallApp', [this.app_.appData.id]);
+    },
+
+    /** @private */
+    onSiteSettings_: function() {
+      chrome.send('siteSettings', [this.app_.appData.id]);
     },
 
     /** @private */
