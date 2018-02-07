@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82bcfd6d_46ee9154",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-07T01:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ce7bea6_d1a373cd",
+      "range": {
+        "startLine": 41,
+        "startChar": 68,
+        "endLine": 41,
+        "endChar": 84
+      },
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9472f36_36522804",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegateImpl.java",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "80f91076_f375a10b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-07T01:16:27Z",
+      "side": 1,
+      "message": "Renamed the method for launchCctForWebappUrl().\n\nIt bugs me how many webapp specific methods there are in ExternalNavigationDelegateImpl. I unfortunately don\u0027t see how the number can be decreased",
+      "parentUuid": "a9472f36_36522804",
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e30796fd_b3fb4c26",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-27T22:47:10Z",
       "side": 1,
       "message": "Given that as far as I understand applyPolicyForNavigationToUrl is the preferred interface for interacting with WebappScopePolicy regarding CCT behavior, can we restrict the visibility of openOffScopeNavsInCct?",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e0cfd5_2aa05e3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2018-02-07T01:16:27Z",
+      "side": 1,
+      "message": "I changed the method to protected.",
+      "parentUuid": "e30796fd_b3fb4c26",
       "range": {
         "startLine": 39,
         "startChar": 23,
