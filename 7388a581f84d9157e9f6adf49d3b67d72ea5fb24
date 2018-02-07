@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "188555d9_76ca1c43",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-07T13:19:53Z",
+      "side": 1,
+      "message": "Yes, thank you @Blundell, there will be a replacing mojo interface SetClientAndEnumerateStorages() later doing the same work.",
+      "parentUuid": "fb0608a9_f9469350",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c71633_d8ffd2d3",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
@@ -190,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "8eafaab2_28293a92",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-07T13:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448bf147_a83f47bd",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d63b306_1a423324",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
@@ -240,6 +276,24 @@
       "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18dce56_38e6405e",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2018-02-07T13:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4c0b19_535f980d",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
