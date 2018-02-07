@@ -403,6 +403,30 @@
       "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095a6843_65fbe594",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-07T23:34:27Z",
+      "side": 1,
+      "message": "Agreed, this wouldn\u0027t have been a big issue with non-public inheritance. I\u0027ll ponder workarounds to make sure the proxy object doesn\u0027t become too convoluted. Thanks for jumping through the hoops with me.",
+      "parentUuid": "7bd85cea_a3ffb6d8",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
