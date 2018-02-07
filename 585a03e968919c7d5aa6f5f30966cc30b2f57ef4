@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf7d853_17f96c02",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParserTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2018-02-07T23:09:10Z",
+      "side": 1,
+      "message": "link to spec here",
+      "revId": "585a03e968919c7d5aa6f5f30966cc30b2f57ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
