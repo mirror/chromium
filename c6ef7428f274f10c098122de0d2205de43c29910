@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7dc3433_bb920b49",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "Most views don\u0027t have an id, right? I wonder if this should be\noptional.\n\nHow about indicating nth-child somehow?",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428055da_bef58004",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "ncestry -\u003e ancestry",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83d46e7_27f8650b",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "const std::string",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8be3299_9cb6c265",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "How about creating a vector of string and then using\nJoinString from base/strings/string_util.h?",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049b0c49_081acecd",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "Put \"using ax::mojom::StringAttribute\" at the top and then you won\u0027t have to\nwrap as much, same for Role, etc.\n\nWe should probably do that in all accessibility-only files and avoid doing it\nin non-accessibility files that have a little bit of accessibility code.\nI didn\u0027t want to do it as part of my big refactoring because of that difference.",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499ee77a_62c8edf5",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "I might just call this IsVisible, since it\u0027s just returning a bool\nand not \"checking\"",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e2b35d_37940097",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "Same - a function named Check often returns void and asserts if the\ncheck fails. How about ViewHasNoAccessibilityErrors or something\nconsistent with whatever you call the main function?",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687e2f02_3507d4a0",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to move the file to chrome/test/views, where it\nwill only be compiled on Views platforms, then put this ifdef in the\nplace where you\u0027re calling it.",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93b7343_7a3ee8a0",
+        "filename": "chrome/test/base/accessibility_checks.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "I don\u0027t think this should ever happen, right? It\u0027s not the same as the\naccessibility errors which we expect will happen often and will be caught\nduring try jobs. This shouldn\u0027t normally happen so maybe a CHECK() would\nmake more sense.",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e10841_27766e66",
+        "filename": "chrome/test/base/accessibility_checks.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "Since these tests are specific to Views, I think that this should\nmove to chrome/test/views. It probably couldn\u0027t hurt to call this\nRunViewHierarchyAccessibilityChecks or something like that.\n\nEven better, how about a name like CheckNoViewHierarchyAccessibilityErrors,\nbecause then it\u0027s more clear from the function name whether true means\n\"good\" or \"bad\". (RunChecks is ambiguous - it could be that true means\nerrors were found.)",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e3c253_e02b2f35",
+        "filename": "chrome/test/base/in_process_browser_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T19:08:16Z",
+      "side": 1,
+      "message": "I think you might be able to merge these multiple EXPECT_TRUE\nand LOG lines into a single line like this, try it:\n\nEXPECT_TRUE(RunUIAccessibilityChecks(\u0026error_message))\n  \u003c\u003c error_message;",
+      "revId": "c6ef7428f274f10c098122de0d2205de43c29910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
