@@ -17,6 +17,9 @@
 #include "ios/web/public/web_client.h"
 #include "ios/web/public/web_thread.h"
 #include "ios/web/webui/url_data_manager_ios_backend.h"
+#include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/interfaces/url_loader_factory.mojom.h"
+#include "services/network/url_loader.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/mojom/service.mojom.h"
 
@@ -101,6 +104,34 @@ class BrowserStateServiceManagerConnectionHolder
 
 }  // namespace
 
+class BrowserState::URLLoaderFactory : public network::mojom::URLLoaderFactory {
+ public:
+  explicit URLLoaderFactory(net::URLRequestContextGetter* request_context)
+      : request_context_(request_context) {}
+
+  void CreateLoaderAndStart(network::mojom::URLLoaderRequest request,
+                            int32_t routing_id,
+                            int32_t request_id,
+                            uint32_t options,
+                            const network::ResourceRequest& resource_request,
+                            network::mojom::URLLoaderClientPtr client,
+                            const net::MutableNetworkTrafficAnnotationTag&
+                                traffic_annotation) override {
+    new network::URLLoader(
+        request_context_, nullptr, std::move(request), options,
+        resource_request, false, std::move(client),
+        static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation), 0,
+        nullptr);
+  }
+
+  void Clone(network::mojom::URLLoaderFactoryRequest request) override {
+    NOTREACHED() << "Clone shouldn't be called on iOS";
+  }
+
+ private:
+  scoped_refptr<net::URLRequestContextGetter> request_context_;
+};
+
 // static
 scoped_refptr<CertificatePolicyCache> BrowserState::GetCertificatePolicyCache(
     BrowserState* browser_state) {
@@ -144,6 +175,15 @@ BrowserState::~BrowserState() {
     if (!posted)
       delete url_data_manager_ios_backend_;
   }
+}
+
+network::mojom::URLLoaderFactory* BrowserState::GetURLLoaderFactory() {
+  if (!url_loader_factory_) {
+    url_loader_factory_ =
+        std::make_unique<URLLoaderFactory>(GetRequestContext());
+  }
+
+  return url_loader_factory_.get();
 }
 
 URLDataManagerIOSBackend*
