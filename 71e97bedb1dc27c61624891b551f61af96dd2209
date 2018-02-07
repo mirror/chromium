@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "335000a8_f047a1f4",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T05:29:20Z",
+      "side": 1,
+      "message": "I stopped using DataPipeDrainer to make the aborting logic easy.",
+      "parentUuid": "1c24cf5f_77c714c4",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20835583_64c9dc8c",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
         "patchSetId": 6
