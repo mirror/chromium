@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5b84ac_2cbb7f43",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T06:47:48Z",
+      "side": 1,
+      "message": "nit: has been -\u003e have been",
+      "revId": "bc7c66614a044077bd9bd8bbe84bd13f3add6fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f570b6_8dd64677",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T06:47:48Z",
+      "side": 1,
+      "message": "The term main_frame feels a bit confusing if it\u0027s not checking the same thing as IsMainFrame().\n\nIf we only check the Host() part that doesn\u0027t mean it\u0027s from same-origin, is it really meaningful?",
+      "revId": "bc7c66614a044077bd9bd8bbe84bd13f3add6fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
