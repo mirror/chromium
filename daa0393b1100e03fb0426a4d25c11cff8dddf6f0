@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e827c4d_1d738901",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4942,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-07T17:34:45Z",
+      "side": 1,
+      "message": "Is this codepath really only for Flash cases?",
+      "range": {
+        "startLine": 4942,
+        "startChar": 19,
+        "endLine": 4942,
+        "endChar": 24
+      },
+      "revId": "daa0393b1100e03fb0426a4d25c11cff8dddf6f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e72e6e_045efbb7",
+        "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2018-02-07T17:34:45Z",
+      "side": 1,
+      "message": "nit: Add a brief comment about what the test is verifying and link to the bug number.",
+      "revId": "daa0393b1100e03fb0426a4d25c11cff8dddf6f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
