@@ -6,14 +6,14 @@
 #define CompositorAnimation_h
 
 #include <memory>
-#include "cc/animation/animation.h"
+#include "cc/animation/keyframe_model.h"
 #include "platform/PlatformExport.h"
 #include "platform/animation/CompositorTargetProperty.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace cc {
-class Animation;
+class KeyframeModel;
 }
 
 namespace blink {
@@ -26,8 +26,8 @@ class PLATFORM_EXPORT CompositorAnimation {
   WTF_MAKE_NONCOPYABLE(CompositorAnimation);
 
  public:
-  using Direction = cc::Animation::Direction;
-  using FillMode = cc::Animation::FillMode;
+  using Direction = cc::KeyframeModel::Direction;
+  using FillMode = cc::KeyframeModel::FillMode;
 
   static std::unique_ptr<CompositorAnimation> Create(
       const blink::CompositorAnimationCurve& curve,
@@ -70,7 +70,7 @@ class PLATFORM_EXPORT CompositorAnimation {
   double IterationStart() const;
   void SetIterationStart(double);
 
-  std::unique_ptr<cc::Animation> ReleaseCcAnimation();
+  std::unique_ptr<cc::KeyframeModel> ReleaseCcAnimation();
 
   std::unique_ptr<CompositorFloatAnimationCurve> FloatCurveForTesting() const;
 
@@ -80,7 +80,7 @@ class PLATFORM_EXPORT CompositorAnimation {
                       int animation_id,
                       int group_id);
 
-  std::unique_ptr<cc::Animation> animation_;
+  std::unique_ptr<cc::KeyframeModel> keyframe_model_;
 };
 
 }  // namespace blink

@@ -273,7 +273,7 @@ class CC_EXPORT LayerTreeHostImpl
   virtual void CommitComplete();
   virtual void UpdateAnimationState(bool start_ready_animations);
   bool Mutate(base::TimeTicks monotonic_time);
-  void ActivateAnimations();
+  void ActivateKeyframeModels();
   void Animate();
   void AnimatePendingTreeAfterCommit();
   void MainThreadHasStoppedFlinging();
