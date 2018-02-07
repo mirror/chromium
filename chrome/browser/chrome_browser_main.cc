@@ -974,6 +974,11 @@ void ChromeBrowserMainParts::StartMetricsRecording() {
 
   g_browser_process->metrics_service()->CheckForClonedInstall();
 
+#if defined(OS_WIN)
+  // Start updating the last browser live timestamp.
+  g_browser_process->metrics_service()->StartUpdatingLastLiveTimestamp();
+#endif
+
   // Register a synthetic field trial for the sampling profiler configuration
   // that was already chosen.
   std::string trial_name, group_name;
