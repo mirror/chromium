@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// TODO: !!! Add some tests.
+
 // Making it explicit that this is exposed for the background page to call.
 window.attemptAudioDebugRecording = function(succeed, fail) {
   // The API calls must be made in the window that hosts the webview.
