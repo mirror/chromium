@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e353c10_e4570814",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-07T23:04:07Z",
+      "side": 1,
+      "message": "Because I had no idea of how AD entries look like. Now it\u0027s https://crbug.com/810167 .",
+      "parentUuid": "9c0d2edb_6d387ac1",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 746,
+        "endChar": 20
+      },
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "179b51d2_71bad717",
         "filename": "chrome/browser/profiles/profile_info_cache.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "826458b2_b745e917",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-07T23:04:07Z",
+      "side": 1,
+      "message": "There are many reasons for that:\n\nFor Google accounts AccountId does not always have GaiaId populated due to legacy reasons.\nFor local profiles (robot, managed, signin, etc...), gaia_id is always empty.\nFor AD accounts, gaia_id is always empty.\n...",
+      "parentUuid": "179b51d2_71bad717",
+      "range": {
+        "startLine": 752,
+        "startChar": 50,
+        "endLine": 752,
+        "endChar": 66
+      },
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d0a09c3_0ad878ce",
         "filename": "chrome/browser/profiles/profile_info_cache.cc",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2018-02-07T15:10:39Z",
       "side": 1,
       "message": "What happens if we don\u0027t find a matching profile? Is that something that is expected to happen?",
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26459117_68268569",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-07T23:04:07Z",
+      "side": 1,
+      "message": "It will have current behavior: cache entry will not be deleted.\nThat\u0027s bad, but does not break existing code.",
+      "parentUuid": "1d0a09c3_0ad878ce",
       "revId": "812f333670236eaa216f39cc45a3678182888f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
