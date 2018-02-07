@@ -33,6 +33,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/extensions/extension_enable_flow.h"
@@ -234,6 +235,10 @@ void AppLauncherHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("uninstallApp",
       base::Bind(&AppLauncherHandler::HandleUninstallApp,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "siteSettings",
+      base::BindRepeating(&AppLauncherHandler::HandleSiteSettings,
+                          base::Unretained(this)));
   web_ui()->RegisterMessageCallback("createAppShortcut",
       base::Bind(&AppLauncherHandler::HandleCreateAppShortcut,
                  base::Unretained(this)));
@@ -581,6 +586,21 @@ void AppLauncherHandler::HandleUninstallApp(const base::ListValue* args) {
         extension, extensions::UNINSTALL_REASON_USER_INITIATED,
         extensions::UNINSTALL_SOURCE_CHROME_APPS_PAGE);
   }
+}
+
+void AppLauncherHandler::HandleSiteSettings(const base::ListValue* args) {
+  std::string extension_id;
+  CHECK(args->GetString(0, &extension_id));
+
+  const Extension* extension =
+      extension_service_->GetInstalledExtension(extension_id);
+  if (!extension)
+    return;
+
+  CHECK(extension->is_hosted_app() && extension->from_bookmark());
+  chrome::ShowSiteSettings(
+      chrome::FindBrowserWithWebContents(web_ui()->GetWebContents()),
+      extensions::AppLaunchInfo::GetFullLaunchURL(extension));
 }
 
 void AppLauncherHandler::HandleCreateAppShortcut(const base::ListValue* args) {

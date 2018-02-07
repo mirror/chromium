@@ -106,6 +106,10 @@ class AppLauncherHandler
   // false.
   void HandleUninstallApp(const base::ListValue* args);
 
+  // Handles the "siteSettings" message with |args| containing
+  // [extension_id].
+  void HandleSiteSettings(const base::ListValue* args);
+
   // Handles the "createAppShortcut" message with |args| containing
   // [extension_id].
   void HandleCreateAppShortcut(const base::ListValue* args);
