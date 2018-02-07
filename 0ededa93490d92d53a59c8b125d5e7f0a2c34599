@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d998afa_7a9cf0c4",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-07T22:39:51Z",
+      "side": 1,
+      "message": "Should the idl structure conform to the style guide that says: \"Data members of structs, both static and non-static, are named like ordinary nonmember variables...\" (see https://google.github.io/styleguide/cppguide.html#Variable_Names)\n\nI see that the name of the member is translated to the function name parameter, which should also be \"_\" separated, e.g.:\nvoid Cronet_Error_set_immediatelyRetryable(Cronet_ErrorPtr self, bool immediately_retryable);",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "0ededa93490d92d53a59c8b125d5e7f0a2c34599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9894df44_b73d651f",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-07T22:39:51Z",
+      "side": 1,
+      "message": "Should it be \"bytes_read\"?",
+      "range": {
+        "startLine": 800,
+        "startChar": 82,
+        "endLine": 800,
+        "endChar": 91
+      },
+      "revId": "0ededa93490d92d53a59c8b125d5e7f0a2c34599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d538e76_8e6ba981",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-02-07T22:39:51Z",
+      "side": 1,
+      "message": "Should this method be a part of the public interface exposed to the client?",
+      "range": {
+        "startLine": 627,
+        "startChar": 5,
+        "endLine": 627,
+        "endChar": 39
+      },
+      "revId": "0ededa93490d92d53a59c8b125d5e7f0a2c34599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
