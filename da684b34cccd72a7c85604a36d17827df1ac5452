@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f29bffd_cda8fee1",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "Nit: forwards calls",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 5
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e96244_e2fbc75d",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "Nit: no Ptr here",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 26
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa7298a_d491541d",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "InterfaceFactoryPtr maybe?\n\nit\u0027s a bit confusing (because content::MediaInterfaceFactory does implement media::mojom::InterfaceFactory but forwards to a media::mojom::InterfaceFactoryPtr)",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b8a747_696d83cb",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "Nit: for that frame from the browser process.",
+      "range": {
+        "startLine": 77,
+        "startChar": 11,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93407c0_ebb1dc35",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "It might be nice to document the opposite here: where is this injection point supported. Presumably there\u0027s only a limited number of such places.",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0408b7b6_b262bccf",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "Nit: WebLocalFrame.",
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e0fc89_66341507",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "What are the downsides of always indirecting through CdmService?",
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3a46e5_a48b77c1",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "MojoServiceContext",
+      "range": {
+        "startLine": 242,
+        "startChar": 1,
+        "endLine": 242,
+        "endChar": 22
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f81f893_b061786e",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T22:12:01Z",
+      "side": 1,
+      "message": "So if I understand this section correctly, all CDM IDs are essentially namespaced to CdmContext they live in?",
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
