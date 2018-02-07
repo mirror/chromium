@@ -21,7 +21,12 @@ class SyncConfirmationHandler : public content::WebUIMessageHandler,
                                 public AccountTrackerService::Observer,
                                 public BrowserListObserver {
  public:
-  explicit SyncConfirmationHandler(Browser* browser);
+  // Creates a SyncConfirmationHandler for the |browser|. All strings in the
+  // corresponding Web UI should be represented in |string_to_grd_id_map| and
+  // mapped to their GRD IDs.
+  explicit SyncConfirmationHandler(
+      Browser* browser,
+      const std::map<std::string, int>& string_to_grd_id_map);
   ~SyncConfirmationHandler() override;
 
   // content::WebUIMessageHandler:
@@ -50,6 +55,14 @@ class SyncConfirmationHandler : public content::WebUIMessageHandler,
   // sync settings page for configuration before starting sync.
   virtual void HandleGoToSettings(const base::ListValue* args);
 
+  // Handles "recordConsent" message from the page. Expects two parameters:
+  // 1. List of strings (names of the string resources constituting the consent
+  //                     description as per WebUIDataSource)
+  // 2. Strings (name of the string resource of the consent confirmation)
+  // This message is sent when the user interacts with the dialog in a positive
+  // manner, i.e. clicks on the confirmation button or the settings link.
+  virtual void HandleRecordConsent(const base::ListValue* args);
+
   // Handles the web ui message sent when the html content is done being laid
   // out and it's time to resize the native view hosting it to fit. |args| is
   // a single integer value for the height the native view should resize to.
@@ -72,6 +85,10 @@ class SyncConfirmationHandler : public content::WebUIMessageHandler,
 
   // Records whether the user clicked on Undo, Ok, or Settings.
   bool did_user_explicitly_interact;
+
+  // Mapping between strings displayed in the UI corresponding to this handler
+  // and their respective GRD IDs.
+  std::map<std::string, int> string_to_grd_id_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncConfirmationHandler);
 };

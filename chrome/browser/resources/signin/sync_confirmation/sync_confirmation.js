@@ -5,7 +5,34 @@
 cr.define('sync.confirmation', function() {
   'use strict';
 
+  /**
+   * Records the Sync consent.
+   * @param {!Array<!HTMLElement>} path Path of the click event. Must contain
+   *     a consent confirmation element.
+   */
+  function recordConsent(path) {
+    var consentConfirmation;
+    for (var i = 0; i < path.length; i++) {
+      console.log(path[i]);
+      if (path[i].hasAttribute('consent-confirmation')) {
+        consentConfirmation = path[i].innerHTML.trim();
+        break;
+      }
+    }
+    assert(consentConfirmation);
+
+    // Get the consent description from visible elements.
+    var consentDescription =
+        Array.from(document.querySelectorAll('[consent-description]'))
+            .filter(element => element.clientWidth * element.clientHeight > 0)
+            .map(element => element.innerHTML.trim());
+    assert(consentDescription);
+
+    chrome.send('recordConsent', [consentDescription, consentConfirmation]);
+  }
+
   function onConfirm(e) {
+    recordConsent(e.path);
     chrome.send('confirm');
   }
 
@@ -14,6 +41,7 @@ cr.define('sync.confirmation', function() {
   }
 
   function onGoToSettings(e) {
+    recordConsent(e.path);
     chrome.send('goToSettings');
   }
 

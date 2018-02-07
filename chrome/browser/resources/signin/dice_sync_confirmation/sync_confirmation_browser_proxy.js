@@ -17,6 +17,15 @@ cr.define('sync.confirmation', function() {
 
     /** @param {!Array<number>} height */
     initializedWithSize(height) {}
+
+    /**
+     * Records that the user consented to Sync.
+     * @param {!Array<!string>} description Strings that the user was presented
+     *     with in the UI.
+     * @param {!string} confirmation Text of the element that the user
+     *     clicked on.
+     */
+    recordConsent(description, confirmation) {}
   }
 
   /** @implements {sync.confirmation.SyncConfirmationBrowserProxy} */
@@ -39,6 +48,11 @@ cr.define('sync.confirmation', function() {
     /** @override */
     initializedWithSize(height) {
       chrome.send('initializedWithSize', height);
+    }
+
+    /** @override */
+    recordConsent(description, confirmation) {
+      chrome.send('recordConsent', [description, confirmation]);
     }
   }
 
