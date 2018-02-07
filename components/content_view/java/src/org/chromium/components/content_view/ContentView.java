@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.components.content_view;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -32,8 +32,8 @@ import org.chromium.ui.base.EventForwarder;
  * The containing view for {@link ContentViewCore} that exists in the Android UI hierarchy and
  * exposes the various {@link View} functionality to it.
  */
-public class ContentView extends FrameLayout
-        implements ContentViewCore.InternalAccessDelegate, SmartClipProvider {
+public class ContentView
+        extends FrameLayout implements ContentViewCore.InternalAccessDelegate, SmartClipProvider {
     private static final String TAG = "cr.ContentView";
 
     // Default value to signal that the ContentView's size need not be overridden.
@@ -85,16 +85,14 @@ public class ContentView extends FrameLayout
     }
 
     protected WebContentsAccessibility getWebContentsAccessibility() {
-        WebContents webContents = getWebContents();
-        return webContents != null ? WebContentsAccessibility.fromWebContents(webContents) : null;
+        return WebContentsAccessibility.fromWebContents(mContentViewCore.getWebContents());
     }
 
     @Override
     public boolean performAccessibilityAction(int action, Bundle arguments) {
         WebContentsAccessibility wcax = getWebContentsAccessibility();
-        return wcax != null && wcax.supportsAction(action)
-                ? wcax.performAction(action, arguments)
-                : super.performAccessibilityAction(action, arguments);
+        return wcax.supportsAction(action) ? wcax.performAction(action, arguments)
+                                           : super.performAccessibilityAction(action, arguments);
     }
 
     /**
@@ -120,9 +118,8 @@ public class ContentView extends FrameLayout
 
     @Override
     public AccessibilityNodeProvider getAccessibilityNodeProvider() {
-        WebContentsAccessibility wcax = getWebContentsAccessibility();
         AccessibilityNodeProvider provider =
-                (wcax != null) ? wcax.getAccessibilityNodeProvider() : null;
+                getWebContentsAccessibility().getAccessibilityNodeProvider();
         return (provider != null) ? provider : super.getAccessibilityNodeProvider();
     }
 
@@ -193,8 +190,7 @@ public class ContentView extends FrameLayout
     @Override
     public boolean onHoverEvent(MotionEvent event) {
         boolean consumed = getEventForwarder().onHoverEvent(event);
-        WebContentsAccessibility wcax = getWebContentsAccessibility();
-        if (wcax != null && !wcax.isTouchExplorationEnabled()) super.onHoverEvent(event);
+        if (!getWebContentsAccessibility().isTouchExplorationEnabled()) super.onHoverEvent(event);
         return consumed;
     }
 
@@ -343,8 +339,7 @@ public class ContentView extends FrameLayout
 
         @Override
         public void onProvideVirtualStructure(final ViewStructure structure) {
-            WebContentsAccessibility wcax = getWebContentsAccessibility();
-            if (wcax != null) wcax.onProvideVirtualStructure(structure, false);
+            getWebContentsAccessibility().onProvideVirtualStructure(structure, false);
         }
     }
 }
