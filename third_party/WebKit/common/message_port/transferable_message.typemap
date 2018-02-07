@@ -11,5 +11,8 @@ traits_headers = [ "//third_party/WebKit/common/message_port/transferable_messag
 
 deps = [
   "//mojo/common:struct_traits",
+  "//skia/public/interfaces",
 ]
-type_mappings = [ "blink.mojom.TransferableMessage=::blink::TransferableMessage[move_only]" ]
+type_mappings = [
+  "blink.mojom.TransferableMessage=::blink::TransferableMessage[move_only]",
+]
