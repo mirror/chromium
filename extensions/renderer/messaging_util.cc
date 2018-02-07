@@ -79,7 +79,8 @@ std::unique_ptr<Message> MessageFromV8(v8::Local<v8::Context> context,
 }
 
 std::unique_ptr<Message> MessageFromJSONString(v8::Local<v8::String> json,
-                                               std::string* error_out) {
+                                               std::string* error_out,
+                                               ScriptContext* script_context) {
   std::string message;
   message = gin::V8ToString(json);
   // JSON.stringify can fail to produce a string value in one of two ways: it
@@ -112,7 +113,8 @@ std::unique_ptr<Message> MessageFromJSONString(v8::Local<v8::String> json,
   }
 
   return std::make_unique<Message>(
-      message, blink::WebUserGestureIndicator::IsProcessingUserGesture());
+      message, blink::WebUserGestureIndicator::IsProcessingUserGesture(
+                   script_context->web_frame()));
 }
 
 v8::Local<v8::Value> MessageToV8(v8::Local<v8::Context> context,
