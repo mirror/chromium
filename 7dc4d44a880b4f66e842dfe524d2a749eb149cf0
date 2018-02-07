@@ -483,6 +483,24 @@
     },
     {
       "key": {
+        "uuid": "38622d74_3c5d7065",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-07T20:58:28Z",
+      "side": 1,
+      "message": "I\u0027ve just looked into this, this is hard to do. When data is received, but the parser is blocked, we still want to process the data all the way up to the point that data is appended to the parser. This is important, because ProcessData() is what causes CommitNavigation(), which is what sends DidCommitProvisionalLoad back to the browser. We also notify the ApplicationCacheHost, as well handle differently some mime types and media documents.\n\nThe tldr is that this is just not possible without change/breaking some of the API promises that DocumentLoader makes (which may be OK, but I\u0027m trying to avoid even more complex changes in this CL, since this is already complex enough).",
+      "parentUuid": "35ae4c25_9271c351",
+      "revId": "7dc4d44a880b4f66e842dfe524d2a749eb149cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84128633_a6f0ff5a",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 12

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bb8b995a_71d51eae",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-07T20:58:28Z",
+      "side": 1,
+      "message": "Also, Fady already filed a bug to refactor this: https://crbug.com/807637.",
+      "parentUuid": "854aa521_d6eb1caf",
+      "range": {
+        "startLine": 307,
+        "startChar": 42,
+        "endLine": 307,
+        "endChar": 59
+      },
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a93751c0_c12a7dd3",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
         "patchSetId": 23
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f54b562b_19fc9c80",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-07T20:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93751c0_c12a7dd3",
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b49a90_fd0f7793",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 23
@@ -80,6 +122,24 @@
       "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46419fcf_937d0eb9",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-07T20:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b49a90_fd0f7793",
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
