@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc5d10f7_ecd7a69e",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T21:29:46Z",
+      "side": 1,
+      "message": "It seems the static_casts in this test aren\u0027t necessary?",
+      "revId": "1b5d784915338d61cd1af01fb9839b688143d76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d91c10_8fa1ebf0",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-07T21:29:46Z",
+      "side": 1,
+      "message": "Can we also test entering fullscreen again via simulating the hardware button?",
+      "revId": "1b5d784915338d61cd1af01fb9839b688143d76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
