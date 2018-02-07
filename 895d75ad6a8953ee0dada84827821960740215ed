@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f14c71_cf3ec629",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-07T02:07:22Z",
+      "side": 1,
+      "message": "I still think having a delay here (10 seconds or so) will less likely interfere with user action which is most likely taking place, like opening of DH or tab switches. It is not likely that we\u0027ll regress some specific perf tests since UI and especially transitions in it are not usually measured very thoroughly.\n\nIt seems a simple method that just posts delayed task which executes ScheduleMaintenanceTask\u0027s body as a callback would be totally sufficient... Not sure I get argument about complexity.",
+      "revId": "895d75ad6a8953ee0dada84827821960740215ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab67199_79ffab3b",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-07T02:07:22Z",
+      "side": 1,
+      "message": "I\u0027m glad this remains 30 min. I think this is a good compromise because the cleanup will work in both cases:\n- device has small RAM and Chrome is often evicted\n- device has large RAM and sessions can be days-long\nIn both cases this large interval makes sure the cleanup happens on periodic basis, but not excessively often.",
+      "revId": "895d75ad6a8953ee0dada84827821960740215ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
