@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad15e990_e76210f6",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:02:07Z",
+      "side": 1,
+      "message": "nit: method order",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4955f2de_09991554",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:02:07Z",
+      "side": 1,
+      "message": "Or let\u0027s say that \u0027the cert fetcher doesn\u0027t allow any redirects.\u0027",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c963efa_5dcbe504",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:02:07Z",
+      "side": 1,
+      "message": "nit: This can take Unretained and we probably don\u0027t need weak_factory_",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a34ba0_48afda17",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:02:07Z",
+      "side": 1,
+      "message": "Should the callback also give some error code?\n\nAlso document the behavior about what happens when Fetcher is destructed on its way. (We have a test, that is nice!)",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff681f45_d976dd36",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:02:07Z",
+      "side": 1,
+      "message": "ASSERT_TRUE? (Below too)",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
