@@ -22,6 +22,30 @@
       "revId": "817a8f5bbd53559ae790e08178215a9e32f5c67e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3519e28_2b7d2e00",
+        "filename": "base/android/jni_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-02-07T21:28:08Z",
+      "side": 1,
+      "message": "I think the report would look like http://crash/8d0cc3b38f9a8bf7 (and many others for crbug.com/809633). That is, the magic signature is \"[Android Java Exception] Java OOM\u0027d in exception handling, check logcat\", and the stack includes GetClass.\n\nIn the latest patch set I let the process die directly if the exception is an OutOfMemoryError. With it we will lose java exception information in case that GetJavaExceptionInfo() can still get enough memory to succeed after an OOM exception (which may be a result of a huge memory allocation), but seems better than grouping many OOM crashes under \"[Android Java Exception] Java OOM\u0027d in exception handling\".",
+      "parentUuid": "71618436_2cc007b0",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 14
+      },
+      "revId": "817a8f5bbd53559ae790e08178215a9e32f5c67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
