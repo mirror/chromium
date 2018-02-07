@@ -16,6 +16,24 @@
       "revId": "5d3cc37607ebe52209bbca15cd4d7afce3898bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf46a94b_e91eee96",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2018-02-07T15:48:29Z",
+      "side": 1,
+      "message": "Very true, added the \"why\". Thanks :).",
+      "parentUuid": "35fbc7de_1941e0ab",
+      "revId": "5d3cc37607ebe52209bbca15cd4d7afce3898bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
