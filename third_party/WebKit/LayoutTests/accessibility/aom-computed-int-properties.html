@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+x<!DOCTYPE HTML>
 <script src="../resources/gc.js"></script>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
@@ -26,24 +26,48 @@ test(function(t) {
 async_test(async function(test) {
     var element = document.getElementById("no-int-props");
     computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.role, "button");
-    assert_equals(computedAXNode.colCount, null);
-    assert_equals(computedAXNode.colIndex, null);
-    assert_equals(computedAXNode.colSpan, null);
-    assert_equals(computedAXNode.level, null);
-    assert_equals(computedAXNode.posInSet, null);
-    assert_equals(computedAXNode.rowCount, null);
-    assert_equals(computedAXNode.rowIndex, null);
-    assert_equals(computedAXNode.rowSpan, null);
-    assert_equals(computedAXNode.setSize, null);
+    await test.step_func(() => {
+        assert_equals(computedAXNode.role, "button");
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.colCount, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.colIndex, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.colSpan, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.level, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.posInSet, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.rowCount, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.rowIndex, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.rowSpan, null);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.setSize, null);
+    });
     test.done();
 }, "computedAccessibleNode has nullable int properties.");
 
 async_test(async function(test) {
     var listitem = document.getElementById("listitem");
     computedAXNode = await window.getComputedAccessibleNode(listitem);
-    assert_equals(computedAXNode.posInSet, 3);
-    assert_equals(computedAXNode.setSize, 10);
+    await test.step_func(() => {
+        assert_equals(computedAXNode.posInSet, 3);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.setSize, 10);
+    });
     test.done();
 }, "computedAccessibleNode.setSize and computedAccessibleNode.posInSet");
 
@@ -63,9 +87,15 @@ async_test(async function(test) {
     computedAXNode2 = await window.getComputedAccessibleNode(heading2);
     computedAXNode3 = await window.getComputedAccessibleNode(heading3);
 
-    assert_equals(computedAXNode1.level, 1);
-    assert_equals(computedAXNode2.level, 2);
-    assert_equals(computedAXNode3.level, 2);
+    await test.step_func(() => {
+        assert_equals(computedAXNode1.level, 1);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode2.level, 2);
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode3.level, 2);
+    });
     test.done();
 }, "computedAccessibleNode.level");
 

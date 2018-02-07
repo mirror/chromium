@@ -22,14 +22,18 @@ test(function(t) {
 async_test(async function(test) {
     var element = document.getElementById("button1");
     var computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.role, "button");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.role, "button");
+    });
     test.done();
 }, "ComputedAccessibleNode.role");
 
 async_test(async function(test) {
     var element = document.getElementById("button1");
     var computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.name, "Click");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.name, "Click");
+    });
     test.done();
 }, "ComputedAccessibleNode.name");
 
@@ -42,7 +46,9 @@ async_test(async function(test) {
 async_test(async function(test) {
     var element = document.getElementById("button2");
     var computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.name, "axButton");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.name, "axButton");
+    });
     test.done();
 }, "ComputedAccessibleNode.name set through ARIA.");
 
@@ -55,7 +61,9 @@ async_test(async function(test) {
 async_test(async function(test) {
     var element = document.getElementById("shortcut");
     var computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.keyShortcuts, "Alt+Shift+P");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.keyShortcuts, "Alt+Shift+P");
+    });
     test.done();
 }, "ComputedAccessibleNode.keyShortcuts.");
 
@@ -68,7 +76,9 @@ async_test(async function(test) {
 async_test(async function(test) {
     var element = document.getElementById("fullname");
     computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.placeholder, "Jordan Doe");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.placeholder, "Jordan Doe");
+    });
     test.done();
 }, "ComputedAccessibleNode.placeHolder.");
 
@@ -81,8 +91,12 @@ async_test(async function(test) {
 async_test(async function(test) {
     var element = document.getElementById("button3");
     computedAXNode = await window.getComputedAccessibleNode(element);
-    assert_equals(computedAXNode.role, "button");
-    assert_equals(computedAXNode.roleDescription, "submit button");
+    await test.step_func(() => {
+        assert_equals(computedAXNode.role, "button");
+    });
+    await test.step_func(() => {
+        assert_equals(computedAXNode.roleDescription, "submit button");
+    });
     test.done();
 }, "ComputedAccessibleNode.roleDescription.");
 

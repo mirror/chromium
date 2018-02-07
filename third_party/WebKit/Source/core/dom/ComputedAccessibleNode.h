@@ -18,11 +18,34 @@ namespace blink {
 class ScriptPromiseResolver;
 class ScriptState;
 
+class ComputedAccessibleNodePromiseResolver final
+    : public GarbageCollectedFinalized<ComputedAccessibleNodePromiseResolver>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(ComputedAccessibleNodePromiseResolver);
+
+ public:
+  static ComputedAccessibleNodePromiseResolver* Create(ScriptState*, Element*);
+
+  ScriptPromise Promise();
+
+  void ComputeAccessibleNode();
+
+  void Trace(blink::Visitor*);
+
+ private:
+  ComputedAccessibleNodePromiseResolver(ScriptState*, Element*);
+  void OnTimerFired(TimerBase*);
+
+  WeakMember<Element> element_;
+  Member<ScriptPromiseResolver> resolver_;
+  TaskRunnerTimer<ComputedAccessibleNodePromiseResolver> timer_;
+};
+
 class ComputedAccessibleNode : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static ComputedAccessibleNode* Create(Element*);
+  static ComputedAccessibleNode* Create(AXID, WebComputedAXTree*);
   virtual ~ComputedAccessibleNode();
 
   void Trace(Visitor*);
@@ -54,7 +77,7 @@ class ComputedAccessibleNode : public ScriptWrappable {
   ComputedAccessibleNode* nextSibling() const;
 
  private:
-  explicit ComputedAccessibleNode(Element*);
+  explicit ComputedAccessibleNode(AXID, WebComputedAXTree*);
 
   // content::ComputedAXTree callback.
   void OnSnapshotResponse(ScriptPromiseResolver*);
@@ -63,7 +86,7 @@ class ComputedAccessibleNode : public ScriptWrappable {
   const String GetStringAttribute(WebAOMStringAttribute) const;
   ComputedAccessibleNode* GetRelationFromCache(AXID) const;
 
-  Member<Element> element_;
+  AXID ax_id_;
   Member<AXObjectCache> cache_;
 
   // This tree is owned by the RenderFrame.
