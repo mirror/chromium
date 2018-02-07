@@ -215,15 +215,13 @@ WindowTreeClient::WindowTreeClient(
     }
 
     if (switches::IsMusHostingViz()) {
-      gpu_ =
-          ui::Gpu::Create(connector, ui::mojom::kServiceName, io_task_runner);
+      gpu_ = ui::Gpu::Create(connector, "ash", io_task_runner);
       compositor_context_factory_ =
           std::make_unique<MusContextFactory>(gpu_.get());
       initial_context_factory_ = Env::GetInstance()->context_factory();
       Env::GetInstance()->set_context_factory(
           compositor_context_factory_.get());
     }
-
     // WindowServerTest will create more than one WindowTreeClient. We will not
     // create the discardable memory manager for those tests.
     if (create_discardable_memory) {
@@ -286,7 +284,7 @@ WindowTreeClient::~WindowTreeClient() {
 
 void WindowTreeClient::ConnectViaWindowTreeFactory() {
   ui::mojom::WindowTreeFactoryPtr factory;
-  connector_->BindInterface(ui::mojom::kServiceName, &factory);
+  connector_->BindInterface("ash", &factory);
   ui::mojom::WindowTreePtr window_tree;
   ui::mojom::WindowTreeClientPtr client;
   binding_.Bind(MakeRequest(&client));

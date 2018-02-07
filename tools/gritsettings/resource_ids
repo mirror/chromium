@@ -278,6 +278,10 @@
     "structures": [23920],
   },
 
+  "ash/shell/ash_shell_resources.grd": {
+    "includes": [24000],
+  },
+
   # //blimp used to have IDs from 24200-24299, which are now free to use.
 
   "chromecast/browser/cast_browser_resources.grd": {
