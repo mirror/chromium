@@ -142,11 +142,11 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
+  KeepaliveStatisticsRecorder keepalive_statistics_recorder_;
+
   // Put it below |url_request_context_| so that it outlives all the
   // NetworkServiceURLLoaderFactory instances.
   mojo::StrongBindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
-
-  KeepaliveStatisticsRecorder keepalive_statistics_recorder_;
 
   mojom::NetworkContextParamsPtr params_;
 
