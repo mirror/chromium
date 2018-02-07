@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "472079ca_bab09c41",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-02-07T18:57:52Z",
+      "side": 1,
+      "message": "Because libva libraries can be present and InitializeStubs still fail.",
+      "parentUuid": "a8ed3e62_a14116ce",
+      "range": {
+        "startLine": 1164,
+        "startChar": 15,
+        "endLine": 1164,
+        "endChar": 38
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac785400_93233945",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 13
@@ -105,6 +129,30 @@
       "writtenOn": "2018-02-07T14:59:15Z",
       "side": 1,
       "message": "This should have {} per style guide. But, couldn\u0027t we do\naway with SetVAStubsInit() and the associate member var, \nand query instead the semi-auto-generated \n  media_gpu_vaapi::IsVaInitialized() \nin VADisplayState::Initialize() ?\n(see out/gn/gen/media/gpu/vaapi/va_stubs.{cc,h} )",
+      "range": {
+        "startLine": 1169,
+        "startChar": 8,
+        "endLine": 1171,
+        "endChar": 0
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7aac0f_3b915cf8",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-02-07T18:57:52Z",
+      "side": 1,
+      "message": "We need to know that InitializeStubs return success before trying to actually initialize libva (vaapi).",
+      "parentUuid": "ac785400_93233945",
       "range": {
         "startLine": 1169,
         "startChar": 8,
