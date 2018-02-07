@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9cd728b_edbf0387",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T20:34:23Z",
+      "side": 1,
+      "message": "Don\u0027t need the {}s",
+      "revId": "4a7620ca4102debbc1657d7d2badbdae82caff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
