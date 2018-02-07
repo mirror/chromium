@@ -19,6 +19,7 @@
 #include "components/update_client/configurator.h"
 #include "components/update_client/task_traits.h"
 #include "components/update_client/update_client.h"
+#include "components/update_client/update_engine.h"
 
 namespace update_client {
 
@@ -48,8 +49,9 @@ void ActionRunner::Unpack() {
 
   // Contains the key hash of the CRX this object is allowed to run.
   const auto key_hash = component_.config()->GetRunActionKeyHash();
-  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(key_hash, file_path,
-                                                          installer, nullptr);
+  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(
+      key_hash, file_path, installer,
+      component_.config()->CreateServiceManagerConnector());
   unpacker->Unpack(
       base::BindOnce(&ActionRunner::UnpackComplete, base::Unretained(this)));
 }
