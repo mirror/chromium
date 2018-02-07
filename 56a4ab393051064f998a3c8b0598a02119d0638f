@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c082a6d0_1d4b87f6",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T19:45:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd40850_8d52bd75",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 11
+      },
+      "revId": "56a4ab393051064f998a3c8b0598a02119d0638f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9215fe_cabd7411",
         "filename": "ui/webui/resources/cr_components/chromeos/quick_unlock/pin_keyboard.html",
         "patchSetId": 2
