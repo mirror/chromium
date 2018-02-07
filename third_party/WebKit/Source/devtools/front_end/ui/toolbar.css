@@ -297,7 +297,12 @@ select.toolbar-item[data-keyboard-focus="true"]:focus > * {
     background-color: rgb(163, 163, 163);
 }
 
-.toolbar-button[data-keyboard-focus="true"]:focus::after {
+:not(.toolbar-blue-on-hover) .toolbar-button:enabled {
+    cursor: pointer;
+}
+
+.toolbar-button[data-keyboard-focus="true"]:focus::after,
+:not(.toolbar-blue-on-hover):not(.toolbar-render-as-links):not(.toolbar-toggled-gray) .toolbar-button:enabled:hover::after {
     position: absolute;
     top: 2px;
     bottom: 2px;
@@ -306,6 +311,10 @@ select.toolbar-item[data-keyboard-focus="true"]:focus > * {
     background-color: rgba(0, 0, 0, 0.08);
     border-radius: 2px;
     content: "";
+}
+
+:not(.toolbar-render-as-links):not(.toolbar-toggled-gray) .toolbar-button:enabled:active::after {
+    background-color: rgba(0, 0, 0, 0.12);
 }
 
 .toolbar-shadow.floating {
