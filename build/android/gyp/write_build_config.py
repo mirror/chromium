@@ -231,13 +231,6 @@ def _ExtractSharedLibsFromRuntimeDeps(runtime_deps_files):
   return ret
 
 
-def _CreateJavaLibrariesList(library_paths):
-  """Returns a java literal array with the "base" library names:
-  e.g. libfoo.so -> foo
-  """
-  return ('{%s}' % ','.join(['"%s"' % s[3:-3] for s in library_paths]))
-
-
 def _CreateLocalePaksAssetJavaList(assets, locale_paks):
   """Returns a java literal array from a list of assets in the form src:dst."""
   asset_paths = [a.split(':')[1] for a in assets]
@@ -754,29 +747,22 @@ def main(argv):
       manifest.CheckInstrumentationElements(manifest.GetPackageName())
 
     library_paths = []
-    java_libraries_list = None
     runtime_deps_files = build_utils.ParseGnList(
         options.shared_libraries_runtime_deps or '[]')
     if runtime_deps_files:
       library_paths = _ExtractSharedLibsFromRuntimeDeps(runtime_deps_files)
-      java_libraries_list = _CreateJavaLibrariesList(library_paths)
 
     secondary_abi_library_paths = []
-    secondary_abi_java_libraries_list = None
     secondary_abi_runtime_deps_files = build_utils.ParseGnList(
         options.secondary_abi_shared_libraries_runtime_deps or '[]')
     if secondary_abi_runtime_deps_files:
       secondary_abi_library_paths = _ExtractSharedLibsFromRuntimeDeps(
           secondary_abi_runtime_deps_files)
-      secondary_abi_java_libraries_list = _CreateJavaLibrariesList(
-          secondary_abi_library_paths)
 
     all_inputs.extend(runtime_deps_files)
     config['native'] = {
       'libraries': library_paths,
       'secondary_abi_libraries': secondary_abi_library_paths,
-      'java_libraries_list': java_libraries_list,
-      'secondary_abi_java_libraries_list': secondary_abi_java_libraries_list,
     }
     config['assets'], config['uncompressed_assets'], locale_paks = (
         _MergeAssets(deps.All('android_assets')))
