@@ -65,6 +65,11 @@ bool CSSPaintImageGeneratorImpl::GetValidDocumentDefinition(
   if (!HasDocumentDefinition())
     return false;
   definition = paint_worklet_->GetDocumentDefinitionMap().at(name_);
+  if (definition->GetRegisteredDefinitionCount() !=
+      PaintWorklet::kNumGlobalScopes) {
+    definition = kInvalidDocumentPaintDefinition;
+    return false;
+  }
   return definition != kInvalidDocumentPaintDefinition;
 }
 
