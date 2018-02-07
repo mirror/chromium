@@ -32,7 +32,7 @@ class PrintedPage;
 class PrinterQuery;
 
 void HoldRefCallback(const scoped_refptr<PrintJobWorkerOwner>& owner,
-                     const base::Closure& callback);
+                     base::OnceClosure&& callback);
 
 // Manages the print work for a specific document. Talks to the printer through
 // PrintingContext through PrintJobWorker. Hides access to PrintingContext in a
