@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3f9876_92644ba3",
+        "filename": "components/gcm_driver/crypto/gcm_encryption_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-07T18:49:34Z",
+      "side": 1,
+      "message": "base::BindOnce()",
+      "revId": "f9da27a5e6b08c2cf3c24f31c93cefb7873b3fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d91882_b06a436c",
+        "filename": "components/gcm_driver/crypto/gcm_encryption_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-07T18:49:34Z",
+      "side": 1,
+      "message": "nit: maybe add a TODO for changing this to a base::OnceCallback?",
+      "revId": "f9da27a5e6b08c2cf3c24f31c93cefb7873b3fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb52d84_098315c9",
+        "filename": "components/gcm_driver/crypto/gcm_key_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-02-07T18:49:34Z",
+      "side": 1,
+      "message": "nit: drop `const`. Also on lines 83 and 108",
+      "revId": "f9da27a5e6b08c2cf3c24f31c93cefb7873b3fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
