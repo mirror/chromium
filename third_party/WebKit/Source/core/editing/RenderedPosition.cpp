@@ -372,9 +372,42 @@ static CompositedSelectionBound ComputeSelectionBound(
   return bound;
 }
 
+static Position NextVisiblePositionOr(const Node& node,
+                                      const Position& position) {
+  for (const Node& runner : NodeTraversal::StartsAfter(node)) {
+    if (runner.GetLayoutObject())
+      return Position::BeforeNode(runner);
+  }
+  return position;
+}
+
+// LocalCaretRectOfPosition assumes Position doesn't point end of Node
+// because VisiblePosition canonicalization never ruturn such Position.
+// This function emulates it partially.
+static PositionWithAffinity AdjustPositionNotEndOfAnchor(
+    const PositionWithAffinity& position_with_affinity) {
+  const Position& position = position_with_affinity.GetPosition();
+  if (position.AnchorType() != PositionAnchorType::kAfterAnchor &&
+      position.AnchorType() != PositionAnchorType::kOffsetInAnchor)
+    return position;
+  if (position.AnchorType() == PositionAnchorType::kAfterAnchor)
+    return NextVisiblePositionOr(*position.AnchorNode(), position);
+  DCHECK(position.AnchorType() == PositionAnchorType::kOffsetInAnchor);
+  LayoutObject* const layout_object = position.AnchorNode()->GetLayoutObject();
+  if (!layout_object || !layout_object->IsText())
+    return position;
+  if (position.ComputeEditingOffset() ==
+      static_cast<int>(ToLayoutText(layout_object)->TextLength()))
+    return NextVisiblePositionOr(*position.AnchorNode(), position);
+  return position;
+}
+
 static CompositedSelectionBound StartPositionInGraphicsLayerBacking(
     const PositionWithAffinity& position) {
-  const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
+  const PositionWithAffinity& adjusted_position =
+      AdjustPositionNotEndOfAnchor(position);
+  const LocalCaretRect& local_caret_rect =
+      LocalCaretRectOfPosition(adjusted_position);
   const LayoutObject* const layout_object = local_caret_rect.layout_object;
   if (!layout_object)
     return CompositedSelectionBound();
@@ -388,7 +421,10 @@ static CompositedSelectionBound StartPositionInGraphicsLayerBacking(
 
 static CompositedSelectionBound EndPositionInGraphicsLayerBacking(
     const PositionWithAffinity& position) {
-  const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
+  const PositionWithAffinity& adjusted_position =
+      AdjustPositionNotEndOfAnchor(position);
+  const LocalCaretRect& local_caret_rect =
+      LocalCaretRectOfPosition(adjusted_position);
   const LayoutObject* const layout_object = local_caret_rect.layout_object;
   if (!layout_object)
     return CompositedSelectionBound();
