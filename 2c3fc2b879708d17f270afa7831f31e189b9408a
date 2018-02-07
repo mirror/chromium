@@ -46,6 +46,30 @@
       "revId": "2c3fc2b879708d17f270afa7831f31e189b9408a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b335747_9530e3d0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-02-07T12:07:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b367eef_7c9646c9",
+      "range": {
+        "startLine": 508,
+        "startChar": 33,
+        "endLine": 508,
+        "endChar": 51
+      },
+      "revId": "2c3fc2b879708d17f270afa7831f31e189b9408a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
