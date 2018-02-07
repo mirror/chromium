@@ -388,9 +388,8 @@ class AutofillManager : public AutofillHandler,
       WARN_UNUSED_RESULT;
 
   // Re-parses |live_form| and adds the result to |form_structures_|.
-  // |cached_form| should be a pointer to the existing version of the form, or
-  // NULL if no cached version exists.  The updated form is then written into
-  // |updated_form|.  Returns false if the cache could not be updated.
+  // The updated form is then written into |updated_form|. Returns false if the
+  // cache could not be updated.
   bool UpdateCachedForm(const FormData& live_form,
                         const FormStructure* cached_form,
                         FormStructure** updated_form) WARN_UNUSED_RESULT;

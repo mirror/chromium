@@ -124,6 +124,9 @@ class FormStructure {
   void UpdateFromCache(const FormStructure& cached_form,
                        const bool apply_is_autofilled);
 
+  // Sets the server data from cache.
+  void RetrieveServerDataFromCache(const FormStructure& cached_form);
+
   // Logs quality metrics for |this|, which should be a user-submitted form.
   // This method should only be called after the possible field types have been
   // set for each field.  |interaction_time| should be a timestamp corresponding
