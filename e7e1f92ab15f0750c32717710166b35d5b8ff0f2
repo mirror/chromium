@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da296d23_9718958c",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-07T15:58:33Z",
+      "side": 1,
+      "message": "\u0027f\u0027 suffixes for consistency.",
+      "revId": "e7e1f92ab15f0750c32717710166b35d5b8ff0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02d5887_6d45db1c",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-07T15:58:33Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed, right?  You only need to bind visibility of the hosted UI root element (might apply to other elements here too).",
+      "revId": "e7e1f92ab15f0750c32717710166b35d5b8ff0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
