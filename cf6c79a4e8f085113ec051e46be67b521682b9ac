@@ -16,6 +16,24 @@
       "revId": "cf6c79a4e8f085113ec051e46be67b521682b9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0002d412_cfa218e3",
+        "filename": "third_party/WebKit/Source/platform/graphics/AcceleratedStaticBitmapImageTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-07T22:47:39Z",
+      "side": 1,
+      "message": "I disagree. Mocking the class you are testing is quite unorthodox.",
+      "parentUuid": "32e3ef7e_dd7b6ac4",
+      "revId": "cf6c79a4e8f085113ec051e46be67b521682b9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

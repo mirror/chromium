@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0697184_f70593c8",
+        "filename": "third_party/WebKit/Source/platform/graphics/AcceleratedStaticBitmapImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-07T22:47:39Z",
+      "side": 0,
+      "message": "Because the call site I added uses an lvalue, which broke the build. And it was in a use case where I could not use std::move().  requiring an r-value reference was total overkill IMHO.",
+      "parentUuid": "7fe3080b_d261ead6",
+      "revId": "b7b9a0fe6a75507cd007920762d008941edfc182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d452a1_9950d16a",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T21:44:52Z",
       "side": 0,
       "message": "Why do you delete this? Then the original_skia_image_ is not saved.",
+      "revId": "b7b9a0fe6a75507cd007920762d008941edfc182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2ab099_71f41c10",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResourceProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2018-02-07T22:47:39Z",
+      "side": 0,
+      "message": "But it is because AcceleratedStaticBitmapImage::EnsureMailbox was already calling this internally, so this call was redundant.",
+      "parentUuid": "a7d452a1_9950d16a",
       "revId": "b7b9a0fe6a75507cd007920762d008941edfc182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
