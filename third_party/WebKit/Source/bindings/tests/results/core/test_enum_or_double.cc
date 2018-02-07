@@ -49,7 +49,8 @@ void TestEnumOrDouble::SetTestEnum(const String& value) {
       "EnumValue2",
       "EnumValue3",
   };
-  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", exceptionState)) {
+  const char* enum_name = "TestEnum";
+  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), enum_name, exceptionState)) {
     NOTREACHED();
     return;
   }

@@ -32,7 +32,8 @@ void TestEnumOrTestEnumSequence::SetTestEnum(const String& value) {
       "EnumValue2",
       "EnumValue3",
   };
-  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", exceptionState)) {
+  const char* enum_name = "TestEnum";
+  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), enum_name, exceptionState)) {
     NOTREACHED();
     return;
   }
@@ -60,7 +61,8 @@ void TestEnumOrTestEnumSequence::SetTestEnumSequence(const Vector<String>& value
       "EnumValue2",
       "EnumValue3",
   };
-  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnumSequence", exceptionState)) {
+  const char* enum_name = "TestEnum";
+  if (!IsValidEnum(value, validValues, WTF_ARRAY_LENGTH(validValues), enum_name, exceptionState)) {
     NOTREACHED();
     return;
   }
@@ -98,7 +100,7 @@ void V8TestEnumOrTestEnumSequence::ToImpl(v8::Isolate* isolate, v8::Local<v8::Va
         "EnumValue2",
         "EnumValue3",
     };
-    if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnumSequence", exceptionState))
+    if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", exceptionState))
       return;
     impl.SetTestEnumSequence(cppValue);
     return;
