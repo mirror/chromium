@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "233c2b3f_6cdf1f86",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-02-07T00:20:38Z",
+      "side": 1,
+      "message": "I did a bit of investigation. For my purposes, this belongs in model()-\u003eOnKillFocus() after the focus state is actually set to false - as I want it to operate on Cocoa as well.\n\nI noticed that this code snippet (added here: https://codereview.chromium.org/1060613004) doesn\u0027t exist in the Cocoa version. Any specific reason for that?\n\nI\u0027m leaning towards: Leave this snippet as-is, and have an independent clause in OmniboxEditModel::OnKillFocus to trigger a revert for the steady state elisions.",
+      "parentUuid": "fc7426ca_9d783099",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a7af61_2e854035",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 9
