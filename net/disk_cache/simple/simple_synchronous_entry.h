@@ -269,6 +269,20 @@ class SimpleSynchronousEntry {
     FILE_REQUIRED
   };
 
+  enum LoadState {
+    // We have not tried to open or create the file (or have closed it already).
+    LOAD_CLOSED,
+
+    // File is missing (aka an efficient representation of an empty stream 2).
+    LOAD_EMPTY_OMITTED,
+
+    // File exists, but its loading has been deferred.
+    LOAD_LAZY,
+
+    // File has been opened fully.
+    LOAD_NORMAL
+  };
+
   struct SparseRange {
     int64_t offset;
     int64_t length;
@@ -301,6 +315,7 @@ class SimpleSynchronousEntry {
   // or if the file was not found and is allowed to be omitted if the
   // corresponding stream is empty.
   bool MaybeOpenFile(int file_index,
+                     FileRequired file_required,
                      base::File::Error* out_error);
   // Creates one of the cache entry files if necessary. If the file is allowed
   // to be omitted if the corresponding stream is empty, and if |file_required|
@@ -449,9 +464,8 @@ class SimpleSynchronousEntry {
 
   SimpleFileTracker* file_tracker_;
 
-  // True if the corresponding stream is empty and therefore no on-disk file
-  // was created to store it.
-  bool empty_file_omitted_[kSimpleEntryNormalFileCount];
+  // Keeps track of it the given file is missing or is being lazy-loaded
+  LoadState load_state_[kSimpleEntryNormalFileCount];
 
   typedef std::map<int64_t, SparseRange> SparseRangeOffsetMap;
   typedef SparseRangeOffsetMap::iterator SparseRangeIterator;
