@@ -16,6 +16,23 @@
       "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea549041_85fd8edf",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T00:59:08Z",
+      "side": 1,
+      "message": "why post task? std::move(load_callback).Run(mount_point) should suffice.",
+      "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
