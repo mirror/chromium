@@ -7,6 +7,7 @@
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -195,17 +196,22 @@ class ServerGpuMemoryBufferManagerTest : public ::testing::Test {
 
   // ::testing::Test:
   void SetUp() override {
-    gfx::ClientNativePixmapFactory::ResetInstance();
-    gfx::ClientNativePixmapFactory::SetInstance(&pixmap_factory_);
   }
 
-  void TearDown() override { gfx::ClientNativePixmapFactory::ResetInstance(); }
+  void TearDown() override {}
 
  private:
-  FakeClientNativePixmapFactory pixmap_factory_;
-
   DISALLOW_COPY_AND_ASSIGN(ServerGpuMemoryBufferManagerTest);
 };
+
+std::unique_ptr<gpu::GpuMemoryBufferImplFactory> MakeBufferFactory() {
+#if defined(OS_LINUX)
+  return std::make_unique<gpu::GpuMemoryBufferImplFactory>(
+      std::make_unique<FakeClientNativePixmapFactory>());
+#else
+  return std::make_unique<gpu::GpuMemoryBufferImplFactory>();
+#endif
+}
 
 // Tests that allocation requests from a client that goes away before allocation
 // completes are cleaned up correctly.
@@ -213,7 +219,8 @@ TEST_F(ServerGpuMemoryBufferManagerTest, AllocationRequestsForDestroyedClient) {
 #if !defined(USE_OZONE) && !defined(OS_MACOSX) && !defined(OS_WIN)
   // Not all platforms support native configurations (currently only ozone and
   // mac support it). Abort the test in those platforms.
-  DCHECK(gpu::GetNativeGpuMemoryBufferConfigurations().empty());
+  gpu::GpuMemoryBufferSupport support;
+  DCHECK(gpu::GetNativeGpuMemoryBufferConfigurations(&support).empty());
   return;
 #else
   // Note: ServerGpuMemoryBufferManager normally operates on a mojom::GpuService
@@ -221,7 +228,9 @@ TEST_F(ServerGpuMemoryBufferManagerTest, AllocationRequestsForDestroyedClient) {
   // GpuService is asynchronous. In this test, the mojom::GpuService is not
   // bound to a mojo pipe, which means those calls are all synchronous.
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  auto buffer_factory = MakeBufferFactory();
+  ServerGpuMemoryBufferManager manager(&gpu_service, 1,
+                                       std::move(buffer_factory));
 
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
@@ -249,9 +258,10 @@ TEST_F(ServerGpuMemoryBufferManagerTest, AllocationRequestsForDestroyedClient) {
 
 TEST_F(ServerGpuMemoryBufferManagerTest,
        RequestsFromUntrustedClientsValidated) {
-  gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  auto buffer_factory = MakeBufferFactory();
+  ServerGpuMemoryBufferManager manager(&gpu_service, 1,
+                                       std::move(buffer_factory));
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
   // SCANOUT cannot be used if native gpu memory buffer is not supported.
@@ -295,9 +305,10 @@ TEST_F(ServerGpuMemoryBufferManagerTest,
 }
 
 TEST_F(ServerGpuMemoryBufferManagerTest, GpuMemoryBufferDestroyed) {
-  gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  auto buffer_factory = MakeBufferFactory();
+  ServerGpuMemoryBufferManager manager(&gpu_service, 1,
+                                       std::move(buffer_factory));
   auto buffer = AllocateGpuMemoryBufferSync(&manager);
   EXPECT_TRUE(buffer);
   buffer.reset();
@@ -305,9 +316,10 @@ TEST_F(ServerGpuMemoryBufferManagerTest, GpuMemoryBufferDestroyed) {
 
 TEST_F(ServerGpuMemoryBufferManagerTest,
        GpuMemoryBufferDestroyedOnDifferentThread) {
-  gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  auto buffer_factory = MakeBufferFactory();
+  ServerGpuMemoryBufferManager manager(&gpu_service, 1,
+                                       std::move(buffer_factory));
   auto buffer = AllocateGpuMemoryBufferSync(&manager);
   EXPECT_TRUE(buffer);
   // Destroy the buffer in a different thread.

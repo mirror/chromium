@@ -257,13 +257,6 @@ void Service::OnStart() {
   ui::KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()
       ->SetCurrentLayoutByName("us");
 
-  if (running_standalone_) {
-    client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
-    gfx::ClientNativePixmapFactory::SetInstance(
-        client_native_pixmap_factory_.get());
-  }
-
-  DCHECK(gfx::ClientNativePixmapFactory::GetInstance());
 #endif
 
 #if defined(OS_CHROMEOS)

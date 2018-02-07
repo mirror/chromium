@@ -46,6 +46,7 @@ GpuMemoryBufferImplNativePixmap::~GpuMemoryBufferImplNativePixmap() = default;
 // static
 std::unique_ptr<GpuMemoryBufferImplNativePixmap>
 GpuMemoryBufferImplNativePixmap::CreateFromHandle(
+    gfx::ClientNativePixmapFactory* pixmap_factory,
     const gfx::GpuMemoryBufferHandle& handle,
     const gfx::Size& size,
     gfx::BufferFormat format,
@@ -80,8 +81,7 @@ GpuMemoryBufferImplNativePixmap::CreateFromHandle(
   }
   native_pixmap_handle.planes = handle.native_pixmap_handle.planes;
   std::unique_ptr<gfx::ClientNativePixmap> native_pixmap =
-      gfx::ClientNativePixmapFactory::GetInstance()->ImportFromHandle(
-          native_pixmap_handle, size, usage);
+      pixmap_factory->ImportFromHandle(native_pixmap_handle, size, usage);
   DCHECK(native_pixmap);
 
   return base::WrapUnique(new GpuMemoryBufferImplNativePixmap(
@@ -90,19 +90,11 @@ GpuMemoryBufferImplNativePixmap::CreateFromHandle(
 }
 
 // static
-bool GpuMemoryBufferImplNativePixmap::IsConfigurationSupported(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage) {
-  return gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage);
-}
-
-// static
 base::Closure GpuMemoryBufferImplNativePixmap::AllocateForTesting(
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     gfx::GpuMemoryBufferHandle* handle) {
-  DCHECK(IsConfigurationSupported(format, usage));
 #if defined(USE_OZONE)
   scoped_refptr<gfx::NativePixmap> pixmap =
       ui::OzonePlatform::GetInstance()

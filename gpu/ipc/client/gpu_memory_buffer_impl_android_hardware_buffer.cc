@@ -103,13 +103,6 @@ GpuMemoryBufferImplAndroidHardwareBuffer::CreateFromHandle(
       handle.id, size, format, callback, handle.handle));
 }
 
-// static
-bool GpuMemoryBufferImplAndroidHardwareBuffer::IsConfigurationSupported(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage) {
-  return gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage);
-}
-
 bool GpuMemoryBufferImplAndroidHardwareBuffer::Map() {
   return false;
 }
@@ -140,7 +133,6 @@ base::Closure GpuMemoryBufferImplAndroidHardwareBuffer::AllocateForTesting(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     gfx::GpuMemoryBufferHandle* handle) {
-  DCHECK(IsConfigurationSupported(format, usage));
   gfx::GpuMemoryBufferId kBufferId(1);
   handle->type = gfx::ANDROID_HARDWARE_BUFFER;
   handle->id = kBufferId;

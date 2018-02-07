@@ -15,6 +15,7 @@
 
 namespace gfx {
 class ClientNativePixmap;
+class ClientNativePixmapFactory;
 }
 
 namespace gpu {
@@ -24,15 +25,15 @@ class GPU_EXPORT GpuMemoryBufferImplNativePixmap : public GpuMemoryBufferImpl {
  public:
   ~GpuMemoryBufferImplNativePixmap() override;
 
+  static constexpr gfx::GpuMemoryBufferType kBufferType = gfx::NATIVE_PIXMAP;
+
   static std::unique_ptr<GpuMemoryBufferImplNativePixmap> CreateFromHandle(
+      gfx::ClientNativePixmapFactory* pixmap_factory,
       const gfx::GpuMemoryBufferHandle& handle,
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       const DestructionCallback& callback);
-
-  static bool IsConfigurationSupported(gfx::BufferFormat format,
-                                       gfx::BufferUsage usage);
 
   static base::Closure AllocateForTesting(const gfx::Size& size,
                                           gfx::BufferFormat format,

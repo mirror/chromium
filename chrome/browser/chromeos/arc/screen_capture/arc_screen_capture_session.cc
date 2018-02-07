@@ -32,6 +32,7 @@
 #include "ui/compositor/dip_util.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
 
 namespace {
 // Callback into Android to force screen updates if the queue gets this big.
@@ -95,6 +96,7 @@ ArcScreenCaptureSession::ArcScreenCaptureSession(
       notifier_(std::move(notifier)),
       size_(size),
       desktop_window_(nullptr),
+      pixmap_factory_(gfx::CreateClientNativePixmapFactoryDmabuf()),
       weak_ptr_factory_(this) {}
 
 mojom::ScreenCaptureSessionPtr ArcScreenCaptureSession::Initialize(
@@ -197,7 +199,7 @@ void ArcScreenCaptureSession::SetOutputBuffer(
       stride * kBytesPerPixel, 0, stride * kBytesPerPixel * size_.height(), 0);
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer =
       gpu::GpuMemoryBufferImplNativePixmap::CreateFromHandle(
-          handle, size_, gfx::BufferFormat::RGBX_8888,
+          pixmap_factory_.get(), handle, size_, gfx::BufferFormat::RGBX_8888,
           gfx::BufferUsage::SCANOUT,
           gpu::GpuMemoryBufferImpl::DestructionCallback());
   if (!gpu_memory_buffer) {

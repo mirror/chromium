@@ -23,17 +23,6 @@ class GPU_EXPORT GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
 
   ~GpuMemoryBufferImpl() override;
 
-  // Creates an instance from the given |handle|. |size| and |internalformat|
-  // should match what was used to allocate the |handle|. |callback|, if
-  // non-null, is called when instance is deleted, which is not necessarily on
-  // the same thread as this function was called on and instance was created on.
-  static std::unique_ptr<GpuMemoryBufferImpl> CreateFromHandle(
-      const gfx::GpuMemoryBufferHandle& handle,
-      const gfx::Size& size,
-      gfx::BufferFormat format,
-      gfx::BufferUsage usage,
-      const DestructionCallback& callback);
-
   // Overridden from gfx::GpuMemoryBuffer:
   gfx::Size GetSize() const override;
   gfx::BufferFormat GetFormat() const override;
