@@ -290,8 +290,8 @@ class LegacyInputRouterImplPerfTest : public testing::Test {
   ui::LatencyInfo CreateLatencyInfo() {
     ui::LatencyInfo latency;
     latency.AddLatencyNumber(
-        ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT, 1, 0);
-    latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1,
+        ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT, 0);
+    latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
                              NextLatencyID());
     return latency;
   }

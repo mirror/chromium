@@ -200,7 +200,6 @@ void LatencyInfo::CopyLatencyFrom(const LatencyInfo& other,
     if (lc.first.first == type) {
       AddLatencyNumberWithTimestamp(lc.first.first,
                                     lc.first.second,
-                                    lc.second.sequence_number,
                                     lc.second.event_time,
                                     lc.second.event_count);
     }
@@ -230,7 +229,6 @@ void LatencyInfo::AddNewLatencyFrom(const LatencyInfo& other) {
     if (!FindLatency(lc.first.first, lc.first.second, NULL)) {
       AddLatencyNumberWithTimestamp(lc.first.first,
                                     lc.first.second,
-                                    lc.second.sequence_number,
                                     lc.second.event_time,
                                     lc.second.event_count);
     }
@@ -246,36 +244,30 @@ void LatencyInfo::AddNewLatencyFrom(const LatencyInfo& other) {
   terminated_ = other.terminated();
 }
 
-void LatencyInfo::AddLatencyNumber(LatencyComponentType component,
-                                   int64_t id,
-                                   int64_t component_sequence_number) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    base::TimeTicks::Now(), 1, nullptr);
+void LatencyInfo::AddLatencyNumber(LatencyComponentType component, int64_t id) {
+  AddLatencyNumberWithTimestampImpl(component, id, base::TimeTicks::Now(), 1,
+                                    nullptr);
 }
 
 void LatencyInfo::AddLatencyNumberWithTraceName(
     LatencyComponentType component,
     int64_t id,
-    int64_t component_sequence_number,
     const char* trace_name_str) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    base::TimeTicks::Now(), 1, trace_name_str);
+  AddLatencyNumberWithTimestampImpl(component, id, base::TimeTicks::Now(), 1,
+                                    trace_name_str);
 }
 
 void LatencyInfo::AddLatencyNumberWithTimestamp(
     LatencyComponentType component,
     int64_t id,
-    int64_t component_sequence_number,
     base::TimeTicks time,
     uint32_t event_count) {
-  AddLatencyNumberWithTimestampImpl(component, id, component_sequence_number,
-                                    time, event_count, nullptr);
+  AddLatencyNumberWithTimestampImpl(component, id, time, event_count, nullptr);
 }
 
 void LatencyInfo::AddLatencyNumberWithTimestampImpl(
     LatencyComponentType component,
     int64_t id,
-    int64_t component_sequence_number,
     base::TimeTicks time,
     uint32_t event_count,
     const char* trace_name_str) {
@@ -329,12 +321,9 @@ void LatencyInfo::AddLatencyNumberWithTimestampImpl(
   LatencyMap::key_type key = std::make_pair(component, id);
   LatencyMap::iterator it = latency_components_.find(key);
   if (it == latency_components_.end()) {
-    LatencyComponent info = {component_sequence_number, time, event_count, time,
-                             time};
+    LatencyComponent info = {time, event_count, time, time};
     latency_components_[key] = info;
   } else {
-    it->second.sequence_number = std::max(component_sequence_number,
-                                          it->second.sequence_number);
     uint32_t new_count = event_count + it->second.event_count;
     if (event_count > 0 && new_count != 0) {
       // Do a weighted average, so that the new event_time is the average of
@@ -377,8 +366,6 @@ LatencyInfo::AsTraceableData() {
         "time", static_cast<double>(
                     lc.second.event_time.since_origin().InMicroseconds()));
     component_info->SetDouble("count", lc.second.event_count);
-    component_info->SetDouble("sequence_number",
-                              lc.second.sequence_number);
     record_data->Set(GetComponentName(lc.first.first),
                      std::move(component_info));
   }

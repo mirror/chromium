@@ -50,8 +50,6 @@ struct ArrayTraits<ui::LatencyInfo::LatencyMap> {
 template <>
 struct StructTraits<ui::mojom::LatencyComponentDataView,
                     ui::LatencyInfo::LatencyComponent> {
-  static int64_t sequence_number(
-      const ui::LatencyInfo::LatencyComponent& component);
   static base::TimeTicks event_time(
       const ui::LatencyInfo::LatencyComponent& component);
   static uint32_t event_count(
