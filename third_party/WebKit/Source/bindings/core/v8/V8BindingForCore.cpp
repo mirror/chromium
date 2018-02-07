@@ -920,4 +920,33 @@ v8::Local<v8::Value> FromJSONString(v8::Isolate* isolate,
   return parsed;
 }
 
+bool IsNeededToCloneFor(ScriptState* target_script_state,
+                        v8::Local<v8::Value> value) {
+  // No need to clone V8 values that are not associated with contexts.
+  if (!value->IsObject()) {
+    return false;
+  }
+
+  // No need to clone V8 values that were created in the target context.
+  v8::Local<v8::Context> creation_context =
+      value.As<v8::Object>()->CreationContext();
+  if (&ScriptState::From(creation_context)->World() ==
+      &target_script_state->World())
+    return false;
+
+  return true;
+}
+
+v8::Local<v8::Value> CloneV8ValueFor(ScriptState* target_script_state,
+                                     v8::Local<v8::Value> value) {
+  DCHECK(!value.IsEmpty());
+  DCHECK(IsNeededToCloneFor(target_script_state, value));
+
+  v8::Isolate* isolate = target_script_state->GetIsolate();
+  DCHECK(isolate->InContext());
+  scoped_refptr<SerializedScriptValue> serialized =
+      SerializedScriptValue::SerializeAndSwallowExceptions(isolate, value);
+  return serialized->Deserialize(isolate);
+}
+
 }  // namespace blink
