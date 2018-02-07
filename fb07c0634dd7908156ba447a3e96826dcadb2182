@@ -22,6 +22,30 @@
       "revId": "fb07c0634dd7908156ba447a3e96826dcadb2182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a993be00_4e1f8e43",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T05:14:31Z",
+      "side": 1,
+      "message": "Yeah that works, and according to pkasting\u0027s email on Jan 18 email, this is allowed:\n\n\"constexpr on more complex code, including code with conditionals and loops.  This allows marking more simple functions as constexpr.\"\n\nDone.",
+      "parentUuid": "d5270d4c_67f03296",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "fb07c0634dd7908156ba447a3e96826dcadb2182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
