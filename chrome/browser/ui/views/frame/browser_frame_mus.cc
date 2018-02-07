@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "build/build_config.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -23,6 +24,11 @@
 #include "ash/public/interfaces/window_properties.mojom.h"
 #include "ash/public/interfaces/window_style.mojom.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
+#endif
+
+#if defined(USE_OZONE) && defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "ui/aura/client/aura_constants.h"
+#include "ui/aura/window.h"
 #endif
 
 BrowserFrameMus::BrowserFrameMus(BrowserFrame* browser_frame,
@@ -83,13 +89,35 @@ bool BrowserFrameMus::UsesNativeSystemMenu() const {
 }
 
 bool BrowserFrameMus::ShouldSaveWindowPlacement() const {
+#if defined(USE_OZONE) && defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  return nullptr == GetWidget()->GetNativeWindow()->GetProperty(
+                        aura::client::kRestoreBoundsKey);
+#else
   return false;
+#endif
 }
 
 void BrowserFrameMus::GetWindowPlacement(
     gfx::Rect* bounds, ui::WindowShowState* show_state) const {
+#if defined(USE_OZONE) && defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  DesktopNativeWidgetAura::GetWindowPlacement(bounds, show_state);
+
+  gfx::Rect* override_bounds = GetWidget()->GetNativeWindow()->GetProperty(
+      aura::client::kRestoreBoundsKey);
+  if (override_bounds) {
+    *bounds = *override_bounds;
+    *show_state = GetWidget()->GetNativeWindow()->GetProperty(
+        aura::client::kShowStateKey);
+  }
+
+  if (*show_state != ui::SHOW_STATE_MAXIMIZED &&
+      *show_state != ui::SHOW_STATE_MINIMIZED) {
+    *show_state = ui::SHOW_STATE_NORMAL;
+  }
+#else
   *bounds = gfx::Rect(10, 10, 800, 600);
   *show_state = ui::SHOW_STATE_NORMAL;
+#endif
 }
 
 bool BrowserFrameMus::PreHandleKeyboardEvent(
