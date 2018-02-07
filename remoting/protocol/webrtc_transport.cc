@@ -64,7 +64,7 @@ bool IsValidSessionDescriptionType(const std::string& type) {
 }
 
 void UpdateCodecParameters(SdpMessage* sdp_message, bool incoming) {
-  // Set bitrate range to 1-20 Mbps.
+  // Set bitrate range to 1-100 Mbps.
   //  - Setting min bitrate here enables padding.
   //  - The default max bitrate is 600 kbps. Increasing it allows to
   //    use higher bandwidth when it's available.
@@ -79,7 +79,7 @@ void UpdateCodecParameters(SdpMessage* sdp_message, bool incoming) {
   // underlying bug is fixed to handle high load at high bitrate.
   if (sdp_message->has_video()) {
     const char* kParameters =
-        "x-google-min-bitrate=1000; x-google-max-bitrate=20000";
+        "x-google-min-bitrate=1000; x-google-max-bitrate=100000";
     bool param_added = sdp_message->AddCodecParameter("VP8", kParameters);
     param_added |= sdp_message->AddCodecParameter("VP9", kParameters);
     param_added |= sdp_message->AddCodecParameter("H264", kParameters);
