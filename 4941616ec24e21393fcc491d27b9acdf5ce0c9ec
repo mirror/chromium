@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ef4e8a1_8685edc8",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20423,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2018-02-07T01:52:45Z",
+      "side": 1,
+      "message": "The above change disagrees with the check of internal_format here. I suspect that internal_format is either wrong or is referring to the client/ES side of the command buffer. When the GL context is !ES I don\u0027t believe the internal format could really be GL_BGRA as desktop GL has GL_EXT_bgra rather than GL_EXT_texture_format_BGRA8888.",
+      "range": {
+        "startLine": 20423,
+        "startChar": 10,
+        "endLine": 20423,
+        "endChar": 75
+      },
+      "revId": "4941616ec24e21393fcc491d27b9acdf5ce0c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
