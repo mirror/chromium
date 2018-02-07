@@ -8,12 +8,54 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/path_service.h"
+#include "components/font_service/font_service_app.h"
+#include "components/font_service/public/interfaces/constants.mojom.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/utility/content_utility_client.h"
+#include "mash/quick_launch/quick_launch.h"
+#include "services/service_manager/public/cpp/service.h"
 #include "ui/base/ime/input_method_initializer.h"
 #include "ui/base/resource/resource_bundle.h"
 
+#include "base/process/process_handle.h"
+
 namespace ash {
 namespace shell {
+namespace {
+
+std::unique_ptr<service_manager::Service> CreateQuickLaunch() {
+  return std::make_unique<mash::quick_launch::QuickLaunch>();
+}
+
+std::unique_ptr<service_manager::Service> CreateFontService() {
+  return std::make_unique<font_service::FontServiceApp>();
+}
+
+class ShellContentUtilityClient : public content::ContentUtilityClient {
+ public:
+  ShellContentUtilityClient() = default;
+  ~ShellContentUtilityClient() override = default;
+
+  // ContentUtilityClient:
+  void RegisterServices(StaticServiceMap* services) override {
+    LOG(ERROR) << "register content utility";
+    {
+      service_manager::EmbeddedServiceInfo info;
+      info.factory = base::BindRepeating(&CreateQuickLaunch);
+      (*services)["quick_launch"] = info;
+    }
+    {
+      service_manager::EmbeddedServiceInfo info;
+      info.factory = base::BindRepeating(&CreateFontService);
+      (*services)[font_service::mojom::kServiceName] = info;
+    }
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ShellContentUtilityClient);
+};
+
+}  // namespace
 
 ShellMainDelegate::ShellMainDelegate() = default;
 
@@ -36,6 +78,8 @@ void ShellMainDelegate::PreSandboxStartup() {
 }
 
 content::ContentBrowserClient* ShellMainDelegate::CreateContentBrowserClient() {
+  LOG(ERROR) << "CreateContentBrowserClient pid=" << base::GetCurrentProcId();
+
   browser_client_.reset(new ShellContentBrowserClient);
   return browser_client_.get();
 }
@@ -59,6 +103,11 @@ void ShellMainDelegate::InitializeResourceBundle() {
         path.Append(FILE_PATH_LITERAL("ash_test_resources_200_percent.pak"));
     rb.AddDataPackFromPath(ash_test_resources_200, ui::SCALE_FACTOR_200P);
   }
+}
+
+content::ContentUtilityClient* ShellMainDelegate::CreateContentUtilityClient() {
+  utility_client_ = std::make_unique<ShellContentUtilityClient>();
+  return utility_client_.get();
 }
 
 }  // namespace shell

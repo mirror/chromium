@@ -31,10 +31,12 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "content/public/browser/context_factory.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/shell/browser/shell_browser_context.h"
 #include "content/shell/browser/shell_net_log.h"
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
 #include "net/base/net_module.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
@@ -113,6 +115,10 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
       example_app_list_presenter_->CreateInterfacePtrAndBind());
 
   ash::Shell::GetPrimaryRootWindow()->GetHost()->Show();
+
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->StartService("quick_launch");
 }
 
 void ShellBrowserMainParts::PostMainMessageLoopRun() {

@@ -4,6 +4,7 @@
 
 #include "mash/quick_launch/quick_launch.h"
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -20,6 +21,8 @@
 #include "services/service_manager/public/cpp/service_runner.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/base/ui_base_switches.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -46,6 +49,17 @@ class QuickLaunchUI : public views::WidgetDelegateView,
     AddChildView(prompt_);
 
     UpdateEntries();
+    timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(100), this,
+                 &QuickLaunchUI::OnTimerFired);
+  }
+  void OnTimerFired() {
+    GetWidget()
+        ->GetNativeWindow()
+        ->layer()
+        ->GetCompositor()
+        ->ScheduleFullRedraw();
+    LOG(ERROR) << "tick ";
+    GetWidget()->GetNativeWindow()->GetRootWindow()->PrintWindowHierarchy(2);
   }
   ~QuickLaunchUI() override {
     quick_launch_->RemoveWindow(GetWidget());
@@ -147,6 +161,7 @@ class QuickLaunchUI : public views::WidgetDelegateView,
   catalog::mojom::CatalogPtr catalog_;
   std::set<base::string16> app_names_;
   bool suggestion_rejected_ = false;
+  base::RepeatingTimer timer_;
 
   DISALLOW_COPY_AND_ASSIGN(QuickLaunchUI);
 };
@@ -170,6 +185,11 @@ void QuickLaunch::RemoveWindow(views::Widget* window) {
 }
 
 void QuickLaunch::OnStart() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  command_line->AppendSwitch(switches::kMus);
+  command_line->AppendSwitch(switches::kMusHostingViz);
+  command_line->AppendSwitch("ui-show-fps-counter");
+  DCHECK(switches::IsMusHostingViz());
   // If AuraInit was unable to initialize there is no longer a peer connection.
   // The ServiceManager is in the process of shutting down, however we haven't
   // been notified yet. Close our ServiceContext and shutdown.

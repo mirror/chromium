@@ -237,6 +237,7 @@ Shell* Shell::CreateInstance(ShellInitParams init_params) {
                         std::move(init_params.shell_port));
   instance_->Init(init_params.context_factory,
                   init_params.context_factory_private);
+  LOG(ERROR) << "id=" << display::Screen::GetScreen()->GetAllDisplays()[0].id();
   return instance_;
 }
 
