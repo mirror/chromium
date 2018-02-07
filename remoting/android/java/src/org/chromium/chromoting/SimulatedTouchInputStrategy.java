@@ -54,7 +54,7 @@ public class SimulatedTouchInputStrategy implements InputStrategyInterface {
         mInjector = injector;
 
         ViewConfiguration config = ViewConfiguration.get(context);
-        mDoubleTapDurationInMs = config.getDoubleTapTimeout();
+        mDoubleTapDurationInMs = ViewConfiguration.getDoubleTapTimeout();
 
         // In order to detect whether the user is attempting to double tap a target, we define a
         // region around the first point within which the second tap must occur.  The standard way
