@@ -20414,7 +20414,12 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(
       }
       break;
     case kBGRA_8888_SkColorType:
-      texture_info.fFormat = GL_BGRA8_EXT;
+      if (gl_version_info().is_es) {
+        texture_info.fFormat = GL_BGRA8_EXT;
+      } else {
+        // Desktop GL does not have a GL_BGRA internal format.
+        texture_info.fFormat = GL_RGBA8_OES;
+      }
       if (internal_format != GL_BGRA_EXT && internal_format != GL_BGRA8_EXT) {
         LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
                            "color type mismatch");
