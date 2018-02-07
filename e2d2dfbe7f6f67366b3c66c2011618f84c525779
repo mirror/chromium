@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5812d67f_14e9dcaf",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T21:37:18Z",
+      "side": 1,
+      "message": "Why do we need both a feature and a command line switch?",
+      "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
