@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c79c1068_bb2fbe88",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "This scroller should be added by the tabbed pane instead. Then you won\u0027t need to have that extra view `shortcut_item_views_`.",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216770b5_b12e7d19",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "Can you clarify in the comment in which case this would happen? Is it an RTL thing?",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 40
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06b4865_b9a828c5",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "The `description_label_view_` case above also says it should always align left and the condition is:\n  base::i18n::IsRTL() ? gfx::ALIGN_RIGHT : gfx::ALIGN_LEFT\nhowever, here it says left, but the condition is:\n  base::i18n::IsRTL() ? gfx::ALIGN_LEFT : gfx::ALIGN_RIGHT\n\nIs that intentional?",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32274398_eb8e04cc",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "I know your left inset is 0, but what if we want to change that? Shouldn\u0027t we make this work for all cases without any hard coded bits?",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af2335d_7c1f7f0a",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c91652_4b367b05",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affccf61_7e82632b",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "I would keep the order of member declarations matching the order of parameters passed to the constructor. So I would do:\n\n  const KeyboardShortcutItem* shortcut_item_;\n  ShortcutCategory category_;\n\nYou can also make category_ const, since it doesn\u0027t change.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 45
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80257a93_a2d03faa",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "In your previous patch, they used to be (150, 150). What happened?",
+      "range": {
+        "startLine": 50,
+        "startChar": 37,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd1ca6a_fc40be84",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "Add braces for this for only",
+      "range": {
+        "startLine": 117,
+        "startChar": 55,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5cf4f5_84a695e7",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "const\n\nAlso can you a DCHECK() that category is not kUnknown?",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5792f037_abf8f62a",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7a6a46_43c2d4ae",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "If this view is the `search_results_container_`, then it has insets, right? Shouldn\u0027t we take that into account?",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 14
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346e07df_22da14ab",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 24
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4d5b1e_997d05b7",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "Usually the naming is `GetFooForTesting() https://cs.chromium.org/search/?q\u003dGet.*ForTesting\u0026type\u003dcs",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8e1f95_7df3ee89",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "We should keep a vector of KeyboardShortcutItemViews instead.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4c5138_d289e325",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "Nit: Recreating?",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9ae09b_75fff364",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T18:23:38Z",
+      "side": 1,
+      "message": "What I meant was, instead of having the kFooConstexpr defined at the top of the file, it can be defined locally here, rather than having a vague value `32`.\n\u0027\nSimilarly for other constants here and in other files.",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
