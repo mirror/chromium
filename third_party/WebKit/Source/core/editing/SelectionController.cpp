@@ -53,7 +53,7 @@
 #include "core/page/Page.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
-#include "public/platform/WebMenuSourceType.h"
+#include "public/platform/WebSelectionSourceType.h"
 #include "public/web/WebSelection.h"
 
 namespace blink {
@@ -334,6 +334,8 @@ bool SelectionController::HandleSingleClick(
     }
   }
 
+  const WebSelectionSourceType source_type =
+      event.Event().FromTouch() ? kSelectionSourceTap : kSelectionSourceOther;
   if (extend_selection && !selection.IsNone()) {
     // Note: "fast/events/shift-click-user-select-none.html" makes
     // |pos.isNull()| true.
@@ -345,7 +347,10 @@ bool SelectionController::HandleSingleClick(
     if (adjusted_position.IsNull()) {
       UpdateSelectionForMouseDownDispatchingSelectStart(
           inner_node, selection.AsSelection(),
-          SetSelectionOptions::Builder().SetGranularity(granularity).Build());
+          SetSelectionOptions::Builder()
+              .SetGranularity(granularity)
+              .SetSourceType(source_type)
+              .Build());
       return false;
     }
     UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -355,19 +360,25 @@ bool SelectionController::HandleSingleClick(
                                            selection.AsSelection(), granularity)
             : ExtendSelectionAsNonDirectional(
                   adjusted_position, selection.AsSelection(), granularity),
-        SetSelectionOptions::Builder().SetGranularity(granularity).Build());
+
+        SetSelectionOptions::Builder()
+            .SetGranularity(granularity)
+            .SetSourceType(source_type)
+            .Build());
     return false;
   }
 
   if (selection_state_ == SelectionState::kExtendedSelection) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
-        inner_node, selection.AsSelection(), SetSelectionOptions());
+        inner_node, selection.AsSelection(),
+        SetSelectionOptions::Builder().SetSourceType(source_type).Build());
     return false;
   }
 
   if (position_to_use.IsNull()) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
-        inner_node, SelectionInFlatTree(), SetSelectionOptions());
+        inner_node, SelectionInFlatTree(),
+        SetSelectionOptions::Builder().SetSourceType(source_type).Build());
     return false;
   }
 
@@ -392,6 +403,7 @@ bool SelectionController::HandleSingleClick(
               SelectionInFlatTree::Builder().Collapse(position_to_use).Build()),
           SetSelectionOptions::Builder()
               .SetShouldShowHandle(is_handle_visible)
+              .SetSourceType(source_type)
               .Build())) {
     // UpdateSelectionForMouseDownDispatchingSelectStart() returns false when
     // the selectstart handler has prevented the default selection behavior from
@@ -415,26 +427,21 @@ bool SelectionController::HandleTapInsideSelection(
     const MouseEventWithHitTestResults& event,
     const SelectionInFlatTree& selection) {
   if (Selection().ShouldShrinkNextTap()) {
-    const bool did_select = SelectClosestWordFromHitTestResult(
-        event.GetHitTestResult(), AppendTrailingWhitespace::kDontAppend,
-        SelectInputEventType::kTouch);
-    if (did_select) {
-      frame_->GetEventHandler().ShowNonLocatedContextMenu(
-          nullptr, kMenuSourceAdjustSelectionReset);
-    }
+    SelectClosestWordFromHitTestResult(event.GetHitTestResult(),
+                                       AppendTrailingWhitespace::kDontAppend,
+                                       kSelectionSourceReset);
     return true;
   }
 
   if (Selection().IsHandleVisible())
     return false;
 
-  const bool did_select = UpdateSelectionForMouseDownDispatchingSelectStart(
+  UpdateSelectionForMouseDownDispatchingSelectStart(
       event.InnerNode(), selection,
-      SetSelectionOptions::Builder().SetShouldShowHandle(true).Build());
-  if (did_select) {
-    frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
-                                                        kMenuSourceTouch);
-  }
+      SetSelectionOptions::Builder()
+          .SetShouldShowHandle(true)
+          .SetSourceType(kSelectionSourceTap)
+          .Build());
   return true;
 }
 
@@ -535,6 +542,7 @@ void SelectionController::UpdateSelectionForMouseDrag(
       SetSelectionOptions::Builder()
           .SetGranularity(Selection().Granularity())
           .SetIsDirectional(selection_is_directional)
+          .SetSourceType(kSelectionSourceOther)
           .Build(),
       kAdjustEndpointsAtBidiBoundary);
 }
@@ -588,7 +596,7 @@ static bool IsEmptyWordRange(const EphemeralRangeInFlatTree range) {
 bool SelectionController::SelectClosestWordFromHitTestResult(
     const HitTestResult& result,
     AppendTrailingWhitespace append_trailing_whitespace,
-    SelectInputEventType select_input_event_type) {
+    WebSelectionSourceType source_type) {
   Node* const inner_node = result.InnerNode();
 
   if (!inner_node || !inner_node->GetLayoutObject() ||
@@ -600,8 +608,9 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
   // mid-point of the the image (which was intended for mouse-drag selection
   // and isn't desirable for touch).
   HitTestResult adjusted_hit_test_result = result;
-  if (select_input_event_type == SelectInputEventType::kTouch &&
-      result.GetImage())
+  const bool from_touch = source_type != kSelectionSourceOther;
+
+  if (from_touch && result.GetImage())
     adjusted_hit_test_result.SetNodeAndPosition(result.InnerNode(),
                                                 LayoutPoint(0, 0));
 
@@ -621,7 +630,7 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
   if (new_selection.IsNone() || new_selection.Start() > new_selection.End())
     return false;
 
-  if (select_input_event_type == SelectInputEventType::kTouch) {
+  if (from_touch) {
     // If node doesn't have text except space, tab or line break, do not
     // select that 'empty' area.
     EphemeralRangeInFlatTree range(new_selection.Start(), new_selection.End());
@@ -645,8 +654,8 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
       ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
       SetSelectionOptions::Builder()
           .SetGranularity(TextGranularity::kWord)
-          .SetShouldShowHandle(select_input_event_type ==
-                               SelectInputEventType::kTouch)
+          .SetShouldShowHandle(source_type != kSelectionSourceOther)
+          .SetSourceType(source_type)
           .Build());
 }
 
@@ -700,7 +709,8 @@ void SelectionController::SelectClosestMisspellingFromHitTestResult(
 }
 
 bool SelectionController::SelectClosestWordFromMouseEvent(
-    const MouseEventWithHitTestResults& result) {
+    const MouseEventWithHitTestResults& result,
+    WebSelectionSourceType source_type) {
   if (!mouse_down_may_start_select_)
     return false;
 
@@ -713,9 +723,7 @@ bool SelectionController::SelectClosestWordFromMouseEvent(
   DCHECK(!frame_->GetDocument()->NeedsLayoutTreeUpdate());
 
   return SelectClosestWordFromHitTestResult(
-      result.GetHitTestResult(), append_trailing_whitespace,
-      result.Event().FromTouch() ? SelectInputEventType::kTouch
-                                 : SelectInputEventType::kMouse);
+      result.GetHitTestResult(), append_trailing_whitespace, source_type);
 }
 
 void SelectionController::SelectClosestMisspellingFromMouseEvent(
@@ -734,7 +742,7 @@ void SelectionController::SelectClosestMisspellingFromMouseEvent(
 void SelectionController::SelectClosestWordOrLinkFromMouseEvent(
     const MouseEventWithHitTestResults& result) {
   if (!result.GetHitTestResult().IsLiveLink()) {
-    SelectClosestWordFromMouseEvent(result);
+    SelectClosestWordFromMouseEvent(result, kSelectionSourceOther);
     return;
   }
 
@@ -916,7 +924,8 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
 }
 
 void SelectionController::SetCaretAtHitTestResult(
-    const HitTestResult& hit_test_result) {
+    const HitTestResult& hit_test_result,
+    WebSelectionSourceType source_type) {
   Node* inner_node = hit_test_result.InnerNode();
   DCHECK(inner_node);
   const VisiblePositionInFlatTree& visible_hit_pos =
@@ -930,7 +939,10 @@ void SelectionController::SetCaretAtHitTestResult(
   if (visible_pos.IsNull()) {
     UpdateSelectionForMouseDownDispatchingSelectStart(
         inner_node, SelectionInFlatTree(),
-        SetSelectionOptions::Builder().SetShouldShowHandle(true).Build());
+        SetSelectionOptions::Builder()
+            .SetShouldShowHandle(true)
+            .SetSourceType(source_type)
+            .Build());
     return;
   }
   UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -939,7 +951,10 @@ void SelectionController::SetCaretAtHitTestResult(
           inner_node, SelectionInFlatTree::Builder()
                           .Collapse(visible_pos.ToPositionWithAffinity())
                           .Build()),
-      SetSelectionOptions::Builder().SetShouldShowHandle(true).Build());
+      SetSelectionOptions::Builder()
+          .SetShouldShowHandle(true)
+          .SetSourceType(source_type)
+          .Build());
 }
 
 bool SelectionController::HandleDoubleClick(
@@ -965,12 +980,9 @@ bool SelectionController::HandleDoubleClick(
     selection_state_ = SelectionState::kExtendedSelection;
     return true;
   }
-  if (!SelectClosestWordFromMouseEvent(event))
-    return true;
-  if (!Selection().IsHandleVisible())
-    return true;
-  frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
-                                                      kMenuSourceTouch);
+  SelectClosestWordFromMouseEvent(event, event.Event().FromTouch()
+                                             ? kSelectionSourceTap
+                                             : kSelectionSourceOther);
   return true;
 }
 
@@ -1016,14 +1028,12 @@ bool SelectionController::HandleTripleClick(
       SetSelectionOptions::Builder()
           .SetGranularity(TextGranularity::kParagraph)
           .SetShouldShowHandle(is_handle_visible)
+          .SetSourceType(event.Event().FromTouch() ? kSelectionSourceTap
+                                                   : kSelectionSourceOther)
           .Build());
   if (!did_select)
     return false;
 
-  if (!Selection().IsHandleVisible())
-    return true;
-  frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
-                                                      kMenuSourceTouch);
   return true;
 }
 
@@ -1204,12 +1214,12 @@ bool SelectionController::HandleGestureLongPress(
 
   if (SelectClosestWordFromHitTestResult(hit_test_result,
                                          AppendTrailingWhitespace::kDontAppend,
-                                         SelectInputEventType::kTouch))
+                                         kSelectionSourceLongPress))
     return Selection().IsAvailable();
 
   if (!inner_node->isConnected() || !inner_node->GetLayoutObject())
     return false;
-  SetCaretAtHitTestResult(hit_test_result);
+  SetCaretAtHitTestResult(hit_test_result, kSelectionSourceLongPress);
   return false;
 }
 
@@ -1217,14 +1227,16 @@ void SelectionController::HandleGestureTwoFingerTap(
     const GestureEventWithHitTestResults& targeted_event) {
   TRACE_EVENT0("blink", "SelectionController::handleGestureTwoFingerTap");
 
-  SetCaretAtHitTestResult(targeted_event.GetHitTestResult());
+  SetCaretAtHitTestResult(targeted_event.GetHitTestResult(),
+                          kSelectionSourceOther);
 }
 
 void SelectionController::HandleGestureLongTap(
     const GestureEventWithHitTestResults& targeted_event) {
   TRACE_EVENT0("blink", "SelectionController::handleGestureLongTap");
 
-  SetCaretAtHitTestResult(targeted_event.GetHitTestResult());
+  SetCaretAtHitTestResult(targeted_event.GetHitTestResult(),
+                          kSelectionSourceOther);
 }
 
 static bool HitTestResultIsMisspelled(const HitTestResult& result) {
@@ -1262,8 +1274,7 @@ void SelectionController::SendContextMenuEvent(
   AutoReset<bool> mouse_down_may_start_select_change(
       &mouse_down_may_start_select_, true);
 
-  if (mev.Event().menu_source_type != kMenuSourceTouchHandle &&
-      HitTestResultIsMisspelled(mev.GetHitTestResult()))
+  if (HitTestResultIsMisspelled(mev.GetHitTestResult()))
     return SelectClosestMisspellingFromMouseEvent(mev);
 
   if (!frame_->GetEditor().Behavior().ShouldSelectOnContextualMenuClick())

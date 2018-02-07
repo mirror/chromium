@@ -322,6 +322,7 @@ source_set("blink_headers") {
     "platform/WebSecurityOrigin.h",
     "platform/WebSecurityStyle.h",
     "platform/WebSelectionBound.h",
+    "platform/WebSelectionSourceType.h",
     "platform/WebSetSinkIdCallbacks.h",
     "platform/WebSize.h",
     "platform/WebSocketHandshakeThrottle.h",

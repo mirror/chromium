@@ -35,6 +35,7 @@
 #include "core/editing/TextGranularity.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebSelectionSourceType.h"
 
 namespace blink {
 
@@ -86,7 +87,6 @@ class CORE_EXPORT SelectionController final
   explicit SelectionController(LocalFrame&);
 
   enum class AppendTrailingWhitespace { kShouldAppend, kDontAppend };
-  enum class SelectInputEventType { kTouch, kMouse };
   enum EndPointsAdjustmentMode {
     kAdjustEndpointsAtBidiBoundary,
     kDoNotAdjustEndpoints
@@ -97,11 +97,12 @@ class CORE_EXPORT SelectionController final
   // Returns |true| if a word was selected.
   bool SelectClosestWordFromHitTestResult(const HitTestResult&,
                                           AppendTrailingWhitespace,
-                                          SelectInputEventType);
+                                          WebSelectionSourceType);
   void SelectClosestMisspellingFromHitTestResult(const HitTestResult&,
                                                  AppendTrailingWhitespace);
   // Returns |true| if a word was selected.
-  bool SelectClosestWordFromMouseEvent(const MouseEventWithHitTestResults&);
+  bool SelectClosestWordFromMouseEvent(const MouseEventWithHitTestResults&,
+                                       WebSelectionSourceType);
   void SelectClosestMisspellingFromMouseEvent(
       const MouseEventWithHitTestResults&);
   void SelectClosestWordOrLinkFromMouseEvent(
@@ -109,7 +110,7 @@ class CORE_EXPORT SelectionController final
   void SetNonDirectionalSelectionIfNeeded(const SelectionInFlatTree&,
                                           const SetSelectionOptions&,
                                           EndPointsAdjustmentMode);
-  void SetCaretAtHitTestResult(const HitTestResult&);
+  void SetCaretAtHitTestResult(const HitTestResult&, WebSelectionSourceType);
   bool UpdateSelectionForMouseDownDispatchingSelectStart(
       Node*,
       const SelectionInFlatTree&,

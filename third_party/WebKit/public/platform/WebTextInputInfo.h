@@ -57,6 +57,8 @@ struct WebTextInputInfo {
   // The inputmode attribute value of the currently focused input field.
   WebTextInputMode input_mode;
 
+  int selection_id;
+
   BLINK_PLATFORM_EXPORT bool Equals(const WebTextInputInfo&) const;
 
   WebTextInputInfo()
@@ -66,7 +68,8 @@ struct WebTextInputInfo {
         selection_end(0),
         composition_start(-1),
         composition_end(-1),
-        input_mode(kWebTextInputModeDefault) {}
+        input_mode(kWebTextInputModeDefault),
+        selection_id(0) {}
 };
 
 inline bool operator==(const WebTextInputInfo& a, const WebTextInputInfo& b) {

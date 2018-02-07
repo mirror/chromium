@@ -44,9 +44,10 @@ namespace blink {
 // See |WebSelection|.
 struct CompositedSelection {
   STACK_ALLOCATED();
-  CompositedSelection() : type(kNoSelection) {}
+  CompositedSelection() : type(kNoSelection), id(0) {}
 
   SelectionType type;
+  int id;
   CompositedSelectionBound start;
   CompositedSelectionBound end;
 };

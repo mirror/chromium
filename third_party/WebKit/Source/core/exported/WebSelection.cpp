@@ -42,7 +42,8 @@ static WebSelectionBound GetWebSelectionBound(
 WebSelection::WebSelection(const CompositedSelection& selection)
     : selection_type_(static_cast<WebSelection::SelectionType>(selection.type)),
       start_(GetWebSelectionBound(selection, true)),
-      end_(GetWebSelectionBound(selection, false)) {}
+      end_(GetWebSelectionBound(selection, false)),
+      selection_id_(selection.id) {}
 
 WebSelection::WebSelection(const WebSelection& other) = default;
 

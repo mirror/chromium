@@ -188,6 +188,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebRange SelectionRange() const override;
   WebString SelectionAsText() const override;
   WebString SelectionAsMarkup() const override;
+  int SelectionId() const override;
   bool SelectWordAroundCaret() override;
   void SelectRange(const WebPoint& base, const WebPoint& extent) override;
   void SelectRange(const WebRange&,

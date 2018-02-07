@@ -486,7 +486,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DetachGuest(int element_instance_id) override;
   void SetSelectedText(const base::string16& selection_text,
                        size_t offset,
-                       const gfx::Range& range) override;
+                       const gfx::Range& range,
+                       int selection_id) override;
   void AddMessageToConsole(ConsoleMessageLevel level,
                            const std::string& message) override;
   void SetPreviewsState(PreviewsState previews_state) override;
@@ -1418,6 +1419,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // Range over the document corresponding to the actual selected text (which
   // could correspond to a substring of |selection_text_|; see above).
   gfx::Range selection_range_;
+  int selection_id_;
   // Used to inform didChangeSelection() when it is called in the context
   // of handling a InputMsg_SelectRange IPC.
   bool handling_select_range_;
