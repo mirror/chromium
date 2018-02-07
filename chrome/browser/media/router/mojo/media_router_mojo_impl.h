@@ -242,14 +242,9 @@ class MediaRouterMojoImpl : public MediaRouterBase,
         const std::vector<MediaRoute>& routes,
         const std::vector<MediaRoute::Id>& joinable_route_ids);
 
-    // Adds |route| to the list of routes managed by the provider and returns
-    // true, if it hasn't been added already. Returns false otherwise.
-    bool AddRouteForProvider(MediaRouteProviderId provider_id,
-                             const MediaRoute& route);
-
-    // Re-constructs |cached_route_list_| by merging route lists in
-    // |providers_to_routes_|.
-    void UpdateCachedRouteList();
+    // Adds |route| to the list of cached routes and returns true if it hasn't
+    // been added already. Returns false otherwise.
+    bool AddRoute(const MediaRoute& route);
 
     void AddObserver(MediaRoutesObserver* observer);
     void RemoveObserver(MediaRoutesObserver* observer);
@@ -257,29 +252,21 @@ class MediaRouterMojoImpl : public MediaRouterBase,
     bool HasObserver(MediaRoutesObserver* observer) const;
     bool HasObservers() const;
 
-    const base::Optional<std::vector<MediaRoute>>& cached_route_list() const {
+    const std::vector<MediaRoute>& cached_route_list() const {
       return cached_route_list_;
     }
     const std::vector<MediaRoute::Id>& joinable_route_ids() const {
       return joinable_route_ids_;
     }
-    const base::flat_map<MediaRouteProviderId, std::vector<MediaRoute>>&
-    providers_to_routes() const {
-      return providers_to_routes_;
-    }
+    bool received_results() const { return received_results_; }
 
    private:
     // Cached list of routes and joinable route IDs for the query.
-    base::Optional<std::vector<MediaRoute>> cached_route_list_;
+    std::vector<MediaRoute> cached_route_list_;
     std::vector<MediaRoute::Id> joinable_route_ids_;
 
-    // Per-MRP lists of routes and joinable route IDs for the query.
-    // TODO(crbug.com/761493): Consider making MRP ID an attribute
-    // of MediaRoute, so that we can simplify these into vectors.
-    base::flat_map<MediaRouteProviderId, std::vector<MediaRoute>>
-        providers_to_routes_;
-    base::flat_map<MediaRouteProviderId, std::vector<MediaRoute::Id>>
-        providers_to_joinable_routes_;
+    // This is set to true once routes are returned from a provider.
+    bool received_results_ = false;
 
     base::ObserverList<MediaRoutesObserver> observers_;
 
@@ -367,7 +354,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Adds |route| to the list of routes. Called in the callback for
   // CreateRoute() etc. so that even if the callback is called before
   // OnRoutesUpdated(), MediaRouter is still aware of the route.
-  void OnRouteAdded(MediaRouteProviderId provider_id, const MediaRoute& route);
+  void OnRouteAdded(const MediaRoute& route);
 
   // Converts the callback result of calling Mojo CreateRoute()/JoinRoute()
   // into a local callback.

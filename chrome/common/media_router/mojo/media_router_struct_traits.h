@@ -421,6 +421,11 @@ struct StructTraits<media_router::mojom::MediaRouteDataView,
     return route.media_sink_id();
   }
 
+  static media_router::MediaRouteProviderId provider_id(
+      const media_router::MediaRoute& route) {
+    return route.provider_id();
+  }
+
   static const std::string& description(const media_router::MediaRoute& route) {
     return route.description();
   }
