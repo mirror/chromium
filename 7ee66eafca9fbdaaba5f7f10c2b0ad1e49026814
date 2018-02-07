@@ -116,6 +116,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3979b4_1a156f88",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2018-02-07T18:46:35Z",
+      "side": 1,
+      "message": "To make \"HasTablet\" as true, it seems I need a kernel side change for the goldfish events driver. Since that driver is also used by android images.  Android image still want to keep old behavior, so the kernel driver have to have some logic to provide INPUT_PROP_DIRECT or INPUT_PROP_POINTER dynamically. I think that\u0027s lots of unecassary trouble.",
+      "parentUuid": "c0db4da3_c1657ba1",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
