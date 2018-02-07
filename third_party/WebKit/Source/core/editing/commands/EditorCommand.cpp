@@ -47,6 +47,7 @@
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/VisiblePosition.h"
+#include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/editing/commands/CreateLinkCommand.h"
 #include "core/editing/commands/EditorCommandNames.h"
 #include "core/editing/commands/FormatBlockCommand.h"
@@ -274,13 +275,33 @@ static LocalFrame* TargetFrame(LocalFrame& frame, Event* event) {
   return node->GetDocument().GetFrame();
 }
 
+static void ApplyStyle(LocalFrame& frame,
+                       CSSPropertyValueSet* style,
+                       InputEvent::InputType input_type) {
+  const VisibleSelection& selection =
+      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  if (selection.IsNone())
+    return;
+  if (selection.IsCaret()) {
+    frame.GetEditor().ComputeAndSetTypingStyle(style, input_type);
+    return;
+  }
+  DCHECK(selection.IsRange()) << selection;
+  if (!style)
+    return;
+  DCHECK(frame.GetDocument());
+  ApplyStyleCommand::Create(*frame.GetDocument(), EditingStyle::Create(style),
+                            input_type)
+      ->Apply();
+}
+
 static void ApplyStyleToSelection(LocalFrame& frame,
                                   CSSPropertyValueSet* style,
                                   InputEvent::InputType input_type) {
   if (!style || style->IsEmpty() || !frame.GetEditor().CanEditRichly())
     return;
 
-  frame.GetEditor().ApplyStyle(style, input_type);
+  ApplyStyle(frame, style, input_type);
 }
 
 static bool ApplyCommandToFrame(LocalFrame& frame,
@@ -294,7 +315,7 @@ static bool ApplyCommandToFrame(LocalFrame& frame,
       ApplyStyleToSelection(frame, style, input_type);
       return true;
     case kCommandFromDOM:
-      frame.GetEditor().ApplyStyle(style, input_type);
+      ApplyStyle(frame, style, input_type);
       return true;
   }
   NOTREACHED();
@@ -1202,8 +1223,7 @@ static bool ExecuteMakeTextWritingDirectionLeftToRight(LocalFrame& frame,
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
   style->SetProperty(CSSPropertyUnicodeBidi, CSSValueIsolate);
   style->SetProperty(CSSPropertyDirection, CSSValueLtr);
-  frame.GetEditor().ApplyStyle(
-      style, InputEvent::InputType::kFormatSetBlockTextDirection);
+  ApplyStyle(frame, style, InputEvent::InputType::kFormatSetBlockTextDirection);
   return true;
 }
 
@@ -1214,8 +1234,7 @@ static bool ExecuteMakeTextWritingDirectionNatural(LocalFrame& frame,
   MutableCSSPropertyValueSet* style =
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
   style->SetProperty(CSSPropertyUnicodeBidi, CSSValueNormal);
-  frame.GetEditor().ApplyStyle(
-      style, InputEvent::InputType::kFormatSetBlockTextDirection);
+  ApplyStyle(frame, style, InputEvent::InputType::kFormatSetBlockTextDirection);
   return true;
 }
 
@@ -1227,8 +1246,7 @@ static bool ExecuteMakeTextWritingDirectionRightToLeft(LocalFrame& frame,
       MutableCSSPropertyValueSet::Create(kHTMLQuirksMode);
   style->SetProperty(CSSPropertyUnicodeBidi, CSSValueIsolate);
   style->SetProperty(CSSPropertyDirection, CSSValueRtl);
-  frame.GetEditor().ApplyStyle(
-      style, InputEvent::InputType::kFormatSetBlockTextDirection);
+  ApplyStyle(frame, style, InputEvent::InputType::kFormatSetBlockTextDirection);
   return true;
 }
 
