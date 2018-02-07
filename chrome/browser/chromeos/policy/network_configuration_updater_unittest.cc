@@ -76,19 +76,22 @@ class FakeUser : public user_manager::User {
   DISALLOW_COPY_AND_ASSIGN(FakeUser);
 };
 
-class FakeWebTrustedCertsObserver
-    : public UserNetworkConfigurationUpdater::WebTrustedCertsObserver {
+class FakePolicyProvidedCertsObserver
+    : public UserNetworkConfigurationUpdater::PolicyProvidedCertsObserver {
  public:
-  FakeWebTrustedCertsObserver() {}
+  FakePolicyProvidedCertsObserver() {}
 
-  void OnTrustAnchorsChanged(
+  void OnPolicyProvidedCertsChanged(
+      const net::CertificateList& all_server_and_authority_certs,
       const net::CertificateList& trust_anchors) override {
+    all_server_and_authority_certs_ = all_server_and_authority_certs;
     trust_anchors_ = trust_anchors;
   }
+  net::CertificateList all_server_and_authority_certs_;
   net::CertificateList trust_anchors_;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(FakeWebTrustedCertsObserver);
+  DISALLOW_COPY_AND_ASSIGN(FakePolicyProvidedCertsObserver);
 };
 
 class FakeNetworkDeviceHandler : public chromeos::FakeNetworkDeviceHandler {
@@ -117,11 +120,6 @@ class FakeCertificateImporter : public chromeos::onc::CertificateImporter {
       : expected_onc_source_(::onc::ONC_SOURCE_UNKNOWN), call_count_(0) {}
   ~FakeCertificateImporter() override {}
 
-  void SetTrustedCertificatesResult(
-      net::ScopedCERTCertificateList onc_trusted_certificates) {
-    onc_trusted_certificates_ = std::move(onc_trusted_certificates);
-  }
-
   void SetExpectedONCCertificates(
       std::unique_ptr<chromeos::onc::OncParsedCertificates>
           expected_onc_certificates) {
@@ -139,7 +137,18 @@ class FakeCertificateImporter : public chromeos::onc::CertificateImporter {
   }
 
   void ImportCertificates(
-      std::unique_ptr<chromeos::onc::OncParsedCertificates> certificates,
+      const chromeos::onc::OncParsedCertificates* certificates,
+      ::onc::ONCSource source,
+      DoneCallback done_callback) override {
+    // As policy-provided server and authority certificates are not permanently
+    // imported, only ImportClientCertificaates should be called.
+    // ImportCertificates should never be calledfrom
+    // UserNetworkConfigurationUpdater.
+    NOTREACHED();
+  }
+
+  void ImportClientCertificates(
+      const chromeos::onc::OncParsedCertificates* certificates,
       ::onc::ONCSource source,
       DoneCallback done_callback) override {
     if (expected_onc_source_ != ::onc::ONC_SOURCE_UNKNOWN)
@@ -154,9 +163,8 @@ class FakeCertificateImporter : public chromeos::onc::CertificateImporter {
     }
 
     ++call_count_;
-    std::move(done_callback).Run(true, std::move(onc_trusted_certificates_));
+    std::move(done_callback).Run(true);
   }
-
  private:
   ::onc::ONCSource expected_onc_source_;
   std::unique_ptr<chromeos::onc::OncParsedCertificates>
@@ -183,7 +191,55 @@ const char kFakeONC[] =
     "  \"Certificates\": ["
     "    { \"GUID\": \"{f998f760-272b-6939-4c2beffe428697ac}\","
     "      \"PKCS12\": \"YWJj\","
-    "      \"Type\": \"Client\" }"
+    "      \"Type\": \"Client\" },"
+    "    { \"GUID\": \"{d443ad0d-ea16-4301-9089-588115e2f5c4}\","
+    "      \"TrustBits\": ["
+    "         \"Web\""
+    "      ],"
+    "      \"Type\": \"Authority\","
+    "      \"X509\": \"-----BEGIN CERTIFICATE-----\n"
+    "MIIC8zCCAdugAwIBAgIJALF9qhLor0+aMA0GCSqGSIb3DQEBBQUAMBcxFTATBgNV\n"
+    "BAMMDFRlc3QgUm9vdCBDQTAeFw0xNDA4MTQwMzA1MjlaFw0yNDA4MTEwMzA1Mjla\n"
+    "MBcxFTATBgNVBAMMDFRlc3QgUm9vdCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEP\n"
+    "ADCCAQoCggEBALZJQeNCAVGofzx6cdP7zZE1F4QajvY2x9FwHfqG8267dm/oMi43\n"
+    "/TiSPWjkin1CMxRGG9wE9pFuVEDECgn97C1i4l7huiycwbFgTNrH+CJcgiBlQh5W\n"
+    "d3VP65AsSupXDiKNbJWsEerM1+72cA0J3aY1YV3Jdm2w8h6/MIbYd1I2lZcO0UbF\n"
+    "7YE9G7DyYZU8wUA4719dumGf7yucn4WJdHBj1XboNX7OAeHzERGQHA31/Y3OEGyt\n"
+    "fFUaIW/XLfR4FeovOL2RnjwdB0b1Q8GCi68SU2UZimlpZgay2gv6KgChKhWESfEB\n"
+    "v5swBtAVoB+dUZFH4VNf717swmF5whSfxOMCAwEAAaNCMEAwDwYDVR0TAQH/BAUw\n"
+    "AwEB/zAdBgNVHQ4EFgQUvPcw0TzA8nn675/JbFyT84poq4MwDgYDVR0PAQH/BAQD\n"
+    "AgEGMA0GCSqGSIb3DQEBBQUAA4IBAQBXByn7f+j/sObYWGrDkKE4HLTzaLHs6Ikj\n"
+    "JNeo8iHDYOSkSVwAv9/HgniAKxj3rd3QYl6nsMzwqrTOcBJZZWd2BQAYmv/EKhfj\n"
+    "8VXYvlxe68rLU4cQ1QkyNqdeQfRT2n5WYNJ+TpqlCF9ddennMMsi6e8ZSYOlI6H4\n"
+    "YEzlNtU5eBjxXr/OqgtTgSx4qQpr2xMQIRR/G3A9iRpAigYsXVAZYvnHRYnyPWYF\n"
+    "PX11W1UegEJyoZp8bQp09u6mIWw6mPt3gl/ya1bm3ZuOUPDGrv3qpgUHqSYGVrOy\n"
+    "2bI3oCE+eQYfuVG+9LFJTZC1M+UOx15bQMVqBNFDepRqpE9h/ILg\n"
+    "-----END CERTIFICATE-----\" },"
+    "    { \"GUID\": \"{dac8e282-8ff3-4bb9-a20f-b5ef22b2f83b}\","
+    "      \"Type\": \"Authority\","
+    "      \"X509\": \"-----BEGIN CERTIFICATE-----\n"
+    "MIIDvzCCAqegAwIBAgIBAzANBgkqhkiG9w0BAQsFADBjMQswCQYDVQQGEwJVUzET\n"
+    "MBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNTW91bnRhaW4gVmlldzEQMA4G\n"
+    "A1UECgwHVGVzdCBDQTEVMBMGA1UEAwwMVGVzdCBSb290IENBMB4XDTE3MDYwNTE3\n"
+    "MTA0NloXDTI3MDYwMzE3MTA0NlowYDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNh\n"
+    "bGlmb3JuaWExFjAUBgNVBAcMDU1vdW50YWluIFZpZXcxEDAOBgNVBAoMB1Rlc3Qg\n"
+    "Q0ExEjAQBgNVBAMMCTEyNy4wLjAuMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC\n"
+    "AQoCggEBALS/0pcz5RNbd2W9cxp1KJtHWea3MOhGM21YW9ofCv/k5C3yHfiJ6GQu\n"
+    "9sPN16OO1/fN59gOEMPnVtL85ebTTuL/gk0YY4ewo97a7wo3e6y1t0PO8gc53xTp\n"
+    "w6RBPn5oRzSbe2HEGOYTzrO0puC6A+7k6+eq9G2+l1uqBpdQAdB4uNaSsOTiuUOI\n"
+    "ta4UZH1ScNQFHAkl1eJPyaiC20Exw75EbwvU/b/B7tlivzuPtQDI0d9dShOtceRL\n"
+    "X9HZckyD2JNAv2zNL2YOBNa5QygkySX9WXD+PfKpCk7Cm8TenldeXRYl5ni2REkp\n"
+    "nfa/dPuF1g3xZVjyK9aPEEnIAC2I4i0CAwEAAaOBgDB+MAwGA1UdEwEB/wQCMAAw\n"
+    "HQYDVR0OBBYEFODc4C8HiHQ6n9Mwo3GK+dal5aZTMB8GA1UdIwQYMBaAFJsmC4qY\n"
+    "qbsduR8c4xpAM+2OF4irMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAP\n"
+    "BgNVHREECDAGhwR/AAABMA0GCSqGSIb3DQEBCwUAA4IBAQB6FEQuUDRcC5jkX3aZ\n"
+    "uuTeZEqMVL7JXgvgFqzXsPb8zIdmxr/tEDfwXx2qDf2Dpxts7Fq4vqUwimK4qV3K\n"
+    "7heLnWV2+FBvV1eeSfZ7AQj+SURkdlyo42r41+t13QUf+Z0ftR9266LSWLKrukeI\n"
+    "Mxk73hOkm/u8enhTd00dy/FN9dOFBFHseVMspWNxIkdRILgOmiyfQNRgxNYdOf0e\n"
+    "EfELR8Hn6WjZ8wAbvO4p7RTrzu1c/RZ0M+NLkID56Brbl70GC2h5681LPwAOaZ7/\n"
+    "mWQ5kekSyJjmLfF12b+h9RVAt5MrXZgk2vNujssgGf4nbWh4KZyQ6qrs778ZdDLm\n"
+    "yfUn\n"
+    "-----END CERTIFICATE-----\" }"
     "  ],"
     "  \"Type\": \"UnencryptedConfiguration\""
     "}";
@@ -387,27 +443,20 @@ TEST_F(NetworkConfigurationUpdaterTest, PolicyIsValidatedAndRepaired) {
 
 TEST_F(NetworkConfigurationUpdaterTest,
        DoNotAllowTrustedCertificatesFromPolicy) {
-  net::ScopedCERTCertificateList cert_list =
-      net::CreateCERTCertificateListFromFile(net::GetTestCertsDirectory(),
-                                             "ok_cert.pem",
-                                             net::X509Certificate::FORMAT_AUTO);
-  ASSERT_EQ(1u, cert_list.size());
-
   EXPECT_CALL(network_config_handler_,
               SetPolicy(onc::ONC_SOURCE_USER_POLICY, _, _, _));
-  certificate_importer_->SetTrustedCertificatesResult(std::move(cert_list));
 
   UserNetworkConfigurationUpdater* updater =
       CreateNetworkConfigurationUpdaterForUserPolicy(
           false /* do not allow trusted certs from policy */,
-          true /* set certificate importer */);
-  MarkPolicyProviderInitialized();
+          false /* set certificate importer */);
 
   // Certificates with the "Web" trust flag set should not be forwarded to
   // observers.
-  FakeWebTrustedCertsObserver observer;
-  updater->AddTrustedCertsObserver(&observer);
+  FakePolicyProvidedCertsObserver observer;
+  updater->AddPolicyProvidedCertsObserver(&observer);
 
+  MarkPolicyProviderInitialized();
   base::RunLoop().RunUntilIdle();
 
   net::CertificateList trust_anchors;
@@ -415,7 +464,7 @@ TEST_F(NetworkConfigurationUpdaterTest,
   EXPECT_TRUE(trust_anchors.empty());
 
   EXPECT_TRUE(observer.trust_anchors_.empty());
-  updater->RemoveTrustedCertsObserver(&observer);
+  updater->RemovePolicyProvidedCertsObserver(&observer);
 }
 
 TEST_F(NetworkConfigurationUpdaterTest,
@@ -424,27 +473,33 @@ TEST_F(NetworkConfigurationUpdaterTest,
   EXPECT_CALL(network_config_handler_, SetPolicy(_, _, _, _))
       .Times(AnyNumber());
 
-  net::ScopedCERTCertificateList cert_list =
-      net::CreateCERTCertificateListFromFile(net::GetTestCertsDirectory(),
-                                             "ok_cert.pem",
-                                             net::X509Certificate::FORMAT_AUTO);
-  ASSERT_EQ(1u, cert_list.size());
-
   certificate_importer_->SetExpectedONCSource(onc::ONC_SOURCE_USER_POLICY);
-  certificate_importer_->SetTrustedCertificatesResult(std::move(cert_list));
 
   UserNetworkConfigurationUpdater* updater =
       CreateNetworkConfigurationUpdaterForUserPolicy(
           true /* allow trusted certs from policy */,
-          true /* set certificate importer */);
-  MarkPolicyProviderInitialized();
+          false /* set certificate importer */);
 
+  // Certificates with the "Web" trust flag set should be forwarded to
+  // observers.
+  FakePolicyProvidedCertsObserver observer;
+  updater->AddPolicyProvidedCertsObserver(&observer);
+
+  PolicyMap policy;
+  policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
+             POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
+             base::MakeUnique<base::Value>(kFakeONC), nullptr);
+  UpdateProviderPolicy(policy);
+  MarkPolicyProviderInitialized();
   base::RunLoop().RunUntilIdle();
 
   // Certificates with the "Web" trust flag set will be returned.
   net::CertificateList trust_anchors;
   updater->GetWebTrustedCertificates(&trust_anchors);
   EXPECT_EQ(1u, trust_anchors.size());
+
+  EXPECT_EQ(1u, observer.trust_anchors_.size());
+  updater->RemovePolicyProvidedCertsObserver(&observer);
 }
 
 TEST_F(NetworkConfigurationUpdaterTest,
@@ -457,12 +512,11 @@ TEST_F(NetworkConfigurationUpdaterTest,
   UserNetworkConfigurationUpdater* updater =
       CreateNetworkConfigurationUpdaterForUserPolicy(
           true /* allow trusted certs from policy */,
-          true /* set certificate importer */);
+          false /* set certificate importer */);
+  FakePolicyProvidedCertsObserver observer;
+  updater->AddPolicyProvidedCertsObserver(&observer);
+
   MarkPolicyProviderInitialized();
-
-  FakeWebTrustedCertsObserver observer;
-  updater->AddTrustedCertsObserver(&observer);
-
   base::RunLoop().RunUntilIdle();
 
   // Verify that the returned certificate list is empty.
@@ -473,16 +527,7 @@ TEST_F(NetworkConfigurationUpdaterTest,
   }
   EXPECT_TRUE(observer.trust_anchors_.empty());
 
-  // Now use a non-empty certificate list to test the observer notification.
-  net::ScopedCERTCertificateList cert_list =
-      net::CreateCERTCertificateListFromFile(net::GetTestCertsDirectory(),
-                                             "ok_cert.pem",
-                                             net::X509Certificate::FORMAT_AUTO);
-  ASSERT_EQ(1u, cert_list.size());
-  certificate_importer_->SetTrustedCertificatesResult(std::move(cert_list));
-
-  // Change to any non-empty policy, so that updates are triggered. The actual
-  // content of the policy is irrelevant.
+  // Change to ONC policy with web trust certs.
   PolicyMap policy;
   policy.Set(key::kOpenNetworkConfiguration, POLICY_LEVEL_MANDATORY,
              POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -499,7 +544,7 @@ TEST_F(NetworkConfigurationUpdaterTest,
   }
   EXPECT_EQ(1u, observer.trust_anchors_.size());
 
-  updater->RemoveTrustedCertsObserver(&observer);
+  updater->RemovePolicyProvidedCertsObserver(&observer);
 }
 
 TEST_F(NetworkConfigurationUpdaterTest,
@@ -654,8 +699,9 @@ TEST_P(NetworkConfigurationUpdaterTestWithParam, PolicyChange) {
   MarkPolicyProviderInitialized();
 
   Mock::VerifyAndClearExpectations(&network_config_handler_);
-  EXPECT_LE(ExpectedImportCertificatesCallCount(),
-            certificate_importer_->GetAndResetImportCount());
+  // The certificate importer is only called if the certificates changes. An
+  // empty policy does not count.
+  EXPECT_EQ(0u, certificate_importer_->GetAndResetImportCount());
 
   // The Updater should update if policy changes.
   EXPECT_CALL(network_config_handler_,
