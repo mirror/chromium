@@ -608,6 +608,7 @@ source_set("unit_tests") {
     "//device/bluetooth:mocks",
     "//extensions:extensions_browser_resources",
     "//extensions:test_support",
+    "//extensions/browser/value_store:test_support",
     "//extensions/common",
     "//extensions/common/api",
     "//extensions/features",

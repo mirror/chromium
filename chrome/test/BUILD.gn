@@ -1317,6 +1317,7 @@ test("browser_tests") {
         "//chrome/test/media_router:media_router_browsertests",
         "//components/guest_view/browser:test_support",
         "//components/keep_alive_registry",
+        "//extensions/browser/value_store:test_support",
 
         # TODO(rockot) bug 505926: The chrome_extensions_browsertests target
         # should be deleted and this line removed. See the
@@ -3498,6 +3499,7 @@ test("unit_tests") {
       "//chrome/common/extensions/api",
       "//extensions:extensions_resources",
       "//extensions/browser:test_support",
+      "//extensions/browser/value_store:test_support",
       "//extensions/common",
       "//extensions/renderer:unit_test_support",
       "//extensions/strings",
