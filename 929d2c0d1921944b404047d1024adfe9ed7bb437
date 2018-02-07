@@ -167,6 +167,29 @@
     },
     {
       "key": {
+        "uuid": "3a255ea5_4be7d147",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:07:56Z",
+      "side": 1,
+      "message": "Why do we need this?\nIsn\u0027t InitTable() done before we entering this function?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 9,
+        "endLine": 1044,
+        "endChar": 18
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "396a4fd9_f595fc76",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
@@ -208,6 +231,23 @@
         "endLine": 1060,
         "endChar": 54
       },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8761970_e1935e43",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:07:56Z",
+      "side": 1,
+      "message": "nit: This comment doesn\u0027t apply to this test/",
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

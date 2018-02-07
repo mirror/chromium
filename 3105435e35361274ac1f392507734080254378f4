@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1331687c_c0b96da5",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:07:56Z",
+      "side": 1,
+      "message": "Since you are already here, can we either get rid of these two existing tests or report the times to perf dashboard as well?",
+      "revId": "3105435e35361274ac1f392507734080254378f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd668c0b_2e0b6e0c",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T22:07:56Z",
+      "side": 1,
+      "message": "Do we need base::PerfTimeLogger?",
+      "revId": "3105435e35361274ac1f392507734080254378f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
