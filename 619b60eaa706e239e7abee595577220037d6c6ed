@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2be7a76b_600ba489",
+        "filename": "chrome/android/java/res_vr/values-vrheadset-v26/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-07T18:40:17Z",
+      "side": 1,
+      "message": "Should we add android:windowBackground like we do here: https://cs.chromium.org/chromium/src/chrome/android/java/res_vr/values-v17/vr_styles.xml?rcl\u003d4441b88817fefeb870c6a51f3bbba17720dc4d53\u0026l\u003d16",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "619b60eaa706e239e7abee595577220037d6c6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb93db1_78010703",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-02-07T18:40:17Z",
+      "side": 0,
+      "message": "I believe the reason we had this here is that we can close the CCT for DLA when we early out below.",
+      "range": {
+        "startLine": 986,
+        "startChar": 21,
+        "endLine": 986,
+        "endChar": 38
+      },
+      "revId": "eb2c637c78cb4553e1a3242b89d4e6114c7a299f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
