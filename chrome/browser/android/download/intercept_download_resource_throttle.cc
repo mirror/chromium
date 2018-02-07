@@ -4,13 +4,35 @@
 
 #include "chrome/browser/android/download/intercept_download_resource_throttle.h"
 
+#include "base/bind.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/android/download/download_controller_base.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "content/public/browser/browser_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
+
+namespace {
+static const char kOMADrmMessageMimeType[] = "application/vnd.oma.drm.message";
+static const char kOMADrmContentMimeType[] = "application/vnd.oma.drm.content";
+static const char kOMADrmRightsMimeType1[] =
+    "application/vnd.oma.drm.rights+xml";
+static const char kOMADrmRightsMimeType2[] =
+    "application/vnd.oma.drm.rights+wbxml";
+
+// Return the cookie service at the client end of the mojo pipe.
+network::mojom::CookieManager* cookie_service_client() {
+  return content::BrowserContext::GetDefaultStoragePartition(
+             ProfileManager::GetPrimaryUserProfile())
+      ->GetCookieManagerForBrowserProcess();
+}
+
+}  // namespace
 
 InterceptDownloadResourceThrottle::InterceptDownloadResourceThrottle(
     net::URLRequest* request,
@@ -47,18 +69,17 @@ void InterceptDownloadResourceThrottle::WillProcessResponse(bool* defer) {
     return;
   }
 
-  net::CookieStore* cookie_store = request_->context()->cookie_store();
-  if (cookie_store) {
+  network::mojom::CookieManager* cookie_manager = cookie_service_client();
+  if (cookie_manager) {
     // Cookie is obtained via asynchonous call. Setting |*defer| to true
     // keeps the throttle alive in the meantime.
     *defer = true;
     net::CookieOptions options;
     options.set_include_httponly();
-    cookie_store->GetCookieListWithOptionsAsync(
-        request_->url(),
-        options,
-        base::Bind(&InterceptDownloadResourceThrottle::CheckCookiePolicy,
-                   weak_factory_.GetWeakPtr()));
+    cookie_manager->GetCookieList(
+        request_->url(), options,
+        base::BindOnce(&InterceptDownloadResourceThrottle::CheckCookiePolicy,
+                       weak_factory_.GetWeakPtr()));
   } else {
     // Can't get any cookies, start android download.
     StartDownload(DownloadInfo(request_));
