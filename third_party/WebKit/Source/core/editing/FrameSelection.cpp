@@ -85,7 +85,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebScrollIntoViewParams.h"
-
+#include "public/platform/WebSelectionSourceType.h"
 #define EDIT_DEBUG 0
 
 namespace blink {
@@ -173,13 +173,15 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   builder.SetIsDirectional(GetSelectionInDOMTree().IsDirectional());
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
-  SetSelection(builder.Build(), SetSelectionOptions::Builder()
-                                    .SetShouldCloseTyping(true)
-                                    .SetShouldClearTypingStyle(true)
-                                    .SetSetSelectionBy(SetSelectionBy::kUser)
-                                    .SetShouldShowHandle(true)
-                                    .SetIsDirectional(IsDirectional())
-                                    .Build());
+  SetSelection(builder.Build(),
+               SetSelectionOptions::Builder()
+                   .SetShouldCloseTyping(true)
+                   .SetShouldClearTypingStyle(true)
+                   .SetSetSelectionBy(SetSelectionBy::kUser)
+                   .SetShouldShowHandle(true)
+                   .SetIsDirectional(IsDirectional())
+                   .SetSourceType(kSelectionSourceHandleDragged)
+                   .Build());
 }
 
 void FrameSelection::SetSelection(const SelectionInDOMTree& selection,
@@ -234,6 +236,8 @@ bool FrameSelection::SetSelectionDeprecated(
   is_directional_ = options.IsDirectional();
   should_shrink_next_tap_ = options.ShouldShrinkNextTap();
   is_handle_visible_ = should_show_handle;
+  source_type_ = options.GetSourceType();
+  selection_id_++;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
   const Document& current_document = GetDocument();
@@ -744,6 +748,7 @@ void FrameSelection::SelectAll(SetSelectionBy set_selection_by) {
                    .SetShouldCloseTyping(true)
                    .SetShouldClearTypingStyle(true)
                    .SetShouldShowHandle(IsHandleVisible())
+                   .SetSourceType(kSelectionSourceEditingCmd)
                    .Build());
   SelectFrameElementInParentIfFullySelected();
   // TODO(editing-dev): Should we pass in set_selection_by?
@@ -1171,6 +1176,7 @@ void FrameSelection::MoveRangeSelectionExtent(const IntPoint& contents_point) {
           .SetDoNotClearStrategy(true)
           .SetSetSelectionBy(SetSelectionBy::kUser)
           .SetShouldShowHandle(true)
+          .SetSourceType(kSelectionSourceHandleDragged)
           .Build());
 }
 
@@ -1215,6 +1221,7 @@ void FrameSelection::MoveRangeSelectionInternal(
                                     .SetShouldClearTypingStyle(true)
                                     .SetGranularity(granularity)
                                     .SetShouldShowHandle(IsHandleVisible())
+                                    .SetSourceType(kSelectionSourceEditingCmd)
                                     .Build());
 }
 

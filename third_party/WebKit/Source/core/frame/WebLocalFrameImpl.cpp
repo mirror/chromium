@@ -218,6 +218,7 @@
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebSecurityOrigin.h"
+#include "public/platform/WebSelectionSourceType.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoaderFactory.h"
@@ -1217,6 +1218,15 @@ WebString WebLocalFrameImpl::SelectionAsMarkup() const {
   return GetFrame()->Selection().SelectedHTMLForClipboard();
 }
 
+int WebLocalFrameImpl::SelectionId() const {
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  // Selection normalization and markup generation require clean layout.
+  GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  return GetFrame()->Selection().GetSelectionId();
+}
+
 bool WebLocalFrameImpl::SelectWordAroundCaret() {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectWordAroundCaret");
 
@@ -1258,15 +1268,10 @@ void WebLocalFrameImpl::SelectRange(
           .Build(),
       SetSelectionOptions::Builder()
           .SetShouldShowHandle(show_handles)
+          .SetSourceType(kSelectionSourceEditingCmd)
           .SetShouldShrinkNextTap(selection_menu_behavior ==
                                   SelectionMenuBehavior::kShow)
           .Build());
-
-  if (selection_menu_behavior == SelectionMenuBehavior::kShow) {
-    ContextMenuAllowedScope scope;
-    GetFrame()->GetEventHandler().ShowNonLocatedContextMenu(
-        nullptr, kMenuSourceAdjustSelection);
-  }
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {

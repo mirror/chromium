@@ -433,6 +433,7 @@ CompositedSelection RenderedPosition::ComputeCompositedSelection(
   DCHECK(!visible_selection.IsNone());
   selection.type =
       visible_selection.IsRange() ? kRangeSelection : kCaretSelection;
+  selection.id = frame_selection.GetSelectionId();
   return selection;
 }
 

@@ -1242,6 +1242,7 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     params.composition_start = new_info.composition_start;
     params.composition_end = new_info.composition_end;
     params.can_compose_inline = new_can_compose_inline;
+    params.selection_id = new_info.selection_id;
     // TODO(changwan): change instances of show_ime_if_needed to
     // show_virtual_keyboard.
     params.show_ime_if_needed = show_virtual_keyboard;
