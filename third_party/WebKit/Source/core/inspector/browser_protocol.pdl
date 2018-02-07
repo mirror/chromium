@@ -1019,7 +1019,7 @@ experimental domain CSS
   # Enables the selector recording.
   command startRuleUsageTracking
 
-  # Stop tracking rule usage and return the list of rules that were used since last call to 
+  # Stop tracking rule usage and return the list of rules that were used since last call to
   # `takeCoverageDelta` (or since start of coverage instrumentation)
   command stopRuleUsageTracking
     returns
@@ -2653,8 +2653,41 @@ domain Input
   experimental type GestureSourceType extends string
     enum
       default
+      pen
       touch
       mouse
+
+  experimental type PointerType extends string
+    enum
+      # release the pointer
+      pointerUp
+      # press the pointer
+      pointerDown
+      # move the pointer
+      pointerMove
+      # do nothing and wait
+      pause
+
+  experimental type PointerAction extends object
+    properties
+      # Type of action to perform
+      PointerType type
+      # Source of the pointer
+      GestureSourceType pointerSource
+      # X coordinate of the action
+      optional number x
+      # Y coordinate of the action
+      optional number y
+      # The button to press or lift as a result of the action
+      # (default: "none").
+      optional enum button extends string
+        none
+        left
+        middle
+        right
+      # The amount of time in seconds the action should take
+      # (default: 0).
+      optional number duration
 
   # UTC time in seconds, counted from January 1, 1970.
   type TimeSinceEpoch extends number
@@ -2699,6 +2732,11 @@ domain Input
       # Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:
       # 0).
       optional integer location
+
+  # Dispatches pointer events to the page
+  command dispatchPointerActions
+    parameters
+      array of PointerAction pointerActions
 
   # Dispatches a mouse event to the page.
   command dispatchMouseEvent

@@ -92,6 +92,10 @@ class InputHandler : public DevToolsDomainHandler,
 
   Response SetIgnoreInputEvents(bool ignore) override;
 
+  void DispatchPointerActions(
+      std::unique_ptr<protocol::Array<Input::PointerAction>> pointer_actions,
+      std::unique_ptr<DispatchPointerActionsCallback> callback) override;
+
   void SynthesizePinchGesture(
       double x,
       double y,
@@ -162,6 +166,10 @@ class InputHandler : public DevToolsDomainHandler,
   gfx::SizeF scrollable_viewport_size_;
   int last_id_;
   bool ignore_input_events_ = false;
+  // used to keep track of the last point for DispatchPointerActions
+  int last_pointer_x_ = 0;
+  int last_pointer_y_ = 0;
+
   base::flat_map<int, blink::WebTouchPoint> touch_points_;
   base::WeakPtrFactory<InputHandler> weak_factory_;
 
