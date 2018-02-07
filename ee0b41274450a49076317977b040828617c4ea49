@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6061de1c_4c256861",
+        "filename": "third_party/WebKit/Source/modules/xr/XRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-02-07T23:50:03Z",
+      "side": 1,
+      "message": "nit: todo is now addressed",
+      "range": {
+        "startLine": 336,
+        "startChar": 1,
+        "endLine": 337,
+        "endChar": 14
+      },
+      "revId": "ee0b41274450a49076317977b040828617c4ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a5d7e3_f6fbfed2",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/XRWebGLDrawingBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2018-02-07T23:50:03Z",
+      "side": 1,
+      "message": "unsure what you are doing with the commented code here.  The comment indicates we should do this.",
+      "range": {
+        "startLine": 373,
+        "startChar": 9,
+        "endLine": 373,
+        "endChar": 29
+      },
+      "revId": "ee0b41274450a49076317977b040828617c4ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
