@@ -22,6 +22,30 @@
       "revId": "2c3fc2b879708d17f270afa7831f31e189b9408a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b367eef_7c9646c9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T09:10:19Z",
+      "side": 1,
+      "message": "Also \"AcrossWorlds\" or \"OverWorlds\" is a key point, I think.\n\nAs you did, people might be confused between contexts and worlds.\n\nGiven that this function wouldn\u0027t be used widely nor often, there is no need to make this name short.  Explicit and clear name is better.",
+      "parentUuid": "a8889d9a_ee854f95",
+      "range": {
+        "startLine": 508,
+        "startChar": 33,
+        "endLine": 508,
+        "endChar": 51
+      },
+      "revId": "2c3fc2b879708d17f270afa7831f31e189b9408a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
