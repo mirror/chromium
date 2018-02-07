@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d401f2d_cab73f38",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T14:14:25Z",
+      "side": 1,
+      "message": "typo officail",
+      "range": {
+        "startLine": 18,
+        "startChar": 36,
+        "endLine": 18,
+        "endChar": 42
+      },
+      "revId": "17fdedd2e1620fea92c6ac6b4d9bbb0c7fb6be11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93ce421_ad33ade0",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T14:14:25Z",
+      "side": 1,
+      "message": "This should be !is_official_build",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "17fdedd2e1620fea92c6ac6b4d9bbb0c7fb6be11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41eda15_26997368",
+        "filename": "chrome/tools/build/win/create_installer_archive.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2018-02-07T14:14:25Z",
+      "side": 1,
+      "message": "add_option(\u0027--skip-compression\u0027, default\u003dFalse, action\u003d\u0027store_true\u0027) seems a bit more natural to me. Then you only pass the flag if you want to skip, and you don\u0027t need the \u003d1 arg.",
+      "range": {
+        "startLine": 625,
+        "startChar": 14,
+        "endLine": 625,
+        "endChar": 22
+      },
+      "revId": "17fdedd2e1620fea92c6ac6b4d9bbb0c7fb6be11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
