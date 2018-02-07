@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e044bd1e_c376b83c",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-07T21:31:28Z",
+      "side": 1,
+      "message": "If we do auto\u0026 then AllTabContentses has to return a rvalue. What do you think of the change here?",
+      "parentUuid": "70499159_ba7eff14",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "639c83cf_f9b91251",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 6
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "An STL algo could try to default instantiate the iterator and fail to compile.",
       "parentUuid": "a6d896b2_f1a9021f",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2a0fbfd_18f91061",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-07T21:31:28Z",
+      "side": 1,
+      "message": "I get that. And I get that the algo has the right to do that based on what the spec says. I just don\u0027t get why the spec says that forward iterators have to be default constructible to be put into some useless state.\n\nThis is a complaint about the spec, though.",
+      "parentUuid": "952756a8_a415dedf",
       "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -158,6 +194,24 @@
       "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c81ab1a_8aa5a148",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-07T21:31:28Z",
+      "side": 1,
+      "message": "Dana, SG.",
+      "parentUuid": "cd06b25b_52aa54cf",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
