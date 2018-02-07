@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "f951c95c_8e64c8f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f4e4ba8_53127884",
+      "range": {
+        "startLine": 360,
+        "startChar": 43,
+        "endLine": 360,
+        "endChar": 53
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683d541a_16468e8f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -461,6 +485,30 @@
       "side": 1,
       "message": "Rather than toggling the header here, can we modify #getSectionDismissalRange to return the empty set if the header is expandable?",
       "parentUuid": "2cc54f77_326fc27b",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 20
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9740b1c1_72b98aab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "Hm.. Even if we return the empty set, we would still need to update the header to the collapsed state.",
+      "parentUuid": "f8fc68c0_b86352b9",
       "range": {
         "startLine": 280,
         "startChar": 12,

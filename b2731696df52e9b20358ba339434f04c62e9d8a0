@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b8148e4_64e7570e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8bb2e8d_d22a4468",
+      "range": {
+        "startLine": 79,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 59
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9467ba13_56ca2fd8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-07T22:12:49Z",
       "side": 1,
       "message": "When the header is expanded -\u003e collapsed -\u003e expanded again, do we re-fetch articles from the backend? I think that\u0027s probably OK (especially for a v1), but I\u0027d like to make sure I understand the flow.",
+      "range": {
+        "startLine": 639,
+        "startChar": 13,
+        "endLine": 639,
+        "endChar": 32
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a391a48_680bb765",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "We don\u0027t refetch for the toggle within one session (at least that\u0027s what I understand) because the service is never stopped in this case, which means suggestions cache are not cleared and new suggestions can still be posted.\n\nWe only need to refetch if expanded again from collpased state after restart. This would change the service state from explicitly disabled to one of enabled states. We should do the refetch on this state transition. Will verify if this works appropriately after integration to backend.",
+      "parentUuid": "9467ba13_56ca2fd8",
       "range": {
         "startLine": 639,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c13d56f_5088c521",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "If we need to update drawable here, we would need to keep this.",
+      "parentUuid": "1064ad73_34b6ab9a",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08d82411_9179e962",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c66c7888_134909e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "Since we need to call toggleHeader() from SuggestionsSection#dismissItem(). If this is in onClick, the icon won\u0027t be updated if the header is not toggled from click.",
+      "parentUuid": "08d82411_9179e962",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efda926d_032a4849",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
         "patchSetId": 5
@@ -105,6 +201,24 @@
       "writtenOn": "2018-02-07T22:12:49Z",
       "side": 1,
       "message": "We check for a null icon view in onBindViewHolder, but not here. Is mIconView guaranteed to be non-null?",
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b920e6_5d91f9da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T23:51:45Z",
+      "side": 1,
+      "message": "If header is expandable, we use the expandable_header xml. So yes, it is non-null.",
+      "parentUuid": "efda926d_032a4849",
       "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
