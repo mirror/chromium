@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "277e44d8_e843df89",
+        "filename": "chrome/browser/ntp_snippets/download_suggestions_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2018-02-07T21:18:57Z",
+      "side": 1,
+      "message": "I think it\u0027s okay in general to open UI without items while requesting them asynchronously. This avoids situation when we load databases in memory on Chrome startup just in case, and can never unload that data. Obviously, it can\u0027t be a good way to go as features groe and volume of data grows as well. So we have to go with more \u0027on demand\u0027 loading, where UI drives fetching of data as it loads. That means we can start asynchronous/database operations once UI starts to load, and then populate UI which is already visible. I think mostly the code is written this way already, for example Content Suggestion Providers already use the OnNewSuggestions notification that I think is (or can be) wired to asynchronously populate the UI.\n\nI agree the fetching shouldbe done only once and I can add a flag for that. Doing it in GetCategoryInfo is an attempt to detect when UI starts to initialize (since suggestion UI asks for Category Info early in the process I think) - but I\u0027d be glad to get a better advise on this!",
+      "parentUuid": "7b4b7c4e_a175ced0",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 42
+      },
+      "revId": "4b164682d64cbd1aee9eb0edd44afe764d5e8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "868219cb_ff5d9ccf",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.h",
         "patchSetId": 1
