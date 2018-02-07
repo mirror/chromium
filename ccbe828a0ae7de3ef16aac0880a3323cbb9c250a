@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2f3f0bf3_43a3931c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T09:08:33Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "dcbcfb21_2212d997",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "902e4909_cb95f73f",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 3
