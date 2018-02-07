@@ -22,6 +22,7 @@
 #include "base/strings/string_piece_forward.h"
 #include "base/time/time.h"
 #include "net/base/cache_type.h"
+#include "net/base/net_errors.h"
 #include "net/base/net_export.h"
 #include "net/disk_cache/simple/simple_entry_format.h"
 #include "net/disk_cache/simple/simple_file_tracker.h"
@@ -136,21 +137,42 @@ class SimpleSynchronousEntry {
     bool verify_ok;
   };
 
-  struct EntryOperationData {
-    EntryOperationData(int index_p, int offset_p, int buf_len_p);
-    EntryOperationData(int index_p,
-                       int offset_p,
-                       int buf_len_p,
-                       bool truncate_p,
-                       bool doomed_p);
-    EntryOperationData(int64_t sparse_offset_p, int buf_len_p);
-
+  struct ReadRequest {
+    ReadRequest(int index_p, int offset_p, int buf_len_p);
     int index;
     int offset;
-    int64_t sparse_offset;
     int buf_len;
+  };
+
+  struct WriteRequest {
+    WriteRequest(int index_p,
+                 int offset_p,
+                 int buf_len_p,
+                 uint32_t data_crc32_p,
+                 bool truncate_p,
+                 bool doomed_p,
+                 bool request_update_crc_p);
+    int index;
+    int offset;
+    int buf_len;
+    uint32_t data_crc32;
     bool truncate;
     bool doomed;
+    bool request_update_crc;
+  };
+
+  struct WriteResult {
+    WriteResult() : crc_updated(false) {}
+    int result;
+    uint32_t data_crc32;  // only relevant if crc_updated set
+    bool crc_updated;
+  };
+
+  struct SparseRequest {
+    SparseRequest(int64_t sparse_offset_p, int buf_len_p);
+
+    int64_t sparse_offset;
+    int buf_len;
   };
 
   // Opens a disk cache entry on disk. The |key| parameter is optional, if empty
@@ -209,30 +231,30 @@ class SimpleSynchronousEntry {
 
   // |crc_request| can be nullptr here, to denote that no CRC computation is
   // requested.
-  void ReadData(const EntryOperationData& in_entry_op,
+  void ReadData(const ReadRequest& in_entry_op,
                 CRCRequest* crc_request,
                 SimpleEntryStat* entry_stat,
                 net::IOBuffer* out_buf,
                 int* out_result);
-  void WriteData(const EntryOperationData& in_entry_op,
+  void WriteData(const WriteRequest& in_entry_op,
                  net::IOBuffer* in_buf,
-                 SimpleEntryStat* out_entry_stat,
-                 int* out_result);
+                 SimpleEntryStat* entry_stat,
+                 WriteResult* out_write_result);
   int CheckEOFRecord(base::File* file,
                      int stream_index,
                      const SimpleEntryStat& entry_stat,
                      uint32_t expected_crc32);
 
-  void ReadSparseData(const EntryOperationData& in_entry_op,
+  void ReadSparseData(const SparseRequest& in_entry_op,
                       net::IOBuffer* out_buf,
                       base::Time* out_last_used,
                       int* out_result);
-  void WriteSparseData(const EntryOperationData& in_entry_op,
+  void WriteSparseData(const SparseRequest& in_entry_op,
                        net::IOBuffer* in_buf,
                        uint64_t max_sparse_data_size,
                        SimpleEntryStat* out_entry_stat,
                        int* out_result);
-  void GetAvailableRange(const EntryOperationData& in_entry_op,
+  void GetAvailableRange(const SparseRequest& in_entry_op,
                          int64_t* out_start,
                          int* out_result);
 

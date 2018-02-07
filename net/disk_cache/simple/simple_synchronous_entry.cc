@@ -211,27 +211,28 @@ SimpleSynchronousEntry::CRCRecord::CRCRecord(int index_p,
                                              uint32_t data_crc32_p)
     : index(index_p), has_crc32(has_crc32_p), data_crc32(data_crc32_p) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(int index_p,
-                                                               int offset_p,
-                                                               int buf_len_p)
-    : index(index_p),
-      offset(offset_p),
-      buf_len(buf_len_p) {}
+SimpleSynchronousEntry::ReadRequest::ReadRequest(int index_p,
+                                                 int offset_p,
+                                                 int buf_len_p)
+    : index(index_p), offset(offset_p), buf_len(buf_len_p) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(int index_p,
-                                                               int offset_p,
-                                                               int buf_len_p,
-                                                               bool truncate_p,
-                                                               bool doomed_p)
+SimpleSynchronousEntry::WriteRequest::WriteRequest(int index_p,
+                                                   int offset_p,
+                                                   int buf_len_p,
+                                                   uint32_t data_crc32_p,
+                                                   bool truncate_p,
+                                                   bool doomed_p,
+                                                   bool request_update_crc_p)
     : index(index_p),
       offset(offset_p),
       buf_len(buf_len_p),
+      data_crc32(data_crc32_p),
       truncate(truncate_p),
-      doomed(doomed_p) {}
+      doomed(doomed_p),
+      request_update_crc(request_update_crc_p) {}
 
-SimpleSynchronousEntry::EntryOperationData::EntryOperationData(
-    int64_t sparse_offset_p,
-    int buf_len_p)
+SimpleSynchronousEntry::SparseRequest::SparseRequest(int64_t sparse_offset_p,
+                                                     int buf_len_p)
     : sparse_offset(sparse_offset_p), buf_len(buf_len_p) {}
 
 // static
@@ -369,7 +370,7 @@ int SimpleSynchronousEntry::DeleteEntrySetFiles(
   return (did_delete_count == key_hashes->size()) ? net::OK : net::ERR_FAILED;
 }
 
-void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
+void SimpleSynchronousEntry::ReadData(const ReadRequest& in_entry_op,
                                       CRCRequest* crc_request,
                                       SimpleEntryStat* entry_stat,
                                       net::IOBuffer* out_buf,
@@ -425,10 +426,10 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
   }
 }
 
-void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
+void SimpleSynchronousEntry::WriteData(const WriteRequest& in_entry_op,
                                        net::IOBuffer* in_buf,
                                        SimpleEntryStat* out_entry_stat,
-                                       int* out_result) {
+                                       WriteResult* out_write_result) {
   base::ElapsedTimer write_time;
   DCHECK(initialized_);
   DCHECK_NE(0, in_entry_op.index);
@@ -439,7 +440,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     SimpleFileTracker::FileHandle file =
         file_tracker_->Acquire(this, SubFileForFileIndex(file_index));
     if (!file.IsOK() || !CheckHeaderAndKey(file.get(), file_index)) {
-      *out_result = net::ERR_FAILED;
+      out_write_result->result = net::ERR_FAILED;
       Doom();
       return;
     }
@@ -460,21 +461,21 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
                     << in_entry_op.index << " of doomed cache entry.";
       RecordWriteResult(cache_type_,
                         SYNC_WRITE_RESULT_LAZY_STREAM_ENTRY_DOOMED);
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
     File::Error error;
     if (!MaybeCreateFile(file_index, FILE_REQUIRED, &error)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_LAZY_CREATE_FAILURE);
       Doom();
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
     CreateEntryResult result;
     if (!InitializeCreatedFile(file_index, &result)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_LAZY_INITIALIZE_FAILURE);
       Doom();
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
   }
@@ -485,7 +486,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
   SimpleFileTracker::FileHandle file =
       file_tracker_->Acquire(this, SubFileForFileIndex(file_index));
   if (!file.IsOK()) {
-    *out_result = net::ERR_FAILED;
+    out_write_result->result = net::ERR_FAILED;
     Doom();
     return;
   }
@@ -497,7 +498,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     if (!file->SetLength(file_eof_offset)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_PRETRUNCATE_FAILURE);
       Doom();
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
   }
@@ -505,7 +506,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     if (file->Write(file_offset, in_buf->data(), buf_len) != buf_len) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_WRITE_FAILURE);
       Doom();
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
   }
@@ -519,9 +520,15 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
     if (!file->SetLength(file_eof_offset)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_TRUNCATE_FAILURE);
       Doom();
-      *out_result = net::ERR_CACHE_WRITE_FAILURE;
+      out_write_result->result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
+  }
+
+  if (in_entry_op.request_update_crc) {
+    out_write_result->data_crc32 = simple_util::IncrementalCrc32(
+        in_entry_op.data_crc32, in_buf->data(), buf_len);
+    out_write_result->crc_updated = true;
   }
 
   SIMPLE_CACHE_UMA(TIMES, "DiskWriteLatency", cache_type_,
@@ -530,14 +537,13 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
   base::Time modification_time = Time::Now();
   out_entry_stat->set_last_used(modification_time);
   out_entry_stat->set_last_modified(modification_time);
-  *out_result = buf_len;
+  out_write_result->result = buf_len;
 }
 
-void SimpleSynchronousEntry::ReadSparseData(
-    const EntryOperationData& in_entry_op,
-    net::IOBuffer* out_buf,
-    base::Time* out_last_used,
-    int* out_result) {
+void SimpleSynchronousEntry::ReadSparseData(const SparseRequest& in_entry_op,
+                                            net::IOBuffer* out_buf,
+                                            base::Time* out_last_used,
+                                            int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int buf_len = in_entry_op.buf_len;
@@ -611,12 +617,11 @@ void SimpleSynchronousEntry::ReadSparseData(
   *out_result = read_so_far;
 }
 
-void SimpleSynchronousEntry::WriteSparseData(
-    const EntryOperationData& in_entry_op,
-    net::IOBuffer* in_buf,
-    uint64_t max_sparse_data_size,
-    SimpleEntryStat* out_entry_stat,
-    int* out_result) {
+void SimpleSynchronousEntry::WriteSparseData(const SparseRequest& in_entry_op,
+                                             net::IOBuffer* in_buf,
+                                             uint64_t max_sparse_data_size,
+                                             SimpleEntryStat* out_entry_stat,
+                                             int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int buf_len = in_entry_op.buf_len;
@@ -726,10 +731,9 @@ void SimpleSynchronousEntry::WriteSparseData(
   *out_result = written_so_far;
 }
 
-void SimpleSynchronousEntry::GetAvailableRange(
-    const EntryOperationData& in_entry_op,
-    int64_t* out_start,
-    int* out_result) {
+void SimpleSynchronousEntry::GetAvailableRange(const SparseRequest& in_entry_op,
+                                               int64_t* out_start,
+                                               int* out_result) {
   DCHECK(initialized_);
   int64_t offset = in_entry_op.sparse_offset;
   int len = in_entry_op.buf_len;
@@ -829,7 +833,7 @@ void SimpleSynchronousEntry::Close(
   base::ElapsedTimer close_time;
   DCHECK(stream_0_data);
 
-  for (std::vector<CRCRecord>::const_iterator it = crc32s_to_write->begin();
+  for (std::vector<CRCRecord>::iterator it = crc32s_to_write->begin();
        it != crc32s_to_write->end(); ++it) {
     const int stream_index = it->index;
     const int file_index = GetFileIndexFromStreamIndex(stream_index);
@@ -861,6 +865,15 @@ void SimpleSynchronousEntry::Close(
         RecordCloseResult(cache_type_, CLOSE_RESULT_WRITE_FAILURE);
         DVLOG(1) << "Could not write stream 0 data.";
         Doom();
+      }
+
+      // Re-compute stream 0 CRC if the data got changed (we may be here even
+      // if it didn't change if stream 0's position on disk got changed due to
+      // stream 1 write).
+      if (!it->has_crc32) {
+        it->data_crc32 =
+            simple_util::Crc32(stream_0_data->data(), entry_stat.data_size(0));
+        it->has_crc32 = true;
       }
     }
 
