@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb75c927_c07eeb7a",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9506fabc_43b67053",
+      "range": {
+        "startLine": 111,
+        "startChar": 32,
+        "endLine": 111,
+        "endChar": 60
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bcfe1cd_ffca1070",
         "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bf3b6d_587be32d",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bcfe1cd_ffca1070",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed79a34d_0e3f43ce",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b37e13_25bb32f9",
+      "range": {
+        "startLine": 60,
+        "startChar": 44,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8422a24_9656936e",
         "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2018-02-07T18:01:55Z",
       "side": 1,
       "message": "The use pattern after we making this async looks cumbersome. I wonder whether it makes sense to pass the display id when we show the app list and return that cached one synchronously.\n\nFor current code, we could change the impl to get the display id from AppListPresenterImpl::GetDisplayId (, or just leave as-is). For the future mojo impl, we get it from browser side mojo impl.\n\nMake sense?",
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05c9a7d_6f597d86",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Let me cache it via presenter-\u003eview_delegate-\u003econtroller_delegate in this CL.\nI\u0027m trying to get rid of presenter totally in this CL.",
+      "parentUuid": "b8422a24_9656936e",
       "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +192,24 @@
       "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e14dbb_4aa77bb5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ee811c_710e2203",
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +256,54 @@
       "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd82356c_52b811a5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "568851ac_3b2cabe8",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3be831b6_aaf837fb",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-02-07T19:49:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6415150_48b5e8ba",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
