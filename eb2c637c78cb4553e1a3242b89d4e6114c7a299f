@@ -22,6 +22,30 @@
       "revId": "eb2c637c78cb4553e1a3242b89d4e6114c7a299f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5cfded_2caaba27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-07T18:45:08Z",
+      "side": 0,
+      "message": "Ah, added back. We should probably use a different boolean or something instead of re-using the boolean for semantically different things though.",
+      "parentUuid": "7fb93db1_78010703",
+      "range": {
+        "startLine": 986,
+        "startChar": 21,
+        "endLine": 986,
+        "endChar": 38
+      },
+      "revId": "eb2c637c78cb4553e1a3242b89d4e6114c7a299f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "619b60eaa706e239e7abee595577220037d6c6ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ad3eb5_5d17ebc5",
+        "filename": "chrome/android/java/res_vr/values-vrheadset-v26/styles.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-07T18:45:08Z",
+      "side": 1,
+      "message": "Nope, doesn\u0027t appear to be needed, and I\u0027d be worried about it having adverse effects after we leave VR.",
+      "parentUuid": "2be7a76b_600ba489",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "619b60eaa706e239e7abee595577220037d6c6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
