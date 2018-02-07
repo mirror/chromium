@@ -1071,25 +1071,39 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   // Force a redraw to ensure that the copy swap promise isn't cancelled due to
   // no damage.
   SetNeedsForcedRedraw();
-  layer_tree_host_->QueueSwapPromise(
-      delegate_->RequestCopyOfOutputForLayoutTest(std::move(request)));
+  auto swap_promise =
+      delegate_->RequestCopyOfOutputForLayoutTest(std::move(request));
 
   // Force a commit to happen. The temporary copy output request will
   // be installed after layout which will happen as a part of the commit, for
   // widgets that delay the creation of their output surface.
   if (CompositeIsSynchronous()) {
+    // Since the composite is required for a pixel dump, we need to raster.
+    // Note that we defer queuing the SwapPromise until the requested Composite
+    // with rasterization is done.
+    const bool raster = true;
     layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::SynchronouslyComposite,
-                       weak_factory_.GetWeakPtr()));
+                       weak_factory_.GetWeakPtr(), raster,
+                       std::move(swap_promise)));
   } else {
+    layer_tree_host_->QueueSwapPromise(std::move(swap_promise));
     layer_tree_host_->SetNeedsCommit();
   }
 }
 
-void RenderWidgetCompositor::SynchronouslyComposite() {
+void RenderWidgetCompositor::SynchronouslyCompositeNoRaster() {
+  SynchronouslyComposite(false /* raster */, nullptr /* swap_promise */);
+}
+
+void RenderWidgetCompositor::SynchronouslyComposite(
+    bool raster,
+    std::unique_ptr<cc::SwapPromise> swap_promise) {
   DCHECK(CompositeIsSynchronous());
-  layer_tree_host_->Composite(base::TimeTicks::Now());
+  if (swap_promise)
+    layer_tree_host_->QueueSwapPromise(std::move(swap_promise));
+  layer_tree_host_->Composite(base::TimeTicks::Now(), raster);
 }
 
 void RenderWidgetCompositor::SetDeferCommits(bool defer_commits) {
@@ -1159,10 +1173,11 @@ void RenderWidgetCompositor::RequestDecode(
   // in this case we actually need a commit to transfer the decode requests to
   // the impl side. So, force a commit to happen.
   if (CompositeIsSynchronous()) {
+    const bool raster = true;
     layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetCompositor::SynchronouslyComposite,
-                       weak_factory_.GetWeakPtr()));
+                       weak_factory_.GetWeakPtr(), raster, nullptr));
   }
 }
 
