@@ -856,8 +856,6 @@ PeopleHandler::GetSyncStatusDictionary() {
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile_);
   sync_status->SetBoolean("signinAllowed", signin->IsSigninAllowed());
   sync_status->SetBoolean("syncSystemEnabled", (service != nullptr));
-  sync_status->SetBoolean("setupCompleted",
-                          service && service->IsFirstSetupComplete());
   sync_status->SetBoolean(
       "setupInProgress",
       service && !service->IsManaged() && service->IsFirstSetupInProgress());
@@ -880,6 +878,7 @@ PeopleHandler::GetSyncStatusDictionary() {
                          signin_ui_util::GetAuthenticatedUsername(signin));
   sync_status->SetBoolean("hasUnrecoverableError",
                           service && service->HasUnrecoverableError());
+
   return sync_status;
 }
 
