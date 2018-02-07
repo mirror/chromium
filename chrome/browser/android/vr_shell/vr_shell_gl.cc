@@ -298,11 +298,8 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   std::string render_path_string = base::GetFieldTrialParamValueByFeature(
       features::kWebXrRenderPath, features::kWebXrRenderPathParamName);
   DVLOG(1) << __FUNCTION__ << ": WebXrRenderPath=" << render_path_string;
-  if (render_path_string == features::kWebXrRenderPathParamValueClientWait) {
-    // Use the baseline kClientWait.
-  } else {
-    // Default aka features::kWebXrRenderPathParamValueGpuFence.
-    // Use kGpuFence if it is supported. If not, use baseline kClientWait.
+  if (render_path_string == features::kWebXrRenderPathParamValueGpuFence) {
+    // TODO(https://crbug.com/760389): force this on for S8 via whitelist?
     if (gl::GLFence::IsGpuFenceSupported()) {
       webvr_use_gpu_fence_ = true;
       render_path = VrMetricsUtil::XRRenderPath::kGpuFence;
