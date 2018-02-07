@@ -290,6 +290,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   }
   String CacheIdentifier() const { return cache_identifier_; }
 
+  void SetSourceOrigin(scoped_refptr<const SecurityOrigin> source_origin) {
+    source_origin_ = source_origin;
+  }
+
   virtual void DidSendData(unsigned long long /* bytesSent */,
                            unsigned long long /* totalBytesToBeSent */) {}
   virtual void DidDownloadData(int) {}
@@ -306,7 +310,11 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     response_.SetDecodedBodyLength(value);
   }
 
-  virtual bool CanReuse(const FetchParameters&) const;
+  // |new_context_origin| is used only when |new_fetch_parameters| doesn't have
+  // a SecurityOrigin to override the FetchContext's SecurityOrigin.
+  virtual bool CanReuse(
+      const FetchParameters& new_fetch_parameters,
+      scoped_refptr<const SecurityOrigin> new_context_origin) const;
 
   // If cache-aware loading is activated, this callback is called when the first
   // disk-cache-only request failed due to cache miss. After this callback,
@@ -446,6 +454,9 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   Type type_;
   ResourceStatus status_;
+
+  // Used for isolating resources for different origins in the MemoryCache.
+  scoped_refptr<const SecurityOrigin> source_origin_;
   CORSStatus cors_status_;
 
   Member<CachedMetadataHandlerImpl> cache_handler_;

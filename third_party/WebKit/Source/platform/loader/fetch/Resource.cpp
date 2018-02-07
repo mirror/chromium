@@ -850,9 +850,12 @@ void Resource::FinishPendingClients() {
   DCHECK(clients_awaiting_callback_.IsEmpty() || scheduled);
 }
 
-bool Resource::CanReuse(const FetchParameters& params) const {
-  const ResourceRequest& new_request = params.GetResourceRequest();
-  const ResourceLoaderOptions& new_options = params.Options();
+bool Resource::CanReuse(
+    const FetchParameters& new_fetch_parameters,
+    scoped_refptr<const SecurityOrigin> new_context_origin) const {
+  const ResourceRequest& new_request =
+      new_fetch_parameters.GetResourceRequest();
+  const ResourceLoaderOptions& new_options = new_fetch_parameters.Options();
 
   // Never reuse opaque responses from a service worker for requests that are
   // not no-cors. https://crbug.com/625575
@@ -916,6 +919,15 @@ bool Resource::CanReuse(const FetchParameters& params) const {
     return false;
 
   if (resource_request_.GetKeepalive() || new_request.GetKeepalive()) {
+    return false;
+  }
+
+  // Don't reuse an existing resource when the source origin is different.
+  if (new_options.security_origin)
+    new_context_origin = new_options.security_origin;
+  if (!source_origin_ ||
+      (source_origin_ != new_context_origin &&
+       !source_origin_->IsSameSchemeHostPort(new_context_origin.get()))) {
     return false;
   }
 

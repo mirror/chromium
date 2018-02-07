@@ -181,7 +181,13 @@ class PLATFORM_EXPORT ResourceFetcher
   ResourceFetcher(FetchContext*);
 
   void InitializeRevalidation(ResourceRequest&, Resource*);
-  Resource* CreateResourceForLoading(FetchParameters&,
+  // When |source_origin_override| is not a nullptr, it'll be used instead of
+  // the FetchContext's SecurityOrigin.
+  void SetSourceOriginToResource(
+      Resource*,
+      scoped_refptr<const SecurityOrigin> source_origin_override) const;
+  void AddToMemoryCacheIfNeeded(const FetchParameters&, Resource*);
+  Resource* CreateResourceForLoading(const FetchParameters&,
                                      const ResourceFactory&);
   void StorePerformanceTimingInitiatorInformation(Resource*);
   ResourceLoadPriority ComputeLoadPriority(
