@@ -218,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "1b641466_44d6fc22",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T21:13:26Z",
+      "side": 1,
+      "message": "That might be good, unless we just switch over to doing this for everyone by default.  It\u0027s not clear to me why we wouldn\u0027t be able to use a new set of colors unless we also had touchable design elements?  Might be worth asking the designers about.",
+      "parentUuid": "e555f511_60933b2e",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0d53c6_3e8807ad",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -464,6 +482,30 @@
       "side": 1,
       "message": "Moved to the switch case.\n\nI will leave the second request upto the owner. From my offline discussion with Peter, I understand that it is difficult to infer when a hybrid/normal constant is overridden for touch optimized and when it is not if we use an array. Its preferred to use array when the values for all 3 modes are different. However in this situation that is not the case. A lot of constants being used for touch optimized UI come from the hybrid values.",
       "parentUuid": "cba63d02_616aec44",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90e33dd_e15260a3",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T21:13:26Z",
+      "side": 1,
+      "message": "I think it\u0027s OK to use an array as long as constants aren\u0027t all the same value.  If it\u0027s {x, x, y}, that\u0027s OK with me.",
+      "parentUuid": "1945442b_bc5af01b",
       "range": {
         "startLine": 17,
         "startChar": 16,
@@ -949,6 +991,24 @@
       "side": 1,
       "message": "Since each icon has its own priority based on the active/inactive status of the tab, this function can still be used I believe.\n\nFor active tab, the priority is - Close Button \u003e alert indicator \u003e Favicon\nFor inactive tab, the priority is - Favicon \u003e Alert Indicator \u003e Close button\n\nGiven the icon capacity and the status of tab, the decision on whether to display an icon or not can still be made. \nThis function so far is working as expected when testing.",
       "parentUuid": "87b9163a_bc212092",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdaf59f_577be97f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T21:13:26Z",
+      "side": 1,
+      "message": "Right, it works, it\u0027s just cumbersome and redundant.\n\nThis is a cleanup suggestion rather than a functional bug suggestion; I\u0027m saying that the new system violates the old one\u0027s design assumptions, so shoehorning correct behavior into it is more problematic than simply refactoring the system to do what you want directly.\n\nI don\u0027t want to block your CL on cleanup that doesn\u0027t have to happen, and I might be OK with landing a cleanup to this as a followup.  But since it\u0027s this CL that\u0027s introducing the extra complexity, I wouldn\u0027t want to just treat it as a pre-existing issue to never be fixed.",
+      "parentUuid": "2017c0a8_3cf00111",
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

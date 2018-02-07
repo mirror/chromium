@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c426932d_f0cc59c5",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T21:13:26Z",
+      "side": 0,
+      "message": "I thought the issue was that we didn\u0027t want to ship the behavior change this line represented, so the TODO was effectively \"fix this functional bug\"?",
+      "parentUuid": "8d3c78a6_0807ee84",
+      "revId": "0b609ebac014b1cad5afefe276aa3423e73a2784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "317b37eb_7ac34979",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 7
