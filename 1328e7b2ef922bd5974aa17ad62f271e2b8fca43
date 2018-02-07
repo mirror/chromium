@@ -84,6 +84,23 @@
       "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299e218a_c7368e48",
+        "filename": "content/public/common/resource_type.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T07:06:09Z",
+      "side": 1,
+      "message": "Would it make sense to just use this one, while we can add requester_type for other checks? (As I chatted offline we\u0027re deprecating ResourceType, if we don\u0027t need to add it we don\u0027t need to add it)",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
