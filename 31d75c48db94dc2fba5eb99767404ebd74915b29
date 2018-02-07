@@ -16,6 +16,52 @@
       "revId": "31d75c48db94dc2fba5eb99767404ebd74915b29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cea548e_ddccca01",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-02-07T20:50:25Z",
+      "side": 1,
+      "message": "Can you verify that it is correct to not check watchers_being_invoked_.Contains(notifier) here? I think this is safe because watchers_being_invoked_ is always a subset of watchers_ except when handling a fatal error, in which case all watchers are already stopped.",
+      "range": {
+        "startLine": 312,
+        "startChar": 9,
+        "endLine": 312,
+        "endChar": 18
+      },
+      "revId": "31d75c48db94dc2fba5eb99767404ebd74915b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c1a313_c8f54404",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-02-07T20:50:25Z",
+      "side": 1,
+      "message": "I think there is a minor bug related to clearWatch. Suppose the user has one one-shot and one watcher when an error is received. In the one-shot error callback, the user calls clearWatch with the watcher\u0027s watchId. clearWatch will remove it from watchers_, or if a fatal error was received then it will fail silently since watchers_ is already cleared. Then the error callback will be invoked on the already-cleared watcher. According to the spec, no callback should be invoked:\n\n\u003e If this value does not correspond to any previously started watch process, then the method must return immediately without taking any further action. Otherwise, the watch process identified by the watchId argument must be immediately stopped and no further callbacks must be invoked.\n\nI don\u0027t think it\u0027s worth fixing in this CL, but could you add a comment indicating that calls to clearWatch could be ignored if made during notifier callbacks?",
+      "range": {
+        "startLine": 381,
+        "startChar": 16,
+        "endLine": 381,
+        "endChar": 32
+      },
+      "revId": "31d75c48db94dc2fba5eb99767404ebd74915b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
