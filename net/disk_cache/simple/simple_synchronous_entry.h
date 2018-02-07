@@ -461,10 +461,6 @@ class SimpleSynchronousEntry {
   // Offset of the end of the sparse file (where the next sparse range will be
   // written).
   int64_t sparse_tail_offset_;
-
-  // True if the entry was created, or false if it was opened. Used to log
-  // SimpleCache.*.EntryCreatedWithStream2Omitted only for created entries.
-  bool files_created_;
 };
 
 }  // namespace disk_cache

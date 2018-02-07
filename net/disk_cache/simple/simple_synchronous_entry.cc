@@ -908,11 +908,6 @@ void SimpleSynchronousEntry::Close(
     CloseSparseFile();
   }
 
-  if (files_created_) {
-    const int stream2_file_index = GetFileIndexFromStreamIndex(2);
-    SIMPLE_CACHE_UMA(BOOLEAN, "EntryCreatedAndStream2Omitted", cache_type_,
-                     empty_file_omitted_[stream2_file_index]);
-  }
   SIMPLE_CACHE_UMA(TIMES, "DiskCloseLatency", cache_type_,
                    close_time.Elapsed());
   RecordCloseResult(cache_type_, CLOSE_RESULT_SUCCESS);
@@ -1109,8 +1104,6 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
                    "SyncOpenEntryAge", cache_type_,
                    entry_age.InHours(), 1, 1000, 50);
 
-  files_created_ = false;
-
   return true;
 }
 
@@ -1147,8 +1140,6 @@ bool SimpleSynchronousEntry::CreateFiles(SimpleEntryStat* out_entry_stat) {
   out_entry_stat->set_last_used(creation_time);
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i)
     out_entry_stat->set_data_size(i, 0);
-
-  files_created_ = true;
 
   return true;
 }
