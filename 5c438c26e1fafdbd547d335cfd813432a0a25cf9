@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d7adbe4_dc9b157d",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-07T00:46:48Z",
+      "side": 1,
+      "message": "I tried {} as \u0027or\u0027 but it doesn\u0027t work. Maybe I\u0027ve got something wrong. I used:\n\n{*.[pP][nN][gG],*.[jJ][pP][gG],*.[jJ][pP][eE][gG]}",
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
