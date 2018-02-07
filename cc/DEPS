@@ -1,5 +1,6 @@
 include_rules = [
   "+components/ukm/test_ukm_recorder.h",
+  "+components/viz/client",
   "+components/viz/common",
   "+gpu/GLES2",
   "+gpu/command_buffer/client/context_support.h",
