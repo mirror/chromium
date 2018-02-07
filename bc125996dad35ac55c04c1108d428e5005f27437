@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ce707e28_7563c635",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T00:55:25Z",
+      "side": 1,
+      "message": "how about something like COMPATIBILITY_CHECK_FAILED, then? it\u0027d be nice to remove GENERIC_ERROR if possible.",
+      "parentUuid": "60ecfe3f_2b9134cb",
+      "revId": "bc125996dad35ac55c04c1108d428e5005f27437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28aa750a_8ceacf2d",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 3
