@@ -841,6 +841,10 @@
     "label": "//chrome/installer/mini_installer:next_version_mini_installer",
     "type": "additional_compile_target",
   },
+  "notification_helper_unittests": {
+    "label": "//notification_helper:notification_helper_unittests",
+    "type": "raw",
+  },
   "ozone_unittests": {
     "label": "//ui/ozone:ozone_unittests",
     "type": "console_test_launcher",
