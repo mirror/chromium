@@ -58,9 +58,9 @@ void V8MessageEvent::dataAttributeGetterCustom(
 
   v8::Local<v8::Value> result;
   switch (event->GetDataType()) {
-    case MessageEvent::kDataTypeScriptValue:
-      result =
-          event->DataAsScriptValue().V8ValueFor(ScriptState::Current(isolate));
+    case MessageEvent::kDataTypeV8Value:
+      result = CloneV8ValueFor(ScriptState::Current(isolate),
+                               event->DataAsV8Value());
       if (result.IsEmpty())
         result = v8::Null(isolate);
       break;
@@ -132,10 +132,9 @@ void V8MessageEvent::initMessageEventMethodCustom(
     if (exception_state.HadException())
       return;
   }
-  event->initMessageEvent(
-      type_arg, can_bubble_arg, cancelable_arg,
-      ScriptValue(ScriptState::Current(info.GetIsolate()), data_arg),
-      origin_arg, last_event_id_arg, source_arg, port_array);
+  event->initMessageEvent(type_arg, can_bubble_arg, cancelable_arg, data_arg,
+                          origin_arg, last_event_id_arg, source_arg,
+                          port_array);
 }
 
 }  // namespace blink
