@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6663f1_381b7236",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "I think this should actually stay as ActivateAnimations. The AnimationHost doesn\u0027t care about \u0027KeyframeModels\u0027 (or shouldn\u0027t), it wants to activate the highest-level concept of an \u0027Animation\u0027 (aka currently a cc::AnimationPlayer).",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6c1a42_edcb8c47",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "I am also uneasy about this naming, but walking through the call stack I\u0027m not sure what else it would be called. It seems very wrong to me that AnimationHost has to know about KeyframeModels, and that AnimationHost is responsible for passing this sort of information between main/impl :(",
+      "range": {
+        "startLine": 394,
+        "startChar": 26,
+        "endLine": 394,
+        "endChar": 52
+      },
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d35aa9f7_dda68ed9",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "Again; this refers to the top-level conceptual animations, so the name can stay. It doesn\u0027t matter that the internal impl goes down and checks each KeyframeModel, the important thing at the AnimationHost level is whether the Animations preserve axis alignment or not.",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd90c5b_6055c749",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "Same as \u0027KeyframeModelsPreserveAxisAlignment\u0027, I think this should stay as AnimationStartScale.",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efe2ebe_98013845",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "Again, my gut feeling is that we want to keep this as \"HasAnyAnimation\". This method is just looking to see whether there are any (conceptual) animations in existence, shouldn\u0027t care about impl details.",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94618c90_eadf6122",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "Nit; alphabetical ordering please",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6225ff68_08243495",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-02-07T21:32:53Z",
+      "side": 1,
+      "message": "Nit; this comment is fairly redundant now that the class is named something sensible. (It\u0027s clear that an effect is owned by a KeyframeEffect :).)",
+      "revId": "f4e7bbc0e11ab8617dfdbf872829f7a37a40830c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
