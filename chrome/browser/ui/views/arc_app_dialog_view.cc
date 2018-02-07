@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
+#include "chrome/browser/ui/app_list/arc/arc_usb_host_permission_manager.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/native_window_tracker.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
@@ -38,8 +39,7 @@ const int kIconSize = 64;
 // Currenty ARC apps only support 48*48 native icon.
 const int kIconSourceSize = 48;
 
-using ArcAppConfirmCallback =
-    base::Callback<void(const std::string& app_id, Profile* profile)>;
+using ArcAppConfirmCallback = base::OnceCallback<void(bool accept)>;
 
 class ArcAppDialogView : public views::DialogDelegateView,
                          public AppIconLoaderDelegate {
@@ -67,6 +67,7 @@ class ArcAppDialogView : public views::DialogDelegateView,
   // views::DialogDelegate:
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   bool Accept() override;
+  bool Cancel() override;
 
   // AppIconLoaderDelegate:
   void OnAppImageUpdated(const std::string& app_id,
@@ -85,9 +86,9 @@ class ArcAppDialogView : public views::DialogDelegateView,
 
   Profile* const profile_;
 
-  AppListControllerDelegate* controller_;
+  AppListControllerDelegate* controller_ = nullptr;
 
-  gfx::NativeWindow parent_;
+  gfx::NativeWindow parent_ = nullptr;
 
   // Tracks whether |parent_| got destroyed.
   std::unique_ptr<NativeWindowTracker> parent_window_tracker_;
@@ -101,8 +102,12 @@ class ArcAppDialogView : public views::DialogDelegateView,
   DISALLOW_COPY_AND_ASSIGN(ArcAppDialogView);
 };
 
-// Browertest use only. Global pointer of ArcAppDialogView which is shown.
+// Browsertest use only. Global pointer of most recent ArcAppDialogView which is
+// shown.
 ArcAppDialogView* g_current_arc_app_dialog_view = nullptr;
+
+// Browsertest use only. Global pointers of live ArcAppDialogView.
+std::set<ArcAppDialogView*> g_live_arc_app_dialog_views;
 
 ArcAppDialogView::ArcAppDialogView(Profile* profile,
                                    AppListControllerDelegate* controller,
@@ -119,9 +124,9 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
       window_title_(window_title),
       confirm_button_text_(confirm_button_text),
       cancel_button_text_(cancel_button_text),
-      confirm_callback_(confirm_callback) {
-  DCHECK(controller);
-  parent_ = controller_->GetAppListWindow();
+      confirm_callback_(std::move(confirm_callback)) {
+  if (controller)
+    parent_ = controller_->GetAppListWindow();
   if (parent_)
     parent_window_tracker_ = NativeWindowTracker::Create(parent_);
 
@@ -158,8 +163,13 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
 }
 
 ArcAppDialogView::~ArcAppDialogView() {
-  DCHECK_EQ(this, g_current_arc_app_dialog_view);
-  g_current_arc_app_dialog_view = nullptr;
+  // Null the current test pointer if it equals to this. Otherwise the new
+  // dialog is shown before this one is deconstructed. Current test pointer
+  // points to the newly created dialog and tt's up to the newly created dialog
+  // to clear the test pointer.
+  if (g_current_arc_app_dialog_view == this)
+    g_current_arc_app_dialog_view = nullptr;
+  g_live_arc_app_dialog_views.erase(this);
 }
 
 void ArcAppDialogView::AddMultiLineLabel(views::View* parent,
@@ -191,7 +201,9 @@ void ArcAppDialogView::DeleteDelegate() {
 }
 
 ui::ModalType ArcAppDialogView::GetModalType() const {
-  return ui::MODAL_TYPE_WINDOW;
+  if (parent_)
+    return ui::MODAL_TYPE_WINDOW;
+  return ui::MODAL_TYPE_SYSTEM;
 }
 
 base::string16 ArcAppDialogView::GetDialogButtonLabel(
@@ -201,7 +213,14 @@ base::string16 ArcAppDialogView::GetDialogButtonLabel(
 }
 
 bool ArcAppDialogView::Accept() {
-  confirm_callback_.Run(app_id_, profile_);
+  if (confirm_callback_)
+    std::move(confirm_callback_).Run(true);
+  return true;
+}
+
+bool ArcAppDialogView::Cancel() {
+  if (confirm_callback_)
+    std::move(confirm_callback_).Run(false);
   return true;
 }
 
@@ -232,7 +251,21 @@ void ArcAppDialogView::Show() {
     controller_->OnShowChildDialog();
 
   g_current_arc_app_dialog_view = this;
+  g_live_arc_app_dialog_views.insert(this);
   constrained_window::CreateBrowserModalDialogViews(this, parent_)->Show();
+}
+
+void HandleArcAppUninstall(base::OnceClosure closure, bool accept) {
+  if (accept)
+    std::move(closure).Run();
+}
+
+std::unique_ptr<ArcAppListPrefs::AppInfo> GetArcAppInfo(
+    Profile* profile,
+    const std::string& app_id) {
+  ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(profile);
+  DCHECK(arc_prefs);
+  return arc_prefs->GetApp(app_id);
 }
 
 }  // namespace
@@ -240,11 +273,7 @@ void ArcAppDialogView::Show() {
 void ShowArcAppUninstallDialog(Profile* profile,
                                AppListControllerDelegate* controller,
                                const std::string& app_id) {
-  ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(profile);
-  DCHECK(arc_prefs);
-  std::unique_ptr<ArcAppListPrefs::AppInfo> app_info =
-      arc_prefs->GetApp(app_id);
-
+  auto app_info = GetArcAppInfo(profile, app_id);
   if (!app_info)
     return;
 
@@ -269,14 +298,71 @@ void ShowArcAppUninstallDialog(Profile* profile,
                   : IDS_EXTENSION_PROMPT_UNINSTALL_APP_BUTTON);
 
   base::string16 cancel_button_text = l10n_util::GetStringUTF16(IDS_CANCEL);
+  new ArcAppDialogView(
+      profile, controller, app_id, window_title, heading_text, subheading_text,
+      confirm_button_text, cancel_button_text,
+      base::BindOnce(HandleArcAppUninstall,
+                     base::BindOnce(UninstallArcApp, app_id, profile)));
+}
 
-  new ArcAppDialogView(profile, controller, app_id, window_title, heading_text,
+void ShowArcUsbScanDeviceListPermissionDialog(Profile* profile,
+                                              const std::string& app_id,
+                                              ArcUsbConfirmCallback callback) {
+  auto app_info = GetArcAppInfo(profile, app_id);
+  if (!app_info) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  base::string16 window_title =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_TITLE);
+
+  base::string16 heading_text = l10n_util::GetStringFUTF16(
+      IDS_ARC_USB_SCAN_DEVICE_LIST_PERMISSION_HEADING,
+      base::UTF8ToUTF16(app_info->name));
+
+  base::string16 confirm_button_text =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_AGREE_BUTTON_TEXT);
+
+  base::string16 cancel_button_text =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_CANCEL_BUTTON_TEXT);
+
+  new ArcAppDialogView(profile, nullptr, app_id, window_title, heading_text,
+                       base::string16(), confirm_button_text,
+                       cancel_button_text, std::move(callback));
+}
+
+void ShowArcUsbAccessPermissionDialog(Profile* profile,
+                                      const std::string& app_id,
+                                      const base::string16& device_name,
+                                      ArcUsbConfirmCallback callback) {
+  auto app_info = GetArcAppInfo(profile, app_id);
+  if (!app_info) {
+    std::move(callback).Run(false);
+    return;
+  }
+
+  base::string16 window_title =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_TITLE);
+
+  base::string16 heading_text = l10n_util::GetStringFUTF16(
+      IDS_ARC_USB_ACCESS_PERMISSION_HEADING, base::UTF8ToUTF16(app_info->name));
+
+  base::string16 subheading_text = device_name;
+
+  base::string16 confirm_button_text =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_AGREE_BUTTON_TEXT);
+
+  base::string16 cancel_button_text =
+      l10n_util::GetStringUTF16(IDS_ARC_USB_PERMISSION_CANCEL_BUTTON_TEXT);
+
+  new ArcAppDialogView(profile, nullptr, app_id, window_title, heading_text,
                        subheading_text, confirm_button_text, cancel_button_text,
-                       base::Bind(UninstallArcApp));
+                       std::move(callback));
 }
 
 bool IsArcAppDialogViewAliveForTest() {
-  return g_current_arc_app_dialog_view != nullptr;
+  return g_current_arc_app_dialog_view || !g_live_arc_app_dialog_views.empty();
 }
 
 bool CloseAppDialogViewAndConfirmForTest(bool confirm) {
