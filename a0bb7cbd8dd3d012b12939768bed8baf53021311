@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763b460c_2a071173",
+        "filename": "chrome/browser/ui/views/chrome_browser_main_extra_parts_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "How come we need to tear this down here instead of in the destructor?  This deserves a comment.",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0414effe_bab8a5e0",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: Would NotificationStyle be a clearer name (since this isn\u0027t a notification instance but just the style in which to show any such instance)?",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197cdb71_9e008abb",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: This comment doesn\u0027t seem to refer to any code.  I think we get the watching part of this for free from our superclass?  I\u0027d just remove this as I don\u0027t know what it\u0027s trying to tell me.",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278eb129_2fa36a42",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: To avoid the necessity for this block, use a ScopedObserver member to manage your observership.  (This also lets you test if you\u0027re observing more directly, instead of checking the notification style.)",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61fc86a_7324c4a8",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: We could remove the StartObservingUpgrades() method and just do that unconditionally at consturction if this method simply no-oped when the notification style is none.",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9b718b_34ca34d9",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: It seems like the only reason we have to do this before the subsequent call is because of the DCHECKs in that function.  But as a result we have to manually set this both here and above, and we don\u0027t set it for UPGRADE_ANNOYANCE_CRITICAL, which seems wrong (e.g. we will re-traverse this switch if called multiple times with UPGRADE_ANNOYANCE_CRITICAL instead of no-oping).\n\nIt seems preferable to set last_level_ unconditionally before this function returns, and if that means we need to remove some DCHECKs in ShowRelaunchNotification(), that seems OK.  (We could even keep them if we passed in the current notification level instead of reading it off last_level_.)",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670fe2a1_88f506a6",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "If we were showing a notification, should we now close it?",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4b6051_569e221c",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: This switch suggests to me that maybe either RelaunchNotification and NotificationStyle should be the same enum, or we should just static_cast from one to the other here?  They seem to be conveying the same three states (\"nothing, recommended, required\").",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbf188d_c3b9ed45",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: (expected, actual)",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6ede3d_22fdd3fa",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: Brings",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e487aae_a52cb754",
+        "filename": "chrome/browser/ui/views/relaunch_notification/relaunch_notification_controller_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T23:45:08Z",
+      "side": 1,
+      "message": "Nit: Trailing period",
+      "revId": "a0bb7cbd8dd3d012b12939768bed8baf53021311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
