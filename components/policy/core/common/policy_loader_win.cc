@@ -60,6 +60,8 @@ const char kKeyThirdParty[] = "3rdparty";
 
 // The web store url that is the only trusted source for extensions.
 const char kExpectedWebStoreUrl[] =
+    "https://clients2.google.com/service/update2/crx";
+const char kLegacyExpectedWebStoreUrl[] =
     ";https://clients2.google.com/service/update2/crx";
 // String to be prepended to each blocked entry.
 const char kBlockedExtensionPrefix[] = "[BLOCKED]";
@@ -99,11 +101,11 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
     return;
 
   int invalid_policies = 0;
-  const PolicyMap::Entry* map_entry =
+  const PolicyMap::Entry* legacy_map_entry =
       policy->Get(key::kExtensionInstallForcelist);
-  if (map_entry && map_entry->value) {
+  if (legacy_map_entry && legacy_map_entry->value) {
     const base::ListValue* policy_list_value = nullptr;
-    if (!map_entry->value->GetAsList(&policy_list_value))
+    if (!legacy_map_entry->value->GetAsList(&policy_list_value))
       return;
 
     std::unique_ptr<base::ListValue> filtered_values(new base::ListValue);
@@ -116,7 +118,7 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
         continue;
       // Only allow custom update urls in enterprise environments.
       if (!base::LowerCaseEqualsASCII(entry.substr(pos),
-                                      kExpectedWebStoreUrl)) {
+                                      kLegacyExpectedWebStoreUrl)) {
         entry = kBlockedExtensionPrefix + entry;
         invalid_policies++;
       }
@@ -124,13 +126,60 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
       filtered_values->AppendString(entry);
     }
     if (invalid_policies) {
-      PolicyMap::Entry filtered_entry = map_entry->DeepCopy();
+      PolicyMap::Entry filtered_entry = legacy_map_entry->DeepCopy();
       filtered_entry.value = std::move(filtered_values);
       policy->Set(key::kExtensionInstallForcelist, std::move(filtered_entry));
 
       const PolicyDetails* details =
           GetChromePolicyDetails(key::kExtensionInstallForcelist);
       base::UmaHistogramSparse("EnterpriseCheck.InvalidPolicies", details->id);
+    }
+  }
+
+  // Filter forced extensions (ExtensionSettings); https://crbug.com/809004
+  const PolicyMap::Entry* map_entry = policy->Get(key::kExtensionSettings);
+  if (map_entry && map_entry->value) {
+    const base::DictionaryValue* policy_dict_value = nullptr;
+
+    if (map_entry->value->GetAsDictionary(&policy_dict_value)) {
+      std::unique_ptr<base::ListValue> invalid_extension_ids(
+          new base::ListValue);
+      for (base::DictionaryValue::Iterator it(*policy_dict_value);
+           !it.IsAtEnd(); it.Advance()) {
+        const base::DictionaryValue* sub_dict = nullptr;
+        if (!policy_dict_value->GetDictionaryWithoutPathExpansion(it.key(),
+                                                                  &sub_dict))
+          continue;
+
+        std::string installation_mode;
+        std::string update_url;
+        if (!sub_dict->GetStringWithoutPathExpansion("installation_mode",
+                                                     &installation_mode) &&
+            sub_dict->GetStringWithoutPathExpansion("update_url", &update_url))
+          continue;
+
+        if ((installation_mode == "force_installed" ||
+             installation_mode == "normal_installed") &&
+            !base::LowerCaseEqualsASCII(update_url, kExpectedWebStoreUrl)) {
+          invalid_policies++;
+          invalid_extension_ids->AppendString(it.key());
+        }
+      }
+
+      if (!invalid_extension_ids->empty()) {
+        PolicyMap::Entry filtered_entry = map_entry->DeepCopy();
+        // Delete the entry that contains invalid an installation_mode.
+        for (const auto& list_entry : *invalid_extension_ids) {
+          std::string extension_id;
+          list_entry.GetAsString(&extension_id);
+          filtered_entry.value->RemoveKey(extension_id);
+        }
+        policy->Set(key::kExtensionSettings, std::move(filtered_entry));
+        const PolicyDetails* details =
+            GetChromePolicyDetails(key::kExtensionSettings);
+        base::UmaHistogramSparse("EnterpriseCheck.InvalidPolicies",
+                                 details->id);
+      }
     }
   }
 

@@ -159,6 +159,8 @@ source_set("internal") {
       "shlwapi.lib",
       "userenv.lib",
     ]
+    sources +=
+        [ "//chrome/browser/extensions/extension_management_constants.cc" ]
   }
 
   # Compile on Linux for fuzzer and since code is reused on Chrome OS.
