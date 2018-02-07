@@ -42,11 +42,14 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
+#include "media/audio/audio_manager.h"
 #include "media/media_features.h"
 #include "media/mojo/features.h"
 #include "media/mojo/interfaces/constants.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
+#include "services/audio/public/mojom/constants.mojom.h"
+#include "services/audio/service_factory.h"
 #include "services/catalog/manifest_provider.h"
 #include "services/catalog/public/cpp/manifest_parsing_util.h"
 #include "services/catalog/public/interfaces/constants.mojom.h"
@@ -627,6 +630,16 @@ ServiceManagerContext::ServiceManagerContext() {
     browser_connection->GetConnector()->StartService(
         mojom::kNetworkServiceName);
   }
+}
+
+void ServiceManagerContext::RegisterDelayedAudioService(
+    media::AudioManager* audio_manager) {
+  service_manager::EmbeddedServiceInfo info;
+  info.factory =
+      base::BindRepeating(&audio::CreateEmbeddedService, audio_manager);
+  info.task_runner = audio_manager->GetTaskRunner();
+  packaged_services_connection_->AddEmbeddedService(audio::mojom::kServiceName,
+                                                    info);
 }
 
 ServiceManagerContext::~ServiceManagerContext() {

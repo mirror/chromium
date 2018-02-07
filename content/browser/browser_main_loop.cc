@@ -124,6 +124,7 @@
 #include "net/socket/client_socket_factory.h"
 #include "net/ssl/ssl_config_service.h"
 #include "ppapi/features/features.h"
+#include "services/audio/public/cpp/audio_system_factory.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
@@ -1335,6 +1336,10 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
       // AudioManager shutdown failed.
       ignore_result(user_input_monitor_.release());
     }
+
+    // Leaking AudioSystem: we cannot correctly destory it since Audio service
+    // connection in there is bound to IO thread.
+    ignore_result(audio_system_.release());
   }
 
   if (parts_) {
@@ -1479,6 +1484,14 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   {
     TRACE_EVENT0("startup", "BrowserThreadsStarted::Subsystem:AudioMan");
     CreateAudioManager();
+
+    service_manager_context_->RegisterDelayedAudioService(audio_manager_.get());
+
+    audio_system_ = audio::CreateAudioSystemInstance(
+        content::ServiceManagerConnection::GetForProcess()
+            ->GetConnector()
+            ->Clone());
+    CHECK(audio_system_);
   }
 
   {
@@ -1833,8 +1846,6 @@ void BrowserMainLoop::CreateAudioManager() {
                                     MediaInternals::GetInstance());
   }
   CHECK(audio_manager_);
-  audio_system_ = media::AudioSystem::CreateInstance();
-  CHECK(audio_system_);
 }
 
 }  // namespace content
