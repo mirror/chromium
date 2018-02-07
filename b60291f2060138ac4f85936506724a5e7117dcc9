@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f652cc_dafef733",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "If you set this to false here, it means you\u0027ll incorrectly miss the next close. See comment on line 49 for behavior this code is going for.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673b7049_b621cbf5",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "Tests includes should have the same format as used for non-test includes. Specifically this should be the first include, then newline, then other includes.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb2e129_17486597",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e708fab_0415e69c",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 2
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e1a167_d9184bc5",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "Use a \u0027using\u0027 instead of this.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 67
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22481638_d434f837",
+        "filename": "chrome/browser/ui/tabs/pinned_tab_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:26:23Z",
+      "side": 1,
+      "message": "You never actually use these, so is there a point in the expects calls here?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "b60291f2060138ac4f85936506724a5e7117dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
