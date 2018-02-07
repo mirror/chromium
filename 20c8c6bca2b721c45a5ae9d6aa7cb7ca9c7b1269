@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "52f06a64_a35cb658",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T15:25:12Z",
+      "side": 1,
+      "message": "Good gravy this was confusing.\n\nThe fundamental problem is that Supplementable uses the address of the char* key, not the contents. I\u0027ve exposed the address of the key used by InteractiveDetector, which lets us replace the InteractiveDetector from the DummyPageHolder after it\u0027s been given DCL.\n\nThis gives us an empty InteractiveDetector, which is connected to the document, so it receives long tasks.\n\nAdded a DCHECK to make sure we\u0027ve only got one InteractiveDetector floating around.",
+      "parentUuid": "8190d32f_dd30455b",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2445864_4f58a29c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
