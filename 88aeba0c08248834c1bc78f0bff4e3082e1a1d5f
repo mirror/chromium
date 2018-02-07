@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b382fbe_54c95a64",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: equivalence_source",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 59
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273add6e_31fc77c9",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "e.has_value() ?",
+      "range": {
+        "startLine": 202,
+        "startChar": 40,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b46117_b72791b1",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: equivalences_.begin()\n\n(tempting to have class dogfood its interface, but being explicit is better).",
+      "range": {
+        "startLine": 233,
+        "startChar": 29,
+        "endLine": 233,
+        "endChar": 36
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abd83ca_160c59fc",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: Re. |current_equivalence|: Note that in PruneEquivalencesAndSortBySource(), |current| is used. Make this consistent (or shorter if you\u0027d like)?",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 26
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4171077_d82ab697",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Maybe add offsets-\u003eshrink_to_fit()?",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 1
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a3610b_251ea0b1",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Might have found an O(n^2) case.  Consider.\n\n  0 ************\n  1        **********\n  2         ********\n  3          ******\n  4           ****\n  5            **\n  6             ************\n\nAfter the first outer loop:\n\n  0 ************\n  1             *****\n  2             ****\n  3             ***\n  4             **\n  5             *\n  6             ************\n\nSecond outer loop, after first inner loop\n\n  0 ************\n  1             \u003cempty\u003e\n  2             ****\n  3             ***\n  4             **\n  5             *\n  6             ************\n\nIn second inner loop, 1 cannot trim 2-5.  The pattern repeats.\n\nA quick way to address this is to realize that if 270 is holds and we find a better overlapping |next| (call it a \"reaper\"), then everything between will disappear so can be skipped. Don\u0027t know if this is sufficient in general though; still thinking.",
+      "range": {
+        "startLine": 252,
+        "startChar": 19,
+        "endLine": 252,
+        "endChar": 51
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb58c5c_5e78ce56",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Do you need std::move(equivalences) ?",
+      "range": {
+        "startLine": 302,
+        "startChar": 18,
+        "endLine": 302,
+        "endChar": 30
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0525b34c_e37d5245",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Unify with OffsetMapper::PruneEquivalencesAndSortBySource() ?",
+      "range": {
+        "startLine": 399,
+        "startChar": 21,
+        "endLine": 399,
+        "endChar": 26
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f511636_962df47b",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5141903a_a1299552",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: The map is injective but not surjective (since not every byte is covered). How about:\n\n// ... to make the equivalence map (for covered bytes in |old_image| and |new_image|) one-to-one.\n\n?",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 82,
+        "endChar": 27
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6322c94_052cf682",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Comment on why so many flavors are needed? E.g.:\n\n  // Constructors for various data sources.\n  // - From a list of |equivalences|, already sorted (by |src_offset|) and pruned, uesful for ???\n  explicit OffsetMapper(std::vector\u003cEquivalence\u003e\u0026\u0026 equivalences);\n  // - From a generator, useful for ???\n  explicit OffsetMapper(EquivalenceSource\u0026\u0026 equivalence_source);   \u003c\u003d\u003d Rename variable.\n  // - From an EquivalenceMap that needs to be processed, useful for ???\n  explicit OffsetMapper(const EquivalenceMap\u0026 equivalence_map);",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 63
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9597cdf2_57579998",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Does this assume |equivalences_| to be non-empty (e.g., patch \"aaaaa\" -\u003e \"bbbbb\")?  If so then the assumption should be stated.  If not then the case should be handled, and added to unit tests.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232f159f_c53e2a64",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: equivalences (plural).",
+      "range": {
+        "startLine": 107,
+        "startChar": 33,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce46213c_66e96222",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: removes",
+      "range": {
+        "startLine": 109,
+        "startChar": 46,
+        "endLine": 109,
+        "endChar": 52
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558f82a1_96231749",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: Unwrap, unless new line is intentional?",
+      "range": {
+        "startLine": 113,
+        "startChar": 56,
+        "endLine": 113,
+        "endChar": 57
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b740eda6_d9d9ed95",
+        "filename": "chrome/installer/zucchini/target_pool.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Decided to rephrase:\n\n// InsertTargets() can be called many times (number of reference types for the pool) in succession. Calling SortAndUniquefy() every time enables deduping to occur more often. This prioritizes peak memory reduction over running time.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85295199_2dd654a7",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "// Uses |offset_mapper| to transform \"old\" |targets_| to \"new\" |targets_|, resulting in sorted and unique targets.\n\nAlso, it seems items in |targets_| might disappear because they are not covered by |offset_mapper|? If that\u0027s the case, then rename to FilterAndProject()?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 6
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5568afc4_09fe020a",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "cbegin() and cend() are allowed; don\u0027t know if you want to use them?",
+      "range": {
+        "startLine": 65,
+        "startChar": 49,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719b251c_973f4df8",
+        "filename": "chrome/installer/zucchini/target_pool_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "NIT: Switch the 2 parameters so we\u0027d have \"expected\" before \"input\". This also has the benefit of lining up the strings.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5198ac20_963bd9d5",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "// Load \"old\" targets, then filter and map them to \"new\" targets.",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 7
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35703ec6_7a0042af",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T18:51:56Z",
+      "side": 1,
+      "message": "Should this be rvalue, for consistency (or must use const\u0026 throughout, unless you think that\u0027s yucky)?",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "88aeba0c08248834c1bc78f0bff4e3082e1a1d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
