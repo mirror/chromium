@@ -36,6 +36,7 @@ import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell.Shell;
+import org.chromium.content_shell.ShellViewAndroidDelegate;
 import org.chromium.content_shell.ShellViewAndroidDelegate.OnCursorUpdateHelper;
 
 import java.lang.annotation.ElementType;
@@ -63,9 +64,28 @@ public class ContentShellActivityTestRule extends ActivityTestRule<ContentShellA
         this(false, false);
     }
 
+    private static class OnCursorUpdateHelperImpl
+            extends CallbackHelper implements OnCursorUpdateHelper {
+        private int mPointerType;
+
+        @Override
+        public void notifyCalled(int type) {
+            mPointerType = type;
+            notifyCalled();
+        }
+
+        @Override
+        public int getPointerType() {
+            assert getCallCount() > 0;
+            return mPointerType;
+        }
+    }
+
     public ContentShellActivityTestRule(boolean initialTouchMode, boolean launchActivity) {
         super(ContentShellActivity.class, initialTouchMode, launchActivity);
         mLaunchActivity = launchActivity;
+        ShellViewAndroidDelegate delegate = getActivity().getActiveShell().getViewAndroidDelegate();
+        delegate.setOnCursorUpdateHelper(new OnCursorUpdateHelperImpl());
     }
 
     @Override
