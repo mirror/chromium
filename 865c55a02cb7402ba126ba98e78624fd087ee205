@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca986dbb_8523cf84",
+        "filename": "components/unzip_service/unzip_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524a7902_0a7e517e",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39910390_5b1676d5",
         "filename": "components/unzip_service/unzipper_impl.cc",
         "patchSetId": 21
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4004db76_d0c9a026",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39910390_5b1676d5",
+      "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb40dfec_37238077",
         "filename": "components/unzip_service/unzipper_impl.cc",
         "patchSetId": 21
@@ -56,6 +98,24 @@
       "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8069a18_6016bac4",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb40dfec_37238077",
+      "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6ca3aeb6_24bb9cc3",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T21:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3841b8ed_20ecd6ac",
+      "range": {
+        "startLine": 766,
+        "startChar": 32,
+        "endLine": 766,
+        "endChar": 38
+      },
+      "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dae1366_cfe3314f",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 21
@@ -102,6 +186,30 @@
       "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892b60a4_0ab52c79",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T21:32:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6dae1366_cfe3314f",
+      "range": {
+        "startLine": 166,
+        "startChar": 37,
+        "endLine": 166,
+        "endChar": 47
+      },
+      "revId": "865c55a02cb7402ba126ba98e78624fd087ee205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
