@@ -95,6 +95,23 @@
     },
     {
       "key": {
+        "uuid": "6f937ec6_0afca85a",
+        "filename": "chrome/installer/mini_installer/mini_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T14:01:22Z",
+      "side": 1,
+      "message": "this conditional still needs to be present for your \"skip compress\" build. the other COMPONENT_BUILD blocks in mini_installer.cc are indeed specific to component builds -- this one is specific to \"compressed or not compressed\".",
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb5d7d9_52d52215",
         "filename": "chrome/tools/build/win/create_installer_archive.py",
         "patchSetId": 14
