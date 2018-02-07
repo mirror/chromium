@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5108287_5f8c5346",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: don\u0027t need this; it\u0027s already included by the header",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d312cac9_5df2b834",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: delete extra space",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 6
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cddb2c_a4662974",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "it\u0027s possible for SuspendDone to be called before the lock screen is ready and compositors have been stopped. is this case handled? in particular, will we stop observing compositors as expected if this happens?",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc5b529_7b39b0d1",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: theoretically",
+      "range": {
+        "startLine": 145,
+        "startChar": 61,
+        "endLine": 145,
+        "endChar": 73
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ddc10bc_44093bfc",
         "filename": "ash/system/power/power_event_observer.cc",
         "patchSetId": 10
@@ -19,6 +99,92 @@
     },
     {
       "key": {
+        "uuid": "03e92186_042d8680",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: required",
+      "range": {
+        "startLine": 148,
+        "startChar": 19,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c89d9d_9a9cd3c8",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "this class is now quite complicated due to this compositing-related code being spread throughout it. would it be possible to move the compositor-observing code into a separate helper class, possibly just defined at the top of this .cc file? specifically, i\u0027m thinking of a class with a simple interface like this:\n\n  // One-shot class that runs a callback after all compositors start and\n  // complete a cycle.\n  class CompositorWatcher {\n   public:\n    explicit CompositorWatcher(base::OnceClosure callback);\n    ...\n  };",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed79c0c_a03476f5",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: \"it suspends all displays and stops compositing\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5590d98c_19908461",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: \"starts\" or \"is started\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 52,
+        "endLine": 30,
+        "endChar": 59
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2330273_37fae74f",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -30,6 +196,189 @@
       "writtenOn": "2018-02-07T20:06:49Z",
       "side": 1,
       "message": "danakj: Does this make sense from the compositing layer\u0027s point of view?\nBasically, the idea is to observe root window compositors after the screen is locked, and wait for CompositingDidCommit, CompositingStarted, CompositingEnded events before proceeding with suspend (and calling ui::Compositor::SetVisible(false))?\n\nIs this enough to know displays will have frames with screen locked when they get resumed/reconfigured?",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986ce0a5_8edacab8",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "i\u0027m curious about whether we\u0027re guaranteed to always get at least one more cycle of compositing notifications before we suspend, or if it\u0027s possible that we could miss the one for the lock screen and get stuck as a result.",
+      "parentUuid": "e2330273_37fae74f",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179c09b8_c3331bca",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: kUnlocked?",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de954ebf_2185e34e",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: add trailing comma",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fce72d_4da54433",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: add trailing comma",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9700bc02_ff5aeea7",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: window or windows\u0027, also compositor or compositors\u0027",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fed48a_98b8cb37",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "same nit re singular or plural possessive here",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a27ab3_903b1893",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: safe",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d827c4a6_2d29c961",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "mind adding comments for these too?",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d27759_eae71de4",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: don\u0027t need this comment",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954726d6_6e2c1807",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T22:03:57Z",
+      "side": 1,
+      "message": "nit: please assign an initial value here (i see that it\u0027s initialized in the c\u0027tor, but this makes it more obvious that it can\u0027t be used uninitialized)",
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
