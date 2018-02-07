@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0c489d4_5b0a9438",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T07:47:45Z",
+      "side": 1,
+      "message": "Presumably in the parent.\n\n(It\u0027s not clear to me why it\u0027s useful for the frame to know its position in the parent though?)",
+      "range": {
+        "startLine": 307,
+        "startChar": 42,
+        "endLine": 307,
+        "endChar": 59
+      },
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93751c0_c12a7dd3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T07:47:45Z",
+      "side": 1,
+      "message": "Nit: remove unnecessary semicolon here.",
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b49a90_fd0f7793",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T07:47:45Z",
+      "side": 1,
+      "message": "Super minor nit: I would personally find this clearer if it was labelled \"did_suspend_parsing_\". It obviously means the same thing... I just personally think its more clear if the original state change is expressed in terms of what we already did, not what needs to be done in the future.",
+      "revId": "827a1d1bee7837ff4f9ded9cda291ba0c52d9214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
