@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4acc5be5_dbb38bfc",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "It\u0027s probably not necessary to avoid capturing \"Undo\" (arguably it\u0027s also part of consent description), but there are several problems with taking the whole textContent:\n\n- I want to translate the strings back to their GRD IDs, which means I need to record individual strings where each directly corresponds to one string in the GRD file.\n- Although currently not present, if we want to e.g. show the user\u0027s name in the future, such a custom string would have to be avoided, so it seems better to be explicit about what is recorded and what not.\n- When manually testing, I realized that some of the strings contain HTML markup (\u003ca\u003e\u003c/a\u003e), so in the end we actually have to record innerHTML rather than textContent.",
+      "parentUuid": "a3866d85_71f724b4",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641d9119_00a7dd3a",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2015ae7_9b242b6e",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "That\u0027s a good point! We\u0027ll treat that as consent revokation, which we\u0027ll also record. I\u0027ll address that in a followup CL.\n\nWe could theoretically hold on recording until the user leaves settings, but that seems more error-prone, and also not exactly achieving the goal of recording what *exactly* the user saw when granting consent. Recording that the user read the dialog, consented (or rather - acknowledged in this case), then went to settings and revoked consent from there is a better representation of reality than saying that the user consented to the text of the dialog by leaving settings in a different way than clicking the \"Cancel\" button.",
+      "parentUuid": "641d9119_00a7dd3a",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ba7ef01_dd19644c",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b10ba7_592dc206",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44082e31_59635b70",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "76577789_707f43d4",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "I want this code to be somewhat defensive towards unexpected changes. In case the dialog had some moving parts, it\u0027s better to scrap the text at click time.\n\n(I also replaced [hidden] with clientWidth/clientHeight checks for visibility, which is more general.)\n\nMore importantly, I don\u0027t understand what do you mean by twice? This method is called from onConfirm_() and onGoToSettings_(), but those two events are mutually exclusive.",
+      "parentUuid": "44082e31_59635b70",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eca22c74_eaec1b1a",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2018-02-02T21:50:09Z",
       "side": 1,
       "message": "does this.querySelectorAll also work?",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7961dce_06464bf0",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "Despite my expectation that \"this\" is \"sync-confirmation-app\", it doesn\u0027t. It\u0027s actually not clear to me why.",
+      "parentUuid": "eca22c74_eaec1b1a",
       "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1ead2c50_45fbdaf9",
+        "filename": "chrome/browser/ui/webui/signin/sync_confirmation_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2018-02-07T19:39:35Z",
+      "side": 1,
+      "message": "In the end, I removed this part, as it didn\u0027t make much sense. At the time the user is consenting to Sync, they\u0027re already signed in.\n\nAnd if we actually needed to wait for the signed-in state, consent auditor can do that internally.",
+      "parentUuid": "04e59d18_c85fe9e6",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 29
+      },
+      "revId": "6b53309090da833495c8fe06dc35aabfbcd621ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ba259b_2ab2aae5",
         "filename": "chrome/browser/ui/webui/signin/sync_confirmation_ui.h",
         "patchSetId": 3
