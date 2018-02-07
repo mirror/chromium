@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea7bc73f_6efac267",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-07T19:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43160171_2ac2a8fd",
+      "range": {
+        "startLine": 668,
+        "startChar": 50,
+        "endLine": 668,
+        "endChar": 51
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ded6a0cb_89fdcbb3",
         "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fe2cb67f_38ec78b6",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-07T19:58:24Z",
+      "side": 1,
+      "message": "I also expect this is always non-null, but things have changed since when Daniel\u0027s CL landed.\ne.g. CORS::CheckAccess() requires SecurityOrigin reference (i.e. non-null) while CrossOriginAccessControl::CheckAccess() took pointer, how SecurityOrigin is obtained is slightly different from before Daniel\u0027s CL, etc., and I\u0027m not fully aware about the contexts/impacts of these changes.\n\nAnd thus this null check is left as a kind of defensive programming.\nIf security origin is null, this returns kNotSharableCrossOrigin, which is probably harmless.",
+      "parentUuid": "c30daa66_688daf0c",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71973a88_0c29acd8",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 7
@@ -92,6 +140,30 @@
       "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626a2b8b_289b9841",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-07T19:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71973a88_0c29acd8",
+      "range": {
+        "startLine": 216,
+        "startChar": 38,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c7294158_c3727d3f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-07T19:58:24Z",
+      "side": 1,
+      "message": "No.\n\nIsSameOriginOrCORSSuccessful() still has callers.\n\nGetCORSStatus() is also still used in ScriptResource::CalculateAccessControlStatus().\n(I can further revert the CL and replace GetCORSStatus() with ResourceResponse check though)",
+      "parentUuid": "27e459f3_2aea9a41",
+      "range": {
+        "startLine": 282,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a5545af_e7454077",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 7
@@ -129,6 +225,30 @@
       "writtenOn": "2018-02-06T06:12:26Z",
       "side": 1,
       "message": "This setter method, member variable, and caller can be also removed?",
+      "range": {
+        "startLine": 439,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 3
+      },
+      "revId": "38b8e2aaf8b14823a16daa2222edbe61ee1d6edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdb3859_81f65cdb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2018-02-07T19:58:24Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "4a5545af_e7454077",
       "range": {
         "startLine": 439,
         "startChar": 0,
