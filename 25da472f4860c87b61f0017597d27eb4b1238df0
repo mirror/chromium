@@ -22,6 +22,30 @@
       "revId": "25da472f4860c87b61f0017597d27eb4b1238df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230965c4_5d7bf60c",
+        "filename": "extensions/browser/api/socket/udp_socket.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T16:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2b00ec_3b363a49",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "25da472f4860c87b61f0017597d27eb4b1238df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
