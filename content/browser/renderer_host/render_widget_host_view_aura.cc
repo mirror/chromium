@@ -1230,6 +1230,15 @@ void RenderWidgetHostViewAura::UnlockMouse() {
   event_handler_->UnlockMouse();
 }
 
+void RenderWidgetHostViewAura::LockKeyboard(
+    const std::vector<std::string>& keys_to_lock) {
+  keyboard_lock_host_ = KeyboardLockHost::Create(this, keys_to_lock);
+}
+
+void RenderWidgetHostViewAura::UnlockKeyboard() {
+  keyboard_lock_host_.reset();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, ui::TextInputClient implementation:
 void RenderWidgetHostViewAura::SetCompositionText(

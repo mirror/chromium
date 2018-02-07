@@ -7,9 +7,14 @@
 #include <memory>
 #include <utility>
 
+#include "base/bind.h"
+#include "base/callback.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "content/browser/keyboard_lock/keyboard_lock_host.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 
 namespace content {
@@ -36,8 +41,8 @@ void LogKeyboardLockMethodCalled(KeyboardLockMethods method) {
 
 KeyboardLockServiceImpl::KeyboardLockServiceImpl(
     RenderFrameHost* render_frame_host)
-    : web_contents_(WebContents::FromRenderFrameHost(render_frame_host)) {
-  DCHECK(web_contents_);
+    : render_frame_host_(render_frame_host) {
+  DCHECK(render_frame_host_);
 }
 
 KeyboardLockServiceImpl::~KeyboardLockServiceImpl() = default;
@@ -59,14 +64,21 @@ void KeyboardLockServiceImpl::RequestKeyboardLock(
   else
     LogKeyboardLockMethodCalled(KeyboardLockMethods::kRequestSomeKeys);
 
-  // TODO(joedow): Implementation required.
+  // RenderWidgetHostView may change over time so don't store it.
+  RenderWidgetHostView* render_widget_host_view = render_frame_host_->GetView();
+  if (render_widget_host_view)
+    render_widget_host_view->LockKeyboard(key_codes);
+
   std::move(callback).Run(blink::mojom::KeyboardLockRequestResult::SUCCESS);
 }
 
 void KeyboardLockServiceImpl::CancelKeyboardLock() {
   LogKeyboardLockMethodCalled(KeyboardLockMethods::kCancelLock);
 
-  // TODO(joedow): Implementation required.
+  // RenderWidgetHostView may change over time so don't store it.
+  RenderWidgetHostView* render_widget_host_view = render_frame_host_->GetView();
+  if (render_widget_host_view)
+    render_widget_host_view->UnlockKeyboard();
 }
 
 }  // namespace content

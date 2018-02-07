@@ -190,6 +190,15 @@ bool RenderWidgetHostViewBase::IsMouseLocked() {
   return mouse_locked_;
 }
 
+void RenderWidgetHostViewBase::LockKeyboard(
+    const std::vector<std::string>& keys_to_lock) {
+  NOTIMPLEMENTED();
+}
+
+void RenderWidgetHostViewBase::UnlockKeyboard() {
+  NOTIMPLEMENTED();
+}
+
 InputEventAckState RenderWidgetHostViewBase::FilterInputEvent(
     const blink::WebInputEvent& input_event) {
   // By default, input events are simply forwarded to the renderer.
