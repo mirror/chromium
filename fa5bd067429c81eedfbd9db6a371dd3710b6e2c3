@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47f5a36_87a37790",
+        "filename": "third_party/gles1_conform",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:28:07Z",
+      "side": 1,
+      "message": "will remove",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "fa5bd067429c81eedfbd9db6a371dd3710b6e2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
