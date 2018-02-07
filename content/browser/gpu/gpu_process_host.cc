@@ -256,6 +256,8 @@ class GpuSandboxedProcessLauncherDelegate
   // backend. Note that the GPU process is connected to the interactive
   // desktop.
   bool PreSpawnTarget(sandbox::TargetPolicy* policy) override {
+    static bool disable_appcontainer = false;
+
     if (cmd_line_.GetSwitchValueASCII(switches::kUseGL) ==
         gl::kGLImplementationDesktopName) {
       // Open GL path.
@@ -281,17 +283,24 @@ class GpuSandboxedProcessLauncherDelegate
               JOB_OBJECT_UILIMIT_DISPLAYSETTINGS,
           policy);
 
+      if (service_manager::SandboxWin::IsAppContainerEnabledForSandbox(
+              service_manager::SANDBOX_TYPE_GPU)) {
+        base::UmaHistogramBoolean("GPU.AppContainer.Disabled",
+                                  disable_appcontainer);
+        // TODO: Remove this once AppContainer sandbox is enabled by default.
+        if (!disable_appcontainer) {
+          sandbox::ResultCode result =
+              service_manager::SandboxWin::AddAppContainerPolicy(
+                  policy, service_manager::SANDBOX_TYPE_GPU);
+          DCHECK(result == sandbox::SBOX_ALL_OK);
+          base::UmaHistogramSparse("GPU.AppContainer.Status", result);
+          // Disable AppContainer. If this code is recalled it's likely it
+          // indicates a crash so do not enable AppContainer again.
+          disable_appcontainer = true;
+        }
+      }
       policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
     }
-
-    // Allow the server side of GPU sockets, which are pipes that have
-    // the "chrome.gpu" namespace and an arbitrary suffix.
-    sandbox::ResultCode result = policy->AddRule(
-        sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
-        sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
-        L"\\\\.\\pipe\\chrome.gpu.*");
-    if (result != sandbox::SBOX_ALL_OK)
-      return false;
 
     // Block this DLL even if it is not loaded by the browser process.
     policy->AddDllToUnload(L"cmsetac.dll");
@@ -299,9 +308,9 @@ class GpuSandboxedProcessLauncherDelegate
     if (cmd_line_.HasSwitch(switches::kEnableLogging)) {
       base::string16 log_file_path = logging::GetLogFileFullPath();
       if (!log_file_path.empty()) {
-        result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
-                                 sandbox::TargetPolicy::FILES_ALLOW_ANY,
-                                 log_file_path.c_str());
+        sandbox::ResultCode result = policy->AddRule(
+            sandbox::TargetPolicy::SUBSYS_FILES,
+            sandbox::TargetPolicy::FILES_ALLOW_ANY, log_file_path.c_str());
         if (result != sandbox::SBOX_ALL_OK)
           return false;
       }

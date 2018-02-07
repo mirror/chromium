@@ -1433,6 +1433,9 @@ extern const char kEnableD3DVsyncDescription[];
 extern const char kEnableDesktopIosPromotionsName[];
 extern const char kEnableDesktopIosPromotionsDescription[];
 
+extern const char kEnableGpuAppcontainerName[];
+extern const char kEnableGpuAppcontainerDescription[];
+
 extern const char kGdiTextPrinting[];
 extern const char kGdiTextPrintingDescription[];
 

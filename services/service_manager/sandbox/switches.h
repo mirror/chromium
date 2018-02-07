@@ -40,6 +40,10 @@ SERVICE_MANAGER_SANDBOX_EXPORT extern const char kGpuSandboxAllowSysVShm[];
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kGpuSandboxFailuresFatal[];
 #if defined(OS_WIN)
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kAllowThirdPartyModules[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kAddGpuAppContainerCaps[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kDisableGpuAppContainer[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kDisableGpuLpac[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kEnableGpuAppContainer[];
 #endif
 
 // Flags spied upon from other layers.
@@ -62,6 +66,7 @@ SERVICE_MANAGER_SANDBOX_EXPORT extern const char kEnableSandboxLogging[];
 // Returns whether Win32k lockdown is enabled for child processes or not.
 // Not really a switch, but uses one under the covers.
 SERVICE_MANAGER_SANDBOX_EXPORT bool IsWin32kLockdownEnabled();
+
 #endif
 
 }  // namespace service_manager

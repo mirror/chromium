@@ -59,6 +59,17 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxWin {
       sandbox::TargetPolicy* policy,
       bool enable_opm);
 
+  // Add the AppContainer sandbox on supported OS. |sandbox_type| determines
+  // what policy is enabled.
+  static sandbox::ResultCode AddAppContainerPolicy(
+      sandbox::TargetPolicy* policy,
+      service_manager::SandboxType sandbox_type);
+
+  // Returns whether the AppContainer sandbox is enabled or not for a specific
+  // |sandbox_type|.
+  static bool IsAppContainerEnabledForSandbox(
+      service_manager::SandboxType sandbox_type);
+
   static bool InitBrokerServices(sandbox::BrokerServices* broker_services);
   static bool InitTargetServices(sandbox::TargetServices* target_services);
 };
