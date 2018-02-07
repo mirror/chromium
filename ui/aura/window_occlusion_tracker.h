@@ -187,6 +187,8 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   // Root Windows of Windows in |tracked_windows_|.
   base::flat_map<Window*, RootWindowState> root_windows_;
 
+  bool is_computing_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(WindowOcclusionTracker);
 };
 

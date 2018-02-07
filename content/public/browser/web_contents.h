@@ -433,12 +433,6 @@ class WebContents : public PageNavigator,
   // Returns the visibility of the WebContents' view.
   virtual Visibility GetVisibility() const = 0;
 
-  // Invoked when the WebContents becomes occluded/unoccluded. An occluded
-  // WebContents isn't painted on the screen, except in a window switching
-  // feature (e.g. Alt-Tab).
-  virtual void WasOccluded() = 0;
-  virtual void WasUnOccluded() = 0;
-
   // Returns true if the before unload and unload listeners need to be
   // fired. The value of this changes over time. For example, if true and the
   // before unload listener is executed and allows the user to exit, then this

@@ -549,7 +549,7 @@ void RenderWidgetHostViewAura::Hide() {
   if (is_mus_browser_plugin_guest_)
     return;
 
-  window_->Hide();
+  // window_->Hide();
   WasOccluded();
 }
 
