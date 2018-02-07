@@ -10,6 +10,10 @@
 #include "chrome/browser/upgrade_observer.h"
 #include "components/prefs/pref_change_registrar.h"
 
+namespace views {
+class Widget;
+}
+
 // A class that observes changes to the browser.relaunch_notification preference
 // (which is backed by the RelaunchNotification policy setting) and annoyance
 // levels from the UpgradeDetector. An appropriate notification is shown to the
@@ -83,6 +87,8 @@ class RelaunchNotificationController : public UpgradeObserver {
   // dormant (browser.relaunch_notification is 0). It is any other value only
   // when a notification has been shown.
   UpgradeDetector::UpgradeNotificationAnnoyanceLevel last_level_;
+
+  views::Widget* recommended_widget_;
 
   DISALLOW_COPY_AND_ASSIGN(RelaunchNotificationController);
 };

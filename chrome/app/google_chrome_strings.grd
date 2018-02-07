@@ -1236,6 +1236,35 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@example.com</
           Click <ph name="BEGIN_BOLD">&lt;strong&gt;</ph>Switch anyway<ph name="END_BOLD">&lt;/strong&gt;</ph>, if it appears
         </message>
       </if>
+
+      <!-- Native notifications for Windows 10 -->
+      <if expr="is_win">
+        <message name="IDS_WIN_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME" desc="The name of the button in Windows Notification Center which leads to Chrome notification settings.">
+          Go to Chrome notification settings
+        </message>
+      </if>
+      <!-- Relaunch notification bubble and dialog. -->
+      <if expr="not is_android and not chromeos">
+        <message name="IDS_RELAUNCH_RECOMMENDED_TITLE_MINUTES" desc="The title of the relaunch recommended bubble shown to users when an administrator has configured such notifications.">
+          {0, plural,
+           =0 {A Chrome update has been available for less than a minute}
+           =1 {A Chrome update has been available for one minute}
+           other {A Chrome update has been available for # minutes}}
+        </message>
+        <message name="IDS_RELAUNCH_RECOMMENDED_TITLE_HOURS" desc="The title of the relaunch recommended bubble shown to users when an administrator has configured such notifications.">
+          {0, plural,
+           =1 {A Chrome update has been available for one hour}
+           other {A Chrome update has been available for # hours}}
+        </message>
+        <message name="IDS_RELAUNCH_RECOMMENDED_TITLE_DAYS" desc="The title of the relaunch recommended bubble shown to users when an administrator has configured such notifications.">
+          {0, plural,
+           =1 {A Chrome update has been available for one day}
+           other {A Chrome update has been available for # days}}
+        </message>
+        <message name="IDS_RELAUNCH_RECOMMENDED_BODY" desc="The body text of the relaunch recommended bubble shown to users when an administrator has configured such notifications.">
+          Your administrator asks that you relaunch Chrome to apply this update
+        </message>
+      </if>
     </messages>
   </release>
 </grit>
