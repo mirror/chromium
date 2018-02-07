@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be8a3b2e_dbe86c90",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-02-07T18:09:36Z",
+      "side": 0,
+      "message": "?",
+      "range": {
+        "startLine": 6,
+        "startChar": 73,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "9ba2fee6d7c54b256369fc56e64dc6434207a51e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
