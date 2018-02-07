@@ -230,4 +230,14 @@ public class PaymentOption implements Completable {
 
         return previewString.toString();
     }
+
+    /** @return Whether the label should be stylized as an HTTPS url. */
+    public boolean getIsLabelStylizedHttps() {
+        return false;
+    }
+
+    /** @return Whether the tetriary label should be stylized as an HTTPS url. */
+    public boolean getIsTetriaryLabelStylizedHttps() {
+        return false;
+    }
 }

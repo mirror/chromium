@@ -40,6 +40,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     private final boolean mCanPreselect;
     private final Set<String> mPreferredRelatedApplicationIds;
     private final boolean mIsIncognito;
+    private final boolean mIsLabelTheOrigin;
 
     // Below variables are used for installable service worker payment app specifically.
     private final boolean mNeedsInstallation;
@@ -117,8 +118,9 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             @Nullable Drawable icon, String[] methodNames, Capabilities[] capabilities,
             String[] preferredRelatedApplicationIds) {
         // Do not display duplicate information.
-        super(scope.toString(), TextUtils.isEmpty(name) ? origin : name, userHint,
-                TextUtils.isEmpty(name) ? null : origin, icon);
+        super(scope.toString(), TextUtils.isEmpty(name) ? removeTrailingSlash(origin) : name,
+                userHint, TextUtils.isEmpty(name) ? null : removeTrailingSlash(origin), icon);
+        mIsLabelTheOrigin = TextUtils.isEmpty(name);
         mWebContents = webContents;
         mRegistrationId = registrationId;
 
@@ -163,9 +165,10 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     public ServiceWorkerPaymentApp(WebContents webContents, @Nullable String name, String origin,
             URI swUri, URI scope, boolean useCache, @Nullable Drawable icon, String methodName) {
         // Do not display duplicate information.
-        super(scope.toString(), TextUtils.isEmpty(name) ? origin : name, null,
-                TextUtils.isEmpty(name) ? null : origin, icon);
+        super(scope.toString(), TextUtils.isEmpty(name) ? removeTrailingSlash(origin) : name, null,
+                TextUtils.isEmpty(name) ? null : removeTrailingSlash(origin), icon);
 
+        mIsLabelTheOrigin = TextUtils.isEmpty(name);
         mWebContents = webContents;
         // No registration ID before the app is registered (installed).
         mRegistrationId = -1;
@@ -186,6 +189,12 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         mSwUri = swUri;
         mScope = scope;
         mUseCache = useCache;
+    }
+
+    private static String removeTrailingSlash(String text) {
+        return TextUtils.isEmpty(text) || text.charAt(text.length() - 1) != '/'
+                ? text
+                : text.substring(0, text.length() - 1);
     }
 
     @Override
@@ -350,5 +359,16 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     @Override
     public boolean canPreselect() {
         return mCanPreselect;
+    }
+
+    @Override
+    public boolean getIsLabelStylizedHttps() {
+        return mIsLabelTheOrigin;
+    }
+
+    @Override
+    public boolean getIsTetriaryLabelStylizedHttps() {
+        // Either the label or the tetriary label is the origin of the service worker.
+        return !mIsLabelTheOrigin;
     }
 }

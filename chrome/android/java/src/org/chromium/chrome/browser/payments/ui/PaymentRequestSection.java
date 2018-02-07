@@ -11,6 +11,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.GridLayout;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
@@ -34,8 +36,11 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.omnibox.OmniboxUrlEmphasizer;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.widget.DualControlLayout;
 import org.chromium.chrome.browser.widget.TintedDrawable;
+import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.ui.UiUtils;
 
 import java.util.ArrayList;
@@ -1385,6 +1390,12 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
                     builder.setSpan(
                             new StyleSpan(android.graphics.Typeface.BOLD), 0, builder.length(), 0);
                 }
+                if (item.getIsLabelStylizedHttps()) {
+                    OmniboxUrlEmphasizer.emphasizeUrl(builder, getResources(),
+                            Profile.getLastUsedProfile(), ConnectionSecurityLevel.SECURE,
+                            false /* isInternalPage */, true /* useDarkColors */,
+                            true /* emphasizeHttpsScheme */);
+                }
             }
 
             String labelSeparator = singleLine
@@ -1397,7 +1408,14 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
 
             if (!TextUtils.isEmpty(item.getTertiaryLabel())) {
                 if (builder.length() > 0) builder.append(labelSeparator);
-                builder.append(item.getTertiaryLabel());
+                Spannable tetriaryLabel = new SpannableString(item.getTertiaryLabel());
+                if (item.getIsTetriaryLabelStylizedHttps()) {
+                    OmniboxUrlEmphasizer.emphasizeUrl(tetriaryLabel, getResources(),
+                            Profile.getLastUsedProfile(), ConnectionSecurityLevel.SECURE,
+                            false /* isInternalPage */, true /* useDarkColors */,
+                            true /* emphasizeHttpsScheme */);
+                }
+                builder.append(tetriaryLabel);
             }
 
             if (!TextUtils.isEmpty(item.getPromoMessage())) {
