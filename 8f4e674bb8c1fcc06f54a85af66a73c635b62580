@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0d2526c_e3c7caf4",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T13:12:36Z",
+      "side": 1,
+      "message": "I changed this to a warning.",
+      "revId": "8f4e674bb8c1fcc06f54a85af66a73c635b62580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0bfb4c_fb98f9cc",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T13:12:36Z",
+      "side": 1,
+      "message": "I removed this one entirely because I\u0027m not sure websites would be able to do anything about it except switching to `play()` which isn\u0027t what we would like.",
+      "revId": "8f4e674bb8c1fcc06f54a85af66a73c635b62580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
