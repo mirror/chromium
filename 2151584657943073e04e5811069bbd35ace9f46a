@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe9af3a3_5a338a0b",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-07T01:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa391c7_07196f70",
+      "revId": "2151584657943073e04e5811069bbd35ace9f46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e7bcdd_5a123b3b",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T04:23:06Z",
       "side": 1,
       "message": "Add a class-level comment.",
+      "revId": "2151584657943073e04e5811069bbd35ace9f46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db6ec4f_504a2d23",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-02-07T01:03:26Z",
+      "side": 1,
+      "message": "Addressed it in another CL.",
+      "parentUuid": "f0e7bcdd_5a123b3b",
       "revId": "2151584657943073e04e5811069bbd35ace9f46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
