@@ -531,6 +531,7 @@ void DesktopWindowTreeHostX11::ShowWindowWithState(
       SetFullscreen(true);
       break;
     default:
+      native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
       break;
   }
 
@@ -1033,6 +1034,7 @@ void DesktopWindowTreeHostX11::SetFullscreen(bool fullscreen) {
   }
   OnHostMovedInPixels(bounds_in_pixels_.origin());
   OnHostResizedInPixels(bounds_in_pixels_.size());
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 
   if (ui::HasWMSpecProperty(window_properties_,
                             gfx::GetAtom("_NET_WM_STATE_FULLSCREEN")) ==
@@ -1615,6 +1617,7 @@ void DesktopWindowTreeHostX11::OnWMStateUpdated() {
       content_window_->Show();
       compositor()->SetVisible(true);
     }
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
   }
 
   if (restored_bounds_in_pixels_.IsEmpty()) {
@@ -1641,8 +1644,10 @@ void DesktopWindowTreeHostX11::OnWMStateUpdated() {
   is_always_on_top_ = ui::HasWMSpecProperty(
       window_properties_, gfx::GetAtom("_NET_WM_STATE_ABOVE"));
 
-  if (was_maximized != is_maximized)
+  if (was_maximized != is_maximized) {
     OnMaximizedStateChanged();
+    native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
+  }
 
   // Now that we have different window properties, we may need to relayout the
   // window. (The windows code doesn't need this because their window change is

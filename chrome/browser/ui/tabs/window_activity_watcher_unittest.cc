@@ -9,9 +9,11 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/observer_list.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_ukm_test_helper.h"
 #include "chrome/test/base/test_browser_window.h"
@@ -74,22 +76,33 @@ class FakeBrowserWindow : public TestBrowserWindow {
   bool IsMinimized() const override {
     return show_state_ == ui::SHOW_STATE_MINIMIZED;
   }
-  void Maximize() override {
-    show_state_ = ui::SHOW_STATE_MAXIMIZED;
-    Activate();
+  bool IsFullscreen() const override {
+    return show_state_ == ui::SHOW_STATE_FULLSCREEN;
   }
-  void Minimize() override {
-    show_state_ = ui::SHOW_STATE_MINIMIZED;
-    Deactivate();
+  void Maximize() override { UpdateShowState(ui::SHOW_STATE_MAXIMIZED); }
+  void Minimize() override { UpdateShowState(ui::SHOW_STATE_MINIMIZED); }
+  void Restore() override { UpdateShowState(ui::SHOW_STATE_NORMAL); }
+  void AddObserver(BrowserWindowObserver* observer) override {
+    browser_window_observers_.AddObserver(observer);
   }
-  void Restore() override {
-    // This isn't true "restore" behavior.
-    show_state_ = ui::SHOW_STATE_NORMAL;
-    Activate();
+  void RemoveObserver(BrowserWindowObserver* observer) override {
+    browser_window_observers_.RemoveObserver(observer);
   }
 
+  void EnterFullscreen() { UpdateShowState(ui::SHOW_STATE_FULLSCREEN); }
+
  private:
+  // Simulates a show state change. Callers should follow up with a call to
+  // Activate() or Deactivate() if a window manager would normally change the
+  // window activation state.
+  void UpdateShowState(ui::WindowShowState show_state) {
+    show_state_ = show_state;
+    for (auto& observer : browser_window_observers_)
+      observer.OnShowStateChanged();
+  }
+
   Browser* browser_;
+  base::ObserverList<BrowserWindowObserver> browser_window_observers_;
   bool is_active_ = false;
   ui::WindowShowState show_state_ = ui::SHOW_STATE_NORMAL;
 
@@ -124,8 +137,82 @@ class WindowActivityWatcherTest : public TabActivityTestBase {
   DISALLOW_COPY_AND_ASSIGN(WindowActivityWatcherTest);
 };
 
+// Tests UKM logging of window changes.
+TEST_F(WindowActivityWatcherTest, WindowChanges) {
+  Browser::CreateParams params(profile(), true);
+  std::unique_ptr<Browser> browser =
+      FakeBrowserWindow::CreateBrowserWithFakeWindowForParams(&params);
+  FakeBrowserWindow* window =
+      static_cast<FakeBrowserWindow*>(browser->window());
+  AddTab(browser.get());
+
+  UkmMetricMap expected_metrics({
+      {TabManager_WindowMetrics::kWindowIdName, browser->session_id().id()},
+      {TabManager_WindowMetrics::kShowStateName,
+       WindowMetricsEvent::SHOW_STATE_NORMAL},
+      {TabManager_WindowMetrics::kTypeName, WindowMetricsEvent::TYPE_TABBED},
+      {TabManager_WindowMetrics::kIsActiveName, 1},
+      {TabManager_WindowMetrics::kTabCountName, 1},
+  });
+  {
+    SCOPED_TRACE("");
+    // Window UKMs are not expected to be keyed to a URL.
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->window()->Maximize();
+  expected_metrics[TabManager_WindowMetrics::kShowStateName] =
+      WindowMetricsEvent::SHOW_STATE_MAXIMIZED;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->window()->Restore();
+  expected_metrics[TabManager_WindowMetrics::kShowStateName] =
+      WindowMetricsEvent::SHOW_STATE_NORMAL;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  window->EnterFullscreen();
+  expected_metrics[TabManager_WindowMetrics::kShowStateName] =
+      WindowMetricsEvent::SHOW_STATE_FULLSCREEN;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->window()->Restore();
+  expected_metrics[TabManager_WindowMetrics::kShowStateName] =
+      WindowMetricsEvent::SHOW_STATE_NORMAL;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->window()->Minimize();
+  expected_metrics[TabManager_WindowMetrics::kShowStateName] =
+      WindowMetricsEvent::SHOW_STATE_MINIMIZED;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  // Minimize windows become inactive.
+  browser->window()->Deactivate();
+  expected_metrics[TabManager_WindowMetrics::kIsActiveName] = 0;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  browser->tab_strip_model()->CloseAllTabs();
+}
+
 // Tests UKM logging of two browser windows.
-TEST_F(WindowActivityWatcherTest, Basic) {
+TEST_F(WindowActivityWatcherTest, MultipleWindows) {
   Browser::CreateParams params(profile(), true);
   std::unique_ptr<Browser> browser =
       FakeBrowserWindow::CreateBrowserWithFakeWindowForParams(&params);
@@ -141,7 +228,6 @@ TEST_F(WindowActivityWatcherTest, Basic) {
   });
   {
     SCOPED_TRACE("");
-    // Window UKMs are not expected to be associated with any particular URL.
     ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
   }
 
@@ -149,21 +235,23 @@ TEST_F(WindowActivityWatcherTest, Basic) {
   expected_metrics[TabManager_WindowMetrics::kTabCountName].value()++;
   {
     SCOPED_TRACE("");
-    // Window UKMs are not expected to be associated with any particular URL.
     ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
   }
 
   browser->window()->Minimize();
   expected_metrics[TabManager_WindowMetrics::kShowStateName] =
       WindowMetricsEvent::SHOW_STATE_MINIMIZED;
-  expected_metrics[TabManager_WindowMetrics::kIsActiveName] = 0;
   {
     SCOPED_TRACE("");
     ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
   }
 
-  // A new entry is not created if nothing changes.
-  EXPECT_FALSE(WasNewEntryRecorded());
+  browser->window()->Deactivate();
+  expected_metrics[TabManager_WindowMetrics::kIsActiveName] = 0;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
 
   // A second browser can be logged.
   Browser::CreateParams params_2(Browser::TYPE_POPUP, profile(), true);
@@ -198,6 +286,13 @@ TEST_F(WindowActivityWatcherTest, Basic) {
   browser->window()->Restore();
   expected_metrics[TabManager_WindowMetrics::kShowStateName] =
       WindowMetricsEvent::SHOW_STATE_NORMAL;
+  {
+    SCOPED_TRACE("");
+    ukm_entry_checker()->ExpectNewEntry(kEntryName, GURL(), expected_metrics);
+  }
+
+  // Un-minimizing a window activates it.
+  browser->window()->Activate();
   expected_metrics[TabManager_WindowMetrics::kIsActiveName] = 1;
   {
     SCOPED_TRACE("");

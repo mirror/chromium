@@ -203,6 +203,7 @@ void DesktopWindowTreeHostWin::ShowWindowWithState(
   if (compositor())
     compositor()->SetVisible(true);
   message_handler_->ShowWindowWithState(show_state);
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 void DesktopWindowTreeHostWin::ShowMaximizedWithBounds(
@@ -212,6 +213,7 @@ void DesktopWindowTreeHostWin::ShowMaximizedWithBounds(
   gfx::Rect pixel_bounds =
       display::win::ScreenWin::DIPToScreenRect(GetHWND(), restored_bounds);
   message_handler_->ShowMaximizedWithBounds(pixel_bounds);
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 bool DesktopWindowTreeHostWin::IsVisible() const {
@@ -336,14 +338,20 @@ bool DesktopWindowTreeHostWin::IsActive() const {
 
 void DesktopWindowTreeHostWin::Maximize() {
   message_handler_->Maximize();
+  // TODO(michaelpg): Ensure OnNativeWidgetWindowShowStateChanged is called when
+  // window show state changes are triggered by Windows rather than Chrome
+  // (here and below).
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 void DesktopWindowTreeHostWin::Minimize() {
   message_handler_->Minimize();
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 void DesktopWindowTreeHostWin::Restore() {
   message_handler_->Restore();
+  native_widget_delegate_->OnNativeWidgetWindowShowStateChanged();
 }
 
 bool DesktopWindowTreeHostWin::IsMaximized() const {
