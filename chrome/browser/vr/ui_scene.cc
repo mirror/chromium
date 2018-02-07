@@ -41,13 +41,19 @@ void UiScene::AddUiElement(UiElementName parent,
   InitializeElement(element.get());
   GetUiElementByName(parent)->AddChild(std::move(element));
   is_dirty_ = true;
+  ProcessPendingAdditions();
 }
 
 void UiScene::AddParentUiElement(UiElementName child,
                                  std::unique_ptr<UiElement> element) {
   InitializeElement(element.get());
   auto* child_ptr = GetUiElementByName(child);
-  CHECK_NE(nullptr, child_ptr);
+  if (!child_ptr) {
+    pending_ancestor_additions_.push_back(
+        std::make_unique<PendingAncestorAddition>(child, std::move(element)));
+    return;
+  }
+
   auto* parent_ptr = child_ptr->parent();
   CHECK_NE(nullptr, parent_ptr);
   element->AddChild(parent_ptr->RemoveChild(child_ptr));
@@ -65,6 +71,7 @@ std::unique_ptr<UiElement> UiScene::RemoveUiElement(int element_id) {
 
 bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
                            const gfx::Transform& head_pose) {
+  DCHECK(pending_ancestor_additions_.empty());
   bool scene_dirty = !initialized_scene_ || is_dirty_;
   initialized_scene_ = true;
   is_dirty_ = false;
@@ -212,6 +219,12 @@ void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider) {
     element.Initialize(provider_);
 }
 
+void UiScene::ProcessPendingAdditions() {
+  PendingAncestorAdditions temp = std::move(pending_ancestor_additions_);
+  for (auto& addition : temp)
+    AddParentUiElement(addition->descendant, std::move(addition->ancestor));
+}
+
 void UiScene::InitializeElement(UiElement* element) {
   CHECK_GE(element->id(), 0);
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
@@ -222,5 +235,11 @@ void UiScene::InitializeElement(UiElement* element) {
     }
   }
 }
+
+UiScene::PendingAncestorAddition::PendingAncestorAddition(
+    UiElementName descendant,
+    std::unique_ptr<UiElement> ancestor)
+    : descendant(descendant), ancestor(std::move(ancestor)) {}
+UiScene::PendingAncestorAddition::~PendingAncestorAddition() = default;
 
 }  // namespace vr
