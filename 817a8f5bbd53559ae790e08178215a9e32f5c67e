@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71618436_2cc007b0",
+        "filename": "base/android/jni_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-07T20:34:12Z",
+      "side": 1,
+      "message": "we have some throws that we saw happen from this call. Which obviously hit their own CheckException. I guess I\u0027m wondering what the report looks like? Would the native stack still be in that frame or point this outer frame where we OOM\u0027d?",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 14
+      },
+      "revId": "817a8f5bbd53559ae790e08178215a9e32f5c67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
