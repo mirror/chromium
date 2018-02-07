@@ -35,6 +35,7 @@
 
 #include "base/macros.h"
 #include "core/workers/WorkerReportingProxy.h"
+#include "modules/serviceworkers/WaitUntilObserver.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/KURL.h"
@@ -69,7 +70,10 @@ class WebURLResponse;
 class ServiceWorkerGlobalScopeProxy final
     : public GarbageCollectedFinalized<ServiceWorkerGlobalScopeProxy>,
       public WebServiceWorkerContextProxy,
-      public WorkerReportingProxy {
+      public WorkerReportingProxy,
+      public WaitUntilObserverClient {
+  USING_GARBAGE_COLLECTED_MIXIN(ServiceWorkerGlobalScopeProxy);
+
  public:
   static ServiceWorkerGlobalScopeProxy* Create(WebEmbeddedWorkerImpl&,
                                                WebServiceWorkerContextClient&);
@@ -161,6 +165,12 @@ class ServiceWorkerGlobalScopeProxy final
   void DidCloseWorkerGlobalScope() override;
   void WillDestroyWorkerGlobalScope() override;
   void DidTerminateWorkerThread() override;
+
+  // WaitUntilObserverClient impl
+  void CompleteEvent(WebServiceWorkerContextClient::EventType,
+                     int event_id,
+                     mojom::ServiceWorkerEventStatus,
+                     double event_dispatch_time) override;
 
   void Trace(blink::Visitor*);
 
