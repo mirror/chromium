@@ -54,6 +54,7 @@
 
 class BookmarkBarView;
 class Browser;
+class BrowserActionsContainer;
 class BrowserViewLayout;
 class ContentsLayoutManager;
 class DownloadShelfView;
@@ -252,6 +253,11 @@ class BrowserView : public BrowserWindow,
   // FullscreenController. This method does any processing which was skipped.
   // Only exiting fullscreen in this way is currently supported.
   void FullscreenStateChanged();
+
+  void SetBrowserActionsContainer(BrowserActionsContainer* container);
+  BrowserActionsContainer* browser_actions_container() {
+    return browser_actions_container_;
+  }
 
   // Overridden from BrowserWindow:
   void Show() override;
@@ -678,6 +684,9 @@ class BrowserView : public BrowserWindow,
   // The view managing the devtools and contents positions.
   // Handled by ContentsLayoutManager.
   views::View* contents_container_ = nullptr;
+
+  // The view that displays browser actions for the browser.
+  BrowserActionsContainer* browser_actions_container_ = nullptr;
 
   // Tracks and stores the last focused view which is not the
   // devtools_web_view_ or any of its children. Used to restore focus once
