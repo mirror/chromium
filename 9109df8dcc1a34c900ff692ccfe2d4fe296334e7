@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db827a66_d4de58f3",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T12:34:14Z",
+      "side": 1,
+      "message": "nit: to -\u003e with",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 46
+      },
+      "revId": "9109df8dcc1a34c900ff692ccfe2d4fe296334e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db1b76e_dea651c0",
+        "filename": "chrome/browser/conflicts/module_list_filter_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T12:34:14Z",
+      "side": 1,
+      "message": "nit: just use the generic \"null\" when talking about a smart pointer",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "9109df8dcc1a34c900ff692ccfe2d4fe296334e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
