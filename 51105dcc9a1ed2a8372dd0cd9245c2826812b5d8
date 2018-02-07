@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76e4261_3d004f7e",
+        "filename": "components/url_pattern_index/url_pattern.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2018-02-07T23:36:11Z",
+      "side": 1,
+      "message": "Double-checking this -- \"position + 1\" is correct right because hostname canonicalization prevents \"..\" from being a thing?",
+      "revId": "51105dcc9a1ed2a8372dd0cd9245c2826812b5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
