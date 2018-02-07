@@ -25,6 +25,8 @@ int GetLayoutConstant(LayoutConstant constant) {
     case LOCATION_BAR_HEIGHT:
       return hybrid ? 32 : 28;
     case TABSTRIP_NEW_TAB_BUTTON_OVERLAP:
+      if (ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
+        return -6;
       return hybrid ? 6 : 5;
     case TAB_HEIGHT:
       return hybrid ? 33 : 29;
@@ -48,12 +50,16 @@ gfx::Insets GetLayoutInsets(LayoutInset inset) {
   return gfx::Insets();
 }
 
-gfx::Size GetLayoutSize(LayoutSize size) {
-  const bool hybrid = ui::MaterialDesignController::GetMode() ==
-                      ui::MaterialDesignController::MATERIAL_HYBRID;
+gfx::Size GetLayoutSize(LayoutSize size, bool is_incognito) {
+  const int mode = ui::MaterialDesignController::GetMode();
   switch (size) {
-    case NEW_TAB_BUTTON:
+    case NEW_TAB_BUTTON: {
+      if (mode == ui::MaterialDesignController::MATERIAL_TOUCH_OPTIMIZED)
+        return is_incognito ? gfx::Size(42, 24) : gfx::Size(24, 24);
+
+      const bool hybrid = mode == ui::MaterialDesignController::MATERIAL_HYBRID;
       return hybrid ? gfx::Size(39, 21) : gfx::Size(36, 18);
+    }
   }
   NOTREACHED();
   return gfx::Size();

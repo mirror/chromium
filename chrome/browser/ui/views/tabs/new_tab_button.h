@@ -60,6 +60,10 @@ class NewTabButton : public views::ImageButton,
   void OnMouseReleased(const ui::MouseEvent& event) override;
 #endif
   void OnGestureEvent(ui::GestureEvent* event) override;
+  std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
+  void NotifyClick(const ui::Event& event) override;
+  std::unique_ptr<views::InkDrop> CreateInkDrop() override;
+  std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
   void PaintButtonContents(gfx::Canvas* canvas) override;
 
   // views::MaskedTargeterDelegate:
@@ -72,7 +76,7 @@ class NewTabButton : public views::ImageButton,
   // Note: This is different than the rect around the entire New Tab Button as
   // it extends to the top of the tabstrip for Fitts' Law interaction in a
   // maximized window. Used for anchoring the NewTabPromo.
-  gfx::Rect GetVisibleBounds();
+  gfx::Rect GetVisibleBounds() const;
 
   // Computes a path corresponding to the button's outer border for a given
   // |scale| and stores it in |path|.  |button_y| is used as the y-coordinate

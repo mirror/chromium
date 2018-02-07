@@ -58,6 +58,6 @@ enum LayoutSize {
 
 int GetLayoutConstant(LayoutConstant constant);
 gfx::Insets GetLayoutInsets(LayoutInset inset);
-gfx::Size GetLayoutSize(LayoutSize size);
+gfx::Size GetLayoutSize(LayoutSize size, bool is_incognito);
 
 #endif  // CHROME_BROWSER_UI_LAYOUT_CONSTANTS_H_

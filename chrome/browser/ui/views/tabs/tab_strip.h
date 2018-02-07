@@ -62,7 +62,7 @@ class TabStrip : public views::View,
                  public views::ViewTargeterDelegate,
                  public TabController {
  public:
-  TabStrip(std::unique_ptr<TabStripController> controller);
+  explicit TabStrip(std::unique_ptr<TabStripController> controller);
   ~TabStrip() override;
 
   // Add and remove observers to changes within this TabStrip.
@@ -97,6 +97,8 @@ class TabStrip : public views::View,
   bool IsTabCrashed(int tab_index) const;
   bool TabHasNetworkError(int tab_index) const;
   TabAlertState GetTabAlertState(int tab_index) const;
+
+  bool IsIncognito() const;
 
   // Updates the loading animations displayed by tabs in the tabstrip to the
   // next frame.
