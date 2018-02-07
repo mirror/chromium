@@ -329,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "dcd8185d_56657da1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-07T13:52:47Z",
+      "side": 1,
+      "message": "\u003e I\u0027ve added the symbols in names.h (even though they are marked internal which would, in theory, avoid symbol collision as in: https://gcc.gnu.org/wiki/Visibility).\n\nNote that visibility does not work on MSVC, not that that is an issue for chromium any more.  The changes in \"names.h\" look correct, good.\n\n\u003e The names.h seems to follow the format:\n\u003e /* Symbols added by $PATCH */\n\u003e #define a_name Cr_z_name\n\nYes, correct.\n\n\u003e with no comments on what/why the symbol does.\n\nYour change description can used to cover that to any level of detail needed.\n\n\u003e Maybe just leave this comment here close to the code or simply remove it? \n\nI\u0027d remove the comment (the need for name mangling is a longer story).\n\nAlso note that adding #include \"names.h\", a chromium-only file, here in this in file which if for upstreaming, is probably not what you want.  Suggest you change it to\n\n#include \"zlib.h\"\n\nso that 1) arm_features.h does not depend on a chomium-only file, and 2) name mangling is applied.",
+      "parentUuid": "30f1aee3_ebc2ae98",
+      "revId": "c8d2d37980e18e7d02cc2857718b25140c739feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2161b7db_5db181b6",
         "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
         "patchSetId": 25
