@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca996d4_294f754b",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T11:59:59Z",
+      "side": 1,
+      "message": "one thing I couldn\u0027t figure out: who sets g_sampling_interval (cs is broken today) ?\nI guess  that it is set rather rarely, and you don\u0027t care about temporary inconsistencies when that changes right?",
+      "range": {
+        "startLine": 238,
+        "startChar": 58,
+        "endLine": 238,
+        "endChar": 77
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f503388_3cf4ae17",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T11:59:59Z",
+      "side": 1,
+      "message": "given that only one thread gets to this point, can this be a:\n\naccumulated \u003d Acquire_Load(g_current_interval)\nRelease_Store(g_current_interval, next_interval)\n?",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f093ce00_803cd0aa",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T11:59:59Z",
+      "side": 1,
+      "message": "some though reached this point, I am still not 100% sure I am reading your intents correctly.\nIt seems that you are trying very hard to make sure that g_bytes_left and g_sampling_interval are in sync (I still can\u0027t tell 100% what is the purpose of the two).\nIf that\u0027s the case isn\u0027t easier to do:\n\nspinlock {\n  nobarrier load g_sampling_interval\n  nobarrier load g_bytes_left\n}\n\nmath for computing accumulated\n\nspinlock {\n  nobarrier store ...\n  nobarrier store ...\n}\n\n?\nThat would be easier to read and reason about (but I suspect I am still misreading your intentions somehow)",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 1
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
