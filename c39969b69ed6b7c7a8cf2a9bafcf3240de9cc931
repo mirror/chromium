@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "eaa3a4bd_b4572f5b",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "not explicit",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1f5ad9_e5fe42b0",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "Let\u0027s mark these two const.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ae6750_995049ad",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "Can we test with valid values? Cookies are generally non-zero and positive.",
+      "range": {
+        "startLine": 155,
+        "startChar": 25,
+        "endLine": 155,
+        "endChar": 29
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd705237_2d6ff407",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "kCookie and kPageNumber then?",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 22
+      },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbd6fff3_712cfd7a",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 47
@@ -76,6 +162,91 @@
         "endLine": 78,
         "endChar": 46
       },
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae821367_999f0b83",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "Move this closer to where it\u0027s used.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69d1106_bd65be0d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "If early returns like this happens, there is probably a missing DispatchAfterPrintEvent() call.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b06b76_df30c2ec",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "How did we pick this scaling setting?",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7129d452_d8480c0b",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "PrintBegin can return 0 in some cases, which means there are no pages to print. In which case, the next line shouldn\u0027t be called.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5288dd23_f7484584",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T01:27:16Z",
+      "side": 1,
+      "message": "You shouldn\u0027t call non-const methods inside a DCHECK().",
       "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
