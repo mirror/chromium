@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<title>Test Picture-in-Picture window</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+<script src="resources/picture-in-picture-helpers.js"></script>
+<body></body>
+<script>
+promise_test(t => {
+  return requestPictureInPictureWithTrustedClick(document.createElement('video'))
+  .then(pipWindow => {
+    assert_equals(pipWindow.width, 500);
+    assert_equals(pipWindow.height, 300);
+  });
+}, 'Picture-in-Picture window dimensions are set after entering Picture-in-Picture');
+
+
+promise_test(t => {
+  const video1 = document.createElement('video');
+  const video2 = document.createElement('video');
+  return requestPictureInPictureWithTrustedClick(video1)
+  .then(pipWindow1 => {
+    return requestPictureInPictureWithTrustedClick(video2)
+    .then(pipWindow2 => {
+      assert_equals(pipWindow1.width, 0);
+      assert_equals(pipWindow1.height, 0);
+      assert_equals(pipWindow2.width, 500);
+      assert_equals(pipWindow2.height, 300);
+    });
+  });
+}, 'Picture-in-Picture window dimensions are set to 0 after entering ' +
+   'Picture-in-Picture for another video');
+
+promise_test(t => {
+  return requestPictureInPictureWithTrustedClick(document.createElement('video'))
+  .then(pipWindow => {
+    return document.exitPictureInPicture()
+    .then(() => {
+      assert_equals(pipWindow.width, 0);
+      assert_equals(pipWindow.height, 0);
+    });
+  })
+}, 'Picture-in-Picture window dimensions are set to 0 after exiting Picture-in-Picture');
+
+promise_test(t => {
+  const video = document.createElement('video');
+  return requestPictureInPictureWithTrustedClick(video)
+  .then(pipWindow => {
+    document.createElement('video').disablePictureInPicture = true;
+    // TODO(crbug.com/806249): requestAnimationFrame should not be needed.
+    requestAnimationFrame(() => {
+      assert_equals(pipWindow.width, 0);
+      assert_equals(pipWindow.height, 0);
+    });
+  });
+}, 'Picture-in-Picture window dimensions are set to 0 if ' +
+   'disablePictureInPicture becomes true');
+
+</script>
