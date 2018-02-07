@@ -2499,6 +2499,9 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_ASK_BEFORE_SENDING_RECOMMENDED" desc="The 'ask before sending' label in site settings -- a recommended setting for some categories, such as when sites want to send push notifications.">
     Ask before sending (recommended)
   </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_NOTIFICATION_INDICATORS" desc="BLAH">
+    Enable Notification Indicators
+  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_DONT_SHOW_IMAGES" desc="Label for the global 'Do not show any images' toggle (category default) in site settings.">
     Do not show any images
   </message>

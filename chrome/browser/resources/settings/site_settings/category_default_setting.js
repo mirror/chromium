@@ -100,6 +100,7 @@ Polymer({
       case settings.ContentSettingsTypes.SENSORS:
       case settings.ContentSettingsTypes.POPUPS:
       case settings.ContentSettingsTypes.PROTOCOL_HANDLERS:
+      case settings.ContestSettingsTypes.NOTIFICATION_INDICATORS:
 
         // "Allowed" vs "Blocked".
         this.browserProxy.setDefaultValueForContentType(

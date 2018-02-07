@@ -390,6 +390,11 @@
               toggle-on-label="$i18n{siteSettingsAskBeforeSendingRecommended}"
               category="{{ContentSettingsTypes.NOTIFICATIONS}}">
           </category-default-setting>
+          <category-default-setting
+              toggle-off-label="$i18n{siteSettingsBlocked}"
+              toggle-on-label="$i18n{siteSettingsNotificationIndicators}"
+              category="{{ContentSettingsTypes.NOTIFICATION_INDICATORS}}">
+          </category-default-setting>
           <category-setting-exceptions
               category="{{ContentSettingsTypes.NOTIFICATIONS}}"
               block-header="$i18n{siteSettingsBlock}">

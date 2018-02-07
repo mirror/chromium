@@ -79,6 +79,7 @@
  *   SITE_SETTINGS_MICROPHONE: (undefined|!settings.Route),
  *   SITE_SETTINGS_MIDI_DEVICES: (undefined|!settings.Route),
  *   SITE_SETTINGS_NOTIFICATIONS: (undefined|!settings.Route),
+ *   SITE_SETTINGS_NOTIFICATION_INDICATORS: (undefined|!settings.Route),
  *   SITE_SETTINGS_PDF_DOCUMENTS: (undefined|!settings.Route),
  *   SITE_SETTINGS_POPUPS: (undefined|!settings.Route),
  *   SITE_SETTINGS_PROTECTED_CONTENT: (undefined|!settings.Route),
@@ -323,6 +324,8 @@ cr.define('settings', function() {
       r.SITE_SETTINGS_MICROPHONE = r.SITE_SETTINGS.createChild('microphone');
       r.SITE_SETTINGS_NOTIFICATIONS =
           r.SITE_SETTINGS.createChild('notifications');
+      r.SITE_SETTINGS_NOTIFICATION_INDICATORS =
+          r.SITE_SETTINGS.createChild('notification-indicators');
       r.SITE_SETTINGS_FLASH = r.SITE_SETTINGS.createChild('flash');
       r.SITE_SETTINGS_POPUPS = r.SITE_SETTINGS.createChild('popups');
       r.SITE_SETTINGS_UNSANDBOXED_PLUGINS =
