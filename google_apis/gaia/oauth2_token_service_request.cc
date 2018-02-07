@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -76,8 +77,6 @@ class OAuth2TokenServiceRequest::Core
  private:
   friend class base::RefCountedThreadSafe<OAuth2TokenServiceRequest::Core>;
 
-  void DoNothing();
-
   scoped_refptr<base::SingleThreadTaskRunner> token_service_task_runner_;
   OAuth2TokenServiceRequest* owner_;
 
@@ -118,15 +117,16 @@ void OAuth2TokenServiceRequest::Core::Stop() {
   // if |Stop()| has never been called.
   owner_ = NULL;
 
-  // We are stopping and will likely be destroyed soon.  Use a reply closure
-  // (DoNothing) to retain "this" and ensure we are destroyed in the owner
-  // thread, not the task runner thread.  PostTaskAndReply guarantees that the
-  // reply closure will execute after StopOnTokenServiceThread has completed.
+  // We are stopping and will likely be destroyed soon.  Retain a ref to "this"
+  // and ensure we are destroyed in the owner thread, not the task runner
+  // thread.  PostTaskAndReply guarantees that the reply closure will execute
+  // after StopOnTokenServiceThread has completed.
   token_service_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::Bind(&OAuth2TokenServiceRequest::Core::StopOnTokenServiceThread,
                  this),
-      base::Bind(&OAuth2TokenServiceRequest::Core::DoNothing, this));
+      base::Bind(base::DoNothing::Repeatedly<decltype(this)>(),
+                 base::RetainedRef(this)));
 }
 
 bool OAuth2TokenServiceRequest::Core::IsStopped() const {
@@ -147,10 +147,6 @@ OAuth2TokenService* OAuth2TokenServiceRequest::Core::token_service() {
 OAuth2TokenServiceRequest* OAuth2TokenServiceRequest::Core::owner() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return owner_;
-}
-
-void OAuth2TokenServiceRequest::Core::DoNothing() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 namespace {

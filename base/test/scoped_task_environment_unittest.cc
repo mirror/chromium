@@ -8,6 +8,7 @@
 
 #include "base/atomicops.h"
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/post_task.h"
@@ -240,12 +241,12 @@ TEST_F(ScopedTaskEnvironmentTest, FastForwardAdvanceTickClock) {
       ScopedTaskEnvironment::ExecutionMode::QUEUED);
 
   constexpr base::TimeDelta kShortTaskDelay = TimeDelta::FromDays(1);
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::BindOnce(&base::DoNothing), kShortTaskDelay);
+  ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, base::DoNothing(),
+                                                 kShortTaskDelay);
 
   constexpr base::TimeDelta kLongTaskDelay = TimeDelta::FromDays(7);
-  ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::BindOnce(&base::DoNothing), kLongTaskDelay);
+  ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE, base::DoNothing(),
+                                                 kLongTaskDelay);
 
   std::unique_ptr<base::TickClock> tick_clock =
       scoped_task_environment.GetMockTickClock();

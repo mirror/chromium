@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -431,7 +432,7 @@ class FakeFaviconService {
     // We use PostTaskAndReply() to cause |callback| being run in the current
     // TaskRunner.
     return tracker->PostTaskAndReply(manual_callback_task_runner_.get(),
-                                     FROM_HERE, base::Bind(&base::DoNothing),
+                                     FROM_HERE, base::DoNothing(),
                                      bound_callback);
   }
 

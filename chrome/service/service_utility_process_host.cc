@@ -421,7 +421,7 @@ void ServiceUtilityProcessHost::BindInterface(
       service_manager::Identity{content::mojom::kBrowserServiceName};
   utility_process_connection_->OnBindInterface(source_info, interface_name,
                                                std::move(interface_pipe),
-                                               base::Bind(&base::DoNothing));
+                                               base::DoNothing());
 }
 
 void ServiceUtilityProcessHost::OnMetafileSpooled(bool success) {

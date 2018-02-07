@@ -239,7 +239,7 @@ void IOSChromeBrowsingDataRemover::RemoveImpl(int remove_mask) {
                                                         delete_end_);
       // Ask for a call back when the above call is finished.
       web_data_service->GetDBTaskRunner()->PostTaskAndReply(
-          FROM_HERE, base::Bind(&base::DoNothing),
+          FROM_HERE, base::DoNothing(),
           base::Bind(&IOSChromeBrowsingDataRemover::OnClearedAutofillOriginURLs,
                      base::Unretained(this)));
 
@@ -312,7 +312,7 @@ void IOSChromeBrowsingDataRemover::RemoveImpl(int remove_mask) {
                                                           delete_end_);
       // Ask for a call back when the above calls are finished.
       web_data_service->GetDBTaskRunner()->PostTaskAndReply(
-          FROM_HERE, base::Bind(&base::DoNothing),
+          FROM_HERE, base::DoNothing(),
           base::Bind(&IOSChromeBrowsingDataRemover::OnClearedFormData,
                      base::Unretained(this)));
 

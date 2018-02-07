@@ -504,7 +504,7 @@ have already started to run.
 auto task_runner = base::CreateTaskRunnerWithTraits(base::TaskTraits());
 base::CancelableTaskTracker cancelable_task_tracker;
 cancelable_task_tracker.PostTask(task_runner.get(), FROM_HERE,
-                                 base::Bind(&base::DoNothing));
+                                 base::DoNothing());
 // Cancels Task(), only if it hasn't already started running.
 cancelable_task_tracker.TryCancelAll();
 ```

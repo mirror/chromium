@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/format_macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/numerics/safe_math.h"
@@ -176,7 +177,7 @@ base::Closure GpuMemoryBufferImplSharedMemory::AllocateForTesting(
     gfx::BufferUsage usage,
     gfx::GpuMemoryBufferHandle* handle) {
   *handle = CreateGpuMemoryBuffer(handle->id, size, format, usage);
-  return base::Bind(&base::DoNothing);
+  return base::DoNothing();
 }
 
 bool GpuMemoryBufferImplSharedMemory::Map() {
