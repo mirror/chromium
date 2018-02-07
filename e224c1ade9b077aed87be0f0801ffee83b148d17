@@ -70,6 +70,24 @@
       "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa282bba_246cc89b",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T22:26:45Z",
+      "side": 1,
+      "message": "Honestly, I wouldn\u0027t stress it too much. Multi profile is tricky to test at best. If you hunt around the code you can find examples and test helpers to set up more than one profile, but I don\u0027t know of any examples off the top of my head.",
+      "parentUuid": "a639bc0f_e42ce61b",
+      "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
