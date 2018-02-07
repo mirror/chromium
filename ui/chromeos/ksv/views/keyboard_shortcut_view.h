@@ -7,8 +7,10 @@
 
 #include <map>
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
+#include "ui/chromeos/search_box/search_box_view_delegate.h"
 #include "ui/views/widget/widget_delegate.h"
 
 namespace views {
@@ -18,16 +20,26 @@ class Widget;
 
 namespace keyboard_shortcut_viewer {
 
-class KeyboardShortcutItemView;
+class KeyboardShortcutItemListView;
+class KSVSearchBoxView;
 enum class ShortcutCategory;
 
 // The UI container for Ash and Chrome keyboard shortcuts.
-class KeyboardShortcutView : public views::WidgetDelegateView {
+class KeyboardShortcutView : public views::WidgetDelegateView,
+                             public search_box::SearchBoxViewDelegate {
  public:
   ~KeyboardShortcutView() override;
 
   // Shows the Keyboard Shortcut Viewer window, or re-activates an existing one.
   static views::Widget* Show(gfx::NativeWindow context);
+
+  // views::View:
+  void Layout() override;
+
+  // search_box::SearchBoxViewDelegate:
+  void QueryChanged(search_box::SearchBoxViewBase* sender) override;
+  void BackButtonPressed() override;
+  void ActiveChanged(search_box::SearchBoxViewBase* sender) override;
 
  private:
   friend class KeyboardShortcutViewTest;
@@ -39,6 +51,10 @@ class KeyboardShortcutView : public views::WidgetDelegateView {
   static KeyboardShortcutView* GetInstanceForTests();
   int GetCategoryNumberForTests() const;
   int GetTabCountForTests() const;
+  const std::vector<KeyboardShortcutItemListView*>&
+  tabbed_pane_contents_for_tests() {
+    return tabbed_pane_contents_;
+  }
 
   // views::WidgetDelegate:
   bool CanMaximize() const override;
@@ -49,10 +65,20 @@ class KeyboardShortcutView : public views::WidgetDelegateView {
 
   // Owned by views hierarchy.
   views::TabbedPane* tabbed_pane_;
+  KSVSearchBoxView* search_box_view_;
+  views::View* search_results_container_;
 
-  // Views are owned by views hierarchy.
-  std::map<ShortcutCategory, std::vector<KeyboardShortcutItemView*>>
-      shortcut_views_by_category_;
+  // Views are owned by views hierarchy. TabbedPane does not expose API to get
+  // the tabs and contents, therefore we store a copy of the item list view for
+  // search.
+  std::vector<KeyboardShortcutItemListView*> tabbed_pane_contents_;
+
+  // Two illustrations to indicate the two search states: start searching and no
+  // result found. Since these two views need to be added and removed
+  // frequently from the |search_results_container_|, they are not owned by view
+  // hierarchy to avoid deleting them.
+  std::unique_ptr<views::View> search_start_view_;
+  std::unique_ptr<views::View> search_no_result_view_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardShortcutView);
 };

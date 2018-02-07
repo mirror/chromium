@@ -8,6 +8,8 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/chromeos/ksv/keyboard_shortcut_viewer_metadata.h"
+#include "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.h"
+#include "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget.h"
 
@@ -27,6 +29,11 @@ class KeyboardShortcutViewTest : public views::ViewsTestBase {
   int GetTabCount() const {
     DCHECK(GetView());
     return GetView()->GetTabCountForTests();
+  }
+
+  const std::vector<KeyboardShortcutItemListView*>& GetTabbedPaneContents() {
+    DCHECK(GetView());
+    return GetView()->tabbed_pane_contents_for_tests();
   }
 
  private:
@@ -59,11 +66,28 @@ TEST_F(KeyboardShortcutViewTest, SideTabsCount) {
 
 // Test that the shortcut category has no duplicate.
 TEST_F(KeyboardShortcutViewTest, ShortcutCategoryNoDuplicate) {
+  // Showing the widget.
+  views::Widget* widget = KeyboardShortcutView::Show(GetContext());
+
   std::set<ShortcutCategory> categories;
-  for (const auto& category : GetShortcutCategories()) {
+  for (auto* item_list_view : GetTabbedPaneContents()) {
+    views::View* item_views = item_list_view->shortcut_item_views();
+    ShortcutCategory category;
+    for (int i = 0; i < item_views->child_count(); ++i) {
+      KeyboardShortcutItemView* item_view =
+          static_cast<KeyboardShortcutItemView*>(item_views->child_at(i));
+      if (i == 0)
+        category = item_view->category();
+      else
+        EXPECT_EQ(category, item_view->category())
+            << "Has different categories in one tab.";
+    }
     EXPECT_TRUE(categories.insert(category).second)
-        << "Has duplicated category.";
+        << "Has duplicated category in different tabs.";
   }
+
+  // Cleaning up.
+  widget->CloseNow();
 }
 
 }  // namespace keyboard_shortcut_viewer
