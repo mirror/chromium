@@ -3340,7 +3340,6 @@ void RenderFrameImpl::CommitSameDocumentNavigation(
 
 void RenderFrameImpl::HandleRendererDebugURL(const GURL& url) {
   DCHECK(IsRendererDebugURL(url));
-  base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
   if (url.SchemeIs(url::kJavaScriptScheme)) {
     // Javascript URLs should be sent to Blink for handling.
     frame_->LoadJavaScriptURL(url);
@@ -3348,12 +3347,6 @@ void RenderFrameImpl::HandleRendererDebugURL(const GURL& url) {
     // This is a Chrome Debug URL. Handle it.
     HandleChromeDebugURL(url);
   }
-
-  // The browser sets its status as loading before calling this IPC. Inform it
-  // that the load stopped if needed, while leaving the debug URL visible in the
-  // address bar.
-  if (weak_this && frame_ && !frame_->IsLoading())
-    Send(new FrameHostMsg_DidStopLoading(routing_id_));
 }
 
 void RenderFrameImpl::UpdateSubresourceLoaderFactories(

@@ -3631,17 +3631,6 @@ void RenderFrameHostImpl::FailedNavigation(
 
 void RenderFrameHostImpl::HandleRendererDebugURL(const GURL& url) {
   DCHECK(IsRendererDebugURL(url));
-
-  // Several tests expect a load of Chrome Debug URLs to send a DidStopLoading
-  // notification, so set is loading to true here to properly surface it when
-  // the renderer process is done handling the URL.
-  // TODO(clamy): Remove the test dependency on this behavior.
-  if (!url.SchemeIs(url::kJavaScriptScheme)) {
-    bool was_loading = frame_tree_node()->frame_tree()->IsLoading();
-    is_loading_ = true;
-    frame_tree_node()->DidStartLoading(true, was_loading);
-  }
-
   GetNavigationControl()->HandleRendererDebugURL(url);
 }
 
