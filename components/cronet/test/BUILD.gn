@@ -4,6 +4,40 @@
 
 import("//testing/test.gni")
 
+# This section can be updated from globbing rules using:
+#  find assets -type f | sort | sed 's/\(.*\)/"\1",/g'
+bundle_data("test_support_bundle_data") {
+  visibility = [ ":test_support" ]
+  testonly = true
+  sources = [
+    "assets/test/cacheable.txt",
+    "assets/test/cacheable.txt.mock-http-headers",
+    "assets/test/content_length_mismatch.html",
+    "assets/test/content_length_mismatch.html.mock-http-headers",
+    "assets/test/gzipped.html",
+    "assets/test/gzipped.html.mock-http-headers",
+    "assets/test/multiredirect.html",
+    "assets/test/multiredirect.html.mock-http-headers",
+    "assets/test/notfound.html",
+    "assets/test/notfound.html.mock-http-headers",
+    "assets/test/quic_data/simple.txt",
+    "assets/test/redirect.html",
+    "assets/test/redirect.html.mock-http-headers",
+    "assets/test/redirect_invalid_scheme.html",
+    "assets/test/redirect_invalid_scheme.html.mock-http-headers",
+    "assets/test/secureproxychecksuccess.txt",
+    "assets/test/secureproxychecksuccess.txt.mock-http-headers",
+    "assets/test/set_cookie.html",
+    "assets/test/set_cookie.html.mock-http-headers",
+    "assets/test/success.txt",
+    "assets/test/success.txt.mock-http-headers",
+  ]
+  outputs = [
+    "{{bundle_resources_dir}}/" +
+        "{{source_root_relative_dir}}/{{source_file_part}}",
+  ]
+}
+
 # Test support for Cronet common implementation.
 source_set("test_support") {
   testonly = true
@@ -12,8 +46,16 @@ source_set("test_support") {
     "//net:test_support",
   ]
 
+  data = [
+    "assets/test/",
+  ]
+
   sources = [
     "test_server.cc",
     "test_server.h",
   ]
+
+  if (is_ios) {
+    deps += [ ":test_support_bundle_data" ]
+  }
 }
