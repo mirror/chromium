@@ -93,6 +93,12 @@ class AURA_EXPORT WindowPort {
   // that does not involve a resize or a device scale factor change.
   virtual void AllocateLocalSurfaceId() = 0;
 
+  virtual void SetLocalSurfaceId(
+      const viz::LocalSurfaceId& local_surface_id) = 0;
+
+  virtual void UpdateLocalSurfaceIdWithChildSequenceNumber(
+      const viz::LocalSurfaceId& local_surface_id) = 0;
+
   // Gets the current viz::LocalSurfaceId. The viz::LocalSurfaceId is allocated
   // lazily on call, and will be updated on changes to size or device scale
   // factor.
