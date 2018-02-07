@@ -46,6 +46,30 @@
       "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf658bd_601ab316",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-07T17:29:43Z",
+      "side": 1,
+      "message": "Well I\u0027m pretty sure the devtools team won\u0027t want you using an \u0027Error\u0027 level for this anyway - they have a real problem with developers complaining about error-spam (see the new features for filtering/grouping of messages), and so I believe errors are really supposed to be reserved for things that HAVE broken.  We can ask someone in devtools though if you feel strongly it should be an error.  Also I believe kJSMessageSource is supposed to be reserved for things that are generated directly by JavaScript, which this isn\u0027t.  Off the top of my head I don\u0027t see anything better than kDeperecationMessageSource, kOtherMessageSource or maybe kRecommendationMessageSource.\n\nSo I think a custom \u0027deprecation\u0027 warning is as good as anything else (just using your own string to avoid words like \"deprecated\").  Here\u0027s a key question: when we ship ReportingAPI and we\u0027ve got some analytics providers generating reports showing developers what breaking changes they may be hitting - do you want this message to be included?  If so, you\u0027ll get that for free by calling this a \"deprecation\" (or \"intervention - but that is even less applicable).  In a way I think you can think of it as something we shipped via a blog and then deprecated and removed before it ever made it into an official Chrome build.\n\nBut I\u0027m also fine with you outputting a custom warning from kOtherMessageSource yourself.  To avoid triggering more than once per document you could just stash a bit somewhere associated with the Document (or FrameHost) to track that the message has been generated already.  Or just following the pattern in Deprecation.cpp (accessing UseCounter::HasRecordedMeasurement) seems fine to me - I don\u0027t think there\u0027s a very strong reason to say that that is for testing only (obviously Deprecation.cpp uses it outside testing).",
+      "parentUuid": "197fa492_d6690d71",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
