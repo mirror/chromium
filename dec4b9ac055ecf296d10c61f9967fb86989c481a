@@ -16,6 +16,24 @@
       "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051bed7d_2c8555af",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-02-07T18:00:48Z",
+      "side": 1,
+      "message": "That would require a non-const ResourceRequest argument to be plumbed via CanRequest \u003d\u003e CanRequestInternal \u003d\u003e AllowLoad. Not sure if that\u0027s something we would want to change especially in the APIs CanRequest and CanRequestInternal.",
+      "parentUuid": "2340362e_14963660",
+      "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
