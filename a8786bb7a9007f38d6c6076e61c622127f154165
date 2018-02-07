@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7deb9744_e2be5aad",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2018-02-07T20:44:07Z",
+      "side": 1,
+      "message": "Happy to do that, but do you understand why? I thought\nchromium_strings and google_chrome_strings were for strings\nthat had a good reason to be different depending on the product.\nMost of the strings seem to have Chrome/Chromium in them.",
+      "parentUuid": "65c816a0_30d72a66",
+      "revId": "a8786bb7a9007f38d6c6076e61c622127f154165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e543761b_7eee2565",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
