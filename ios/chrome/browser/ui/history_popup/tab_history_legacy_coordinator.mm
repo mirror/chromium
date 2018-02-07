@@ -13,7 +13,6 @@
 #import "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
-#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h"
 #import "ios/chrome/browser/ui/history_popup/tab_history_popup_controller.h"
@@ -41,7 +40,6 @@ using base::UserMetricsAction;
 @implementation LegacyTabHistoryCoordinator
 
 @synthesize dispatcher = _dispatcher;
-@synthesize positionProvider = _positionProvider;
 @synthesize presentationProvider = _presentationProvider;
 @synthesize tabHistoryPopupController = _tabHistoryPopupController;
 @synthesize tabHistoryUIUpdater = _tabHistoryUIUpdater;
@@ -71,14 +69,7 @@ using base::UserMetricsAction;
       [tab navigationManager]->GetBackwardItems();
 
   CGPoint origin = CGPointZero;
-  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-    origin = [self popupOriginForNamedGuide:kBackButtonGuide];
-  } else {
-    origin = [[self.presentationProvider viewForTabHistoryPresentation].window
-        convertPoint:[self.positionProvider
-                         originPointForToolbarButton:ToolbarButtonTypeBack]
-              toView:[self.presentationProvider viewForTabHistoryPresentation]];
-  }
+  origin = [self popupOriginForNamedGuide:kBackButtonGuide];
 
   [self.tabHistoryUIUpdater
       updateUIForTabHistoryPresentationFrom:ToolbarButtonTypeBack];
@@ -91,14 +82,7 @@ using base::UserMetricsAction;
       [tab navigationManager]->GetForwardItems();
 
   CGPoint origin = CGPointZero;
-  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
-    origin = [self popupOriginForNamedGuide:kForwardButtonGuide];
-  } else {
-    origin = [[self.presentationProvider viewForTabHistoryPresentation].window
-        convertPoint:[self.positionProvider
-                         originPointForToolbarButton:ToolbarButtonTypeForward]
-              toView:[self.presentationProvider viewForTabHistoryPresentation]];
-  }
+  origin = [self popupOriginForNamedGuide:kForwardButtonGuide];
 
   [self.tabHistoryUIUpdater
       updateUIForTabHistoryPresentationFrom:ToolbarButtonTypeForward];

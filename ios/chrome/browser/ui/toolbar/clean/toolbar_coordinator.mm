@@ -264,10 +264,6 @@
 // is more advanced.
 #pragma mark OmniboxPopupPositioner methods.
 
-- (UIView*)popupAnchorView {
-  return self.toolbarViewController.view;
-}
-
 - (UIView*)popupParentView {
   return self.toolbarViewController.view.superview;
 }

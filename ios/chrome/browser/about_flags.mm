@@ -47,7 +47,6 @@
 #include "ios/chrome/browser/ui/main/main_feature_flags.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_clipping_feature.h"
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_private_base_feature.h"
 #include "ios/chrome/browser/ui/ui_feature_flags.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
@@ -185,10 +184,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kTabSwitcherPresentsBVCName,
      flag_descriptions::kTabSwitcherPresentsBVCDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(kTabSwitcherPresentsBVC)},
-    {"safe_area_compatible_toolbar",
-     flag_descriptions::kSafeAreaCompatibleToolbarName,
-     flag_descriptions::kSafeAreaCompatibleToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kSafeAreaCompatibleToolbar)},
     {"external-search", flag_descriptions::kExternalSearchName,
      flag_descriptions::kExternalSearchDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(kExternalSearch)},
@@ -214,12 +209,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"new-fullscreen-controller", flag_descriptions::kNewFullscreenName,
      flag_descriptions::kNewFullscreenDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(fullscreen::features::kNewFullscreen)},
-    {"clean-toolbar", flag_descriptions::kCleanToolbarName,
-     flag_descriptions::kCleanToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kCleanToolbar)},
-    {"clipping-textfield", flag_descriptions::kClippingTextfieldName,
-     flag_descriptions::kClippingTextfieldDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kClippingTextfield)},
     {"PasswordExport", flag_descriptions::kPasswordExportName,
      flag_descriptions::kPasswordExportDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)},
