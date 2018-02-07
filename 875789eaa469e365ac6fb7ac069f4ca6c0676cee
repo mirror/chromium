@@ -34,6 +34,24 @@
       "revId": "875789eaa469e365ac6fb7ac069f4ca6c0676cee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdce5360_722f17fe",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-02-07T18:10:41Z",
+      "side": 1,
+      "message": "Ah, sorry didn\u0027t realise it was out of date already. I have another CL changing something related to field trials in this file, so let me include the comment clean up as part of it. (cl 907168)",
+      "parentUuid": "14abb032_6ae96754",
+      "revId": "875789eaa469e365ac6fb7ac069f4ca6c0676cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
