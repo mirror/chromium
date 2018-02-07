@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a01c16_14182e5a",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-07T23:27:01Z",
+      "side": 1,
+      "message": "+chrishtr@, for compositing/layer-creation/fixed-position-out-of-view* tests, we are getting page scale values that are later getting clamped in cc with no other impl-side manipulation of the page scale. Is this expected?",
+      "range": {
+        "startLine": 747,
+        "startChar": 39,
+        "endLine": 748,
+        "endChar": 13
+      },
+      "revId": "50ffad6b5ea7eb9ccb2b8459b636f2e0c7b97095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
