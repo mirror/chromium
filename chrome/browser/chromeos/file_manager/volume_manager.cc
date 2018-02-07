@@ -637,8 +637,7 @@ void VolumeManager::OnMountEvent(
           drive::util::GetFileSystemByProfile(profile_);
       if (file_system) {
         file_system->MarkCacheFileAsUnmounted(
-            base::FilePath(mount_info.source_path),
-            base::Bind(&drive::util::EmptyFileOperationCallback));
+            base::FilePath(mount_info.source_path), base::DoNothing());
       }
     }
   }

@@ -256,10 +256,9 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
   // message owns its data.
   message->data.EnsureDataIsOwned();
 
-  DispatchExtendableMessageEvent(
-      base::WrapRefCounted(handle->version()), std::move(message->data),
-      source_origin, sender_provider_host,
-      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
+  DispatchExtendableMessageEvent(base::WrapRefCounted(handle->version()),
+                                 std::move(message->data), source_origin,
+                                 sender_provider_host, base::DoNothing());
 }
 
 void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
@@ -462,7 +461,7 @@ void ServiceWorkerDispatcherHost::OnTerminateWorker(int handle_id) {
                                     bad_message::SWDH_TERMINATE_BAD_HANDLE);
     return;
   }
-  handle->version()->StopWorker(base::BindOnce(&base::DoNothing));
+  handle->version()->StopWorker(base::DoNothing());
 }
 
 }  // namespace content

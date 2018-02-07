@@ -5,6 +5,7 @@
 #include "chromeos/network/network_connection_handler_impl.h"
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/json/json_reader.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -718,8 +719,7 @@ void NetworkConnectionHandlerImpl::CheckPendingRequest(
       // If a profile path was specified, set it on a successful connection.
       configuration_handler_->SetNetworkProfile(
           service_path, request->profile_path,
-          NetworkConfigurationObserver::SOURCE_USER_ACTION,
-          base::Bind(&base::DoNothing),
+          NetworkConfigurationObserver::SOURCE_USER_ACTION, base::DoNothing(),
           chromeos::network_handler::ErrorCallback());
     }
     InvokeConnectSuccessCallback(request->service_path,

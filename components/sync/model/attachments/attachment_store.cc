@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/message_loop/message_loop.h"
 #include "base/sequenced_task_runner.h"
@@ -17,11 +18,6 @@
 #include "components/sync/engine/attachments/on_disk_attachment_store.h"
 
 namespace syncer {
-
-namespace {
-
-void NoOpDropCallback(const AttachmentStore::Result& result) {}
-}
 
 AttachmentStore::AttachmentStore(
     const scoped_refptr<AttachmentStoreFrontend>& frontend,
@@ -127,8 +123,7 @@ void AttachmentStoreForSync::SetModelTypeReference(
 }
 
 void AttachmentStoreForSync::DropSyncReference(const AttachmentIdList& ids) {
-  frontend()->DropReference(sync_component_, ids,
-                            base::Bind(&NoOpDropCallback));
+  frontend()->DropReference(sync_component_, ids, base::DoNothing());
 }
 
 void AttachmentStoreForSync::ReadMetadataForSync(

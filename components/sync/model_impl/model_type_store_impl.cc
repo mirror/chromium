@@ -34,10 +34,6 @@ const char kMetadataPrefix[] = "-md-";
 // Key for global metadata record.
 const char kGlobalMetadataKey[] = "-GlobalMetadata";
 
-void NoOpForBackendDtor(scoped_refptr<ModelTypeStoreBackend> backend) {
-  // This function was intentionally left blank.
-}
-
 // Formats key prefix for data records of |type|.
 std::string FormatDataPrefix(ModelType type) {
   return std::string(GetModelTypeRootTag(type)) + kDataPrefix;
@@ -119,8 +115,9 @@ ModelTypeStoreImpl::ModelTypeStoreImpl(
 
 ModelTypeStoreImpl::~ModelTypeStoreImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  backend_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&NoOpForBackendDtor, std::move(backend_)));
+  backend_->AddRef();
+  backend_task_runner_->ReleaseSoon(FROM_HERE, backend_.get());
+  backend_ = nullptr;
 }
 
 // static

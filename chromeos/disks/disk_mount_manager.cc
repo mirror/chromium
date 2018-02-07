@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
@@ -82,7 +83,7 @@ class DiskMountManagerImpl : public DiskMountManager,
         REMOUNT_OPTION_MOUNT_NEW_DEVICE,
         // When succeeds, OnMountCompleted will be called by
         // "MountCompleted" signal instead.
-        base::Bind(&base::DoNothing),
+        base::DoNothing(),
         base::Bind(&DiskMountManagerImpl::OnMountCompleted,
                    weak_ptr_factory_.GetWeakPtr(),
                    MountEntry(MOUNT_ERROR_INTERNAL, source_path, type, "")));
@@ -367,7 +368,7 @@ class DiskMountManagerImpl : public DiskMountManager,
         access_mode, REMOUNT_OPTION_REMOUNT_EXISTING_DEVICE,
         // When succeeds, OnMountCompleted will be called by
         // "MountCompleted" signal instead.
-        base::Bind(&base::DoNothing),
+        base::DoNothing(),
         base::Bind(&DiskMountManagerImpl::OnMountCompleted,
                    weak_ptr_factory_.GetWeakPtr(),
                    MountEntry(MOUNT_ERROR_INTERNAL, source_path,
@@ -728,7 +729,7 @@ class DiskMountManagerImpl : public DiskMountManager,
             device_path,
             base::Bind(&DiskMountManagerImpl::OnGetDeviceProperties,
                        weak_ptr_factory_.GetWeakPtr()),
-            base::Bind(&base::DoNothing));
+            base::DoNothing());
         break;
       }
       case CROS_DISKS_DISK_REMOVED: {
