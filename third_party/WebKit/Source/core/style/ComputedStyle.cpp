@@ -191,6 +191,13 @@ StyleRecalcChange ComputedStyle::StylePropagationDiff(
       old_style->HasTextCombine() != new_style->HasTextCombine())
     return kReattach;
 
+  // We need to perform a reattach if a "display: layout(foo)" (custom layout)
+  // has been loaded, or switched to an algorithm which has been loaded.
+  if (old_style->DisplayLayoutCustomState() !=
+      new_style->DisplayLayoutCustomState()) {
+    return kReattach;
+  }
+
   bool independent_equal = old_style->IndependentInheritedEqual(*new_style);
   bool non_independent_equal =
       old_style->NonIndependentInheritedEqual(*new_style);

@@ -16,6 +16,7 @@ const char kAttribute[] = "Attribute";
 const char kCleanupPlaceholderStyles[] = "CleanupPlaceholderStyles";
 const char kControlValue[] = "ControlValue";
 const char kControl[] = "Control";
+const char kCSSLayoutAPIRegistration[] = "CSSLayoutAPIRegistration";
 const char kDeclarativeContent[] = "Extension declarativeContent.css";
 const char kDesignMode[] = "DesignMode";
 const char kFontSizeChange[] = "FontSizeChange";

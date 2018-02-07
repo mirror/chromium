@@ -52,6 +52,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutReplaced.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/layout/custom/LayoutWorklet.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "core/svg/SVGSVGElement.h"
@@ -550,6 +551,22 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
     // from inline.  https://drafts.csswg.org/css-containment/#containment-paint
     if (style.ContainsPaint() && style.Display() == EDisplay::kInline)
       style.SetDisplay(EDisplay::kBlock);
+
+    // For "display: layout(foo)" (custom layout) we need to keep additional
+    // information on computed style about how to construct the box tree.
+    // https://drafts.css-houdini.org/css-layout-api/#layout-api-box-tree
+    if (style.IsDisplayLayoutCustomBox()) {
+      // NOTE: In the future there may be a third state "normal", this will
+      // mean that not everything is blockified, (e.g. root inline boxes, so
+      // that line-by-line layout can be performed).
+      LayoutWorklet* worklet =
+          LayoutWorklet::From(*element->GetDocument().domWindow());
+      style.SetDisplayLayoutCustomState(
+          worklet->GetDocumentDefinitionMap()->Contains(
+              style.DisplayLayoutCustomName())
+              ? EDisplayLayoutCustomState::kBlock
+              : EDisplayLayoutCustomState::kUnloaded);
+    }
   } else {
     AdjustStyleForFirstLetter(style);
   }
