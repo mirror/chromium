@@ -22,6 +22,30 @@
       "revId": "756390353793d6fc99abafef3264e3b0674c0f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cef69d6_909ea4cd",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T19:39:40Z",
+      "side": 1,
+      "message": "GetWindowTypeText() is used from a few places that we don\u0027t (easily) know the window controller is a BrowserExtensionWindowController(), so we can\u0027t eliminate it entirely (since we might not have a browser).  But I\u0027ve added a TODO to remove it (which should happen in the next couple patch sets), and updated BrowserExtensionWindowController::GetWindowTypeText() to just return the ExtensionTabUtil result.",
+      "parentUuid": "e053cdc3_586b770f",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 36
+      },
+      "revId": "756390353793d6fc99abafef3264e3b0674c0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
