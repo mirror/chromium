@@ -157,6 +157,24 @@
       "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b37013_b1a6f753",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T22:16:39Z",
+      "side": 1,
+      "message": "It is reasonable to consider.\n\nAt the moment aura::Window is not used at all.  aura::WindowTreeHost is used for KeyEvent injection and I had the platform window own the hook.\n\nIt looks like the Windows and X11 WindowTreeHost Impls each have their own method used for injecting input (i.e. not a shared interface) so I would likely still call into the WindowTreeHost impl to create the KB hook and give it a callback/interface for injecting KeyEvents.  The WindowTreeHost could then pass ownership of the ScopedHook to aura::Window.\n\nMy assumption is that we would use the RootWindow (similar to how aura::Window::SetCapture() is used) since there could be any number of child aura:Windows (for menus and such).\n\nIs that along the lines of what you were thinking?\n\nIs the lifetime of the root aura::Window relatively stable or will I need to handle OnWindowDestroyed (and similar using WindowObserver) events in RenderWidgetHostView?",
+      "parentUuid": "41d3f342_7e380d45",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
