@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88150b46_7a5e3ccb",
+        "filename": "ui/base/platform_hook/platform_hook.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T21:00:36Z",
+      "side": 1,
+      "message": "PlatformKeyboardHook",
+      "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099f638a_148c97e3",
+        "filename": "ui/base/platform_hook/platform_hook_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T21:00:36Z",
+      "side": 1,
+      "message": "This can also be in anon namespace.",
+      "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08df936_bb059391",
+        "filename": "ui/events/event.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T21:00:36Z",
+      "side": 1,
+      "message": "I have to say, now that I see it, it still seems confusing. I don\u0027t have a better suggestion. Maybe sky@ will think of something better.",
+      "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

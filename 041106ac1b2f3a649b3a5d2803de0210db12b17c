@@ -139,6 +139,24 @@
       "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d3f342_7e380d45",
+        "filename": "ui/views/win/hwnd_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T21:00:36Z",
+      "side": 1,
+      "message": "Can the aura::Window itself own the scoped object?",
+      "parentUuid": "85bab3e3_bd9d7033",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
