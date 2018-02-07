@@ -117,6 +117,8 @@ template("compute_interfaces_info_individual") {
       rebase_path(invoker.component_info_file, root_build_dir),
     ]
 
+    pool = "//build/toolchain:action_pool($default_toolchain)"
+
     deps = [ "//third_party/WebKit/Source/bindings/scripts:cached_lex_yacc_tables" ] + invoker.deps
   }
 }
@@ -158,6 +160,7 @@ template("generate_event_interfaces") {
         invoker.suffix,
       ]
     }
+    pool = "//build/toolchain:action_pool($default_toolchain)"
   }
 }
 
@@ -258,6 +261,8 @@ template("idl_compiler") {
         "--read-idl-list-from-file",
         rebase_path(idl_files_list, root_build_dir),
       ]
+
+      pool = "//build/toolchain:action_pool($default_toolchain)"
     }
   } else {
     action_foreach(target_name) {
@@ -293,6 +298,7 @@ template("idl_compiler") {
         invoker.target_component,
         "{{source}}",
       ]
+      pool = "//build/toolchain:action_pool($default_toolchain)"
     }
   }
 }
@@ -366,6 +372,8 @@ template("idl_impl") {
       rebase_path(idl_files_list, root_build_dir),
     ]
 
+    pool = "//build/toolchain:action_pool($default_toolchain)"
+
     deps = [
       # FIXME: should be interfaces_info_core (w/o modules)
       # http://crbug.com/358074
@@ -402,6 +410,8 @@ template("aggregate_generated_bindings") {
       "{{response_file_name}}",
     ]
     args += rebase_path(outputs, root_build_dir)
+
+    pool = "//build/toolchain:action_pool($default_toolchain)"
 
     public_deps = invoker.public_deps
   }
@@ -444,6 +454,8 @@ template("compute_global_objects") {
       ]
     }
     args += [ rebase_path(invoker.output_file, root_build_dir) ]
+
+    pool = "//build/toolchain:action_pool($default_toolchain)"
 
     deps = invoker.deps
   }
@@ -503,6 +515,8 @@ template("generate_global_constructors") {
       i += 1
     }
 
+    pool = "//build/toolchain:action_pool($default_toolchain)"
+
     outputs = output_idl_files + output_header_files
     deps = invoker.deps
   }
@@ -550,6 +564,8 @@ template("generate_origin_trial_features") {
       rebase_path(idl_files_list, root_build_dir),
     ]
 
+    pool = "//build/toolchain:action_pool($default_toolchain)"
+
     outputs = [
       "${invoker.output_dir}/OriginTrialFeaturesFor${invoker.component}.cpp",
       "${invoker.output_dir}/OriginTrialFeaturesFor${invoker.component}.h",
@@ -588,5 +604,7 @@ template("generate_web_idl_collection") {
       "--output",
       rebase_path(output_path, root_build_dir),
     ]
+
+    pool = "//build/toolchain:action_pool($default_toolchain)"
   }
 }
