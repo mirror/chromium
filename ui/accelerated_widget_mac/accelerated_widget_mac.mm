@@ -6,6 +6,7 @@
 
 #include <map>
 
+#include "base/debug/dump_without_crashing.h"
 #include "base/lazy_instance.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
@@ -153,6 +154,7 @@ void AcceleratedWidgetMac::UpdateCALayerTree(
         IOSurfaceLookupFromMachPort(ca_layer_params.io_surface_mach_port));
     if (!io_surface) {
       LOG(ERROR) << "Unable to open IOSurface for frame.";
+      base::debug::DumpWithoutCrashing();
     }
     GotIOSurfaceFrame(io_surface, ca_layer_params.pixel_size,
                       ca_layer_params.scale_factor);
