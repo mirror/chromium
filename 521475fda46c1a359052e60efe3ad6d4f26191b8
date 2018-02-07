@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87ef04ed_769748a9",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "Yeah, as I understand it, this is WAI for subframe form submissions.",
+      "parentUuid": "ad8da4a8_db5295b4",
+      "range": {
+        "startLine": 84,
+        "startChar": 46,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "371ce9ce_cdc52723",
         "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce4698b_21054f38",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "It looks like the TestNavigationObserver sets navigation_started to true for interstitials (even of the non-committed variety), and then since that is set OnDidStopLoading releases from the Wait(). (https://cs.chromium.org/chromium/src/content/public/test/test_navigation_observer.cc?rcl\u003d348bbca831edfbcea84934decaca02c10e1a0c85\u0026l\u003d166)",
+      "parentUuid": "371ce9ce_cdc52723",
+      "range": {
+        "startLine": 2700,
+        "startChar": 2,
+        "endLine": 2700,
+        "endChar": 21
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "31d11603_8c239abd",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2704,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f0d388_1e021cc8",
+      "range": {
+        "startLine": 2704,
+        "startChar": 47,
+        "endLine": 2704,
+        "endChar": 48
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e15ce6_1053a513",
         "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0803191d_1ca7e6fd",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e15ce6_1053a513",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f153cae_6a6fac14",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -108,6 +204,24 @@
       "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b08bbc1_f8fd57aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 79136,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f153cae_6a6fac14",
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +245,30 @@
       "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e79501c_27ccc734",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 79141,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2018-02-07T20:53:55Z",
+      "side": 1,
+      "message": "Sg! Done.",
+      "parentUuid": "f9713826_5581b11c",
+      "range": {
+        "startLine": 79138,
+        "startChar": 65,
+        "endLine": 79141,
+        "endChar": 37
+      },
+      "revId": "521475fda46c1a359052e60efe3ad6d4f26191b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
