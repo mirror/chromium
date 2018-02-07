@@ -15,6 +15,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 #include "chrome/browser/media/router/issue_manager.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_routes_observer.h"
@@ -129,7 +130,9 @@ class MockCastMediaSinkService : public CastMediaSinkService {
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   ~MockCastMediaSinkService() override;
 
-  MOCK_METHOD1(Start, void(const OnSinksDiscoveredCallback&));
+  MOCK_METHOD2(Start,
+               void(const OnSinksDiscoveredCallback&,
+                    CastMediaSinkServiceImpl::Observer*));
   MOCK_METHOD0(OnUserGesture, void());
   MOCK_METHOD0(StartMdnsDiscovery, void());
 };
