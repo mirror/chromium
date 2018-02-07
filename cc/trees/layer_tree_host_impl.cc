@@ -1968,6 +1968,8 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
         base::StringPrintf("Compositing.%s.CompositorFrame.Quads", client_name),
         total_quad_count);
   }
+
+  layer_tree_frame_sink_->UpdateHitTestData(this);
   layer_tree_frame_sink_->SubmitCompositorFrame(std::move(compositor_frame));
 
   // Clears the list of swap promises after calling DidSwap on each of them to

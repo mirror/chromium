@@ -78,6 +78,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   void SetLocalSurfaceId(const LocalSurfaceId& id, float device_scale_factor);
   void SetVisible(bool visible);
   void Resize(const gfx::Size& new_size);
+  float device_scale_factor() const { return device_scale_factor_; }
 
   // Sets the color matrix that will be used to transform the output of this
   // display. This is only supported for GPU compositing.

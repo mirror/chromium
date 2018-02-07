@@ -21,6 +21,7 @@
 #include "content/common/frame_messages.h"
 #include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/gfx/geometry/dip_util.h"
 
 namespace {
 
@@ -276,6 +277,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
     gfx::Point point_in_root =
         gfx::ToFlooredPoint(point_in_screen) -
         root_view->GetBoundsInRootWindow().OffsetFromOrigin();
+    point_in_root = gfx::ConvertPointToPixel(
+        root_view->current_device_scale_factor(), point_in_root);
     viz::HitTestQuery* query = iter->second.get();
     // TODO(kenrb): Add the short circuit to avoid hit testing when there is
     // only one RenderWidgetHostView in the map. It is absent right now to
@@ -310,6 +313,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindViewAtLocation(
   }
 
   auto* view = FindViewFromFrameSinkId(frame_sink_id);
+  *transformed_point = gfx::ConvertPointToDIP(
+      root_view->current_device_scale_factor(), *transformed_point);
   return {view ? view : root_view, query_renderer, *transformed_point};
 }
 
@@ -351,7 +356,6 @@ void RenderWidgetHostInputEventRouter::DispatchMouseEvent(
     if (root_view->GetCursorManager())
       root_view->GetCursorManager()->UpdateViewUnderCursor(target);
   }
-
   target->ProcessMouseEvent(event, latency);
 }
 

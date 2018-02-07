@@ -91,7 +91,6 @@ bool HitTestQuery::FindTargetInRegionForLocation(
   region->transform.TransformPoint(&location_transformed);
   if (!region->rect.Contains(location_transformed))
     return false;
-
   if (region->child_count < 0 ||
       region->child_count >
           (active_hit_test_list_ + active_hit_test_list_size_ - region - 1)) {

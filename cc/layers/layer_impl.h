@@ -238,6 +238,7 @@ class CC_EXPORT LayerImpl {
 
   gfx::Transform DrawTransform() const;
   gfx::Transform ScreenSpaceTransform() const;
+  gfx::Transform RootSpaceTransform() const;
   PerformanceProperties<LayerImpl>& performance_properties() {
     return performance_properties_;
   }
@@ -449,6 +450,8 @@ class CC_EXPORT LayerImpl {
   bool raster_even_if_not_drawn() const { return raster_even_if_not_drawn_; }
 
   void EnsureValidPropertyTreeIndices() const;
+
+  virtual bool is_surface_layer() const;
 
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,
