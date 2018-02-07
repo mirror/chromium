@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9195b8e_c685839d",
+        "filename": "content/browser/notifications/notification_id_generator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-07T12:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14088bcf_9251516f",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea763aac_788d6d1c",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "927026904e14005732cd828ab684da885bb2e61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e2b7ef_4ecf41f2",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-07T12:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea763aac_788d6d1c",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bd984c9e_37f5821b",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-07T12:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ad0d2e_7522af39",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d882ce49_263443ab",
         "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bee760e9_34088589",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-07T12:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d882ce49_263443ab",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b855638_ec4cd167",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "927026904e14005732cd828ab684da885bb2e61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f2fa2b_c3daf206",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-02-07T12:01:27Z",
+      "side": 1,
+      "message": "We have added dchecks that the token is not empty (here \u0026 in Display), because if it is, then the code which calls this is probably using the API wrong - generally the code should be using random tokens to avoid notifications replacing each other (unless the notification has a tag to use as the token, and tags must be non-empty).\n\nStill, supposing an empty token *were* passed to Display+Close by a compromised renderer when dchecks are off, then the ID would only be generated based on the origin, so displaying \u0026 closing would work as normal, and multiple calls to Display would result in notifications from the same origin replacing each other. \n\nHave added comments anyway to Display \u0026 Close making it clear empty tokens shouldn\u0027t be passed, but I think we can agree the consequences are not too undesirable if this does happen.\n\nMeanwhile, passing a token to Close..() that just wasn\u0027t previously passed to Display..() would simply make this a no-op, like you guessed. Also added a comment saying this.",
+      "parentUuid": "9b855638_ec4cd167",
+      "revId": "927026904e14005732cd828ab684da885bb2e61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
