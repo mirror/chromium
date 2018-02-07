@@ -215,8 +215,12 @@ mojom::HitTestRegionListPtr DirectLayerTreeFrameSink::CreateHitTestData(
         hit_test_region->local_surface_id = surface_id.local_surface_id();
         hit_test_region->flags = mojom::kHitTestChildSurface;
         hit_test_region->rect = surface_quad->rect;
-        hit_test_region->transform =
-            surface_quad->shared_quad_state->quad_to_target_transform;
+        gfx::Transform target_to_quad_transform;
+        bool invertible =
+            surface_quad->shared_quad_state->quad_to_target_transform
+                .GetInverse(&target_to_quad_transform);
+        DCHECK(invertible);
+        hit_test_region->transform = target_to_quad_transform;
         hit_test_region_list->regions.push_back(std::move(hit_test_region));
       }
     }
