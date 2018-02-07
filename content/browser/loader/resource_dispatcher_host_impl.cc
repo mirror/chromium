@@ -746,7 +746,9 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsCertificateFetcherForSignedExchange());
   BeginRequest(requester_info, request_id, request_data, is_sync_load,
                routing_id, std::move(mojo_request),
                std::move(url_loader_client), traffic_annotation);
@@ -901,7 +903,9 @@ void ResourceDispatcherHostImpl::BeginRequest(
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsCertificateFetcherForSignedExchange());
   int child_id = requester_info->child_id();
 
   // Reject request id that's currently in use.
@@ -1041,7 +1045,9 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     BlobHandles blob_handles,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HeaderInterceptorResult interceptor_result) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsCertificateFetcherForSignedExchange());
   if (interceptor_result != HeaderInterceptorResult::CONTINUE) {
     if (requester_info->IsRenderer() &&
         interceptor_result == HeaderInterceptorResult::KILL) {
@@ -1106,12 +1112,16 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     new_request->set_method(request_data.method);
     new_request->set_site_for_cookies(request_data.site_for_cookies);
 
-    // The initiator should normally be present, unless this is a navigation.
-    // Browser-initiated navigations don't have an initiator document, the
-    // others have one.
+    // The initiator should normally be present, unless this is a navigation
+    // or a certificate request for signed HTTP exchange.
+    // Browser-initiated navigations don't have an initiator document. And
+    // certificate requests don't need to have an initiator because cookies are
+    // not sent. The others have one.
     DCHECK(request_data.request_initiator.has_value() ||
            IsResourceTypeFrame(
-               static_cast<ResourceType>(request_data.resource_type)));
+               static_cast<ResourceType>(request_data.resource_type)) ||
+           request_data.resource_type ==
+               RESOURCE_TYPE_CERT_FOR_SIGNED_EXCHANGE);
     new_request->set_initiator(request_data.request_initiator);
 
     if (request_data.originated_from_service_worker) {
@@ -1297,7 +1307,9 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     ResourceContext* resource_context,
     network::mojom::URLLoaderRequest mojo_request,
     network::mojom::URLLoaderClientPtr url_loader_client) {
-  DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
+  DCHECK(requester_info->IsRenderer() ||
+         requester_info->IsNavigationPreload() ||
+         requester_info->IsCertificateFetcherForSignedExchange());
   // Construct the IPC resource handler.
   std::unique_ptr<ResourceHandler> handler;
   handler = CreateBaseResourceHandler(
