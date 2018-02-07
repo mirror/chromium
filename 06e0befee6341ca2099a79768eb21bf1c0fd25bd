@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c417ba25_89a316be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T17:08:22Z",
+      "side": 1,
+      "message": "I stumbled upon this looking for the old AutofillProfileEditor and was very surprised to find that the autofill address editor is now in the payments package.\n\nAutofill addresses may be used for more than payments, so I think it\u0027s odd for this class to rely so heavily on things on the payments.ui package. It makes more sense to move AdressEditor, etc, to a common package that can used by both autofill and payments.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "06e0befee6341ca2099a79768eb21bf1c0fd25bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
