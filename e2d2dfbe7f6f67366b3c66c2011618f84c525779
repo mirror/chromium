@@ -16,6 +16,24 @@
       "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654f4a70_146080b6",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T22:13:16Z",
+      "side": 1,
+      "message": "I was thinking we may need to commandline switch to test/enable OOBE changes. \n\nWe could use --enable-features\u003dChromeOSAssistant, but --enable-features is not additive, it\u0027s whoever is the last wins.  So it is not as safe to use.\n\nWhat do you think?",
+      "parentUuid": "5812d67f_14e9dcaf",
+      "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
