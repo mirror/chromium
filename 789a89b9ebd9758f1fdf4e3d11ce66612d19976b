@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec90a751_a318cd4e",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:24:45Z",
+      "side": 1,
+      "message": "Do you know if device_xy.x() is going to implicitly use pp::Var\u0027s int32_t ctor or double ctor? I imagine it will use the double ctor. In which case, the value JS receives is going to change from an int to a double. Is the JS side ok with that?",
+      "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869f66b8_5e8eb4e8",
+        "filename": "pdf/pdfium/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:24:45Z",
+      "side": 1,
+      "message": "This may be redundant with the pdf/DEPS entry.",
+      "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
