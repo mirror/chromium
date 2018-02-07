@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "814ff1e9_2fa7d86a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "nit: s/shown/expanded?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028ef52d_9f9412fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "nit: I\u0027d add a comment here about why this is called, e.g. \"If the articles category is currently disable, we may still need to show a expandable header for the section.\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6d65c7_39f2b04f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "SuggestionsSection has access to SuggestionsCategoryInfo, so could it determine whether it\u0027s expandable instead of calculating and passing in from this class?",
+      "range": {
+        "startLine": 128,
+        "startChar": 46,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462b431e_09de0ef3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "Is this the only place outside of SuggestionsSection that uses #canShowSuggestions()? If so, maybe we should do an early return in SuggestionsSection#appendSuggestions if it can\u0027t show suggestions and make #canShowSuggestions() private.",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 64
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14eebd8_29a43850",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "nit: I\u0027d add a JavaDoc for this, even though it\u0027s a private method.",
+      "range": {
+        "startLine": 355,
+        "startChar": 17,
+        "endLine": 355,
+        "endChar": 41
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2b2f3a_9e834206",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "Is this TODO for supervised users?",
+      "range": {
+        "startLine": 360,
+        "startChar": 43,
+        "endLine": 360,
+        "endChar": 53
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def29057_bb4de27c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "What is this line needed for?",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 66
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67fe7f9_31c22b49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "When the header is expandable, should the articles section become undismissable?",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 20
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123aa453_bf0812cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "nit: I think this should be something like shouldShowSuggestions().",
+      "range": {
+        "startLine": 609,
+        "startChar": 19,
+        "endLine": 609,
+        "endChar": 37
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7947e1a7_95f2e119",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "nit: Should this comment include something like \"Called when the section header is toggled.\"",
+      "range": {
+        "startLine": 629,
+        "startChar": 89,
+        "endLine": 629,
+        "endChar": 90
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3604ed7_68ac37d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "isChromeHomeEnabled is deprecated, so this code block can be omitted.",
+      "range": {
+        "startLine": 639,
+        "startChar": 30,
+        "endLine": 639,
+        "endChar": 49
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c71e4b_ec720f71",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "We\u0027re already in an isExpandable() block so this check is redundant. Should this be outside of the if block?",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582c92cc_af2deeef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "Can manipulating the icon view happen in SectionHeaderViewHolder? This class is currently for handling data related to the header, where as SectionHeaderViewHolder controls the views.",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 79
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5713539_c61e2dcd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T01:55:14Z",
+      "side": 1,
+      "message": "Can this go in SectionHeaderViewHolder since that\u0027s registering the onClickListener?",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
