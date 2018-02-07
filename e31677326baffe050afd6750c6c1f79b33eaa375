@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd8500f_7ce8e486",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-07T22:03:27Z",
+      "side": 1,
+      "message": "nit: let\u0027s describe filter additions as \"Filter \u003cblahtest\u003e\" rather than \"Disable\", since disabling tests is a different mechanism?",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "e31677326baffe050afd6750c6c1f79b33eaa375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
