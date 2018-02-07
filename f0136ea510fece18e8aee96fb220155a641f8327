@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c45a1c35_cbef952a",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-02-07T04:40:13Z",
+      "side": 1,
+      "message": "I think this is not shared memory, right? How bad is it that we are serializing a Bitmap in an IPC message? Do you think we should switch to shared memory in the future?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "f0136ea510fece18e8aee96fb220155a641f8327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
