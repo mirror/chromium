@@ -284,6 +284,9 @@ Polymer({
    */
   renderScanOfferedByDefault_: true,
 
+  /** @private {?settings.ChromeCleanerCardState} */
+  stateCurrentlyRendered_: null,
+
   /** @override */
   attached: function() {
     this.userInitiatedCleanupsEnabled_ =
@@ -516,6 +519,7 @@ Polymer({
     this.isPoweredByPartner_ = isPoweredByPartner;
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.NONE;
     this.renderScanOfferedByDefault_ = false;
+    scannerResults.files = ['1', '2', '3', '4', '5', '6', '7'];
     this.scannerResults_ = scannerResults;
     this.updateShowItemsLinklabel_();
     this.renderCleanupCard_(settings.ChromeCleanerCardState.CLEANUP_OFFERED);
@@ -560,6 +564,11 @@ Polymer({
    * @private
    */
   renderCleanupCard_: function(state) {
+    if (state == this.stateCurrentlyRendered_)
+      return;
+
+    console.log('renderCleanupCard_ ' + state);
+    this.stateCurrentlyRendered_ = state;
     const components = this.cardStateToComponentsMap_.get(state);
     assert(components);
 
