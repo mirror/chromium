@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d99015c_3bdc84c7",
+        "filename": "content/browser/renderer_host/render_widget_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-07T20:29:05Z",
+      "side": 0,
+      "message": "We should still merge at least mouse-move I think. There can be hundreds of mouse-moves, and we need to do targeting for each one of those. Not coalescing these causes noticeable lag.",
+      "revId": "9164cf3f2d9247b3549963b8a11ad3076325a5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
