@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0a4d71_9d32bad7",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 4
+      },
+      "lineNbr": 2294,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-02-07T21:29:08Z",
+      "side": 0,
+      "message": "This line can now be removed, too",
+      "revId": "bdaadea6a229bc677230144a7d778aa5f3efab74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
