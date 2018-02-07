@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "2972b7bc_38982bf4",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ebff7fb_e7e3cc1d",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c82abd1_7f6b07bc",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 24
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "a87eca81_d19e1aa4",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c82abd1_7f6b07bc",
+      "range": {
+        "startLine": 820,
+        "startChar": 11,
+        "endLine": 820,
+        "endChar": 74
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c23749_c56e811a",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 24
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "82ee958a_f8c2560f",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c23749_c56e811a",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9069834_e4730b0e",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 24
@@ -96,6 +156,24 @@
       "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d581f19_cfcbb8e3",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9069834_e4730b0e",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "8e812785_a15bda99",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe066ecb_b6be7ce9",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b080b4_f17ff118",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 24
@@ -150,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "bc49cf94_7755555a",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "That does sounds like a better solution... I will update!",
+      "parentUuid": "37b080b4_f17ff118",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c04f912d_3faff275",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 24
@@ -161,6 +275,24 @@
       "writtenOn": "2018-02-06T18:12:03Z",
       "side": 1,
       "message": "Why is this manually constructed? Shouldn\u0027t this be a business of synthetic gesture instead?",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db2304f_f096a88c",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "AFAIK one cannot specify duration with synthetic gestures in Chromium. https://cs.chromium.org/chromium/src/content/common/input/synthetic_pointer_action_params.h?sq\u003dpackage:chromium\n\nFor now I have decided to make the change here instead of directly to the synthetic gesture code.",
+      "parentUuid": "c04f912d_3faff275",
       "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +322,30 @@
     },
     {
       "key": {
+        "uuid": "80f9a726_08f5c7a1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faa12c06_c50efbb4",
+      "range": {
+        "startLine": 2664,
+        "startChar": 6,
+        "endLine": 2664,
+        "endChar": 11
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf9a813_bccfc94b",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 24
@@ -213,6 +369,30 @@
     },
     {
       "key": {
+        "uuid": "987ad995_708e9cd1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2671,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcf9a813_bccfc94b",
+      "range": {
+        "startLine": 2671,
+        "startChar": 24,
+        "endLine": 2671,
+        "endChar": 35
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147a664e_0fd4db3a",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 24
@@ -233,6 +413,30 @@
       "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3273d8e0_e7473ec5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147a664e_0fd4db3a",
+      "range": {
+        "startLine": 2672,
+        "startChar": 28,
+        "endLine": 2672,
+        "endChar": 33
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +486,30 @@
     },
     {
       "key": {
+        "uuid": "741a7b3d_5959359c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2680,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a314a1_5a2293fb",
+      "range": {
+        "startLine": 2680,
+        "startChar": 8,
+        "endLine": 2680,
+        "endChar": 11
+      },
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2717d0f3_d0042fe2",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 24
@@ -296,6 +524,24 @@
       "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bf0369_e950e09a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 24
+      },
+      "lineNbr": 2687,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-02-07T22:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2717d0f3_d0042fe2",
+      "revId": "96f174848983ae5447070dcbac6c07f48eb4c52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
