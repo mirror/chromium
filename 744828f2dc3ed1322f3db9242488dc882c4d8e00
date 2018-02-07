@@ -337,6 +337,30 @@
     },
     {
       "key": {
+        "uuid": "66a2ece0_7e7a98f9",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-07T22:33:49Z",
+      "side": 1,
+      "message": "But we are transforming |persistent_window_bounds|, so we couldn\u0027t add const.",
+      "parentUuid": "25a6d492_f120265e",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03379025_e5b098ef",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 10
@@ -384,6 +408,24 @@
       "side": 1,
       "message": "Let\u0027s confirm with marcheu",
       "parentUuid": "b486413a_8550eda0",
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec3dbf9_b55a4494",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-07T22:33:49Z",
+      "side": 1,
+      "message": "I chatted with marcheu. He said it could happen, but it should be rare (different cable, bad signal...).",
+      "parentUuid": "3c5aa012_3b50e657",
       "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -502,6 +544,30 @@
       "side": 1,
       "message": "yes, keep this test.",
       "parentUuid": "4f43ab71_ba976a5c",
+      "range": {
+        "startLine": 248,
+        "startChar": 10,
+        "endLine": 248,
+        "endChar": 24
+      },
+      "revId": "744828f2dc3ed1322f3db9242488dc882c4d8e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bb088d2_2da32402",
+        "filename": "ash/display/persistent_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1263480
+      },
+      "writtenOn": "2018-02-07T22:33:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b74cc9b7_8a12533c",
       "range": {
         "startLine": 248,
         "startChar": 10,
