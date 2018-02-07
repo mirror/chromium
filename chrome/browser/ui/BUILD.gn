@@ -1534,8 +1534,6 @@ split_static_library("ui") {
       "unload_controller.h",
       "unload_controller_web_contents_delegate.cc",
       "unload_controller_web_contents_delegate.h",
-      "user_manager.cc",
-      "user_manager.h",
       "webui/app_launcher_login_handler.cc",
       "webui/app_launcher_login_handler.h",
       "webui/bookmarks_ui.cc",
@@ -2240,10 +2238,14 @@ split_static_library("ui") {
 
     if (!is_mac || mac_views_browser) {
       sources += [
+        "user_manager.cc",
+        "user_manager.h",
         "views/frame/avatar_button_manager.cc",
         "views/frame/avatar_button_manager.h",
         "views/profiles/avatar_button.cc",
         "views/profiles/avatar_button.h",
+        "views/profiles/user_manager_view.cc",
+        "views/profiles/user_manager_view.h",
       ]
       deps += [ "//ui/views:features" ]
     }
@@ -3128,8 +3130,6 @@ split_static_library("ui") {
         "views/permission_bubble/permission_prompt_impl_views.cc",
         "views/profiles/profile_indicator_icon.cc",
         "views/profiles/profile_indicator_icon.h",
-        "views/profiles/user_manager_view.cc",
-        "views/profiles/user_manager_view.h",
         "views/proximity_auth/proximity_auth_error_bubble_view.cc",
         "views/proximity_auth/proximity_auth_error_bubble_view.h",
         "views/sad_tab_view.cc",
