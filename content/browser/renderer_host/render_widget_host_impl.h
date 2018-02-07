@@ -587,6 +587,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     return last_frame_metadata_;
   }
 
+  const cc::RenderFrameMetadata& last_render_frame_metadata() {
+    return last_render_frame_metadata_;
+  }
+
   uint64_t last_auto_resize_request_number() const {
     return last_auto_resize_request_number_;
   }

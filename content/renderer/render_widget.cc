@@ -59,6 +59,7 @@
 #include "content/renderer/mash_util.h"
 #include "content/renderer/pepper/pepper_plugin_instance_impl.h"
 #include "content/renderer/render_frame_impl.h"
+#include "content/renderer/render_frame_metadata_observer_impl.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_process.h"
 #include "content/renderer/render_thread_impl.h"
@@ -604,6 +605,10 @@ void RenderWidget::Init(const ShowCallback& show_callback,
     RenderThreadImpl::current()->WidgetCreated();
     if (is_hidden_)
       RenderThreadImpl::current()->WidgetHidden();
+    // Create the observer before the main thread is blocked by javascript. So
+    // that test IPCs can still be handle
+    compositor_->SetRenderFrameObserver(
+        std::make_unique<RenderFrameMetadataObserverImpl>(routing_id_));
   }
 }
 
