@@ -58,6 +58,10 @@ cr.define('cr.ui.Oobe', function() {
             9,   // Tab
             13,  // Enter
             27,  // Escape
+            37,  // Left
+            38,  // Up
+            39,  // Right
+            40,  // Down
           ];
           if (keycodeInterested.indexOf(event.keyCode) >= 0)
             runCallback();
