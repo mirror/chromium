@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce99650_fef9c77b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T19:23:59Z",
+      "side": 1,
+      "message": "nit: this should not be needed (observers will be removed when scoped_observer_ goes out of scope)",
+      "revId": "e073e48ec5827a1602974afe1f692e1b794538f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
