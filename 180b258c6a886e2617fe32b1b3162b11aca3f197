@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bf95c59_c38f8392",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e960e9b1_b40a6d96",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e1f765_8349e907",
         "filename": "content/common/media/media_player_delegate_messages.h",
         "patchSetId": 15
@@ -57,6 +81,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e11c1d_b6762a9a",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Correct, the nonce makes the viz::LocalSurfaceId objects not \u0027\u003d\u003d\u0027 each other. We\u0027re just passing it through to the OverlaySurfaceEmbedder to show the particular surface.\n\nWe currently have one PiP at a time, but we\u0027re considering having multiple PiPs in the future as well. It could be possible to PiP two videos from the same source page, for example.\n\nbase::UnguessableToken (as well as viz::FrameSinkId, viz::LocalSurfaceId, etc) aren\u0027t used here since it causes a crash when it\u0027s passed through. That\u0027s why I deconstructed everything for the IPC message.",
+      "parentUuid": "3725dec4_29c3ad69",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "55b62c13_e091ff2f",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Ack, moved to WebContentsDelegate.",
+      "parentUuid": "369b1e84_f1444ca9",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b5e947_c66b078b",
         "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
         "patchSetId": 15
@@ -145,6 +205,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c65fbb_d27c74ce",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "This was to acquire the high / low bytes. It\u0027s not possible to acquire the values directly.",
+      "parentUuid": "a6b5e947_c66b078b",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +261,42 @@
     },
     {
       "key": {
+        "uuid": "8f9e66e3_cbdc841a",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "I took a look at sending in a RepeatingCallback from the render frame. IIUC, we don\u0027t have a chrome/ component to route this info to. Currently, we\u0027re using ChromeContentBrowserClient (the chrome/ version of ContentBrowserClient). Am I missing something from the render frame side? Thanks!",
+      "parentUuid": "5c776a3c_d00bdf24",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e072f37c_7ba54f2b",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "I took a look at sending in a RepeatingCallback from the render frame. We don\u0027t have",
+      "parentUuid": "5c776a3c_d00bdf24",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca204ddc_1c5f82c3",
         "filename": "media/blink/webmediaplayer_delegate.h",
         "patchSetId": 15
@@ -203,6 +317,30 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7cbecb_6d56c9b4",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ca204ddc_1c5f82c3",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 47
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "5530ee1a_956f37a6",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "I split them out (including here) since WMPI can\u0027t reference SurfaceId / LocalSurfaceId.",
+      "parentUuid": "330bd5b3_5043cb33",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77f9955_d6d9c142",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 15
@@ -243,6 +405,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fa8845_e00ada7d",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Makes sense. Is there a way to force a video resolution change to try this out?",
+      "parentUuid": "c77f9955_d6d9c142",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +443,24 @@
     },
     {
       "key": {
+        "uuid": "d5773abd_5144475f",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "I initially took this apart since HTMLCanvasElement (another observer) can\u0027t refer to FrameSinkIds. Likewise, WMPI cannot reference SurfaceInfo.",
+      "parentUuid": "3eb86cd7_f4a713c8",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e61eba_4125c433",
         "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
         "patchSetId": 15
@@ -277,6 +475,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24cfd052_83c3778c",
+        "filename": "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2018-02-07T02:49:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "14e61eba_4125c433",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
