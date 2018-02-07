@@ -83,7 +83,8 @@ PermissionRequestManager::PermissionRequestManager(
       view_factory_(base::Bind(&PermissionPrompt::Create)),
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
-      tab_is_visible_(web_contents->IsVisible()),
+      tab_is_hidden_(web_contents->GetVisibility() ==
+                     content::Visibility::HIDDEN),
       auto_response_for_test_(NONE),
       weak_factory_(this) {}
 
@@ -202,39 +203,32 @@ void PermissionRequestManager::WebContentsDestroyed() {
   // returning from this function is the only safe thing to do.
 }
 
-void PermissionRequestManager::WasShown() {
-  // This function can be called when the tab is already showing.
-  if (tab_is_visible_)
-    return;
+void PermissionRequestManager::OnVisibilityChanged(
+    content::Visibility visibility) {
+  if (visibility == content::Visibility::VISIBLE && tab_is_hidden_) {
+    tab_is_hidden_ = false;
 
-  tab_is_visible_ = true;
+    if (!main_frame_has_fully_loaded_)
+      return;
 
-  if (!main_frame_has_fully_loaded_)
-    return;
-
-  if (requests_.empty()) {
-    DequeueRequestsAndShowBubble();
-  } else {
-    // We switched tabs away and back while a prompt was active.
+    if (requests_.empty()) {
+      DequeueRequestsAndShowBubble();
+    } else {
+// We switched tabs away and back while a prompt was active.
 #if defined(OS_ANDROID)
-    DCHECK(view_);
+      DCHECK(view_);
 #else
-    ShowBubble(/*is_reshow=*/true);
+      ShowBubble(/*is_reshow=*/true);
 #endif
-  }
-}
-
-void PermissionRequestManager::WasHidden() {
-  // This function can be called when the tab is not showing.
-  if (!tab_is_visible_)
-    return;
-
-  tab_is_visible_ = false;
+    }
+  } else if (visibility != content::Visibility::VISIBLE && !tab_is_hidden_) {
+    tab_is_hidden_ = true;
 
 #if !defined(OS_ANDROID)
   if (view_)
     DeleteBubble();
 #endif
+  }
 }
 
 const std::vector<PermissionRequest*>& PermissionRequestManager::Requests() {
@@ -315,7 +309,7 @@ void PermissionRequestManager::ScheduleShowBubble() {
 void PermissionRequestManager::DequeueRequestsAndShowBubble() {
   if (view_)
     return;
-  if (!main_frame_has_fully_loaded_ || !tab_is_visible_)
+  if (!main_frame_has_fully_loaded_ || tab_is_hidden_)
     return;
   if (queued_requests_.empty())
     return;
@@ -337,7 +331,7 @@ void PermissionRequestManager::ShowBubble(bool is_reshow) {
   DCHECK(!view_);
   DCHECK(!requests_.empty());
   DCHECK(main_frame_has_fully_loaded_);
-  DCHECK(tab_is_visible_);
+  DCHECK(!tab_is_hidden_);
 
   view_ = view_factory_.Run(web_contents(), this);
   if (!is_reshow)

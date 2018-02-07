@@ -58,7 +58,7 @@ class TabManager::WebContentsData
       content::NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
-  void WasShown() override;
+  void OnVisibilityChanged(content::Visibility visibility) override;
   void WebContentsDestroyed() override;
 
   // Called by TabManager::ResourceCoordinatorSignalObserver to notify that a
