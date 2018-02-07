@@ -22,6 +22,30 @@
       "revId": "8805151b1210031046088b742a3a3a489a980439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4f4a50_ff39f46f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/MonochromeApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-02-07T18:32:48Z",
+      "side": 1,
+      "message": "MonochromeApplication is used by the isolated process that is created to launch the sandboxed renderer service (since that service is defined in the monochrome APK, it also uses the monochrome APK manifest\u0027s defined Application subclass). These sandboxed renderers are used by both Chrome and WebView - there\u0027s no difference in how those are treated, the renderer starts up the same either way.\n\nIf Chrome used dynamic fonts there wouldn\u0027t be a crash - the resource ID that was fetched would be a valid resource ID for the chrome APK, and the preloading would succeed. So, the actual effect of this change is that if Chrome starts specifying a preloaded font list, the Chrome renderer process will *ignore* that and will not preload any fonts even though it safely could (because there\u0027s no easy way to tell whether the renderer is going to be used by Chrome or WebView, and thus whether or not this will work).",
+      "parentUuid": "30b76318_4aeb2597",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "8805151b1210031046088b742a3a3a489a980439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
