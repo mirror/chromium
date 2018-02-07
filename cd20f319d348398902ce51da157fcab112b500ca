@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0884b441_e4ce228f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T07:36:17Z",
+      "side": 1,
+      "message": "This explanation is not quite right. We\u0027re comparing worlds, not contexts.",
+      "revId": "cd20f319d348398902ce51da157fcab112b500ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f647302_cf267681",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T07:36:17Z",
+      "side": 1,
+      "message": "v8::Isolate::GetCurrent() is not encouraged. Can you explicitly pass in the isolate?",
+      "revId": "cd20f319d348398902ce51da157fcab112b500ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4905f79b_e3aca8c7",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T07:36:17Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "cd20f319d348398902ce51da157fcab112b500ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
