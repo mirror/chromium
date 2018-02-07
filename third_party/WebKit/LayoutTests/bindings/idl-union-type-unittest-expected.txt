@@ -30,6 +30,8 @@ PASS unionTypesTest.doubleOrInternalEnumArg(null) threw exception TypeError: Fai
 PASS unionTypesTest.doubleOrInternalEnumArg({}) threw exception TypeError: Failed to execute 'doubleOrInternalEnumArg' on 'UnionTypesTest': The provided value '[object Object]' is not a valid enum value of type InternalEnum..
 PASS unionTypesTest.doubleOrInternalEnumArg([]) threw exception TypeError: Failed to execute 'doubleOrInternalEnumArg' on 'UnionTypesTest': The provided value '' is not a valid enum value of type InternalEnum..
 
+PASS unionTypesTest.doubleOrInternalEnumOrNullArg(null) is "null is passed"
+
 PASS unionTypesTest.doubleOrStringSequenceArg([]) is ""
 PASS unionTypesTest.doubleOrStringSequenceArg([3.14, "foo"]) is "double: 3.14, string: foo"
 PASS unionTypesTest.doubleOrStringSequenceArg([1, "foo", "bar", 2]) is "double: 1, string: foo, string: bar, double: 2"

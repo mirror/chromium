@@ -62,6 +62,9 @@ String UnionTypesTest::doubleOrStringArg(DoubleOrString& double_or_string) {
 
 String UnionTypesTest::doubleOrInternalEnumArg(
     DoubleOrInternalEnum& double_or_internal_enum) {
+  if (double_or_internal_enum.IsNull()) {
+    return "null is passed";
+  }
   if (double_or_internal_enum.IsDouble()) {
     return "double is passed: " + String::NumberToStringECMAScript(
                                       double_or_internal_enum.GetAsDouble());

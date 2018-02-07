@@ -55,6 +55,9 @@ if (window.internals) {
     shouldThrow('unionTypesTest.doubleOrInternalEnumArg([])');
     debug('');
 
+    shouldBeEqualToString('unionTypesTest.doubleOrInternalEnumOrNullArg(null)', 'null is passed');
+    debug('');
+
     shouldBeEqualToString('unionTypesTest.doubleOrStringSequenceArg([])', '');
     shouldBeEqualToString('unionTypesTest.doubleOrStringSequenceArg([3.14, "foo"])', 'double: 3.14, string: foo');
     shouldBeEqualToString('unionTypesTest.doubleOrStringSequenceArg([1, "foo", "bar", 2])', 'double: 1, string: foo, string: bar, double: 2');

@@ -7,6 +7,7 @@ interface UnionTypesTest {
 
     DOMString doubleOrStringArg((double or DOMString) arg);
     DOMString doubleOrInternalEnumArg((double or InternalEnum) arg);
+    [ImplementedAs=doubleOrInternalEnumArg] DOMString doubleOrInternalEnumOrNullArg((double or InternalEnum?) arg);
 
     [ImplementedAs=doubleOrStringArg] DOMString doubleOrStringDefaultDoubleArg(optional (double or DOMString) arg = 3.14);
     [ImplementedAs=doubleOrStringArg] DOMString doubleOrStringDefaultStringArg(optional (double or DOMString) arg = "foo");

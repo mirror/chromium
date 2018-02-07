@@ -26,6 +26,7 @@ class UnionTypesTest final : public ScriptWrappable {
 
   String doubleOrStringArg(DoubleOrString&);
   String doubleOrInternalEnumArg(DoubleOrInternalEnum&);
+  String doubleOrInternalEnumOrNullArg(DoubleOrInternalEnum&);
   String doubleOrStringSequenceArg(HeapVector<DoubleOrString>&);
 
   String nodeListOrElementArg(NodeListOrElement&);
