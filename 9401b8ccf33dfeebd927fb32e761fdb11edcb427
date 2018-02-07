@@ -16,6 +16,24 @@
       "revId": "9401b8ccf33dfeebd927fb32e761fdb11edcb427",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c204b9_59e27cc1",
+        "filename": "services/shape_detection/face_detection_impl_mac_vision.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T18:44:30Z",
+      "side": 1,
+      "message": "The author tried this in patch set #3 and it failed to compile. Do you know why?",
+      "parentUuid": "fd3ffa1a_e0961c89",
+      "revId": "9401b8ccf33dfeebd927fb32e761fdb11edcb427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
