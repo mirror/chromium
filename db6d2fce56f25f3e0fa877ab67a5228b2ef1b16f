@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9237835d_aaf17f24",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T23:01:34Z",
+      "side": 1,
+      "message": "nit: You might describe why 2 seconds is perfect (i.e. what happens when the Keep alive is too short (200ms)).  Presumably you want this as close to 3 seconds as possible but not too chatty.  That is probably good knowledge to encapsulate in the comment.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "db6d2fce56f25f3e0fa877ab67a5228b2ef1b16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266907aa_5ad774a5",
+        "filename": "remoting/protocol/webrtc_transport.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T23:01:34Z",
+      "side": 1,
+      "message": "Remove this comment since you are increasing the max bitrate again.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 65
+      },
+      "revId": "db6d2fce56f25f3e0fa877ab67a5228b2ef1b16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
