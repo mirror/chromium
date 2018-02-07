@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "968936a6_424517f0",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T16:21:31Z",
+      "side": 1,
+      "message": "that is annoying! But you just need to change MessageCenterView to ignore the no notifications view preferred size (that\u0027s why it\u0027s only a \"preferred\" size --- the parent can ignore it).",
+      "parentUuid": "98fb375f_3291d2e9",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "997339ae_a06ef97c",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 5
@@ -292,6 +316,24 @@
       "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2154cdb_293de6a9",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T16:21:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95b3321a_d652f25b",
+      "revId": "832f72511990f85a3083cc9ba25ef735cffdce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
