@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="author" title="David Grogan" href="dgrogan@chromium.org">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#abspos-boxes-in-table-internal">
+<link rel="help" href="https://www.w3.org/TR/css-position-3/#valdef-position-absolute">
+<link rel="match" href="internal-containing-block-001-ref.html">
+<link rel="bookmark" href="https://bugs.chromium.org/p/chromium/issues/detail?id=798164" />
+<meta name="flags" content="" />
+<meta name="assert" content="A table-row with position:relative establishes a
+containing block for a position:absolute descendent of a table-cell, and the
+descendent is positioned correctly." />
+<title>
+relpos table-row establishes containing block for abspos
+</title>
+
+<style>
+tr {
+  position: relative;
+}
+
+div.abspos {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background: green;
+}
+
+div.static {
+  height: 100px;
+  width: 100px;
+}
+
+/* CSS resets: */
+
+html, body, td, tr{
+  margin:0px;
+  padding:0px;
+}
+
+table {
+  border-collapse:collapse;
+}
+</style>
+
+<table>
+  <tr>
+    <td>
+      <div class="abspos"></div>
+      <div class="static"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="abspos"></div>
+      <div class="static"></div>
+    </td>
+  </tr>
+</table>
+
+<span style="position:absolute; top:220px">
+Test passes if there are two 50x50 green squares stacked vertically with 50px
+white space between them.
+</span>
