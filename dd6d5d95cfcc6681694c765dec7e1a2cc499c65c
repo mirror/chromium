@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d874214_815bc3d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ExportErrorDialogFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "to the user?",
+      "range": {
+        "startLine": 18,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 42
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0f687a_e45bcb96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ExportErrorDialogFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 80
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f682ad7f_06ca1f41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/ExportErrorDialogFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "I don\u0027t recall seeing this method of passing data in our preferences code before.. is it used somewhere else?\n\nIf not, I\u0027d recommend creating a ErrorDialogParams static class that can be used to pass a chunk of data into this class. You can check out PromoDialog.java for an example of how we do this in other places.",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8303e51a_a4ff8ee1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "The export specific code in this class is getting rather long. Would it be possible to split it out into a separate class responsible for handling the export password flow? Perhaps not in this CL, but in a follow up.",
+      "range": {
+        "startLine": 334,
+        "startChar": 17,
+        "endLine": 334,
+        "endChar": 31
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3aac71_c7b98a43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "To check my understanding, when a user chooses to export a password, we first re-authenticate (if needed), then show this warning dialog, then either export or show an error dialog if we cannot export?\n\nI think it would be good to capture these paths in a class comment, so that the expected behavior/flow is documented in code.",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 34
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04cf3b5_8ee7e80e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "Could there be an error dialog waiting to be shown at this point?",
+      "range": {
+        "startLine": 389,
+        "startChar": 28,
+        "endLine": 389,
+        "endChar": 43
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844e1c2b_11eb60c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "showExportErrorDialogFragment?",
+      "range": {
+        "startLine": 467,
+        "startChar": 17,
+        "endLine": 467,
+        "endChar": 41
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b470b2aa_e8b4de14",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "nit: Per our expert UX string writer, this should probably be a right single quotation mark (U+2019) rather than a neutral apostrophe (U+0027) (I can forward an email if you\u0027d like). I think the easiest way to do that is to type this string into a Google Doc and copy + paste.\n\nRight single quotation mark: http://www.fileformat.info/info/unicode/char/2019/index.htm\nNeutral apostrophe: http://www.fileformat.info/info/unicode/char/27/index.htm",
+      "range": {
+        "startLine": 508,
+        "startChar": 11,
+        "endLine": 508,
+        "endChar": 12
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06434ab5_37548681",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "I see a number of strings that match this (e.g. IDS_LOCAL_DISCOVERY_RETRY_LOAD_CLOUD_DEVICES, and IDS_TRANSLATE_INFOBAR_RETRY) but they are in other component files. It\u0027d be great to avoid duplicating strings (to save on APK space). For now, I think it\u0027d be OK to introduce a \"Try again\" in this file, but let\u0027s put it at the top with the other generic strings.",
+      "range": {
+        "startLine": 511,
+        "startChar": 8,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569c5e47_b8904390",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "Same comment on this string.\n\nOut of curiosity, did srahim@ consult on these strings? If not, it\u0027d be good to run them by here (non-blocking, we can always update in a follow-up patch).",
+      "range": {
+        "startLine": 517,
+        "startChar": 25,
+        "endLine": 517,
+        "endChar": 26
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88419426_3d73ff3c",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "nit: s/is/are",
+      "range": {
+        "startLine": 522,
+        "startChar": 261,
+        "endLine": 522,
+        "endChar": 263
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67851f4_c3a43d5a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "nit: Should we check any of the contents of the error dialog or check that it is showing?",
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397bc579_49e69754",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-07T16:14:20Z",
+      "side": 1,
+      "message": "Pull this into a helper method?",
+      "range": {
+        "startLine": 989,
+        "startChar": 9,
+        "endLine": 989,
+        "endChar": 58
+      },
+      "revId": "dd6d5d95cfcc6681694c765dec7e1a2cc499c65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
