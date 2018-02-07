@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ada6737a_9b4fdc50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f99e85d5_3b4083b9",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb89b78_f9f1abd5",
         "filename": "sql/initialization.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb18a97_e397594f",
+        "filename": "sql/initialization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb89b78_f9f1abd5",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd5a48f7_e365a53e",
+        "filename": "sql/initialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa9df85_67a0e50f",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db177073_c7a9f7f6",
         "filename": "sql/initialization.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853fb3d1_0fe8c7ca",
+        "filename": "sql/initialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db177073_c7a9f7f6",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "17accdac_077406cc",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "This will be true in the longer-term plan, but is not true today. WebSQL is still built directly on top of SQLite, and calls sqlite3_ functions directly.",
+      "parentUuid": "0d83be8d_143e9b02",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b5aa6a_1c893da6",
         "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d93681_bba6fd04",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:31:11Z",
+      "side": 1,
+      "message": "I think I still need this for sqlite_open_v2 and the SQLite error macros SQLITE_OPEN_READWRITE, SQLITE_OPEN_CREATE.\n\n../../third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp:66:26: error: use of undeclared identifier \u0027SQLITE_OPEN_READWRITE\u0027\n                         SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,\n                         ^\n../../third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp:66:50: error: use of undeclared identifier \u0027SQLITE_OPEN_CREATE\u0027\n                         SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,",
+      "parentUuid": "a3b5aa6a_1c893da6",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
