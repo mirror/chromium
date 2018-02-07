@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a180690_2ea78d2e",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4288,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-07T18:05:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76ded05_31d021cc",
+      "range": {
+        "startLine": 4288,
+        "startChar": 132,
+        "endLine": 4288,
+        "endChar": 140
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0688df74_a70fdf9c",
         "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d0ee9766_4260b051",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-07T18:05:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0688df74_a70fdf9c",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b28df33_c70d07df",
         "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748a89e7_f6ceb775",
+        "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2018-02-07T18:05:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b28df33_c70d07df",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 80
+      },
+      "revId": "f7b37113b0613dc545c0cf23c7680c6cae0391bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
