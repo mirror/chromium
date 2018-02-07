@@ -22,6 +22,30 @@
       "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e07e3a2_475e893f",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-02-07T02:35:17Z",
+      "side": 1,
+      "message": "When I tested it, I saw that GURL converted \u0027\\x\u0027 to \u0027%\u0027. But I don\u0027t know if it\u0027s a bug or not yet.\n\nAnyway, thanks to the issue 795919, we realized that registerProtocolHandler has been testing nothing regarding percent-encoding, and we add a test for it finally. If you guys think that this test is good for now, I wonder if I can land this CL.",
+      "parentUuid": "54297f7a_c28bbe14",
+      "range": {
+        "startLine": 1032,
+        "startChar": 63,
+        "endLine": 1032,
+        "endChar": 64
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
