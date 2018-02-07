@@ -369,6 +369,14 @@ public class TabModelImpl extends TabModelJniBridge {
 
         canUndo &= supportsPendingClosures();
 
+        // If the close operation can be undone, we need to make sure we have a thumbnail saved so
+        // the preview isn't blank after an undo...unless we're closing the last tab in the model,
+        // in which case it's still "live" throughout the whole process of being closed and unclosed
+        // and we don't need a thumbnail to show a preview.
+        if (canUndo && mTabs.size() != 1) {
+            mTabContentManager.cacheTabThumbnail(tabToClose);
+        }
+
         startTabClosure(tabToClose, animate, uponExit, canUndo);
         if (notify && canUndo) {
             for (TabModelObserver obs : mObservers) obs.tabPendingClosure(tabToClose);
