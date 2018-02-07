@@ -22,6 +22,30 @@
       "revId": "fe3b2d972f9633033b70760640c0c40370a19772",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b04048_633eac6f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-02-07T01:27:20Z",
+      "side": 1,
+      "message": "I had wondered the same thing, but I was nervous about changing proto ids. Although the fuzzer seemed happy to have this succeed INVALID_NAME, it\u0027s also happy to switch their order (and I agree that having INVALID_NAME be last seems better). Latest patch has them switched.",
+      "parentUuid": "90b9c2fb_b248176a",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 14
+      },
+      "revId": "fe3b2d972f9633033b70760640c0c40370a19772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
