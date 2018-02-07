@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2147c96_5e54002b",
+        "filename": "tools/perf/contrib/vr_benchmarks/data/webvr_wpr.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-07T15:47:53Z",
+      "side": 1,
+      "message": "Why is this platform specific?",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cce61ae_2609219f",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-07T15:47:53Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e2edfe_dbbc05d3",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-07T15:47:53Z",
+      "side": 1,
+      "message": "Does recorded here (and everywhere else in this CL) means that the page is replayed?",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71303b9e_b7a836cb",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-07T15:47:53Z",
+      "side": 1,
+      "message": "What is the thing?",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c498a892_304247bb",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-02-07T15:47:53Z",
+      "side": 1,
+      "message": "I\u0027ve never seen that page. Is that page still interesting without the video? klausw@?",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
