@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "4b45dbac_fcb24b49",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T18:57:24Z",
+      "side": 1,
+      "message": "\u003e causes a crash\n\nprobably worth tracking that down.  one should be able to send these things.",
+      "parentUuid": "a0e11c1d_b6762a9a",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6333d60_e845a100",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 15
@@ -297,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "996bbeab_d1956701",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T18:57:24Z",
+      "side": 1,
+      "message": "both WebMediaPlayerDelegate and RenderFrameImpl send messages that are received by WebContents.  For example, FrameHostMsg_DidFinishDocumentLoad is sent here:\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?rcl\u003d2018e4f82efe3cca1a76a3400357d8f981cc505b\u0026l\u003d4367\n\nand received here:\n\nhttps://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?rcl\u003db4ac547420e6715e1da6272408c519898ae09b58\u0026l\u003d816\n\nthe latter function is what dispatches it (via the loop through WebContentsObservers) to the media WCO .\n\ni think that you could RFI \u003d\u003e WebContentsImpl \u003d\u003e WebContentsDelegate (browser.cc) directly, and remove the hops through WebMediaPlayerDelegate / MediaWebContentsObserver.  that should simplify things a bit.",
+      "parentUuid": "e072f37c_7ba54f2b",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca204ddc_1c5f82c3",
         "filename": "media/blink/webmediaplayer_delegate.h",
         "patchSetId": 15
@@ -458,6 +494,24 @@
       "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0a00f4f_717311ca",
+        "filename": "third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T18:57:24Z",
+      "side": 1,
+      "message": "i agree, type visibility is somewhat tricky in this case.  however, i don\u0027t think that taking them apart like this is the right answer -- it\u0027s just going to break later when we need to pass one more thing thing in order to construct the FrameSinkId, etc.\n\ni think that we need to sort this out, so we never need to worry about it again.  i\u0027ll take a look to see if i can provide a more concrete suggestion on how to do that.",
+      "parentUuid": "d5773abd_5144475f",
+      "revId": "180b258c6a886e2617fe32b1b3162b11aca3f197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

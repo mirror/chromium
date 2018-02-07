@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8074f65d_f2138fcb",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T18:57:24Z",
+      "side": 1,
+      "message": "please add comments.",
+      "range": {
+        "startLine": 563,
+        "startChar": 10,
+        "endLine": 563,
+        "endChar": 14
+      },
+      "revId": "055a04fdb801614ca80df1e89d884224a9a4780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccc8df8_876d61a8",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T18:57:24Z",
+      "side": 1,
+      "message": "delete?",
+      "revId": "055a04fdb801614ca80df1e89d884224a9a4780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
