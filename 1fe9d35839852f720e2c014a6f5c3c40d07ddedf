@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a10f96b1_1f74b4c3",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "Comment needs to be updated since there may be multiple requests now.",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac3040e_973a644a",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "grammar: but are still unavailable.",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253c1cb5_7e2f4a26",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "There\u0027s an extra \"the\" and \"dependecy\" is a typo. Then this sentence can use a second pass on grammar.",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22130db_78927d2e",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "Maybe avoid always making the std::copy() call?\n\nif (pending_list.empty() \u0026\u0026 pending_subframes.empty()) {\n  // Fulfill request\n  continue;\n}\nstd::copy(...);",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead17eb9_26281675",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "grammar/spelling: If the request isn\u0027t waiting on any subframes, then it is ready. Fulfill the request now.",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fad86d_b9ecf265",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "simplify comment: If the request still has pending frames, keep waiting.",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16de4e5a_71ca915d",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf00a2d8_6f21e416",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T20:31:26Z",
+      "side": 1,
+      "message": "Should have an overriding destructor.",
+      "range": {
+        "startLine": 28,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
