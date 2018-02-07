@@ -350,6 +350,14 @@ public class ApiCompatibilityUtils {
         } else {
             activity.finish();
         }
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // On L FinishAndRemoveTaskWithRetry can sometimes fail. So try again!
+            if (!activity.isFinishing()) {
+                activity.finish();
+            }
+        }
     }
 
     /**
