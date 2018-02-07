@@ -48,6 +48,9 @@ enum PageAccessibilityConfiguration {
   PageReadWriteExecute,
 };
 
+// Mac OSX supports tagged memory regions, to help in debugging.
+enum PageTag { PageTagChromium = 254, PageTagV8 = 255 };
+
 // Allocate one or more pages.
 //
 // The requested |address| is just a hint; the actual address returned may
@@ -66,6 +69,7 @@ BASE_EXPORT void* AllocPages(void* address,
                              size_t length,
                              size_t align,
                              PageAccessibilityConfiguration page_accessibility,
+                             PageTag tag = PageTagChromium,
                              bool commit = true);
 
 // Free one or more pages starting at |address| and continuing for |length|
