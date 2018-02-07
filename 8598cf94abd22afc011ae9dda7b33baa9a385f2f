@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83d006d_af5df104",
+        "filename": "content/common/service_worker/service_worker_fetch_response_mojom_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:40:37Z",
+      "side": 1,
+      "message": "what happens if blob_uuid is nullopt? (value() will DCHECK)",
+      "revId": "8598cf94abd22afc011ae9dda7b33baa9a385f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5325f2b1_7595d571",
+        "filename": "content/common/service_worker/service_worker_fetch_response_mojom_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:40:37Z",
+      "side": 1,
+      "message": "huh? data.TakeBlob() returns a BlobPtr, you then call PassInterface on that BlobPtr and immediately turn the resulting BlobPtrInfo back into another BlobPtr? Why not just blob \u003d data.TakeBlob\u003c...\u003e(); directly?",
+      "revId": "8598cf94abd22afc011ae9dda7b33baa9a385f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6def1bbc_592ef874",
+        "filename": "content/common/service_worker/service_worker_fetch_response_mojom_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:40:37Z",
+      "side": 1,
+      "message": "I wonder if it makes sense to fix the mojo::MapTraits\u003cstd::map\u003cK, V\u003e\u003e to also support non-default Compare, so you can just return headers directly? Should be as easy as adding the extra template parameter.",
+      "revId": "8598cf94abd22afc011ae9dda7b33baa9a385f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54ea1b3_d657db4b",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:40:37Z",
+      "side": 1,
+      "message": "why is this nullable? It doesn\u0027t seem like you ever actually serialize null into it, and the c++ struct doesn\u0027t have an optional string for this either.",
+      "revId": "8598cf94abd22afc011ae9dda7b33baa9a385f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
