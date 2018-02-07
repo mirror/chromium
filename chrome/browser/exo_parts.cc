@@ -31,20 +31,25 @@
 #include "storage/browser/fileapi/file_system_url.h"
 #include "ui/arc/notification/arc_notification_surface_manager_impl.h"
 
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h"
+
 namespace {
 
 constexpr char kMimeTypeArcUriList[] = "application/x-arc-uri-list";
 
-storage::FileSystemContext* GetFileSystemContext() {
-  // Obtains the primary profile.
+Profile* GetPrimaryProfile() {
   if (!user_manager::UserManager::IsInitialized())
     return nullptr;
   const user_manager::User* primary_user =
       user_manager::UserManager::Get()->GetPrimaryUser();
   if (!primary_user)
     return nullptr;
-  Profile* primary_profile =
-      chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+  return chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+}
+
+storage::FileSystemContext* GetFileSystemContext() {
+  Profile* primary_profile = GetPrimaryProfile();
   if (!primary_profile)
     return nullptr;
 
@@ -90,6 +95,35 @@ class ChromeFileHelper : public exo::FileHelper {
       }
     }
     return !out_urls->empty();
+  }
+  virtual bool GetUrlFromPickleAsync(
+      const std::string& app_id,
+      const base::Pickle& pickle,
+      const base::Callback<void(const GURL& url)>& callback) {
+        LOG(ERROR) << "-------------------------GetUrlFromPickleAsync ";
+    storage::FileSystemContext* file_system_context = GetFileSystemContext();
+    if (!file_system_context)
+      return false;
+
+    // auto* root_map = arc::ArcDocumentsProviderRootMap::GetForBrowserContext(
+    //     GetPrimaryProfile());
+    // if (!root_map)
+    //   return false;
+
+    std::vector<content::DropData::FileSystemFileInfo> file_system_files;
+    if (!content::DropData::FileSystemFileInfo::ReadFileSystemFilesFromPickle(
+            pickle, &file_system_files))
+      return false;
+    for (const auto& file_system_file : file_system_files) {
+      const storage::FileSystemURL file_system_url =
+          file_system_context->CrackURL(file_system_file.url);
+      GURL out_url;
+       LOG(ERROR) << "-------------------------CrackUrl: " << file_system_url.path();
+
+      return file_manager::util::ConvertFileSystemUrlToArcUrl(
+          file_system_url, callback);
+    }
+    return false;
   }
 };
 

@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/files/file_path.h"
+#include "storage/browser/fileapi/file_system_url.h"
 
 class GURL;
 class Profile;
@@ -45,6 +46,10 @@ std::string GetDownloadsMountPointName(Profile* profile);
 // Converts a Chrome OS file path to an ARC file URL. Returns true if the path
 // was converted successfully and false otherwise.
 bool ConvertPathToArcUrl(const base::FilePath& path, GURL* arc_url_out);
+
+bool ConvertFileSystemUrlToArcUrl(
+    const storage::FileSystemURL& file_system_url,
+    const base::Callback<void(const GURL& url)>& callback);
 
 }  // namespace util
 }  // namespace file_manager

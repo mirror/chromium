@@ -149,18 +149,38 @@ void DataOffer::SetDropData(FileHelper* file_helper,
 
   base::string16 url_list_string;
   bool found_urls =
-      GetUrlListFromDataFile(file_helper, data, &url_list_string) ||
-      GetUrlListFromDataPickle(file_helper, data, &url_list_string);
+      GetUrlListFromDataFile(file_helper, data, &url_list_string);// ||
+      //GetUrlListFromDataPickle(file_helper, data, &url_list_string);
   if (found_urls) {
     data_.emplace(file_helper->GetMimeTypeForUriList(),
                   RefCountedString16::TakeString(std::move(url_list_string)));
-  } else if (data.HasString()) {
-    base::string16 string_content;
-    if (data.GetString(&string_content)) {
-      data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
-                    RefCountedString16::TakeString(std::move(string_content)));
+  // } else if (data.HasString()) {
+  //   base::string16 string_content;
+  //   if (data.GetString(&string_content)) {
+  //     data_.emplace(std::string(ui::Clipboard::kMimeTypeText),
+  //                   RefCountedString16::TakeString(std::move(string_content)));
+  //   }
+  } else {
+    static const char kFormatString[] = "chromium/x-file-system-files";
+    CR_DEFINE_STATIC_LOCAL(ui::Clipboard::FormatType, formatType,
+                           (ui::Clipboard::GetFormatType(kFormatString)));
+    base::Pickle pickle;
+    if (data.GetPickledData(formatType, &pickle)) {
+      file_helper->GetUrlFromPickleAsync(
+          /* app_id */ "", pickle,
+          base::Bind(&DataOffer::OnContentUrlResolved, base::Unretained(this)));
     }
   }
+  for (const auto& pair : data_) {
+    delegate_->OnOffer(pair.first);
+  }
+}
+
+void DataOffer::OnContentUrlResolved(const GURL& content_url) {
+  base::string16 url_string = base::UTF8ToUTF16(content_url.spec());
+  LOG(ERROR) << "-------------------------OnContentUrlResolved: " << url_string;
+  data_.emplace("application/x-arc-uri-list",
+                RefCountedString16::TakeString(std::move(url_string)));
   for (const auto& pair : data_) {
     delegate_->OnOffer(pair.first);
   }
