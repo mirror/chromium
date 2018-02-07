@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4b7c4e_a175ced0",
+        "filename": "chrome/browser/ntp_snippets/download_suggestions_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-02-07T17:34:49Z",
+      "side": 1,
+      "message": "How did you decide to load offline pages here? Did anyone advise you?\n\nI feel like there will be a race condition and Downloads section may miss all offline pages on startup. In other words, I am not sure whether there is enough time between GetCategoryInfo and drawing suggestions.\n\nAnother issue is that now Offline Pages will be queried on each GetCategoryInfo. This feels wrong. Shouldn\u0027t this happen only once per lifetime (i.e. on startup)?",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 42
+      },
+      "revId": "4b164682d64cbd1aee9eb0edd44afe764d5e8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868219cb_ff5d9ccf",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-02-07T17:34:49Z",
+      "side": 1,
+      "message": "The method should be renamed, e.g. \"StartInitialization(base::OnceCallback\u003cvoid()\u003e initialization_completed_callback)\".",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "4b164682d64cbd1aee9eb0edd44afe764d5e8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8913d460_13211a2b",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-02-07T17:34:49Z",
+      "side": 1,
+      "message": "The benefit was not obvious at first.\n\nCould you please update the description to say that the tracker requests offline pages when the first fetch is finished instead of in the constructor?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "4b164682d64cbd1aee9eb0edd44afe764d5e8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

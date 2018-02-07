@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac35592_b9e41775",
+        "filename": "chrome/browser/ntp_snippets/download_suggestions_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-02-07T17:34:49Z",
+      "side": 0,
+      "message": "Currently this is being called in OnHistoryQueryComplete (i.e. on startup) and in ClearDismissedSuggestionsForDebugging.\n\nThe latter definitely should still request all offline pages.\n\nI would also delete this helper altogether then and just inline it.",
+      "range": {
+        "startLine": 540,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 42
+      },
+      "revId": "e82cd1b3d7789fa734e96b6d24de6be757d619eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
