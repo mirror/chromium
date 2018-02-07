@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b10787_755c3745",
+        "filename": "ui/message_center/views/notification_header_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-02-07T09:05:52Z",
+      "side": 1,
+      "message": "Let\u0027s remove these accessors.",
+      "revId": "d20c6b688f2a7c41b009965ac45ed0a0037f304a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df84e87f_be319133",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-02-07T09:05:52Z",
+      "side": 1,
+      "message": "Let\u0027s add NotificationHeaderView::SetSubpixelRenderingEnabled() instead of exposing these labels.",
+      "revId": "d20c6b688f2a7c41b009965ac45ed0a0037f304a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70fb377_8004c2c0",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-02-07T09:05:52Z",
+      "side": 1,
+      "message": "Remove *\u0026",
+      "range": {
+        "startLine": 1324,
+        "startChar": 49,
+        "endLine": 1324,
+        "endChar": 51
+      },
+      "revId": "d20c6b688f2a7c41b009965ac45ed0a0037f304a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
