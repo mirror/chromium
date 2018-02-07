@@ -956,7 +956,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_ToggleFullscreen, OnToggleFullscreen)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SuddenTerminationDisablerChanged,
                         OnSuddenTerminationDisablerChanged)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeLoadProgress,
                         OnDidChangeLoadProgress)
@@ -2640,29 +2639,6 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
   // there are any OOPIF widgets, this will also trigger them to resize via
   // frameRectsChanged.
   render_view_host_->GetWidget()->WasResized();
-}
-
-// TODO(clamy): Remove this IPC now that it is only used for same-document
-// navigations.
-void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
-  TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidStartLoading",
-               "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
-               "to different document", to_different_document);
-
-  if (to_different_document) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RFH_UNEXPECTED_LOAD_START);
-    return;
-  }
-  bool was_previously_loading = frame_tree_node_->frame_tree()->IsLoading();
-  is_loading_ = true;
-
-  // Only inform the FrameTreeNode of a change in load state if the load state
-  // of this RenderFrameHost is being tracked.
-  if (is_active()) {
-    frame_tree_node_->DidStartLoading(to_different_document,
-                                      was_previously_loading);
-  }
 }
 
 void RenderFrameHostImpl::OnSuddenTerminationDisablerChanged(

@@ -307,7 +307,6 @@ class TestWebFrameClient : public WebFrameClient {
                                   WebSandboxFlags,
                                   const ParsedFeaturePolicy&,
                                   const WebFrameOwnerProperties&) override;
-  void DidStartLoading(bool) override;
   void DidStopLoading() override;
   service_manager::InterfaceProvider* GetInterfaceProvider() override {
     return interface_provider_.get();
