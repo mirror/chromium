@@ -13,6 +13,10 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 
+namespace media {
+class AudioManager;
+}
+
 namespace service_manager {
 class Connector;
 }
@@ -28,6 +32,8 @@ class CONTENT_EXPORT ServiceManagerContext {
  public:
   ServiceManagerContext();
   ~ServiceManagerContext();
+
+  void RegisterDelayedAudioService(media::AudioManager* audio_manager);
 
   // Returns a service_manager::Connector that can be used on the IO thread.
   static service_manager::Connector* GetConnectorForIOThread();
