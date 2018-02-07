@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0543db6_2f16f509",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T00:47:16Z",
+      "side": 1,
+      "message": "Where do we fill |subframe_content_info|?\n\nstyle: All the other struct members are named \"foo_bar_\". I know the style guide says to use \"foo_bar\" but can we just go along with the existing style for consistency? We can mass rename them all later. Otherwise it just looks weird.",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daeb5b52_f6f7089b",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T00:47:16Z",
+      "side": 1,
+      "message": "Do we need to make sure |data_-\u003epdf_data_| is MSKP and not PDF?",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e581a55_f3c3460e",
+        "filename": "printing/printing_utils.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T00:47:16Z",
+      "side": 1,
+      "message": "Should GenerateFrameGuid() just go in components/printing/browser/print_composite_client.cc? I don\u0027t see it used anywhere else anymore. All the other GenFrameGuid() usage went away. Do you foresee a need for GenerateFrameGuid() anywhere else?",
+      "revId": "c39969b69ed6b7c7a8cf2a9bafcf3240de9cc931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
