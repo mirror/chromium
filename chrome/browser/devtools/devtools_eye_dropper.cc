@@ -106,7 +106,8 @@ void DevToolsEyeDropper::ResetFrame() {
 }
 
 void DevToolsEyeDropper::FrameUpdated(const SkBitmap& bitmap,
-                                      content::ReadbackResponse response) {
+                                      content::ReadbackResponse response,
+                                      bool at_top) {
   if (response == content::READBACK_SUCCESS) {
     frame_ = bitmap;
     UpdateCursor();

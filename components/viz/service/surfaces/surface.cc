@@ -424,6 +424,11 @@ void Surface::TakeCopyOutputRequests(Surface::CopyRequestsMap* copy_requests) {
 
   for (const auto& render_pass : active_frame_data_->frame.render_pass_list) {
     for (auto& request : render_pass->copy_requests) {
+      request->set_at_top(
+          active_frame_data_->frame.metadata.root_scroll_offset.y() == 0);
+      LOG(ERROR)
+          << "================================== request at top: "
+          << active_frame_data_->frame.metadata.root_scroll_offset.ToString();
       copy_requests->insert(
           std::make_pair(render_pass->id, std::move(request)));
     }

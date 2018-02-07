@@ -397,7 +397,7 @@ class ReadPixelsWorkflow {
     gl->UnmapBufferCHROMIUM(GL_PIXEL_PACK_TRANSFER_BUFFER_CHROMIUM);
 
     copy_request_->SendResult(std::make_unique<CopyOutputSkBitmapResult>(
-        result_rect_, result_bitmap));
+        result_rect_, result_bitmap, copy_request_->at_top()));
 
     // |transfer_buffer_| and |query_| will be deleted soon by the destructor.
   }
@@ -474,7 +474,7 @@ void GLRendererCopier::SendTextureResult(
   }
 
   request->SendResult(std::make_unique<CopyOutputTextureResult>(
-      result_rect, mailbox, sync_token, color_space,
+      result_rect, mailbox, sync_token, color_space, request->at_top(),
       std::move(release_callback)));
 }
 
@@ -487,11 +487,14 @@ namespace {
 class GLPixelBufferI420Result : public CopyOutputResult {
  public:
   GLPixelBufferI420Result(const gfx::Rect& result_rect,
+                          bool at_top,
                           scoped_refptr<ContextProvider> context_provider,
                           GLuint transfer_buffer,
                           int y_stride,
                           int chroma_stride)
-      : CopyOutputResult(CopyOutputResult::Format::I420_PLANES, result_rect),
+      : CopyOutputResult(CopyOutputResult::Format::I420_PLANES,
+                         result_rect,
+                         at_top),
         context_provider_(std::move(context_provider)),
         transfer_buffer_(transfer_buffer),
         y_stride_(y_stride),
@@ -641,8 +644,8 @@ class ReadI420PlanesWorkflow
     // If all three readbacks have completed, send the result.
     if (queries_ == std::array<GLuint, 3>{{0, 0, 0}}) {
       copy_request_->SendResult(std::make_unique<GLPixelBufferI420Result>(
-          result_rect_, context_provider_, transfer_buffer_,
-          kRGBABytesPerPixel * y_texture_size_.width(),
+          result_rect_, copy_request_->at_top(), context_provider_,
+          transfer_buffer_, kRGBABytesPerPixel * y_texture_size_.width(),
           kRGBABytesPerPixel * chroma_texture_size_.width()));
       transfer_buffer_ = 0;  // Ownership was transferred to the result.
     }

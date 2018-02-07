@@ -129,7 +129,8 @@ void NavigationEntryScreenshotManager::SetMinScreenshotIntervalMS(
 void NavigationEntryScreenshotManager::OnScreenshotTaken(
     int unique_id,
     const SkBitmap& bitmap,
-    ReadbackResponse response) {
+    ReadbackResponse response,
+    bool at_top) {
   NavigationEntryImpl* entry = owner_->GetEntryWithUniqueID(unique_id);
   if (!entry) {
     LOG(ERROR) << "Invalid entry with unique id: " << unique_id;

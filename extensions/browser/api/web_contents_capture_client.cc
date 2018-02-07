@@ -62,7 +62,8 @@ bool WebContentsCaptureClient::CaptureAsync(
 
 void WebContentsCaptureClient::CopyFromSurfaceComplete(
     const SkBitmap& bitmap,
-    content::ReadbackResponse response) {
+    content::ReadbackResponse response,
+    bool at_top) {
   if (response == content::READBACK_SUCCESS) {
     OnCaptureSuccess(bitmap);
     return;

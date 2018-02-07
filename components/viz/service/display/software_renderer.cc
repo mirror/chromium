@@ -603,7 +603,7 @@ void SoftwareRenderer::CopyDrawnRenderPass(
   // Note: The CopyOutputSkBitmapResult automatically provides I420 format
   // conversion, if needed.
   request->SendResult(std::make_unique<CopyOutputSkBitmapResult>(
-      result_format, result_rect, bitmap));
+      result_format, result_rect, bitmap, request->at_top()));
 }
 
 void SoftwareRenderer::SetEnableDCLayers(bool enable) {

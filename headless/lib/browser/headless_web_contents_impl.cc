@@ -615,7 +615,8 @@ void HeadlessWebContentsImpl::DidReceiveCompositorFrame() {
 void HeadlessWebContentsImpl::PendingFrameReadbackComplete(
     HeadlessWebContentsImpl::PendingFrame* pending_frame,
     const SkBitmap& bitmap,
-    content::ReadbackResponse response) {
+    content::ReadbackResponse response,
+    bool at_top) {
   TRACE_EVENT2(
       "headless", "HeadlessWebContentsImpl::PendingFrameReadbackComplete",
       "sequence_number", pending_frame->sequence_number, "response", response);

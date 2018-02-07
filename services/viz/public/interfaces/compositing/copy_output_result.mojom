@@ -21,6 +21,7 @@ enum CopyOutputResultFormat {
 struct CopyOutputResult {
   CopyOutputResultFormat format;
   gfx.mojom.Rect rect;
+  bool at_top;
 
   // Present when the format is RGBA_BITMAP.
   // If the result is empty, since Bitmap is nullable, |bitmap| will also not be

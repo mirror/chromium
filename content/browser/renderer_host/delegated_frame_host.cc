@@ -134,7 +134,7 @@ void DelegatedFrameHost::CopyFromCompositingSurface(
                          (preferred_color_type == kN32_SkColorType));
   DCHECK(format_support);
   if (!CanCopyFromCompositingSurface()) {
-    callback.Run(SkBitmap(), content::READBACK_SURFACE_UNAVAILABLE);
+    callback.Run(SkBitmap(), content::READBACK_SURFACE_UNAVAILABLE, false);
     return;
   }
 

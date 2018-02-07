@@ -34,6 +34,7 @@ void CopyFromCompositingSurfaceFinished(
     const content::ReadbackRequestCallback& callback,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback,
     std::unique_ptr<SkBitmap> bitmap,
+    bool at_top,
     bool result) {
   gpu::SyncToken sync_token;
   if (result) {
@@ -46,7 +47,8 @@ void CopyFromCompositingSurfaceFinished(
   release_callback->Run(sync_token, lost_resource);
 
   callback.Run(*bitmap,
-               result ? content::READBACK_SUCCESS : content::READBACK_FAILED);
+               result ? content::READBACK_SUCCESS : content::READBACK_FAILED,
+               at_top);
 }
 #endif
 
@@ -60,7 +62,7 @@ void PrepareTextureCopyOutputResult(
     const content::ReadbackRequestCallback& callback,
     std::unique_ptr<viz::CopyOutputResult> result) {
   base::ScopedClosureRunner scoped_callback_runner(
-      base::BindOnce(callback, SkBitmap(), content::READBACK_FAILED));
+      base::BindOnce(callback, SkBitmap(), content::READBACK_FAILED, false));
 
 #if defined(OS_ANDROID) && !defined(USE_AURA)
   // TODO(wjmaclean): See if there's an equivalent pathway for Android and
@@ -79,8 +81,9 @@ void PrepareTextureCopyOutputResult(
   if (!bitmap->tryAllocPixels(SkImageInfo::Make(
           dst_size_in_pixel.width(), dst_size_in_pixel.height(), color_type,
           kPremul_SkAlphaType))) {
-    scoped_callback_runner.ReplaceClosure(base::BindOnce(
-        callback, SkBitmap(), content::READBACK_BITMAP_ALLOCATION_FAILURE));
+    scoped_callback_runner.ReplaceClosure(
+        base::BindOnce(callback, SkBitmap(),
+                       content::READBACK_BITMAP_ALLOCATION_FAILURE, false));
     return;
   }
 
@@ -94,6 +97,7 @@ void PrepareTextureCopyOutputResult(
 
   gpu::Mailbox mailbox = result->GetTextureResult()->mailbox;
   gpu::SyncToken sync_token = result->GetTextureResult()->sync_token;
+  bool at_top = result->at_top();
   std::unique_ptr<viz::SingleReleaseCallback> release_callback =
       result->TakeTextureOwnership();
 
@@ -103,7 +107,8 @@ void PrepareTextureCopyOutputResult(
       mailbox, sync_token, result->size(), dst_size_in_pixel, pixels,
       color_type,
       base::Bind(&CopyFromCompositingSurfaceFinished, callback,
-                 base::Passed(&release_callback), base::Passed(&bitmap)),
+                 base::Passed(&release_callback), base::Passed(&bitmap),
+                 at_top),
       viz::GLHelper::SCALER_QUALITY_GOOD);
 #endif
 }
@@ -120,10 +125,11 @@ void PrepareBitmapCopyOutputResult(
   }
   const SkBitmap source = result->AsSkBitmap();
   if (!source.readyToDraw()) {
-    callback.Run(source, content::READBACK_FAILED);
+    callback.Run(source, content::READBACK_FAILED, false);
     return;
   }
   SkBitmap scaled_bitmap;
+  bool at_top = result->at_top();
   if (source.width() != dst_size_in_pixel.width() ||
       source.height() != dst_size_in_pixel.height()) {
     // TODO(miu): Delete this logic here and use the new
@@ -136,7 +142,7 @@ void PrepareBitmapCopyOutputResult(
   }
   if (color_type == kN32_SkColorType) {
     DCHECK_EQ(scaled_bitmap.colorType(), kN32_SkColorType);
-    callback.Run(scaled_bitmap, content::READBACK_SUCCESS);
+    callback.Run(scaled_bitmap, content::READBACK_SUCCESS, at_top);
     return;
   }
   DCHECK_EQ(color_type, kAlpha_8_SkColorType);
@@ -148,7 +154,8 @@ void PrepareBitmapCopyOutputResult(
   bool success = grayscale_bitmap.tryAllocPixels(
       SkImageInfo::MakeA8(scaled_bitmap.width(), scaled_bitmap.height()));
   if (!success) {
-    callback.Run(SkBitmap(), content::READBACK_BITMAP_ALLOCATION_FAILURE);
+    callback.Run(SkBitmap(), content::READBACK_BITMAP_ALLOCATION_FAILURE,
+                 false);
     return;
   }
   SkCanvas canvas(grayscale_bitmap);
@@ -156,7 +163,7 @@ void PrepareBitmapCopyOutputResult(
   SkPaint paint;
   paint.setColorFilter(SkLumaColorFilter::Make());
   canvas.drawBitmap(scaled_bitmap, SkIntToScalar(0), SkIntToScalar(0), &paint);
-  callback.Run(grayscale_bitmap, content::READBACK_SUCCESS);
+  callback.Run(grayscale_bitmap, content::READBACK_SUCCESS, at_top);
 }
 
 }  // namespace
@@ -200,7 +207,7 @@ void CopyFromCompositingSurfaceHasResult(
     const ReadbackRequestCallback& callback,
     std::unique_ptr<viz::CopyOutputResult> result) {
   if (result->IsEmpty()) {
-    callback.Run(SkBitmap(), READBACK_FAILED);
+    callback.Run(SkBitmap(), READBACK_FAILED, false);
     return;
   }
 
@@ -228,7 +235,7 @@ void CopyFromCompositingSurfaceHasResult(
     case viz::CopyOutputResult::Format::I420_PLANES:
       // No code path external to the VIZ component should have asked for this.
       NOTREACHED();
-      callback.Run(SkBitmap(), READBACK_FAILED);
+      callback.Run(SkBitmap(), READBACK_FAILED, false);
       break;
   }
 }
