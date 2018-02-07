@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "509a8445_7916139e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-07T02:22:22Z",
+      "side": 0,
+      "message": "This moved to (the only) call site.",
+      "revId": "5740ca8845ebcfc27713451766ad2dc1c5e8216b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
