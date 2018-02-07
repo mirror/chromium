@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c61702d_0e50a82c",
+        "filename": "ash/public/cpp/vector_icons/vector_icons.cc.template",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T18:31:05Z",
+      "side": 1,
+      "message": "nit: since this is uncommon I would comment that it\u0027s because of collisions with non-public ash resources. (Or is it because of non-namespaced chrome ones?)",
+      "revId": "98e6ebbfe998d3aaa41f84615cd37be23e71348e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55af8a45_ffbca751",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T18:31:05Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t need a //\n\nAlso, it might be more readable with blank lines above and below",
+      "revId": "98e6ebbfe998d3aaa41f84615cd37be23e71348e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

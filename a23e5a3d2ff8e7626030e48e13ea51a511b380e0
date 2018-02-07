@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "800bb7e9_f65c4eef",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T18:31:05Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "a6d37502_80f2c71f",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "121f04f4_829dc739",
         "filename": "components/vector_icons/forward_arrow.icon",
         "patchSetId": 2
