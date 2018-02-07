@@ -22,6 +22,7 @@
 #include "components/exo/sub_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/xdg_shell_surface.h"
+#include "ui/gfx/linux/client_native_pixmap_factory_dmabuf.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
@@ -65,7 +66,8 @@ Display::Display(NotificationSurfaceManager* notification_surface_manager,
       file_helper_(std::move(file_helper))
 #if defined(USE_OZONE)
       ,
-      overlay_formats_(std::begin(kOverlayFormats), std::end(kOverlayFormats))
+      overlay_formats_(std::begin(kOverlayFormats), std::end(kOverlayFormats)),
+      pixmap_factory_(gfx::CreateClientNativePixmapFactoryDmabuf())
 #endif
 {
 #if defined(USE_OZONE)
@@ -116,7 +118,8 @@ std::unique_ptr<Buffer> Display::CreateLinuxDMABufBuffer(
 
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer =
       gpu::GpuMemoryBufferImplNativePixmap::CreateFromHandle(
-          handle, size, format, gfx::BufferUsage::GPU_READ,
+          pixmap_factory_.get(), handle, size, format,
+          gfx::BufferUsage::GPU_READ,
           gpu::GpuMemoryBufferImpl::DestructionCallback());
   if (!gpu_memory_buffer) {
     LOG(ERROR) << "Failed to create GpuMemoryBuffer from handle";

@@ -15,6 +15,7 @@
 
 #include "base/bind.h"
 #include "build/build_config.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
 
@@ -67,6 +68,8 @@ TYPED_TEST_CASE_P(GpuMemoryBufferImplTest);
 TYPED_TEST_P(GpuMemoryBufferImplTest, CreateFromHandle) {
   const gfx::Size kBufferSize(8, 8);
 
+  GpuMemoryBufferImplFactory factory;
+
   for (auto format : gfx::GetBufferFormatsForTesting()) {
     gfx::BufferUsage usages[] = {
         gfx::BufferUsage::GPU_READ,
@@ -77,7 +80,8 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, CreateFromHandle) {
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
     for (auto usage : usages) {
-      if (!TypeParam::IsConfigurationSupported(format, usage))
+      if (!factory.IsConfigurationSupported(TypeParam::kBufferType, format,
+                                            usage))
         continue;
 
       bool destroyed = false;
@@ -85,7 +89,7 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, CreateFromHandle) {
       GpuMemoryBufferImpl::DestructionCallback destroy_callback =
           TestFixture::CreateGpuMemoryBuffer(kBufferSize, format, usage,
                                              &handle, &destroyed);
-      std::unique_ptr<TypeParam> buffer(TypeParam::CreateFromHandle(
+      std::unique_ptr<GpuMemoryBufferImpl> buffer(factory.CreateFromHandle(
           handle, kBufferSize, format, usage, destroy_callback));
       ASSERT_TRUE(buffer);
       EXPECT_EQ(buffer->GetFormat(), format);
@@ -101,9 +105,12 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, Map) {
   // Use a multiple of 4 for both dimensions to support compressed formats.
   const gfx::Size kBufferSize(4, 4);
 
+  GpuMemoryBufferImplFactory factory;
+
   for (auto format : gfx::GetBufferFormatsForTesting()) {
-    if (!TypeParam::IsConfigurationSupported(
-            format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE)) {
+    if (!factory.IsConfigurationSupported(
+            TypeParam::kBufferType, format,
+            gfx::BufferUsage::GPU_READ_CPU_READ_WRITE)) {
       continue;
     }
 
@@ -112,7 +119,7 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, Map) {
         TestFixture::CreateGpuMemoryBuffer(
             kBufferSize, format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
             &handle, nullptr);
-    std::unique_ptr<TypeParam> buffer(TypeParam::CreateFromHandle(
+    std::unique_ptr<GpuMemoryBufferImpl> buffer(factory.CreateFromHandle(
         handle, kBufferSize, format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
         destroy_callback));
     ASSERT_TRUE(buffer);
@@ -151,9 +158,12 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, PersistentMap) {
   // Use a multiple of 4 for both dimensions to support compressed formats.
   const gfx::Size kBufferSize(4, 4);
 
+  GpuMemoryBufferImplFactory factory;
+
   for (auto format : gfx::GetBufferFormatsForTesting()) {
-    if (!TypeParam::IsConfigurationSupported(
-            format, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT)) {
+    if (!factory.IsConfigurationSupported(
+            TypeParam::kBufferType, format,
+            gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT)) {
       continue;
     }
 
@@ -163,7 +173,7 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, PersistentMap) {
             kBufferSize, format,
             gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT, &handle,
             nullptr);
-    std::unique_ptr<TypeParam> buffer(TypeParam::CreateFromHandle(
+    std::unique_ptr<GpuMemoryBufferImpl> buffer(factory.CreateFromHandle(
         handle, kBufferSize, format,
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT,
         destroy_callback));
@@ -233,13 +243,16 @@ TYPED_TEST_P(GpuMemoryBufferImplCreateTest, Create) {
   const gfx::Size kBufferSize(8, 8);
   gfx::BufferUsage usage = gfx::BufferUsage::GPU_READ;
 
+  GpuMemoryBufferImplFactory factory;
+
   for (auto format : gfx::GetBufferFormatsForTesting()) {
-    if (!TypeParam::IsConfigurationSupported(format, usage))
+    if (!factory.IsConfigurationSupported(TypeParam::kBufferType, format,
+                                          usage))
       continue;
     bool destroyed = false;
     gfx::GpuMemoryBufferHandle handle;
-    std::unique_ptr<TypeParam> buffer(TypeParam::Create(
-        kBufferId, kBufferSize, format, usage,
+    std::unique_ptr<GpuMemoryBufferImpl> buffer(factory.Create(
+        TypeParam::kBufferType, kBufferId, kBufferSize, format, usage,
         base::Bind(
             [](bool* destroyed, const gpu::SyncToken&) { *destroyed = true; },
             base::Unretained(&destroyed))));

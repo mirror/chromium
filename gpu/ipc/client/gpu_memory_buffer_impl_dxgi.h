@@ -22,15 +22,15 @@ class GPU_EXPORT GpuMemoryBufferImplDXGI : public GpuMemoryBufferImpl {
  public:
   ~GpuMemoryBufferImplDXGI() override;
 
+  static constexpr gfx::GpuMemoryBufferType kBufferType =
+      gfx::DXGI_SHARED_HANDLE;
+
   static std::unique_ptr<GpuMemoryBufferImplDXGI> CreateFromHandle(
       const gfx::GpuMemoryBufferHandle& handle,
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       const DestructionCallback& callback);
-
-  static bool IsConfigurationSupported(gfx::BufferFormat format,
-                                       gfx::BufferUsage usage);
 
   static base::Closure AllocateForTesting(const gfx::Size& size,
                                           gfx::BufferFormat format,

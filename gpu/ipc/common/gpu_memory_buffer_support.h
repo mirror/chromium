@@ -5,20 +5,50 @@
 #ifndef GPU_IPC_COMMON_GPU_MEMORY_BUFFER_SUPPORT_H_
 #define GPU_IPC_COMMON_GPU_MEMORY_BUFFER_SUPPORT_H_
 
+#include "base/macros.h"
+#include "build/build_config.h"
 #include "gpu/gpu_export.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 
+#if defined(OS_LINUX) || defined(USE_OZONE)
+namespace gfx {
+class ClientNativePixmapFactory;
+}
+#endif
+
 namespace gpu {
 
-// Returns the native GPU memory buffer factory type. Returns EMPTY_BUFFER
-// type if native buffers are not supported.
-GPU_EXPORT gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType();
+class GPU_EXPORT GpuMemoryBufferSupport {
+ public:
+  GpuMemoryBufferSupport();
+#if defined(OS_LINUX) || defined(USE_OZONE)
+  GpuMemoryBufferSupport(
+      std::unique_ptr<gfx::ClientNativePixmapFactory> pixmap_factory);
+#endif
+  ~GpuMemoryBufferSupport();
 
-// Returns whether the provided buffer format is supported.
-GPU_EXPORT bool IsNativeGpuMemoryBufferConfigurationSupported(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage);
+  // Returns the native GPU memory buffer factory type. Returns EMPTY_BUFFER
+  // type if native buffers are not supported.
+  gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType();
+
+  // Returns whether the provided buffer format is supported.
+  bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
+                                                     gfx::BufferUsage usage);
+
+#if defined(OS_LINUX) || defined(USE_OZONE)
+  gfx::ClientNativePixmapFactory* pixmap_factory() {
+    return pixmap_factory_.get();
+  }
+#endif
+
+ private:
+#if defined(OS_LINUX) || defined(USE_OZONE)
+  std::unique_ptr<gfx::ClientNativePixmapFactory> pixmap_factory_;
+#endif
+
+  DISALLOW_COPY_AND_ASSIGN(GpuMemoryBufferSupport);
+};
 
 }  // namespace gpu
 
