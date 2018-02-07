@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "772c9916_2b18cc0c",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:52:37Z",
+      "side": 1,
+      "message": "Please add a comment for version 10.",
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "130ff6b8_657bb041",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
@@ -43,6 +60,47 @@
         "endLine": 452,
         "endChar": 35
       },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3030c270_f19ee418",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:52:37Z",
+      "side": 1,
+      "message": "First criterion: the index can be used to accelerate (index scan vs table scan) queries with WHERE clauses that cover a prefix of its fields. The current field ordering could serve queries with a WHERE consisting of name, of name and host_key (but not just host_key), and of name, host_key, and path.\n\nI suspect that (host_key, name, path) would be the best ordering, because that index could be used to return all cookies for a given host and all cookies with a given name for a given host. \n\nSecond criterion: Randy\u0027s intuition is correct -- more randomness early on in the key will result in comparisons exiting sooner, and slightly better performance. The differences will be tiny, so we should think of current / future queries, and tailor the index accordingly.\n\nAssuming the cookies database is only used in this file, it\u0027s not too hard to go through and understand all the query patterns. Let me know if you\u0027d like me to do that analysis.",
+      "parentUuid": "cde3582a_2d04f0db",
+      "range": {
+        "startLine": 452,
+        "startChar": 31,
+        "endLine": 452,
+        "endChar": 35
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338b361f_6a877edb",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:52:37Z",
+      "side": 1,
+      "message": "The indexes being dropped aren\u0027t re-created. Is this intentional?\n\nSame comment about query pattern analysis as above.",
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +151,23 @@
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eb7201_ccbee4de",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-07T21:52:37Z",
+      "side": 1,
+      "message": "I really like that you have this test!",
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
