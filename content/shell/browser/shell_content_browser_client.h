@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "build/build_config.h"
@@ -65,10 +66,15 @@ class ShellContentBrowserClient : public ContentBrowserClient {
       override;
   net::NetLog* GetNetLog() override;
   DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
-
   void OpenURL(BrowserContext* browser_context,
                const OpenURLParams& params,
                const base::Callback<void(WebContents*)>& callback) override;
+  ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      bool is_main_frame,
+      const GURL& url,
+      bool first_auth_attempt) override;
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   void GetAdditionalMappedFilesForChildProcess(
@@ -99,6 +105,10 @@ class ShellContentBrowserClient : public ContentBrowserClient {
       base::Callback<bool(const service_manager::Identity&)> callback) {
     should_terminate_on_service_quit_callback_ = callback;
   }
+  void set_login_request_callback(
+      base::Callback<void()> login_request_callback) {
+    login_request_callback_ = login_request_callback;
+  }
 
  protected:
   virtual void ExposeInterfacesToFrame(
@@ -121,6 +131,7 @@ class ShellContentBrowserClient : public ContentBrowserClient {
   base::Closure select_client_certificate_callback_;
   base::Callback<bool(const service_manager::Identity&)>
       should_terminate_on_service_quit_callback_;
+  base::Callback<void()> login_request_callback_;
 
   std::unique_ptr<
       service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>>

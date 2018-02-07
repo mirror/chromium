@@ -9,6 +9,7 @@
 #include "base/files/file.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/supports_user_data.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -233,6 +234,14 @@ class SSLPrivateKeyInternal : public net::SSLPrivateKey {
   DISALLOW_COPY_AND_ASSIGN(SSLPrivateKeyInternal);
 };
 
+const char* kAuthAttemptsKey = "url_loader_auth_attempts";
+
+class UrlRequestAuthAttemptsData : public base::SupportsUserData::Data {
+ public:
+  UrlRequestAuthAttemptsData() : auth_attempts_(0) {}
+  int auth_attempts_;
+};
+
 }  // namespace
 
 URLLoader::URLLoader(
@@ -406,8 +415,27 @@ void URLLoader::OnReceivedRedirect(net::URLRequest* url_request,
 
 void URLLoader::OnAuthRequired(net::URLRequest* unused,
                                net::AuthChallengeInfo* auth_info) {
-  NOTIMPLEMENTED() << "http://crbug.com/756654";
-  net::URLRequest::Delegate::OnAuthRequired(unused, auth_info);
+  if (!network_service_client_) {
+    net::AuthCredentials credentials;
+    OnAuthRequiredResponse(credentials);
+    return;
+  }
+
+  UrlRequestAuthAttemptsData* count = static_cast<UrlRequestAuthAttemptsData*>(
+      url_request_->GetUserData(kAuthAttemptsKey));
+
+  if (count == NULL) {
+    count = new UrlRequestAuthAttemptsData();
+    url_request_->SetUserData(kAuthAttemptsKey, base::WrapUnique(count));
+  }
+
+  network_service_client_->OnAuthRequired(
+      process_id_, render_frame_id_, url_request_->url(),
+      (count->auth_attempts_ == 0), auth_info,
+      base::BindOnce(&URLLoader::OnAuthRequiredResponse,
+                     weak_ptr_factory_.GetWeakPtr()));
+
+  count->auth_attempts_++;
 }
 
 void URLLoader::OnCertificateRequested(net::URLRequest* unused,
@@ -747,6 +775,18 @@ void URLLoader::OnCertificateRequestedResponse(
     } else {
       url_request_->ContinueWithCertificate(nullptr, nullptr);
     }
+  }
+}
+
+void URLLoader::OnAuthRequiredResponse(
+    const net::AuthCredentials& credentials) {
+  if (!url_request_)
+    return;
+
+  if (credentials.Empty()) {
+    url_request_->CancelAuth();
+  } else {
+    url_request_->SetAuth(credentials);
   }
 }
 

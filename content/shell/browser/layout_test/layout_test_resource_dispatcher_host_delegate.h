@@ -18,11 +18,6 @@ class LayoutTestResourceDispatcherHostDelegate
   LayoutTestResourceDispatcherHostDelegate();
   ~LayoutTestResourceDispatcherHostDelegate() override;
 
-  // ResourceDispatcherHostDelegate implementation.
-  ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
-      net::AuthChallengeInfo* auth_info,
-      net::URLRequest* request) override;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(LayoutTestResourceDispatcherHostDelegate);
 };

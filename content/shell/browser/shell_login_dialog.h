@@ -20,7 +20,6 @@ class ShellLoginDialogHelper;
 
 namespace net {
 class AuthChallengeInfo;
-class URLRequest;
 }
 
 namespace content {
@@ -30,7 +29,7 @@ namespace content {
 class ShellLoginDialog : public ResourceDispatcherHostLoginDelegate {
  public:
   // Threading: IO thread.
-  ShellLoginDialog(net::AuthChallengeInfo* auth_info, net::URLRequest* request);
+  ShellLoginDialog(net::AuthChallengeInfo* auth_info);
 
   // ResourceDispatcherHostLoginDelegate implementation:
   // Threading: IO thread.
@@ -70,14 +69,6 @@ class ShellLoginDialog : public ResourceDispatcherHostLoginDelegate {
   void SendAuthToRequester(bool success,
                            const base::string16& username,
                            const base::string16& password);
-
-  // Who/where/what asked for the authentication.
-  // Threading: IO thread.
-  scoped_refptr<net::AuthChallengeInfo> auth_info_;
-
-  // The request that wants login data.
-  // Threading: IO thread.
-  net::URLRequest* request_;
 
 #if defined(OS_MACOSX)
   // Threading: UI thread.

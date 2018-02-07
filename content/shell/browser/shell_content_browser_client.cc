@@ -32,6 +32,7 @@
 #include "content/shell/browser/shell_browser_context.h"
 #include "content/shell/browser/shell_browser_main_parts.h"
 #include "content/shell/browser/shell_devtools_manager_delegate.h"
+#include "content/shell/browser/shell_login_dialog.h"
 #include "content/shell/browser/shell_net_log.h"
 #include "content/shell/browser/shell_quota_permission_context.h"
 #include "content/shell/browser/shell_resource_dispatcher_host_delegate.h"
@@ -346,6 +347,27 @@ void ShellContentBrowserClient::OpenURL(
                                       params.url,
                                       nullptr,
                                       gfx::Size())->web_contents());
+}
+
+ResourceDispatcherHostLoginDelegate*
+ShellContentBrowserClient::CreateLoginDelegate(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool is_main_frame,
+    const GURL& url,
+    bool first_auth_attempt) {
+  if (!login_request_callback_.is_null()) {
+    login_request_callback_.Run();
+    login_request_callback_.Reset();
+    return nullptr;
+  }
+
+#if !defined(OS_MACOSX)
+  // TODO: implement ShellLoginDialog for other platforms, drop this #if
+  return nullptr;
+#else
+  return new ShellLoginDialog(auth_info);
+#endif
 }
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)

@@ -5,8 +5,6 @@
 #ifndef CONTENT_SHELL_BROWSER_SHELL_RESOURCE_DISPATCHER_HOST_DELEGATE_H_
 #define CONTENT_SHELL_BROWSER_SHELL_RESOURCE_DISPATCHER_HOST_DELEGATE_H_
 
-#include "base/callback.h"
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 
@@ -18,20 +16,7 @@ class ShellResourceDispatcherHostDelegate
   ShellResourceDispatcherHostDelegate();
   ~ShellResourceDispatcherHostDelegate() override;
 
-  // ResourceDispatcherHostDelegate implementation.
-  ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
-      net::AuthChallengeInfo* auth_info,
-      net::URLRequest* request) override;
-
-  // Used for content_browsertests.
-  void set_login_request_callback(
-      base::Callback<void()> login_request_callback) {
-    login_request_callback_ = login_request_callback;
-  }
-
  private:
-  base::Callback<void()> login_request_callback_;
-
   DISALLOW_COPY_AND_ASSIGN(ShellResourceDispatcherHostDelegate);
 };
 

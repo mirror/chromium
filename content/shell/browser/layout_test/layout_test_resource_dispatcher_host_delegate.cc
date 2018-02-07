@@ -17,10 +17,4 @@ LayoutTestResourceDispatcherHostDelegate::
     ~LayoutTestResourceDispatcherHostDelegate() {
 }
 
-ResourceDispatcherHostLoginDelegate*
-LayoutTestResourceDispatcherHostDelegate::CreateLoginDelegate(
-    net::AuthChallengeInfo* auth_info, net::URLRequest* request) {
-  return nullptr;
-}
-
 }  // namespace content

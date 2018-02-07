@@ -403,9 +403,14 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool ShouldPermitIndividualAttestationForWebauthnRPID(
       content::BrowserContext* browser_context,
       const std::string& rp_id) override;
-
   std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       content::ResourceContext* resource_context) override;
+  content::ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      bool is_main_frame,
+      const GURL& url,
+      bool first_auth_attempt) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
