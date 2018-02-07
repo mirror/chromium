@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b9c2fb_b248176a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSProtoConverter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2018-02-07T01:06:09Z",
+      "side": 1,
+      "message": "I don\u0027t understand how the proto fuzzer works.  Are you sure INVALID_NAME isn\u0027t required to be last (here and in CSS.proto)?",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 14
+      },
+      "revId": "fe3b2d972f9633033b70760640c0c40370a19772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
