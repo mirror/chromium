@@ -73,7 +73,8 @@ class ShelfWidget::DelegateView : public views::WidgetDelegate,
     default_last_focusable_child_ = default_last_focusable_child;
   }
 
-  // views::WidgetDelegateView:
+  // views::WidgetDelegate:
+  void DeleteDelegate() override { delete this; }
   views::Widget* GetWidget() override { return View::GetWidget(); }
   const views::Widget* GetWidget() const override { return View::GetWidget(); }
 
@@ -106,6 +107,8 @@ ShelfWidget::DelegateView::DelegateView(ShelfWidget* shelf_widget)
       focus_cycler_(nullptr),
       opaque_background_(ui::LAYER_SOLID_COLOR) {
   DCHECK(shelf_widget_);
+  set_owned_by_client();  // Deleted by DeleteDelegate().
+
   SetLayoutManager(std::make_unique<views::FillLayout>());
   set_allow_deactivate_on_esc(true);
   opaque_background_.SetBounds(GetLocalBounds());
