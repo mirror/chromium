@@ -16,6 +16,29 @@
       "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980cac37_8c44d182",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 11185,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-07T11:06:40Z",
+      "side": 1,
+      "message": "A long long time ago we agreed that all time period policies will use milliseconds regardless how ridiculous that might be for some of them. I would rather stick to that for this policy too. Alternatively some policies have decided to go with an enum of some \"sane\" values e.g. 8h, 1day 7days etc but I personally prefer the more flexible option of specifying themselves one. Just make sure the minimum and maximum values are updated accordingly.",
+      "range": {
+        "startLine": 11185,
+        "startChar": 53,
+        "endLine": 11185,
+        "endChar": 68
+      },
+      "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
