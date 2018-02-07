@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78fb3db_4bc1866b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabLayoutManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-02-07T17:24:54Z",
+      "side": 0,
+      "message": "Do we lose anything by removing this simplified path? The version that\u0027s now in LayoutManager looks more comprehensive but has more indirection. Mostly I\u0027m interested in those last few params in onTabCreated being of any value.",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 87
+      },
+      "revId": "782ba02c2ff9179a8f9800e866b086719ccaf8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
