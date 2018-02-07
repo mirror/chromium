@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e058712_0c8b8ac0",
+        "filename": "components/toolbar/vector_icons/vector_icons.cc.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T18:21:28Z",
+      "side": 1,
+      "message": "it would make sense to use that prefix here but it isn\u0027t strictly necessary if the ID isn\u0027t going to be used for anything.",
+      "parentUuid": "7142d618_ff5aa7e5",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "675c4ef7_72c93609",
         "filename": "components/vector_icons/cc_macros.h",
         "patchSetId": 2
@@ -100,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "a6d37502_80f2c71f",
+        "filename": "components/vector_icons/cc_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T18:21:28Z",
+      "side": 1,
+      "message": "The prefix can be anything, although it usually makes sense to match the namespace and doing so should make sure there aren\u0027t ID collisions. The problems I run into if I call this VECTOR_ICON_NAMESPACE is that:\n\na) then I want the header to define:\n\n  #define VECTOR_ICON_NAMESPACE ash\n\nBut we need it to be \"ash\", i.e. a string, unless we want an extra layer of macros here to handle stringification.[1]\n\nb) it falsely implies that it has to match the namespace used in the file (i.e. that that\u0027s enforced)\n\nc) it makes me want to bring the rest of the boilerplate into this file, i.e. the part that goes\n\n  namespace foo {\n  TEMPLATE_PLACEHOLDER\n  }\n\nbut sadly, I can\u0027t, because TEMPLATE_PLACEHOLDER is replaced in a step before the pre-processor.\n\nd) in some cases we might want to be even more specific than the namespace or there might not be a namespace (e.g. the ash public vector icons which share a namespace with the internal ones or the chrome/ vector icons that have no namespace)\n\n[1] https://gcc.gnu.org/onlinedocs/gcc-4.1.2/cpp/Stringification.html",
+      "parentUuid": "b9fb14c2_8db142ae",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "121f04f4_829dc739",
         "filename": "components/vector_icons/forward_arrow.icon",
         "patchSetId": 2
@@ -111,6 +147,24 @@
       "writtenOn": "2018-02-06T22:19:45Z",
       "side": 1,
       "message": "Q: Why do these assets change in this CL?",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a600e63a_0e3c027d",
+        "filename": "components/vector_icons/forward_arrow.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T18:21:28Z",
+      "side": 1,
+      "message": "I have no idea how this change happened. Reverted.",
+      "parentUuid": "121f04f4_829dc739",
       "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "d9db55ae_d33d166d",
+        "filename": "ui/gfx/vector_icon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T18:21:28Z",
+      "side": 1,
+      "message": "done. Hopefully the TODOs around END make it clear why both exist.",
+      "parentUuid": "97c05a59_3bcfe95f",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0304f330_fce59ef7",
         "filename": "ui/gfx/vector_icon_types.h",
         "patchSetId": 2
@@ -148,6 +220,24 @@
       "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f06d77_9d937e55",
+        "filename": "ui/gfx/vector_icon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-07T18:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0304f330_fce59ef7",
+      "revId": "a23e5a3d2ff8e7626030e48e13ea51a511b380e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
