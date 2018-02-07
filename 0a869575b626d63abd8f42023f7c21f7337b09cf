@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13275991_e7f70d1a",
+        "filename": "base/win/scoped_handle_verifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae97a72_fbf77633",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94cddfd_32b0407c",
         "filename": "base/win/scoped_handle_verifier.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca37270_81fe6a2d",
+        "filename": "base/win/scoped_handle_verifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94cddfd_32b0407c",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "65f1edc8_897501e5",
+        "filename": "base/win/scoped_handle_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf53b1b9_52f2f153",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e292e10_b483c592",
         "filename": "base/win/scoped_handle_verifier.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbaa5b4_5a31ee84",
+        "filename": "base/win/scoped_handle_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e292e10_b483c592",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f23a942_95190c40",
+        "filename": "base/win/scoped_handle_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "383c2f42_44acaf33",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfd400ce_6a86db49",
         "filename": "base/win/scoped_handle_verifier.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f27f7d_c695dceb",
+        "filename": "base/win/scoped_handle_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfd400ce_6a86db49",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "34c697b6_79a375ea",
+        "filename": "base/win/scoped_handle_verifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e54dcab_6ca8f501",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7756c6cd_5ec78562",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816101c1_ef015288",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2018-02-07T23:38:59Z",
+      "side": 1,
+      "message": "Yes, we can! I\u0027ve modified the code to do so.",
+      "parentUuid": "7756c6cd_5ec78562",
+      "range": {
+        "startLine": 1197,
+        "startChar": 6,
+        "endLine": 1197,
+        "endChar": 15
+      },
+      "revId": "0a869575b626d63abd8f42023f7c21f7337b09cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
