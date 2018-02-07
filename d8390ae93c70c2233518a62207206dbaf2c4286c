@@ -22,6 +22,30 @@
       "revId": "d8390ae93c70c2233518a62207206dbaf2c4286c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04f4da6_68372b92",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T20:26:00Z",
+      "side": 1,
+      "message": "FWIW, I spoke with bettes@ and mentioned this, and he was clear that all our buttons should be consistent (although he has not responded on the email thread yet). I suggest either pinging the thread, or removing this change for now (we are going to convert all buttons to non uppercase sometime soon anyway).",
+      "parentUuid": "f8c1e968_7a4aedfe",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "d8390ae93c70c2233518a62207206dbaf2c4286c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
