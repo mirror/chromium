@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3164a23a_b804ff7c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:49:24Z",
+      "side": 1,
+      "message": "Do we need to expose HasUnmatchedSurrogates?",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1319830c_aaae0812",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
         "patchSetId": 3
@@ -13,6 +30,24 @@
       "writtenOn": "2018-02-07T04:15:58Z",
       "side": 1,
       "message": "Can we move these methods to WTFString.h?",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbcfb21_2212d997",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:49:24Z",
+      "side": 1,
+      "message": "Hmm, USVString is a concept defined in Web IDL, and bindings layer is supposed to support Web IDL concepts while WTF layer is supposed to provide much more fundamental things.\n\nHaving said that, moving this into WTF doesn\u0027t sound that strange, so I\u0027m on the fence.  But I\u0027d say it\u0027s still reasonable to have this here.",
+      "parentUuid": "1319830c_aaae0812",
       "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
