@@ -25,6 +25,10 @@ class PublicKeyCredentialParams {
   ~PublicKeyCredentialParams();
 
   cbor::CBORValue ConvertToCBOR() const;
+  const std::vector<std::tuple<std::string, int>>&
+  public_key_credential_params() const {
+    return public_key_credential_params_;
+  }
 
  private:
   std::vector<std::tuple<std::string, int>> public_key_credential_params_;

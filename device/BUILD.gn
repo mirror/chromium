@@ -74,6 +74,7 @@ test("device_unittests") {
     "fido/u2f_discovery_unittest.cc",
     "fido/u2f_register_unittest.cc",
     "fido/u2f_request_unittest.cc",
+    "fido/u2f_sign_param_unittest.cc",
     "fido/u2f_sign_unittest.cc",
     "gamepad/abstract_haptic_gamepad_unittest.cc",
     "gamepad/gamepad_provider_unittest.cc",

@@ -116,7 +116,7 @@ TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
       .SetDisplayName("John P. Smith")
       .SetIconUrl(GURL("https://pics.acme.com/00/p/aBjjjpqPb.png"));
 
-  CTAPMakeCredentialRequestParam make_credential_param(
+  CtapMakeCredentialRequestParam make_credential_param(
       std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)),
       std::move(rp), std::move(user),
       PublicKeyCredentialParams({{"public-key", 7}, {"public-key", 257}}));
@@ -196,7 +196,7 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
       // clang-format on
   };
 
-  CTAPGetAssertionRequestParam get_assertion_req(
+  CtapGetAssertionRequestParam get_assertion_req(
       "acme.com",
       std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)));
 

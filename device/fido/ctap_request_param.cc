@@ -6,7 +6,24 @@
 
 namespace device {
 
-CTAPRequestParam::CTAPRequestParam() = default;
-CTAPRequestParam::~CTAPRequestParam() = default;
+CtapRequestParam::CtapRequestParam() = default;
+CtapRequestParam::~CtapRequestParam() = default;
+
+bool CtapRequestParam::CheckU2fInteropCriteria() const {
+  return false;
+}
+
+std::vector<uint8_t> CtapRequestParam::GetU2fApplicationParameter() const {
+  return std::vector<uint8_t>();
+}
+
+std::vector<uint8_t> CtapRequestParam::GetU2fChallengeParameter() const {
+  return std::vector<uint8_t>();
+}
+
+std::vector<std::vector<uint8_t>>
+CtapRequestParam::GetU2fRegisteredKeysParameter() const {
+  return std::vector<std::vector<uint8_t>>();
+}
 
 }  // namespace device

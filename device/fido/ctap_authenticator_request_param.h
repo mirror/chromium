@@ -19,7 +19,7 @@ namespace device {
 // Represents CTAP requests with empty parameters, including
 // AuthenticatorGetInfo, AuthenticatorCancel, AuthenticatorReset and
 // AuthenticatorGetNextAssertion commands.
-class CTAPAuthenticatorRequestParam : public CTAPRequestParam {
+class CTAPAuthenticatorRequestParam : public CtapRequestParam {
  public:
   static CTAPAuthenticatorRequestParam CreateGetInfoParam();
   static CTAPAuthenticatorRequestParam CreateGetNextAssertionParam();
