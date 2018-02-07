@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a36588_49cb7baf",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:41:52Z",
+      "side": 0,
+      "message": "Delete this function and implementations in this CL too?",
+      "revId": "4f455a2cf3ded0690a2131af68ae2a9f6613af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ff29d6_785d3268",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:41:52Z",
+      "side": 0,
+      "message": "What\u0027s hitting this check? I wouldn\u0027t expect this to change.",
+      "revId": "4f455a2cf3ded0690a2131af68ae2a9f6613af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
