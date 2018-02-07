@@ -13,6 +13,8 @@
 #include <memory>
 #include <set>
 
+#include <iostream>
+
 #include "base/auto_reset.h"
 #include "base/i18n/encoding_detection.h"
 #include "base/i18n/icu_string_conversions.h"
@@ -2674,7 +2676,19 @@ pp::VarDictionary PDFiumEngine::TraverseBookmarks(FPDF_BOOKMARK bookmark,
 
   FPDF_DEST dest = FPDFBookmark_GetDest(doc_, bookmark);
   // Some bookmarks don't have a page to select.
+  std::cerr << "TraverseBookmarks " << title << std::endl;
   if (dest) {
+    PDFEngine::NamedDestination result;
+    std::cerr << "  there is a dest" << std::endl;
+    unsigned long viewInt =
+        FPDFDest_GetView(dest, &result.num_params, result.params);
+    result.view = ConvertViewIntToView(viewInt);
+    std::cerr << "  and its view is " << result.view << std::endl;
+    std::cerr << "  and its numParams is " << result.num_params << std::endl;
+    std::cerr << "  and the params are" << std::endl;
+    for (unsigned long i = 0; i < result.num_params; ++i)
+      std::cerr << "    " << result.params[i] << std::endl;
+
     unsigned long page_index = FPDFDest_GetPageIndex(doc_, dest);
     if (page_index < pages_.size() &&
         base::IsValueInRangeForNumericType<int32_t>(page_index)) {
