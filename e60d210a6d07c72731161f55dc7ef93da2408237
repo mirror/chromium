@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afd11c5c_52a0b944",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T21:58:01Z",
+      "side": 1,
+      "message": "For a static like this, we probably want to use base::NoDestructor so it\u0027s not destroyed on shutdown? I don\u0027t think it matters here, as the destructor doesn\u0027t do anything? But good form in case it changes?\n\nBut using a static seems like less code every time we try to use this class so that looks good.",
+      "revId": "e60d210a6d07c72731161f55dc7ef93da2408237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
