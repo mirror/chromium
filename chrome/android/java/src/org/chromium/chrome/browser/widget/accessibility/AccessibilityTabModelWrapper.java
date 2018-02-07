@@ -20,7 +20,7 @@ import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.util.FeatureUtilities;
-import org.chromium.chrome.browser.widget.TintedDrawable;
+import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.accessibility.AccessibilityTabModelAdapter.AccessibilityTabModelAdapterListener;
 
 /**
@@ -38,8 +38,8 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
     private TabLayout mModernStackButtonWrapper;
     private TabLayout.Tab mModernStandardButton;
     private TabLayout.Tab mModernIncognitoButton;
-    private TintedDrawable mModernStandardButtonIcon;
-    private TintedDrawable mModernIncognitoButtonIcon;
+    private TintedImageView mModernStandardButtonIcon;
+    private TintedImageView mModernIncognitoButtonIcon;
 
     private ColorStateList mTabIconDarkColor;
     private ColorStateList mTabIconLightColor;
@@ -107,10 +107,12 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
                     ApiCompatibilityUtils.getColorStateList(getResources(), R.color.white_alpha_70);
             mTabIconSelectedLightColor = ApiCompatibilityUtils.getColorStateList(
                     getResources(), R.color.white_mode_tint);
-            mModernStandardButtonIcon = TintedDrawable.constructTintedDrawable(
-                    getResources(), R.drawable.btn_normal_tabs);
-            mModernIncognitoButtonIcon = TintedDrawable.constructTintedDrawable(
-                    getResources(), R.drawable.btn_incognito_tabs);
+            mModernStandardButtonIcon = new TintedImageView(getContext());
+            mModernStandardButtonIcon.setImageResource(R.drawable.btn_normal_tabs);
+            mModernStandardButtonIcon.setScaleY(-1.0f);
+            mModernIncognitoButtonIcon = new TintedImageView(getContext());
+            mModernIncognitoButtonIcon.setImageResource(R.drawable.btn_incognito_tabs);
+            mModernIncognitoButtonIcon.setScaleY(-1.0f);
 
             setDividerDrawable(null);
             ((ListView) findViewById(R.id.list_view)).setDivider(null);
@@ -119,13 +121,13 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
             mModernStackButtonWrapper = findViewById(R.id.tab_layout);
             mModernStandardButton =
                     mModernStackButtonWrapper.newTab()
-                            .setIcon(mModernStandardButtonIcon)
+                            .setCustomView(mModernStandardButtonIcon)
                             .setContentDescription(
                                     R.string.accessibility_tab_switcher_standard_stack);
             mModernStackButtonWrapper.addTab(mModernStandardButton);
             mModernIncognitoButton =
                     mModernStackButtonWrapper.newTab()
-                            .setIcon(mModernIncognitoButtonIcon)
+                            .setCustomView(mModernIncognitoButtonIcon)
                             .setContentDescription(
                                     R.string.accessibility_tab_switcher_incognito_stack);
             mModernStackButtonWrapper.addTab(mModernIncognitoButton);
