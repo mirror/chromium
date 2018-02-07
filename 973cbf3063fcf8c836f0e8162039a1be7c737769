@@ -22,6 +22,30 @@
       "revId": "973cbf3063fcf8c836f0e8162039a1be7c737769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc1e5b9_590db105",
+        "filename": "extensions/browser/extension_function_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba1525d_2960c4c7",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "973cbf3063fcf8c836f0e8162039a1be7c737769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
