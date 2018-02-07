@@ -96,7 +96,7 @@
                type="chrome_html"
                compress="gzip" />
   </if>
-  <if expr="chromeos">
+  <if expr="chromeos and not optimize_webui">
     <!-- Chrome OS Custom Elements -->
     <structure name="IDR_WEBUI_CHROMEOS_BLUETOOTH_DIALOG_HTML"
                file="cr_components/chromeos/bluetooth_dialog.html"
