@@ -27,20 +27,6 @@ namespace blink {
 
 namespace {
 
-CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
-                                                    const CSSValue& value) {
-  switch (property_id) {
-    case CSSPropertyTransform:
-      return CSSTransformValue::FromCSSValue(value);
-    case CSSPropertyObjectPosition:
-      return CSSPositionValue::FromCSSValue(value);
-    default:
-      // TODO(meade): Implement other properties.
-      break;
-  }
-  return nullptr;
-}
-
 CSSStyleValue* CreateStyleValue(const CSSValue& value) {
   if (value.IsIdentifierValue() || value.IsCustomIdentValue())
     return CSSKeywordValue::FromCSSValue(value);
@@ -56,6 +42,27 @@ CSSStyleValue* CreateStyleValue(const CSSValue& value) {
   }
   if (value.IsImageValue()) {
     return CSSURLImageValue::FromCSSValue(*ToCSSImageValue(value).Clone());
+  }
+  return nullptr;
+}
+
+CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
+                                                    const CSSValue& value) {
+  switch (property_id) {
+    case CSSPropertyTransform:
+      return CSSTransformValue::FromCSSValue(value);
+    case CSSPropertyObjectPosition:
+      return CSSPositionValue::FromCSSValue(value);
+    case CSSPropertyAlignItems: {
+      DCHECK(value.IsValueList());
+      const auto& value_list = ToCSSValueList(value);
+      if (value_list.length() != 1U)
+        return nullptr;
+      return CreateStyleValue(value_list.Item(0));
+    }
+    default:
+      // TODO(meade): Implement other properties.
+      break;
   }
   return nullptr;
 }
@@ -122,6 +129,17 @@ CSSStyleValueVector StyleValueFactory::FromString(
       StyleValueFactory::CssValueToStyleValueVector(property_id, *value);
   DCHECK(!style_value_vector.IsEmpty());
   return style_value_vector;
+}
+
+CSSStyleValue* StyleValueFactory::CssValueToStyleValue(
+    CSSPropertyID property_id,
+    const CSSValue& css_value) {
+  DCHECK(!CSSProperty::Get(property_id).IsRepeated());
+  CSSStyleValue* style_value =
+      CreateStyleValueWithProperty(property_id, css_value);
+  if (!style_value)
+    return CSSUnsupportedStyleValue::Create(property_id, css_value);
+  return style_value;
 }
 
 CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
