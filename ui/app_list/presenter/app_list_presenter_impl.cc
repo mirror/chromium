@@ -94,6 +94,8 @@ void AppListPresenterImpl::Show(int64_t display_id) {
     presenter_delegate_->Init(view, display_id, current_apps_page_);
     SetView(view);
   }
+  presenter_delegate_->GetViewDelegate()->UpdateAppListDisplayId(
+      GetDisplayId());
   presenter_delegate_->OnShown(display_id);
   presenter_delegate_->GetViewDelegate()->ViewShown();
 }
@@ -120,6 +122,8 @@ void AppListPresenterImpl::Dismiss() {
     view_->GetWidget()->Deactivate();
 
   presenter_delegate_->OnDismissed();
+  presenter_delegate_->GetViewDelegate()->UpdateAppListDisplayId(
+      GetDisplayId());
   ScheduleAnimation();
   base::RecordAction(base::UserMetricsAction("Launcher_Dismiss"));
 }

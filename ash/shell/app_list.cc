@@ -276,6 +276,10 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     // Nothing needs to be done.
   }
 
+  void UpdateAppListDisplayId(int64_t display_id) override {
+    // Nothing needs to be done.
+  }
+
   void GetWallpaperProminentColors(
       GetWallpaperProminentColorsCallback callback) override {
     NOTIMPLEMENTED();

@@ -55,6 +55,7 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   void ViewShown() override {}
   void Dismiss() override;
   void ViewClosing() override {}
+  void UpdateAppListDisplayId(int64_t display_id) override {}
   void GetWallpaperProminentColors(
       GetWallpaperProminentColorsCallback callback) override {}
   void ActivateItem(const std::string& id, int event_flags) override;

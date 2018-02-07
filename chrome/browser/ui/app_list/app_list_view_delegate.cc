@@ -211,6 +211,10 @@ void AppListViewDelegate::ViewClosing() {
   controller_->ViewClosing();
 }
 
+void AppListViewDelegate::UpdateAppListDisplayId(int64_t display_id) {
+  controller_->SetAppListDisplayId(display_id);
+}
+
 void AppListViewDelegate::GetWallpaperProminentColors(
     GetWallpaperProminentColorsCallback callback) {
   std::move(callback).Run(wallpaper_prominent_colors_);

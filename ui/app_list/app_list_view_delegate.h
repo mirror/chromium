@@ -68,6 +68,10 @@ class APP_LIST_EXPORT AppListViewDelegate {
   // Invoked when the app list is closing.
   virtual void ViewClosing() = 0;
 
+  // Invoked whenever the app list's display id may change, i.e. when shown or
+  // dismissed.
+  virtual void UpdateAppListDisplayId(int64_t display_id) = 0;
+
   // Gets the wallpaper prominent colors.
   using GetWallpaperProminentColorsCallback =
       base::OnceCallback<void(const std::vector<SkColor>&)>;
