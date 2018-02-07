@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42b0fafa_748cb747",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Very good! Thanks.",
+      "parentUuid": "c79c1068_bb2fbe88",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "216770b5_b12e7d19",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e750d8c7_7b460735",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Added comment. It is RTL thing.",
+      "parentUuid": "216770b5_b12e7d19",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 40
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7bd21b3c_fcd7c7db",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Typo. The comment is \"align to right\".\nThe code is intentional.",
+      "parentUuid": "f06b4865_b9a828c5",
+      "range": {
+        "startLine": 52,
+        "startChar": 22,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32274398_eb8e04cc",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20abd34_77983c7e",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Changed the code to use insets",
+      "parentUuid": "32274398_eb8e04cc",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b1b9453a_97867505",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af2335d_7c1f7f0a",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c91652_4b367b05",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56655dc2_cf9cb180",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c91652_4b367b05",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "17e02510_ee9760ce",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_item_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "affccf61_7e82632b",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 45
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80257a93_a2d03faa",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ed6e01_ff0ab8ed",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Thanks!. I was playing with different params. Changed back to 150.",
+      "parentUuid": "80257a93_a2d03faa",
+      "range": {
+        "startLine": 50,
+        "startChar": 37,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a486a3ce_78ba75d7",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd1ca6a_fc40be84",
+      "range": {
+        "startLine": 117,
+        "startChar": 55,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f5cf4f5_84a695e7",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa34770_c50ee2ee",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5cf4f5_84a695e7",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "0e271f68_34881ca2",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5792f037_abf8f62a",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee7a6a46_43c2d4ae",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969bedea_62b6b8f1",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "The KSV parent view does not have insets. The |search_results_container_| just fill all available space.\nThe |search_results_container_| itself has insets, so that the item list view inside will have space to window edges.\n\nBut I will change 0 to parent window\u0027s inset in case we add some later.",
+      "parentUuid": "ee7a6a46_43c2d4ae",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 14
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "79469285_cf3abf97",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "346e07df_22da14ab",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 24
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da4d5b1e_997d05b7",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 3
@@ -321,6 +633,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9228d35c_74b47bb2",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da4d5b1e_997d05b7",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "29c94dd9_7ae62aea",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8e1f95_7df3ee89",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4c5138_d289e325",
         "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
         "patchSetId": 3
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "684c8787_16d823fb",
+        "filename": "ui/chromeos/ksv/views/keyboard_shortcut_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4c5138_d289e325",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c9ae09b_75fff364",
         "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
         "patchSetId": 3
@@ -390,6 +774,30 @@
       "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b2954c_5a61e775",
+        "filename": "ui/chromeos/ksv/views/ksv_search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T23:26:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c9ae09b_75fff364",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "5d3fd9e4bf70b92977344588ee598b3915fefbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
