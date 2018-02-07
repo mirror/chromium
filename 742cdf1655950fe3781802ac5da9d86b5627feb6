@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8e8ca9_0e86266c",
+        "filename": "chromecast/browser/extension_request_protocol_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-02-07T17:52:38Z",
+      "side": 1,
+      "message": "both includes unused?",
+      "revId": "742cdf1655950fe3781802ac5da9d86b5627feb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d273d9_85ea2903",
+        "filename": "chromecast/browser/extension_request_protocol_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-02-07T17:52:38Z",
+      "side": 1,
+      "message": "nit, explicit",
+      "revId": "742cdf1655950fe3781802ac5da9d86b5627feb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37847cd_a01f1c6b",
+        "filename": "chromecast/browser/extension_request_protocol_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2018-02-07T17:52:38Z",
+      "side": 1,
+      "message": "nit, include guard comment",
+      "revId": "742cdf1655950fe3781802ac5da9d86b5627feb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
