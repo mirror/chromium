@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853c5bc1_f016b088",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-02-07T23:28:17Z",
+      "side": 1,
+      "message": "These methods are very specific and I\u0027m not sure adding them the top level NGPhysicalFragment class is the right thing to do. The API surface is getting pretty big as is.\n\nHow about instead having a utility class that provides these?\n\nSomething like:\n\nIsFragmentAfterLineWrap(NGPhysicalFragment\u0026, NGPhysicalLineBoxFragment\u0026 current_line).",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "69ac9d3f925e4958c304e3c31cd64f3851ae6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
