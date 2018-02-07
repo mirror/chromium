@@ -835,6 +835,78 @@ TEST_F(DeviceStatusCollectorTest, ActivityTimesKeptUntilSubmittedSuccessfully) {
   EXPECT_EQ(ActivePeriodMilliseconds(), GetActiveMilliseconds(device_status_));
 }
 
+TEST_F(DeviceStatusCollectorTest, ActivityNoUser) {
+  ui::IdleState test_states[] = {ui::IDLE_STATE_ACTIVE, ui::IDLE_STATE_ACTIVE,
+                                 ui::IDLE_STATE_ACTIVE};
+  settings_helper_.SetBoolean(chromeos::kReportDeviceActivityTimes, true);
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, true);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_TRUE(device_status_.active_period(0).user_email().empty());
+}
+
+TEST_F(DeviceStatusCollectorTest, ActivityWithPublicSessionUser) {
+  ui::IdleState test_states[] = {ui::IDLE_STATE_ACTIVE, ui::IDLE_STATE_ACTIVE,
+                                 ui::IDLE_STATE_ACTIVE};
+  settings_helper_.SetBoolean(chromeos::kReportDeviceActivityTimes, true);
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, true);
+  const AccountId public_account_id(
+      AccountId::FromUserEmail("public@localhost"));
+  user_manager_->CreatePublicAccountUser(public_account_id);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_TRUE(device_status_.active_period(0).user_email().empty());
+}
+
+TEST_F(DeviceStatusCollectorTest, ActivityWithAffiliatedUser) {
+  ui::IdleState test_states[] = {ui::IDLE_STATE_ACTIVE, ui::IDLE_STATE_ACTIVE,
+                                 ui::IDLE_STATE_ACTIVE};
+  settings_helper_.SetBoolean(chromeos::kReportDeviceActivityTimes, true);
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, true);
+  const AccountId account_id0(AccountId::FromUserEmail("user0@managed.com"));
+  user_manager_->AddUserWithAffiliation(account_id0, true);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_EQ(account_id0.GetUserEmail(),
+            device_status_.active_period(0).user_email());
+  device_status_.clear_active_period();  // Clear the result protobuf.
+
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, false);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_TRUE(device_status_.active_period(0).user_email().empty());
+}
+
+TEST_F(DeviceStatusCollectorTest, ActivityWithNotAffiliatedUser) {
+  ui::IdleState test_states[] = {ui::IDLE_STATE_ACTIVE, ui::IDLE_STATE_ACTIVE,
+                                 ui::IDLE_STATE_ACTIVE};
+  settings_helper_.SetBoolean(chromeos::kReportDeviceActivityTimes, true);
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, true);
+  const AccountId account_id0(AccountId::FromUserEmail("user0@managed.com"));
+  user_manager_->AddUserWithAffiliation(account_id0, false);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_TRUE(device_status_.active_period(0).user_email().empty());
+  device_status_.clear_active_period();  // Clear the result protobuf.
+
+  settings_helper_.SetBoolean(chromeos::kReportDeviceUsers, false);
+
+  status_collector_->Simulate(test_states, 3);
+  GetStatus();
+  EXPECT_EQ(1, device_status_.active_period_size());
+  EXPECT_TRUE(device_status_.active_period(0).user_email().empty());
+}
+
 TEST_F(DeviceStatusCollectorTest, DevSwitchBootMode) {
   // Test that boot mode data is reported by default.
   fake_statistics_provider_.SetMachineStatistic(
