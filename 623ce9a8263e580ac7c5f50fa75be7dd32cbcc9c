@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee11557_4167e6df",
+        "filename": "chrome/browser/ui/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:12:06Z",
+      "side": 1,
+      "message": "Can we tighten this to \"components/crash/core/common/crash_keys.h\" like in the other DEPS files?",
+      "revId": "623ce9a8263e580ac7c5f50fa75be7dd32cbcc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
