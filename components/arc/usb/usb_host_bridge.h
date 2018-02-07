@@ -11,7 +11,9 @@
 #include "base/callback_forward.h"
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
+#include "base/memory/singleton.h"
 #include "base/scoped_observer.h"
+#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/common/usb_host.mojom.h"
 #include "components/arc/connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -26,6 +28,7 @@ class BrowserContext;
 namespace arc {
 
 class ArcBridgeService;
+class ArcUsbHostUiDelegate;
 
 // Private implementation of UsbHostHost.
 class ArcUsbHostBridge : public KeyedService,
@@ -60,6 +63,10 @@ class ArcUsbHostBridge : public KeyedService,
 
   // ConnectionObserver<mojom::UsbHostInstance> overrides:
   void OnConnectionReady() override;
+  void OnConnectionClosed() override;
+
+  void SetUiDelegate(ArcUsbHostUiDelegate* ui_delegate);
+  void ClearUiDelegate();
 
  private:
   void OnDeviceChecked(const std::string& guid, bool allowed);
@@ -73,11 +80,29 @@ class ArcUsbHostBridge : public KeyedService,
   ScopedObserver<device::UsbService, device::UsbService::Observer>
       usb_observer_;
   device::UsbService* usb_service_;
+  ArcUsbHostUiDelegate* ui_delegate_ = nullptr;
 
   // WeakPtrFactory to use for callbacks.
   base::WeakPtrFactory<ArcUsbHostBridge> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcUsbHostBridge);
+};
+
+// Singleton factory for ArcUsbHostBridge
+class ArcUsbHostBridgeFactory
+    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
+          ArcUsbHostBridge,
+          ArcUsbHostBridgeFactory> {
+ public:
+  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
+  static constexpr const char* kName = "ArcUsbHostBridgeFactory";
+
+  static ArcUsbHostBridgeFactory* GetInstance();
+
+ private:
+  friend base::DefaultSingletonTraits<ArcUsbHostBridgeFactory>;
+  ArcUsbHostBridgeFactory() = default;
+  ~ArcUsbHostBridgeFactory() override = default;
 };
 
 }  // namespace arc
