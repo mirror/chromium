@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d98aef3_05cd4c83",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-07T14:52:22Z",
+      "side": 1,
+      "message": "You probably want to set the cursor visibility to true in Reset...",
+      "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
