@@ -54,6 +54,7 @@ class MESSAGE_CENTER_EXPORT MessageView
 
   // Creates a shadow around the notification and changes slide-out behavior.
   void SetIsNested();
+  bool is_nested() const { return is_nested_; }
 
   virtual NotificationControlButtonsView* GetControlButtonsView() const = 0;
   virtual bool IsCloseButtonFocused() const = 0;
