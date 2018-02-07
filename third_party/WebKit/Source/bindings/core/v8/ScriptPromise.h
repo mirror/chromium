@@ -130,6 +130,7 @@ class CORE_EXPORT ScriptPromise final {
     void Clear() { resolver_.Clear(); }
 
    private:
+    v8::Isolate* isolate_;
     ScriptValue resolver_;
   };
 

@@ -431,17 +431,19 @@ void StringifyAndParseMethodSpecificData(
     PaymentMethodDataPtr& output,
     ExceptionState& exception_state) {
   DCHECK(!input.IsEmpty());
-  v8::Local<v8::String> value;
-  if (!input.V8Value()->IsObject() ||
-      !v8::JSON::Stringify(input.GetContext(), input.V8Value().As<v8::Object>())
-           .ToLocal(&value)) {
+  v8::Local<v8::Value> input_value = input.V8Value();
+  v8::Local<v8::String> input_string;
+  if (!input_value->IsObject() ||
+      !v8::JSON::Stringify(input.GetIsolate()->GetCurrentContext(),
+                           input_value.As<v8::Object>())
+           .ToLocal(&input_string)) {
     exception_state.ThrowTypeError(
         "Payment method data should be a JSON-serializable object");
     return;
   }
 
   output->stringified_data =
-      V8StringToWebCoreString<String>(value, kDoNotExternalize);
+      V8StringToWebCoreString<String>(input_string, kDoNotExternalize);
 
   if (output->stringified_data.length() >
       PaymentRequest::kMaxJSONStringLength) {

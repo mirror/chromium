@@ -90,7 +90,7 @@ class PromiseAllHandler final
 
     ScriptValue Call(ScriptValue value) override {
       if (resolve_type_ == kFulfilled)
-        handler_->OnFulfilled(index_, value);
+        handler_->OnFulfilled(GetScriptState()->GetIsolate(), index_, value);
       else
         handler_->OnRejected(value);
       // This return value is never used.
@@ -122,7 +122,9 @@ class PromiseAllHandler final
                                    this);
   }
 
-  void OnFulfilled(size_t index, const ScriptValue& value) {
+  void OnFulfilled(v8::Isolate* isolate,
+                   size_t index,
+                   const ScriptValue& value) {
     if (is_settled_)
       return;
 
@@ -131,10 +133,10 @@ class PromiseAllHandler final
     if (--number_of_pending_promises_ > 0)
       return;
 
-    v8::Local<v8::Array> values =
-        v8::Array::New(value.GetIsolate(), values_.size());
+    v8::Local<v8::Array> values = v8::Array::New(isolate, values_.size());
+    v8::Local<v8::Context> current_context = isolate->GetCurrentContext();
     for (size_t i = 0; i < values_.size(); ++i) {
-      if (!V8CallBoolean(values->CreateDataProperty(value.GetContext(), i,
+      if (!V8CallBoolean(values->CreateDataProperty(current_context, i,
                                                     values_[i].V8Value())))
         return;
     }
@@ -168,7 +170,8 @@ class PromiseAllHandler final
 }  // namespace
 
 ScriptPromise::InternalResolver::InternalResolver(ScriptState* script_state)
-    : resolver_(script_state,
+    : isolate_(script_state->GetIsolate()),
+      resolver_(script_state,
                 v8::Promise::Resolver::New(script_state->GetContext())) {}
 
 v8::Local<v8::Promise> ScriptPromise::InternalResolver::V8Promise() const {
@@ -188,7 +191,7 @@ void ScriptPromise::InternalResolver::Resolve(v8::Local<v8::Value> value) {
     return;
   resolver_.V8Value()
       .As<v8::Promise::Resolver>()
-      ->Resolve(resolver_.GetContext(), value)
+      ->Resolve(isolate_->GetCurrentContext(), value)
       .ToChecked();
   Clear();
 }
@@ -198,7 +201,7 @@ void ScriptPromise::InternalResolver::Reject(v8::Local<v8::Value> value) {
     return;
   resolver_.V8Value()
       .As<v8::Promise::Resolver>()
-      ->Reject(resolver_.GetContext(), value)
+      ->Reject(isolate_->GetCurrentContext(), value)
       .ToChecked();
   Clear();
 }
