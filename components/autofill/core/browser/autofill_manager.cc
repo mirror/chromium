@@ -1513,8 +1513,9 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
   if (!ParseForm(live_form, updated_form))
     return false;
 
+  // We need to keep the server data.
   if (cached_form)
-    (*updated_form)->UpdateFromCache(*cached_form, true);
+    (*updated_form)->RetrieveServerDataFromCache(*cached_form);
 
   // Annotate the updated form with its predicted types.
   driver()->SendAutofillTypePredictionsToRenderer({*updated_form});
