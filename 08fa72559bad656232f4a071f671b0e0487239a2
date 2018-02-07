@@ -22,6 +22,30 @@
       "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197fa492_d6690d71",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T12:37:29Z",
+      "side": 1,
+      "message": "As mentioned in the comment, this isn\u0027t quite a deprecation and if we use a warning it may as well be ignored. It\u0027s unclear how I can use an error level of console messages for deprecation. One solution would be to check if we already registered the count but these methods are \"only for tests\". Is there a solution I missed?",
+      "parentUuid": "32d6cdd3_0974c6ce",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
