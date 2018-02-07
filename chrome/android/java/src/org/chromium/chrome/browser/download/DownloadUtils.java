@@ -93,6 +93,8 @@ public class DownloadUtils {
 
     private static final String EXTRA_IS_OFF_THE_RECORD =
             "org.chromium.chrome.browser.download.IS_OFF_THE_RECORD";
+    private static final String EXTRA_EXPAND_PREFETCHED_CONTENT =
+            "org.chromium.chrome.browser.download.EXPAND_PREFETCHED_CONTENT";
 
     @VisibleForTesting
     static final long SECONDS_PER_MINUTE = TimeUnit.MINUTES.toSeconds(1);
@@ -121,7 +123,7 @@ public class DownloadUtils {
      * @return Whether the UI was shown.
      */
     public static boolean showDownloadManager(@Nullable Activity activity, @Nullable Tab tab) {
-        return showDownloadManager(activity, tab, false);
+        return showDownloadManager(activity, tab, false, false);
     }
 
     /**
@@ -129,10 +131,11 @@ public class DownloadUtils {
      * @param activity The current activity is available.
      * @param tab The current tab if it exists.
      * @param fromMenu Whether the manager was triggered from the overflow menu.
+     * @param fromPrefetchNotification Whether the manager was triggered from prefetch notification.
      * @return Whether the UI was shown.
      */
-    public static boolean showDownloadManager(
-            @Nullable Activity activity, @Nullable Tab tab, boolean fromMenu) {
+    public static boolean showDownloadManager(@Nullable Activity activity, @Nullable Tab tab,
+            boolean fromMenu, boolean fromPrefetchNotification) {
         // Figure out what tab was last being viewed by the user.
         if (activity == null) activity = ApplicationStatus.getLastTrackedFocusedActivity();
 
@@ -168,6 +171,7 @@ public class DownloadUtils {
             Intent intent = new Intent();
             intent.setClass(appContext, DownloadActivity.class);
             if (tab != null) intent.putExtra(EXTRA_IS_OFF_THE_RECORD, tab.isIncognito());
+            intent.putExtra(EXTRA_EXPAND_PREFETCHED_CONTENT, fromPrefetchNotification);
             if (activity == null) {
                 // Stands alone in its own task.
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -240,6 +244,14 @@ public class DownloadUtils {
      */
     public static boolean shouldShowOffTheRecordDownloads(Intent intent) {
         return IntentUtils.safeGetBooleanExtra(intent, EXTRA_IS_OFF_THE_RECORD, false);
+    }
+
+    /**
+     * @return Whether or not the Intent corresponds to a DownloadActivity that should show off the
+     *         record downloads.
+     */
+    public static boolean shouldExpandPrefetchContent(Intent intent) {
+        return IntentUtils.safeGetBooleanExtra(intent, EXTRA_EXPAND_PREFETCHED_CONTENT, false);
     }
 
     /**

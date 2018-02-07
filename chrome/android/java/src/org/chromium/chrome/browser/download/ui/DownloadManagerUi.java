@@ -270,6 +270,14 @@ public class DownloadManagerUi
     }
 
     /**
+     * Expands the prefetched content section.
+     * @param expand Whether the section should be expanded.
+     */
+    public void expandPrefetchedContent(boolean expand) {
+        mHistoryAdapter.setSubsectionExpanded(expand);
+    }
+
+    /**
      * Sets the {@link BasicNativePage} that holds this manager.
      */
     public void setBasicNativePage(BasicNativePage delegate) {
