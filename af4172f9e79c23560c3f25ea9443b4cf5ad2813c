@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c1f6460_9428373d",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "Please add a comment about return bool value.\n\ne.g.\n// Returns true if Editor should continue with default processing.",
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f342d766_7af88db2",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "const String",
+      "range": {
+        "startLine": 1772,
+        "startChar": 2,
+        "endLine": 1772,
+        "endChar": 8
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1b74c7_12f2c393",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "const String",
+      "range": {
+        "startLine": 1814,
+        "startChar": 4,
+        "endLine": 1814,
+        "endChar": 10
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b7cd40_31f44cac",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "const String",
+      "range": {
+        "startLine": 1824,
+        "startChar": 4,
+        "endLine": 1824,
+        "endChar": 10
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8317b51_965ef829",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "We prefer early return style to reduce indentation.\n\nif (!fragment)\n  return;\n\nframe.GetEditor().Paste...",
+      "range": {
+        "startLine": 1839,
+        "startChar": 0,
+        "endLine": 1843,
+        "endChar": 3
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2d0a02_92b7470f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "ResourceFetcher* const",
+      "range": {
+        "startLine": 1863,
+        "startChar": 2,
+        "endLine": 1863,
+        "endChar": 18
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccedd26c_7236cd13",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T02:31:38Z",
+      "side": 1,
+      "message": "We prefer early return style to reduce indentation:\n\nif (paste_mode \u003d\u003d kAllMimeTYpes) {\n  PasteWith...\n  return;\n}\nPasteAsPlainText...;",
+      "range": {
+        "startLine": 1884,
+        "startChar": 0,
+        "endLine": 1889,
+        "endChar": 3
+      },
+      "revId": "af4172f9e79c23560c3f25ea9443b4cf5ad2813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
