@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbe5069a_00bae45d",
+        "filename": "content/public/browser/gpu_data_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-07T18:59:37Z",
+      "side": 1,
+      "message": "Ah, I see, it\u0027s possible to only put it on the GpuDataManagerImpl. Done.",
+      "parentUuid": "e1762f75_e2193219",
+      "range": {
+        "startLine": 81,
+        "startChar": 19,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7606cd_422d77ef",
         "filename": "gpu/config/process_json.py",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0577691e_e8699e15",
+        "filename": "gpu/config/process_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-07T18:59:37Z",
+      "side": 1,
+      "message": "Thanks, good idea. Done.",
+      "parentUuid": "9e7606cd_422d77ef",
+      "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13de8d72_429a431b",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53766e8c_5aa8302c",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-07T18:59:37Z",
+      "side": 1,
+      "message": "Do we reevaluate the GPU blacklist if that happens? Regardless, comment removed.",
+      "parentUuid": "13de8d72_429a431b",
+      "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
