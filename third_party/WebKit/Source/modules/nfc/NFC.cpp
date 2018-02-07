@@ -177,8 +177,8 @@ struct TypeConverter<NFCMessagePtr, String> {
 template <>
 struct TypeConverter<Optional<Vector<uint8_t>>, blink::ScriptValue> {
   static Optional<Vector<uint8_t>> Convert(
-      const blink::ScriptValue& scriptValue) {
-    v8::Local<v8::Value> value = scriptValue.V8Value();
+      const blink::ScriptValue& script_value) {
+    v8::Local<v8::Value> value = script_value.V8Value();
 
     if (value->IsNumber()) {
       return mojo::ConvertTo<Vector<uint8_t>>(
@@ -186,27 +186,28 @@ struct TypeConverter<Optional<Vector<uint8_t>>, blink::ScriptValue> {
     }
 
     if (value->IsString()) {
-      blink::V8StringResource<> stringResource = value;
-      if (stringResource.Prepare()) {
-        return mojo::ConvertTo<Vector<uint8_t>>(String(stringResource));
+      blink::V8StringResource<> string_resource = value;
+      if (string_resource.Prepare()) {
+        return mojo::ConvertTo<Vector<uint8_t>>(String(string_resource));
       }
     }
 
     if (value->IsObject() && !value->IsArray() && !value->IsArrayBuffer()) {
-      v8::Local<v8::String> jsonString;
-      v8::Isolate* isolate = scriptValue.GetIsolate();
+      v8::Isolate* isolate = v8::Isolate::GetCurrent();
       v8::TryCatch try_catch(isolate);
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
+      v8::Local<v8::Object> object = value.As<v8::Object>();
+      v8::Local<v8::String> json_string;
 
       // https://w3c.github.io/web-nfc/#mapping-json-to-ndef
       // If serialization throws, reject promise with a "SyntaxError" exception.
-      if (!v8::JSON::Stringify(scriptValue.GetContext(), value.As<v8::Object>())
-               .ToLocal(&jsonString) ||
+      if (!v8::JSON::Stringify(context, object).ToLocal(&json_string) ||
           try_catch.HasCaught()) {
         return WTF::nullopt;
       }
 
       String string = blink::V8StringToWebCoreString<String>(
-          jsonString, blink::kDoNotExternalize);
+          json_string, blink::kDoNotExternalize);
       return mojo::ConvertTo<Vector<uint8_t>>(string);
     }
 
