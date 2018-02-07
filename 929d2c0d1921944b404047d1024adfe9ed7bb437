@@ -22,6 +22,30 @@
       "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde3582a_2d04f0db",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T21:17:49Z",
+      "side": 1,
+      "message": "Hmmm.  I hadn\u0027t thought about it, but the order actually might matter; I suspect it controls the key order of the index that\u0027s created to support the uniqueness constraint.  So we\u0027d want the mostly likely to be unique elements first.\n\nVictor, do you have any opinions on this?  I could play around with the order WRT my performance test, but that\u0027s probably a pretty artificial sample, so going based on a priori reasoning might be better.",
+      "parentUuid": "130ff6b8_657bb041",
+      "range": {
+        "startLine": 452,
+        "startChar": 31,
+        "endLine": 452,
+        "endChar": 35
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
