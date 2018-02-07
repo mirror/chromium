@@ -435,6 +435,32 @@ WebContents* TabManager::DiscardTabById(int32_t tab_id, DiscardReason reason) {
   return DiscardWebContentsAt(index, model, reason);
 }
 
+bool TabManager::FreezeTabById(int32_t tab_id) {
+  TabStripModel* model;
+  int index = FindTabStripModelById(tab_id, &model);
+
+  if (index == -1)
+    return false;
+
+  VLOG(1) << "Freezing tab " << index << " id " << tab_id;
+  LOG(ERROR) << "Freezing tab " << index << " id " << tab_id;
+
+  return false;
+}
+
+bool TabManager::ResumeTabById(int32_t tab_id) {
+  TabStripModel* model;
+  int index = FindTabStripModelById(tab_id, &model);
+
+  if (index == -1)
+    return false;
+
+  VLOG(1) << "Resuming tab " << index << " id " << tab_id;
+  LOG(ERROR) << "Resuming tab " << index << " id " << tab_id;
+
+  return false;
+}
+
 WebContents* TabManager::DiscardTabByExtension(content::WebContents* contents) {
   if (contents) {
     return DiscardTabById(IdFromWebContents(contents),
@@ -674,6 +700,7 @@ void TabManager::AddTabStats(const BrowserInfo& browser_info,
       stats.has_form_entry =
           contents->GetPageImportanceSignals().had_form_interaction;
       stats.discard_count = GetWebContentsData(contents)->DiscardCount();
+      stats.is_frozen = GetWebContentsData(contents)->IsFrozen();
       stats.last_active = contents->GetLastActiveTime();
       stats.render_process_host = contents->GetMainFrame()->GetProcess();
       stats.renderer_handle =

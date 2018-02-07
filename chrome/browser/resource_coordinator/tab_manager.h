@@ -125,6 +125,12 @@ class TabManager : public TabStripModelObserver, public BrowserListObserver {
   // of the discarded tab.
   content::WebContents* DiscardTabById(int32_t tab_id, DiscardReason reason);
 
+  // TODO(fmeawad): Add comment.
+  bool FreezeTabById(int32_t tab_id);
+
+  // TODO(fmeawad): Add comment.
+  bool ResumeTabById(int32_t tab_id);
+
   // Method used by the extensions API to discard tabs. If |contents| is null,
   // discards the least important tab using DiscardTab(). Otherwise discards
   // the given contents. Returns the new web_contents or null if no tab

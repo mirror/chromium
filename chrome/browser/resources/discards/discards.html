@@ -39,6 +39,7 @@ general use and is not localized.
           <th data-sort-key="discardCount">Discard Count</th>
           <th data-sort-key="isAutoDiscardable">Auto Discardable</th>
           <th data-sort-key="lastActiveSeconds">Last Active</th>
+          <th data-sort-key="isFrozen">Frozen</th>
         </tr>
       </thead>
       <tbody id="tab-discards-info-table-body">
@@ -66,11 +67,14 @@ general use and is not localized.
           </div>
         </td>
         <td class="last-active-cell"></td>
+        <td class="is-frozen-cell boolean-cell"></td>
         <td class="discard-links-cell">
           <div is="action-link" class="discard-link">[Discard]</div>
           <div is="action-link" class="discard-urgent-link">
             [Urgent Discard]
           </div>
+          <div is="action-link" class="freeze-link">[Freeze]</div>
+          <div is="action-link" class="resume-link">[Resume]</div>
         </td>
       </tr>
     </template>

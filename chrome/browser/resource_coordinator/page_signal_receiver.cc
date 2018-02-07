@@ -45,6 +45,24 @@ void PageSignalReceiver::NotifyPageAlmostIdle(const CoordinationUnitID& cu_id) {
     observer.OnPageAlmostIdle(web_contents_iter->second);
 }
 
+void PageSignalReceiver::NotifyPageFrozen(const CoordinationUnitID& cu_id) {
+  // DCHECK(IsPageAlmostIdleSignalEnabled());
+  auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
+  if (web_contents_iter == cu_id_web_contents_map_.end())
+    return;
+  for (auto& observer : observers_)
+    observer.OnPageFrozen(web_contents_iter->second);
+}
+
+void PageSignalReceiver::NotifyPageResumed(const CoordinationUnitID& cu_id) {
+  // DCHECK(IsPageAlmostIdleSignalEnabled());
+  auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
+  if (web_contents_iter == cu_id_web_contents_map_.end())
+    return;
+  for (auto& observer : observers_)
+    observer.OnPageResumed(web_contents_iter->second);
+}
+
 void PageSignalReceiver::SetExpectedTaskQueueingDuration(
     const CoordinationUnitID& cu_id,
     base::TimeDelta duration) {

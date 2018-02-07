@@ -45,6 +45,8 @@ source_set("lib") {
     "observers/coordination_unit_graph_observer.h",
     "observers/ipc_volume_reporter.cc",
     "observers/ipc_volume_reporter.h",
+    "observers/lifecycle_tracker.cc",
+    "observers/lifecycle_tracker.h",
     "observers/metrics_collector.cc",
     "observers/metrics_collector.h",
     "observers/page_signal_generator_impl.cc",

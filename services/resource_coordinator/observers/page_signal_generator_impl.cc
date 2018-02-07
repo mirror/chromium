@@ -77,10 +77,10 @@ void PageSignalGeneratorImpl::OnPagePropertyChanged(
     const PageCoordinationUnitImpl* page_cu,
     const mojom::PropertyType property_type,
     int64_t value) {
-  // Only the loading state of a page is of interest.
-  if (property_type != mojom::PropertyType::kIsLoading)
-    return;
-  UpdateLoadIdleStatePage(page_cu);
+  if (property_type == mojom::PropertyType::kIsLoading)
+    UpdateLoadIdleStatePage(page_cu);
+  else if (property_type == mojom::PropertyType::kFrozen)
+    UpdatePageLifecycleState(page_cu, value);
 }
 
 void PageSignalGeneratorImpl::OnProcessPropertyChanged(
@@ -263,6 +263,18 @@ bool PageSignalGeneratorImpl::IsIdling(
           mojom::PropertyType::kNetworkAlmostIdle, 0u) &&
       process_cu->GetPropertyOrDefault(
           mojom::PropertyType::kMainThreadTaskLoadIsLow, 0u);
+}
+
+void PageSignalGeneratorImpl::UpdatePageLifecycleState(
+    const PageCoordinationUnitImpl* page_cu,
+    int64_t value) {
+  // LOG(ERROR) << "PageSignalGeneratorImpl::UpdatePageLifecycleState: " <<
+  // value;
+  if (value) {
+    DISPATCH_PAGE_SIGNAL(receivers_, NotifyPageFrozen, page_cu->id());
+  } else {
+    DISPATCH_PAGE_SIGNAL(receivers_, NotifyPageResumed, page_cu->id());
+  }
 }
 
 }  // namespace resource_coordinator

@@ -40,6 +40,12 @@ enum TabLoadingState {
   TAB_LOADING_STATE_MAX,
 };
 
+enum TabLifecycleState {
+  TAB_IS_ACTIVE = 0,
+  TAB_IS_FROZEN = 1,
+  TAB_LIFECYCLE_STATE_MAX,
+};
+
 // Internal class used by TabManager to record the needed data for
 // WebContentses.
 // TODO(michaelpg): Merge implementation into
@@ -65,6 +71,10 @@ class TabManager::WebContentsData
   // tab is considered loaded.
   void NotifyTabIsLoaded();
 
+  void NotifyTabIsFrozen();
+
+  void NotifyTabIsResumed();
+
   // Returns true if the tab has been discarded to save memory.
   bool IsDiscarded();
 
@@ -73,6 +83,8 @@ class TabManager::WebContentsData
 
   // Returns the number of times the tab has been discarded.
   int DiscardCount();
+
+  bool IsFrozen();
 
   // Increments the number of times the tab has been discarded.
   void IncrementDiscardCount();
@@ -186,6 +198,8 @@ class TabManager::WebContentsData
     bool is_auto_discardable;
     // Current loading state of this tab.
     TabLoadingState tab_loading_state;
+
+    TabLifecycleState tab_lifecycle_state;
     // True if the tab was created by session restore. Remains true until the
     // end of the first navigation or the tab is closed.
     bool is_in_session_restore;

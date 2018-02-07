@@ -18,6 +18,10 @@ struct TabDiscardsInfo {
   bool is_media;
   // If the tab is currently discarded, this is true.
   bool is_discarded;
+  // If the tab is currently frozen, this is true.
+  bool is_frozen;
+  // If the tab is currently throttled, this is true.
+  bool is_throttled;
   // The number of times this tab has been discarded in the current browser
   // session.
   int32 discard_count;
@@ -52,6 +56,14 @@ interface DiscardsDetailsProvider {
   // handlers will not be run, and the tab will be unloaded with prejudice.
   // Invokes a callback when the discard is complete.
   DiscardById(int32 tab_id, bool urgent) => ();
+
+  // Freezes a tab given its |tab_id|. Invokes a callback when the freeze is
+  // complete.
+  FreezeById(int32 tab_id) => ();
+
+  // Resumes a tab given its |tab_id|. Invokes a callback when the resume is
+  // complete.
+  ResumeById(int32 tab_id) => ();
 
   // Discards the least important tab. If |urgent| is specified the unload
   // handlers will not be run, and the tab will be unloaded with prejudice.

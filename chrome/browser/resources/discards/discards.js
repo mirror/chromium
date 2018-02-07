@@ -229,6 +229,33 @@ cr.define('discards', function() {
     discardLink.addEventListener('click', discardListener);
     discardUrgentLink.addEventListener('click', discardListener);
 
+
+    // Set up the listeners for freeze/resume links.
+    let lifecycleListener = function(e) {
+      // Get the info backing this row.
+      let info = infos[getRowIndex(e.target)];
+      // Determine whether this is freeze or resume.
+      let isFreeze = e.target.classList.contains('freeze-link');
+      // Disable the action. The update function is responsible for
+      // re-enabling actions if necessary.
+      e.target.setAttribute('disabled', '');
+      // Perform the action.
+      if (isFreeze) {
+        uiHandler.freezeById(info.id).then((response) => {
+          stableUpdateTabDiscardsInfoTable();
+        });
+      } else {
+        uiHandler.resumeById(info.id).then((response) => {
+          stableUpdateTabDiscardsInfoTable();
+        });
+      }
+    };
+
+    let freezeLink = row.querySelector('.freeze-link');
+    let resumeLink = row.querySelector('.resume-link');
+    freezeLink.addEventListener('click', lifecycleListener);
+    resumeLink.addEventListener('click', lifecycleListener);
+
     return row;
   }
 
@@ -254,6 +281,8 @@ cr.define('discards', function() {
         boolToString(info.isAutoDiscardable);
     row.querySelector('.last-active-cell').textContent =
         lastActiveToString(info.lastActiveSeconds);
+    row.querySelector('.is-frozen-cell').textContent =
+        boolToString(info.isFrozen);
 
     // Enable/disable action links as appropriate.
     row.querySelector('.is-auto-discardable-link').removeAttribute('disabled');

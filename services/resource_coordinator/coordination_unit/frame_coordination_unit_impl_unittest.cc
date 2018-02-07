@@ -127,4 +127,6 @@ TEST_F(FrameCoordinationUnitImplTest, LastAudibleTime) {
             cu_graph.frame->last_audible_time());
 }
 
+// TODO(fmeawad): Add test for frozen.
+
 }  // namespace resource_coordinator

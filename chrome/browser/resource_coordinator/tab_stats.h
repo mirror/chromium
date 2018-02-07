@@ -35,6 +35,7 @@ struct TabStats {
   bool is_pinned = false;
   bool is_in_visible_window = false;
   bool is_in_active_window = false;
+  bool is_frozen = false;
   // Whether this is the active tab in a browser window.
   bool is_active = false;
   bool is_discarded = false;

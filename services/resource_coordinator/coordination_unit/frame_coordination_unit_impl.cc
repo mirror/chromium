@@ -68,6 +68,11 @@ void FrameCoordinationUnitImpl::SetNetworkAlmostIdle(bool idle) {
   SetProperty(mojom::PropertyType::kNetworkAlmostIdle, idle);
 }
 
+void FrameCoordinationUnitImpl::SetPageFrozen(bool frozen) {
+  DCHECK(IsMainFrame());
+  GetPageCoordinationUnit()->SetProperty(mojom::PropertyType::kFrozen, frozen);
+}
+
 void FrameCoordinationUnitImpl::OnAlertFired() {
   SendEvent(mojom::Event::kAlertFired);
 }
