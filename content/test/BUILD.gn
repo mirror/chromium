@@ -1163,6 +1163,10 @@ test("content_unittests") {
     check_includes = false
   }
 
+  if (is_android) {
+    enable_multidex = true
+  }
+
   defines = []
   sources = [
     "../browser/accessibility/browser_accessibility_mac_unittest.mm",
