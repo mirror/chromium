@@ -72,6 +72,9 @@ class BASE_EXPORT Sequence : public RefCountedThreadSafe<Sequence> {
   // be called on an empty Sequence.
   SequenceSortKey GetSortKey() const;
 
+  // Gets the size of the sequence's task queue. Used for trace event logging.
+  size_t GetQueueSizeForLogging() const;
+
   // Returns a token that uniquely identifies this Sequence.
   const SequenceToken& token() const { return token_; }
 

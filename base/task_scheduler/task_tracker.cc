@@ -37,10 +37,12 @@ class TaskTracingInfo : public trace_event::ConvertableToTraceFormat {
  public:
   TaskTracingInfo(const TaskTraits& task_traits,
                   const char* execution_mode,
-                  const SequenceToken& sequence_token)
+                  const SequenceToken& sequence_token,
+                  size_t sequence_queue_size)
       : task_traits_(task_traits),
         execution_mode_(execution_mode),
-        sequence_token_(sequence_token) {}
+        sequence_token_(sequence_token),
+        sequence_queue_size_(sequence_queue_size) {}
 
   // trace_event::ConvertableToTraceFormat implementation.
   void AppendAsTraceFormat(std::string* out) const override;
@@ -49,6 +51,7 @@ class TaskTracingInfo : public trace_event::ConvertableToTraceFormat {
   const TaskTraits task_traits_;
   const char* const execution_mode_;
   const SequenceToken sequence_token_;
+  size_t sequence_queue_size_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskTracingInfo);
 };
@@ -61,6 +64,7 @@ void TaskTracingInfo::AppendAsTraceFormat(std::string* out) const {
   dict.SetString("execution_mode", execution_mode_);
   if (execution_mode_ != kParallelExecutionMode)
     dict.SetInteger("sequence_token", sequence_token_.ToInternalValue());
+  dict.SetInteger("sequence_queue_size", sequence_queue_size_);
 
   std::string tmp;
   JSONWriter::Write(dict, &tmp);
@@ -434,7 +438,8 @@ void TaskTracker::RunOrSkipTask(Task task,
       // http://crbug.com/652692 is resolved.
       TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
                    std::make_unique<TaskTracingInfo>(
-                       task.traits, execution_mode, sequence_token));
+                       task.traits, execution_mode, sequence_token,
+                       sequence->GetQueueSizeForLogging()));
 
       debug::TaskAnnotator().RunTask(kQueueFunctionName, &task);
     }

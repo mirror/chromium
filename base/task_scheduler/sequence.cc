@@ -81,6 +81,11 @@ SequenceSortKey Sequence::GetSortKey() const {
   return SequenceSortKey(priority, next_task_sequenced_time);
 }
 
+size_t Sequence::GetQueueSizeForLogging() const {
+  AutoSchedulerLock auto_lock(lock_);
+  return queue_.size();
+}
+
 Sequence::~Sequence() = default;
 
 }  // namespace internal
