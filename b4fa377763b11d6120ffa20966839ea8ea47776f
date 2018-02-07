@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d70f4f1_7ab19461",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T20:11:41Z",
+      "side": 1,
+      "message": "oobe loads the pin-keyboard here [1] depending on if its md or not. I think it then dumps it in chrome://oobe/custom_elements/pin_keyboard.html and then its users import that. So i think we if we delete this file we\u0027d have to change IDR_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML to link to cr_components/pin_keyboard.html, but I don\u0027t know if linking to ui/webui in browser_resources.grd is allowed.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/oobe_ui.cc?rcl\u003daf5321fc306f27fc364cb6ebbf93ad99c4da54c5\u0026l\u003d150",
+      "parentUuid": "1bfd8e38_512d66d8",
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59ff2b4c_4c6fd3ea",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 3
