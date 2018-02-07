@@ -70,6 +70,30 @@
       "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8881bc_c7fd97d6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T20:17:53Z",
+      "side": 1,
+      "message": "(FWIW, the \"only for tests\" are the `IsCounted` methods... not sure why they are for tests while `HasMeasurement` isn\u0027t... thanks for the pointer!)\n\nThanks for the thorough reply. I hear the argument about not using errors. I will follow the advice even if I\u0027m worried it will make this less effective.\n\nRegarding using the Deprecation code, there is still the issue of it being prefixed with \"Deprecation\" (I guess coming from the type?). I\u0027m afraid it will lead to confusions as a deprecation means \"things will work but will break\" while here the message is \"things are not working even though you might think it does\".\n\nI\u0027ve also switched to kOtherMessageSource. I will update the CL description accordingly.",
+      "parentUuid": "3bf658bd_601ab316",
+      "range": {
+        "startLine": 215,
+        "startChar": 18,
+        "endLine": 215,
+        "endChar": 23
+      },
+      "revId": "08fa72559bad656232f4a071f671b0e0487239a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
