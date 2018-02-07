@@ -175,7 +175,7 @@ NextProto HttpProxyClientSocketWrapper::GetProxyNegotiatedProtocol() const {
   return kProtoUnknown;
 }
 
-int HttpProxyClientSocketWrapper::Connect(const CompletionCallback& callback) {
+int HttpProxyClientSocketWrapper::Connect(CompletionOnceCallback callback) {
   DCHECK(!callback.is_null());
   DCHECK(connect_callback_.is_null());
 
@@ -187,7 +187,7 @@ int HttpProxyClientSocketWrapper::Connect(const CompletionCallback& callback) {
   next_state_ = STATE_BEGIN_CONNECT;
   int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING) {
-    connect_callback_ = callback;
+    connect_callback_ = std::move(callback);
   } else {
     connect_timer_.Stop();
   }
@@ -309,19 +309,20 @@ void HttpProxyClientSocketWrapper::ApplySocketTag(const SocketTag& tag) {
 
 int HttpProxyClientSocketWrapper::Read(IOBuffer* buf,
                                        int buf_len,
-                                       const CompletionCallback& callback) {
+                                       CompletionOnceCallback callback) {
   if (transport_socket_)
-    return transport_socket_->Read(buf, buf_len, callback);
+    return transport_socket_->Read(buf, buf_len, std::move(callback));
   return ERR_SOCKET_NOT_CONNECTED;
 }
 
 int HttpProxyClientSocketWrapper::Write(
     IOBuffer* buf,
     int buf_len,
-    const CompletionCallback& callback,
+    CompletionOnceCallback callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
   if (transport_socket_)
-    return transport_socket_->Write(buf, buf_len, callback, traffic_annotation);
+    return transport_socket_->Write(buf, buf_len, std::move(callback),
+                                    traffic_annotation);
   return ERR_SOCKET_NOT_CONNECTED;
 }
 
@@ -748,9 +749,9 @@ void HttpProxyClientSocketWrapper::ConnectTimeout() {
     }
   }
 
-  CompletionCallback callback = connect_callback_;
+  CompletionOnceCallback callback = std::move(connect_callback_);
   Disconnect();
-  callback.Run(ERR_CONNECTION_TIMED_OUT);
+  std::move(callback).Run(ERR_CONNECTION_TIMED_OUT);
 }
 
 const HostResolver::RequestInfo&

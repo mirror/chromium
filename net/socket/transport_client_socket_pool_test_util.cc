@@ -47,7 +47,7 @@ class MockConnectClientSocket : public StreamSocket {
         net_log_(NetLogWithSource::Make(net_log, NetLogSourceType::SOCKET)) {}
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override {
+  int Connect(CompletionOnceCallback callback) override {
     connected_ = true;
     return OK;
   }
@@ -91,12 +91,12 @@ class MockConnectClientSocket : public StreamSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override {
+           CompletionOnceCallback callback) override {
     return ERR_FAILED;
   }
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     return ERR_FAILED;
   }
@@ -118,7 +118,7 @@ class MockFailingClientSocket : public StreamSocket {
         net_log_(NetLogWithSource::Make(net_log, NetLogSourceType::SOCKET)) {}
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override {
+  int Connect(CompletionOnceCallback callback) override {
     return ERR_CONNECTION_FAILED;
   }
 
@@ -157,13 +157,13 @@ class MockFailingClientSocket : public StreamSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override {
+           CompletionOnceCallback callback) override {
     return ERR_FAILED;
   }
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     return ERR_FAILED;
   }
@@ -237,9 +237,9 @@ class MockTriggerableClientSocket : public StreamSocket {
   }
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override {
+  int Connect(CompletionOnceCallback callback) override {
     DCHECK(callback_.is_null());
-    callback_ = callback;
+    callback_ = std::move(callback);
     return ERR_IO_PENDING;
   }
 
@@ -286,13 +286,13 @@ class MockTriggerableClientSocket : public StreamSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override {
+           CompletionOnceCallback callback) override {
     return ERR_FAILED;
   }
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     return ERR_FAILED;
   }
@@ -302,14 +302,14 @@ class MockTriggerableClientSocket : public StreamSocket {
  private:
   void DoCallback() {
     is_connected_ = should_connect_;
-    callback_.Run(is_connected_ ? OK : ERR_CONNECTION_FAILED);
+    std::move(callback_).Run(is_connected_ ? OK : ERR_CONNECTION_FAILED);
   }
 
   bool should_connect_;
   bool is_connected_;
   const AddressList addrlist_;
   NetLogWithSource net_log_;
-  CompletionCallback callback_;
+  CompletionOnceCallback callback_;
   ConnectionAttempts connection_attempts_;
 
   base::WeakPtrFactory<MockTriggerableClientSocket> weak_factory_;

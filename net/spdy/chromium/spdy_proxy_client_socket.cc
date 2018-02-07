@@ -109,7 +109,7 @@ SpdyProxyClientSocket::CreateConnectResponseStream() {
 // by creating a new stream for the subsequent request.
 // TODO(rch): create a more appropriate error code to disambiguate
 // the HTTPS Proxy tunnel failure from an HTTP Proxy tunnel failure.
-int SpdyProxyClientSocket::Connect(const CompletionCallback& callback) {
+int SpdyProxyClientSocket::Connect(CompletionOnceCallback callback) {
   DCHECK(read_callback_.is_null());
   if (next_state_ == STATE_OPEN)
     return OK;
@@ -119,7 +119,7 @@ int SpdyProxyClientSocket::Connect(const CompletionCallback& callback) {
 
   int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING)
-    read_callback_ = callback;
+    read_callback_ = std::move(callback);
   return rv;
 }
 
@@ -195,8 +195,9 @@ void SpdyProxyClientSocket::ApplySocketTag(const SocketTag& tag) {
   CHECK(false);
 }
 
-int SpdyProxyClientSocket::Read(IOBuffer* buf, int buf_len,
-                                const CompletionCallback& callback) {
+int SpdyProxyClientSocket::Read(IOBuffer* buf,
+                                int buf_len,
+                                CompletionOnceCallback callback) {
   DCHECK(read_callback_.is_null());
   DCHECK(!user_buffer_.get());
 
@@ -214,7 +215,7 @@ int SpdyProxyClientSocket::Read(IOBuffer* buf, int buf_len,
     user_buffer_ = buf;
     user_buffer_len_ = static_cast<size_t>(buf_len);
     DCHECK(!callback.is_null());
-    read_callback_ = callback;
+    read_callback_ = std::move(callback);
     return ERR_IO_PENDING;
   }
   user_buffer_ = NULL;
@@ -228,7 +229,7 @@ size_t SpdyProxyClientSocket::PopulateUserReadBuffer(char* data, size_t len) {
 int SpdyProxyClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
-    const CompletionCallback& callback,
+    CompletionOnceCallback callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(write_callback_.is_null());
   if (next_state_ != STATE_OPEN)
@@ -238,7 +239,7 @@ int SpdyProxyClientSocket::Write(
   spdy_stream_->SendData(buf, buf_len, MORE_DATA_TO_SEND);
   net_log_.AddByteTransferEvent(NetLogEventType::SOCKET_BYTES_SENT, buf_len,
                                 buf->data());
-  write_callback_ = callback;
+  write_callback_ = std::move(callback);
   write_buffer_len_ = buf_len;
   return ERR_IO_PENDING;
 }
@@ -273,9 +274,9 @@ void SpdyProxyClientSocket::LogBlockedTunnelResponse() const {
       /* is_https_proxy = */ true);
 }
 
-void SpdyProxyClientSocket::RunCallback(const CompletionCallback& callback,
+void SpdyProxyClientSocket::RunCallback(CompletionOnceCallback callback,
                                         int result) const {
-  callback.Run(result);
+  std::move(callback).Run(result);
 }
 
 void SpdyProxyClientSocket::OnIOComplete(int result) {
@@ -488,9 +489,9 @@ void SpdyProxyClientSocket::OnDataSent()  {
   // Proxy write callbacks result in deep callback chains. Post to allow the
   // stream's write callback chain to unwind (see crbug.com/355511).
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&SpdyProxyClientSocket::RunCallback,
-                            write_callback_weak_factory_.GetWeakPtr(),
-                            base::ResetAndReturn(&write_callback_), rv));
+      FROM_HERE, base::BindOnce(&SpdyProxyClientSocket::RunCallback,
+                                write_callback_weak_factory_.GetWeakPtr(),
+                                base::ResetAndReturn(&write_callback_), rv));
 }
 
 void SpdyProxyClientSocket::OnTrailers(const SpdyHeaderBlock& trailers) {
@@ -511,7 +512,7 @@ void SpdyProxyClientSocket::OnClose(int status)  {
     next_state_ = STATE_DISCONNECTED;
 
   base::WeakPtr<SpdyProxyClientSocket> weak_ptr = weak_factory_.GetWeakPtr();
-  CompletionCallback write_callback = write_callback_;
+  CompletionOnceCallback write_callback = std::move(write_callback_);
   write_callback_.Reset();
   write_buffer_len_ = 0;
 
@@ -526,7 +527,7 @@ void SpdyProxyClientSocket::OnClose(int status)  {
   }
   // This may have been deleted by read_callback_, so check first.
   if (weak_ptr.get() && !write_callback.is_null())
-    write_callback.Run(ERR_CONNECTION_CLOSED);
+    std::move(write_callback).Run(ERR_CONNECTION_CLOSED);
 }
 
 NetLogSource SpdyProxyClientSocket::source_dependency() const {

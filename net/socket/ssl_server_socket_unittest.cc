@@ -106,13 +106,13 @@ class FakeDataChannel {
         weak_factory_(this) {
   }
 
-  int Read(IOBuffer* buf, int buf_len, const CompletionCallback& callback) {
+  int Read(IOBuffer* buf, int buf_len, CompletionOnceCallback callback) {
     DCHECK(read_callback_.is_null());
     DCHECK(!read_buf_.get());
     if (closed_)
       return 0;
     if (data_.empty()) {
-      read_callback_ = callback;
+      read_callback_ = std::move(callback);
       read_buf_ = buf;
       read_buf_len_ = buf_len;
       return ERR_IO_PENDING;
@@ -122,14 +122,14 @@ class FakeDataChannel {
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) {
     DCHECK(write_callback_.is_null());
     if (closed_) {
       if (write_called_after_close_)
         return ERR_CONNECTION_RESET;
       write_called_after_close_ = true;
-      write_callback_ = callback;
+      write_callback_ = std::move(callback);
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(&FakeDataChannel::DoWriteCallback,
                                 weak_factory_.GetWeakPtr()));
@@ -195,11 +195,11 @@ class FakeDataChannel {
     return copied;
   }
 
-  CompletionCallback read_callback_;
+  CompletionOnceCallback read_callback_;
   scoped_refptr<IOBuffer> read_buf_;
   int read_buf_len_;
 
-  CompletionCallback write_callback_;
+  CompletionOnceCallback write_callback_;
 
   base::queue<scoped_refptr<DrainableIOBuffer>> data_;
 
@@ -226,19 +226,19 @@ class FakeSocket : public StreamSocket {
 
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override {
+           CompletionOnceCallback callback) override {
     // Read random number of bytes.
     buf_len = rand() % buf_len + 1;
-    return incoming_->Read(buf, buf_len, callback);
+    return incoming_->Read(buf, buf_len, std::move(callback));
   }
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     // Write random number of bytes.
     buf_len = rand() % buf_len + 1;
-    return outgoing_->Write(buf, buf_len, callback,
+    return outgoing_->Write(buf, buf_len, std::move(callback),
                             TRAFFIC_ANNOTATION_FOR_TESTS);
   }
 
@@ -246,7 +246,7 @@ class FakeSocket : public StreamSocket {
 
   int SetSendBufferSize(int32_t size) override { return OK; }
 
-  int Connect(const CompletionCallback& callback) override { return OK; }
+  int Connect(CompletionOnceCallback callback) override { return OK; }
 
   void Disconnect() override {
     incoming_->Close();

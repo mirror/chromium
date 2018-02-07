@@ -571,16 +571,16 @@ class MockClientSocket : public SSLClientSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override = 0;
+           CompletionOnceCallback callback) override = 0;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override = 0;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override = 0;
+  int Connect(CompletionOnceCallback callback) override = 0;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -612,8 +612,8 @@ class MockClientSocket : public SSLClientSocket {
 
  protected:
   ~MockClientSocket() override;
-  void RunCallbackAsync(const CompletionCallback& callback, int result);
-  void RunCallback(const CompletionCallback& callback, int result);
+  void RunCallbackAsync(CompletionOnceCallback callback, int result);
+  void RunCallback(CompletionOnceCallback callback, int result);
 
   // True if Connect completed successfully and Disconnect hasn't been called.
   bool connected_;
@@ -641,17 +641,17 @@ class MockTCPClientSocket : public MockClientSocket, public AsyncSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
-                  const CompletionCallback& callback) override;
+                  CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override;
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -677,7 +677,7 @@ class MockTCPClientSocket : public MockClientSocket, public AsyncSocket {
   void RetryRead(int rv);
   int ReadIfReadyImpl(IOBuffer* buf,
                       int buf_len,
-                      const CompletionCallback& callback);
+                      CompletionOnceCallback callback);
   AddressList addresses_;
 
   SocketDataProvider* data_;
@@ -693,13 +693,13 @@ class MockTCPClientSocket : public MockClientSocket, public AsyncSocket {
   // While an asynchronous read is pending, we save our user-buffer state.
   scoped_refptr<IOBuffer> pending_read_buf_;
   int pending_read_buf_len_;
-  CompletionCallback pending_read_callback_;
+  CompletionOnceCallback pending_read_callback_;
 
   // Non-null when a ReadIfReady() is pending.
-  CompletionCallback pending_read_if_ready_callback_;
+  CompletionOnceCallback pending_read_if_ready_callback_;
 
-  CompletionCallback pending_connect_callback_;
-  CompletionCallback pending_write_callback_;
+  CompletionOnceCallback pending_connect_callback_;
+  CompletionOnceCallback pending_write_callback_;
   bool was_used_to_convey_data_;
 
   // If true, ReadIfReady() is enabled; otherwise ReadIfReady() returns
@@ -722,17 +722,17 @@ class MockSSLClientSocket : public MockClientSocket, public AsyncSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
-                  const CompletionCallback& callback) override;
+                  CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override;
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -761,7 +761,7 @@ class MockSSLClientSocket : public MockClientSocket, public AsyncSocket {
 
  private:
   static void ConnectCallback(MockSSLClientSocket* ssl_client_socket,
-                              const CompletionCallback& callback,
+                              CompletionOnceCallback callback,
                               int rv);
 
   std::unique_ptr<ClientSocketHandle> transport_;
@@ -778,10 +778,10 @@ class MockUDPClientSocket : public DatagramClientSocket, public AsyncSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
@@ -814,8 +814,8 @@ class MockUDPClientSocket : public DatagramClientSocket, public AsyncSocket {
  private:
   int CompleteRead();
 
-  void RunCallbackAsync(const CompletionCallback& callback, int result);
-  void RunCallback(const CompletionCallback& callback, int result);
+  void RunCallbackAsync(CompletionOnceCallback callback, int result);
+  void RunCallback(CompletionOnceCallback callback, int result);
 
   bool connected_;
   SocketDataProvider* data_;
@@ -833,8 +833,8 @@ class MockUDPClientSocket : public DatagramClientSocket, public AsyncSocket {
   // While an asynchronous IO is pending, we save our user-buffer state.
   scoped_refptr<IOBuffer> pending_read_buf_;
   int pending_read_buf_len_;
-  CompletionCallback pending_read_callback_;
-  CompletionCallback pending_write_callback_;
+  CompletionOnceCallback pending_read_callback_;
+  CompletionOnceCallback pending_write_callback_;
 
   NetLogWithSource net_log_;
 
@@ -947,7 +947,7 @@ class MockTransportClientSocketPool : public TransportClientSocketPool {
     MockConnectJob(std::unique_ptr<StreamSocket> socket,
                    ClientSocketHandle* handle,
                    const SocketTag& socket_tag,
-                   const CompletionCallback& callback);
+                   CompletionOnceCallback callback);
     ~MockConnectJob();
 
     int Connect();
@@ -959,7 +959,7 @@ class MockTransportClientSocketPool : public TransportClientSocketPool {
     std::unique_ptr<StreamSocket> socket_;
     ClientSocketHandle* handle_;
     const SocketTag socket_tag_;
-    CompletionCallback user_callback_;
+    CompletionOnceCallback user_callback_;
 
     DISALLOW_COPY_AND_ASSIGN(MockConnectJob);
   };
@@ -1060,7 +1060,7 @@ class WrappedStreamSocket : public StreamSocket {
   ~WrappedStreamSocket() override;
 
   // StreamSocket implementation:
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -1082,13 +1082,13 @@ class WrappedStreamSocket : public StreamSocket {
   // Socket implementation:
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
-                  const CompletionCallback& callback) override;
+                  CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation =
                 NO_TRAFFIC_ANNOTATION_BUG_656607) override;
   int SetReceiveBufferSize(int32_t size) override;
@@ -1107,7 +1107,7 @@ class MockTaggingStreamSocket : public WrappedStreamSocket {
   ~MockTaggingStreamSocket() override {}
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void ApplySocketTag(const SocketTag& tag) override;
 
   // Returns false if socket's tag was changed after the socket was connected,

@@ -460,7 +460,8 @@ int HttpStreamParser::DoSendHeaders() {
 
   io_state_ = STATE_SEND_HEADERS_COMPLETE;
   return connection_->socket()->Write(
-      request_headers_.get(), bytes_remaining, io_callback_,
+      request_headers_.get(), bytes_remaining,
+      CompletionOnceCallback(io_callback_),
       NetworkTrafficAnnotationTag(traffic_annotation_));
 }
 

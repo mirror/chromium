@@ -544,7 +544,7 @@ class MockStreamSocket : public StreamSocket {
         read_buf_len_(0) {}
 
   // StreamSocket
-  int Connect(const CompletionCallback& callback) override {
+  int Connect(CompletionOnceCallback callback) override {
     return ERR_NOT_IMPLEMENTED;
   }
   void Disconnect() override {
@@ -584,14 +584,14 @@ class MockStreamSocket : public StreamSocket {
   // Socket
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override {
+           CompletionOnceCallback callback) override {
     if (!connected_) {
       return ERR_SOCKET_NOT_CONNECTED;
     }
     if (pending_read_data_.empty()) {
       read_buf_ = buf;
       read_buf_len_ = buf_len;
-      read_callback_ = callback;
+      read_callback_ = std::move(callback);
       return ERR_IO_PENDING;
     }
     DCHECK_GT(buf_len, 0);
@@ -604,7 +604,7 @@ class MockStreamSocket : public StreamSocket {
 
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     return ERR_NOT_IMPLEMENTED;
   }
@@ -632,7 +632,7 @@ class MockStreamSocket : public StreamSocket {
   bool connected_;
   scoped_refptr<IOBuffer> read_buf_;
   int read_buf_len_;
-  CompletionCallback read_callback_;
+  CompletionOnceCallback read_callback_;
   std::string pending_read_data_;
   NetLogWithSource net_log_;
 

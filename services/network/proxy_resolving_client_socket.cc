@@ -49,19 +49,19 @@ ProxyResolvingClientSocket::~ProxyResolvingClientSocket() {
 
 int ProxyResolvingClientSocket::Read(net::IOBuffer* buf,
                                      int buf_len,
-                                     const net::CompletionCallback& callback) {
+                                     net::CompletionOnceCallback callback) {
   if (transport_.get() && transport_->socket())
-    return transport_->socket()->Read(buf, buf_len, callback);
+    return transport_->socket()->Read(buf, buf_len, std::move(callback));
   return net::ERR_SOCKET_NOT_CONNECTED;
 }
 
 int ProxyResolvingClientSocket::Write(
     net::IOBuffer* buf,
     int buf_len,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (transport_.get() && transport_->socket())
-    return transport_->socket()->Write(buf, buf_len, callback,
+    return transport_->socket()->Write(buf, buf_len, std::move(callback),
                                        traffic_annotation);
   return net::ERR_SOCKET_NOT_CONNECTED;
 }
@@ -78,8 +78,7 @@ int ProxyResolvingClientSocket::SetSendBufferSize(int32_t size) {
   return net::ERR_SOCKET_NOT_CONNECTED;
 }
 
-int ProxyResolvingClientSocket::Connect(
-    const net::CompletionCallback& callback) {
+int ProxyResolvingClientSocket::Connect(net::CompletionOnceCallback callback) {
   DCHECK(user_connect_callback_.is_null());
 
   // First try to resolve the proxy.
@@ -99,7 +98,7 @@ int ProxyResolvingClientSocket::Connect(
         FROM_HERE, base::BindOnce(&ProxyResolvingClientSocket::ConnectToProxy,
                                   weak_factory_.GetWeakPtr(), net_error));
   }
-  user_connect_callback_ = callback;
+  user_connect_callback_ = std::move(callback);
   return net::ERR_IO_PENDING;
 }
 

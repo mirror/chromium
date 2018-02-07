@@ -91,7 +91,7 @@ NextProto QuicProxyClientSocket::GetProxyNegotiatedProtocol() const {
 // ERR_TUNNEL_CONNECTION_FAILED will be returned for any other status.
 // In any of these cases, Read() may be called to retrieve the HTTP
 // response body.  Any other return values should be considered fatal.
-int QuicProxyClientSocket::Connect(const CompletionCallback& callback) {
+int QuicProxyClientSocket::Connect(CompletionOnceCallback callback) {
   DCHECK(connect_callback_.is_null());
   if (!stream_->IsOpen())
     return ERR_CONNECTION_CLOSED;
@@ -101,7 +101,7 @@ int QuicProxyClientSocket::Connect(const CompletionCallback& callback) {
 
   int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING)
-    connect_callback_ = callback;
+    connect_callback_ = std::move(callback);
   return rv;
 }
 
@@ -169,7 +169,7 @@ void QuicProxyClientSocket::ApplySocketTag(const SocketTag& tag) {
 
 int QuicProxyClientSocket::Read(IOBuffer* buf,
                                 int buf_len,
-                                const CompletionCallback& callback) {
+                                CompletionOnceCallback callback) {
   DCHECK(connect_callback_.is_null());
   DCHECK(read_callback_.is_null());
   DCHECK(!read_buf_);
@@ -186,7 +186,7 @@ int QuicProxyClientSocket::Read(IOBuffer* buf,
                                         weak_factory_.GetWeakPtr()));
 
   if (rv == ERR_IO_PENDING) {
-    read_callback_ = callback;
+    read_callback_ = std::move(callback);
     read_buf_ = buf;
   } else if (rv == 0) {
     net_log_.AddByteTransferEvent(NetLogEventType::SOCKET_BYTES_RECEIVED, 0,
@@ -216,7 +216,7 @@ void QuicProxyClientSocket::OnReadComplete(int rv) {
 int QuicProxyClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
-    const CompletionCallback& callback,
+    CompletionOnceCallback callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(connect_callback_.is_null());
   DCHECK(write_callback_.is_null());
@@ -235,7 +235,7 @@ int QuicProxyClientSocket::Write(
     return buf_len;
 
   if (rv == ERR_IO_PENDING) {
-    write_callback_ = callback;
+    write_callback_ = std::move(callback);
     write_buf_len_ = buf_len;
   }
 

@@ -94,7 +94,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
   NextProto GetProxyNegotiatedProtocol() const override;
 
   // StreamSocket implementation.
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -114,10 +114,10 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
@@ -212,7 +212,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketWrapper
   // Called when a connection is established. Also used when restarting with
   // AUTH, which will invoke this when ready to restart, after reconnecting
   // if necessary.
-  CompletionCallback connect_callback_;
+  CompletionOnceCallback connect_callback_;
 
   SpdyStreamRequest spdy_stream_request_;
 

@@ -39,13 +39,13 @@ class TestUDPClientSocket : public DatagramClientSocket {
 
   ~TestUDPClientSocket() override = default;
 
-  int Read(IOBuffer*, int, const CompletionCallback&) override {
+  int Read(IOBuffer*, int, CompletionOnceCallback) override {
     NOTIMPLEMENTED();
     return OK;
   }
   int Write(IOBuffer*,
             int,
-            const CompletionCallback&,
+            CompletionOnceCallback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override {
     NOTIMPLEMENTED();
     return OK;

@@ -83,16 +83,16 @@ void UDPClientSocket::ApplySocketTag(const SocketTag& tag) {
 
 int UDPClientSocket::Read(IOBuffer* buf,
                           int buf_len,
-                          const CompletionCallback& callback) {
-  return socket_.Read(buf, buf_len, callback);
+                          CompletionOnceCallback callback) {
+  return socket_.Read(buf, buf_len, std::move(callback));
 }
 
 int UDPClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
-    const CompletionCallback& callback,
+    CompletionOnceCallback callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
-  return socket_.Write(buf, buf_len, callback, traffic_annotation);
+  return socket_.Write(buf, buf_len, std::move(callback), traffic_annotation);
 }
 
 void UDPClientSocket::Close() {
