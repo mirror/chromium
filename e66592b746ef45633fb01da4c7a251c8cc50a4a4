@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18595c14_389cf677",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0635ca_d4c0ea31",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0fe8e4b_81e67c37",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 16
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "081db051_133c2471",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "It is because this is in the anonymous namespace.",
+      "parentUuid": "d0fe8e4b_81e67c37",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 36
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c095ef46_728cb24d",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 16
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-27T02:01:38Z",
       "side": 1,
       "message": "no need to use weak ptrs with mojo binding callbacks. invocation is already bounded by the lifetime of the thing to which they\u0027re attached.",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f68284a_9f49a713",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Am I correct that I do need a WeakPtr for the call to GetMimeTypeFromFile below? If so then is there any benefit to switching this one call from `weak_factory_.GetWeakPtr()` to `base::Unretained(this)`?\n\nI switched it, but just curious.",
+      "parentUuid": "c095ef46_728cb24d",
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "848a586b_a7746d3e",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Depending on the platform it\u0027s mostly looking at the filename only. On Windows it will make a registry call. However, it is running with the base::MayBlock() trait which, if I understand correctly, is intended for blocking file I/O. Do you still want it changed, or is it OK as-is.\n\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?type\u003dcs\u0026q\u003dMayBlock\u0026sq\u003dpackage:chromium\u0026l\u003d86",
+      "parentUuid": "ec934f17_3449400d",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdbd9bce_3eeeb8e3",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 16
@@ -96,6 +180,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc543ba4_c61fb0ce",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdbd9bce_3eeeb8e3",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "1cc18846_2a02e577",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6130b73_d9d75385",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "310b35b8_d45f7fd1",
         "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
         "patchSetId": 16
@@ -130,6 +250,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48e9aeb_87739835",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310b35b8_d45f7fd1",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "cca5fc02_bcbce796",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Good point. This function was a refactoring of MaybeCreateURLRequestResourceBundleJob above which also doesn\u0027t use relative_path. Looks like it\u0027s only calling that function to determine if directory_path is a child of resources_path, so I simplified this function accordingly.\n\nAlso, I improved the names (hopefully you\u0027ll agree), and also this function is split into GetBundleResourcePath and LoadResourceFromResourceBundle.",
+      "parentUuid": "88143fb6_bf66e50e",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 24
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "062f9c6b_a58fa5c4",
         "filename": "chrome/browser/extensions/chrome_url_request_util.h",
         "patchSetId": 16
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "e139d6b4_26ecabc6",
+        "filename": "chrome/browser/extensions/chrome_url_request_util.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Yeah, good point. I couldn\u0027t think of a nice way to deal with the \"optionally take ownership\" problem, so I decided to split it up into two functions. I hope that\u0027s more clear.",
+      "parentUuid": "062f9c6b_a58fa5c4",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc5addd5_53bc27a5",
         "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
         "patchSetId": 16
@@ -193,6 +379,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55578a5_b6918d32",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done. It\u0027s only used one place, so I am tempted to move this down below, but decided to keep it as is.",
+      "parentUuid": "bc5addd5_53bc27a5",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "74bdd2da_3eea0aad",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61a8f58_ef090409",
+      "range": {
+        "startLine": 218,
+        "startChar": 39,
+        "endLine": 218,
+        "endChar": 45
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1be1c8ea_6f9f1a8b",
         "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
         "patchSetId": 16
@@ -233,6 +461,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa6113f_0e3beeca",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1be1c8ea_6f9f1a8b",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "7574b066_6624298d",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Yes, I think so. done.",
+      "parentUuid": "47183707_e58b9259",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "859df61b_f31bca01",
         "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
         "patchSetId": 16
@@ -267,6 +531,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcf0a4b_d2edb790",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859df61b_f31bca01",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +575,30 @@
     },
     {
       "key": {
+        "uuid": "b3b50839_d63ce04c",
+        "filename": "chrome/browser/extensions/extension_protocols_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Yes, most could - thx.",
+      "parentUuid": "6ab7720a_6dfde58a",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 51
+      },
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5709a3c8_5df1bbd1",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 16
@@ -307,6 +613,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee764648_53d50beb",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5709a3c8_5df1bbd1",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +663,24 @@
       "side": 1,
       "message": "A few quick notes:\n- ProcessMap is a thread-agnostic class, and we set up instances on both the UI (as a keyed service) and IO (as a member of the info map) threads.  This is bad, but it\u0027s what we have.  However, it\u0027s not entirely thread-unsafe.\n- With this, I think that AllowExtensionResourceLoad really can (as it documents) be called on either the IO or UI threads, but you need to be careful which constructs you pass in.\n- Any information on the IO thread in the InfoMap should be available on the UI thread.  There\u0027s no reason we should need a thread hop here to get extension info.",
       "parentUuid": "ccc6d3e7_e313ec9e",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655f90b8_3888d03f",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T14:51:48Z",
+      "side": 1,
+      "message": "Thx Devlin:\n\nAgreed with your point #3 and the info being available in the UI thread. But, if I\u0027m correct, the ExtensionProtocolsTest do not register the extensions they create with the objects in the UI thread (e.g. ExtensionRegistry, BrowserContext, etc.).\n\nI see two ways to solve this:\n\n1) Have ExtensionProtocolsTest became a ExtensionBrowserTest which would properly register these extensions.\n\n2) Create a test helper (see patch set 15), which is ugly, but I believe will solve this problem.\n\nIf I\u0027m missing an easy way to avoid using the InfoMap in ExtensionURLLoaderFactory w/o having to refactor the extension protocols tests please let me know.",
+      "parentUuid": "58c1eac5_cd0aaaaf",
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
