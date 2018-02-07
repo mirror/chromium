@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "7edbdf71_2497be7d",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T22:42:03Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "faa7298a_d491541d",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b8a747_696d83cb",
         "filename": "media/mojo/README.md",
         "patchSetId": 3
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "ab49f337_e1bdc5e0",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T22:42:03Z",
+      "side": 1,
+      "message": "I can put those injection points in the Adoption section for all the cases there.",
+      "parentUuid": "b93407c0_ebb1dc35",
+      "range": {
+        "startLine": 144,
+        "startChar": 59,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0408b7b6_b262bccf",
         "filename": "media/mojo/README.md",
         "patchSetId": 3
@@ -151,6 +199,24 @@
     },
     {
       "key": {
+        "uuid": "93884ae8_ddac0953",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T22:42:03Z",
+      "side": 1,
+      "message": "Then it\u0027ll be harder to connect (SetCdm()) the media component (e.g. decoder) with the CDM since they run in two different services (or even processes).",
+      "parentUuid": "e9e0fc89_66341507",
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e3a46e5_a48b77c1",
         "filename": "media/mojo/README.md",
         "patchSetId": 3
@@ -174,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "8bf4b03f_fb7938c4",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T22:42:03Z",
+      "side": 1,
+      "message": "This is actually MojoCdmServiceContext:\n\nhttps://cs.chromium.org/chromium/src/media/mojo/services/mojo_cdm_service_context.h",
+      "parentUuid": "2e3a46e5_a48b77c1",
+      "range": {
+        "startLine": 242,
+        "startChar": 1,
+        "endLine": 242,
+        "endChar": 22
+      },
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f81f893_b061786e",
         "filename": "media/mojo/README.md",
         "patchSetId": 3
@@ -185,6 +275,24 @@
       "writtenOn": "2018-02-07T22:12:01Z",
       "side": 1,
       "message": "So if I understand this section correctly, all CDM IDs are essentially namespaced to CdmContext they live in?",
+      "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9778a3f_00272f3d",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T22:42:03Z",
+      "side": 1,
+      "message": "All CDM IDs are namespaced to the MojoCdmServiceContext that is owned by the MediaService. Note that there is only one MediaService per process (guaranteed by the service manager), and in each MediaService there\u0027s only one MojoCdmServiceContext member. But I don\u0027t like to depend on so many assumptions, which is another reason I want to switch to use base::UnguessableToken for the CDM ID.",
+      "parentUuid": "2f81f893_b061786e",
       "revId": "da684b34cccd72a7c85604a36d17827df1ac5452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
