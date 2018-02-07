@@ -16,6 +16,24 @@
       "revId": "7f85b9371bfe873faa12eb254032b373980f4e90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a19e82_1d38f9b5",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1263624
+      },
+      "writtenOn": "2018-02-07T22:15:44Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "0ec62749_e967f7f8",
+      "revId": "7f85b9371bfe873faa12eb254032b373980f4e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
