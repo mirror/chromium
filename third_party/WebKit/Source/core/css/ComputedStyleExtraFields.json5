@@ -85,6 +85,13 @@
       default_value: "g_null_atom",
     },
     {
+      name: "DisplayLayoutCustomState",
+      field_template: "keyword",
+      field_group: "*",
+      keywords: ["unloaded", "block"],
+      default_value: "unloaded",
+    },
+    {
       name: "OriginalDisplay",
       field_template: "keyword",
       type_name: "EDisplay",

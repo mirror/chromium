@@ -20,6 +20,7 @@ extern const char kAttribute[];
 extern const char kCleanupPlaceholderStyles[];
 extern const char kControlValue[];
 extern const char kControl[];
+extern const char kCSSLayoutAPIRegistration[];
 extern const char kDeclarativeContent[];
 extern const char kDesignMode[];
 extern const char kFontSizeChange[];

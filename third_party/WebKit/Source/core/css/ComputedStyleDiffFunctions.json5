@@ -155,9 +155,17 @@
             field_dependencies: ["float"]
           },
           {
+            method: "DisplayLayoutCustomState()",
+            field_dependencies: ["DisplayLayoutCustomState"]
+          },
+          {
+            method: "DisplayLayoutCustomName()",
+            field_dependencies: ["DisplayLayoutCustomName"]
+          },
+          {
             method: "OriginalDisplay()",
             field_dependencies: ["OriginalDisplay"]
-          }
+          },
         ],
         predicates_to_test: [
           {
