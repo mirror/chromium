@@ -349,8 +349,7 @@ void ShellContentBrowserClient::OpenURL(
                                       gfx::Size())->web_contents());
 }
 
-ResourceDispatcherHostLoginDelegate*
-ShellContentBrowserClient::CreateLoginDelegate(
+LoginDelegate* ShellContentBrowserClient::CreateLoginDelegate(
     net::AuthChallengeInfo* auth_info,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     bool is_main_frame,

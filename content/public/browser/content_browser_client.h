@@ -136,6 +136,7 @@ class BrowserURLHandler;
 class ClientCertificateDelegate;
 class ControllerPresentationServiceDelegate;
 class DevToolsManagerDelegate;
+class LoginDelegate;
 class MediaObserver;
 class MemoryCoordinatorDelegate;
 class NavigationHandle;
@@ -147,7 +148,6 @@ class RenderFrameHost;
 class RenderProcessHost;
 class RenderViewHost;
 class ResourceContext;
-class ResourceDispatcherHostLoginDelegate;
 class SiteInstance;
 class SpeechRecognitionManagerDelegate;
 class StoragePartition;
@@ -1062,9 +1062,9 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(
       ResourceContext* resource_context);
 
-  // Creates a ResourceDispatcherHostLoginDelegate that asks the user for a
+  // Creates a LoginDelegate that asks the user for a
   // username and password.
-  virtual ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+  virtual LoginDelegate* CreateLoginDelegate(
       net::AuthChallengeInfo* auth_info,
       content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
       bool is_main_frame,

@@ -660,8 +660,7 @@ bool AwContentBrowserClient::ShouldCreateTaskScheduler() {
   return g_should_create_task_scheduler;
 }
 
-content::ResourceDispatcherHostLoginDelegate*
-AwContentBrowserClient::CreateLoginDelegate(
+content::LoginDelegate* AwContentBrowserClient::CreateLoginDelegate(
     net::AuthChallengeInfo* auth_info,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     bool is_main_frame,

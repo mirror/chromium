@@ -488,7 +488,7 @@ class ResourceLoaderTest : public testing::Test,
   }
 
   // ResourceLoaderDelegate:
-  ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+  LoginDelegate* CreateLoginDelegate(
       ResourceLoader* loader,
       net::AuthChallengeInfo* auth_info) override {
     return nullptr;

@@ -126,7 +126,7 @@
 
 using content::BrowserThread;
 using content::RenderViewHost;
-using content::ResourceDispatcherHostLoginDelegate;
+using content::LoginDelegate;
 using content::ResourceRequestInfo;
 using content::ResourceType;
 

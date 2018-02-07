@@ -18,12 +18,12 @@ struct ResourceResponse;
 }
 
 namespace content {
-class ResourceDispatcherHostLoginDelegate;
+class LoginDelegate;
 class ResourceLoader;
 
 class CONTENT_EXPORT ResourceLoaderDelegate {
  public:
-  virtual ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+  virtual LoginDelegate* CreateLoginDelegate(
       ResourceLoader* loader,
       net::AuthChallengeInfo* auth_info) = 0;
 

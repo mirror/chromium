@@ -197,8 +197,7 @@ void LayoutTestContentBrowserClient::ExposeInterfacesToFrame(
   registry->AddInterface(base::Bind(&BindLayoutTestHelper));
 }
 
-ResourceDispatcherHostLoginDelegate*
-LayoutTestContentBrowserClient::CreateLoginDelegate(
+LoginDelegate* LayoutTestContentBrowserClient::CreateLoginDelegate(
     net::AuthChallengeInfo* auth_info,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     bool is_main_frame,

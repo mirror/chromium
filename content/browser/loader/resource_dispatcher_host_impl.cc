@@ -76,10 +76,10 @@
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/login_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
-#include "content/public/browser/resource_dispatcher_host_login_delegate.h"
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/browser/stream_info.h"
@@ -575,8 +575,7 @@ ResourceDispatcherHostImpl::MaybeInterceptAsStream(
   return std::move(handler);
 }
 
-ResourceDispatcherHostLoginDelegate*
-ResourceDispatcherHostImpl::CreateLoginDelegate(
+LoginDelegate* ResourceDispatcherHostImpl::CreateLoginDelegate(
     ResourceLoader* loader,
     net::AuthChallengeInfo* auth_info) {
   if (!delegate_)
@@ -603,7 +602,7 @@ ResourceDispatcherHostImpl::CreateLoginDelegate(
 
   GURL url = request->url();
 
-  ResourceDispatcherHostLoginDelegate* login_delegate =
+  LoginDelegate* login_delegate =
       GetContentClient()->browser()->CreateLoginDelegate(
           auth_info, web_contents_getter, is_main_frame, url,
           (count->auth_attempts_ == 0));

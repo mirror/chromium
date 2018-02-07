@@ -165,7 +165,7 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
                                 bool is_main_frame,
                                 ui::PageTransition transition) override;
   bool ShouldCreateTaskScheduler() override;
-  content::ResourceDispatcherHostLoginDelegate* CreateLoginDelegate(
+  content::LoginDelegate* CreateLoginDelegate(
       net::AuthChallengeInfo* auth_info,
       content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
       bool is_main_frame,
