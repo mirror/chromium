@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f0fcc69d_8d3797a6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-02-07T00:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73bd023d_8802b5e7",
+      "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d29127_c7d9fdb2",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/InspectorView.js",
         "patchSetId": 2
@@ -105,6 +123,24 @@
       "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014ac808_3b63021b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/InspectorView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-02-07T00:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7fbdb7b_161e32fe",
+      "revId": "82ecb09640d1a21820aab3b99025c661fc7f3bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
