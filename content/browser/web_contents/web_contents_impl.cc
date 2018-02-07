@@ -4021,6 +4021,18 @@ void WebContentsImpl::SubresourceResponseStarted(const GURL& url,
   SetNotWaitingForResponse();
 }
 
+void WebContentsImpl::PrintSubframe(const gfx::Rect& rect,
+                                    int document_cookie,
+                                    int page_number,
+                                    RenderFrameHost* render_frame_host) {
+  // If there is no delegate such as in tests or during deletion, do nothing.
+  if (!delegate_)
+    return;
+
+  delegate_->PrintSubframe(this, rect, document_cookie, page_number,
+                           render_frame_host);
+}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 WebContentsImpl::GetJavaRenderFrameHostDelegate() {
