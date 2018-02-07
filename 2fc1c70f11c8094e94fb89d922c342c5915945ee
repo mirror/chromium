@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab3480d2_29ae7f5c",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "nit: texture_target should be GLenum not bool",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8233483b_92dee14b",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "nit: GLenum instead of uint32_t",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dafaaaa_7e9b28bc",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "nit: GLuint instead of GLenum",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f3bae6_b8e2da97",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "Creating a sync token per raster buffer here might be ok:\n1. The cost of acquiring GpuChannelHost lock (for the implied OrderingBarrier in GenSyncToken) is likely dwarfed by other things like generating a mailbox.\n2. In a steady state where we\u0027re only reusing resources (hopefully), we\u0027ll not generate any sync token. Which means compositor context will deschedule other contexts less, which might be a win.\n\nSo synchronization will boil down to two cases:\n1. first use, compositor_sync_token_ is set here and waited on worker context.\n2. subsequent uses, returned_sync_token_ is set by ResourcePool and waited on worker context.\n\nDoing this would mean we can get rid of RBP::OrderingBarrier and the pending_raster_buffers_ tracking.",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a9320c_42977e5b",
+        "filename": "cc/raster/gpu_raster_buffer_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "Can you separate this out into two vars - compositor_sync_token (worker waits) and mailbox_sync_token (worker produces)? The same var used for two things has been the source of much confusion. Also see the related comment in gpu_raster_buffer_provider.cc.",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a63524_0781a279",
+        "filename": "cc/resources/resource_pool.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2018-02-07T23:45:19Z",
+      "side": 1,
+      "message": "nit: GLenum instead of uint32_t",
+      "revId": "2fc1c70f11c8094e94fb89d922c342c5915945ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
