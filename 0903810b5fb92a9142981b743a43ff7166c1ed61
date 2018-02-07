@@ -50,6 +50,24 @@
       "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dacf91f_708d007f",
+        "filename": "ui/events/event.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T22:34:22Z",
+      "side": 1,
+      "message": "Would EF_PrePlatformIntercepted | PrePlatformCaptured be too generic?  I think that describes how it was created (similar to IsSynthesized)",
+      "parentUuid": "c08df936_bb059391",
+      "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
