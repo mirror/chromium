@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ad31dad_1f5cda6b",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2018-02-07T00:31:00Z",
+      "side": 1,
+      "message": "Can I ask you to merge this with L2026~L2034?",
+      "revId": "ac74c3efdeb18db6b91cb0ae07462865bcdc66c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
