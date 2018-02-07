@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 416
+#   For your editing convenience: highest ID currently used: 418
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -11128,6 +11128,48 @@
       If this policy is set to 'PasswordProtectionRiskOnPasswordReuse', password protection at-risk account flagging will be triggered when users reuse google passwords on any non-whitelisted sites.
       If this policy is set to 'PasswordProtectionRiskOnPhishingReuse', password protection at-risk account flagging will be triggered when users reuse google passwords on phishing sites.
       If this policy is left unset, password protection at-risk account flagging will be triggered when users reuse google passwords on phishing sites but the user can change it.''',
+    },
+    {
+      'name': 'PasswordProtectionEmailDomains',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': ['chrome.*:66-', 'chrome_os:66-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': ['mydomain.com', 'myuniversity.edu'],
+      'id': 417,
+      'caption': '''Configure the GSUITE domain names (without @) for password protection.''',
+      'tags': [],
+      'desc': '''Configure the GSUITE domain names (without @) that will be protected by password protection service.
+
+      If this setting is enabled, then password protection service can monitor the reuses of passwords of these specified domains.
+      If this setting is disabled or not set, then default password protection is applied.''',
+    },
+    {
+      'name': 'SafeBrowsingWhitelistDomains',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': ['chrome.*:66-', 'chrome_os:66-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': ['mydomain.com', 'myuniversity.edu'],
+      'id': 418,
+      'caption': '''Configure the list of domains on which Safe Browsing will not trigger warnings.''',
+      'tags': [],
+      'desc': '''Configure the list of domains on which Safe Browsing will trust. That means Safe Browsing will not check for dangerous resources on these domains, or trigger warnings.
+
+      If this setting is enabled, then Safe Browsing will trust these domains.
+      If this setting is disabled or not set, then default Safe Browsing protection is applied to all resources.''',
     },
   ],
 

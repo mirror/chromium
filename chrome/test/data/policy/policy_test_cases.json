@@ -3518,6 +3518,26 @@
     "note": "Chrome OS device policy used by authpolicyd only, not used in Chrome"
   },
 
+  "PasswordProtectionEmailDomains": {
+    "os": ["win", "linux", "mac", "chromeos"],
+    "test_policy": {
+      "PasswordProtectionEmailDomains": ["mydomain1.com", "mydomain2.com"]
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.password_protection_email_domains"}
+    ]
+  },
+
+  "SafeBrowsingWhitelistDomains": {
+    "os": ["win", "linux", "mac", "chromeos", "android"],
+    "test_policy": {
+      "SafeBrowsingWhitelistDomains": ["mydomain.com", "mydomain.net"]
+    },
+    "pref_mappings": [
+      { "pref": "safe_browsing.safe_browsing_whitelist_domains"}
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
