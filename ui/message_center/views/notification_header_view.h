@@ -40,6 +40,8 @@ class NotificationHeaderView : public views::Button {
   void ClearOverflowIndicator();
   void ClearTimestamp();
   bool IsExpandButtonEnabled();
+  void SetSubpixelRenderingEnabled();
+  void SetSubpixelRenderingDisabled();
 
   // Button override:
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
