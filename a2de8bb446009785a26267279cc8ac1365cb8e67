@@ -51,6 +51,24 @@
       "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca67390f_645d3744",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T01:11:01Z",
+      "side": 1,
+      "message": "Load seems to always post the callback task, but your second sentence was the point - we should ensure that the callback is already async at this point (as this is just a wrapper around Load callback that drops the error).",
+      "parentUuid": "fbff09c4_22bbc1e5",
+      "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
