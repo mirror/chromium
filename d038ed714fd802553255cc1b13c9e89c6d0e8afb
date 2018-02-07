@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e322dd8_47f9fc94",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T18:33:03Z",
+      "side": 1,
+      "message": "Ya it should move, but I would like to defer it to another CL",
+      "parentUuid": "806ee3f7_5e615ff2",
+      "revId": "d038ed714fd802553255cc1b13c9e89c6d0e8afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e86f4489_449c9126",
         "filename": "components/viz/common/gpu/texture_allocation.cc",
         "patchSetId": 15
