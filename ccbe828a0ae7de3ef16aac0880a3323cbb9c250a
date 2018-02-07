@@ -158,6 +158,24 @@
       "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3c37de0_0cd5d4b8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-02-07T10:01:07Z",
+      "side": 1,
+      "message": "What you said is correct, but it is also correct that we don\u0027t need handling |extended_attributes| here, because those [TreatNullAs] should be taken into annotated types in the parser.\nhttps://cs.chromium.org/chromium/src/tools/idl_parser/idl_parser.py?l\u003d146",
+      "parentUuid": "6d54ebb8_55d7f4a2",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
