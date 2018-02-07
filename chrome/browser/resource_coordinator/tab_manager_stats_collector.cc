@@ -193,7 +193,7 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
     base::TimeDelta queueing_time) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  if (!contents->IsVisible())
+  if (contents->GetVisibility() != content::Visibility::VISIBLE)
     return;
 
   if (IsInOverlappedSession())
