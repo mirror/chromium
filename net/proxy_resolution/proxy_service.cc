@@ -34,6 +34,7 @@
 #include "net/proxy_resolution/proxy_config_service_fixed.h"
 #include "net/proxy_resolution/proxy_resolver.h"
 #include "net/proxy_resolution/proxy_resolver_factory.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "url/gurl.h"
 
@@ -173,7 +174,6 @@ class ProxyConfigServiceDirect : public ProxyConfigService {
   void RemoveObserver(Observer* observer) override {}
   ConfigAvailability GetLatestProxyConfig(ProxyConfig* config) override {
     *config = ProxyConfig::CreateDirect();
-    config->set_source(PROXY_CONFIG_SOURCE_UNKNOWN);
     return CONFIG_VALID;
   }
 };
@@ -796,7 +796,6 @@ class ProxyResolutionService::Request
         proxy_delegate_(proxy_delegate),
         resolve_job_(nullptr),
         config_id_(ProxyConfig::kInvalidConfigID),
-        config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
         net_log_(net_log),
         creation_time_(TimeTicks::Now()) {
     DCHECK(!user_callback.is_null());
@@ -810,7 +809,8 @@ class ProxyResolutionService::Request
     DCHECK(service_->config_.is_valid());
 
     config_id_ = service_->config_.id();
-    config_source_ = service_->config_.source();
+    traffic_annotation_ = net::MutableNetworkTrafficAnnotationTag(
+        service_->config_.traffic_annotation());
 
     return resolver()->GetProxyForURL(
         url_, results_,
@@ -874,14 +874,14 @@ class ProxyResolutionService::Request
     // Make a note in the results which configuration was in use at the
     // time of the resolve.
     results_->config_id_ = config_id_;
-    results_->config_source_ = config_source_;
+    results_->traffic_annotation_ = traffic_annotation_;
     results_->did_use_pac_script_ = true;
     results_->proxy_resolve_start_time_ = creation_time_;
     results_->proxy_resolve_end_time_ = TimeTicks::Now();
 
     // Reset the state associated with in-progress-resolve.
     config_id_ = ProxyConfig::kInvalidConfigID;
-    config_source_ = PROXY_CONFIG_SOURCE_UNKNOWN;
+    traffic_annotation_.reset();
 
     return rv;
   }
@@ -925,7 +925,8 @@ class ProxyResolutionService::Request
   ProxyDelegate* proxy_delegate_;
   std::unique_ptr<ProxyResolver::Request> resolve_job_;
   ProxyConfig::ID config_id_;  // The config id when the resolve was started.
-  ProxyConfigSource config_source_;  // The source of proxy settings.
+  net::MutableNetworkTrafficAnnotationTag
+      traffic_annotation_;  // The traffic anntotation of proxy settings.
   NetLogWithSource net_log_;
   // Time when the request was created.  Stored here rather than in |results_|
   // because the time in |results_| will be cleared.
@@ -1131,7 +1132,7 @@ int ProxyResolutionService::TryToCompleteSynchronously(
 
   // Use the manual proxy settings.
   config_.proxy_rules().Apply(url, result);
-  result->config_source_ = config_.source();
+  result->set_traffic_annotation(config_.traffic_annotation());
   result->config_id_ = config_.id();
 
   return OK;
@@ -1253,7 +1254,7 @@ void ProxyResolutionService::OnInitProxyResolverComplete(int result) {
   // TODO(eroman): Make this ID unique in the case where configuration changed
   //               due to ProxyScriptDeciderPoller.
   config_.set_id(fetched_config_.id());
-  config_.set_source(fetched_config_.source());
+  config_.set_traffic_annotation(fetched_config_.traffic_annotation());
 
   // Resume any requests which we had to defer until the PAC script was
   // downloaded.

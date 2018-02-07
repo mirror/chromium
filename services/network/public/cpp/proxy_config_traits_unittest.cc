@@ -6,6 +6,7 @@
 
 #include "net/proxy_resolution/proxy_bypass_rules.h"
 #include "net/proxy_resolution/proxy_config.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/interfaces/proxy_config.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -22,22 +23,22 @@ bool TestProxyConfigRoundTrip(net::ProxyConfig& original_config) {
 
   return original_config.Equals(copied_config) &&
          original_config.id() == copied_config.id() &&
-         original_config.source() == copied_config.source() &&
+         original_config.traffic_annotation() ==
+             copied_config.traffic_annotation() &&
          original_config.is_valid() == copied_config.is_valid();
 }
 
 TEST(ProxyConfigTraitsTest, AutoDetect) {
   net::ProxyConfig proxy_config = net::ProxyConfig::CreateAutoDetect();
   proxy_config.set_id(1);
-  proxy_config.set_source(net::ProxyConfigSource::PROXY_CONFIG_SOURCE_KDE);
+  proxy_config.set_traffic_annotation(TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(TestProxyConfigRoundTrip(proxy_config));
 }
 
 TEST(ProxyConfigTraitsTest, Direct) {
   net::ProxyConfig proxy_config = net::ProxyConfig::CreateDirect();
   proxy_config.set_id(2);
-  proxy_config.set_source(
-      net::ProxyConfigSource::PROXY_CONFIG_SOURCE_GSETTINGS);
+  proxy_config.set_traffic_annotation(TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_TRUE(TestProxyConfigRoundTrip(proxy_config));
 }
 
