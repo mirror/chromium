@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcdc4822_d5aa40e9",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-02-07T06:22:47Z",
+      "side": 1,
+      "message": "IMO, this should be EXPECT_TRUE(), not ASSERT_TRUE().\nPlease refer to https://testing.googleblog.com/2008/07/tott-expect-vs-assert.html",
+      "revId": "e0051843b0d0f6dec632075e9726590a523d501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f104cbad_4e8e6c3c",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-02-07T06:22:47Z",
+      "side": 1,
+      "message": "Do we need \"this-\u003e\" ?",
+      "revId": "e0051843b0d0f6dec632075e9726590a523d501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
