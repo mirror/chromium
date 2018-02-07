@@ -16,6 +16,17 @@ group("test") {
   ]
 }
 
+group("webview_cts_tests") {
+  deps = [
+    "//android_webview/system_webview_apk",
+  ]
+
+  data = [
+    # Needed for isolate script to execute.
+    "//android_webview/tools/run_cts.py",
+  ]
+}
+
 android_apk("webview_instrumentation_apk") {
   deps = [
     ":android_webview_apk_assets",
