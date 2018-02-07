@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52bfa5bf_bb090629",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T15:59:32Z",
+      "side": 1,
+      "message": "optional nit: move all these literal inits to the header decls.",
+      "revId": "e0f6576d7e6c96813d124f3d1981c02b8170f42f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
