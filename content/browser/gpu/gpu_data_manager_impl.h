@@ -84,6 +84,8 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   bool HardwareAccelerationEnabled() const override;
   void GetDisabledExtensions(std::string* disabled_extensions) const override;
   void SetGpuInfo(const gpu::GPUInfo& gpu_info) override;
+  void GetDisabledWebGLExtensions(
+      std::string* disabled_webgl_extensions) const override;
 
   bool IsGpuFeatureInfoAvailable() const;
   gpu::GpuFeatureStatus GetFeatureStatus(gpu::GpuFeatureType feature) const;

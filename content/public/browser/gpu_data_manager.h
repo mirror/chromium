@@ -76,6 +76,10 @@ class GpuDataManager {
   // the backlists decision and applying commandline switches.
   virtual void SetGpuInfo(const gpu::GPUInfo& gpu_info) = 0;
 
+  // WebGL extensions that are currently disabled.
+  virtual void GetDisabledWebGLExtensions(
+      std::string* disabled_webgl_extensions) const = 0;
+
  protected:
   virtual ~GpuDataManager() {}
 };
