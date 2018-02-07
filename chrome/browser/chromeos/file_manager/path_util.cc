@@ -6,6 +6,8 @@
 
 #include "base/logging.h"
 #include "base/sys_info.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h"
 #include "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util.h"
 #include "chrome/browser/chromeos/fileapi/external_file_url_util.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -87,19 +89,21 @@ std::string GetDownloadsMountPointName(Profile* profile) {
   return net::EscapeQueryParamValue(kDownloadsFolderName + id, false);
 }
 
+Profile* GetPrimaryProfile() {
+  if (!user_manager::UserManager::IsInitialized())
+    return nullptr;
+  const auto* primary_user = user_manager::UserManager::Get()->GetPrimaryUser();
+  if (!primary_user)
+    return nullptr;
+  return chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+}
+
 bool ConvertPathToArcUrl(const base::FilePath& path, GURL* arc_url_out) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   // Obtain the primary profile. This information is required because currently
   // only the file systems for the primary profile is exposed to ARC.
-  if (!user_manager::UserManager::IsInitialized())
-    return false;
-  const user_manager::User* primary_user =
-      user_manager::UserManager::Get()->GetPrimaryUser();
-  if (!primary_user)
-    return false;
-  Profile* primary_profile =
-      chromeos::ProfileHelper::Get()->GetProfileByUser(primary_user);
+  Profile* primary_profile = GetPrimaryProfile();
   if (!primary_profile)
     return false;
 
@@ -132,6 +136,34 @@ bool ConvertPathToArcUrl(const base::FilePath& path, GURL* arc_url_out) {
 
   // TODO(kinaba): Add conversion logic once other file systems are supported.
   return false;
+}
+
+bool ConvertFileSystemUrlToContentUrl(
+    const storage::FileSystemURL& file_system_url,
+    const base::Callback<void(const GURL& content_url)>& callback) {
+  GURL arc_url;
+  if (ConvertPathToArcUrl(file_system_url.path(), &arc_url)) {
+    callback.Run(arc_url);
+    return true;
+  }
+
+  Profile* primary_profile = GetPrimaryProfile();
+  if (!primary_profile)
+    return false;
+
+  auto* documents_provider_root_map =
+      arc::ArcDocumentsProviderRootMap::GetForBrowserContext(primary_profile);
+  if (!documents_provider_root_map)
+    return false;
+
+  base::FilePath file_path;
+  auto* documents_provider_root =
+      documents_provider_root_map->ParseAndLookup(file_system_url, &file_path);
+  if (!documents_provider_root)
+    return false;
+
+  documents_provider_root->ResolveToContentUrl(file_path, callback);
+  return true;
 }
 
 }  // namespace util
