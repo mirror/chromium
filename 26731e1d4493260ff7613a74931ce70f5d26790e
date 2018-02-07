@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "57888373_6cdd7560",
+        "filename": "components/autofill/content/renderer/form_autofill_util_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-07T00:15:49Z",
+      "side": 1,
+      "message": "For readability, it would help to put the expectation and actual result together.\n\nHow about\n  static const AutofillFieldLabelSourceCase test_cases[] \u003d {\n      {\"DIV_TABLE\", FormFieldData::LabelSource::DIV_TABLE,\n        \"\u003cdiv\u003e\u003cdiv\u003elabel\u003c/div\u003e\u003cdiv\u003e\u003cinput id\u003d\u0027target\u0027/\u003e\u003c/div\u003e\u003c/div\u003e\"},\n      ...\n  };\n\nor even better, using a helper function, how about\n\nEXPECT_INFERRED_LABEL(\"DIV_TABLE\", FormFieldData::LabelSource::DIV_TABLE,\n        \"\u003cdiv\u003e\u003cdiv\u003elabel\u003c/div\u003e\u003cdiv\u003e\u003cinput id\u003d\u0027target\u0027/\u003e\u003c/div\u003e\u003c/div\u003e\");\n?",
+      "range": {
+        "startLine": 216,
+        "startChar": 30,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45453b27_5a2674f0",
+        "filename": "components/autofill/core/common/autofill_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-07T00:15:49Z",
+      "side": 1,
+      "message": "How about kAutofillSkipComparingInferredLabel ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 64
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c61896_80d9dd77",
+        "filename": "components/autofill/core/common/form_field_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-02-07T00:15:49Z",
+      "side": 1,
+      "message": "Could you refactor this into a separate function,\ne.g., bool HasSameLabel(const FormFieldData\u0026 field)?",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 168,
+        "endChar": 76
+      },
+      "revId": "26731e1d4493260ff7613a74931ce70f5d26790e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde96120_af817d15",
         "filename": "components/autofill/core/common/form_field_data.h",
         "patchSetId": 1
