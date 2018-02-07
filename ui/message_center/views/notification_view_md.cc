@@ -518,6 +518,7 @@ class InlineSettingsRadioButton : public views::RadioButton {
       : views::RadioButton(label_text, 1 /* group */, true /* force_md */) {
     label()->SetFontList(GetTextFontList());
     label()->SetEnabledColor(kRegularTextColorMD);
+    label()->SetSubpixelRenderingEnabled(false);
   }
 };
 
@@ -592,6 +593,7 @@ NotificationViewMD::NotificationViewMD(const Notification& notification)
 
   ink_drop_container_->SetPaintToLayer();
   ink_drop_container_->layer()->SetFillsBoundsOpaquely(false);
+  ink_drop_container_->SetVisible(false);
   AddChildView(ink_drop_container_);
 
   control_buttons_view_ =
@@ -1146,6 +1148,8 @@ void NotificationViewMD::CreateOrUpdateInlineSettingsViews(
   settings_done_button_ = new NotificationButtonMD(
       this, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS_DONE),
       base::nullopt);
+  settings_done_button_->SetTextSubpixelRenderingEnabled(false);
+
   auto* settings_button_row = new views::View;
   auto settings_button_layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, kSettingsButtonRowPadding, 0);
