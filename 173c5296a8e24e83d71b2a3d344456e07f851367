@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e12ba9c6_ebc453e1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "We only need v8::Isolate*.\nSee below comments.",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 31
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99c6957_3686302c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "FYI,\n\nv8::Array::New is creating a new array in the current context (isolate-\u003eGetCurrentContext()).  If we wanted to create new objects in a specific context, then we must have entered to that context beforehand.\n\nReading the current implementation, it seems okay to use the current context.",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 22
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07c5e21_d60759fe",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "|CreateDataProperty| does NOT create a new object, so we don\u0027t need to specify a creation context.  Thus, it\u0027s good to use |isolate-\u003eGetCurrentContext()| here.\n\nNote that GetCurrentContext() is not lightweight, so it\u0027s good to save it in a local handle.",
+      "range": {
+        "startLine": 141,
+        "startChar": 14,
+        "endLine": 141,
+        "endChar": 40
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b271b1_b0b3bd15",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "v8::Isolate::GetCurrent() is highly discouraged.",
+      "range": {
+        "startLine": 196,
+        "startChar": 29,
+        "endLine": 196,
+        "endChar": 52
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea88b4c4_9d8ab57c",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "nit: ToLocal returns false iff an exception has been thrown.  So try_catch.HasCaught() is redundant.",
+      "range": {
+        "startLine": 204,
+        "startChar": 69,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01966232_55760383",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "ditto\n\nBy the way, I think the old implementation is better as we don\u0027t write the same thing twice.  s/value/input_string/ is good, though.",
+      "range": {
+        "startLine": 442,
+        "startChar": 27,
+        "endLine": 442,
+        "endChar": 52
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ac8bb_ef5fb9d5",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T08:16:06Z",
+      "side": 1,
+      "message": "nit: ToIsolate is discouraged, too, as it\u0027s using v8::Isolate::GetCurrent().",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "173c5296a8e24e83d71b2a3d344456e07f851367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
