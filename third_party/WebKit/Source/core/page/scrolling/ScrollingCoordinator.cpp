@@ -191,18 +191,13 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded(
     frame_view->SetScrollGestureRegionIsDirty(false);
   }
 
-  // TODO(wjmaclean): Make the stuff below this point work for OOPIFs too.
-  // https://crbug.com/680606
-  if (frame != frame_view->GetPage()->MainFrame())
-    return;
-
   if (!(touch_event_target_rects_are_dirty_ ||
         should_scroll_on_main_thread_dirty_ || FrameScrollerIsDirty())) {
     return;
   }
 
   if (touch_event_target_rects_are_dirty_) {
-    UpdateTouchEventTargetRectsIfNeeded();
+    UpdateTouchEventTargetRectsIfNeeded(frame);
     touch_event_target_rects_are_dirty_ = false;
   }
 
@@ -211,7 +206,7 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded(
   if (should_scroll_on_main_thread_dirty_ ||
       was_frame_scrollable_ != frame_is_scrollable) {
     SetShouldUpdateScrollLayerPositionOnMainThread(
-        frame_view->GetMainThreadScrollingReasons());
+        frame, frame_view->GetMainThreadScrollingReasons());
 
     // Need to update scroll on main thread reasons for subframe because
     // subframe (e.g. iframe with background-attachment:fixed) should
@@ -709,7 +704,8 @@ static void ProjectRectsToGraphicsLayerSpace(
       layer_child_frame_map);
 }
 
-void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
+void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded(
+    LocalFrame* frame) {
   TRACE_EVENT0("input",
                "ScrollingCoordinator::updateTouchEventTargetRectsIfNeeded");
 
@@ -718,8 +714,8 @@ void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
     return;
 
   LayerHitTestRects touch_event_target_rects;
-  ComputeTouchEventTargetRects(touch_event_target_rects);
-  SetTouchEventTargetRects(touch_event_target_rects);
+  ComputeTouchEventTargetRects(frame, touch_event_target_rects);
+  SetTouchEventTargetRects(frame, touch_event_target_rects);
 }
 
 void ScrollingCoordinator::UpdateUserInputScrollable(
@@ -734,7 +730,7 @@ void ScrollingCoordinator::UpdateUserInputScrollable(
   }
 }
 
-void ScrollingCoordinator::Reset() {
+void ScrollingCoordinator::Reset(LocalFrame* frame) {
   for (const auto& scrollbar : horizontal_scrollbars_)
     GraphicsLayer::UnregisterContentsLayer(scrollbar.value->Layer());
   for (const auto& scrollbar : vertical_scrollbars_)
@@ -747,13 +743,14 @@ void ScrollingCoordinator::Reset() {
 
   last_main_thread_scrolling_reasons_ = 0;
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled())
-    SetShouldUpdateScrollLayerPositionOnMainThread(0);
+    SetShouldUpdateScrollLayerPositionOnMainThread(frame, 0);
 }
 
 // Note that in principle this could be called more often than
 // computeTouchEventTargetRects, for example during a non-composited scroll
 // (although that's not yet implemented - crbug.com/261307).
 void ScrollingCoordinator::SetTouchEventTargetRects(
+    LocalFrame* frame,
     LayerHitTestRects& layer_rects) {
   TRACE_EVENT0("input", "ScrollingCoordinator::setTouchEventTargetRects");
 
@@ -794,8 +791,7 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
     }
   }
 
-  ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
-                                   layer_rects, graphics_layer_rects);
+  ProjectRectsToGraphicsLayerSpace(frame, layer_rects, graphics_layer_rects);
 
   for (const auto& layer_rect : graphics_layer_rects) {
     const GraphicsLayer* graphics_layer = layer_rect.key;
@@ -856,6 +852,7 @@ void ScrollingCoordinator::WillDestroyLayer(PaintLayer* layer) {
 }
 
 void ScrollingCoordinator::SetShouldUpdateScrollLayerPositionOnMainThread(
+    LocalFrame* frame,
     MainThreadScrollingReasons main_thread_scrolling_reasons) {
   if (!page_->MainFrame()->IsLocalFrame() ||
       !page_->DeprecatedLocalMainFrame()->View())
@@ -864,10 +861,8 @@ void ScrollingCoordinator::SetShouldUpdateScrollLayerPositionOnMainThread(
   GraphicsLayer* visual_viewport_layer =
       page_->GetVisualViewport().ScrollLayer();
   WebLayer* visual_viewport_scroll_layer = toWebLayer(visual_viewport_layer);
-  GraphicsLayer* layer = page_->DeprecatedLocalMainFrame()
-                             ->View()
-                             ->LayoutViewportScrollableArea()
-                             ->LayerForScrolling();
+  GraphicsLayer* layer =
+      frame->View()->LayoutViewportScrollableArea()->LayerForScrolling();
   if (WebLayer* scroll_layer = toWebLayer(layer)) {
     last_main_thread_scrolling_reasons_ = main_thread_scrolling_reasons;
     if (main_thread_scrolling_reasons) {
@@ -876,10 +871,8 @@ void ScrollingCoordinator::SetShouldUpdateScrollLayerPositionOnMainThread(
         if (ScrollAnimatorBase* scroll_animator =
                 scrollable_area->ExistingScrollAnimator()) {
           DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
-                 page_->DeprecatedLocalMainFrame()
-                         ->GetDocument()
-                         ->Lifecycle()
-                         .GetState() >= DocumentLifecycle::kCompositingClean);
+                 frame->GetDocument()->Lifecycle().GetState() >=
+                     DocumentLifecycle::kCompositingClean);
           scroll_animator->TakeOverCompositorAnimation();
         }
       }
@@ -890,10 +883,8 @@ void ScrollingCoordinator::SetShouldUpdateScrollLayerPositionOnMainThread(
                 visual_viewport_layer->GetScrollableArea()
                     ->ExistingScrollAnimator()) {
           DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
-                 page_->DeprecatedLocalMainFrame()
-                         ->GetDocument()
-                         ->Lifecycle()
-                         .GetState() >= DocumentLifecycle::kCompositingClean);
+                 frame->GetDocument()->Lifecycle().GetState() >=
+                     DocumentLifecycle::kCompositingClean);
           scroll_animator->TakeOverCompositorAnimation();
         }
         visual_viewport_scroll_layer->AddMainThreadScrollingReasons(
@@ -1151,10 +1142,11 @@ static void AccumulateDocumentTouchEventTargetRects(
 }
 
 void ScrollingCoordinator::ComputeTouchEventTargetRects(
+    LocalFrame* frame,
     LayerHitTestRects& rects) {
   TRACE_EVENT0("input", "ScrollingCoordinator::computeTouchEventTargetRects");
 
-  Document* document = page_->DeprecatedLocalMainFrame()->GetDocument();
+  Document* document = frame->GetDocument();
   if (!document || !document->View() || !document->GetFrame())
     return;
 
