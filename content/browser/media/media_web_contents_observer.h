@@ -100,6 +100,13 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void OnMediaMutedStatusChanged(RenderFrameHost* render_frame_host,
                                  int delegate_id,
                                  bool muted);
+  void OnUpdatePictureInPictureSurfaceId(RenderFrameHost* render_frame_host,
+                                         int delegate_id,
+                                         uint32_t client_id,
+                                         uint32_t sink_id,
+                                         uint32_t parent_id,
+                                         uint64_t unguessable_high,
+                                         uint64_t unguessable_low);
 
   // Clear |render_frame_host|'s tracking entry for its WakeLocks.
   void ClearWakeLocks(RenderFrameHost* render_frame_host);

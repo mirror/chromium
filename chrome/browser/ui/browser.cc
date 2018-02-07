@@ -28,6 +28,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
@@ -66,6 +67,7 @@
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/pepper_broker_infobar_delegate.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 #include "chrome/browser/plugins/plugin_finder.h"
 #include "chrome/browser/plugins/plugin_metadata.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
@@ -173,6 +175,7 @@
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "components/toolbar/toolbar_model_impl.h"
 #include "components/translate/core/browser/language_state.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "components/zoom/zoom_controller.h"
 #include "content/public/browser/devtools_agent_host.h"
@@ -1410,6 +1413,17 @@ void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
   // click-through metrics.
   content_settings->OnFramebustBlocked(
       url, FramebustBlockTabHelper::ClickCallback());
+}
+
+void Browser::UpdatePictureInPictureSurfaceId(viz::FrameSinkId frame_sink_id,
+                                              uint32_t parent_id,
+                                              base::UnguessableToken nonce) {
+  pip_window_controller_.reset(
+      PictureInPictureWindowController::GetOrCreateForWebContents(
+          tab_strip_model_->GetActiveWebContents()));
+  pip_window_controller_->Init();
+  pip_window_controller_->EmbedSurface(frame_sink_id, parent_id, nonce);
+  pip_window_controller_->Show();
 }
 
 bool Browser::IsMouseLocked() const {

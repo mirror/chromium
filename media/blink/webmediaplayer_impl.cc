@@ -421,6 +421,19 @@ void WebMediaPlayerImpl::UnregisterContentsLayer(blink::WebLayer* web_layer) {
   client_->SetWebLayer(nullptr);
 }
 
+void WebMediaPlayerImpl::OnSurfaceIdUpdated(uint32_t client_id,
+                                            uint32_t frame_sink_id,
+                                            uint32_t parent_id,
+                                            base::UnguessableToken nonce) {
+  frame_sink_id_ = viz::FrameSinkId(client_id, frame_sink_id);
+  parent_id_ = parent_id;
+  nonce_ = nonce;
+
+  if (client_ && client_->IsInPictureInPictureMode())
+    delegate_->ShowPictureInPicture(delegate_id_, frame_sink_id_, parent_id_,
+                                    nonce_);
+}
+
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
 #if defined(OS_ANDROID)
   return !using_media_player_renderer_ &&
@@ -790,7 +803,10 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   UpdatePlayState();
 }
 
-void WebMediaPlayerImpl::PictureInPicture() {
+void WebMediaPlayerImpl::EnterPictureInPicture() {
+  delegate_->ShowPictureInPicture(delegate_id_, frame_sink_id_, parent_id_,
+                                  nonce_);
+
   if (client_)
     client_->PictureInPictureStarted();
 }
