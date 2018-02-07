@@ -176,3 +176,6 @@ QUIC_FLAG(
     bool,
     FLAGS_quic_reloadable_flag_quic_close_session_on_too_many_outstanding_sent_packets,
     false)
+
+// If true, enable QUIC v99.
+QUIC_FLAG(bool, FLAGS_quic_enable_version_99, false)
