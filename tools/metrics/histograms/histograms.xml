@@ -92698,6 +92698,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="UMA.FileMetricsProvider.Happening"
     enum="FileMetricsProviderHappening">
+  <obsolete>
+    This metrics was to provide information for crbug/760317 which has been
+    resolved. Removed February, 2018.
+  </obsolete>
   <owner>bcwhite@chromium.org</owner>
   <summary>
     Records various happenings within the FileMetricsProvider for debugging
@@ -92952,6 +92956,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="UMA.MetricsService.DeletedDirectorySize.Failure" units="KB">
+  <obsolete>
+    This metrics was to provide information for crbug/760317 which has been
+    resolved. Removed February, 2018.
+  </obsolete>
   <owner>bcwhite@chromium.org</owner>
   <summary>
     Records the size of the metrics directory size, after failing to be deleted.
@@ -92960,6 +92968,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="UMA.MetricsService.DeletedDirectorySize.Success" units="KB">
+  <obsolete>
+    This metrics was to provide information for crbug/760317 which has been
+    resolved. Removed February, 2018.
+  </obsolete>
   <owner>bcwhite@chromium.org</owner>
   <summary>
     Records the size of the metrics directory size, after being successfully
