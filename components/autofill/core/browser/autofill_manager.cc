@@ -1458,7 +1458,7 @@ bool AutofillManager::GetCachedFormAndField(const FormData& form,
 
   // Update the cached form to reflect any dynamic changes to the form data, if
   // necessary.
-  if (!UpdateCachedForm(form, *form_structure, form_structure))
+  if (!UpdateCachedForm(form, form_structure))
     return false;
 
   // No data to return if there are no auto-fillable fields.
@@ -1497,12 +1497,11 @@ AutofillField* AutofillManager::GetAutofillField(const FormData& form,
 }
 
 bool AutofillManager::UpdateCachedForm(const FormData& live_form,
-                                       const FormStructure* cached_form,
                                        FormStructure** updated_form) {
-  bool needs_update =
-      (!cached_form || live_form.fields.size() != cached_form->field_count());
-  for (size_t i = 0; !needs_update && i < cached_form->field_count(); ++i)
-    needs_update = !cached_form->field(i)->SameFieldAs(live_form.fields[i]);
+  bool needs_update = (!(*updated_form) || live_form.fields.size() !=
+                                               (*updated_form)->field_count());
+  for (size_t i = 0; !needs_update && i < (*updated_form)->field_count(); ++i)
+    needs_update = !(*updated_form)->field(i)->SameFieldAs(live_form.fields[i]);
 
   if (!needs_update)
     return true;
@@ -1512,9 +1511,6 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
   // crowdsourcing server's response to our query.
   if (!ParseForm(live_form, updated_form))
     return false;
-
-  if (cached_form)
-    (*updated_form)->UpdateFromCache(*cached_form, true);
 
   // Annotate the updated form with its predicted types.
   driver()->SendAutofillTypePredictionsToRenderer({*updated_form});
