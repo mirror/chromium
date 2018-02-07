@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "828c0bab_20369f9f",
+        "filename": "tools/gn/bootstrap/bootstrap.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:24:21Z",
+      "side": 1,
+      "message": "Can you fix this by running the command from the build_dir instead (i.e., cwd\u003dbuild_dir), and then not need the filesystem changes?",
+      "revId": "91b6a336e683bcb511790b95b864310412f14a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f4cd56_e11d1639",
+        "filename": "tools/gn/filesystem_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:24:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is the right thing to do. brettw@, thoughts?",
+      "revId": "91b6a336e683bcb511790b95b864310412f14a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
