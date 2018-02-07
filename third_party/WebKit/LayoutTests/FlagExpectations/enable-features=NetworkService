@@ -233,6 +233,13 @@ crbug.com/777879 external/wpt/FileAPI/file/send-file-form-windows-1252.tentative
 crbug.com/777879 external/wpt/FileAPI/file/send-file-form-x-user-defined.tentative.html [ Crash ]
 crbug.com/777879 external/wpt/FileAPI/file/send-file-form.html [ Crash ]
 
+# Passing only with network service.
+crbug.com/800898 external/wpt/FileAPI/url/cross-global-revoke.sub.html [ Pass ]
+crbug.com/800898 external/wpt/FileAPI/url/url-with-fetch.any.html [ Pass ]
+crbug.com/800898 external/wpt/FileAPI/url/url-with-xhr.any.html [ Pass ]
+crbug.com/800898 external/wpt/FileAPI/url/url-with-fetch.any.worker.html [ Pass ]
+crbug.com/800898 external/wpt/FileAPI/url/url-with-xhr.any.worker.html [ Pass ]
+
 # Started flaking after https://chromium-review.googlesource.com/864265.
 # Text-diff: total-byte-weight: {{true => false}}
 Bug(none) http/tests/devtools/audits2/audits2-limited-run.js [ Failure ]
