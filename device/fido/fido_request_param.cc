@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "device/fido/ctap_request_param.h"
+#include "device/fido/fido_request_param.h"
 
 namespace device {
 
-CTAPRequestParam::CTAPRequestParam() = default;
-CTAPRequestParam::~CTAPRequestParam() = default;
+FidoRequestParam::FidoRequestParam() = default;
+FidoRequestParam::~FidoRequestParam() = default;
 
 }  // namespace device
