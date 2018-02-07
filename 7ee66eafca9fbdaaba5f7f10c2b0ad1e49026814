@@ -140,6 +140,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b57e46_e2d611c4",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T18:53:53Z",
+      "side": 1,
+      "message": "Not necessarily, HasTablet() is a userspace determination in our code (EventDeviceInfo class). If you post the capabilities of your device that would be very helpful in determining how to get it to go down the right code path.\n\nBTW, Do you want touch behavior, or mouse behavior? Since this was for Android, it seems like it may have been meant for touch input, not mouse input.",
+      "parentUuid": "7f3979b4_1a156f88",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
