@@ -5,8 +5,12 @@
 package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.support.customtabs.browseractions.BrowserServiceImageReadTask;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 
 import org.chromium.base.Callback;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.browseractions.BrowserActionsCustomContextMenuItem;
 
 import java.util.List;
 
@@ -88,8 +93,33 @@ class TabularContextMenuListAdapter extends BaseAdapter {
 
         viewHolder.mText.setText(menuItem.getTitle(mActivity));
         Drawable icon = menuItem.getDrawable(mActivity);
-        viewHolder.mIcon.setImageDrawable(icon);
-        viewHolder.mIcon.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
+
+        if (menuItem instanceof BrowserActionsCustomContextMenuItem
+                && ((BrowserActionsCustomContextMenuItem) menuItem).getIconUri() != null) {
+            BrowserActionsImageReadTask task = new BrowserActionsImageReadTask(
+                    menuItem.getTitle(mActivity), mActivity.getContentResolver()) {
+                @Override
+                protected void handlePreLoadingFallback() {
+                    viewHolder.mIcon.setImageDrawable(icon);
+                    viewHolder.mIcon.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
+                }
+
+                @Override
+                protected void onBitmapFileReady(Bitmap bitmap) {
+                    // ViewHolder has been reused by other item.
+                    if (!mText.equals(viewHolder.mText.getText().toString())) return;
+                    if (viewHolder.mIcon != null && bitmap != null) {
+                        viewHolder.mIcon.setVisibility(View.VISIBLE);
+                        viewHolder.mIcon.setImageBitmap(bitmap);
+                    }
+                }
+            };
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                    ((BrowserActionsCustomContextMenuItem) menuItem).getIconUri());
+        } else {
+            viewHolder.mIcon.setImageDrawable(icon);
+            viewHolder.mIcon.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
+        }
 
         if (menuItem instanceof ShareContextMenuItem) {
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
@@ -119,6 +149,20 @@ class TabularContextMenuListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    private static class BrowserActionsImageReadTask extends BrowserServiceImageReadTask {
+        String mText;
+        private BrowserActionsImageReadTask(String menuItemText, ContentResolver resolver) {
+            super(resolver);
+            mText = menuItemText;
+        }
+
+        @Override
+        protected void onBitmapFileReady(Bitmap bitmap) {}
+
+        @Override
+        protected void handlePreLoadingFallback() {}
     }
 
     private static class ViewHolderItem {
