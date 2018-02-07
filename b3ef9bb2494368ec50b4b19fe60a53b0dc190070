@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "514140f5_ee9a37d8",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bab6f73_aac3235c",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db0c6aa4_626a9f82",
         "filename": "chrome/browser/ui/login/login_handler.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5092d32e_7a76975f",
+        "filename": "chrome/browser/ui/login/login_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db0c6aa4_626a9f82",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7d4c57d0_aad8cb3a",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e500345a_5329666d",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205e3a6c_95cdcd47",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd62d581_b41ca520",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "205e3a6c_95cdcd47",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "588f68b0_dda321d1",
+        "filename": "content/public/browser/content_browser_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "The ResourceDispatcherHostDelegate::CreateLoginDelegate is removed.\n\nI filed a bug to rename ResourceDispatcherHostLoginDelegate to LoginDelegate in a follow-up CL:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d809819\n\nDone",
+      "parentUuid": "3bcf691c_90410593",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4db9dcd6_405e18ab",
         "filename": "services/network/url_loader.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3fddd8_6c5b7223",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-02-07T20:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db9dcd6_405e18ab",
+      "revId": "b3ef9bb2494368ec50b4b19fe60a53b0dc190070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
