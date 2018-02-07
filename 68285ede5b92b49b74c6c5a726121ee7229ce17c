@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2eb17e4_69e4e4f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsCustomContextMenuItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-02-07T05:42:17Z",
+      "side": 1,
+      "message": "javadocs missing on interface and all methods.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e823ae_4a2b1b3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-02-07T05:42:17Z",
+      "side": 1,
+      "message": "I think we should consider having a color here. The client likely wont give both resource ID and Uri.",
+      "range": {
+        "startLine": 102,
+        "startChar": 37,
+        "endLine": 102,
+        "endChar": 53
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d56d8c3_c5ea2d4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-02-07T05:42:17Z",
+      "side": 1,
+      "message": "bitmap instead of bm",
+      "range": {
+        "startLine": 107,
+        "startChar": 56,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d306fe_5b18a015",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2018-02-07T05:42:17Z",
+      "side": 1,
+      "message": "This tests the image read task mechanism. Maybe after we show a placeholder color or something we should also assert that is shown as well, so that we at least know something is showing while waiting?",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 56
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
