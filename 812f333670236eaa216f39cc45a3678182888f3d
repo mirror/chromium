@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c0d2edb_6d387ac1",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T15:10:39Z",
+      "side": 1,
+      "message": "What does this mean, really?\n\n(In general I don\u0027t think NOTIMPLEMENTED should really be used in new code anymore. It made some sense back when Chrome was not a finished product, so a developer might want to put in a marker, but now we do want all the code we write ideally to be shippable right away, having missing parts runs counter to that. If OTOH this is simply not _expected_ to happen, it should be a DCHECK (not a NOTREACHED(), because that would be handling the condition)).",
+      "range": {
+        "startLine": 746,
+        "startChar": 4,
+        "endLine": 746,
+        "endChar": 20
+      },
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179b51d2_71bad717",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T15:10:39Z",
+      "side": 1,
+      "message": "So we consider an empty GAIA ID in the profile info cache not to match an empty GAIA ID in the account ID? Does that case actually happen?",
+      "range": {
+        "startLine": 752,
+        "startChar": 50,
+        "endLine": 752,
+        "endChar": 66
+      },
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0a09c3_0ad878ce",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T15:10:39Z",
+      "side": 1,
+      "message": "What happens if we don\u0027t find a matching profile? Is that something that is expected to happen?",
+      "revId": "812f333670236eaa216f39cc45a3678182888f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
