@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c523b70_3a52cec9",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-02-07T13:27:10Z",
+      "side": 1,
+      "message": "oh, nice catch. I add the //TODO to new updated CL.",
+      "parentUuid": "bd60647d_72c4c0b2",
+      "range": {
+        "startLine": 1014,
+        "startChar": 66,
+        "endLine": 1014,
+        "endChar": 67
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54297f7a_c28bbe14",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "996cc768_df85531a",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-02-07T13:27:10Z",
+      "side": 1,
+      "message": "Matt, thank you for your explanation of the reason! In my opinion, I would like to keep this test as is with a short explanation of the reason of double-escaping, because it looks like this can be a good test for double-escaping in the registerProtocolHandler.",
+      "parentUuid": "950a5cc6_adc34a41",
+      "range": {
+        "startLine": 1032,
+        "startChar": 63,
+        "endLine": 1032,
+        "endChar": 64
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c153a811_a37145d9",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
         "patchSetId": 5
@@ -110,6 +158,24 @@
       "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736ec86a_c747d289",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-02-07T13:27:10Z",
+      "side": 1,
+      "message": "I understand this issue will be handled by issue 809852 later. If not, please let me know.",
+      "parentUuid": "c153a811_a37145d9",
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
