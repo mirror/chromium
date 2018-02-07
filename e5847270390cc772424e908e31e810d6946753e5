@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bc901f8_ec5f6533",
+        "filename": "media/base/renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "would this be better to do in a CL combining the video \u0026 audio track changes to both use vectors?",
+      "parentUuid": "103b1c61_c48762af",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2033784_2c39c881",
         "filename": "media/filters/pipeline_controller.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31fd4ea_e3bf980e",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2033784_2c39c881",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "15b976b2_73432f5a",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e408d937_271caa9c",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bf707ef_1ad5ebec",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064b6e29_6b49d474",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bf707ef_1ad5ebec",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3127887e_50693da2",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e4b703_ebfe58aa",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69d9820c_80016807",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fac9bd6_05383b7b",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d9820c_80016807",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6d5d8781_65d95683",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ccfb686_cb1279d5",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00c4323f_e4101524",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21ef145_cd7ea4da",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "This is what happens when you track switch from [] to [trackId].\nIt makes no sense to flush twice, which is probably better content for this comment, so I\u0027ve changed it.",
+      "parentUuid": "00c4323f_e4101524",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ad11d971_fdd6fdc9",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc6fd464_0ae66362",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e34636f_5ccc1f7f",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a107f431_8fb4f58c",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e34636f_5ccc1f7f",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ef5196c5_0c5f210e",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e979e86_8c3a8c38",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2c4579_2f5e4c4a",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8c1573_54c4b719",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2c4579_2f5e4c4a",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "95ff87c3_4d4e7e0d",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "I changed all the boolean conditions to make them more clear, like in the video track switch function.",
+      "parentUuid": "5c0f83bc_b811f4d3",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60ee5813_8a650118",
         "filename": "media/renderers/renderer_impl.h",
         "patchSetId": 4
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "27fe83a1_fe5f3cf0",
+        "filename": "media/renderers/renderer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ee5813_8a650118",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb01523d_96db7239",
         "filename": "media/test/pipeline_integration_test.cc",
         "patchSetId": 4
@@ -251,6 +503,24 @@
       "writtenOn": "2018-02-07T00:41:52Z",
       "side": 1,
       "message": "Instead of passing in DoNothing you should pass in a mock_callback and assert that it\u0027s called. Ditto here and the rest of the instances. I\u0027d suggest making a ChangeVideoTrack() helper function which does this in one spot.",
+      "revId": "e5847270390cc772424e908e31e810d6946753e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc1ec71_7cf14f55",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 1,
+      "message": "yeah, this was just to make it compile for now; the tests do not pass as is, I\u0027m going to work on that next, so I\u0027ll just leave this unresolved until i post a new patch set.",
+      "parentUuid": "eb01523d_96db7239",
       "revId": "e5847270390cc772424e908e31e810d6946753e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

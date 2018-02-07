@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c3fbf36_67d7b8fc",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "85a36588_49cb7baf",
+      "revId": "4f455a2cf3ded0690a2131af68ae2a9f6613af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ff29d6_785d3268",
         "filename": "media/renderers/renderer_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4f455a2cf3ded0690a2131af68ae2a9f6613af27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e724e696_968a6166",
+        "filename": "media/renderers/renderer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2018-02-07T23:12:54Z",
+      "side": 0,
+      "message": "When the video player starts getting frames again it ends up here through OnBufferedStateChanged, but since we only disabled video and didn\u0027t stop time ticking, a check kept happening.",
+      "parentUuid": "e9ff29d6_785d3268",
+      "revId": "4f455a2cf3ded0690a2131af68ae2a9f6613af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
