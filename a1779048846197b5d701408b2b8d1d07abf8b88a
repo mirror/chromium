@@ -16,6 +16,24 @@
       "revId": "a1779048846197b5d701408b2b8d1d07abf8b88a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7c85e6_b4f17796",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-02-07T17:36:54Z",
+      "side": 1,
+      "message": "The UMA part of it adds the counts to the uma counter, which I think is aggregated at some point, but it is presented as a histogram, so each count is there. You\u0027re right that the UKM portion of this aggregates over a second and sends one sample as second (with 4 entries one for each type). This prevents us from spamming up to 240 times a second (60/second * 4 entries). We do lose the granularity of each entry, but we at least have a per url per second measure, which I think is still very useful.",
+      "parentUuid": "e80db35e_8121cd3b",
+      "revId": "a1779048846197b5d701408b2b8d1d07abf8b88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
