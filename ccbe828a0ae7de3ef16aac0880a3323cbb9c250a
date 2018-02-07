@@ -33,6 +33,24 @@
       "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff07f0c_4b7bdebc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2018-02-07T04:58:15Z",
+      "side": 1,
+      "message": "I believe all type annotations have been moved into idl_type.",
+      "parentUuid": "902e4909_cb95f73f",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
