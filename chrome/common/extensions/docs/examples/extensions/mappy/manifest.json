@@ -1,6 +1,6 @@
 {
   "name": "Mappy",
-  "version": "0.6.1",
+  "version": "1.0",
   "description": "Finds addresses in the web page you're on and pops up a map window.",
   "icons": { "128": "icon.png" },
   "background": { "scripts": ["background.js"] },
