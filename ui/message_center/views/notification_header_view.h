@@ -44,6 +44,9 @@ class NotificationHeaderView : public views::Button {
   // Button override:
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
 
+  views::Label* app_name_view() { return app_name_view_; }
+  views::Label* timestamp_divider() { return timestamp_divider_; }
+  views::Label* timestamp_view() { return timestamp_view_; }
   views::ImageView* expand_button() { return expand_button_; }
 
   SkColor accent_color_for_testing() { return accent_color_; }

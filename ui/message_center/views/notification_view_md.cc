@@ -518,6 +518,7 @@ class InlineSettingsRadioButton : public views::RadioButton {
       : views::RadioButton(label_text, 1 /* group */, true /* force_md */) {
     label()->SetFontList(GetTextFontList());
     label()->SetEnabledColor(kRegularTextColorMD);
+    label()->SetSubpixelRenderingEnabled(false);
   }
 };
 
@@ -1146,6 +1147,8 @@ void NotificationViewMD::CreateOrUpdateInlineSettingsViews(
   settings_done_button_ = new NotificationButtonMD(
       this, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS_DONE),
       base::nullopt);
+  settings_done_button_->SetTextSubpixelRenderingEnabled(false);
+
   auto* settings_button_row = new views::View;
   auto settings_button_layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, kSettingsButtonRowPadding, 0);
@@ -1247,21 +1250,9 @@ void NotificationViewMD::ToggleInlineSettings(const ui::LocatedEvent& event) {
   PreferredSizeChanged();
 
   if (inline_settings_visible) {
-    SetInkDropMode(InkDropMode::ON);
-
-    // Convert the point of |event| from the coordinate system of
-    // |control_buttons_view_| to that of NotificationViewMD, create a new
-    // LocatedEvent which has the new point.
-    views::View* target = static_cast<views::View*>(event.target());
-    const gfx::Point& location = event.location();
-    gfx::Point converted_location(location);
-    View::ConvertPointToWidget(target, &converted_location);
-    std::unique_ptr<ui::Event> cloned_event = ui::Event::Clone(event);
-    ui::LocatedEvent* cloned_located_event = cloned_event->AsLocatedEvent();
-    cloned_located_event->set_location(converted_location);
-    AnimateBackground(*cloned_located_event);
+    AddBackgroundAnimation(event);
   } else {
-    SetInkDropMode(InkDropMode::OFF);
+    RemoveBackgroundAnimation();
   }
 
   Layout();
@@ -1310,11 +1301,36 @@ void NotificationViewMD::Activate() {
   GetWidget()->Activate();
 }
 
-void NotificationViewMD::AnimateBackground(const ui::LocatedEvent& event) {
+void NotificationViewMD::AddBackgroundAnimation(const ui::LocatedEvent& event) {
+  header_row_->app_name_view()->SetSubpixelRenderingEnabled(false);
+  header_row_->timestamp_divider()->SetSubpixelRenderingEnabled(false);
+  header_row_->timestamp_view()->SetSubpixelRenderingEnabled(false);
+
+  SetInkDropMode(InkDropMode::ON);
+
+  // Convert the point of |event| from the coordinate system of
+  // |control_buttons_view_| to that of NotificationViewMD, create a new
+  // LocatedEvent which has the new point.
+  views::View* target = static_cast<views::View*>(event.target());
+  const gfx::Point& location = event.location();
+  gfx::Point converted_location(location);
+  View::ConvertPointToWidget(target, &converted_location);
+  std::unique_ptr<ui::Event> cloned_event = ui::Event::Clone(event);
+  ui::LocatedEvent* cloned_located_event = cloned_event->AsLocatedEvent();
+  cloned_located_event->set_location(converted_location);
+
   if (View::HitTestPoint(event.location())) {
     AnimateInkDrop(views::InkDropState::ACTION_PENDING,
-                   ui::LocatedEvent::FromIfValid(&event));
+                   ui::LocatedEvent::FromIfValid(*&cloned_located_event));
   }
+}
+
+void NotificationViewMD::RemoveBackgroundAnimation() {
+  header_row_->app_name_view()->SetSubpixelRenderingEnabled(true);
+  header_row_->timestamp_divider()->SetSubpixelRenderingEnabled(true);
+  header_row_->timestamp_view()->SetSubpixelRenderingEnabled(true);
+
+  SetInkDropMode(InkDropMode::OFF);
 }
 
 void NotificationViewMD::AddInkDropLayer(ui::Layer* ink_drop_layer) {
