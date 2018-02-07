@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4da6809_9a6c1cd3",
+        "filename": "third_party/WebKit/Source/core/messaging/BUILD.gn",
+        "patchSetId": 39
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "I\u0027m having trouble eliminating them while keeping definitions for the not-inlined struct traits. Any ideas for how to set up the deps?",
+      "parentUuid": "ab40b917_af5c139b",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3722faea_590eaddf",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.typemap",
         "patchSetId": 39
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e790521d_624e12cc",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessage.typemap",
+        "patchSetId": 39
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "Done, although I\u0027m not very confident in how I updated the DEPS :). \n\nOriginally I included this header in BlinkTransferableMessageStructTraits, but I hadn\u0027t added it to DEPS and I was scared off by the checkdeps failure. Maybe it would help to mention the convention here? https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings/README.md#enabling-a-new-type-mapping",
+      "parentUuid": "3722faea_590eaddf",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2164c2_51d5437c",
         "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
         "patchSetId": 39
@@ -47,6 +83,30 @@
       "writtenOn": "2018-02-07T08:08:31Z",
       "side": 1,
       "message": "Would it be possible to move the logic to convert between these two into helper functions in the unnamed namespace?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3421496_5f15c7ec",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraits.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "It\u0027s possible, but returning false on error is a little ugly with the helper function. How does this look?",
+      "parentUuid": "4f2164c2_51d5437c",
       "range": {
         "startLine": 55,
         "startChar": 0,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cc40f6f1_771a836c",
+        "filename": "third_party/WebKit/Source/core/messaging/BlinkTransferableMessageStructTraitsTest.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "I\u0027m not seeing a way to keep the SerializedScriptValue in a block scope (which is useful) and also use SerializeAndDeserialize. Do you see a way around that?",
+      "parentUuid": "6984da93_110e58d8",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "315e4d41_09cb7681",
         "filename": "third_party/WebKit/common/message_port/message_port.mojom",
         "patchSetId": 39
@@ -87,6 +165,24 @@
       "writtenOn": "2018-02-07T08:08:31Z",
       "side": 1,
       "message": "What is the typical size for these array buffers? Mojo messages have a max size, so I\u0027m wondering how likely we are to run up against it.",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddc6372_e4c03e2a",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 39
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we have any stats on that. Do you know the max size for a mojo message?",
+      "parentUuid": "315e4d41_09cb7681",
       "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "cbe77676_470bb5ef",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881e86d0_850338a9",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09df219_707d31af",
         "filename": "third_party/WebKit/common/message_port/transferable_message.typemap",
         "patchSetId": 39
@@ -124,6 +238,24 @@
       "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a36ef0_79a8f50b",
+        "filename": "third_party/WebKit/common/message_port/transferable_message.typemap",
+        "patchSetId": 39
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1236784
+      },
+      "writtenOn": "2018-02-07T21:19:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f09df219_707d31af",
+      "revId": "9d7ff7d70bde49b79632f195ff4f4a403a70e4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
