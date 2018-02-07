@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad97bf6_34723371",
+        "filename": "tools/perf/core/results_dashboard.py",
+        "patchSetId": 40
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:13:44Z",
+      "side": 1,
+      "message": "Don\u0027t you kinda need this to be present, rather than failing silently?\n\nAlso, I think we usually encourage people to use the \u0027requests\u0027 package for http requests rather than httplib.",
+      "revId": "ab9f1d7a8987afbe2143f87b292961776a39da59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b079d682_f0b5d480",
+        "filename": "tools/perf/core/results_merger.py",
+        "patchSetId": 40
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:13:44Z",
+      "side": 1,
+      "message": "I feel like we must already have another version of this src-side, somewhere? Maybe check w/ martiniss@?",
+      "revId": "ab9f1d7a8987afbe2143f87b292961776a39da59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

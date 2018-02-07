@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4556ef62_824ada8b",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 40
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:13:44Z",
+      "side": 0,
+      "message": "Should you remove the target from //chrome/test/BUILD.gn as well?",
+      "revId": "8e617b9378a5e39b47ddef65cf6bc0d6a0040a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
