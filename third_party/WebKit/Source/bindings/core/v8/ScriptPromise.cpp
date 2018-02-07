@@ -90,7 +90,7 @@ class PromiseAllHandler final
 
     ScriptValue Call(ScriptValue value) override {
       if (resolve_type_ == kFulfilled)
-        handler_->OnFulfilled(index_, value);
+        handler_->OnFulfilled(GetScriptState(), index_, value);
       else
         handler_->OnRejected(value);
       // This return value is never used.
@@ -122,7 +122,9 @@ class PromiseAllHandler final
                                    this);
   }
 
-  void OnFulfilled(size_t index, const ScriptValue& value) {
+  void OnFulfilled(ScriptState* script_state,
+                   size_t index,
+                   const ScriptValue& value) {
     if (is_settled_)
       return;
 
@@ -132,10 +134,11 @@ class PromiseAllHandler final
       return;
 
     v8::Local<v8::Array> values =
-        v8::Array::New(value.GetIsolate(), values_.size());
+        v8::Array::New(script_state->GetIsolate(), values_.size());
+    v8::Local<v8::Context> context = script_state->GetContext();
     for (size_t i = 0; i < values_.size(); ++i) {
-      if (!V8CallBoolean(values->CreateDataProperty(value.GetContext(), i,
-                                                    values_[i].V8Value())))
+      if (!V8CallBoolean(
+              values->CreateDataProperty(context, i, values_[i].V8Value())))
         return;
     }
 
@@ -186,9 +189,11 @@ ScriptPromise ScriptPromise::InternalResolver::Promise() const {
 void ScriptPromise::InternalResolver::Resolve(v8::Local<v8::Value> value) {
   if (resolver_.IsEmpty())
     return;
+  v8::Local<v8::Context> context =
+      v8::Isolate::GetCurrent()->GetCurrentContext();
   resolver_.V8Value()
       .As<v8::Promise::Resolver>()
-      ->Resolve(resolver_.GetContext(), value)
+      ->Resolve(context, value)
       .ToChecked();
   Clear();
 }
@@ -196,9 +201,11 @@ void ScriptPromise::InternalResolver::Resolve(v8::Local<v8::Value> value) {
 void ScriptPromise::InternalResolver::Reject(v8::Local<v8::Value> value) {
   if (resolver_.IsEmpty())
     return;
+  v8::Local<v8::Context> context =
+      v8::Isolate::GetCurrent()->GetCurrentContext();
   resolver_.V8Value()
       .As<v8::Promise::Resolver>()
-      ->Reject(resolver_.GetContext(), value)
+      ->Reject(context, value)
       .ToChecked();
   Clear();
 }

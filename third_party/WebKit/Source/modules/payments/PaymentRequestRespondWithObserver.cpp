@@ -38,11 +38,13 @@ void PaymentRequestRespondWithObserver::OnResponseRejected(
 void PaymentRequestRespondWithObserver::OnResponseFulfilled(
     const ScriptValue& value) {
   DCHECK(GetExecutionContext());
-  ExceptionState exception_state(value.GetIsolate(),
-                                 ExceptionState::kUnknownContext,
+  v8::Isolate* isolate = ToIsolate(GetExecutionContext());
+  // TODO(peria): Remove this CHECK_EQ before uploading.
+  CHECK_EQ(isolate, value.GetIsolate());
+  ExceptionState exception_state(isolate, ExceptionState::kUnknownContext,
                                  "PaymentRequestEvent", "respondWith");
-  PaymentHandlerResponse response = ScriptValue::To<PaymentHandlerResponse>(
-      ToIsolate(GetExecutionContext()), value, exception_state);
+  PaymentHandlerResponse response =
+      ScriptValue::To<PaymentHandlerResponse>(isolate, value, exception_state);
   if (exception_state.HadException()) {
     exception_state.ClearException();
     OnResponseRejected(mojom::ServiceWorkerResponseError::kNoV8Instance);
@@ -64,7 +66,7 @@ void PaymentRequestRespondWithObserver::OnResponseFulfilled(
   web_data.method_name = response.methodName();
 
   v8::Local<v8::String> details_value;
-  if (!v8::JSON::Stringify(response.details().GetContext(),
+  if (!v8::JSON::Stringify(isolate->GetCurrentContext(),
                            response.details().V8Value().As<v8::Object>())
            .ToLocal(&details_value)) {
     GetExecutionContext()->AddConsoleMessage(ConsoleMessage::Create(
