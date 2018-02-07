@@ -1330,10 +1330,50 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     }
   }
 
+  // At this point, |dest_url| corresponds to a cross-site navigation.  See if
+  // we can swap BrowsingInstances to avoid unneeded process sharing.  This is
+  // done for certain main frame browser-initiated navigations. See
+  // https://crbug.com/803367.
+  if (IsBrowsingInstanceSwapAllowedForPageTransition(transition, dest_url)) {
+    return SiteInstanceDescriptor(browser_context, dest_url,
+                                  SiteInstanceRelation::UNRELATED);
+  }
+
   // Start the new renderer in a new SiteInstance, but in the current
   // BrowsingInstance.
   return SiteInstanceDescriptor(browser_context, dest_url,
                                 SiteInstanceRelation::RELATED);
+}
+
+bool RenderFrameHostManager::IsBrowsingInstanceSwapAllowedForPageTransition(
+    ui::PageTransition transition,
+    const GURL& dest_url) {
+  // Disallow BrowsingInstance swaps for subframes.
+  if (!frame_tree_node_->IsMainFrame())
+    return false;
+
+  // Skip data: and file: URLs, as some tests rely on browser-initiated
+  // navigations to those URLs to stay in the same BrowsingInstance.  Also,
+  // avoiding unneeded process sharing for those URLs would carry less benefit,
+  // given that they are likely less common.
+  //
+  // Note that such URLs are not considered same-site, but they stay in the
+  // same BrowsingInstance by virtue of using a common SiteInstance site URL
+  // (e.g., all data URLs use a site URL of "data:").
+  if (dest_url.SchemeIsFile() || dest_url.SchemeIs(url::kDataScheme))
+    return false;
+
+  // Allow page transitions corresponding to certain browser-initiated
+  // navigations: typing in the URL, using a bookmark, or using search.
+  switch (ui::PageTransitionStripQualifier(transition)) {
+    case ui::PAGE_TRANSITION_TYPED:
+    case ui::PAGE_TRANSITION_AUTO_BOOKMARK:
+    case ui::PAGE_TRANSITION_GENERATED:
+    case ui::PAGE_TRANSITION_KEYWORD:
+      return true;
+    default:
+      return false;
+  }
 }
 
 bool RenderFrameHostManager::IsRendererTransferNeededForNavigation(
@@ -1487,14 +1527,24 @@ bool RenderFrameHostManager::IsCurrentlySameSite(RenderFrameHostImpl* candidate,
   }
 
   // It is possible that last_successful_url() was a nonstandard scheme (for
-  // example, "about:blank"). If so, examine the replicated origin to determine
-  // the site.
-  if (!candidate->GetLastCommittedOrigin().unique() &&
-      SiteInstanceImpl::IsSameWebSite(
-          browser_context,
-          GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url,
-          should_compare_effective_urls)) {
-    return true;
+  // example, "about:blank"). If so, examine the last committed origin to
+  // determine the site.
+  if (!candidate->GetLastCommittedOrigin().unique()) {
+    if (SiteInstanceImpl::IsSameWebSite(
+            browser_context,
+            GURL(candidate->GetLastCommittedOrigin().Serialize()), dest_url,
+            should_compare_effective_urls))
+      return true;
+  } else {
+    // If the last committed origin is unique, compare site URLs. This matters
+    // when |candidate|'s last navigation was a browser-initiated navigation to
+    // about:blank.  For example, for two browser-initiated navigations,
+    // foo.com -> about:blank -> foo.com, this allows the second navigation to
+    // be treated as same-site.
+    if (SiteInstanceImpl::IsSameWebSite(
+            browser_context, candidate->GetSiteInstance()->original_url(),
+            dest_url, should_compare_effective_urls))
+      return true;
   }
 
   // Not same-site.
