@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8823c098_dd5f9b76",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10f96b1_1f74b4c3",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac3040e_973a644a",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c853063f_edf8fa20",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac3040e_973a644a",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "890b0b76_6e5f0b1a",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253c1cb5_7e2f4a26",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22130db_78927d2e",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9341d911_bb92f310",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "The order should not be changed since we need to see whether the pending list after the copy is still empty.",
+      "parentUuid": "b22130db_78927d2e",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cdda022f_2cc97618",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead17eb9_26281675",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29fad86d_b9ecf265",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5314e6_7a787dab",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fad86d_b9ecf265",
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "42048bae_3d56267c",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16de4e5a_71ca915d",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf00a2d8_6f21e416",
         "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
         "patchSetId": 17
@@ -138,6 +270,30 @@
       "writtenOn": "2018-02-07T20:31:26Z",
       "side": 1,
       "message": "Should have an overriding destructor.",
+      "range": {
+        "startLine": 28,
+        "startChar": 55,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "1fe9d35839852f720e2c014a6f5c3c40d07ddedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708b674c_0829cc18",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-02-07T21:32:32Z",
+      "side": 1,
+      "message": "Is that necessary since we could just use PdfCompositorImpl\u0027s?",
+      "parentUuid": "bf00a2d8_6f21e416",
       "range": {
         "startLine": 28,
         "startChar": 55,
