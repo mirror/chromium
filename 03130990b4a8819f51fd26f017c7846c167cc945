@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb5bf3d0_cb08a0f1",
+        "filename": "chromecast/browser/cast_web_view_default.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-07T23:37:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "97e015cb_b1ef777f",
+      "range": {
+        "startLine": 89,
+        "startChar": 3,
+        "endLine": 90,
+        "endChar": 52
+      },
+      "revId": "03130990b4a8819f51fd26f017c7846c167cc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bba9afd_993d0b20",
         "filename": "chromecast/browser/cast_web_view_extension.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-07T21:34:15Z",
       "side": 1,
       "message": "Matching changes for cast_web_view_extension.h?",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 42
+      },
+      "revId": "03130990b4a8819f51fd26f017c7846c167cc945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dae015b3_e1e2f64c",
+        "filename": "chromecast/browser/cast_web_view_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2018-02-07T23:37:26Z",
+      "side": 1,
+      "message": "Done. This class was also broken, so I fixed it.",
+      "parentUuid": "0bba9afd_993d0b20",
       "range": {
         "startLine": 13,
         "startChar": 22,
