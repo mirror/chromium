@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3953cd9_7de2fa68",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-02-07T15:20:43Z",
+      "side": 1,
+      "message": "This check is O(num tabs). You can achieve the same result in O(1):\n\nbrowser-\u003etab_strip_model()-\u003eGetActiveWebContents() \u003d\u003d web_contents",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "776c2ab376ae1e1e015ff28c8c5abc1a1545a225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f5065d_bb374bae",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-02-07T15:20:43Z",
+      "side": 1,
+      "message": "What if the window is hidden with Cmd+H on Mac? I think this should be handled the same way as \"minimized\". If it\u0027s too hard to handle correctly, this case should at least be discussed in a comment.",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 39
+      },
+      "revId": "776c2ab376ae1e1e015ff28c8c5abc1a1545a225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
