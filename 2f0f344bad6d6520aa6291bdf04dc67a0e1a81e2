@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f26e33_8db16811",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:16:54Z",
+      "side": 1,
+      "message": "Having these tests in browser_tests makes me nervous. Remember that browser_tests may run on machines with other browser_tests running, which means tests that rely on activation are typically flaky and should be moved to interactive_ui_tests, where you are guaranteed only your test is running.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 34
+      },
+      "revId": "2f0f344bad6d6520aa6291bdf04dc67a0e1a81e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c10d9b_97ee6176",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:16:54Z",
+      "side": 1,
+      "message": "This is worth a comment.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 38
+      },
+      "revId": "2f0f344bad6d6520aa6291bdf04dc67a0e1a81e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906954b3_f4f166d7",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:16:54Z",
+      "side": 1,
+      "message": "Why at instead of []?",
+      "range": {
+        "startLine": 96,
+        "startChar": 49,
+        "endLine": 96,
+        "endChar": 53
+      },
+      "revId": "2f0f344bad6d6520aa6291bdf04dc67a0e1a81e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
