@@ -16,6 +16,24 @@
       "revId": "e68a0407408cb75f1c2ac5421036a55972885bcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525504e1_91a3f6a0",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-02-07T18:33:47Z",
+      "side": 1,
+      "message": "Sure, done.\n\nNote that, RemoveAll is still called explicitly in order to keep the current behavior (i.e., removing the observer before StopMediaAnalytics, and invalidating weakptrs).\nIf the order can be swapped, we can defer the removing to its dtor, instead. WDYT?",
+      "parentUuid": "152e86f1_31187de7",
+      "revId": "e68a0407408cb75f1c2ac5421036a55972885bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
