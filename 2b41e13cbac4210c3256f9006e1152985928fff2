@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f99e85d5_3b4083b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "Did you omit the word \"exception\"?",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb89b78_f9f1abd5",
+        "filename": "sql/initialization.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "Omit \"(c)\".",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa9df85_67a0e50f",
+        "filename": "sql/initialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "Omit the \"(c)\" as per https://chromium.googlesource.com/chromium/src/+/lkgr/styleguide/c++/c++.md#file-headers",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db177073_c7a9f7f6",
+        "filename": "sql/initialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "Missing include header guard: SQL_INITIALIZATION_H_",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d83be8d_143e9b02",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "You don\u0027t need third_party/sqlite/sqlite3.h anymore.",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b5aa6a_1c893da6",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/sqlite/SQLiteFileSystem.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T15:16:06Z",
+      "side": 1,
+      "message": "You can delete third_party/sqlite/sqlite3.h right?",
+      "revId": "2b41e13cbac4210c3256f9006e1152985928fff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
