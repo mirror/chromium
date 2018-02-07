@@ -39,6 +39,9 @@ class HostedAppBrowserController : public SiteEngagementObserver {
   // Returns whether the associated browser is for an installed PWA window.
   bool IsForInstalledPwa(content::WebContents* web_contents) const;
 
+  // Returns whether the associated browser is for any installed PWA window.
+  bool IsForInstalledPwa() const;
+
   // Whether the browser being controlled should be currently showing the
   // location bar.
   bool ShouldShowLocationBar() const;

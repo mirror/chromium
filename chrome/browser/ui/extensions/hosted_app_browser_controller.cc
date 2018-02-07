@@ -93,6 +93,10 @@ bool HostedAppBrowserController::IsForInstalledPwa(
     return false;
   }
 
+  return IsForInstalledPwa();
+}
+
+bool HostedAppBrowserController::IsForInstalledPwa() const {
   if (!browser_->is_app())
     return false;
 
