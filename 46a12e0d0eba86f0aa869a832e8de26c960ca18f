@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4444453b_ac0c23e7",
+        "filename": "chrome/renderer/extensions/chrome_extensions_renderer_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T22:49:42Z",
+      "side": 1,
+      "message": "Probably worth adding a TODO to tighten this a bit - we should be able to restrict based on whether the extension has permission to the host, right?",
+      "revId": "46a12e0d0eba86f0aa869a832e8de26c960ca18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83813d40_528363c4",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T22:49:42Z",
+      "side": 1,
+      "message": "nit: remove this line",
+      "revId": "46a12e0d0eba86f0aa869a832e8de26c960ca18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdebbc0_89e7470d",
+        "filename": "chrome/test/data/extensions/api_test/content_scripts/request_cookies/cookies.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T22:49:42Z",
+      "side": 1,
+      "message": "nit: don\u0027t mix let + var; use let here",
+      "revId": "46a12e0d0eba86f0aa869a832e8de26c960ca18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
