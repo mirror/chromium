@@ -21,6 +21,7 @@ settings.ContentSettingsTypes = {
   POPUPS: 'popups',
   GEOLOCATION: 'location',
   NOTIFICATIONS: 'notifications',
+  NOTIFICATION_INDICATORS: 'notification-indicators',
   MIC: 'media-stream-mic',  // AKA Microphone.
   CAMERA: 'media-stream-camera',
   PROTOCOL_HANDLERS: 'register-protocol-handler',

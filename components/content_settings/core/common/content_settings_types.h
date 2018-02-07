@@ -104,6 +104,9 @@ enum ContentSettingsType {
   // a site.
   CONTENT_SETTINGS_TYPE_PLUGINS_DATA,
 
+  // todo -- comment.
+  CONTENT_SETTINGS_TYPE_NOTIFICATION_INDICATORS,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
