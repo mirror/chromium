@@ -33,4 +33,10 @@ void FrameResourceCoordinator::OnNonPersistentNotificationCreated() {
   service_->OnNonPersistentNotificationCreated();
 }
 
+void FrameResourceCoordinator::SetPageFrozen(bool frozen) {
+  if (!service_)
+    return;
+  service_->SetPageFrozen(frozen);
+}
+
 }  // namespace blink

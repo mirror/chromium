@@ -38,6 +38,7 @@ interface FrameCoordinationUnit {
   // Property signals.
   SetAudibility(bool audible);
   SetNetworkAlmostIdle(bool idle);
+  SetPageFrozen(bool frozen);
 
   // Event signals.
   OnAlertFired();

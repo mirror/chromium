@@ -347,13 +347,13 @@ const base::Feature kSlimmingPaintInvalidation{
     "SlimmingPaintInvalidation", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Stop scheduler task queues in background after allowed grace time.
-const base::Feature kStopInBackground {
-  "stop-in-background",
-#if defined(OS_ANDROID)
-      base::FEATURE_ENABLED_BY_DEFAULT
-#else
-      base::FEATURE_DISABLED_BY_DEFAULT
-#endif
+const base::Feature kStopInBackground{
+    "stop-in-background",
+    // #if defined(OS_ANDROID)
+    base::FEATURE_ENABLED_BY_DEFAULT
+    // #else
+    //   base::FEATURE_DISABLED_BY_DEFAULT
+    // #endif
 };
 
 // Stop loading tasks and loading of resources in background, on Android,

@@ -112,6 +112,10 @@ class PageSignalGeneratorImpl : public CoordinationUnitGraphObserver,
   void UpdateLoadIdleStateProcess(
       const ProcessCoordinationUnitImpl* process_cu);
 
+  // TODO(fmeawad): ADD COMMENT
+  void UpdatePageLifecycleState(const PageCoordinationUnitImpl* page_cu,
+                                int64_t value);
+
   // Convenience accessors for state associated with a |page_cu|.
   PageData* GetPageData(const PageCoordinationUnitImpl* page_cu);
   bool IsLoading(const PageCoordinationUnitImpl* page_cu);

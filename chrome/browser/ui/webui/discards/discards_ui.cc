@@ -62,6 +62,7 @@ class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
       info->title = base::UTF16ToUTF8(tab.title);
       info->is_media = tab.is_media;
       info->is_discarded = tab.is_discarded;
+      info->is_frozen = tab.is_frozen;
       info->discard_count = tab.discard_count;
       info->utility_rank = rank++;
       auto elapsed = now - tab.last_active;
@@ -90,6 +91,20 @@ class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
     resource_coordinator::TabManager* tab_manager =
         g_browser_process->GetTabManager();
     tab_manager->DiscardTabById(tab_id, GetDiscardReason(urgent));
+    std::move(callback).Run();
+  }
+
+  void FreezeById(int32_t tab_id, FreezeByIdCallback callback) override {
+    resource_coordinator::TabManager* tab_manager =
+        g_browser_process->GetTabManager();
+    tab_manager->FreezeTabById(tab_id);
+    std::move(callback).Run();
+  }
+
+  void ResumeById(int32_t tab_id, ResumeByIdCallback callback) override {
+    resource_coordinator::TabManager* tab_manager =
+        g_browser_process->GetTabManager();
+    tab_manager->ResumeTabById(tab_id);
     std::move(callback).Run();
   }
 

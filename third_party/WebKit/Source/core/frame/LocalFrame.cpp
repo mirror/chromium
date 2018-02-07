@@ -487,6 +487,10 @@ void LocalFrame::DidFreeze() {
         CustomCountHistogram, freeze_histogram,
         ("DocumentEventTiming.FreezeDuration", 0, 10000000, 50));
     freeze_histogram.Count((freeze_event_end - freeze_event_start) * 1000000.0);
+    if (IsMainFrame()) {
+      if (auto* frame_resource_coordinator = GetFrameResourceCoordinator())
+        frame_resource_coordinator->SetPageFrozen(true);
+    }
   }
 }
 
@@ -500,6 +504,10 @@ void LocalFrame::DidResume() {
         CustomCountHistogram, resume_histogram,
         ("DocumentEventTiming.ResumeDuration", 0, 10000000, 50));
     resume_histogram.Count((resume_event_end - resume_event_start) * 1000000.0);
+    if (IsMainFrame()) {
+      if (auto* frame_resource_coordinator = GetFrameResourceCoordinator())
+        frame_resource_coordinator->SetPageFrozen(false);
+    }
   }
 }
 

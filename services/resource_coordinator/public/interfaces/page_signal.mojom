@@ -15,6 +15,8 @@ import "mojo/common/time.mojom";
 // PageSignalGenerator::AddReceiver.
 interface PageSignalReceiver {
   NotifyPageAlmostIdle(CoordinationUnitID cu_id);
+  NotifyPageFrozen(CoordinationUnitID cu_id);
+  NotifyPageResumed(CoordinationUnitID cu_id);
   SetExpectedTaskQueueingDuration(CoordinationUnitID cu_id,
                                   mojo.common.mojom.TimeDelta duration);
 };

@@ -119,6 +119,30 @@ void TabManager::WebContentsData::NotifyTabIsLoaded() {
   }
 }
 
+void TabManager::WebContentsData::NotifyTabIsFrozen() {
+  LOG(ERROR) << "TabManager::WebContentsData::NotifyTabIsFrozen";
+  tab_data_.tab_lifecycle_state = TAB_IS_FROZEN;
+  // // We may already be in the stopped state if this is being invoked due to
+  // an
+  // // iframe loading new content.
+  // if (tab_data_.tab_loading_state != TAB_IS_LOADED) {
+  //   SetTabLoadingState(TAB_IS_LOADED);
+  //   g_browser_process->GetTabManager()->OnTabIsLoaded(web_contents());
+  // }
+}
+
+void TabManager::WebContentsData::NotifyTabIsResumed() {
+  LOG(ERROR) << "TabManager::WebContentsData::NotifyTabIsResumed";
+  tab_data_.tab_lifecycle_state = TAB_IS_ACTIVE;
+  // // We may already be in the stopped state if this is being invoked due to
+  // an
+  // // iframe loading new content.
+  // if (tab_data_.tab_loading_state != TAB_IS_LOADED) {
+  //   SetTabLoadingState(TAB_IS_LOADED);
+  //   g_browser_process->GetTabManager()->OnTabIsLoaded(web_contents());
+  // }
+}
+
 bool TabManager::WebContentsData::IsDiscarded() {
   return tab_data_.is_discarded;
 }
@@ -143,6 +167,10 @@ void TabManager::WebContentsData::SetDiscardState(bool is_discarded) {
 
 int TabManager::WebContentsData::DiscardCount() {
   return tab_data_.discard_count;
+}
+
+bool TabManager::WebContentsData::IsFrozen() {
+  return tab_data_.tab_lifecycle_state == TAB_IS_FROZEN;
 }
 
 void TabManager::WebContentsData::IncrementDiscardCount() {
@@ -212,6 +240,7 @@ TabManager::WebContentsData::Data::Data()
       is_recently_audible(false),
       is_auto_discardable(true),
       tab_loading_state(TAB_IS_NOT_LOADING),
+      tab_lifecycle_state(TAB_IS_ACTIVE),
       is_in_session_restore(false),
       is_restored_in_foreground(false) {
   static int32_t next_id = 0;
@@ -227,7 +256,8 @@ bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
          last_inactive_time == right.last_inactive_time &&
          tab_loading_state == right.tab_loading_state &&
          is_in_session_restore == right.is_in_session_restore &&
-         is_restored_in_foreground == right.is_restored_in_foreground;
+         is_restored_in_foreground == right.is_restored_in_foreground &&
+         tab_lifecycle_state == right.tab_lifecycle_state;
 }
 
 bool TabManager::WebContentsData::Data::operator!=(const Data& right) const {

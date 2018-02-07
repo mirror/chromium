@@ -32,6 +32,24 @@ void TabManager::ResourceCoordinatorSignalObserver::OnPageAlmostIdle(
   web_contents_data->NotifyTabIsLoaded();
 }
 
+void TabManager::ResourceCoordinatorSignalObserver::OnPageFrozen(
+    content::WebContents* web_contents) {
+  auto* web_contents_data =
+      TabManager::WebContentsData::FromWebContents(web_contents);
+  if (!web_contents_data)
+    return;
+  web_contents_data->NotifyTabIsFrozen();
+}
+
+void TabManager::ResourceCoordinatorSignalObserver::OnPageResumed(
+    content::WebContents* web_contents) {
+  auto* web_contents_data =
+      TabManager::WebContentsData::FromWebContents(web_contents);
+  if (!web_contents_data)
+    return;
+  web_contents_data->NotifyTabIsResumed();
+}
+
 void TabManager::ResourceCoordinatorSignalObserver::
     OnExpectedTaskQueueingDurationSet(content::WebContents* web_contents,
                                       base::TimeDelta duration) {

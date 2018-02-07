@@ -24,6 +24,7 @@ class PLATFORM_EXPORT FrameResourceCoordinator final
 
   void SetNetworkAlmostIdle(bool);
   void OnNonPersistentNotificationCreated();
+  void SetPageFrozen(bool);
 
  private:
   explicit FrameResourceCoordinator(service_manager::InterfaceProvider*);
