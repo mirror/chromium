@@ -16,6 +16,24 @@
       "revId": "aaf3e0cffa5b5f1005f44342a2ce353303ab06d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25ba2b7_1d2ce6f6",
+        "filename": "components/url_pattern_index/url_pattern.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-07T23:27:39Z",
+      "side": 1,
+      "message": "Yeah my intention was to fix that pathological case. Your suggestion is better (and allows us to use IsSubdomainAnchored as a loop precondition). Done.",
+      "parentUuid": "ff88242f_d9be4d93",
+      "revId": "aaf3e0cffa5b5f1005f44342a2ce353303ab06d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
