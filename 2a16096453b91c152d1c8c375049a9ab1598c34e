@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c410de_e6cad608",
+        "filename": "chrome/browser/resources/settings/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T23:43:36Z",
+      "side": 1,
+      "message": "Use HTML imports instead?",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 71
+      },
+      "revId": "2a16096453b91c152d1c8c375049a9ab1598c34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
