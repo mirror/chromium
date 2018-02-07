@@ -3,15 +3,43 @@
 // found in the LICENSE file.
 
 #include "core/messaging/BlinkTransferableMessageStructTraits.h"
+#include "core/imagebitmap/ImageBitmap.h"
+#include "third_party/skia/include/core/SkBitmap.h"
 
 namespace mojo {
+
+Vector<SkBitmap>
+StructTraits<blink::mojom::blink::TransferableMessage::DataView,
+             blink::BlinkTransferableMessage>::
+    image_bitmap_contents_array(const blink::BlinkCloneableMessage& input) {
+  Vector<SkBitmap> out;
+  out.ReserveInitialCapacity(
+      input.message->GetImageBitmapContentsArray().size());
+  for (auto& bitmap_contents : input.message->GetImageBitmapContentsArray()) {
+    SkBitmap bitmap;
+    const sk_sp<SkImage> image =
+        bitmap_contents->PaintImageForCurrentFrame().GetSkImage();
+    if (!image ||
+        !image->asLegacyBitmap(
+            &bitmap, SkImage::LegacyBitmapMode::kRO_LegacyBitmapMode)) {
+      return Vector<SkBitmap>();
+    }
+    out.push_back(std::move(bitmap));
+  }
+  return out;
+}
 
 bool StructTraits<blink::mojom::blink::TransferableMessage::DataView,
                   blink::BlinkTransferableMessage>::
     Read(blink::mojom::blink::TransferableMessage::DataView data,
          blink::BlinkTransferableMessage* out) {
   Vector<mojo::ScopedMessagePipeHandle> ports;
+  blink::SerializedScriptValue::ArrayBufferContentsArray
+      array_buffer_contents_array;
+  Vector<SkBitmap> sk_bitmaps;
   if (!data.ReadMessage(static_cast<blink::BlinkCloneableMessage*>(out)) ||
+      !data.ReadArrayBufferContentsArray(&array_buffer_contents_array) ||
+      !data.ReadImageBitmapContentsArray(&sk_bitmaps) ||
       !data.ReadPorts(&ports)) {
     return false;
   }
@@ -19,6 +47,58 @@ bool StructTraits<blink::mojom::blink::TransferableMessage::DataView,
   out->ports.ReserveInitialCapacity(ports.size());
   out->ports.AppendRange(std::make_move_iterator(ports.begin()),
                          std::make_move_iterator(ports.end()));
+
+  out->message->SetArrayBufferContentsArray(
+      std::move(array_buffer_contents_array));
+  array_buffer_contents_array.clear();
+
+  // Bitmaps are serialized in mojo as SkBitmaps to leverage existing
+  // serialization logic, but SerializedScriptValue uses StaticBitmapImage, so
+  // the SkBitmaps need to be converted to StaticBitmapImages.
+  blink::SerializedScriptValue::ImageBitmapContentsArray
+      image_bitmap_contents_array;
+  image_bitmap_contents_array.ReserveInitialCapacity(sk_bitmaps.size());
+  for (const SkBitmap& sk_bitmap : sk_bitmaps) {
+    auto handle = WTF::ArrayBufferContents::CreateDataHandle(
+        sk_bitmap.computeByteSize(), WTF::ArrayBufferContents::kZeroInitialize);
+    if (!handle)
+      return false;
+
+    WTF::ArrayBufferContents array_buffer_contents(
+        std::move(handle), WTF::ArrayBufferContents::kNotShared);
+    if (!array_buffer_contents.Data())
+      return false;
+
+    SkImageInfo info = sk_bitmap.info();
+    if (!sk_bitmap.readPixels(info, array_buffer_contents.Data(),
+                              info.minRowBytes(), 0, 0,
+                              SkTransferFunctionBehavior::kIgnore))
+      return false;
+
+    image_bitmap_contents_array.push_back(
+        blink::StaticBitmapImage::Create(array_buffer_contents, info));
+  }
+  out->message->SetImageBitmapContentsArray(image_bitmap_contents_array);
+
+  return true;
+}
+
+bool StructTraits<blink::mojom::blink::SerializedArrayBufferContents::DataView,
+                  WTF::ArrayBufferContents>::
+    Read(blink::mojom::blink::SerializedArrayBufferContents::DataView data,
+         WTF::ArrayBufferContents* out) {
+  mojo::ArrayDataView<uint8_t> mojo_contents;
+  data.GetContentsDataView(&mojo_contents);
+  auto handle = WTF::ArrayBufferContents::CreateDataHandle(
+      mojo_contents.size(), WTF::ArrayBufferContents::kZeroInitialize);
+  if (!handle)
+    return false;
+
+  WTF::ArrayBufferContents array_buffer_contents(
+      std::move(handle), WTF::ArrayBufferContents::kNotShared);
+  memcpy(array_buffer_contents.Data(), mojo_contents.data(),
+         mojo_contents.size());
+  *out = std::move(array_buffer_contents);
   return true;
 }
 

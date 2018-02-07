@@ -161,6 +161,7 @@ mojom("mojo_bindings") {
 
   public_deps = [
     ":mojo_platform_bindings",
+    "//skia/public/interfaces",
   ]
 
   overridden_deps_blink = [ ":mojo_platform_bindings" ]
