@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfe7f0c_ddd8b65d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-07T22:12:36Z",
+      "side": 1,
+      "message": "nit: It would be nice to do this in a separate CL, but I won\u0027t insist.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "58b9049a10aa49b18b1ab8602d3694f456fae6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ba7fa9_129ef9ee",
+        "filename": "base/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-07T22:12:36Z",
+      "side": 1,
+      "message": "nit: s/not/is not",
+      "range": {
+        "startLine": 387,
+        "startChar": 17,
+        "endLine": 387,
+        "endChar": 20
+      },
+      "revId": "58b9049a10aa49b18b1ab8602d3694f456fae6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1ea99e_04a0af77",
+        "filename": "base/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-07T22:12:36Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d leave a blank line here.",
+      "range": {
+        "startLine": 394,
+        "startChar": 5,
+        "endLine": 394,
+        "endChar": 0
+      },
+      "revId": "58b9049a10aa49b18b1ab8602d3694f456fae6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
