@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ecb553d_f1198bce",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Oops, sorry! Did this while debugging and forgot to change it back. Thanks!",
+      "parentUuid": "b94e03e1_120aa0bf",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd8fd463_2b57831f",
         "filename": "chrome/test/data/webui/settings/site_list_tests.js",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546c32d2_657a862c",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd8fd463_2b57831f",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cad18a4b_0ed5b5d9",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Done. We also changed it to a list of exceptions now so I updated to account for that as well.",
+      "parentUuid": "9919d376_d0fc9908",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14e1e0d0_5d6c62a2",
         "filename": "chrome/test/data/webui/settings/test_util.js",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96076b9_c79d5fdf",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e1e0d0_5d6c62a2",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b29de828_975664ed",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf873ff_df67a0a4",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc7eb31_e75c1bf8",
         "filename": "chrome/test/data/webui/settings/test_util.js",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52965522_5a3f1c97",
+        "filename": "chrome/test/data/webui/settings/test_util.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-02-07T07:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc7eb31_e75c1bf8",
+      "revId": "788c104727dd4db9f19bf177fcc2c98df7831cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
