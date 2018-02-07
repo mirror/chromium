@@ -348,6 +348,18 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
+                       DisplayNonPersistentNotificationWithoutPermission) {
+  RequestAndDenyPermission();
+
+  std::string script_result;
+  ASSERT_TRUE(RunScript("DisplayNonPersistentNotification('Title', {})",
+                        &script_result));
+  EXPECT_EQ("error", script_result);
+
+  ASSERT_EQ(0u, GetDisplayedNotifications(false /* is_persistent */).size());
+}
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
                        DisplayAndCloseNonPersistentNotification) {
   ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
 
@@ -1096,4 +1108,16 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   message_center::Notification replacement = notifications[1];
   EXPECT_EQ("Title3", base::UTF16ToUTF8(replacement.title()));
   EXPECT_EQ(notification.id(), replacement.id());
+}
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
+                       DisplayNonPersistentNotificationWithoutPermission) {
+  RequestAndDenyPermission();
+
+  std::string script_result;
+  ASSERT_TRUE(RunScript("DisplayNonPersistentNotification('Title', {})",
+                        &script_result));
+  EXPECT_EQ("error", script_result);
+
+  ASSERT_EQ(0u, GetDisplayedNotifications(false /* is_persistent */).size());
 }

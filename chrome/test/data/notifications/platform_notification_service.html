@@ -28,7 +28,7 @@
         notification.addEventListener('show', e =>
           domAutomationController.send('ok'));
         notification.addEventListener('error', e =>
-          domAutomationController.send('could not show notification'));
+          domAutomationController.send('' + e.type));
       }
 
       // Instantiates a new non-persistent notification with the given |title|
