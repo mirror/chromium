@@ -160,7 +160,7 @@ void MediaRouterMojoImpl::RouteResponseReceived(
         error, RouteRequestResult::INCOGNITO_MISMATCH);
   } else {
     result = RouteRequestResult::FromSuccess(*media_route, presentation_id);
-    OnRouteAdded(provider_id, *media_route);
+    OnRouteAdded(*media_route);
   }
 
   if (is_join) {
@@ -459,50 +459,48 @@ void MediaRouterMojoImpl::MediaRoutesQuery::SetRoutesForProvider(
     MediaRouteProviderId provider_id,
     const std::vector<MediaRoute>& routes,
     const std::vector<MediaRoute::Id>& joinable_route_ids) {
-  providers_to_routes_[provider_id] = routes;
-  UpdateCachedRouteList();
+  received_results_ = true;
 
-  providers_to_joinable_routes_[provider_id] = joinable_route_ids;
-  joinable_route_ids_.clear();
-  for (const auto& provider_to_joinable_routes :
-       providers_to_joinable_routes_) {
-    joinable_route_ids_.insert(joinable_route_ids_.end(),
-                               provider_to_joinable_routes.second.begin(),
-                               provider_to_joinable_routes.second.end());
-  }
+  // Remove routes from |joinable_route_ids_| and |cached_route_list_| that are
+  // associated with |provider_id|. We assume |joinable_route_ids_| is a subset
+  // of IDs in |cached_route_list_|.
+  const auto& cached_route_list = cached_route_list_;
+  base::EraseIf(joinable_route_ids_, [&cached_route_list, &provider_id](
+                                         const MediaRoute::Id& route_id) {
+    return std::find_if(cached_route_list.begin(), cached_route_list.end(),
+                        [&route_id, &provider_id](const MediaRoute& route) {
+                          return route.provider_id() == provider_id &&
+                                 route.media_route_id() == route_id;
+                        }) != cached_route_list.end();
+  });
+  base::EraseIf(cached_route_list_, [&provider_id](const MediaRoute& route) {
+    return route.provider_id() == provider_id;
+  });
+
+  joinable_route_ids_.insert(joinable_route_ids_.end(),
+                             joinable_route_ids.begin(),
+                             joinable_route_ids.end());
+  cached_route_list_.insert(cached_route_list_.end(), routes.begin(),
+                            routes.end());
 }
 
-bool MediaRouterMojoImpl::MediaRoutesQuery::AddRouteForProvider(
-    MediaRouteProviderId provider_id,
-    const MediaRoute& route) {
-  std::vector<MediaRoute>& routes = providers_to_routes_[provider_id];
-  if (std::find_if(routes.begin(), routes.end(),
+bool MediaRouterMojoImpl::MediaRoutesQuery::AddRoute(const MediaRoute& route) {
+  received_results_ = true;
+  if (std::find_if(cached_route_list_.begin(), cached_route_list_.end(),
                    [&route](const MediaRoute& existing_route) {
                      return existing_route.media_route_id() ==
                             route.media_route_id();
-                   }) == routes.end()) {
-    routes.push_back(route);
-    UpdateCachedRouteList();
+                   }) == cached_route_list_.end()) {
+    cached_route_list_.push_back(route);
     return true;
   }
   return false;
 }
 
-void MediaRouterMojoImpl::MediaRoutesQuery::UpdateCachedRouteList() {
-  cached_route_list_.emplace();
-  for (const auto& provider_to_routes : providers_to_routes_) {
-    cached_route_list_->insert(cached_route_list_->end(),
-                               provider_to_routes.second.begin(),
-                               provider_to_routes.second.end());
-  }
-}
-
 void MediaRouterMojoImpl::MediaRoutesQuery::AddObserver(
     MediaRoutesObserver* observer) {
   observers_.AddObserver(observer);
-  observer->OnRoutesUpdated(
-      cached_route_list_.value_or(std::vector<MediaRoute>()),
-      joinable_route_ids_);
+  observer->OnRoutesUpdated(cached_route_list_, joinable_route_ids_);
 }
 
 void MediaRouterMojoImpl::MediaRoutesQuery::RemoveObserver(
@@ -512,9 +510,7 @@ void MediaRouterMojoImpl::MediaRoutesQuery::RemoveObserver(
 
 void MediaRouterMojoImpl::MediaRoutesQuery::NotifyObservers() {
   for (auto& observer : observers_) {
-    observer.OnRoutesUpdated(
-        cached_route_list_.value_or(std::vector<MediaRoute>()),
-        joinable_route_ids_);
+    observer.OnRoutesUpdated(cached_route_list_, joinable_route_ids_);
   }
 }
 
@@ -651,7 +647,7 @@ void MediaRouterMojoImpl::RegisterMediaRoutesObserver(
       provider.second->StartObservingMediaRoutes(source_id);
     // The MRPs will call MediaRouterMojoImpl::OnRoutesUpdated() soon, if there
     // are any existing routes the new observer should be aware of.
-  } else if (routes_query->cached_route_list()) {
+  } else if (routes_query->received_results()) {
     // Return to the event loop before notifying of a cached route list because
     // MediaRoutesObserver is calling this method from its constructor, and that
     // must complete before invoking its virtual OnRoutesUpdated() method.
@@ -671,12 +667,12 @@ void MediaRouterMojoImpl::NotifyOfExistingRoutesIfRegistered(
   // observer is still registered. Otherwise, there is nothing to report to the
   // observer.
   const auto it = routes_queries_.find(source_id);
-  if (it == routes_queries_.end() || !it->second->cached_route_list() ||
+  if (it == routes_queries_.end() || !it->second->received_results() ||
       !it->second->HasObserver(observer)) {
     return;
   }
 
-  observer->OnRoutesUpdated(*it->second->cached_route_list(),
+  observer->OnRoutesUpdated(it->second->cached_route_list(),
                             it->second->joinable_route_ids());
 }
 
@@ -817,10 +813,9 @@ void MediaRouterMojoImpl::OnTerminateRouteResult(
                                                                  result_code);
 }
 
-void MediaRouterMojoImpl::OnRouteAdded(MediaRouteProviderId provider_id,
-                                       const MediaRoute& route) {
+void MediaRouterMojoImpl::OnRouteAdded(const MediaRoute& route) {
   for (auto& routes_query : routes_queries_) {
-    if (routes_query.second->AddRouteForProvider(provider_id, route))
+    if (routes_query.second->AddRoute(route))
       routes_query.second->NotifyObservers();
   }
 }
@@ -899,19 +894,9 @@ void MediaRouterMojoImpl::BindToMojoRequest(
 
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForRoute(
     const MediaRoute::Id& route_id) {
-  for (const auto& routes_query : routes_queries_) {
-    for (const auto& provider_to_routes :
-         routes_query.second->providers_to_routes()) {
-      const std::vector<MediaRoute>& routes = provider_to_routes.second;
-      if (std::find_if(routes.begin(), routes.end(),
-                       [&route_id](const MediaRoute& route) {
-                         return route.media_route_id() == route_id;
-                       }) != routes.end()) {
-        return provider_to_routes.first;
-      }
-    }
-  }
-  return base::nullopt;
+  const MediaRoute* route = GetRoute(route_id);
+  return route ? base::make_optional<MediaRouteProviderId>(route->provider_id())
+               : base::nullopt;
 }
 
 base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
@@ -924,19 +909,9 @@ base::Optional<MediaRouteProviderId> MediaRouterMojoImpl::GetProviderIdForSink(
 base::Optional<MediaRouteProviderId>
 MediaRouterMojoImpl::GetProviderIdForPresentation(
     const std::string& presentation_id) {
-  for (const auto& routes_query : routes_queries_) {
-    for (const auto& provider_to_routes :
-         routes_query.second->providers_to_routes()) {
-      const std::vector<MediaRoute>& routes = provider_to_routes.second;
-      if (std::find_if(routes.begin(), routes.end(),
-                       [&presentation_id](const MediaRoute& route) {
-                         return route.presentation_id() == presentation_id;
-                       }) != routes.end()) {
-        return provider_to_routes.first;
-      }
-    }
-  }
-  return base::nullopt;
+  const MediaRoute* route = GetRouteByPresentationId(presentation_id);
+  return route ? base::make_optional<MediaRouteProviderId>(route->provider_id())
+               : base::nullopt;
 }
 
 const MediaSink* MediaRouterMojoImpl::GetSinkById(

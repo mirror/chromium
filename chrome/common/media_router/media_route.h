@@ -9,6 +9,7 @@
 
 #include "base/logging.h"
 #include "base/values.h"
+#include "chrome/common/media_router/media_route_provider_helper.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "chrome/common/media_router/media_source.h"
 
@@ -68,6 +69,11 @@ class MediaRoute {
   }
   const MediaSink::Id& media_sink_id() const { return media_sink_id_; }
 
+  void set_provider_id(MediaRouteProviderId provider_id) {
+    provider_id_ = provider_id;
+  }
+  MediaRouteProviderId provider_id() const { return provider_id_; }
+
   void set_description(const std::string& description) {
     description_ = description;
   }
@@ -108,6 +114,9 @@ class MediaRoute {
 
   // The ID of sink being routed to.
   MediaSink::Id media_sink_id_;
+
+  // The ID of the MediaRouteProvider that the MediaRoute belongs to.
+  MediaRouteProviderId provider_id_ = MediaRouteProviderId::UNKNOWN;
 
   // Human readable description of the casting activity.  Examples:
   // "Mirroring tab (www.example.com)", "Casting media", "Casting YouTube"

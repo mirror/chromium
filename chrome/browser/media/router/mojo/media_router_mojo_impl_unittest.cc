@@ -93,6 +93,7 @@ MediaRoute CreateMediaRoute() {
                    true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
+  route.set_provider_id(MediaRouteProviderId::EXTENSION);
   return route;
 }
 
@@ -102,6 +103,7 @@ MediaRoute CreateMediaRoute2() {
                    true);
   route.set_presentation_id(kPresentationId);
   route.set_controller_type(RouteControllerType::kGeneric);
+  route.set_provider_id(MediaRouteProviderId::EXTENSION);
   return route;
 }
 
@@ -173,6 +175,7 @@ TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
   MediaSource media_source(kSource);
   MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, false);
   expected_route.set_incognito(true);
+  expected_route.set_provider_id(MediaRouteProviderId::EXTENSION);
 
   // Use a lambda function as an invocation target here to work around
   // a limitation with GMock::Invoke that prevents it from using move-only types
@@ -1210,11 +1213,15 @@ TEST_F(MediaRouterMojoImplTest, ObserveSinksFromMultipleProviders) {
 TEST_F(MediaRouterMojoImplTest, ObserveRoutesFromMultipleProviders) {
   const MediaSource source(kSource);
   // Routes for the extension MRP.
-  const MediaRoute route1a("route1a", source, "sink 1a", "", true, true);
-  const MediaRoute route1b("route1b", source, "sink 1b", "", true, true);
+  MediaRoute route1a("route1a", source, "sink 1a", "", true, true);
+  route1a.set_provider_id(MediaRouteProviderId::EXTENSION);
+  MediaRoute route1b("route1b", source, "sink 1b", "", true, true);
+  route1b.set_provider_id(MediaRouteProviderId::EXTENSION);
   // Routes for the wired display MRP.
-  const MediaRoute route2a("route2a", source, "sink 2a", "", true, true);
-  const MediaRoute route2b("route2b", source, "sink 2b", "", true, true);
+  MediaRoute route2a("route2a", source, "sink 2a", "", true, true);
+  route2a.set_provider_id(MediaRouteProviderId::WIRED_DISPLAY);
+  MediaRoute route2b("route2b", source, "sink 2b", "", true, true);
+  route2b.set_provider_id(MediaRouteProviderId::WIRED_DISPLAY);
   RegisterWiredDisplayProvider();
   MockMediaRoutesObserver observer(router(), kSource);
 

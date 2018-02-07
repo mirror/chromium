@@ -540,6 +540,7 @@ function routeToMojo_(route) {
     'mediaRouteId': route.id,
     'mediaSource': route.mediaSource,
     'mediaSinkId': route.sinkId,
+    'providerId': mediaRouter.mojom.MediaRouteProvider.Id.EXTENSION,
     'description': route.description,
     'iconUrl': route.iconUrl,
     'isLocal': route.isLocal,
