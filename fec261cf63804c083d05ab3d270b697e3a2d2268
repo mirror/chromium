@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d7f7452_5fba7abe",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T19:17:00Z",
+      "side": 1,
+      "message": "Not sure if removing these cycles is worthwhile. It would require moving bunch of headers with abstract interfaces to a separate target, which would increase build complexity, but I don\u0027t think it gives anything in return.",
+      "range": {
+        "startLine": 330,
+        "startChar": 30,
+        "endLine": 330,
+        "endChar": 68
+      },
+      "revId": "fec261cf63804c083d05ab3d270b697e3a2d2268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50f3dd3_d94d55a6",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T19:17:00Z",
+      "side": 1,
+      "message": "I think we need this for all other per-platform targets below. That\u0027s probably why this CL fails on try bots right now.",
+      "range": {
+        "startLine": 331,
+        "startChar": 3,
+        "endLine": 331,
+        "endChar": 33
+      },
+      "revId": "fec261cf63804c083d05ab3d270b697e3a2d2268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cd1c23_7320cbc5",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T19:17:00Z",
+      "side": 1,
+      "message": "remove this?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 22
+      },
+      "revId": "fec261cf63804c083d05ab3d270b697e3a2d2268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d47a90_9dad86ad",
+        "filename": "remoting/host/setup/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T19:17:00Z",
+      "side": 1,
+      "message": "don\u0027t need :base",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "fec261cf63804c083d05ab3d270b697e3a2d2268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f458c6_f81e375e",
+        "filename": "remoting/host/setup/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T19:17:00Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "fec261cf63804c083d05ab3d270b697e3a2d2268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
