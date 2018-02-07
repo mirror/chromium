@@ -34,6 +34,24 @@
       "revId": "e99515dd2ad918eb2b6ae93488d3aff6832b6945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "341ce218_4d58a66d",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-02-07T21:44:44Z",
+      "side": 1,
+      "message": "Drive-by: My understanding was that (at least back in the days) if you had a string where you could swap out the word Chromium vs Chrome (depending on which version was installed), then you\u0027d create one string in chromium_strings and one in chrome_strings. However, strings that didn\u0027t have that differentiation belonged elsewhere.",
+      "parentUuid": "79e4582d_acbe3020",
+      "revId": "e99515dd2ad918eb2b6ae93488d3aff6832b6945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
