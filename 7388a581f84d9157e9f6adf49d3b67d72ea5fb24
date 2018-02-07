@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "fb0608a9_f9469350",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-07T09:29:31Z",
+      "side": 1,
+      "message": "The call will come in from the other side of a Mojo interface, so while the implementation of this method won\u0027t really change (i.e., it will still run the callback in the body of the method as it does here), it will indeed be asynchronous from the caller\u0027s POV.",
+      "parentUuid": "dc3e2f4e_c1b0b5cd",
+      "revId": "7388a581f84d9157e9f6adf49d3b67d72ea5fb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c71633_d8ffd2d3",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.h",
         "patchSetId": 18
