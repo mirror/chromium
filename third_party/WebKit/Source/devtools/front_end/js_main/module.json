@@ -1,0 +1,14 @@
+{
+    "extensions": [
+        {
+            "type": "early-initialization",
+            "className": "JSMain.JSMain"
+        }
+    ],
+    "dependencies": [
+        "components"
+    ],
+    "scripts": [
+        "JSMain.js"
+    ]
+}
