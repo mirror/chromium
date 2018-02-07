@@ -34,6 +34,24 @@
       "revId": "45dd198c8265f24de77f36613beb46799982640b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8580441d_1e5a9a08",
+        "filename": "base/logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-07T01:49:54Z",
+      "side": 1,
+      "message": "Running base_unittests\u0027 LoggingTest.CheckCausesDistinctBreakpoints under WinDbg, I find the original CheckContainingFunc helper disassembles to :\n\nbase_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc:\n00007ff7`0a384f40 55              push    rbp\n00007ff7`0a384f41 4889e5          mov     rbp,rsp\n00007ff7`0a384f44 83f901          cmp     ecx,1\n00007ff7`0a384f47 740c            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x15 (00007ff7`0a384f55)\n00007ff7`0a384f49 83f902          cmp     ecx,2\n00007ff7`0a384f4c 740e            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x1c (00007ff7`0a384f5c)\n00007ff7`0a384f4e 83f903          cmp     ecx,3\n00007ff7`0a384f51 7410            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x23 (00007ff7`0a384f63)\n00007ff7`0a384f53 5d              pop     rbp\n00007ff7`0a384f54 c3              ret\n00007ff7`0a384f55 cc              int     3\n00007ff7`0a384f56 0f0b            ud2\n00007ff7`0a384f58 6a01            push    1\n00007ff7`0a384f5a ebf7            jmp     base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x13 (00007ff7`0a384f53)\n00007ff7`0a384f5c cc              int     3\n00007ff7`0a384f5d 0f0b            ud2\n00007ff7`0a384f5f 6a02            push    2\n00007ff7`0a384f61 ebf0            jmp     base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x13 (00007ff7`0a384f53)\n00007ff7`0a384f63 cc              int     3\n00007ff7`0a384f64 0f0b            ud2\n00007ff7`0a384f66 6a03            push    3\n00007ff7`0a384f68 ebe9            jmp     base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x13 (00007ff7`0a384f53)\n\nwhile the annotation has it become:\n\nbase_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc:\n00007ff6`4a476a60 55              push    rbp\n00007ff6`4a476a61 4889e5          mov     rbp,rsp\n00007ff6`4a476a64 83f903          cmp     ecx,3\n00007ff6`4a476a67 740c            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x15 (00007ff6`4a476a75)\n00007ff6`4a476a69 83f902          cmp     ecx,2\n00007ff6`4a476a6c 740e            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x1c (00007ff6`4a476a7c)\n00007ff6`4a476a6e 83f901          cmp     ecx,1\n00007ff6`4a476a71 7410            je      base_unittests!logging::`anonymous namespace\u0027::CheckContainingFunc+0x23 (00007ff6`4a476a83)\n00007ff6`4a476a73 5d              pop     rbp\n00007ff6`4a476a74 c3              ret\n\n00007ff6`4a476a75 cc              int     3\n00007ff6`4a476a76 0f0b            ud2\n00007ff6`4a476a78 6a03            push    3\n00007ff6`4a476a7a 0f0b            ud2\n\n00007ff6`4a476a7c cc              int     3\n00007ff6`4a476a7d 0f0b            ud2\n00007ff6`4a476a7f 6a02            push    2\n00007ff6`4a476a81 0f0b            ud2\n\n00007ff6`4a476a83 cc              int     3\n00007ff6`4a476a84 0f0b            ud2\n00007ff6`4a476a86 6a01            push    1\n00007ff6`4a476a88 0f0b            ud2\n\ni.e. no worse, though sadly also no better.",
+      "parentUuid": "805d6cc5_b2cbeada",
+      "revId": "45dd198c8265f24de77f36613beb46799982640b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
