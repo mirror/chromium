@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8889d9a_ee854f95",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T09:08:14Z",
+      "side": 1,
+      "message": "\"Maybe\" prefix is widely used in Chromium codebase, and it\u0027s already our convention.\n\nOilpan somehow prefers \"IfNeeded\" suffix, and it seems Oilpan\u0027s convention.  Or haraken@ prefers \"IfNeeded\" in Blink codebase?\n\nI recommend to follow either of already-existing conventions.",
+      "range": {
+        "startLine": 508,
+        "startChar": 33,
+        "endLine": 508,
+        "endChar": 51
+      },
+      "revId": "2c3fc2b879708d17f270afa7831f31e189b9408a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
