@@ -32,6 +32,8 @@ base::LazyInstance<base::ThreadLocalPointer<void>>::Leaky
     g_stack_frame_pointer = LAZY_INSTANCE_INITIALIZER;
 #endif
 
+bool g_in_get_java_exception_info = false;
+
 }  // namespace
 
 namespace base {
@@ -251,6 +253,12 @@ void CheckException(JNIEnv* env) {
 }
 
 std::string GetJavaExceptionInfo(JNIEnv* env, jthrowable java_throwable) {
+  if (g_in_get_java_exception_info) {
+    return "Java OOM'ed in exception handling, check logcat";
+  }
+
+  AutoReset<bool> reset(&g_in_get_java_exception_info, true);
+
   ScopedJavaLocalRef<jclass> throwable_clazz =
       GetClass(env, "java/lang/Throwable");
   jmethodID throwable_printstacktrace =
@@ -271,6 +279,7 @@ std::string GetJavaExceptionInfo(JNIEnv* env, jthrowable java_throwable) {
   ScopedJavaLocalRef<jobject> bytearray_output_stream(env,
       env->NewObject(bytearray_output_stream_clazz.obj(),
                      bytearray_output_stream_constructor));
+  CheckException(env);
 
   // Create an instance of PrintStream.
   ScopedJavaLocalRef<jclass> printstream_clazz =
@@ -282,19 +291,19 @@ std::string GetJavaExceptionInfo(JNIEnv* env, jthrowable java_throwable) {
   ScopedJavaLocalRef<jobject> printstream(env,
       env->NewObject(printstream_clazz.obj(), printstream_constructor,
                      bytearray_output_stream.obj()));
+  CheckException(env);
 
   // Call Throwable.printStackTrace(PrintStream)
   env->CallVoidMethod(java_throwable, throwable_printstacktrace,
       printstream.obj());
+  CheckException(env);
 
   // Call ByteArrayOutputStream.toString()
   ScopedJavaLocalRef<jstring> exception_string(
       env, static_cast<jstring>(
           env->CallObjectMethod(bytearray_output_stream.obj(),
                                 bytearray_output_stream_tostring)));
-  if (ClearException(env)) {
-    return "Java OOM'd in exception handling, check logcat";
-  }
+  CheckException(env);
 
   return ConvertJavaStringToUTF8(exception_string);
 }
