@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "952756a8_a415dedf",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T19:18:50Z",
+      "side": 1,
+      "message": "An STL algo could try to default instantiate the iterator and fail to compile.",
+      "parentUuid": "a6d896b2_f1a9021f",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072b59e5_e8c662f3",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 6
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "It doesn\u0027t make sense to vend a non-const ref out of this iterator; vending a ref-to-const could work (aka content::WebContents* const \u0026, aka const value_type\u0026), but I\u0027m not sure what would break if you made your reference type be that.  Probably there is code that\u0027s not expecting the reference type to actually be reference-to-const?",
       "parentUuid": "820bed92_6e8a85ad",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd06b25b_52aa54cf",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T19:18:50Z",
+      "side": 1,
+      "message": "I think your |reference| should be a const reference to WebContents*, because this iterator is not an OutputIterator.\n\n```\nThe type std::iterator_traits\u003cIt\u003e::reference must be exactly\n  - T\u0026 if It satisfies OutputIterator (It is mutable)\n  - const T\u0026 otherwise (It is constant),\n```\n\nThen your const operator* method can return a const reference to the pointer it holds.",
+      "parentUuid": "7ee9d52e_180081f0",
       "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
