@@ -845,24 +845,27 @@ void SchedulerWorkerPoolImpl::PostAdjustWorkerCapacityTaskLockRequired() {
 
   polling_worker_capacity_ = true;
 
-  service_thread_task_runner_->PostDelayedTask(
-      FROM_HERE,
-      base::BindOnce(
-          [](SchedulerWorkerPoolImpl* worker_pool) {
-            worker_pool->AdjustWorkerCapacity();
+  {
+    AutoSchedulerUnlock auto_unlock(lock_);
+    service_thread_task_runner_->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(
+            [](SchedulerWorkerPoolImpl* worker_pool) {
+              worker_pool->AdjustWorkerCapacity();
 
-            AutoSchedulerLock auto_lock(worker_pool->lock_);
-            DCHECK(worker_pool->polling_worker_capacity_);
+              AutoSchedulerLock auto_lock(worker_pool->lock_);
+              DCHECK(worker_pool->polling_worker_capacity_);
 
-            if (worker_pool
-                    ->ShouldPeriodicallyAdjustWorkerCapacityLockRequired()) {
-              worker_pool->PostAdjustWorkerCapacityTaskLockRequired();
-            } else {
-              worker_pool->polling_worker_capacity_ = false;
-            }
-          },
-          Unretained(this)),
-      kBlockedWorkersPollPeriod);
+              if (worker_pool
+                      ->ShouldPeriodicallyAdjustWorkerCapacityLockRequired()) {
+                worker_pool->PostAdjustWorkerCapacityTaskLockRequired();
+              } else {
+                worker_pool->polling_worker_capacity_ = false;
+              }
+            },
+            Unretained(this)),
+        kBlockedWorkersPollPeriod);
+  }
 }
 
 bool SchedulerWorkerPoolImpl::

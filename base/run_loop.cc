@@ -95,6 +95,11 @@ RunLoop::Delegate* RunLoop::OverrideDelegateForCurrentThreadForTesting(
   return overridden_delegate;
 }
 
+// static
+bool RunLoop::HasDelegateForCurrentThreadForTesting() {
+  return !!tls_delegate.Get().Get();
+}
+
 RunLoop::RunLoop(Type type)
     : delegate_(tls_delegate.Get().Get()),
       type_(type),

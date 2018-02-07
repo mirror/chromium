@@ -6,8 +6,10 @@
 
 #include <algorithm>
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/synchronization/lock.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/task_scheduler_impl.h"
@@ -20,6 +22,8 @@ namespace {
 
 // |g_task_scheduler| is intentionally leaked on shutdown.
 TaskScheduler* g_task_scheduler = nullptr;
+
+int task_scheduler_version = 0;
 
 }  // namespace
 
@@ -74,11 +78,17 @@ void TaskScheduler::Create(StringPiece name) {
 void TaskScheduler::SetInstance(std::unique_ptr<TaskScheduler> task_scheduler) {
   delete g_task_scheduler;
   g_task_scheduler = task_scheduler.release();
+  ++task_scheduler_version;
 }
 
 // static
 TaskScheduler* TaskScheduler::GetInstance() {
   return g_task_scheduler;
+}
+
+// static
+int TaskScheduler::GetTaskSchedulerVersion() {
+  return task_scheduler_version;
 }
 
 }  // namespace base

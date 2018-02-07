@@ -16,6 +16,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_piece.h"
 #include "base/task_runner.h"
+#include "base/task_scheduler/scheduler_incoming_task_queue.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/single_thread_task_runner_thread_mode.h"
 #include "base/task_scheduler/task_traits.h"
@@ -130,6 +131,9 @@ class BASE_EXPORT TaskScheduler {
   // Returns a vector of all histograms available in this task scheduler.
   virtual std::vector<const HistogramBase*> GetHistograms() const = 0;
 
+  virtual void SetTaskTrackerForSchedulerIncomingTaskQueue(
+      internal::SchedulerIncomingTaskQueue* queue) = 0;
+
   // Synchronously shuts down the scheduler. Once this is called, only tasks
   // posted with the BLOCK_SHUTDOWN behavior will be run. When this returns:
   // - All SKIP_ON_SHUTDOWN tasks that were already running have completed their
@@ -215,6 +219,8 @@ class BASE_EXPORT TaskScheduler {
   // process' initialization phase.
   // In doubt, consult with //base/task_scheduler/OWNERS.
   static TaskScheduler* GetInstance();
+
+  static int GetTaskSchedulerVersion();
 
  private:
   friend class gin::V8BackgroundTaskRunner;

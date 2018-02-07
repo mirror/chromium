@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/public/test/browsing_data_remover_test_util.h"
-#include "base/task_scheduler/task_scheduler.h"
 
 namespace content {
 
@@ -17,7 +16,6 @@ BrowsingDataRemoverCompletionObserver::
     ~BrowsingDataRemoverCompletionObserver() {}
 
 void BrowsingDataRemoverCompletionObserver::BlockUntilCompletion() {
-  base::TaskScheduler::GetInstance()->FlushForTesting();
   message_loop_runner_->Run();
 }
 
@@ -50,7 +48,6 @@ void BrowsingDataRemoverCompletionInhibitor::Reset() {
 }
 
 void BrowsingDataRemoverCompletionInhibitor::BlockUntilNearCompletion() {
-  base::TaskScheduler::GetInstance()->FlushForTesting();
   message_loop_runner_->Run();
   message_loop_runner_ = new MessageLoopRunner();
 }

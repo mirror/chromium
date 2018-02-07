@@ -12,6 +12,7 @@
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/run_loop.h"
 #include "base/sequence_token.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/task_scheduler/scoped_set_task_priority_for_current_thread.h"
@@ -322,7 +323,7 @@ scoped_refptr<Sequence> TaskTracker::WillScheduleSequence(
   return nullptr;
 }
 
-scoped_refptr<Sequence> TaskTracker::RunNextTask(
+scoped_refptr<Sequence> TaskTracker::RunAndPopNextTask(
     scoped_refptr<Sequence> sequence,
     CanScheduleSequenceObserver* observer) {
   DCHECK(sequence);
@@ -360,6 +361,45 @@ scoped_refptr<Sequence> TaskTracker::RunNextTask(
   }
 
   return sequence;
+}
+
+void TaskTracker::DirectlyRunTask(Task* task) {
+  DCHECK(task);
+  const TaskShutdownBehavior shutdown_behavior =
+      task->traits.shutdown_behavior();
+  const bool can_run_task = BeforeRunTask(shutdown_behavior);
+  const bool is_delayed = !task->delayed_run_time.is_null();
+
+  RecordTaskLatencyHistogram(*task);
+  if (can_run_task) {
+    TRACE_TASK_EXECUTION(kRunFunctionName, *task);
+
+    const char* const execution_mode =
+        task->single_thread_task_runner_ref
+            ? kSingleThreadExecutionMode
+            : (task->sequenced_task_runner_ref ? kSequencedExecutionMode
+                                               : kParallelExecutionMode);
+    // TODO(gab): In a better world this would be tacked on as an extra arg
+    // to the trace event generated above. This is not possible however until
+    // http://crbug.com/652692 is resolved.
+    TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
+                 std::make_unique<TaskTracingInfo>(
+                     task->traits, execution_mode,
+                     SequenceToken::GetForCurrentThread()));
+
+    debug::TaskAnnotator().RunTask(kQueueFunctionName, task);
+
+    AfterRunTask(shutdown_behavior);
+  }
+
+  if (!is_delayed)
+    DecrementNumIncompleteUndelayedTasks();
+}
+
+void TaskTracker::MarkTaskSkipped(const Task& task) {
+  const bool is_delayed = !task.delayed_run_time.is_null();
+  if (!is_delayed)
+    DecrementNumIncompleteUndelayedTasks();
 }
 
 bool TaskTracker::HasShutdownStarted() const {

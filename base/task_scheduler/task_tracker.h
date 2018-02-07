@@ -142,8 +142,16 @@ class BASE_EXPORT TaskTracker {
   // posted before this is called. Also, WillScheduleSequence(), RunNextTask()
   // or CanScheduleSequenceObserver::OnCanScheduleSequence() must have allowed
   // |sequence| to be (re)scheduled.
-  scoped_refptr<Sequence> RunNextTask(scoped_refptr<Sequence> sequence,
-                                      CanScheduleSequenceObserver* observer);
+  scoped_refptr<Sequence> RunAndPopNextTask(
+      scoped_refptr<Sequence> sequence,
+      CanScheduleSequenceObserver* observer);
+
+  // Runs a |task| that's generally managed outside of a sequence. The caller is
+  // responsible for ensuring that the task can run with the current thread
+  // environment parameters (e.g. SequenceToken, Task Runner Handle, etc.).
+  void DirectlyRunTask(Task* task);
+
+  void MarkTaskSkipped(const Task& task);
 
   // Returns true once shutdown has started (Shutdown() has been called but
   // might not have returned). Note: sequential consistency with the thread

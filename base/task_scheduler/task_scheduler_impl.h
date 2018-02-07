@@ -79,6 +79,8 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
       SingleThreadTaskRunnerThreadMode thread_mode) override;
 #endif  // defined(OS_WIN)
   std::vector<const HistogramBase*> GetHistograms() const override;
+  void SetTaskTrackerForSchedulerIncomingTaskQueue(
+      internal::SchedulerIncomingTaskQueue* queue) override;
   int GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
       const TaskTraits& traits) const override;
   void Shutdown() override;

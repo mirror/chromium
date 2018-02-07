@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/format_macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/incoming_task_queue.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/condition_variable.h"
@@ -271,7 +272,7 @@ class PostTaskTest : public testing::Test {
         while (!loop_local_queue.empty()) {
           PendingTask t = std::move(loop_local_queue.front());
           loop_local_queue.pop();
-          loop.RunTask(&t);
+          // loop.RunTask(&t);
         }
       }
 
