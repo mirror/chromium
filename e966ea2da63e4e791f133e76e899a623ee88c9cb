@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9522d31_dd034007",
+        "filename": "media/base/task_runner_bound.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T19:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9617d70_298370c5",
+      "revId": "e966ea2da63e4e791f133e76e899a623ee88c9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a372ed_a5b6b159",
         "filename": "media/base/task_runner_bound.h",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f5fbcc42_033872fa",
+        "filename": "media/base/task_runner_bound.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T19:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a372ed_a5b6b159",
+      "revId": "e966ea2da63e4e791f133e76e899a623ee88c9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5fa1fc_f2e70650",
         "filename": "media/base/task_runner_bound.h",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "e966ea2da63e4e791f133e76e899a623ee88c9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee3bab0_4b85c5bf",
+        "filename": "media/base/task_runner_bound.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T19:34:53Z",
+      "side": 1,
+      "message": "good point, done.  also removed the include for sequenced_task_runner_handle, which was leftover from when this class had better support for mocks of |C|",
+      "parentUuid": "9c5fa1fc_f2e70650",
+      "revId": "e966ea2da63e4e791f133e76e899a623ee88c9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
