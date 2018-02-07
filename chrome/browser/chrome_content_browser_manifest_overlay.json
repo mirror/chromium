@@ -44,6 +44,7 @@
         // Only used in classic ash case.
         "local_state": [ "pref_client" ],
         "media_gallery_util": [ "parse_media" ],
+        "mirror": ["media:mirror"],
         "nacl_broker": [ "browser" ],
         "nacl_loader": [ "browser" ],
         "patch": [ "patch_file" ],
@@ -82,6 +83,7 @@
           "extensions::mime_handler::MimeHandlerService",
           "extensions::mojom::InlineInstall",
           "media_router::mojom::MediaRouter",
+          "media::mojom::MirrorServiceProxy",
           "page_load_metrics::mojom::PageLoadMetrics",
           "password_manager::mojom::CredentialManager",
           "translate::mojom::ContentTranslateDriver",

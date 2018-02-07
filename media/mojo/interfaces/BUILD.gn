@@ -26,6 +26,8 @@ mojom("interfaces") {
     "media_metrics_provider.mojom",
     "media_service.mojom",
     "media_types.mojom",
+    "mirror_service.mojom",
+    "mirror_service_controller.mojom",
     "output_protection.mojom",
     "platform_verification.mojom",
     "provision_fetcher.mojom",
@@ -47,6 +49,8 @@ mojom("interfaces") {
   public_deps = [
     "//gpu/ipc/common:interfaces",
     "//mojo/common:common_custom_types",
+    "//net/interfaces",
+    "//services/network/public/interfaces",
     "//services/service_manager/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",

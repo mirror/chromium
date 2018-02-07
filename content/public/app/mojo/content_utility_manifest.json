@@ -23,7 +23,8 @@
         "content_browser": [
           "dwrite_font_proxy",
           "field_trials",
-          "font_cache"
+          "font_cache",
+          "gpu_mojo"
         ],
         "device": [
           "device:power_monitor",
