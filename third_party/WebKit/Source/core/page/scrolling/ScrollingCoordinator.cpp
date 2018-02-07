@@ -191,18 +191,13 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded(
     frame_view->SetScrollGestureRegionIsDirty(false);
   }
 
-  // TODO(wjmaclean): Make the stuff below this point work for OOPIFs too.
-  // https://crbug.com/680606
-  if (frame != frame_view->GetPage()->MainFrame())
-    return;
-
   if (!(touch_event_target_rects_are_dirty_ ||
         should_scroll_on_main_thread_dirty_ || FrameScrollerIsDirty())) {
     return;
   }
 
   if (touch_event_target_rects_are_dirty_) {
-    UpdateTouchEventTargetRectsIfNeeded();
+    UpdateTouchEventTargetRectsIfNeeded(frame);
     touch_event_target_rects_are_dirty_ = false;
   }
 
@@ -709,7 +704,8 @@ static void ProjectRectsToGraphicsLayerSpace(
       layer_child_frame_map);
 }
 
-void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
+void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded(
+    LocalFrame* frame) {
   TRACE_EVENT0("input",
                "ScrollingCoordinator::updateTouchEventTargetRectsIfNeeded");
 
@@ -718,8 +714,8 @@ void ScrollingCoordinator::UpdateTouchEventTargetRectsIfNeeded() {
     return;
 
   LayerHitTestRects touch_event_target_rects;
-  ComputeTouchEventTargetRects(touch_event_target_rects);
-  SetTouchEventTargetRects(touch_event_target_rects);
+  ComputeTouchEventTargetRects(frame, touch_event_target_rects);
+  SetTouchEventTargetRects(frame, touch_event_target_rects);
 }
 
 void ScrollingCoordinator::UpdateUserInputScrollable(
@@ -754,6 +750,7 @@ void ScrollingCoordinator::Reset() {
 // computeTouchEventTargetRects, for example during a non-composited scroll
 // (although that's not yet implemented - crbug.com/261307).
 void ScrollingCoordinator::SetTouchEventTargetRects(
+    LocalFrame* frame,
     LayerHitTestRects& layer_rects) {
   TRACE_EVENT0("input", "ScrollingCoordinator::setTouchEventTargetRects");
 
@@ -794,8 +791,7 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
     }
   }
 
-  ProjectRectsToGraphicsLayerSpace(page_->DeprecatedLocalMainFrame(),
-                                   layer_rects, graphics_layer_rects);
+  ProjectRectsToGraphicsLayerSpace(frame, layer_rects, graphics_layer_rects);
 
   for (const auto& layer_rect : graphics_layer_rects) {
     const GraphicsLayer* graphics_layer = layer_rect.key;
@@ -1151,10 +1147,11 @@ static void AccumulateDocumentTouchEventTargetRects(
 }
 
 void ScrollingCoordinator::ComputeTouchEventTargetRects(
+    LocalFrame* frame,
     LayerHitTestRects& rects) {
   TRACE_EVENT0("input", "ScrollingCoordinator::computeTouchEventTargetRects");
 
-  Document* document = page_->DeprecatedLocalMainFrame()->GetDocument();
+  Document* document = frame->GetDocument();
   if (!document || !document->View() || !document->GetFrame())
     return;
 
