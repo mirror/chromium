@@ -87,7 +87,7 @@ enum EventType {
 // this list and/or reorder it, but make sure you also touch the various other
 // enums/constants that want to stay in sync with this.
 enum EventFlags {
-  EF_NONE                 = 0,       // Used to denote no flags explicitly
+  EF_NONE                 = 0,  // Used to denote no flags explicitly
 
   // Universally applicable status bits.
   EF_IS_SYNTHESIZED       = 1 << 0,
@@ -103,7 +103,7 @@ enum EventFlags {
   EF_ALTGR_DOWN           = 1 << 5,
   EF_MOD3_DOWN            = 1 << 6,
 
-  // Other keyboard state.
+  // Other keyboard states.
   EF_NUM_LOCK_ON          = 1 << 7,
   EF_CAPS_LOCK_ON         = 1 << 8,
   EF_SCROLL_LOCK_ON       = 1 << 9,
@@ -125,6 +125,7 @@ enum KeyEventFlags {
   EF_FINAL              = 1 << 17,  // Do not remap; the event was created with
                                     // the desired final values.
   EF_IS_EXTENDED_KEY    = 1 << 18,  // Windows extended key (see WM_KEYDOWN doc)
+  EF_PRE_PLATFORM_HANDLED = 1 << 19,  // Received via an OS level keyboard hook.
 };
 
 // Flags specific to mouse events
