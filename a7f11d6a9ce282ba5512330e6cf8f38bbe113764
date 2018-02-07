@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957103d6_d1bd629c",
+        "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 0,
+      "message": "The above two includes are also \"probably\" no longer needed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4432e5_4fed71e9",
+        "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 0,
+      "message": "Remove session_tab_helper.h include. Can you run \"git cl lint\" to verify the includes.",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

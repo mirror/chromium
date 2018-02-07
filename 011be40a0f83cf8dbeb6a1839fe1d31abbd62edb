@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cce0534_9bec64da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Maybe: Move some tabs API related functionally out of WindowController.\n\nto better reflect the CLs intent.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d04d48_79a5f90c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Yes this seems wrong. File a bug and refer it here?",
+      "range": {
+        "startLine": 361,
+        "startChar": 14,
+        "endLine": 361,
+        "endChar": 20
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ab7506_5aa3812a",
+        "filename": "chrome/browser/extensions/api/tabs/windows_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Add a comment for this check, e.g. Ignore windows without an associated browser, e.g. app windows.",
+      "range": {
+        "startLine": 209,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163ebf39_92265b3b",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "nit: const Browser* or better a const reference.",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881f8baf_76b84fa4",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "When can this occur now?",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6526a42_c3201d74",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 3
@@ -13,6 +128,161 @@
       "writtenOn": "2018-02-05T20:46:11Z",
       "side": 1,
       "message": "Note: this method was basically copy-pasted from WindowController::CreateWindowValue().",
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a7ea28_4f9cca13",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "nit: DCHECK(browser) or pass const ref.",
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513806f1_8cc64010",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "nit: think enum declarations should precede method declarations.",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98063613_b3532585",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Also, can this be const Browser* or better const Browser\u0026 (should help ensure we don\u0027t pass null browsers).",
+      "range": {
+        "startLine": 126,
+        "startChar": 15,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12649db2_d3ba7652",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "nit: |for_extension| -\u003e |extension|.",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f08ffbe_d5333a5a",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Still needed? Run git cl lint.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30007ff0_4a33c362",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "Still needed?",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde48906_a978193b",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2018-02-07T00:32:20Z",
+      "side": 1,
+      "message": "This seems to be longer true. Can we update this comment to reflect the current state?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 75
+      },
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
