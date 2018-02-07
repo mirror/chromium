@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c631042_b14fdf99",
+        "filename": "chrome/browser/chromeos/virtual_machines/virtual_machines_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-07T10:35:36Z",
+      "side": 1,
+      "message": "Why not simply define this function in an anonymous namespace in the file it is used (it is only one). I see it might not be used there once the finch experiment is over but even then it might be a single place that needs it.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829777a4_80ebbc04",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11137,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-02-07T10:35:36Z",
+      "side": 1,
+      "message": "I think in addition to those you also need \u0027default_for_enterprise_users\u0027: False here because the default for enrolled machines differs from the default for regular users.",
+      "range": {
+        "startLine": 11137,
+        "startChar": 6,
+        "endLine": 11137,
+        "endChar": 26
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
