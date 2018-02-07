@@ -16,6 +16,24 @@
       "revId": "d661c5da0056dee98b4c777df04bb6c098875f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c8c867_61160621",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/printing/thead-under-multicol-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T19:26:11Z",
+      "side": 1,
+      "message": "I don\u0027t know why. The printed output expectation already varies by platform\nfor this test. Therefore I don\u0027t think it is worth investigating further.",
+      "parentUuid": "b9ad97dd_3c26b2ef",
+      "revId": "d661c5da0056dee98b4c777df04bb6c098875f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
