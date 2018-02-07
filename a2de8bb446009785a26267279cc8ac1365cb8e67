@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d02ad835_cb4eff55",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-07T01:35:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5131aa_5491f1d4",
+      "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea549041_85fd8edf",
         "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Load seems to always post the callback task, but your second sentence was the point - we should ensure that the callback is already async at this point (as this is just a wrapper around Load callback that drops the error).",
       "parentUuid": "fbff09c4_22bbc1e5",
+      "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cb37bf_2f7ee871",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-07T01:35:15Z",
+      "side": 1,
+      "message": "Yes Load always uses async calls.\nI changed OnLoadComponent in both here and chrome_component_updater_service_provider_delegate to run callback asyncly.",
+      "parentUuid": "ca67390f_645d3744",
       "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
