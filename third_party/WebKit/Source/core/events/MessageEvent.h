@@ -88,7 +88,8 @@ class CORE_EXPORT MessageEvent final : public Event {
                               const String& suborigin = String()) {
     return new MessageEvent(data, origin, suborigin);
   }
-  static MessageEvent* Create(const AtomicString& type,
+  static MessageEvent* Create(ScriptState*,
+                              const AtomicString& type,
                               const MessageEventInit& initializer,
                               ExceptionState&);
   ~MessageEvent() override;
@@ -96,7 +97,8 @@ class CORE_EXPORT MessageEvent final : public Event {
   void initMessageEvent(const AtomicString& type,
                         bool can_bubble,
                         bool cancelable,
-                        ScriptValue data,
+                        v8::Isolate*,
+                        v8::Local<v8::Value> data,
                         const String& origin,
                         const String& last_event_id,
                         EventTarget* source,
@@ -130,16 +132,16 @@ class CORE_EXPORT MessageEvent final : public Event {
   const AtomicString& InterfaceName() const override;
 
   enum DataType {
-    kDataTypeScriptValue,
+    kDataTypeV8Value,
     kDataTypeSerializedScriptValue,
     kDataTypeString,
     kDataTypeBlob,
     kDataTypeArrayBuffer
   };
   DataType GetDataType() const { return data_type_; }
-  ScriptValue DataAsScriptValue() const {
-    DCHECK_EQ(data_type_, kDataTypeScriptValue);
-    return data_as_script_value_;
+  v8::Local<v8::Value> DataAsV8Value(v8::Isolate* isolate) const {
+    DCHECK_EQ(data_type_, kDataTypeV8Value);
+    return data_as_v8_value_.NewLocal(isolate);
   }
   // Use with caution. Since the data has already been unpacked, the underlying
   // SerializedScriptValue will no longer contain transferred contents.
@@ -190,7 +192,7 @@ class CORE_EXPORT MessageEvent final : public Event {
   };
 
   MessageEvent();
-  MessageEvent(const AtomicString&, const MessageEventInit&);
+  MessageEvent(ScriptState*, const AtomicString&, const MessageEventInit&);
   MessageEvent(const String& origin,
                const String& last_event_id,
                EventTarget* source,
@@ -218,7 +220,7 @@ class CORE_EXPORT MessageEvent final : public Event {
                const String& suborigin);
 
   DataType data_type_;
-  ScriptValue data_as_script_value_;
+  ScopedPersistent<v8::Value> data_as_v8_value_;
   Member<UnpackedSerializedScriptValue> data_as_serialized_script_value_;
   V8GCAwareString data_as_string_;
   Member<Blob> data_as_blob_;

@@ -52,21 +52,6 @@ v8::Local<v8::Value> ScriptValue::V8Value() const {
   return value_->NewLocal(GetIsolate());
 }
 
-v8::Local<v8::Value> ScriptValue::V8ValueFor(
-    ScriptState* target_script_state) const {
-  if (IsEmpty())
-    return v8::Local<v8::Value>();
-  v8::Isolate* isolate = target_script_state->GetIsolate();
-  if (&script_state_->World() == &target_script_state->World())
-    return value_->NewLocal(isolate);
-
-  DCHECK(isolate->InContext());
-  v8::Local<v8::Value> value = value_->NewLocal(isolate);
-  scoped_refptr<SerializedScriptValue> serialized =
-      SerializedScriptValue::SerializeAndSwallowExceptions(isolate, value);
-  return serialized->Deserialize(isolate);
-}
-
 bool ScriptValue::ToString(String& result) const {
   if (IsEmpty())
     return false;

@@ -160,10 +160,6 @@ class CORE_EXPORT ScriptValue final {
   void Clear() { value_ = nullptr; }
 
   v8::Local<v8::Value> V8Value() const;
-  // Returns v8Value() if a given ScriptState is the same as the
-  // ScriptState which is associated with this ScriptValue. Otherwise
-  // this "clones" the v8 value and returns it.
-  v8::Local<v8::Value> V8ValueFor(ScriptState*) const;
 
   bool ToString(String&) const;
 

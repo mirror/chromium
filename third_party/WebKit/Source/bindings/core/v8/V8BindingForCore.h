@@ -502,6 +502,13 @@ CORE_EXPORT v8::Local<v8::Value> FromJSONString(v8::Isolate*,
                                                 const String& stringified_json,
                                                 ExceptionState&);
 
+// Returns a clone of a V8 value if the value is clonable and the target world
+// is different from the world which the value belongs. Returns the value itself
+// otherwise.
+CORE_EXPORT v8::Local<v8::Value> MayCloneV8ValueFor(
+    ScriptState* target_script_state,
+    v8::Local<v8::Value>);
+
 // Ensure that a typed array value is not backed by a SharedArrayBuffer. If it
 // is, an exception will be thrown. The return value will use the NotShared
 // wrapper type.

@@ -58,9 +58,9 @@ void V8MessageEvent::dataAttributeGetterCustom(
 
   v8::Local<v8::Value> result;
   switch (event->GetDataType()) {
-    case MessageEvent::kDataTypeScriptValue:
-      result =
-          event->DataAsScriptValue().V8ValueFor(ScriptState::Current(isolate));
+    case MessageEvent::kDataTypeV8Value:
+      result = MayCloneV8ValueFor(ScriptState::ForCurrentRealm(info),
+                                  event->DataAsV8Value(isolate));
       if (result.IsEmpty())
         result = v8::Null(isolate);
       break;
@@ -98,8 +98,8 @@ void V8MessageEvent::dataAttributeGetterCustom(
 
 void V8MessageEvent::initMessageEventMethodCustom(
     const v8::FunctionCallbackInfo<v8::Value>& info) {
-  ExceptionState exception_state(info.GetIsolate(),
-                                 ExceptionState::kExecutionContext,
+  v8::Isolate* isolate = info.GetIsolate();
+  ExceptionState exception_state(isolate, ExceptionState::kExecutionContext,
                                  "MessageEvent", "initMessageEvent");
   if (UNLIKELY(info.Length() < 1)) {
     exception_state.ThrowTypeError(
@@ -111,31 +111,27 @@ void V8MessageEvent::initMessageEventMethodCustom(
   TOSTRING_VOID(V8StringResource<>, type_arg, info[0]);
   bool can_bubble_arg = false;
   bool cancelable_arg = false;
-  if (!info[1]
-           ->BooleanValue(info.GetIsolate()->GetCurrentContext())
-           .To(&can_bubble_arg) ||
-      !info[2]
-           ->BooleanValue(info.GetIsolate()->GetCurrentContext())
-           .To(&cancelable_arg))
+  v8::Local<v8::Context> current_context = isolate->GetCurrentContext();
+  if (!info[1]->BooleanValue(current_context).To(&can_bubble_arg) ||
+      !info[2]->BooleanValue(current_context).To(&cancelable_arg))
     return;
   v8::Local<v8::Value> data_arg = info[3];
   TOSTRING_VOID(V8StringResource<>, origin_arg, info[4]);
   TOSTRING_VOID(V8StringResource<>, last_event_id_arg, info[5]);
   EventTarget* source_arg =
-      V8EventTarget::ToImplWithTypeCheck(info.GetIsolate(), info[6]);
+      V8EventTarget::ToImplWithTypeCheck(isolate, info[6]);
   MessagePortArray* port_array = nullptr;
   const int kPortArrayIndex = 7;
   if (!IsUndefinedOrNull(info[kPortArrayIndex])) {
     port_array = new MessagePortArray;
     *port_array = NativeValueTraits<IDLSequence<MessagePort>>::NativeValue(
-        info.GetIsolate(), info[kPortArrayIndex], exception_state);
+        isolate, info[kPortArrayIndex], exception_state);
     if (exception_state.HadException())
       return;
   }
-  event->initMessageEvent(
-      type_arg, can_bubble_arg, cancelable_arg,
-      ScriptValue(ScriptState::Current(info.GetIsolate()), data_arg),
-      origin_arg, last_event_id_arg, source_arg, port_array);
+  event->initMessageEvent(type_arg, can_bubble_arg, cancelable_arg, isolate,
+                          data_arg, origin_arg, last_event_id_arg, source_arg,
+                          port_array);
 }
 
 }  // namespace blink
