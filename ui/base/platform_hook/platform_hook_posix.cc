@@ -4,6 +4,9 @@
 
 #include "ui/base/platform_hook/platform_hook.h"
 
+#include <memory>
+#include <vector>
+
 #include "base/callback.h"
 #include "base/macros.h"
 #include "ui/events/event.h"
@@ -17,7 +20,7 @@ class PlatformHookPosix : public PlatformHook {
   ~PlatformHookPosix() override;
 
   // PlatformHook interface.
-  bool Register() override;
+  bool Register(const std::vector<int>& native_key_codes) override;
   bool Unregister() override;
 
  private:
@@ -33,7 +36,7 @@ std::unique_ptr<PlatformHook> PlatformHook::Create(
 PlatformHookPosix::PlatformHookPosix() = default;
 PlatformHookPosix::~PlatformHookPosix() = default;
 
-bool PlatformHookPosix::Register() {
+bool PlatformHookPosix::Register(const std::vector<int>& native_key_codes) {
   NOTIMPLEMENTED();
   return false;
 }

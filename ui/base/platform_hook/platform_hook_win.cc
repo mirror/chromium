@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include <windows.h>
 
@@ -41,7 +42,7 @@ class PlatformHookWin : public PlatformHook {
   ~PlatformHookWin() override;
 
   // PlatformHook interface.
-  bool Register() override;
+  bool Register(const std::vector<int>& native_key_codes) override;
   bool Unregister() override;
 
  private:
@@ -77,7 +78,7 @@ PlatformHookWin::~PlatformHookWin() {
   Unregister();
 }
 
-bool PlatformHookWin::Register() {
+bool PlatformHookWin::Register(const std::vector<int>& native_key_codes) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // Only one instance of this class can be registered at a time.  This method
@@ -86,7 +87,7 @@ bool PlatformHookWin::Register() {
   DCHECK(!instance_ || instance_ == this);
   instance_ = this;
 
-  // TODO(joedow): Update key filter map.
+  // TODO(joedow): Implement key specific filtering using |native_key_codes|.
 
   if (!hook_) {
     // Per MSDN this Hook procedure will be called in the context of the thread

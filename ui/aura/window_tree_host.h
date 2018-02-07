@@ -197,6 +197,13 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Releases OS capture of the root window.
   virtual void ReleaseCapture() = 0;
 
+  // Requests that a set of keyboard keys be intercepted at the platform level
+  // and routed directly to the web content.
+  virtual void LockKeys(const std::vector<int>& native_key_codes) = 0;
+
+  // Releases the keyboard lock, no additional events will be intercepted.
+  virtual void UnlockKeys() = 0;
+
  protected:
   friend class TestScreen;  // TODO(beng): see if we can remove/consolidate.
 

@@ -6,6 +6,7 @@
 #define UI_BASE_PLATFORM_HOOK_PLATFORM_HOOK_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/callback.h"
 #include "ui/base/ui_base_export.h"
@@ -24,10 +25,9 @@ class UI_BASE_EXPORT PlatformHook {
   // Allows for platform specific implementations to be created.
   static std::unique_ptr<PlatformHook> Create(OnKeyEventCallback callback);
 
-  // Registers a kb hook.  Returns true if successful.
-  // TODO(joedow): Add support for filtering specific key events.  Calling
-  // Register() multiple times to update the set of keys will be supported.
-  virtual bool Register() = 0;
+  // Registers a kb hook.  Returns true if successful.  Calling Register()
+  // multiple times to update the set of keys is supported.
+  virtual bool Register(const std::vector<int>& native_key_codes) = 0;
   // Unregisters the kb hook.  Returns true if successful.
   virtual bool Unregister() = 0;
 };

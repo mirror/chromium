@@ -801,13 +801,13 @@ bool HWNDMessageHandler::HasCapture() const {
   return ::GetCapture() == hwnd();
 }
 
-void HWNDMessageHandler::LockKeys() {
+void HWNDMessageHandler::LockKeys(const std::vector<int>& native_key_codes) {
   if (!platform_hook_) {
     platform_hook_ = ui::PlatformHook::Create(
         base::BindRepeating(&HWNDMessageHandlerDelegate::HandleKeyEvent,
                             base::Unretained(delegate_)));
   }
-  platform_hook_->Register();
+  platform_hook_->Register(native_key_codes);
 }
 
 void HWNDMessageHandler::UnlockKeys() {

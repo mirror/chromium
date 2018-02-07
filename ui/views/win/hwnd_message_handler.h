@@ -192,8 +192,7 @@ class VIEWS_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   void ReleaseCapture();
   bool HasCapture() const;
 
-  // TODO(joedow): Allow reservation of specific keys.
-  void LockKeys();
+  void LockKeys(const std::vector<int>& native_key_codes);
   void UnlockKeys();
 
   FullscreenHandler* fullscreen_handler() { return fullscreen_handler_.get(); }
