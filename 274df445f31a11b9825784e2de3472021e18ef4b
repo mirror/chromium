@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "baffc66a_94674b39",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-07T17:02:47Z",
+      "side": 1,
+      "message": "We could at least prevent it in the case of no content scripts...Regardless, LGTM as-is.",
+      "parentUuid": "3ac29093_2149c4ce",
+      "revId": "274df445f31a11b9825784e2de3472021e18ef4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28d64cfb_76b64781",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 10
