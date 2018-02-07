@@ -20,6 +20,7 @@
 #include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
 #include "ui/events/ozone/evdev/keyboard_evdev.h"
 #include "ui/events/ozone/evdev/mouse_button_map_evdev.h"
+#include "ui/events/ozone/evdev/tablet_handler.h"
 
 struct input_event;
 
@@ -99,6 +100,8 @@ class EVENTS_OZONE_EVDEV_EXPORT EventConverterEvdevImpl
 
   // Callbacks for dispatching events.
   DeviceEventDispatcherEvdev* dispatcher_;
+
+  TabletHandler tablet_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(EventConverterEvdevImpl);
 };

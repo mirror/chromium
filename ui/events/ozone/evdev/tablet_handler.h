@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_EVENTS_OZONE_TABLET_EVENT_CONVERTER_EVDEV_H_
-#define UI_EVENTS_OZONE_TABLET_EVENT_CONVERTER_EVDEV_H_
+#ifndef UI_EVENTS_OZONE_TABLET_HANDLER_H_
+#define UI_EVENTS_OZONE_TABLET_HANDLER_H_
 
 #include "base/files/file_path.h"
 #include "base/files/scoped_file.h"
@@ -22,24 +22,17 @@ namespace ui {
 
 class DeviceEventDispatcherEvdev;
 
-class EVENTS_OZONE_EVDEV_EXPORT TabletEventConverterEvdev
-    : public EventConverterEvdev {
+class EVENTS_OZONE_EVDEV_EXPORT TabletHandler {
  public:
-  TabletEventConverterEvdev(base::ScopedFD fd,
-                            base::FilePath path,
-                            int id,
-                            CursorDelegateEvdev* cursor,
-                            const EventDeviceInfo& info,
-                            DeviceEventDispatcherEvdev* dispatcher);
-  ~TabletEventConverterEvdev() override;
+  TabletHandler(int id,
+                CursorDelegateEvdev* cursor,
+                const EventDeviceInfo& info,
+                DeviceEventDispatcherEvdev* dispatcher);
+  ~TabletHandler();
 
-  // EventConverterEvdev:
-  void OnFileCanReadWithoutBlocking(int fd) override;
-
-  void ProcessEvents(const struct input_event* inputs, int count);
+  bool ProcessEvents(const struct input_event& input);
 
  private:
-  friend class MockTabletEventConverterEvdev;
   void ConvertKeyEvent(const input_event& input);
   void ConvertAbsEvent(const input_event& input);
   void DispatchMouseButton(const input_event& input);
@@ -49,17 +42,13 @@ class EVENTS_OZONE_EVDEV_EXPORT TabletEventConverterEvdev
   // non-axis-aligned movement properly.
   void FlushEvents(const input_event& input);
 
-  // Input device file descriptor.
-  base::ScopedFD input_device_fd_;
-
-  // Controller for watching the input fd.
-  base::MessagePumpLibevent::FileDescriptorWatcher controller_;
-
   // Shared cursor state.
   CursorDelegateEvdev* cursor_;
 
   // Dispatcher for events.
   DeviceEventDispatcherEvdev* dispatcher_;
+
+  int id_;
 
   int y_abs_location_ = 0;
   int x_abs_location_ = 0;
@@ -81,18 +70,17 @@ class EVENTS_OZONE_EVDEV_EXPORT TabletEventConverterEvdev
   // BTN_TOOL_ code for the active device
   int stylus_ = 0;
 
+  bool is_tablet_ = false;
+
   // Whether we need to move the cursor
   bool abs_value_dirty_ = false;
-
-  // Set if we drop events in kernel (SYN_DROPPED) or in process.
-  bool dropped_events_ = false;
 
   // Pen has only one side button
   bool one_side_btn_pen_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(TabletEventConverterEvdev);
+  DISALLOW_COPY_AND_ASSIGN(TabletHandler);
 };
 
 }  // namespace ui
 
-#endif  // UI_EVENTS_OZONE_TABLET_EVENT_CONVERTER_EVDEV_H_
+#endif  // UI_EVENTS_OZONE_TABLET_HANDLER_H_
