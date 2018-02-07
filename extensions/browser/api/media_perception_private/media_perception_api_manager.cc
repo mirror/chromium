@@ -80,15 +80,13 @@ MediaPerceptionAPIManager::MediaPerceptionAPIManager(
       weak_ptr_factory_(this) {
   chromeos::MediaAnalyticsClient* dbus_client =
       chromeos::DBusThreadManager::Get()->GetMediaAnalyticsClient();
-  dbus_client->SetMediaPerceptionSignalHandler(
-      base::Bind(&MediaPerceptionAPIManager::MediaPerceptionSignalHandler,
-                 weak_ptr_factory_.GetWeakPtr()));
+  dbus_client->AddObserver(this);
 }
 
 MediaPerceptionAPIManager::~MediaPerceptionAPIManager() {
   chromeos::MediaAnalyticsClient* dbus_client =
       chromeos::DBusThreadManager::Get()->GetMediaAnalyticsClient();
-  dbus_client->ClearMediaPerceptionSignalHandler();
+  dbus_client->RemoveObserver(this);
   // Stop the separate media analytics process.
   chromeos::UpstartClient* upstart_client =
       chromeos::DBusThreadManager::Get()->GetUpstartClient();
@@ -316,7 +314,7 @@ void MediaPerceptionAPIManager::GetDiagnosticsCallback(
   callback.Run(media_perception::DiagnosticsProtoToIdl(result.value()));
 }
 
-void MediaPerceptionAPIManager::MediaPerceptionSignalHandler(
+void MediaPerceptionAPIManager::OnDetectionSignal(
     const mri::MediaPerception& media_perception_proto) {
   EventRouter* router = EventRouter::Get(browser_context_);
   DCHECK(router) << "EventRouter is null.";
