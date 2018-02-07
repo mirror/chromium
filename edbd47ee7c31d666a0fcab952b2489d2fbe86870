@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ad3c1f_eefb08e0",
+        "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T14:51:32Z",
+      "side": 1,
+      "message": "Can we use make_unique here?",
+      "revId": "edbd47ee7c31d666a0fcab952b2489d2fbe86870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134ac773_a82526ec",
+        "filename": "extensions/browser/extension_navigation_ui_data.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T14:51:32Z",
+      "side": 1,
+      "message": "IMO, it\u0027s strange to have both a factory method and a constructor that have different implications, especially when they take the exact same parameters.  I\u0027d prefer we make this instead have two factory methods, CreateForMainFrameNavigation and CreateForSubFrameNavigation or similar, or to explicitly pass in the frame ids.",
+      "revId": "edbd47ee7c31d666a0fcab952b2489d2fbe86870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
