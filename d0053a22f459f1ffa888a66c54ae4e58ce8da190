@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b877013_27e7a578",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T23:19:38Z",
+      "side": 1,
+      "message": "this needs {} now",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96830c94_d6a2c463",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T23:19:38Z",
+      "side": 1,
+      "message": "should we have anything like DCHECK(token.is_empty()) or return null string if token is empty?",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7cf61b_fee00212",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTracingAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T23:19:38Z",
+      "side": 1,
+      "message": "why pass this?",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3db5a62_d0096b31",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTracingAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-02-07T23:19:38Z",
+      "side": 1,
+      "message": "you need to restore it from state then!",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
