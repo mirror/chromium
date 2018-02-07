@@ -453,6 +453,12 @@ TEST(SetupUtilTest, GetConsoleSessionStartTime) {
   EXPECT_FALSE(start_time.is_null());
 }
 
+TEST(SetupUtilTest, GetToastActivatorRegistryPath) {
+  base::string16 toast_activator_reg_path =
+      installer::GetToastActivatorRegistryPath();
+  EXPECT_FALSE(toast_activator_reg_path.empty());
+}
+
 namespace installer {
 
 class DeleteRegistryKeyPartialTest : public ::testing::Test {
