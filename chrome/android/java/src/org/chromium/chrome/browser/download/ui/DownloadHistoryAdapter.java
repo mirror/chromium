@@ -21,7 +21,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.DownloadSharedPreferenceHelper;
-import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.download.ui.BackendProvider.DownloadDelegate;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryItemWrapper.DownloadItemWrapper;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryItemWrapper.OfflineItemWrapper;
@@ -40,12 +39,8 @@ import org.chromium.content_public.browser.DownloadState;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /** Bridges the user's download history and the UI used to display it. */
@@ -160,7 +155,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
     private final FilePathsToDownloadItemsMap mFilePathsToItemsMap =
             new FilePathsToDownloadItemsMap();
 
-    private final Map<Date, SubsectionHeader> mSubsectionHeaders = new HashMap<>();
+    private SubsectionHeader mPrefetchHeader;
     private final ComponentName mParentComponent;
     private final boolean mShowOffTheRecord;
     private final LoadingStateDelegate mLoadingDelegate;
@@ -303,7 +298,9 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
 
     /** Returns a collection of {@link SubsectionHeader}s. */
     public Collection<SubsectionHeader> getSubsectionHeaders() {
-        return mSubsectionHeaders.values();
+        List<SubsectionHeader> headers = new ArrayList<>();
+        if (mPrefetchHeader != null) headers.add(mPrefetchHeader);
+        return headers;
     }
 
     @Override
@@ -350,11 +347,6 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
     protected void bindViewHolderForHeaderItem(ViewHolder viewHolder, HeaderItem headerItem) {
         super.bindViewHolderForHeaderItem(viewHolder, headerItem);
         mSpaceDisplay.onChanged();
-    }
-
-    @Override
-    protected ItemGroup createGroup(long timeStamp) {
-        return new DownloadItemGroup(timeStamp);
     }
 
     /**
@@ -579,14 +571,57 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         mRegularDownloadItems.filter(mFilter, mSearchQuery, filteredTimedItems);
         mIncognitoDownloadItems.filter(mFilter, mSearchQuery, filteredTimedItems);
 
-        filter(mFilter, mSearchQuery, mOfflineItems, filteredTimedItems);
+        List<DownloadHistoryItemWrapper> prefetchedItems = new ArrayList<>();
+        filter(mFilter, mSearchQuery, mOfflineItems, filteredTimedItems, prefetchedItems);
 
         clear(false);
         if (!filteredTimedItems.isEmpty() && !mIsSearching && mShouldShowStorageInfoHeader) {
             setHeaders(mSpaceDisplayHeaderItem);
         }
 
+        createPrefetchedItemGroup(prefetchedItems);
         loadItems(filteredTimedItems);
+    }
+
+    private void createPrefetchedItemGroup(List<DownloadHistoryItemWrapper> prefetchedItems) {
+        if (prefetchedItems.isEmpty()) return;
+        if (!TextUtils.isEmpty(mSearchQuery)) return;
+
+        if (mPrefetchHeader == null) {
+            mPrefetchHeader = new SubsectionHeader(new Date(Long.MAX_VALUE));
+        }
+
+        mPrefetchHeader.update(prefetchedItems);
+
+        ItemGroup prefetchItemGroup = new ItemGroup(mPrefetchHeader.getTimestamp()) {
+            @Override
+            public int priority() {
+                return GROUP_PRIORITY_PREFETCH;
+            }
+
+            @Override
+            public int getItemViewType(int index) {
+                if (index == 0) return TYPE_SUBSECTION_HEADER;
+                return TYPE_NORMAL;
+            }
+
+            @Override
+            protected int compareItem(TimedItem lhs, TimedItem rhs) {
+                if (lhs instanceof SubsectionHeader) return -1;
+                if (rhs instanceof SubsectionHeader) return 1;
+
+                return super.compareItem(lhs, rhs);
+            }
+        };
+
+        prefetchItemGroup.addItem(mPrefetchHeader);
+        if (mPrefetchHeader.isExpanded()) {
+            for (TimedItem item : prefetchedItems) {
+                prefetchItemGroup.addItem(item);
+            }
+        }
+
+        addGroup(prefetchItemGroup);
     }
 
     /**
@@ -599,9 +634,8 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
      * @param filteredItems The output item list which is append-only.
      */
     private void filter(int filterType, String query, List<DownloadHistoryItemWrapper> inputList,
-            List<TimedItem> filteredItems) {
+            List<TimedItem> filteredItems, List<DownloadHistoryItemWrapper> suggestedItems) {
         boolean shouldShowSubsectionHeaders = TextUtils.isEmpty(mSearchQuery);
-        List<DownloadHistoryItemWrapper> suggestedItems = new ArrayList<>();
 
         for (DownloadHistoryItemWrapper item : inputList) {
             if (!item.isVisibleToUser(filterType)) continue;
@@ -613,88 +647,16 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
                 filteredItems.add(item);
             }
         }
-
-        if (!shouldShowSubsectionHeaders) return;
-
-        Map<Date, List<DownloadHistoryItemWrapper>> suggestedPageMap = new HashMap<>();
-
-        for (DownloadHistoryItemWrapper offlineItem : suggestedItems) {
-            // Add the suggested pages to the adapter only if the section is expanded for that date.
-            addItemToSuggestedPagesMap(offlineItem, suggestedPageMap);
-            if (!isSubsectionExpanded(
-                        DownloadUtils.getDateAtMidnight(offlineItem.getTimestamp()))) {
-                continue;
-            }
-            filteredItems.add(offlineItem);
-        }
-
-        generateSubsectionHeaders(filteredItems, suggestedPageMap);
-    }
-
-    private void addItemToSuggestedPagesMap(DownloadHistoryItemWrapper offlineItem,
-            Map<Date, List<DownloadHistoryItemWrapper>> suggestedPageMap) {
-        Date date = DownloadUtils.getDateAtMidnight(offlineItem.getTimestamp());
-
-        if (!suggestedPageMap.containsKey(date)) {
-            suggestedPageMap.put(date, new ArrayList<DownloadHistoryItemWrapper>());
-        }
-
-        suggestedPageMap.get(date).add(offlineItem);
-    }
-
-    // Creates subsection headers for each date and appends to |filteredTimedItems|.
-    private void generateSubsectionHeaders(List<TimedItem> filteredTimedItems,
-            Map<Date, List<DownloadHistoryItemWrapper>> suggestedPageMap) {
-        for (Map.Entry<Date, List<DownloadHistoryItemWrapper>> entry :
-                suggestedPageMap.entrySet()) {
-            Date date = entry.getKey();
-            if (!mSubsectionHeaders.containsKey(date)) {
-                mSubsectionHeaders.put(date, new SubsectionHeader(date));
-            }
-
-            mSubsectionHeaders.get(date).update(suggestedPageMap.get(date));
-        }
-
-        // Remove entry from |mSubsectionExpanded| if there are no more suggested pages.
-        Iterator<Entry<Date, SubsectionHeader>> iter = mSubsectionHeaders.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<Date, SubsectionHeader> entry = iter.next();
-            if (!suggestedPageMap.containsKey(entry.getKey())) {
-                iter.remove();
-            }
-        }
-
-        filteredTimedItems.addAll(mSubsectionHeaders.values());
     }
 
     /**
-     * Whether the suggested pages section is expanded for a given date.
-     * @param date The download date.
-     * @return Whether the suggested pages section is expanded.
-     */
-    public boolean isSubsectionExpanded(Date date) {
-        // Default state is collapsed.
-        if (!mSubsectionHeaders.containsKey(date)) {
-            return false;
-        }
-
-        return mSubsectionHeaders.get(date).isExpanded();
-    }
-
-    /**
-     * Sets the state of a subsection for a particular date and updates the adapter.
-     * @param date The download date.
+     * Sets the state of the subsection and updates the adapter.
      * @param expanded Whether the suggested pages should be expanded.
      */
-    public void setSubsectionExpanded(Date date, boolean expanded) {
-        mSubsectionHeaders.get(date).setIsExpanded(expanded);
+    public void setSubsectionExpanded(boolean expanded) {
+        mPrefetchHeader.setIsExpanded(expanded);
         clear(false);
         filter(mFilter);
-    }
-
-    @Override
-    protected boolean isSubsectionHeader(TimedItem timedItem) {
-        return timedItem instanceof SubsectionHeader;
     }
 
     private BackendItems getDownloadItemList(boolean isOffTheRecord) {
