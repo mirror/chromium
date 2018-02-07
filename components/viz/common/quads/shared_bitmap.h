@@ -52,15 +52,20 @@ class VIZ_COMMON_EXPORT SharedBitmap {
   virtual base::SharedMemoryHandle GetSharedMemoryHandle() const = 0;
 
   // Returns true if the size is valid and false otherwise.
-  static bool SizeInBytes(const gfx::Size& size, size_t* size_in_bytes);
+  static bool SizeInBytes(const gfx::Size& size,
+                          size_t* size_in_bytes,
+                          bool use_half_float_storage = false);
   // Dies with a CRASH() if the size can not be represented as a positive number
   // of bytes.
-  static size_t CheckedSizeInBytes(const gfx::Size& size);
+  static size_t CheckedSizeInBytes(const gfx::Size& size,
+                                   bool use_half_float_storage = false);
   // Returns the size in bytes but may overflow or return 0. Only do this for
   // sizes that have already been checked.
-  static size_t UncheckedSizeInBytes(const gfx::Size& size);
+  static size_t UncheckedSizeInBytes(const gfx::Size& size,
+                                     bool use_half_float_storage = false);
   // Returns true if the size is valid and false otherwise.
-  static bool VerifySizeInBytes(const gfx::Size& size);
+  static bool VerifySizeInBytes(const gfx::Size& size,
+                                bool use_half_float_storage = false);
 
   static SharedBitmapId GenerateId();
 

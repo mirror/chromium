@@ -119,17 +119,18 @@ ClientSharedBitmapManager::ClientSharedBitmapManager(
 ClientSharedBitmapManager::~ClientSharedBitmapManager() {}
 
 std::unique_ptr<SharedBitmap> ClientSharedBitmapManager::AllocateSharedBitmap(
-    const gfx::Size& size) {
+    const gfx::Size& size,
+    const bool use_half_float_storage) {
   TRACE_EVENT2("renderer", "ClientSharedBitmapManager::AllocateSharedBitmap",
                "width", size.width(), "height", size.height());
   size_t memory_size;
-  if (!SharedBitmap::SizeInBytes(size, &memory_size))
+  if (!SharedBitmap::SizeInBytes(size, use_half_float_storage, &memory_size))
     return nullptr;
   SharedBitmapId id = SharedBitmap::GenerateId();
   std::unique_ptr<base::SharedMemory> memory =
       AllocateSharedMemory(memory_size);
   if (!memory || !memory->Map(memory_size))
-    CollectMemoryUsageAndDie(size, memory_size);
+    CollectMemoryUsageAndDie(size, use_half_float_storage, memory_size);
 
   uint32_t sequence_number = NotifyAllocatedSharedBitmap(memory.get(), id);
 

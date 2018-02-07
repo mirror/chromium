@@ -19,9 +19,11 @@ class SharedBitmapManager {
   virtual ~SharedBitmapManager() {}
 
   virtual std::unique_ptr<SharedBitmap> AllocateSharedBitmap(
-      const gfx::Size&) = 0;
+      const gfx::Size&,
+      const bool use_half_float_storage) = 0;
   virtual std::unique_ptr<SharedBitmap> GetSharedBitmapFromId(
       const gfx::Size&,
+      const bool use_half_float_storage,
       const SharedBitmapId&) = 0;
 
  private:

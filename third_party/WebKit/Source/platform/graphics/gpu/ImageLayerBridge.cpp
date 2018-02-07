@@ -104,6 +104,12 @@ bool ImageLayerBridge::PrepareTransferableResource(
   }
   DCHECK_EQ(image_for_compositor->IsTextureBacked(), gpu_compositing);
 
+  CanvasColorParams color_params;
+  bool color_mangement_enabled =
+      (RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled());
+  if (color_mangement_enabled)
+    color_params = image_for_compositor.ColorParams();
+
   if (gpu_compositing) {
     uint32_t filter =
         filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
@@ -116,8 +122,11 @@ bool ImageLayerBridge::PrepareTransferableResource(
                   WrapWeakPersistent(this), std::move(image_for_compositor));
     *out_release_callback = viz::SingleReleaseCallback::Create(std::move(func));
   } else {
-    std::unique_ptr<viz::SharedBitmap> bitmap =
-        CreateOrRecycleBitmap(image_for_compositor->Size());
+    bool uses_half_float_storage = false;
+    if (color_mangement_enabled)
+      uses_half_float_storage = (color_params.BytesPerPixel() == 8);
+    std::unique_ptr<viz::SharedBitmap> bitmap = CreateOrRecycleBitmap(
+        image_for_compositor->Size(), uses_half_float_storage);
     if (!bitmap)
       return false;
 
@@ -129,6 +138,13 @@ bool ImageLayerBridge::PrepareTransferableResource(
     SkImageInfo dst_info =
         SkImageInfo::MakeN32Premul(image_for_compositor->width(), 1);
     size_t row_bytes = image_for_compositor->width() * 4;
+    if (color_mangement_enabled) {
+      dst_info = SkImageInfo::Make(
+          image_for_compositor->width(), 1, color_params.GetSkColorType(),
+          color_params.GetSkAlphaType(), color_params.GetSkColorSpace());
+      if (uses_half_float_storage)
+        row_bytes *= 2;
+    }
 
     // Copy from SkImage into |bitmap|, while flipping the Y axis.
     for (int row = 0; row < image_for_compositor->height(); row++) {
@@ -139,24 +155,31 @@ bool ImageLayerBridge::PrepareTransferableResource(
     *out_resource = viz::TransferableResource::MakeSoftware(
         bitmap->id(), bitmap->sequence_number(),
         gfx::Size(image_for_compositor->width(),
-                  image_for_compositor->height()));
-    auto func = WTF::Bind(&ImageLayerBridge::ResourceReleasedSoftware,
-                          WrapWeakPersistent(this), base::Passed(&bitmap),
-                          image_for_compositor->Size());
+                  image_for_compositor->height()),
+        uses_half_float_storage);
+    auto func =
+        WTF::Bind(&ImageLayerBridge::ResourceReleasedSoftware,
+                  WrapWeakPersistent(this), base::Passed(&bitmap),
+                  image_for_compositor->Size(), uses_half_float_storage);
     *out_release_callback = viz::SingleReleaseCallback::Create(std::move(func));
   }
 
-  // TODO(junov): Figure out how to get the color space info.
-  // out_resource->color_space = ...;
-
+  if (color_mangement_enabled) {
+    out_resource->color_space = color_params.GetSamplerGfxColorSpace();
+    if (uses_half_float_storage)
+      out_resource->format = viz::RGBA_F16;
+  }
   return true;
 }
 
 std::unique_ptr<viz::SharedBitmap> ImageLayerBridge::CreateOrRecycleBitmap(
-    const IntSize& size) {
-  auto it = std::remove_if(
-      recycled_bitmaps_.begin(), recycled_bitmaps_.end(),
-      [&size](const RecycledBitmap& bitmap) { return bitmap.size != size; });
+    const IntSize& size,
+    const bool uses_half_float_storage) {
+  auto it = std::remove_if(recycled_bitmaps_.begin(), recycled_bitmaps_.end(),
+                           [&size](const RecycledBitmap& bitmap) {
+                             return !bitmap.SameBufferSize(
+                                 size, uses_half_float_storage);
+                           });
   recycled_bitmaps_.Shrink(it - recycled_bitmaps_.begin());
 
   if (!recycled_bitmaps_.IsEmpty()) {
@@ -186,11 +209,13 @@ void ImageLayerBridge::ResourceReleasedGpu(
 void ImageLayerBridge::ResourceReleasedSoftware(
     std::unique_ptr<viz::SharedBitmap> bitmap,
     const IntSize& size,
+    const bool uses_half_float_storage,
     const gpu::SyncToken& sync_token,
     bool lost_resource) {
   DCHECK(!sync_token.HasData());  // No sync tokens for software resources.
   if (!disposed_ && !lost_resource) {
-    RecycledBitmap recycled = {std::move(bitmap), size};
+    RecycledBitmap recycled = {std::move(bitmap), size,
+                               uses_half_float_storage};
     recycled_bitmaps_.push_back(std::move(recycled));
   }
 }

@@ -22,11 +22,13 @@ class TestSharedBitmapManager : public viz::SharedBitmapManager {
   ~TestSharedBitmapManager() override;
 
   std::unique_ptr<viz::SharedBitmap> AllocateSharedBitmap(
-      const gfx::Size& size) override;
+      const gfx::Size& size,
+      bool use_half_float_storage = false) override;
 
   std::unique_ptr<viz::SharedBitmap> GetSharedBitmapFromId(
       const gfx::Size&,
-      const viz::SharedBitmapId& id) override;
+      const viz::SharedBitmapId& id,
+      bool use_half_float_storage = false) override;
 
  private:
   base::Lock lock_;

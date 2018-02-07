@@ -53,10 +53,15 @@ TestSharedBitmapManager::TestSharedBitmapManager() = default;
 TestSharedBitmapManager::~TestSharedBitmapManager() = default;
 
 std::unique_ptr<viz::SharedBitmap>
-TestSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
+TestSharedBitmapManager::AllocateSharedBitmap(
+    const gfx::Size& size,
+    bool use_half_float_storage) {
   base::AutoLock lock(lock_);
   std::unique_ptr<base::SharedMemory> memory(new base::SharedMemory);
-  memory->CreateAndMapAnonymous(size.GetArea() * 4);
+  size_t buffer_size = size.GetArea() * 4;
+  if (use_half_float_storage)
+    buffer_size *= 2;
+  memory->CreateAndMapAnonymous(buffer_size);
   viz::SharedBitmapId id = viz::SharedBitmap::GenerateId();
   bitmap_map_[id] = memory.get();
   return std::make_unique<OwnedSharedBitmap>(std::move(memory), id);
@@ -64,7 +69,8 @@ TestSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
 
 std::unique_ptr<viz::SharedBitmap>
 TestSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size&,
-                                               const viz::SharedBitmapId& id) {
+                                               const viz::SharedBitmapId& id,
+                                               bool use_half_float_storage) {
   base::AutoLock lock(lock_);
   if (bitmap_map_.find(id) == bitmap_map_.end())
     return nullptr;
