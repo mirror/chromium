@@ -35,6 +35,11 @@ public interface WebContentsAccessibility {
     boolean supportsAction(int action);
 
     /**
+     *  Determines if a11y enabled.
+     */
+    boolean isAccessibilityEnabled();
+
+    /**
      * Attempts to perform an accessibility action on the web content.  If the accessibility action
      * cannot be processed, it returns {@code null}, allowing the caller to know to call the
      * super {@link View#performAccessibilityAction(int, Bundle)} method and use that return value.

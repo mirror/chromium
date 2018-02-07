@@ -168,18 +168,21 @@ public class AwContentsGarbageCollectionTest {
         AwTestContainerView containerViews[] = new AwTestContainerView[MAX_IDLE_INSTANCES + 1];
         AccessibilityNodeProvider providers[] =
                 new AccessibilityNodeProvider[MAX_IDLE_INSTANCES + 1];
+        boolean a11y[] = new boolean[MAX_IDLE_INSTANCES + 1];
         for (int i = 0; i < containerViews.length; i++) {
             final AwTestContainerView containerView =
                     mActivityTestRule.createAwTestContainerViewOnMainSync(client);
             containerViews[i] = containerView;
             mActivityTestRule.loadUrlAsync(
                     containerViews[i].getAwContents(), ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
-            providers[i] = ThreadUtils.runOnUiThreadBlocking(() -> {
+            a11y[i] = ThreadUtils.runOnUiThreadBlocking(() -> {
                 WebContentsAccessibility.fromWebContents(containerView.getWebContents())
                         .setState(true);
-                return containerView.getAccessibilityNodeProvider();
+                return WebContentsAccessibility.fromWebContents(containerView.getWebContents())
+                        .isAccessibilityEnabled();
             });
-            Assert.assertNotNull(providers[i]);
+
+            Assert.assertTrue(a11y[i]);
         }
 
         for (int i = 0; i < containerViews.length; i++) {
