@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf280d6_4837ce8b",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T09:56:03Z",
+      "side": 1,
+      "message": "This is quite a change. I don\u0027t really know why we used to do it this way and `ready_state_maximum_` seems to be in general a mess so :shrug:\n\n(Even though I\u0027m happy to +2, I can hear the regressions coming your way :))",
+      "revId": "274f0b3e5af3a37d0cd314a871ad351bddf6e009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aa5046_14042e7b",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T09:56:03Z",
+      "side": 1,
+      "message": "+Tommy, because I think he had to fix a bug around this in the controls.",
+      "revId": "274f0b3e5af3a37d0cd314a871ad351bddf6e009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
