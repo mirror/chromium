@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e2ce4555_7936746c",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-02-07T22:37:33Z",
+      "side": 1,
+      "message": "I don\u0027t read the code as calling InitTable() before we enter this function.  InitializeDatabase has the following code:\n\n  if (!EnsureDatabaseVersion() || !InitTable(db_.get())) {\n\nSo InitTable will only be called if EnsureDatabaseVersion fails.  (Which I have real concerns about, see next comment, but isn\u0027t relevant to your question.)\n\nBut your question as to why it\u0027s needed is a good one.  In general I think InitTable() is used if the database isn\u0027t already there on disk to set it up, so it wouldn\u0027t normally be included in an upgrade of an existing database.  It\u0027s used here as a simple way of creating the V10 scheme without replicating it at this point in the database; the code has just moved the old cookie table out of the way, this creates the new cookie table, and the next chunk of code copies the cookies into the new cookie table.\n\nHaving said that, I realize in explaining this that there\u0027s a bug here that\u0027ll only show up the next time we rev the DB version.  Coming out of this conditional, we want the version schema to be that of version 10, *NOT* that of whatever the current version is.  So I really should refactor the version 10 schema out into a separate function and call that from both here and the InitTable() function.  Then InitTable can be updated for the next schema without affecting this code.\n\nI will do that, but sending this comment back beforehand in case this explanation brings up other issues.",
+      "parentUuid": "3a255ea5_4be7d147",
+      "range": {
+        "startLine": 1044,
+        "startChar": 9,
+        "endLine": 1044,
+        "endChar": 18
+      },
+      "revId": "929d2c0d1921944b404047d1024adfe9ed7bb437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "396a4fd9_f595fc76",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 1
