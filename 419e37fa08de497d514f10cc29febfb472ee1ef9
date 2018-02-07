@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "62b6eac2_f43ce8a6",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-07T21:13:55Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s unique to WidgetObserver per se, but proposing a large-scale change to all observers seemed less feasible and like it could have potential non-zero overhead in critical paths. I think OnRemoved would also make sense but be premature to add before it\u0027s important (though to be fair other methods like OnWidgetDestroyed are kind of effectively already acting as OnRemoved in the overrides I\u0027ve glanced over now).\n\nThese toolbar icons rely on observing both \"OnAdded\" and \"OnRemoved\" without those methods we need to call icon-\u003eOnWidgetCreated(widget) (\u003d\u003d OnAdded + AddObserver) and rely on OnWidgetVisibilityChanged(_, false) (\u003d\u003d OnRemoved) as replacements for these methods. The only reason this specific view doesn\u0027t need an OnRemoved() method is that OnWidgetVisibilityChanged(widget, false) gets called before a dialog goes away.\n\nIf there\u0027s a path that destroys a dialog silently without calling OnWidgetVisibilityChanged then this implementation is already broken as the highlight would keep showing the icon as active long after the widget goes away.",
+      "parentUuid": "5a9cf38c_d6af890f",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
