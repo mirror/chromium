@@ -892,6 +892,14 @@ void MediaRouterMojoImpl::OnMediaRemoterCreated(
   connector->ConnectToService(std::move(source_request), std::move(remoter));
 }
 
+void MediaRouterMojoImpl::GetMediaSinkServiceStatus(
+    mojom::MediaRouter::GetMediaSinkServiceStatusCallback callback) {
+  // TODO(https://crbug.com/687380): Run |callback| with media sink service
+  // status.
+  NOTIMPLEMENTED();
+  std::move(callback).Run("GetMediaSinkServiceStatus() not implemented");
+}
+
 void MediaRouterMojoImpl::BindToMojoRequest(
     mojo::InterfaceRequest<mojom::MediaRouter> request) {
   bindings_.AddBinding(this, std::move(request));
