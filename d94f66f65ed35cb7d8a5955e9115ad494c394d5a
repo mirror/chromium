@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9506fabc_43b67053",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "Just use |self| since we have it.",
+      "range": {
+        "startLine": 111,
+        "startChar": 32,
+        "endLine": 111,
+        "endChar": 60
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcfe1cd_ffca1070",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "Using WeakPtrFactory as member is preferred than derive from SupportsWeakPtr when feasiable.",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b37e13_25bb32f9",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "nit: #include \"base/callback_forward.h\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 44,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8422a24_9656936e",
+        "filename": "chrome/browser/ui/app_list/app_list_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "The use pattern after we making this async looks cumbersome. I wonder whether it makes sense to pass the display id when we show the app list and return that cached one synchronously.\n\nFor current code, we could change the impl to get the display id from AppListPresenterImpl::GetDisplayId (, or just leave as-is). For the future mojo impl, we get it from browser side mojo impl.\n\nMake sense?",
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ee811c_710e2203",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "This does not protect against dangling pointers since we are passing |controller| as raw pointer.\n\nCurrent code should guarantee that ArcAppContextMenu holds a valid controller. We could add a WeakPtrFactor to ArcAppContextMenu and use that to access the controller.",
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6415150_48b5e8ba",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "ditto, change to use a WeakPtr\u003cArcAppItem\u003e instead",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568851ac_3b2cabe8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T18:01:55Z",
+      "side": 1,
+      "message": "Why do we need to test |profile|?",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 35
+      },
+      "revId": "d94f66f65ed35cb7d8a5955e9115ad494c394d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
