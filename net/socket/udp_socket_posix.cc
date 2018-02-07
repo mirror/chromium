@@ -312,6 +312,8 @@ void UDPSocketPosix::Close() {
   write_buf_len_ = 0;
   write_callback_.Reset();
   send_to_address_.reset();
+  local_address_.reset();
+  remote_address_.reset();
 
   bool ok = read_socket_watcher_.StopWatchingFileDescriptor();
   DCHECK(ok);
