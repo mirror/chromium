@@ -59,12 +59,19 @@ base::FilePath GetTestFilePath(const char* dir, const char* file);
 // content/test/data/<file>
 GURL GetTestUrl(const char* dir, const char* file);
 
-// Navigates |window| to |url|, blocking until the navigation finishes.
-// Returns true if the page was loaded successfully and the last committed
-// URL matches |url|.
+// Navigates |window| to |url|, blocking until the navigation finishes.  Uses a
+// page transition that simulates a user clicking on a link. Returns true if
+// the page was loaded successfully and the last committed URL matches |url|.
 // TODO(alexmos): any tests that use this function and expect successful
 // navigations should do EXPECT_TRUE(NavigateToURL()).
 bool NavigateToURL(Shell* window, const GURL& url);
+
+// Navigates |window| to |url|, blocking until the navigation finishes.
+// Uses a page transition that simulates a user typing |url| into the
+// address bar. Returns true if the page was loaded successfully and the last
+// committed URL matches |url|.
+WARN_UNUSED_RESULT bool NavigateToURLFromAddressBar(Shell* window,
+                                                    const GURL& url);
 
 void LoadDataWithBaseURL(Shell* window,
                          const GURL& url,

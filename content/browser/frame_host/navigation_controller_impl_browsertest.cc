@@ -1158,10 +1158,10 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
                        NavigationTypeClassification_ExistingPage) {
   GURL url1(embedded_test_server()->GetURL(
       "/navigation_controller/simple_page_1.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), url1));
+  EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
   GURL url2(embedded_test_server()->GetURL(
       "/navigation_controller/simple_page_2.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), url2));
+  EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), url2));
 
   FrameTreeNode* root =
       static_cast<WebContentsImpl*>(shell()->web_contents())->
@@ -1328,7 +1328,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   GURL url_links(embedded_test_server()->GetURL(
       "/navigation_controller/page_with_links.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), url_links));
+  EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), url_links));
   std::string script = "document.getElementById('fraglink').click()";
   EXPECT_TRUE(ExecuteScript(root, script));
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
@@ -1362,7 +1362,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Back and forward across a pushState-created navigation.
 
-  EXPECT_TRUE(NavigateToURL(shell(), url1));
+  EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
   script = "history.pushState({}, 'page 2', 'simple_page_2.html')";
   EXPECT_TRUE(ExecuteScript(root, script));
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
@@ -4066,7 +4066,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     // Load the redirecting page.
     FrameNavigateParamsCapturer capturer(root);
     capturer.set_navigations_remaining(2);
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     capturer.Wait();
 
     ASSERT_EQ(1, controller.GetEntryCount());
@@ -4105,7 +4105,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Test fixture: start with typing a URL.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     ASSERT_EQ(1, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     ASSERT_EQ(url1, entry1->GetURL());
@@ -4159,7 +4159,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Test fixture: start with typing a URL.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     ASSERT_EQ(1, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     ASSERT_EQ(url1, entry1->GetURL());
@@ -4255,7 +4255,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Test fixture: start with typing a URL.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     ASSERT_EQ(1, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     ASSERT_EQ(url1, entry1->GetURL());
@@ -4300,7 +4300,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Test fixture: start with typing a URL.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     ASSERT_EQ(1, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     ASSERT_EQ(url1, entry1->GetURL());
@@ -4361,7 +4361,7 @@ IN_PROC_BROWSER_TEST_F(
 
   // Start with typing a URL.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
     ASSERT_EQ(1, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     ASSERT_EQ(url1, entry1->GetURL());
@@ -4426,8 +4426,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
 
   // Test fixture: start with typing two URLs.
   {
-    ASSERT_TRUE(NavigateToURL(shell(), url1));
-    ASSERT_TRUE(NavigateToURL(shell(), url2));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url1));
+    ASSERT_TRUE(NavigateToURLFromAddressBar(shell(), url2));
     ASSERT_EQ(2, controller.GetEntryCount());
     NavigationEntry* entry1 = controller.GetEntryAtIndex(0);
     NavigationEntry* entry2 = controller.GetEntryAtIndex(1);
@@ -7594,7 +7594,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
                        GoBackToManualSubFrame) {
   GURL main_url(embedded_test_server()->GetURL(
       "/navigation_controller/page_with_iframe.html"));
-  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+  EXPECT_TRUE(NavigateToURLFromAddressBar(shell(), main_url));
 
   FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
                             ->GetFrameTree()
