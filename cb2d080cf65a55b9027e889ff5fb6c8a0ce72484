@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25bd85b_5349cfd6",
+        "filename": "notification_helper/notification_helper_process_unittest.cc",
+        "patchSetId": 90
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T08:38:49Z",
+      "side": 1,
+      "message": "if you want the test to write into HKLM, you will need to make it run at high integrity. have a look at the stanza for setup_unittests in test_suites.pyl to see how to do this. alternatively, try HKCU here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "cb2d080cf65a55b9027e889ff5fb6c8a0ce72484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
