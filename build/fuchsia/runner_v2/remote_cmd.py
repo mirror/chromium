@@ -43,7 +43,7 @@ def RunSsh(config_path, host, port, command, silent):
     return subprocess.call(ssh_command)
 
 
-def RunPipedSsh(config_path, host, port, command, **kwargs):
+def RunPipedSsh(config_path, host, port, command = [], ssh_args = [], **kwargs):
   """Executes an SSH command on the remote host and returns a process object
   with access to the command's stdio streams. Does not block.
 
@@ -51,6 +51,7 @@ def RunPipedSsh(config_path, host, port, command, **kwargs):
   host: The hostname or IP address of the remote host.
   port: The port to connect to.
   command: A list of strings containing the command and its arguments.
+  ssh_args: Arguments that will be passed to SSH.
   kwargs: A dictionary of parameters to be passed to subprocess.Popen().
           The parameters can be used to override stdin and stdout, for example.
 
@@ -58,7 +59,7 @@ def RunPipedSsh(config_path, host, port, command, **kwargs):
 
   ssh_command = _SSH + ['-F', config_path,
                         host,
-                        '-p', str(port)] + command
+                        '-p', str(port)] + ssh_args + ['--'] + command
   logging.debug(' '.join(ssh_command))
   return subprocess.Popen(ssh_command, **kwargs)
 
