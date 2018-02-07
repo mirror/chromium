@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c1e67e1_4f78a014",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-07T15:45:51Z",
+      "side": 1,
+      "message": "Err, shouldn\u0027t this go after we check the runtimeHost?",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 21
+      },
+      "revId": "5c17f169a35f4c36af2503181d939c8def0a0edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a03275e3_fc03e93c",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
         "patchSetId": 14
