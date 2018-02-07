@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b8b918_b4190469",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T19:15:39Z",
+      "side": 1,
+      "message": "I left it like this because instead of deleting this file and changing the import at custom_elements_lock.html because there\u0027s a similar file md_pin_keyboard.html which also defines a pin-keyboard element. Depending on the flags present oobe will either load from this file or md_pin_keyboard.html. I think if I change the original import this pin-keyboard element will always load and the correct md_pin_keyboard.html pin-keyboard will not be shown.",
+      "revId": "56a4ab393051064f998a3c8b0598a02119d0638f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9215fe_cabd7411",
+        "filename": "ui/webui/resources/cr_components/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2018-02-07T19:15:39Z",
+      "side": 1,
+      "message": "This file and the js one is completely unchanged except for i18n{..} -\u003e [[i18n(\u0027..\u0027)]].",
+      "revId": "56a4ab393051064f998a3c8b0598a02119d0638f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
