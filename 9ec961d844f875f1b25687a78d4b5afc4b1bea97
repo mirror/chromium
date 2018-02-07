@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "df57dd6d_3713c66a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11136,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "BTW, Is this going to be merged back to M-65? If not, let\u0027s do 66- here.",
+      "range": {
+        "startLine": 11136,
+        "startChar": 34,
+        "endLine": 11136,
+        "endChar": 36
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "829777a4_80ebbc04",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 6
@@ -41,6 +64,190 @@
         "startChar": 6,
         "endLine": 11137,
         "endChar": 26
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abb77f4_6bc21763",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11141,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s change this to True, as setting it to False doesn\u0027t make sense for the admin if the managed default is False.",
+      "range": {
+        "startLine": 11141,
+        "startChar": 23,
+        "endLine": 11141,
+        "endChar": 28
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cf4609_0d13cb3e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11147,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: True",
+      "range": {
+        "startLine": 11147,
+        "startChar": 30,
+        "endLine": 11147,
+        "endChar": 34
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dd409c_3b6a2d93",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11147,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: the device is",
+      "range": {
+        "startLine": 11147,
+        "startChar": 36,
+        "endLine": 11147,
+        "endChar": 47
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa671415_1b68d1ee",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11148,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: False",
+      "range": {
+        "startLine": 11148,
+        "startChar": 30,
+        "endLine": 11148,
+        "endChar": 35
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e373645_6de2b58f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11148,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: the device",
+      "range": {
+        "startLine": 11148,
+        "startChar": 37,
+        "endLine": 11148,
+        "endChar": 44
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625bc38c_9d8af0e7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: policy",
+      "range": {
+        "startLine": 11149,
+        "startChar": 16,
+        "endLine": 11149,
+        "endChar": 22
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3ac655_68991b72",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11149,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: but does not",
+      "range": {
+        "startLine": 11149,
+        "startChar": 88,
+        "endLine": 11149,
+        "endChar": 104
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7908a6_31febbdc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11150,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:35:40Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest to split this in two sentences :\nWhen this policy is not set on a managed device, the device will not be allowed to run virtual machines.\nUnmanaged devices are allowed to run virtual machines.",
+      "range": {
+        "startLine": 11150,
+        "startChar": 6,
+        "endLine": 11150,
+        "endChar": 130
       },
       "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
