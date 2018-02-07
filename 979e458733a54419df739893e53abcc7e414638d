@@ -16,6 +16,24 @@
       "revId": "979e458733a54419df739893e53abcc7e414638d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c19132f_c3548619",
+        "filename": "ui/views/controls/tabbed_pane/tabbed_pane.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-02-07T07:19:53Z",
+      "side": 1,
+      "message": "Added the comments to the class.",
+      "parentUuid": "fa8993f6_f5e25adb",
+      "revId": "979e458733a54419df739893e53abcc7e414638d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
