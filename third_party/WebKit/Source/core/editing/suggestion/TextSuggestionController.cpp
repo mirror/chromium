@@ -596,7 +596,9 @@ void TextSuggestionController::ReplaceRangeWithText(const EphemeralRange& range,
       SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build());
 
   // Dispatch 'beforeinput'.
-  Element* const target = GetFrame().GetEditor().FindEventTargetFromSelection();
+  Element* const target = GetFrame().GetEditor().FindEventTargetFrom(
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+
   DataTransfer* const data_transfer = DataTransfer::Create(
       DataTransfer::DataTransferType::kInsertReplacementText,
       DataTransferAccessPolicy::kDataTransferReadable,

@@ -497,7 +497,9 @@ void SpellChecker::ReplaceMisspelledRange(const String& text) {
   Document& current_document = *GetFrame().GetDocument();
 
   // Dispatch 'beforeinput'.
-  Element* const target = GetFrame().GetEditor().FindEventTargetFromSelection();
+  Element* const target = GetFrame().GetEditor().FindEventTargetFrom(
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+
   DataTransfer* const data_transfer = DataTransfer::Create(
       DataTransfer::DataTransferType::kInsertReplacementText,
       DataTransferAccessPolicy::kDataTransferReadable,

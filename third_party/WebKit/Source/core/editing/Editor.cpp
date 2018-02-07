@@ -804,11 +804,6 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
   return target;
 }
 
-Element* Editor::FindEventTargetFromSelection() const {
-  return FindEventTargetFrom(
-      GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
-}
-
 Element* Editor::FindEventTargetForClipboardEvent(
     EditorCommandSource source) const {
   // https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event says:
@@ -818,7 +813,8 @@ Element* Editor::FindEventTargetForClipboardEvent(
   if (source == kCommandFromMenuOrKeyBinding && GetFrameSelection().IsHidden())
     return GetFrameSelection().GetDocument().body();
 
-  return FindEventTargetFromSelection();
+  return FindEventTargetFrom(
+      GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
 
 void Editor::ApplyStyle(CSSPropertyValueSet* style,
