@@ -88,6 +88,7 @@
 #include "modules/webgl/WebGLUniformLocation.h"
 #include "modules/webgl/WebGLVertexArrayObject.h"
 #include "modules/webgl/WebGLVertexArrayObjectOES.h"
+#include "modules/xr/XRDevice.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
@@ -635,7 +636,7 @@ bool WebGLRenderingContextBase::SupportOwnOffscreenSurface(
 std::unique_ptr<WebGraphicsContext3DProvider>
 WebGLRenderingContextBase::CreateContextProviderInternal(
     CanvasRenderingContextHost* host,
-    const CanvasContextCreationAttributes& attributes,
+    const CanvasContextCreationAttributesCore& attributes,
     unsigned web_gl_version,
     bool* using_gpu_compositing) {
   DCHECK(host);
@@ -686,7 +687,7 @@ WebGLRenderingContextBase::CreateContextProviderInternal(
 std::unique_ptr<WebGraphicsContext3DProvider>
 WebGLRenderingContextBase::CreateWebGraphicsContext3DProvider(
     CanvasRenderingContextHost* host,
-    const CanvasContextCreationAttributes& attributes,
+    const CanvasContextCreationAttributesCore& attributes,
     unsigned webgl_version,
     bool* using_gpu_compositing) {
   if (host->IsWebGLBlocked()) {
@@ -749,7 +750,7 @@ WebGLRenderingContextBase::GetStaticBitmapImage(
   if (!GetDrawingBuffer())
     return nullptr;
 
-  if (CreationAttributes().preserveDrawingBuffer()) {
+  if (CreationAttributes().preserve_drawing_buffer) {
     int width = GetDrawingBuffer()->Size().Width();
     int height = GetDrawingBuffer()->Size().Height();
     SkImageInfo image_info = SkImageInfo::Make(
@@ -791,7 +792,7 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
   int height = GetDrawingBuffer()->Size().Height();
   SkImageInfo image_info = SkImageInfo::Make(
       width, height, kRGBA_8888_SkColorType,
-      CreationAttributes().alpha() ? kPremul_SkAlphaType : kOpaque_SkAlphaType);
+      CreationAttributes().alpha ? kPremul_SkAlphaType : kOpaque_SkAlphaType);
   return this->MakeImageSnapshot(image_info);
 }
 
@@ -821,6 +822,43 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
       IntRect(IntPoint(0, 0), GetDrawingBuffer()->Size()), kBackBuffer);
   return AcceleratedStaticBitmapImage::CreateFromSkImage(
       surface->makeImageSnapshot(), std::move(shared_context_wrapper));
+}
+
+ScriptPromise WebGLRenderingContextBase::setCompatibleXRDevice(
+    ScriptState* script_state,
+    XRDevice* xr_device) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  if (isContextLost()) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, "Context lost."));
+  }
+
+  if (xr_device == compatible_xr_device_) {
+    resolver->Resolve();
+    return promise;
+  }
+
+  if (ContextCreatedOnCompatibleAdapter(xr_device)) {
+    compatible_xr_device_ = xr_device;
+    resolver->Resolve();
+  } else {
+    // TODO(offenwanger): Trigger context loss and recreate on compatible GPU.
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kNotSupportedError,
+            "Context is not compatible. Switching not yet implemented."));
+  }
+
+  return promise;
+}
+
+bool WebGLRenderingContextBase::IsXRDeviceCompatible(
+    const XRDevice* xr_device) {
+  return xr_device == compatible_xr_device_;
 }
 
 namespace {
@@ -967,7 +1005,7 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
     CanvasRenderingContextHost* host,
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     bool using_gpu_compositing,
-    const CanvasContextCreationAttributes& requested_attributes,
+    const CanvasContextCreationAttributesCore& requested_attributes,
     unsigned version)
     : WebGLRenderingContextBase(
           host,
@@ -982,7 +1020,7 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     bool using_gpu_compositing,
-    const CanvasContextCreationAttributes& requested_attributes,
+    const CanvasContextCreationAttributesCore& requested_attributes,
     unsigned version)
     : CanvasRenderingContext(host, requested_attributes),
       context_group_(new WebGLContextGroup()),
@@ -1050,13 +1088,13 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
 scoped_refptr<DrawingBuffer> WebGLRenderingContextBase::CreateDrawingBuffer(
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     bool using_gpu_compositing) {
-  bool premultiplied_alpha = CreationAttributes().premultipliedAlpha();
-  bool want_alpha_channel = CreationAttributes().alpha();
-  bool want_depth_buffer = CreationAttributes().depth();
-  bool want_stencil_buffer = CreationAttributes().stencil();
-  bool want_antialiasing = CreationAttributes().antialias();
+  bool premultiplied_alpha = CreationAttributes().premultiplied_alpha;
+  bool want_alpha_channel = CreationAttributes().alpha;
+  bool want_depth_buffer = CreationAttributes().depth;
+  bool want_stencil_buffer = CreationAttributes().stencil;
+  bool want_antialiasing = CreationAttributes().antialias;
   DrawingBuffer::PreserveDrawingBuffer preserve =
-      CreationAttributes().preserveDrawingBuffer() ? DrawingBuffer::kPreserve
+      CreationAttributes().preserve_drawing_buffer ? DrawingBuffer::kPreserve
                                                    : DrawingBuffer::kDiscard;
   DrawingBuffer::WebGLVersion web_gl_version = DrawingBuffer::kWebGL1;
   if (Version() == 1) {
@@ -1102,6 +1140,7 @@ void WebGLRenderingContextBase::InitializeNewContext() {
   current_program_ = nullptr;
   framebuffer_binding_ = nullptr;
   renderbuffer_binding_ = nullptr;
+  compatible_xr_device_ = nullptr;
   depth_mask_ = true;
   stencil_enabled_ = false;
   stencil_mask_ = 0xFFFFFFFF;
@@ -1485,6 +1524,12 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
     return false;
   }
 
+  return true;
+}
+
+bool WebGLRenderingContextBase::ContextCreatedOnCompatibleAdapter(
+    const XRDevice* device) {
+  // TODO(offenwanger): Determine if device is compatible with current context.
   return true;
 }
 
@@ -2761,11 +2806,14 @@ void WebGLRenderingContextBase::getContextAttributes(
   result = ToWebGLContextAttributes(CreationAttributes());
   // Some requested attributes may not be honored, so we need to query the
   // underlying context/drawing buffer and adjust accordingly.
-  if (CreationAttributes().depth() && !GetDrawingBuffer()->HasDepthBuffer())
+  if (CreationAttributes().depth && !GetDrawingBuffer()->HasDepthBuffer())
     result->setDepth(false);
-  if (CreationAttributes().stencil() && !GetDrawingBuffer()->HasStencilBuffer())
+  if (CreationAttributes().stencil && !GetDrawingBuffer()->HasStencilBuffer())
     result->setStencil(false);
   result->setAntialias(GetDrawingBuffer()->Multisample());
+  if (compatible_xr_device_) {
+    result->setCompatibleXRDevice(compatible_xr_device_);
+  }
 }
 
 GLenum WebGLRenderingContextBase::getError() {
@@ -2983,7 +3031,7 @@ ScriptValue WebGLRenderingContextBase::getParameter(ScriptState* script_state,
     case GL_CURRENT_PROGRAM:
       return WebGLAny(script_state, current_program_.Get());
     case GL_DEPTH_BITS:
-      if (!framebuffer_binding_ && !CreationAttributes().depth())
+      if (!framebuffer_binding_ && !CreationAttributes().depth)
         return WebGLAny(script_state, kIntZero);
       return GetIntParameter(script_state, pname);
     case GL_DEPTH_CLEAR_VALUE:
@@ -3091,7 +3139,7 @@ ScriptValue WebGLRenderingContextBase::getParameter(ScriptState* script_state,
     case GL_STENCIL_BACK_WRITEMASK:
       return GetUnsignedIntParameter(script_state, pname);
     case GL_STENCIL_BITS:
-      if (!framebuffer_binding_ && !CreationAttributes().stencil())
+      if (!framebuffer_binding_ && !CreationAttributes().stencil)
         return WebGLAny(script_state, kIntZero);
       return GetIntParameter(script_state, pname);
     case GL_STENCIL_CLEAR_VALUE:
@@ -7814,6 +7862,7 @@ void WebGLRenderingContextBase::Trace(blink::Visitor* visitor) {
   visitor->Trace(current_program_);
   visitor->Trace(framebuffer_binding_);
   visitor->Trace(renderbuffer_binding_);
+  visitor->Trace(compatible_xr_device_);
   visitor->Trace(texture_units_);
   visitor->Trace(extensions_);
   CanvasRenderingContext::Trace(visitor);
