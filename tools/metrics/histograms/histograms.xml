@@ -92969,6 +92969,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="UMA.MetricsService.RecordCurrentHistograms.Time" units="ms">
+  <obsolete>
+    Removed February, 2018 because persistent metrics are fully launched with no
+    observable change in operation time.
+  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <owner>bcwhite@chromium.org</owner>
   <summary>
