@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de619fc0_67fa9383",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-02-07T16:37:56Z",
+      "side": 1,
+      "message": "DCHECK that this is nullptr in StartTransactionInternal (And maybe ContinueWithCertificate and ContinueDespiteLastError?).  I think we\u0027re fine in CancelAuth, since we do want to keep them in that case.\n\nWould be nice if we could just not call into the WebRequest API to let it modify the response until we\u0027ve completed auth, but that\u0027s probably too much of an API change (And would presumably require a more involved CL).",
+      "range": {
+        "startLine": 996,
+        "startChar": 2,
+        "endLine": 996,
+        "endChar": 28
+      },
+      "revId": "d82cf606c680dfd5f7bc2059bf47a0b78d77da72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
