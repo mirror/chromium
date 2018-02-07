@@ -7,14 +7,53 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/profiler/stack_sampling_profiler.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/thread.h"
+#include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "components/metrics/call_stack_profile_params.h"
 
 namespace service_manager {
 class Connector;
 }
+
+// PeriodicSamplingScheduler repeatedly schedules periodic sampling of the
+// thread through calls to GetTimeToNextCollection(). This class is exposed
+// to allow testing.
+class PeriodicSamplingScheduler {
+ public:
+  // Provides a test seam for the class's dependencies.
+  struct Dependencies {
+    Dependencies();
+    Dependencies(base::RepeatingCallback<double()> rand_double,
+                 base::RepeatingCallback<base::TimeTicks()> now);
+    Dependencies(const Dependencies& other);
+    ~Dependencies();
+
+    base::RepeatingCallback<double()> rand_double;
+    base::RepeatingCallback<base::TimeTicks()> now;
+  };
+
+  PeriodicSamplingScheduler(base::TimeDelta sampling_duration,
+                            double fraction_of_execution_time_to_sample,
+                            base::TimeTicks start_time,
+                            // This parameter provides a test seam and should
+                            // not be specified for normal use.
+                            const Dependencies& dependencies = Dependencies());
+  base::TimeDelta GetTimeToNextCollection();
+
+ private:
+  const base::TimeDelta period_duration_;
+  const base::TimeDelta sampling_duration_;
+  base::TimeTicks period_start_time_;
+  Dependencies dependencies_;
+
+  DISALLOW_COPY_AND_ASSIGN(PeriodicSamplingScheduler);
+};
 
 // ThreadProfiler performs startup and periodic profiling of Chrome
 // threads.
@@ -29,6 +68,12 @@ class ThreadProfiler {
   // message loop has been started on the thread.
   static std::unique_ptr<ThreadProfiler> CreateAndStartOnMainThread(
       metrics::CallStackProfileParams::Thread thread);
+
+  // Sets the task runner when profiling on the main thread. This occurs in a
+  // separate call from CreateAndStartOnMainThread so that startup profiling can
+  // occur prior to message loop start.
+  void SetMainThreadTaskRunner(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Creates a profiler for a child thread and immediately starts it. This
   // should be called from a task posted on the child thread immediately after
@@ -48,8 +93,12 @@ class ThreadProfiler {
       service_manager::Connector* connector);
 
  private:
-  // Creates the profiler.
-  explicit ThreadProfiler(metrics::CallStackProfileParams::Thread thread);
+  // Creates the profiler. The task runner will be supplied for child threads
+  // but not for main threads.
+  ThreadProfiler(
+      metrics::CallStackProfileParams::Thread thread,
+      scoped_refptr<base::SingleThreadTaskRunner> owning_thread_task_runner =
+          scoped_refptr<base::SingleThreadTaskRunner>());
 
   // Gets the completed callback for the ultimate receiver of the profiles.
   base::StackSamplingProfiler::CompletedCallback GetReceiverCallback(
@@ -64,12 +113,30 @@ class ThreadProfiler {
   ReceiveStartupProfiles(
       const base::StackSamplingProfiler::CompletedCallback& receiver_callback,
       base::StackSamplingProfiler::CallStackProfiles profiles);
+  static base::Optional<base::StackSamplingProfiler::SamplingParams>
+  ReceivePeriodicProfiles(
+      const base::StackSamplingProfiler::CompletedCallback& receiver_callback,
+      scoped_refptr<base::SingleThreadTaskRunner> owning_thread_task_runner,
+      base::WeakPtr<ThreadProfiler> thread_profiler,
+      base::StackSamplingProfiler::CallStackProfiles profiles);
+  void ScheduleNextPeriodicCollection();
+
+  void StartPeriodicSamplingCollection();
+
+  scoped_refptr<base::SingleThreadTaskRunner> owning_thread_task_runner_;
 
   // TODO(wittman): Make const after cleaning up the existing continuous
   // collection support.
   metrics::CallStackProfileParams startup_profile_params_;
+  metrics::CallStackProfileParams periodic_profile_params_;
 
   std::unique_ptr<base::StackSamplingProfiler> startup_profiler_;
+
+  std::unique_ptr<base::StackSamplingProfiler> periodic_profiler_;
+  std::unique_ptr<PeriodicSamplingScheduler> periodic_sampling_scheduler_;
+
+  THREAD_CHECKER(thread_checker_);
+  base::WeakPtrFactory<ThreadProfiler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadProfiler);
 };
