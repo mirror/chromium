@@ -11,7 +11,7 @@
 
 int main(int argc, const char** argv) {
   base::CommandLine::Init(argc, argv);
-  base::AtExitManager exit_manager;
+  // base::AtExitManager exit_manager;
 
   base::FilePath log_filename;
   PathService::Get(base::DIR_EXE, &log_filename);
