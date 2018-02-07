@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a78d2fcb_57292cb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-07T19:30:20Z",
+      "side": 1,
+      "message": "There\u0027s no mention of *why*. At least attach a Bug: ?",
+      "revId": "fee62db5948b3571cb7000039c63e9143d687cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018902d0_300cc4d5",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-07T19:30:20Z",
+      "side": 1,
+      "message": "This would be more at home in config.gni rather than rules.gni.",
+      "revId": "fee62db5948b3571cb7000039c63e9143d687cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ec21cb_fe039bf5",
+        "filename": "third_party/android_support_test_runner/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-02-07T19:30:20Z",
+      "side": 1,
+      "message": "Could these just be defined under //clank?",
+      "revId": "fee62db5948b3571cb7000039c63e9143d687cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
