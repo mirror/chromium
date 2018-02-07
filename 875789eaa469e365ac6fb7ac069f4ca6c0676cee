@@ -16,6 +16,24 @@
       "revId": "875789eaa469e365ac6fb7ac069f4ca6c0676cee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14abb032_6ae96754",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T16:54:33Z",
+      "side": 1,
+      "message": "This comment was copied verbatim from old location, but I can certainly update it. Do you want me to remove the first sentence entirely?",
+      "parentUuid": "69518e10_6f8de723",
+      "revId": "875789eaa469e365ac6fb7ac069f4ca6c0676cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
