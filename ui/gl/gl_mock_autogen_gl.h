@@ -64,6 +64,17 @@ MOCK_METHOD10(BlitFramebuffer,
                    GLint dstY1,
                    GLbitfield mask,
                    GLenum filter));
+MOCK_METHOD10(BlitFramebufferES2,
+              void(GLint srcX0,
+                   GLint srcY0,
+                   GLint srcX1,
+                   GLint srcY1,
+                   GLint dstX0,
+                   GLint dstY0,
+                   GLint dstX1,
+                   GLint dstY1,
+                   GLbitfield mask,
+                   GLenum filter));
 MOCK_METHOD4(
     BufferData,
     void(GLenum target, GLsizeiptr size, const void* data, GLenum usage));
