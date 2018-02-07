@@ -684,6 +684,24 @@
       "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef43c033_560a8d66",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T15:59:55Z",
+      "side": 1,
+      "message": "So, the existing ExtensionProtocol tests will likely need to keep using the InfoMap, but I don\u0027t think it\u0027d be that hard to adapt the test to work with either the protocols or the loader.  It will depend a bit on how much we want to inject into the loader, though.\n\nAdding the extension to the UI thread objects should be pretty easy - I don\u0027t see any reason just doing ExtensionRegistry::Get(browser_context())-\u003eAddEnabled(extension) wouldn\u0027t work, and I don\u0027t think that would impact the extension protocol version negatively.  Am I over-simplifying things?",
+      "parentUuid": "655f90b8_3888d03f",
+      "revId": "e66592b746ef45633fb01da4c7a251c8cc50a4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
