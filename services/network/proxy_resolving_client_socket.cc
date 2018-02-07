@@ -33,7 +33,6 @@ ProxyResolvingClientSocket::ProxyResolvingClientSocket(
     const GURL& url)
     : network_session_(network_session),
       ssl_config_(ssl_config),
-      proxy_resolve_request_(nullptr),
       url_(url),
       net_log_(net::NetLogWithSource::Make(network_session_->net_log(),
                                            net::NetLogSourceType::SOCKET)),
@@ -106,9 +105,7 @@ int ProxyResolvingClientSocket::Connect(
 void ProxyResolvingClientSocket::Disconnect() {
   CloseTransportSocket();
   if (proxy_resolve_request_) {
-    network_session_->proxy_resolution_service()->CancelRequest(
-        proxy_resolve_request_);
-    proxy_resolve_request_ = nullptr;
+    proxy_resolve_request_.reset();
   }
   user_connect_callback_.Reset();
 }

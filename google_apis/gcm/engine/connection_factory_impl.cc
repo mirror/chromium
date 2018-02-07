@@ -62,7 +62,6 @@ ConnectionFactoryImpl::ConnectionFactoryImpl(
       http_network_session_(http_network_session),
       net_log_(
           net::NetLogWithSource::Make(net_log, net::NetLogSourceType::SOCKET)),
-      proxy_resolve_request_(NULL),
       connecting_(false),
       waiting_for_backoff_(false),
       waiting_for_network_online_(false),
@@ -79,9 +78,7 @@ ConnectionFactoryImpl::~ConnectionFactoryImpl() {
   CloseSocket();
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
   if (proxy_resolve_request_) {
-    gcm_network_session_->proxy_resolution_service()->CancelRequest(
-        proxy_resolve_request_);
-    proxy_resolve_request_ = NULL;
+    proxy_resolve_request_.reset();
   }
 }
 
