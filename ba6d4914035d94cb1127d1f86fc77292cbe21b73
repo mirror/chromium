@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c44a7e1c_3bf77f8b",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T06:25:58Z",
+      "side": 1,
+      "message": "You won\u0027t need USING_GARBAGE_COLLECTED_MIXIN. USING_GARBAGE_COLLECTED_MIXIN is just needed because you inherit from ContextLifecycleObserver.\n\nYou can get GetExecutionContext via element-\u003eGetDocument(), right?",
+      "parentUuid": "353b0d3e_89964630",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15a0e40_7b4c4978",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 6
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I think so, so that it can be garbage collected.",
       "parentUuid": "b15a0e40_7b4c4978",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160cf46e_39b1e312",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-07T06:25:58Z",
+      "side": 1,
+      "message": "Note that GC can collect Members.\n\nclass A : GC\u003cA\u003e {\n  WeakMember\u003cB\u003e b_;\n};\n\nmakes sense if and only if A outlives B.\n\nAs far as I understand, the promise resolver won\u0027t outlive the element.",
+      "parentUuid": "a1c6b408_24207674",
       "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
