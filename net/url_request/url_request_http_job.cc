@@ -514,6 +514,7 @@ void URLRequestHttpJob::MaybeStartTransactionInternal(int result) {
 void URLRequestHttpJob::StartTransactionInternal() {
   // This should only be called while the request's status is IO_PENDING.
   DCHECK_EQ(URLRequestStatus::IO_PENDING, request_->status().status());
+  DCHECK(!override_response_headers_);
 
   // NOTE: This method assumes that request_info_ is already setup properly.
 
@@ -981,7 +982,8 @@ void URLRequestHttpJob::RestartTransactionWithAuth(
   auth_credentials_ = credentials;
 
   // These will be reset in OnStartCompleted.
-  response_info_ = NULL;
+  response_info_ = nullptr;
+  override_response_headers_ = nullptr;  // See https://crbug.com/801237.
   receive_headers_end_ = base::TimeTicks();
 
   ResetTimer();
@@ -1237,6 +1239,9 @@ void URLRequestHttpJob::CancelAuth() {
   // These will be reset in OnStartCompleted.
   response_info_ = NULL;
   receive_headers_end_ = base::TimeTicks::Now();
+  // TODO(davidben,mmenke): We should either reset override_response_headers_
+  // here or not call NotifyHeadersReceived a second time on the same response
+  // headers. See https://crbug.com/810063.
 
   ResetTimer();
 
@@ -1256,9 +1261,10 @@ void URLRequestHttpJob::CancelAuth() {
 void URLRequestHttpJob::ContinueWithCertificate(
     scoped_refptr<X509Certificate> client_cert,
     scoped_refptr<SSLPrivateKey> client_private_key) {
-  DCHECK(transaction_.get());
+  DCHECK(transaction_);
 
   DCHECK(!response_info_) << "should not have a response yet";
+  DCHECK(!override_response_headers_);
   receive_headers_end_ = base::TimeTicks();
 
   ResetTimer();
@@ -1282,6 +1288,7 @@ void URLRequestHttpJob::ContinueDespiteLastError() {
     return;
 
   DCHECK(!response_info_) << "should not have a response yet";
+  DCHECK(!override_response_headers_);
   receive_headers_end_ = base::TimeTicks();
 
   ResetTimer();
