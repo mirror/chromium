@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd60647d_72c4c0b2",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T05:16:23Z",
+      "side": 1,
+      "message": "This is concerning. I\u0027m not sure why \u0027 \u0027 is being encoded as \u0027+\u0027 instead of \u0027%20\u0027. Only x-www-form-urlencoded should encode \u0027 \u0027 as \u0027+\u0027 (and that is a historical anomaly). Everything else should encode as \u0027%20\u0027.\n\nMaybe you can add a TODO(mgiuca): Check whether this should be encoded as \u0027%20\u0027.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 66,
+        "endLine": 1014,
+        "endChar": 67
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54297f7a_c28bbe14",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
         "patchSetId": 5
@@ -43,6 +66,47 @@
         "endLine": 1032,
         "endChar": 64
       },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950a5cc6_adc34a41",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T05:16:23Z",
+      "side": 1,
+      "message": "Hmmm. I think I know what\u0027s going on here, and it\u0027s all to spec.\n\nGURL constructor (following the URL spec) encodes U+001F as \"%1F\", because U+001F is an illegal char. You could put an ASSERT_EQ to check this (on the result of GURL constructor but before calling TranslateUrl).\n\nThen the protocol handler translator encodes it again, to %251F.\n\nThis is all expected. I think that means this test isn\u0027t necessary, because you\u0027re really just testing GURL behaviour here (which is tested elsewhere). Assuming that GURL correctly escapes U+001F, the double-escaping is already covered by the above \"%20\" case. I\u0027ll leave it up to you whether you want this test, but if you keep it, I think put in a short explanation of why there\u0027s double-escaping here.",
+      "parentUuid": "4e07e3a2_475e893f",
+      "range": {
+        "startLine": 1032,
+        "startChar": 63,
+        "endLine": 1032,
+        "endChar": 64
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c153a811_a37145d9",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T05:16:23Z",
+      "side": 1,
+      "message": "This one is concerning. U+007F is not a C0 control, but it is a control character and it\u0027s supposed to be encoded in all cases. So I would expect this to double-encode just like U+001F. (It also doesn\u0027t encode in JavaScript.)\n\nThis seems like a quirk of the fact that the URL is not special (it has a custom scheme). http:// URLs encode this. I filed https://crbug.com/809852.\n\nGiven that it doesn\u0027t, though, this test is useful.",
       "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
