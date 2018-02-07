@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7513c1e7_b818b4d9",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "551f0d9a_eba0bba6",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbd94ed3_2db8cfad",
         "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T22:21:53Z",
       "side": 1,
       "message": "we should probably also consider only logging this one in a WasStartedInForegroundOptionalEventInForeground, as it\u0027s probably not useful to record time to first input if some of that time was time where page was in background and thus time where the user wasn\u0027t necessarily waiting for the page to be ready before they interact.\n\nrelated to this can be also add FG/BG breakouts for FID as part of this change? those will mostly be for diagnostic purposes to sanity check they aren;t significantly different.",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8310e76_186a5eb6",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Only logging in foreground: Done.\n\nI\u0027m planning to leave the splits for a followup, which won\u0027t need merging.\n\nThis feature is getting pretty big to merge back to M65 though, so I suppose the incremental cost isn\u0027t too high.\n\nLet me know if you think I should push that change to this patch.",
+      "parentUuid": "cbd94ed3_2db8cfad",
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f9eac470_51281ef9",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "PageLoadTimingMerger SGTM.\nDone.",
+      "parentUuid": "a54d1b66_ef265814",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f31ad7ef_234570df",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
         "patchSetId": 5
@@ -97,6 +157,24 @@
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4863e3a7_10554752",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31ad7ef_234570df",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "a217ba6c_4ba87799",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Yup, that\u0027s an improvement.\n\nIt\u0027s still a bit hairy, but I haven\u0027t been able to come up with anything nicer.",
+      "parentUuid": "5127bcfb_fdc9be3e",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9aae001_edddf123",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
         "patchSetId": 5
@@ -131,6 +227,24 @@
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6ef94b_f8b07123",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "It doesn\u0027t short circuit, but yeah, this is subtle.\n\nWe aren\u0027t depending on this any more though.",
+      "parentUuid": "e9aae001_edddf123",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +292,30 @@
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb4b1f8_99aaa6b8",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd66eb7f_95344644",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 78
+      },
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +369,24 @@
       "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d34b3a7_40ca66f7",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-02-07T19:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3a6d2c_5b4c00fe",
+      "revId": "20c8c6bca2b721c45a5ae9d6aa7cb7ca9c7b1269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
