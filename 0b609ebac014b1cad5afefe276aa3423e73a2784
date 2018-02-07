@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d3c78a6_0807ee84",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 0,
+      "message": "This comment was added with expectation that the line below would need to be changed. But now that the patch is ready it turns out this line does not need to be updated to pass the test.",
+      "parentUuid": "5b4da4f7_cc9e8653",
+      "revId": "0b609ebac014b1cad5afefe276aa3423e73a2784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "317b37eb_7ac34979",
         "filename": "ui/base/material_design/material_design_controller.cc",
         "patchSetId": 7

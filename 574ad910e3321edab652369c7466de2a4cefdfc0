@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca71d511_d6f00e53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7e9f35_e5a3599b",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78c7483_fa77ed82",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "156e656d_a2e991a6",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "These are not Touch UI specific.",
+      "parentUuid": "a78c7483_fa77ed82",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 36
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7fa6af_e2370e58",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "43d31629_2508f970",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Yes. That looks like the perfect place.",
+      "parentUuid": "4e7fa6af_e2370e58",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "836ebe65_1fe50706",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -79,6 +145,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac3ba5c_ed2594e4",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "836ebe65_1fe50706",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "e555f511_60933b2e",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "The UI spec given right now is only for the touch optimized UI, so I am not sure if this scheme will work for other UI modes.\n\nShould we add another switch/feature that enables only the colors but not the layout scheme?",
+      "parentUuid": "71a82a4c_2784642e",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0d53c6_3e8807ad",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -127,6 +229,30 @@
       "writtenOn": "2018-02-06T03:41:51Z",
       "side": 1,
       "message": "Nit: This comment is not clear in this context, since we are returning the colors immediately without accessing the theme pack. So either remove the comment, or further improve it to explain what you actually mean.",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 39
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb67a216_1eb94a47",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "This is following the comment scheme from the file. See line #357 and #329",
+      "parentUuid": "ca0d53c6_3e8807ad",
       "range": {
         "startLine": 191,
         "startChar": 7,
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "7b0cdebb_869a711b",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "ed9cbacb_e717e195",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 48
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fca8881_ad3ebe78",
         "filename": "chrome/browser/themes/theme_properties.h",
         "patchSetId": 12
@@ -176,6 +326,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5559e59f_014f9e12",
+        "filename": "chrome/browser/themes/theme_properties.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fca8881_ad3ebe78",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -199,6 +367,30 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4752a827_c264ad9e",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db4d2531_8a1add5f",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +434,48 @@
     },
     {
       "key": {
+        "uuid": "1e5c542d_fa1fa3eb",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e407383_dba6f0fd",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1945442b_bc5af01b",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Moved to the switch case.\n\nI will leave the second request upto the owner. From my offline discussion with Peter, I understand that it is difficult to infer when a hybrid/normal constant is overridden for touch optimized and when it is not if we use an array. Its preferred to use array when the values for all 3 modes are different. However in this situation that is not the case. A lot of constants being used for touch optimized UI come from the hybrid values.",
+      "parentUuid": "cba63d02_616aec44",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15ff1ac4_86f255c5",
         "filename": "chrome/browser/ui/layout_constants.cc",
         "patchSetId": 12
@@ -256,6 +490,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40dc1626_8b4faee6",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ff1ac4_86f255c5",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +534,30 @@
     },
     {
       "key": {
+        "uuid": "d9fbe110_51826914",
+        "filename": "chrome/browser/ui/layout_constants.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996527a8_1ac4d599",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "126ac748_99157c7d",
         "filename": "chrome/browser/ui/layout_constants.h",
         "patchSetId": 12
@@ -296,6 +572,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af14063d_05387613",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "126ac748_99157c7d",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -322,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "6266d699_b78593b9",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371e0669_35dc4340",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba0b891_60b30b55",
         "filename": "chrome/browser/ui/layout_constants.h",
         "patchSetId": 12
@@ -336,6 +654,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7817b267_0e8278fa",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba0b891_60b30b55",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +692,24 @@
     },
     {
       "key": {
+        "uuid": "6a7db1aa_a0959f2b",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2edd8255_9050851b",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d508804_c438d4f1",
         "filename": "chrome/browser/ui/layout_constants.h",
         "patchSetId": 12
@@ -370,6 +724,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e887fa_5e1683f0",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d508804_c438d4f1",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -390,6 +762,24 @@
     },
     {
       "key": {
+        "uuid": "fcf03693_b38cf473",
+        "filename": "chrome/browser/ui/layout_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b9a6456_aa388669",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57bdbf5e_6fb0258e",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 12
@@ -404,6 +794,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e14fc62_868602eb",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57bdbf5e_6fb0258e",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +832,24 @@
     },
     {
       "key": {
+        "uuid": "b073e74a_8dcfa91b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ec3447_d95c6e43",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5d59e7a_e1be6cf1",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 12
@@ -435,6 +861,24 @@
       "writtenOn": "2018-02-06T03:33:11Z",
       "side": 1,
       "message": "Seems like maybe we should be ensuring the close button has no left inset, instead of doing this.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9338d1_99e7632b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Its actually the padding that needs to be added in the touch optimized mode. Updating this for the same.",
+      "parentUuid": "f5d59e7a_e1be6cf1",
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -458,6 +902,24 @@
     },
     {
       "key": {
+        "uuid": "5d260d8e_ea87b3d5",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25ade8c9_7fbb0120",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87b9163a_bc212092",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 12
@@ -469,6 +931,24 @@
       "writtenOn": "2018-02-06T03:33:11Z",
       "side": 1,
       "message": "This whole piece of functionality needs to be redesigned.\n\nIconCapacity() was designed to be a fairly easy way to compute how many identically-sized icons could fit, so the functions which determined which icons to show (ShouldShowTabXXX()) could easily decide what to do.  If the icons are not going to be identically-sized, the concept of \"icon capacity\" doesn\u0027t really make sense; we basically just need to compute icon visibility directly, likely in Layout().  Otherwise, you basically have to compute whether each individual icon should be visible, just so other functions can compute whether each individual icon can be visible; this is not only redundant but very error-prone.",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2017c0a8_3cf00111",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Since each icon has its own priority based on the active/inactive status of the tab, this function can still be used I believe.\n\nFor active tab, the priority is - Close Button \u003e alert indicator \u003e Favicon\nFor inactive tab, the priority is - Favicon \u003e Alert Indicator \u003e Close button\n\nGiven the icon capacity and the status of tab, the decision on whether to display an icon or not can still be made. \nThis function so far is working as expected when testing.",
+      "parentUuid": "87b9163a_bc212092",
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -492,6 +972,24 @@
     },
     {
       "key": {
+        "uuid": "076f3023_8392567b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e228886_28400bff",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eac73437_931f330c",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 12
@@ -506,6 +1004,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eb1751_3616e07b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac73437_931f330c",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -532,6 +1048,30 @@
     },
     {
       "key": {
+        "uuid": "8493e5d6_5c9c1def",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854409e0_8711a615",
+      "range": {
+        "startLine": 1158,
+        "startChar": 56,
+        "endLine": 1158,
+        "endChar": 75
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a1db08c_f453e376",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 12
@@ -546,6 +1086,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ad720d_1e608ede",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Spoke with Evan(@estade) and came up with a simpler approach.",
+      "parentUuid": "9a1db08c_f453e376",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -572,6 +1130,30 @@
     },
     {
       "key": {
+        "uuid": "2a3d17e2_6fa09d13",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "No longer required.",
+      "parentUuid": "56fbf6ee_8afc8fa7",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a12d80_5fa42ee5",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 12
@@ -595,6 +1177,30 @@
     },
     {
       "key": {
+        "uuid": "0c4fad1e_e875b01f",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "No longer required.",
+      "parentUuid": "24a12d80_5fa42ee5",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7711fe57_f1009aa1",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 12
@@ -609,6 +1215,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2ac0d5_b21bf4e8",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7711fe57_f1009aa1",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -635,6 +1259,30 @@
     },
     {
       "key": {
+        "uuid": "24b22a54_3827c0a2",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6ad60f8_b21f9543",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f291a0_dbb38883",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 12
@@ -649,6 +1297,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd6a9a4_407ebbab",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f291a0_dbb38883",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

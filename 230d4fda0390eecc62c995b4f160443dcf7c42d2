@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3c0cd03_93c3c9e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5973f652_eeeb9639",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22e4b79f_ae9b6f41",
         "filename": "/COMMIT_MSG",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d521f52_a798bf0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e4b79f_ae9b6f41",
+      "range": {
+        "startLine": 18,
+        "startChar": 54,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2f02c2c_3dba8154",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "They are not touch specific. The same colors are used in non touch mode.\nMaybe I should remove the term \u0027TouchUi\u0027",
+      "parentUuid": "5b25bd01_7b1e8e96",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f05eb890_65d91fa8",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c633ad_f878e33b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-07T20:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f05eb890_65d91fa8",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 80
+      },
+      "revId": "230d4fda0390eecc62c995b4f160443dcf7c42d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
