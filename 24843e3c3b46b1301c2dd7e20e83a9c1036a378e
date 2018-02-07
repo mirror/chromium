@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63f0a3c2_80d1c7ce",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-02-07T16:59:45Z",
+      "side": 1,
+      "message": "i like this structure better.",
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
