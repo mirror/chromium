@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a77c3905_d6ca6637",
+        "filename": "ash/system/flag_warning/flag_warning_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 1,
+      "message": "Yes, for CONTEXT_LAUNCHER_BUTTON. I wish that file was in a utility namespace, but it isn\u0027t.",
+      "parentUuid": "bfd041be_e0266462",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "818565ac_42dfac95",
         "filename": "ash/system/flag_warning/flag_warning_tray.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T00:25:23Z",
       "side": 1,
       "message": "Should this class be a TrayBackgroundView subclass?",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47f1760_2b551c7f",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 1,
+      "message": "I did that initially but it didn\u0027t feel right. TrayBackgroundView strongly assumes it is going to open a bubble when clicked. It has mandatory pure-virtual methods like ClickedOutsideBubble() that don\u0027t really make sense for a tray view that can\u0027t open a bubble.",
+      "parentUuid": "818565ac_42dfac95",
       "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8463209a_933f5d65",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5ab9881_b049736d",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dd1eb7d_08bde8b9",
         "filename": "ash/system/flag_warning/flag_warning_tray.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "08b555ae_8347f1e2",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd1eb7d_08bde8b9",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dbfae90_64585870",
         "filename": "ash/system/status_area_widget.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2e38d5_89d51732",
+        "filename": "ash/system/status_area_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dbfae90_64585870",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

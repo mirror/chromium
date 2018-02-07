@@ -16,6 +16,24 @@
       "revId": "cd4fe6dc3d9e7acf68fc6f14e2b9d76b8fbfc93f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b60a924_ca68c14e",
+        "filename": "ash/system/status_area_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-02-07T00:38:32Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "80dd2784_eaf81303",
+      "revId": "cd4fe6dc3d9e7acf68fc6f14e2b9d76b8fbfc93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
