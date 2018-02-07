@@ -92,6 +92,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0db4da3_c1657ba1",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T18:35:31Z",
+      "side": 1,
+      "message": "Your device wants tablet-like absolute input behavior. What would go wrong if HasTablet() returned true for your device?",
+      "parentUuid": "96d7e52a_af32b6f4",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
