@@ -34,6 +34,24 @@
       "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25daa74_af8681fc",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-02-07T16:05:45Z",
+      "side": 1,
+      "message": "I changed it to update cursor visibility before dispatch all events. That should make more sense now.",
+      "parentUuid": "0a6ed796_9c826c8a",
+      "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
