@@ -689,6 +689,9 @@ void GaiaScreenHandler::HandleCompleteAuthentication(
     const std::string& auth_code,
     bool using_saml,
     const std::string& gaps_cookie) {
+  if (!LoginDisplayHost::default_host())
+    return;
+
   DCHECK(!email.empty());
   DCHECK(!gaia_id.empty());
   const std::string sanitized_email = gaia::SanitizeEmail(email);
@@ -762,6 +765,9 @@ void GaiaScreenHandler::DoCompleteLogin(const std::string& gaia_id,
                                         const std::string& typed_email,
                                         const std::string& password,
                                         bool using_saml) {
+  if (!LoginDisplayHost::default_host())
+    return;
+
   if (using_saml && !using_saml_api_)
     RecordSAMLScrapingVerificationResultInHistogram(true);
 
@@ -890,7 +896,8 @@ void GaiaScreenHandler::CancelShowGaiaAsync() {
 
 void GaiaScreenHandler::ShowGaiaScreenIfReady() {
   if (!dns_cleared_ || !cookies_cleared_ ||
-      !show_when_dns_and_cookies_cleared_) {
+      !show_when_dns_and_cookies_cleared_ ||
+      !LoginDisplayHost::default_host()) {
     return;
   }
 
