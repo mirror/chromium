@@ -34,6 +34,24 @@
       "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed48cba_892795db",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T01:26:50Z",
+      "side": 1,
+      "message": "Sorry. ProfileHelper::Get()-\u003eIsPrimaryProfile(profile)",
+      "parentUuid": "f82b6ffa_a5aa9e8c",
+      "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
