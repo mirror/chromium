@@ -120,6 +120,24 @@
       "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5c8c6f_9ec4f049",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T23:17:53Z",
+      "side": 1,
+      "message": "I agree with your desire for a fast implementation. But, correct me if I\u0027m wrong, the *only* time that you aren\u0027t using a file cache is when the LevelDBFileHandleEviction is disabled. No tests set this flag, so this means that ChromiumRandomAccessFile ships untested. Given that all operations on the MRUCache are O(1) this seems like added risk and complexity to improve the performance for what I will be a test-only case (possibly a finch trial?). I hope I\u0027m not being stubborn, but it doesn\u0027t seem like a worthwhile trade-off to me.\n\nP.S. I believe Windows has an unlimited number of file descriptors, so I\u0027m not correct that ChromiumRandomAccessFile will be untested, but still it\u0027s inconsistent and I\u0027m still in favor of simpler.",
+      "parentUuid": "af0edd33_ddce7ec0",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

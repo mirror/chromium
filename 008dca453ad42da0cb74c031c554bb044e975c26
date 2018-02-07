@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4f1ff2_b0325a80",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T23:17:53Z",
+      "side": 1,
+      "message": "If you save the position, as in patch set #1, then no need for the Get().",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca98025_1170703f",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T23:17:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t access to the FileCache needs to be synchronized to prevent a (albeit unlikely) race condition?",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a070ee_991c9b24",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2018-02-07T23:17:53Z",
+      "side": 1,
+      "message": "base::GetMaxFds() returns a maximum of INT_MAX(2147483647), but std::numeric_limits\u003csize_t\u003e::max() \u003d\u003e 18446744073709551615",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
