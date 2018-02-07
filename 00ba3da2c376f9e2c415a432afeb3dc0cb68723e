@@ -34,6 +34,24 @@
       "revId": "00ba3da2c376f9e2c415a432afeb3dc0cb68723e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9ceab7_014b4c07",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-02-07T04:15:12Z",
+      "side": 1,
+      "message": "Excellent. lgtm.",
+      "parentUuid": "ece2405e_29652a33",
+      "revId": "00ba3da2c376f9e2c415a432afeb3dc0cb68723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
