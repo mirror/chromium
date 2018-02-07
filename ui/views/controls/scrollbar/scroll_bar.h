@@ -43,6 +43,10 @@ class VIEWS_EXPORT ScrollBarController {
   virtual int GetScrollIncrement(ScrollBar* source,
                                  bool is_page,
                                  bool is_positive) = 0;
+
+  // Invoked by the scroll bar when it receives a ui::ScrollEvent. Typically
+  // these should be treated the same as events received over the viewport.
+  virtual void OnScrollEventFromScrollBar(ui::ScrollEvent* event) = 0;
 };
 
 /////////////////////////////////////////////////////////////////////////////
