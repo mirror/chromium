@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3abe311_de222721",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-02-07T20:01:29Z",
+      "side": 1,
+      "message": "It\u0027s a double now. The js side still works fine, the code did not assume it received an int before and the new fractional value gets piped to the viewport position.",
+      "parentUuid": "ec90a751_a318cd4e",
+      "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "869f66b8_5e8eb4e8",
         "filename": "pdf/pdfium/DEPS",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a02ff0_90780549",
+        "filename": "pdf/pdfium/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-02-07T20:01:29Z",
+      "side": 1,
+      "message": "It does work without this. So the parent dir\u0027s deps are inherited?",
+      "parentUuid": "869f66b8_5e8eb4e8",
+      "revId": "789a89b9ebd9758f1fdf4e3d11ce66612d19976b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
