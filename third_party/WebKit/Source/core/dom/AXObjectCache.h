@@ -39,12 +39,14 @@ namespace blink {
 
 class AbstractInlineTextBox;
 class AccessibleNode;
+class ComputedAccessibleNode;
 class HTMLCanvasElement;
 class HTMLOptionElement;
 class HTMLSelectElement;
 class LayoutMenuList;
 class LineLayoutItem;
 class LocalFrameView;
+class WebComputedAXTree;
 
 class CORE_EXPORT AXObjectCache
     : public GarbageCollectedFinalized<AXObjectCache>,
@@ -121,6 +123,9 @@ class CORE_EXPORT AXObjectCache
 
   virtual AXID GetAXID(Node*) = 0;
   virtual Element* GetElementFromAXID(AXID) = 0;
+  virtual ComputedAccessibleNode* GetOrCreateComputedAccessibleNode(
+      AXID,
+      WebComputedAXTree*) = 0;
 
   typedef AXObjectCache* (*AXObjectCacheCreateFunction)(Document&);
   static void Init(AXObjectCacheCreateFunction);

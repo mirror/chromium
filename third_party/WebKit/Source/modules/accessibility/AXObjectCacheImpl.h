@@ -175,6 +175,9 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   AXID GetAXID(Node*) override;
   Element* GetElementFromAXID(AXID) override;
+  ComputedAccessibleNode* GetOrCreateComputedAccessibleNode(
+      AXID,
+      WebComputedAXTree*) override;
 
   // will only return the AXObject if it already exists
   AXObject* Get(AccessibleNode*);
@@ -256,6 +259,8 @@ class MODULES_EXPORT AXObjectCacheImpl
   // LayoutObject and AbstractInlineTextBox are not on the Oilpan heap so we
   // do not use HeapHashMap for those mappings.
   HeapHashMap<Member<AccessibleNode>, AXID> accessible_node_mapping_;
+  HeapHashMap<AXID, Member<ComputedAccessibleNode>>
+      computed_accessible_id_mapping_;
   HashMap<LayoutObject*, AXID> layout_object_mapping_;
   HeapHashMap<Member<const Node>, AXID> node_object_mapping_;
   HashMap<AbstractInlineTextBox*, AXID> inline_text_box_object_mapping_;

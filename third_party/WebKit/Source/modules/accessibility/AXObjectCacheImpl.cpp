@@ -30,6 +30,7 @@
 
 #include "base/memory/scoped_refptr.h"
 #include "core/dom/AccessibleNode.h"
+#include "core/dom/ComputedAccessibleNode.h"
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/frame/LocalFrame.h"
@@ -282,6 +283,17 @@ Element* AXObjectCacheImpl::GetElementFromAXID(AXID axid) {
   if (!ax_object || !ax_object->GetElement())
     return nullptr;
   return ax_object->GetElement();
+}
+
+ComputedAccessibleNode* AXObjectCacheImpl::GetOrCreateComputedAccessibleNode(
+    AXID ax_id,
+    WebComputedAXTree* tree) {
+  if (computed_accessible_id_mapping_.find(ax_id) ==
+      computed_accessible_id_mapping_.end()) {
+    ComputedAccessibleNode* node = ComputedAccessibleNode::Create(ax_id, tree);
+    computed_accessible_id_mapping_.insert(ax_id, node);
+  }
+  return computed_accessible_id_mapping_.at(ax_id);
 }
 
 AXObject* AXObjectCacheImpl::Get(AccessibleNode* accessible_node) {
@@ -1295,6 +1307,7 @@ void AXObjectCacheImpl::ContextDestroyed(ExecutionContext*) {
 void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_);
   visitor->Trace(accessible_node_mapping_);
+  visitor->Trace(computed_accessible_id_mapping_);
   visitor->Trace(node_object_mapping_);
 
   visitor->Trace(objects_);
