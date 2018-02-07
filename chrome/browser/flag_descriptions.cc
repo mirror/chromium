@@ -321,6 +321,12 @@ const char kEnableAutofillUseNewSettingsNameInDropdownDescription[] =
     "If enabled, shows a new Autofill settings string in the Autofill "
     "dropdown.";
 
+const char kEnableAutofillNativeViewsName[] =
+    "Display Autofill Dropdown Using Views";
+const char kEnableAutofillNativeViewsDescription[] =
+    "If enabled, the Autofill Dropdown will be built natively using Views, "
+    "rather than painted directly to a canvas.";
+
 const char kEnableBreakingNewsPushName[] = "Breaking News Push";
 const char kEnableBreakingNewsPushDescription[] =
     "Listen for breaking news content suggestions (e.g. for New Tab Page) "

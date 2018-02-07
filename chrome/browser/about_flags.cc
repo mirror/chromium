@@ -2974,6 +2974,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(
          autofill::features::kAutofillUseNewSettingsNameInDropdown)},
 
+#if !defined(OS_ANDROID)
+    {"enable-autofill-native-views",
+     flag_descriptions::kEnableAutofillNativeViewsName,
+     flag_descriptions::kEnableAutofillNativeViewsDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(autofill::kAutofillExpandedPopupViews)},
+#endif  // !defined(OS_ANDROID)
+
 #if defined(OS_WIN)
     {"windows10-custom-titlebar",
      flag_descriptions::kWindows10CustomTitlebarName,
@@ -3425,8 +3432,7 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableManualFallbacksFillingName,
      flag_descriptions::kEnableManualFallbacksFillingDescription,
      kOsDesktop | kOsAndroid,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kManualFallbacksFilling)},
+     FEATURE_VALUE_TYPE(password_manager::features::kManualFallbacksFilling)},
 
 #if !defined(OS_ANDROID)
     {"voice-search-on-local-ntp", flag_descriptions::kVoiceSearchOnLocalNtpName,
