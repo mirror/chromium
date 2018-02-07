@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b0995f9_bbc32b48",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-07T20:08:15Z",
+      "side": 1,
+      "message": "This is the only place where setupSelect is called.\nI don\u0027t think this supports UI language switching when new policy is pushed to the device.\n\nOn the other hand, I see many other places in this code that do not support language switching. So probably we need a different Cl to check and fix that.",
+      "revId": "783f0f4569889575e11f42a54329d37909036d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47ecd6b_2d574d13",
         "filename": "chrome/browser/ui/webui/chromeos/login/enrollment_screen_handler.cc",
         "patchSetId": 7
