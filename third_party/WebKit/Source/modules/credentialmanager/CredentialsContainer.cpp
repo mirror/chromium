@@ -32,6 +32,7 @@
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
 #include "modules/credentialmanager/PublicKeyCredentialRequestOptions.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
@@ -398,9 +399,11 @@ ScriptPromise CredentialsContainer::get(
           CredentialManagerProxy::From(script_state)->Authenticator();
       authenticator->GetAssertion(
           std::move(mojo_options),
-          WTF::Bind(
-              &OnGetAssertionComplete,
-              WTF::Passed(std::make_unique<ScopedPromiseResolver>(resolver))));
+          WrapCallbackWithDefaultInvokeIfNotRun(
+              WTF::Bind(&OnGetAssertionComplete,
+                        WTF::Passed(
+                            std::make_unique<ScopedPromiseResolver>(resolver))),
+              webauth::mojom::AuthenticatorStatus::UNKNOWN_ERROR, nullptr));
     } else {
       resolver->Reject(DOMException::Create(
           kNotSupportedError,
@@ -531,9 +534,11 @@ ScriptPromise CredentialsContainer::create(
           CredentialManagerProxy::From(script_state)->Authenticator();
       authenticator->MakeCredential(
           std::move(mojo_options),
-          WTF::Bind(
-              &OnMakePublicKeyCredentialComplete,
-              WTF::Passed(std::make_unique<ScopedPromiseResolver>(resolver))));
+          WrapCallbackWithDefaultInvokeIfNotRun(
+              WTF::Bind(&OnMakePublicKeyCredentialComplete,
+                        WTF::Passed(
+                            std::make_unique<ScopedPromiseResolver>(resolver))),
+              webauth::mojom::AuthenticatorStatus::UNKNOWN_ERROR, nullptr));
     } else {
       resolver->Reject(DOMException::Create(
           kNotSupportedError,
