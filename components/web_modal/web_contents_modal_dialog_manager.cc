@@ -150,14 +150,14 @@ void WebContentsModalDialogManager::DidGetIgnoredUIEvent() {
   }
 }
 
-void WebContentsModalDialogManager::WasShown() {
-  if (!child_dialogs_.empty())
-    child_dialogs_.front().manager->Show();
-}
-
-void WebContentsModalDialogManager::WasHidden() {
-  if (!child_dialogs_.empty())
-    child_dialogs_.front().manager->Hide();
+void WebContentsModalDialogManager::OnVisibilityChanged(
+    content::Visibility visibility) {
+  if (!child_dialogs_.empty()) {
+    if (visibility == content::Visibility::HIDDEN)
+      child_dialogs_.front().manager->Hide();
+    else
+      child_dialogs_.front().manager->Show();
+  }
 }
 
 void WebContentsModalDialogManager::WebContentsDestroyed() {
