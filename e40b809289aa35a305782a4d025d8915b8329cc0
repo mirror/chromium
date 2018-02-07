@@ -34,6 +34,24 @@
       "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e946b6be_9f0212dc",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T05:18:23Z",
+      "side": 1,
+      "message": "No, on Android the implementation is completely different. This entire document doesn\u0027t apply (since there are no extensions or apps on Android). The PWAs are implemented as server-generated APKs in that case.\n\nSo I think Ben\u0027s wording is good.",
+      "parentUuid": "836050a9_def96463",
+      "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
