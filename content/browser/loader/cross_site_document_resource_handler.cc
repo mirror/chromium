@@ -75,7 +75,8 @@ void CrossSiteDocumentResourceHandler::LogBlockedResponseOnUIThread(
     bool needed_sniffing,
     CrossSiteDocumentMimeType canonical_mime_type,
     ResourceType resource_type,
-    int http_response_code) {
+    int http_response_code,
+    int64_t content_length) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   WebContents* web_contents = web_contents_getter.Run();
@@ -86,8 +87,9 @@ void CrossSiteDocumentResourceHandler::LogBlockedResponseOnUIThread(
   ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
   recorder->UpdateSourceURL(source_id, web_contents->GetLastCommittedURL());
   ukm::builders::SiteIsolation_XSD_Browser_Blocked(source_id)
-      .SetContentResourceType(resource_type)
       .SetCanonicalMimeType(canonical_mime_type)
+      .SetContentLengthWasZero(content_length == 0)
+      .SetContentResourceType(resource_type)
       .SetHttpResponseCode(http_response_code)
       .SetNeededSniffing(needed_sniffing)
       .Record(recorder);
@@ -99,7 +101,8 @@ void CrossSiteDocumentResourceHandler::LogBlockedResponse(
     bool needed_sniffing,
     bool found_parser_breaker,
     CrossSiteDocumentMimeType canonical_mime_type,
-    int http_response_code) {
+    int http_response_code,
+    int64_t content_length) {
   LogCrossSiteDocumentAction(
       needed_sniffing
           ? CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing
@@ -154,7 +157,7 @@ void CrossSiteDocumentResourceHandler::LogBlockedResponse(
           &CrossSiteDocumentResourceHandler::LogBlockedResponseOnUIThread,
           base::Passed(resource_request_info->GetWebContentsGetterForRequest()),
           needed_sniffing, canonical_mime_type, resource_type,
-          http_response_code));
+          http_response_code, content_length));
 }
 
 // ResourceController that runs a closure on Resume(), and forwards failures
@@ -228,9 +231,11 @@ CrossSiteDocumentResourceHandler::~CrossSiteDocumentResourceHandler() {}
 void CrossSiteDocumentResourceHandler::OnResponseStarted(
     network::ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
+  content_length_ = response->head.content_length;
   has_response_started_ = true;
   http_response_code_ =
       response->head.headers ? response->head.headers->response_code() : 0;
+
   LogCrossSiteDocumentAction(
       CrossSiteDocumentResourceHandler::Action::kResponseStarted);
 
@@ -419,7 +424,7 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
 
       LogBlockedResponse(GetRequestInfo(), needs_sniffing_,
                          found_parser_breaker, canonical_mime_type_,
-                         http_response_code_);
+                         http_response_code_, content_length_);
     } else {
       // Choose not block this response. Pass the contents of |local_buffer_|
       // onto the next handler. Note that the size of the two buffers is the

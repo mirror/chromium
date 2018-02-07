@@ -2035,6 +2035,13 @@ be describing additional metrics about the same event.
       blockable document flavours: html, xml, json, plain.
     </summary>
   </metric>
+  <metric name="ContentLengthWasZero">
+    <summary>
+      Whether the HTTP response headers included Content-Length and it was set
+      to zero. This is a way to identify responses where blocking is a no-op wrt
+      the response body (although blocking can still affect headers).
+    </summary>
+  </metric>
   <metric name="ContentResourceType">
     <summary>
       content::ResourceType of the blocked resource (e.g. image / script / xhr /
