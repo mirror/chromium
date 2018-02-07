@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "68c52561_eb603afb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 39
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T06:18:52Z",
+      "side": 1,
+      "message": "Hmm, I think this is still burying the lead. A CL that makes behavioural changes should announce those at the top, rather than describing a bunch of internal refactoring and \"also\" changes behaviour.",
+      "parentUuid": "3b6214e7_8e13b8d1",
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91076fb1_d1f58a3f",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 39
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "I initially had this because macOS uses Meta instead of Ctrl. Changed it to blink::WebInputEvent::Modifiers and special cased kControlKey on macOS.",
       "parentUuid": "b97ddad1_cc4c6b78",
+      "range": {
+        "startLine": 189,
+        "startChar": 46,
+        "endLine": 189,
+        "endChar": 54
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de85edf0_06e81a29",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T06:18:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42b2c6d8_66b9103d",
       "range": {
         "startLine": 189,
         "startChar": 46,

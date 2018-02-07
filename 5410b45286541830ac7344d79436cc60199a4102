@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f72295a_8f885eac",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-07T06:18:52Z",
+      "side": 1,
+      "message": "Instead of rewriting Control as Meta (which seems a bit... deceptive and a source of confusion/bugs), can you just make sure this is always Meta on Mac to begin with?\n\nIt looks like there are no callers to this function that actually supply a modifier, other than the test. Is that right? If so, is there a future use of modifiers? Then you could just put the #if defined(OS_MACOSX) into the test and pass ControlKey or MetaKey as appropriate.",
+      "revId": "5410b45286541830ac7344d79436cc60199a4102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
