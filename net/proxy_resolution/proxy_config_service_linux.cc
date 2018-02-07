@@ -302,8 +302,26 @@ class SettingGetterImplGSettings
     return task_runner_;
   }
 
-  ProxyConfigSource GetConfigSource() override {
-    return PROXY_CONFIG_SOURCE_GSETTINGS;
+  NetworkTrafficAnnotationTag GetTrafficAnnotation() override {
+    return DefineNetworkTrafficAnnotation("proxy_config_service_linux", R"(
+        semantics {
+          sender: "Linux Proxy Config Service"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: YES/NO
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   }
 
   bool GetString(StringSetting key, std::string* result) override {
@@ -635,8 +653,26 @@ class SettingGetterImplKDE : public ProxyConfigServiceLinux::SettingGetter {
     return file_task_runner_;
   }
 
-  ProxyConfigSource GetConfigSource() override {
-    return PROXY_CONFIG_SOURCE_KDE;
+  NetworkTrafficAnnotationTag GetTrafficAnnotation() override {
+    return DefineNetworkTrafficAnnotation("proxy_config_service_kde", R"(
+        semantics {
+          sender: "KDE Proxy Config Service"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: YES/NO
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   }
 
   bool GetString(StringSetting key, std::string* result) override {
@@ -1218,9 +1254,10 @@ void ProxyConfigServiceLinux::Delegate::SetUpAndFetchInitialConfig(
   if (setting_getter_ && setting_getter_->Init(glib_task_runner) &&
       GetConfigFromSettings(&cached_config_)) {
     cached_config_.set_id(1);  // Mark it as valid.
-    cached_config_.set_source(setting_getter_->GetConfigSource());
+    cached_config_.set_traffic_annotation(MutableNetworkTrafficAnnotationTag(
+        setting_getter_->GetTrafficAnnotation()));
     VLOG(1) << "Obtained proxy settings from "
-            << ProxyConfigSourceToString(cached_config_.source());
+            << cached_config_.traffic_annotation().unique_id_hash_code;
 
     // If gsettings proxy mode is "none", meaning direct, then we take
     // that to be a valid config and will not check environment
@@ -1261,7 +1298,28 @@ void ProxyConfigServiceLinux::Delegate::SetUpAndFetchInitialConfig(
     // Consulting environment variables doesn't need to be done from the
     // default glib main loop, but it's a tiny enough amount of work.
     if (GetConfigFromEnv(&cached_config_)) {
-      cached_config_.set_source(PROXY_CONFIG_SOURCE_ENV);
+      NetworkTrafficAnnotationTag traffic_annotation =
+          net::DefineNetworkTrafficAnnotation("proxy_config_service_env", R"(
+            semantics {
+              sender: "Environment Variables Proxy Config Service"
+              description: "..."
+              trigger: "..."
+              data: "..."
+              destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+            }
+            policy {
+              cookies_allowed: YES/NO
+              cookies_store: "..."
+              setting: "..."
+              chrome_policy {
+                [POLICY_NAME] {
+                  [POLICY_NAME]: ... //(value to disable it)
+                }
+              }
+              policy_exception_justification: "..."
+            })");
+      cached_config_.set_traffic_annotation(
+          MutableNetworkTrafficAnnotationTag(traffic_annotation));
       cached_config_.set_id(1);  // Mark it as valid.
       VLOG(1) << "Obtained proxy settings from environment variables";
     }
@@ -1299,7 +1357,6 @@ ProxyConfigService::ConfigAvailability
     *config = cached_config_;
   } else {
     *config = ProxyConfig::CreateDirect();
-    config->set_source(PROXY_CONFIG_SOURCE_SYSTEM_FAILED);
   }
 
   // We return CONFIG_VALID to indicate that *config was filled in. It is always

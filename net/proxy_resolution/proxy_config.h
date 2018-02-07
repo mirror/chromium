@@ -10,8 +10,8 @@
 #include "net/base/net_export.h"
 #include "net/base/proxy_server.h"
 #include "net/proxy_resolution/proxy_bypass_rules.h"
-#include "net/proxy_resolution/proxy_config_source.h"
 #include "net/proxy_resolution/proxy_list.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -212,19 +212,18 @@ class NET_EXPORT ProxyConfig {
     return auto_detect_;
   }
 
-  void set_source(ProxyConfigSource source) {
-    source_ = source;
+  void set_traffic_annotation(
+      const MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+    traffic_annotation_ = traffic_annotation;
   }
 
-  ProxyConfigSource source() const {
-    return source_;
+  MutableNetworkTrafficAnnotationTag traffic_annotation() const {
+    return traffic_annotation_;
   }
 
   // Helpers to construct some common proxy configurations.
 
-  static ProxyConfig CreateDirect() {
-    return ProxyConfig();
-  }
+  static ProxyConfig CreateDirect();
 
   static ProxyConfig CreateAutoDetect() {
     ProxyConfig config;
@@ -232,11 +231,15 @@ class NET_EXPORT ProxyConfig {
     return config;
   }
 
-  static ProxyConfig CreateFromCustomPacURL(const GURL& pac_url) {
+  static ProxyConfig CreateFromCustomPacURL(
+      const GURL& pac_url,
+      const NetworkTrafficAnnotationTag& traffic_annotation) {
     ProxyConfig config;
     config.set_pac_url(pac_url);
     // By default fall back to direct connection in case PAC script fails.
     config.set_pac_mandatory(false);
+    config.traffic_annotation_ =
+        MutableNetworkTrafficAnnotationTag(traffic_annotation);
     return config;
   }
 
@@ -254,8 +257,8 @@ class NET_EXPORT ProxyConfig {
   // Manual proxy settings.
   ProxyRules proxy_rules_;
 
-  // Source of proxy settings.
-  ProxyConfigSource source_;
+  // Traffic annotation proxy settings.
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   ID id_;
 };

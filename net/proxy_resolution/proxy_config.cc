@@ -10,12 +10,35 @@
 #include "base/logging.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "net/proxy_resolution/proxy_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
 namespace {
+
+constexpr NetworkTrafficAnnotationTag kDirectProxyConfigTrafficAnnotation =
+    DefineNetworkTrafficAnnotation("proxy_config_service_direct", R"(
+    semantics {
+      sender: "Direct Proxy Config Service"
+      description: "..."
+      trigger: "..."
+      data: "..."
+      destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+    }
+    policy {
+      cookies_allowed: YES/NO
+      cookies_store: "..."
+      setting: "..."
+      chrome_policy {
+        [POLICY_NAME] {
+          [POLICY_NAME]: ... //(value to disable it)
+        }
+      }
+      policy_exception_justification: "..."
+    })");
 
 // If |proxies| is non-empty, sets it in |dict| under the key |name|.
 void AddProxyListToValue(const char* name,
@@ -191,9 +214,7 @@ const ProxyList* ProxyConfig::ProxyRules::GetProxyListForWebSocketScheme()
 }
 
 ProxyConfig::ProxyConfig()
-    : auto_detect_(false), pac_mandatory_(false),
-      source_(PROXY_CONFIG_SOURCE_UNKNOWN), id_(kInvalidConfigID)  {
-}
+    : auto_detect_(false), pac_mandatory_(false), id_(kInvalidConfigID) {}
 
 ProxyConfig::ProxyConfig(const ProxyConfig& config) = default;
 
@@ -273,9 +294,19 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
   }
 
   // Output the source.
-  dict->SetString("source", ProxyConfigSourceToString(source_));
+  dict->SetString(
+      "traffic annotation",
+      base::StringPrintf("%i", traffic_annotation_.unique_id_hash_code));
 
   return dict;
+}
+
+// static
+ProxyConfig ProxyConfig::CreateDirect() {
+  ProxyConfig proxy_config;
+  proxy_config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(kDirectProxyConfigTrafficAnnotation));
+  return proxy_config;
 }
 
 }  // namespace net

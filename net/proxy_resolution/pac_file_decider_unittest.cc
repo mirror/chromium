@@ -28,6 +28,7 @@
 #include "net/proxy_resolution/proxy_config.h"
 #include "net/proxy_resolution/proxy_resolver.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -199,6 +200,8 @@ TEST(ProxyScriptDeciderTest, CustomPacSucceeds) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   Rules::Rule rule = rules.AddSuccessRule("http://custom/proxy.pac");
 
@@ -235,6 +238,8 @@ TEST(ProxyScriptDeciderTest, CustomPacFails1) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://custom/proxy.pac");
 
@@ -270,6 +275,8 @@ TEST(ProxyScriptDeciderTest, CustomPacFails2) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailParsingRule("http://custom/proxy.pac");
 
@@ -287,6 +294,8 @@ TEST(ProxyScriptDeciderTest, HasNullProxyScriptFetcher) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   TestCompletionCallback callback;
   ProxyScriptDecider decider(NULL, &dhcp_fetcher, NULL);
@@ -303,6 +312,8 @@ TEST(ProxyScriptDeciderTest, AutodetectSuccess) {
 
   ProxyConfig config;
   config.set_auto_detect(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   Rules::Rule rule = rules.AddSuccessRule("http://wpad/wpad.dat");
 
@@ -326,6 +337,8 @@ class ProxyScriptDeciderQuickCheckTest : public ::testing::Test {
     request_context_.set_host_resolver(&resolver_);
     fetcher_.SetRequestContext(&request_context_);
     config_.set_auto_detect(true);
+    config_.set_traffic_annotation(
+        MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
     decider_.reset(new ProxyScriptDecider(&fetcher_, &dhcp_fetcher_, NULL));
   }
 
@@ -470,6 +483,8 @@ TEST(ProxyScriptDeciderTest, AutodetectFailCustomSuccess1) {
   ProxyConfig config;
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
   Rules::Rule rule = rules.AddSuccessRule("http://custom/proxy.pac");
@@ -495,6 +510,8 @@ TEST(ProxyScriptDeciderTest, AutodetectFailCustomSuccess2) {
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://custom/proxy.pac"));
   config.proxy_rules().ParseFromString("unused-manual-proxy:99");
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailParsingRule("http://wpad/wpad.dat");
   Rules::Rule rule = rules.AddSuccessRule("http://custom/proxy.pac");
@@ -509,8 +526,9 @@ TEST(ProxyScriptDeciderTest, AutodetectFailCustomSuccess2) {
 
   // Verify that the effective configuration no longer contains auto detect or
   // any of the manual settings.
-  EXPECT_TRUE(decider.effective_config().Equals(
-      ProxyConfig::CreateFromCustomPacURL(GURL("http://custom/proxy.pac"))));
+  EXPECT_TRUE(
+      decider.effective_config().Equals(ProxyConfig::CreateFromCustomPacURL(
+          GURL("http://custom/proxy.pac"), TRAFFIC_ANNOTATION_FOR_TESTS)));
 
   // Check the NetLog was filled correctly.
   // (Note that various states are repeated since both WPAD and custom
@@ -558,6 +576,8 @@ TEST(ProxyScriptDeciderTest, AutodetectFailCustomFails1) {
   ProxyConfig config;
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
   rules.AddFailDownloadRule("http://custom/proxy.pac");
@@ -578,6 +598,8 @@ TEST(ProxyScriptDeciderTest, AutodetectFailCustomFails2) {
   ProxyConfig config;
   config.set_auto_detect(true);
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
   rules.AddFailParsingRule("http://custom/proxy.pac");
@@ -599,6 +621,8 @@ TEST(ProxyScriptDeciderTest, CustomPacFails1_WithPositiveDelay) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://custom/proxy.pac");
 
@@ -641,6 +665,8 @@ TEST(ProxyScriptDeciderTest, CustomPacFails1_WithNegativeDelay) {
 
   ProxyConfig config;
   config.set_pac_url(GURL("http://custom/proxy.pac"));
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailDownloadRule("http://custom/proxy.pac");
 
@@ -706,6 +732,8 @@ TEST(ProxyScriptDeciderTest, AutodetectDhcpSuccess) {
 
   ProxyConfig config;
   config.set_auto_detect(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddSuccessRule("http://bingo/");
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
@@ -728,6 +756,8 @@ TEST(ProxyScriptDeciderTest, AutodetectDhcpFailParse) {
 
   ProxyConfig config;
   config.set_auto_detect(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
 
   rules.AddFailParsingRule("http://bingo/");
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
@@ -788,6 +818,8 @@ TEST(ProxyScriptDeciderTest, DhcpCancelledByDestructor) {
 
   ProxyConfig config;
   config.set_auto_detect(true);
+  config.set_traffic_annotation(
+      MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
   rules.AddFailDownloadRule("http://wpad/wpad.dat");
 
   TestCompletionCallback callback;

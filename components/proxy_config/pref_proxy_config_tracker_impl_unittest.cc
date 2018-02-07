@@ -17,6 +17,7 @@
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "net/proxy_resolution/proxy_info.h"
 #include "net/proxy_resolution/proxy_list.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -216,8 +217,8 @@ TEST_F(PrefProxyConfigTrackerImplTest, Fallback) {
 
   // Prepare test data.
   net::ProxyConfig recommended_config = net::ProxyConfig::CreateAutoDetect();
-  net::ProxyConfig user_config =
-      net::ProxyConfig::CreateFromCustomPacURL(GURL(kFixedPacUrl));
+  net::ProxyConfig user_config = net::ProxyConfig::CreateFromCustomPacURL(
+      GURL(kFixedPacUrl), TRAFFIC_ANNOTATION_FOR_TESTS);
 
   // Set a recommended pref.
   EXPECT_CALL(observer,

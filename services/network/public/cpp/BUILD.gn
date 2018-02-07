@@ -18,8 +18,6 @@ component("cpp") {
     "cors/cors_url_loader_factory.h",
     "features.cc",
     "features.h",
-    "mutable_network_traffic_annotation_tag_struct_traits.h",
-    "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
     "net_adapters.h",
     "network_switches.cc",
@@ -57,6 +55,8 @@ component("cpp_base") {
     "data_element.h",
     "http_raw_request_response_info.cc",
     "http_raw_request_response_info.h",
+    "mutable_network_traffic_annotation_tag_struct_traits.h",
+    "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "network_param_ipc_traits.cc",
     "network_param_ipc_traits.h",
     "proxy_config_traits.cc",
@@ -76,6 +76,7 @@ component("cpp_base") {
   ]
   public_deps = [
     "//services/network/public/interfaces:data_pipe_interface",
+    "//services/network/public/interfaces:mutable_network_traffic_annotation_interface",
     "//url/ipc:url_ipc",
     "//url/mojom:url_mojom_gurl",
   ]
