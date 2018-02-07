@@ -34,6 +34,24 @@
       "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af7d1c3_9121ffc0",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T22:18:52Z",
+      "side": 1,
+      "message": "Thanks for the clarification.\n\nWe only need to do that on our dev box and other enable-features should not matter. On the device, --enable-features has special handling and session manager daemon should combine them. [1]\n\nI would leave it to you to device whether to have the switch. :) I am okay with the CL as-is.\n\n[1]: https://cs.corp.google.com/chromeos_public/src/platform2/login_manager/chrome_dev.conf?rcl\u003d9ced2d96759bd6098496a1d71ef3c0a2b89ab261\u0026l\u003d13",
+      "parentUuid": "654f4a70_146080b6",
+      "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
