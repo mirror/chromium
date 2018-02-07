@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b5e3db7_d56659ba",
+        "filename": "ui/events/event.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T03:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1ba94a1_c74f7782",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "973faa58_1c4d7572",
         "filename": "ui/events/event_constants.h",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-06T19:01:45Z",
       "side": 1,
       "message": "\u0027platform hook\u0027 probably does not make a lot of sense in non-Windows. Maybe call it \u0027EF_LOW_LEVEL\u0027 or \u0027EF_PRE_PLATFORM_HANDLED\u0027 (or something like that to reflect that this is a key-event chrome received before the platform had a chance to handle the event).",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc8f793_de079ce4",
+        "filename": "ui/events/event_constants.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T03:11:08Z",
+      "side": 1,
+      "message": "I\u0027ll defer to one of your suggestions as it is more likely to use terms consistent with the event handling section of Chromium.",
+      "parentUuid": "973faa58_1c4d7572",
       "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b784217a_0d32d739",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2018-02-07T03:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88e5886_13ad6673",
+      "revId": "041106ac1b2f3a649b3a5d2803de0210db12b17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
