@@ -16,6 +16,24 @@
       "revId": "fd7e2fb900dd9f3957d125beaa44ab7f89900458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bae93c3_00c220b9",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-02-07T15:31:05Z",
+      "side": 1,
+      "message": "That right, the method call is dispatched to the receiver object\u0027s relevant realm\u0027s  CredentialsContainer object, so, yes. In fact, if another context stashes away the to the `navigator.credentials` object, the call can be dispatched even long after document detach.\n\nHowever, CheckSecurityRequirementsBeforeRequest(), called on line 390, already checks for this on lines 108-118. At least, my understanding of the shutdown sequence is that resolver-\u003eGetExecutionContext()-\u003eIsContextDestroyed() starts returning `true` strictly before GetFrame() starts returning nullptr, see go/ztlpe.",
+      "parentUuid": "65624d4c_8ccde73d",
+      "revId": "fd7e2fb900dd9f3957d125beaa44ab7f89900458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
