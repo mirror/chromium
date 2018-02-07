@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf09f5ef_0cd11dbd",
+        "filename": "net/cert/internal/name_constraints.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-02-07T20:48:05Z",
+      "side": 1,
+      "message": "Please document the meaning of this number. And also express it in decimal.\nAt O(million) this seems quite large. What inspired this choice?",
+      "range": {
+        "startLine": 247,
+        "startChar": 15,
+        "endLine": 247,
+        "endChar": 35
+      },
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1290e8eb_d5e9bd78",
+        "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-02-07T20:48:05Z",
+      "side": 1,
+      "message": "nit: Other parts of this file are using 2 space indentation.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fe7b1f_28b06175",
+        "filename": "net/data/verify_certificate_chain_unittest/many-names/generate-chains.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-02-07T20:48:05Z",
+      "side": 1,
+      "message": "optional: Use the same keys across these chains.\n\n(Only real advantage is fewer key files, and also stability re-ordering of the calls to generate chains)",
+      "revId": "01d6b595a57cb440e77a9364081ec169da66acc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
