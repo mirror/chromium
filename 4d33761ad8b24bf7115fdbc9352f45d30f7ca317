@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "603d65b6_1deb3f6d",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T18:15:02Z",
+      "side": 1,
+      "message": "I think you might just be able to bind infos directly to callback and post a task to run that, rather than go through InvokeSessionStorageUsageCallbackHelper?",
+      "revId": "4d33761ad8b24bf7115fdbc9352f45d30f7ca317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6859c3e5_41a5359c",
+        "filename": "content/browser/dom_storage/dom_storage_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T18:15:02Z",
+      "side": 1,
+      "message": "you could make the deletion on task runner more explicit by using base::OnTaskRunnerDeleter. Although I guess the destructor is doing plenty of other post-task-using-cleanup anyway so you wouldn\u0027t gain much by getting rid of the one DeleteSoon call from there...",
+      "revId": "4d33761ad8b24bf7115fdbc9352f45d30f7ca317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
