@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7403333_a2774462",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-07T21:36:00Z",
+      "side": 1,
+      "message": "It\u0027s probably safer to have the reference you key off of be the Profile_ (owned by chrome_browser_main) as opposed to PrefService.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 12,
+        "endLine": 1387,
+        "endChar": 28
+      },
+      "revId": "b18c5f0a862800f93e4d0b7531f03d4b6f16b728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d1192e_bce4a14e",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-02-07T21:36:00Z",
+      "side": 1,
+      "message": "do we need to support both flows? It seems like just using the more parameterized one could work for android and non-android and simplify thigs a bit?",
+      "range": {
+        "startLine": 1393,
+        "startChar": 1,
+        "endLine": 1393,
+        "endChar": 5
+      },
+      "revId": "b18c5f0a862800f93e4d0b7531f03d4b6f16b728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
