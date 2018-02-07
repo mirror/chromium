@@ -45,6 +45,7 @@
 #include "ui/base/default_theme_provider.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/compositing_recorder.h"
@@ -845,6 +846,10 @@ bool TabStrip::IsTabPinned(const Tab* tab) const {
          controller_->IsTabPinned(model_index);
 }
 
+bool TabStrip::IsIncognito() const {
+  return controller_->IsIncognito();
+}
+
 void TabStrip::MaybeStartDrag(
     Tab* tab,
     const ui::LocatedEvent& event,
@@ -1044,7 +1049,9 @@ void TabStrip::MouseMovedOutOfHost() {
   ResizeLayoutTabs();
   if (reset_to_shrink_on_exit_) {
     reset_to_shrink_on_exit_ = false;
-    SetStackedLayout(false);
+    // We do not want to disable stacked layout if we are touch optimized UI.
+    if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
+      SetStackedLayout(false);
     controller_->StackedLayoutMaybeChanged();
   }
 }
@@ -1175,8 +1182,8 @@ gfx::Size TabStrip::CalculatePreferredSize() const {
   if (touch_layout_ || adjust_layout_) {
     // For stacked tabs the minimum size is calculated as the size needed to
     // handle showing any number of tabs.
-    needed_tab_width =
-        Tab::GetTouchWidth() + (2 * kStackedPadding * kMaxStackedCount);
+    needed_tab_width = GetLayoutConstant(TAB_TOUCH_WIDTH) +
+                       (2 * kStackedPadding * kMaxStackedCount);
   } else {
     // Otherwise the minimum width is based on the actual number of tabs.
     const int pinned_tab_count = GetPinnedTabCount();
@@ -1824,7 +1831,10 @@ void TabStrip::UpdateStackedLayoutFromMouseEvent(views::View* source,
         views::View::ConvertPointToTarget(source, this, &tab_strip_point);
         Tab* tab = FindTabForEvent(tab_strip_point);
         if (tab && touch_layout_->IsStacked(GetModelIndexOfTab(tab))) {
-          SetStackedLayout(false);
+          // We do not want to deactivate stacking if we are in the touch
+          // optiminzed ui.
+          if (!ui::MaterialDesignController::IsTouchOptimizedUiEnabled())
+            SetStackedLayout(false);
           controller_->StackedLayoutMaybeChanged();
         }
       }
@@ -2288,7 +2298,8 @@ void TabStrip::SwapLayoutIfNecessary() {
     return;
 
   if (needs_touch) {
-    gfx::Size tab_size(Tab::GetTouchWidth(), GetLayoutConstant(TAB_HEIGHT));
+    gfx::Size tab_size(GetLayoutConstant(TAB_TOUCH_WIDTH),
+                       GetLayoutConstant(TAB_HEIGHT));
 
     const int overlap = Tab::GetOverlap();
     touch_layout_.reset(new StackedTabStripLayout(
@@ -2320,7 +2331,7 @@ bool TabStrip::NeedsTouchLayout() const {
   int normal_count = tab_count() - pinned_tab_count;
   if (normal_count <= 1 || normal_count == pinned_tab_count)
     return false;
-  return (Tab::GetTouchWidth() * normal_count -
+  return (GetLayoutConstant(TAB_TOUCH_WIDTH) * normal_count -
           Tab::GetOverlap() * (normal_count - 1)) >
          GetTabAreaWidth() - GetStartXForNormalTabs();
 }

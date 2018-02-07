@@ -75,7 +75,13 @@ class Tab : public gfx::AnimationDelegate,
   void set_detached() { detached_ = true; }
   bool detached() const { return detached_; }
 
-  SkColor button_color() const { return button_color_; }
+  // Returns the color used for the alert indicator icon.
+  SkColor GetAlertIndicatorColor(TabAlertState state) const;
+
+  // Returns the color to be used for the tab close button. The first element of
+  // the pair is the base color, and the second element of the pair is the
+  // icon color.
+  SkColor GetCloseTabButtonColor(views::Button::ButtonState button_state) const;
 
   // Returns true if this tab is the active tab.
   bool IsActive() const;
@@ -145,9 +151,6 @@ class Tab : public gfx::AnimationDelegate,
   // Returns the preferred size of a single Tab, assuming space is
   // available.
   static gfx::Size GetStandardSize();
-
-  // Returns the width for touch tabs.
-  static int GetTouchWidth();
 
   // Returns the width for pinned tabs. Pinned tabs always have this width.
   static int GetPinnedWidth();
