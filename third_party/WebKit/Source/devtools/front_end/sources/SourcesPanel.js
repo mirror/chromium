@@ -77,7 +77,18 @@ Sources.SourcesPanel = class extends UI.Panel {
     var navigatorMenuButton = new UI.ToolbarMenuButton(this._populateNavigatorMenu.bind(this), true);
     navigatorMenuButton.setTitle(Common.UIString('More options'));
     tabbedPane.rightToolbar().appendToolbarItem(navigatorMenuButton);
-    this.editorView.setSidebarWidget(tabbedPane);
+
+    this._navigatorSplitWidget = new UI.SplitWidget(false, true, 'sourcePanelNavigatorSidebarSplitViewState');
+    this._navigatorSplitWidget.setMainWidget(tabbedPane);
+    if (UI.viewManager.hasViewsForLocation('run-view-sidebar')) {
+      this._navigatorSplitWidget.setSidebarWidget(
+          UI.viewManager.createTabbedLocation(this._revealNavigatorSidebar.bind(this), 'run-view-sidebar')
+              .tabbedPane());
+    } else {
+      this._navigatorSplitWidget.hideSidebar();
+    }
+
+    this.editorView.setSidebarWidget(this._navigatorSplitWidget);
 
     this._sourcesView = new Sources.SourcesView();
     this._sourcesView.addEventListener(Sources.SourcesView.Events.EditorSelected, this._editorSelected.bind(this));
