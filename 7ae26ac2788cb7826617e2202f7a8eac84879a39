@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2a4e92ec_87d1bad0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/bindings/inline-styles-binding.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-02-07T23:19:24Z",
+      "side": 1,
+      "message": "i still see the line",
+      "parentUuid": "e67346f3_62c2ae78",
+      "revId": "7ae26ac2788cb7826617e2202f7a8eac84879a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac53c883_a5fe1f70",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceMapping.js",
         "patchSetId": 6
