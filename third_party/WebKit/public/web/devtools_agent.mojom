@@ -74,6 +74,19 @@ interface DevToolsAgent {
   // by itself, and has no effect unless a debugging session is
   // or will be attached.
   InspectElement(gfx.mojom.Point point);
+
+  // Requests an agent to notify about dedicated workers being created.
+  // All existing workers should also be reported.
+  // |registry| is used to report workers back.
+  // If |pause_on_start| is true, newly created workers will be paused
+  // during initialization (before their script is run), and will wait
+  // for debugger to attach and start execution over the remote debugging
+  // protocol.
+  //
+  // Note: subsequent calls override previous state (both |registry| and
+  // |pause_on_start|).
+  ReportDedicatedWorkers(DevToolsDedicatedWorkerRegistry registry,
+                         bool pause_on_start);
 };
 
 // Represents an attached session which exposes remote debugging protocol.
@@ -104,4 +117,16 @@ interface DevToolsSessionHost {
 
   // Dispatches protocol notification to a remote debugging client.
   DispatchProtocolNotification(mojo_base.mojom.BigString message);
+};
+
+// The registry is getting notified about dedicated workers created,
+// providing the means to attach to them for debugging.
+// This interface is implemented in browser.
+interface DevToolsDedicatedWorkerRegistry {
+  // Notifies that dedicated worker has been created.
+  // |agent| can be used to debug the worker.
+  // |paused_on_start| means whether the worker is not started yet,
+  // waiting for debugger to attach and start it over the protocol
+  // (see DevToolsAgent).
+  DedicatedWorkerCreated(DevToolsAgent agent, bool paused_on_start);
 };

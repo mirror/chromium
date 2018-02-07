@@ -107,6 +107,9 @@ class CORE_EXPORT WebDevToolsAgentImpl final
       mojom::blink::DevToolsSessionRequest io_session,
       const String& reattach_state) override;
   void InspectElement(const WebPoint& point_in_local_root) override;
+  void ReportDedicatedWorkers(
+      mojom::blink::DevToolsDedicatedWorkerRegistryPtr,
+      bool pause_on_start) override;
 
   // InspectorTracingAgent::Client implementation.
   void ShowReloadingBlanket() override;

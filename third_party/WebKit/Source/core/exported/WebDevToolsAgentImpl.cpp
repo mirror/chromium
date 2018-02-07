@@ -640,6 +640,11 @@ void WebDevToolsAgentImpl::InspectElement(const WebPoint& point_in_local_root) {
   }
 }
 
+void WebDevToolsAgentImpl::ReportDedicatedWorkers(
+    mojom::blink::DevToolsDedicatedWorkerRegistryPtr registry_ptr,
+    bool pause_on_start) {
+}
+
 void WebDevToolsAgentImpl::DetachSession(Session* session) {
   sessions_.erase(session);
   if (!sessions_.size())
