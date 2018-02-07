@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d846f123_61a27fd1",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T14:54:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3108cbba_9275628e",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "c7b33b30417895d0f42459019b0e50bb39c79a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9905f06_11c91530",
         "filename": "services/network/udp_socket.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "c7b33b30417895d0f42459019b0e50bb39c79a44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b0d610_89ca7faf",
+        "filename": "services/network/udp_socket.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-07T14:54:48Z",
+      "side": 1,
+      "message": "When we invoke Connect()/Bind() for the first time? \nDone. I removed the initialization in the constructor so this isn\u0027t possible any more.",
+      "parentUuid": "f9905f06_11c91530",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 22
+      },
+      "revId": "c7b33b30417895d0f42459019b0e50bb39c79a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
