@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b51a30b_cd474375",
+        "filename": "third_party/WebKit/Source/core/css/CSSStyleSheetTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-07T07:06:43Z",
+      "side": 1,
+      "message": "I see. Changed everything to EXPECT except for when exceptions happened.",
+      "parentUuid": "dcdc4822_d5aa40e9",
+      "revId": "e0051843b0d0f6dec632075e9726590a523d501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f104cbad_4e8e6c3c",
         "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e0051843b0d0f6dec632075e9726590a523d501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f403734_2262ca01",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetCandidate.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2018-02-07T07:06:43Z",
+      "side": 1,
+      "message": "looks like we don\u0027t need it, removed.",
+      "parentUuid": "f104cbad_4e8e6c3c",
+      "revId": "e0051843b0d0f6dec632075e9726590a523d501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
