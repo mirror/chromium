@@ -79,6 +79,7 @@
 #endif
 
 #if !defined(OS_ANDROID)
+#include "chrome/browser/media/router/test/noop_dual_media_sink_service.h"
 #include "components/storage_monitor/test_storage_monitor.h"
 #endif
 
@@ -221,6 +222,11 @@ void InProcessBrowserTest::SetUp() {
   quota_settings_ = storage::QuotaSettings(kQuota * 5, kQuota, 0, 0);
   ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(
       &quota_settings_);
+
+#if !defined(OS_ANDROID)
+//  media_router::DualMediaSinkService::SetInstanceForTest(
+//      std::make_unique<media_router::NoopDualMediaSinkService>());
+#endif  // !defined(OS_ANDROID)
 
   BrowserTestBase::SetUp();
 }
