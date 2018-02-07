@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "34863173_2f889df7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-02-07T08:42:10Z",
+      "side": 1,
+      "message": "tiny nit: BUG must be CAPITAL LETTERS.",
+      "revId": "ba9efc964efc8e2bb4aea14db8e9a853535044e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43458a10_3b5cafad",
         "filename": "ui/message_center/views/notification_header_view.cc",
         "patchSetId": 2
