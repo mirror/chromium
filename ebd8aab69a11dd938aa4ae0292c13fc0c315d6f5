@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "719f3e5b_337442b7",
+        "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-07T22:40:47Z",
+      "side": 1,
+      "message": "That\u0027s ... useful! I get it.",
+      "parentUuid": "857d9e0d_1d924e15",
+      "revId": "ebd8aab69a11dd938aa4ae0292c13fc0c315d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072b59e5_e8c662f3",
         "filename": "chrome/browser/ui/tab_contents/tab_contents_iterator.h",
         "patchSetId": 6
