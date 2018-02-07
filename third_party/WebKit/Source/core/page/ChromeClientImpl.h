@@ -165,8 +165,7 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
                                 Element* new_element) override;
 
   void ClearCompositedSelection(LocalFrame*) override;
-  void UpdateCompositedSelection(LocalFrame*,
-                                 const CompositedSelection&) override;
+  void UpdateWebSelection(LocalFrame*, const WebSelection&) override;
 
   // ChromeClient methods:
   String AcceptLanguages() override;
