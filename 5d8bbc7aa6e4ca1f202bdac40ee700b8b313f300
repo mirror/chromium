@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47a33bb_ea9b2c61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "I think you should mention both behavior: if log level is set to verbose, then....; otherwise, ....",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c7d027_d3c17dff",
+        "filename": "components/viz/common/surfaces/local_surface_id.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "personally, I prefer nouce \u003d VLOG_IS_ON(1) ? a : b form. I think it\u0027s easier to understand.",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f9c6b6_09e27328",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this include",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a1b053_dd7279c9",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "Each line should try to be 80 chars in your comments.",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6f5746_f103fdc5",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "\"UnguessableToken as ABCD.. \" is confusing. Try to use complete english sentence.",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d3f25f_59ab96b8",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "In general, we try to use the complete word instead of acronym if it\u0027s not too long. I prefer you use local_surface_id_long(or big or something).",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06abd135_437725da",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "what is shy stands for?",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8f0d89_d4e341e1",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "again, try to make each line 80 chars.",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724997b0_9a648639",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "I may add an expect to check if VLOG_IS_ON(1) holds, so that readers who don\u0027t have any background in logging can understand your test better.",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8f7d3b_65f93354",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T21:04:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
