@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd041be_e0266462",
+        "filename": "ash/system/flag_warning/flag_warning_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T00:25:23Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818565ac_42dfac95",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T00:25:23Z",
+      "side": 1,
+      "message": "Should this class be a TrayBackgroundView subclass?",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ab9881_b049736d",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T00:25:23Z",
+      "side": 1,
+      "message": "nit: comment, cite TrayBackgroundView/others?",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd1eb7d_08bde8b9",
+        "filename": "ash/system/flag_warning/flag_warning_tray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T00:25:23Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbfae90_64585870",
+        "filename": "ash/system/status_area_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T00:25:23Z",
+      "side": 1,
+      "message": "nit: order after virtual_keyboard_tray_for_testing, to mirror member ordering",
+      "revId": "5b5a930fa911e548b32b5051fb9d3db74254095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
