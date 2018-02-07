@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f7edbfb5_c3b2d2fc",
+        "filename": "chrome/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T21:53:24Z",
+      "side": 1,
+      "message": "Can we make this a method on DataReductionProxyResourceThrottle like, DataReductionProxyResourceThrottle::IsEnabledForUrl() just to keep it logically connected?",
+      "parentUuid": "9bd62335_01d5267c",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5003b8bd_cf02f8fb",
         "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
         "patchSetId": 12

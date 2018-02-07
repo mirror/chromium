@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482765da_b0cae389",
+        "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-02-07T21:53:24Z",
+      "side": 1,
+      "message": "Add a comment here explaining the relationship between the Safe Browsing and Data Reduction Proxy resource throttles since this is separated from the code that sets them up.",
+      "revId": "896be0fe89c3a907803196e6c83460a9ebc75a4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
