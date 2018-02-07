@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67901097_f27de932",
+        "filename": "content/browser/cache_storage/cache_storage_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-07T04:11:40Z",
+      "side": 1,
+      "message": "Changed to bindings_.ReportBadMessage() and also triggered the callback.\n\nWRT tests, I\u0027ve been relying on the existing tests, but as you noted, they probably don\u0027t cover this code branch.",
+      "parentUuid": "0f89a530_cff1f282",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb8aeee_759ca9cb",
         "filename": "content/common/cache_storage/cache_storage_struct_traits.h",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1969eb80_813b162f",
+        "filename": "content/common/cache_storage/cache_storage_struct_traits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-07T04:11:40Z",
+      "side": 1,
+      "message": "Done, thanks for sharing the news. :-)",
+      "parentUuid": "dcb8aeee_759ca9cb",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a23d8d6_163710f4",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-07T04:11:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d31342_580d21ce",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f86c6b_2f4e2c45",
         "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d71b74f_963b0f67",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-07T04:11:40Z",
+      "side": 1,
+      "message": "I tried to move there, but due to its dependency on Blob, which in turn depends on //storage/ it failed, specifically failed to link on \"service_worker_fetch_response_mojom_traits.cc\" where referencing \"storage::BlobHandle\".\n\nSo I\u0027m proposing to keep here for the time being, probably until we solve the content::ServiceWorkerReponse/BlobHandle story.",
+      "parentUuid": "c9f86c6b_2f4e2c45",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
