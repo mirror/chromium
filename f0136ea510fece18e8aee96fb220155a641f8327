@@ -22,6 +22,30 @@
       "revId": "f0136ea510fece18e8aee96fb220155a641f8327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8cf4bd_4d34cb22",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_result.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-02-07T05:08:10Z",
+      "side": 1,
+      "message": "Why, yes, I certainly do. :)\n\nSee: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d691070\u0026desc\u003d2#c9\n\nFeel free to bump-up the priority. The bug needs an owner.",
+      "parentUuid": "c45a1c35_cbef952a",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "f0136ea510fece18e8aee96fb220155a641f8327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
