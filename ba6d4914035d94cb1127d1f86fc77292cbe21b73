@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "418395c3_fc975d7c",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T22:51:23Z",
+      "side": 1,
+      "message": "I thought that line 31 would cause it to wait till the next microtask:\n\ntimer_(element.GetExecutionContext()-\u003eGetTaskRunner(TaskType::kMicrotask),\n       this, \u0026ComputedAccessibleNodePromiseResolver::OnTimerFired) {}\n\nLine 51 is the line that causes layout.",
+      "parentUuid": "86c990fb_066478fe",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4246457_558b9e19",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 6
