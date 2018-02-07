@@ -51,7 +51,6 @@ class FrameSelection;
 class LocalFrame;
 class HitTestResult;
 class KillRing;
-class Pasteboard;
 class SetSelectionOptions;
 class SpellChecker;
 class CSSPropertyValueSet;
@@ -94,8 +93,6 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
 
   void Cut(EditorCommandSource);
   void Copy(EditorCommandSource);
-  void Paste(EditorCommandSource);
-  void PasteAsPlainText(EditorCommandSource);
 
   static void CountEvent(ExecutionContext*, const Event*);
   void CopyImage(const HitTestResult&);
@@ -316,6 +313,11 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
 
   void Trace(blink::Visitor*);
 
+  bool DispatchClipboardEvent(const AtomicString&,
+                              DataTransferAccessPolicy,
+                              EditorCommandSource,
+                              PasteMode = kAllMimeTypes);
+
  private:
   Member<LocalFrame> frame_;
   Member<CompositeEditCommand> last_edit_command_;
@@ -343,15 +345,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   // Returns true if Editor should continue with default processing.
   bool DispatchCopyEvent(EditorCommandSource);
   bool DispatchCutEvent(EditorCommandSource);
-  bool DispatchPasteEvent(PasteMode, EditorCommandSource);
-  bool DispatchClipboardEvent(const AtomicString&,
-                              DataTransferAccessPolicy,
-                              EditorCommandSource,
-                              PasteMode = kAllMimeTypes);
 
-  bool CanSmartReplaceWithPasteboard(Pasteboard*);
-  void PasteAsPlainTextWithPasteboard(Pasteboard*, EditorCommandSource);
-  void PasteWithPasteboard(Pasteboard*, EditorCommandSource);
   void WriteSelectionToPasteboard();
 
   void RevealSelectionAfterEditingOperation(
