@@ -15,6 +15,7 @@ namespace viz {
 CopyOutputRequest::CopyOutputRequest(ResultFormat result_format,
                                      CopyOutputRequestCallback result_callback)
     : result_format_(result_format),
+      at_top_(false),
       result_callback_(std::move(result_callback)),
       scale_from_(1, 1),
       scale_to_(1, 1) {
@@ -25,7 +26,8 @@ CopyOutputRequest::CopyOutputRequest(ResultFormat result_format,
 CopyOutputRequest::~CopyOutputRequest() {
   if (!result_callback_.is_null()) {
     // Send an empty result to indicate the request was never satisfied.
-    SendResult(std::make_unique<CopyOutputResult>(result_format_, gfx::Rect()));
+    SendResult(
+        std::make_unique<CopyOutputResult>(result_format_, gfx::Rect(), false));
   }
 }
 

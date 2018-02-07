@@ -42,7 +42,8 @@ class WebContentsCaptureClient {
   virtual void OnCaptureFailure(FailureReason reason) = 0;
   virtual void OnCaptureSuccess(const SkBitmap& bitmap) = 0;
   void CopyFromSurfaceComplete(const SkBitmap& bitmap,
-                               content::ReadbackResponse response);
+                               content::ReadbackResponse response,
+                               bool at_top);
 
  private:
   // The format (JPEG vs PNG) of the resulting image.  Set in RunAsync().

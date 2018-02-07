@@ -280,7 +280,8 @@ class FlashFullscreenInteractiveBrowserTest : public OutOfProcessPPAPITest {
                                       bool* is_expected_color,
                                       const base::Closure& done_cb,
                                       const SkBitmap& bitmap,
-                                      content::ReadbackResponse response) {
+                                      content::ReadbackResponse response,
+                                      bool at_top) {
     if (response == content::READBACK_SUCCESS) {
       if (bitmap.width() > 0 && bitmap.height() > 0)
         *is_expected_color = (bitmap.getColor(0, 0) == expected_color);

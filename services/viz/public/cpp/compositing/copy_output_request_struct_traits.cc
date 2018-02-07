@@ -29,7 +29,7 @@ class CopyOutputResultSenderImpl : public viz::mojom::CopyOutputResultSender {
     if (result_callback_) {
       std::move(result_callback_)
           .Run(std::make_unique<viz::CopyOutputResult>(result_format_,
-                                                       gfx::Rect()));
+                                                       gfx::Rect(), false));
     }
   }
 

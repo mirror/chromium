@@ -89,7 +89,8 @@ class ThumbnailTabHelper
   // Creates a thumbnail from the web contents bitmap.
   void ProcessCapturedBitmap(TriggerReason trigger,
                              const SkBitmap& bitmap,
-                             content::ReadbackResponse response);
+                             content::ReadbackResponse response,
+                             bool at_top);
 
   // Passes the thumbnail to the thumbnail service.
   void StoreThumbnail(const SkBitmap& thumbnail);

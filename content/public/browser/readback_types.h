@@ -28,7 +28,7 @@ enum ReadbackResponse {
 // A callback that is invoked upon completion or failure of a request to read
 // pixel data back into an SkBitmap.
 using ReadbackRequestCallback =
-    base::Callback<void(const SkBitmap&, ReadbackResponse)>;
+    base::RepeatingCallback<void(const SkBitmap&, ReadbackResponse, bool)>;
 
 }  // namespace content
 

@@ -167,7 +167,7 @@ void RenderWidgetHostViewBase::CopyFromSurface(
     const ReadbackRequestCallback& callback,
     const SkColorType color_type) {
   NOTIMPLEMENTED();
-  callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE);
+  callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE, false);
 }
 
 base::string16 RenderWidgetHostViewBase::GetSelectedText() {
