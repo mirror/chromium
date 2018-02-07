@@ -290,6 +290,14 @@ void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
   host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
 }
 
+bool RenderWidgetHostViewBase::IsAllocationPending() const {
+  return false;
+}
+
+void RenderWidgetHostViewBase::SetAllocationPendingFlag() const {}
+
+void RenderWidgetHostViewBase::ClearAllocationPendingFlag() const {}
+
 base::WeakPtr<RenderWidgetHostViewBase> RenderWidgetHostViewBase::GetWeakPtr() {
   return weak_factory_.GetWeakPtr();
 }

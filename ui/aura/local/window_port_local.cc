@@ -96,7 +96,8 @@ void WindowPortLocal::OnDidChangeBounds(const gfx::Rect& old_bounds,
                                         const gfx::Rect& new_bounds) {
   if (last_size_ != new_bounds.size() && local_surface_id_.is_valid()) {
     last_size_ = new_bounds.size();
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    if (!window_->IsAllocationPending())
+      local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
     if (frame_sink_)
       frame_sink_->SetLocalSurfaceId(local_surface_id_);
   }
@@ -139,11 +140,31 @@ viz::SurfaceId WindowPortLocal::GetSurfaceId() const {
 }
 
 void WindowPortLocal::AllocateLocalSurfaceId() {
+  DCHECK(window_);
+  if (!window_->IsAllocationPending()) {
+    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    SetLocalSurfaceId(local_surface_id_);
+  }
   last_device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
   last_size_ = window_->bounds().size();
-  local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
   if (frame_sink_)
     frame_sink_->SetLocalSurfaceId(local_surface_id_);
+}
+
+void WindowPortLocal::SetLocalSurfaceId(
+    const viz::LocalSurfaceId& local_surface_id) {
+  last_device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
+  last_size_ = window_->bounds().size();
+  local_surface_id_ = local_surface_id;
+  if (frame_sink_)
+    frame_sink_->SetLocalSurfaceId(local_surface_id_);
+}
+
+void WindowPortLocal::UpdateLocalSurfaceIdWithChildSequenceNumber(
+    const viz::LocalSurfaceId& local_surface_id) {
+  SetLocalSurfaceId(
+      parent_local_surface_id_allocator_.UpdateChildSequenceNumber(
+          local_surface_id.child_sequence_number()));
 }
 
 const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
