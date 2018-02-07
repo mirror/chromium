@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d72ce20_6193461e",
+        "filename": "build/toolchain/goma.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:21:55Z",
+      "side": 1,
+      "message": "If action_pool_depth is only referenced from //build/toolchain/BUILD.gn, we should move it and the exec_script there, to limit its visibility. Also, I think putting an exec_script() in a header will cause it to be run N times, once per toolchain, which we don\u0027t want.",
+      "revId": "78573a53f383298ff08e46c6ac9c128ae4281e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
