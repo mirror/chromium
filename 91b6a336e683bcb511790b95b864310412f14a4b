@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "f17162fd_e8c49ad6",
+        "filename": "tools/gn/bootstrap/bootstrap.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-07T20:41:22Z",
+      "side": 1,
+      "message": "This is only done as part of the bootstrap script, right? So I\u0027m thinking that people that never run the bootstrap script wouldn\u0027t be affected, and the people that have run it would be guaranteed to have the binary?",
+      "parentUuid": "008e6884_8513b831",
+      "revId": "91b6a336e683bcb511790b95b864310412f14a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3f4cd56_e11d1639",
         "filename": "tools/gn/filesystem_utils.cc",
         "patchSetId": 1
