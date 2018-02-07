@@ -67,7 +67,6 @@ test("device_unittests") {
     "fido/ctap_request_unittest.cc",
     "fido/ctap_response_unittest.cc",
     "fido/fido_hid_message_unittest.cc",
-    "fido/u2f_apdu_unittest.cc",
     "fido/u2f_ble_connection_unittest.cc",
     "fido/u2f_ble_device_unittest.cc",
     "fido/u2f_ble_frames_unittest.cc",
@@ -89,6 +88,7 @@ test("device_unittests") {
   deps = [
     "//base/test:test_support",
     "//base/third_party/dynamic_annotations:dynamic_annotations",
+    "//components/apdu",
     "//components/cbor",
     "//device/base/synchronization",
     "//device/bluetooth",
