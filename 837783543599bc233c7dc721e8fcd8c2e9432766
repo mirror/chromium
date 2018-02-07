@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e89ab7d_861b84ce",
+        "filename": "chrome/browser/ui/browser_ui_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T13:29:55Z",
+      "side": 1,
+      "message": "Hi Peter. Thanks for the suggestion. This particular pref is bound to a policy setting, so I don\u0027t think it\u0027s so simple. It appears that we have many such \"duration\" policy settings that currently use milliseconds as their basic unit (thanks for pointing this out, Julian!). In this CL, I\u0027ll switch from hours to ms for consistency with the other policy settings. I like the idea of having these pop out of the prefs system as TimeDeltas rather than ints. I believe that doing so would require creating a new ConfigurationPolicyHandler to map int ms to TimeDelta and then spreading this over the relevant policies. I think this is outside the scope of this CL, though, so I\u0027ve filed https://crbug.com/809952 to track making this improvement.",
+      "parentUuid": "9190cbcc_aced264d",
+      "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980cac37_8c44d182",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b8244f_0416653f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 11185,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-02-07T13:29:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980cac37_8c44d182",
+      "range": {
+        "startLine": 11185,
+        "startChar": 53,
+        "endLine": 11185,
+        "endChar": 68
+      },
+      "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
