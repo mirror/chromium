@@ -34,6 +34,24 @@
       "revId": "f1a32804ff96698152c127cd3ed52f85020bd7fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b95963_7792b702",
+        "filename": "third_party/WebKit/Source/core/html/HTMLScriptElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2018-02-07T02:16:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4a915a9c_b27d4b25",
+      "revId": "f1a32804ff96698152c127cd3ed52f85020bd7fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
