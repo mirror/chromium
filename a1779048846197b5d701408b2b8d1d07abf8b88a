@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80db35e_8121cd3b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T04:50:03Z",
+      "side": 1,
+      "message": "This computes the average time over the course of 1 second. What does\nSCOPED_BLINK_UMA_HISTOGRAM_TIMER do? I think it records bucketed times\nover some fixed period, then flushes each bucket. I guess the\nvalue sent to the server is some sort of vector with a count for each bucket?",
+      "revId": "a1779048846197b5d701408b2b8d1d07abf8b88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
