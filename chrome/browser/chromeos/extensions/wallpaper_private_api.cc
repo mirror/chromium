@@ -27,6 +27,7 @@
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/extensions/backdrop_wallpaper_handlers/backdrop_wallpaper_handlers.h"
+#include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -75,6 +76,10 @@ namespace {
 // the correct value of the user sync preference of "syncThemes".
 constexpr int kRetryDelay = 10;
 constexpr int kRetryLimit = 3;
+
+constexpr char kPngFilePattern[] = "*.[pP][nN][gG]";
+constexpr char kJpgFilePattern[] = "*.[jJ][pP][gG]";
+constexpr char kJpegFilePattern[] = "*.[jJ][pP][eE][gG]";
 
 #if defined(GOOGLE_CHROME_BUILD)
 const char kWallpaperManifestBaseURL[] =
@@ -144,6 +149,21 @@ wallpaper::WallpaperType getWallpaperType(
       return wallpaper::THIRDPARTY;
     default:
       return wallpaper::ONLINE;
+  }
+}
+
+// Helper function to get the list of image names under |path| that match
+// |pattern|.
+void EnumerateImages(const base::FilePath& path,
+                     const std::string& pattern,
+                     base::Value* result_out) {
+  base::FileEnumerator image_enum(path, true /* recursive */,
+                                  base::FileEnumerator::FILES,
+                                  FILE_PATH_LITERAL(pattern));
+
+  for (base::FilePath name = image_enum.Next(); !name.empty();
+       name = image_enum.Next()) {
+    result_out->GetList().emplace_back(base::Value(name.value()));
   }
 }
 
@@ -880,4 +900,46 @@ void WallpaperPrivateGetImagesInfoFunction::OnImagesInfoFetched(
     return;
   }
   Respond(ArgumentList(get_images_info::Results::Create(images_info_list)));
+}
+
+WallpaperPrivateGetLocalImageNamesFunction::
+    WallpaperPrivateGetLocalImageNamesFunction() = default;
+
+WallpaperPrivateGetLocalImageNamesFunction::
+    ~WallpaperPrivateGetLocalImageNamesFunction() = default;
+
+bool WallpaperPrivateGetLocalImageNamesFunction::RunAsync() {
+  base::FilePath path = file_manager::util::GetDownloadsFolderForProfile(
+      Profile::FromBrowserContext(browser_context()));
+
+  WallpaperFunctionBase::GetNonBlockingTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WallpaperPrivateGetLocalImageNamesFunction::GetImageNames,
+                     this, path));
+
+  return true;
+}
+
+void WallpaperPrivateGetLocalImageNamesFunction::GetImageNames(
+    const base::FilePath& path) {
+  chromeos::AssertCalledOnWallpaperSequence(
+      WallpaperFunctionBase::GetNonBlockingTaskRunner());
+
+  base::Value* image_names_list = new base::Value(base::Value::Type::LIST);
+
+  EnumerateImages(path, kPngFilePattern, image_names_list);
+  EnumerateImages(path, kJpgFilePattern, image_names_list);
+  EnumerateImages(path, kJpegFilePattern, image_names_list);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &WallpaperPrivateGetLocalImageNamesFunction::OnGetImageNamesComplete,
+          this, base::WrapUnique(image_names_list)));
+}
+
+void WallpaperPrivateGetLocalImageNamesFunction::OnGetImageNamesComplete(
+    std::unique_ptr<base::Value> image_names) {
+  SetResult(std::move(image_names));
+  SendResponse(true);
 }

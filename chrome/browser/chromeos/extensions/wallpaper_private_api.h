@@ -361,4 +361,27 @@ class WallpaperPrivateGetImagesInfoFunction : public UIThreadExtensionFunction {
   DISALLOW_COPY_AND_ASSIGN(WallpaperPrivateGetImagesInfoFunction);
 };
 
+class WallpaperPrivateGetLocalImageNamesFunction
+    : public AsyncExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("wallpaperPrivate.getLocalImageNames",
+                             WALLPAPERPRIVATE_GETLOCALIMAGENAMES)
+  WallpaperPrivateGetLocalImageNamesFunction();
+
+ protected:
+  ~WallpaperPrivateGetLocalImageNamesFunction() override;
+
+  // AsyncExtensionFunction:
+  bool RunAsync() override;
+
+ private:
+  // Recursively retrieves the names of the image files under |path|.
+  void GetImageNames(const base::FilePath& path);
+
+  // Sends the list of image names to extension api caller.
+  void OnGetImageNamesComplete(std::unique_ptr<base::Value> image_names);
+
+  DISALLOW_COPY_AND_ASSIGN(WallpaperPrivateGetLocalImageNamesFunction);
+};
+
 #endif  // CHROME_BROWSER_CHROMEOS_EXTENSIONS_WALLPAPER_PRIVATE_API_H_
