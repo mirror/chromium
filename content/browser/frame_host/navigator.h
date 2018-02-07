@@ -84,22 +84,6 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       std::unique_ptr<NavigationHandleImpl> navigation_handle,
       bool was_within_same_document) {}
 
-  // Called by the NavigationController to cause the Navigator to navigate
-  // to the current pending entry. The NavigationController should be called
-  // back with RendererDidNavigate on success or DiscardPendingEntry on failure.
-  // The callbacks can be inside of this function, or at some future time.
-  //
-  // If this method returns false, then the navigation is discarded (equivalent
-  // to calling DiscardPendingEntry on the NavigationController).
-  //
-  // TODO(nasko): Remove this method from the interface, since Navigator and
-  // NavigationController know about each other. This will be possible once
-  // initialization of Navigator and NavigationController is properly done.
-  virtual bool NavigateToPendingEntry(FrameTreeNode* frame_tree_node,
-                                      const FrameNavigationEntry& frame_entry,
-                                      ReloadType reload_type,
-                                      bool is_same_document_history_load);
-
   // Called on a newly created subframe during a history navigation. The browser
   // process looks up the corresponding FrameNavigationEntry for the new frame
   // navigates it in the correct process. Returns false if the

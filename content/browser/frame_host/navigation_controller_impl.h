@@ -217,7 +217,7 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
 
   // Used for identifying which frames need to navigate.
   using FrameLoadVector =
-      std::vector<std::pair<FrameTreeNode*, FrameNavigationEntry*>>;
+      std::vector<std::pair<FrameTreeNode*, NavigationRequest*>>;
 
   // Helper class to smooth out runs of duplicate timestamps while still
   // allowing time to jump backwards.

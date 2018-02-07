@@ -113,33 +113,11 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
   friend class NavigatorTestWithBrowserSideNavigation;
   ~NavigatorImpl() override;
 
-  // Navigates to the given entry, which might be the pending entry (if
-  // |is_pending_entry| is true).  Private because all callers should use either
-  // NavigateToPendingEntry or NavigateToNewChildFrame.
-  bool NavigateToEntry(
-      FrameTreeNode* frame_tree_node,
-      const FrameNavigationEntry& frame_entry,
-      const NavigationEntryImpl& entry,
-      ReloadType reload_type,
-      bool is_same_document_history_load,
-      bool is_history_navigation_in_new_child,
-      bool is_pending_entry,
-      const scoped_refptr<network::ResourceRequestBody>& post_body);
-
-  // If needed, sends a BeforeUnload IPC to the renderer to ask it to execute
-  // the beforeUnload event. Otherwise, the navigation request will be started.
-  void RequestNavigation(
-      FrameTreeNode* frame_tree_node,
-      const GURL& dest_url,
-      const Referrer& dest_referrer,
-      const FrameNavigationEntry& frame_entry,
-      const NavigationEntryImpl& entry,
-      ReloadType reload_type,
-      PreviewsState previews_state,
-      bool is_same_document_history_load,
-      bool is_history_navigation_in_new_child,
-      const scoped_refptr<network::ResourceRequestBody>& post_body,
-      base::TimeTicks navigation_start);
+  // Navigates to the given NavigationRequest. Private because all callers
+  // should be in NavigationControllerImpl, which is a friend of this class.
+  bool Navigate(std::unique_ptr<NavigationRequest> request,
+                ReloadType reload_type,
+                RestoreType restore_type);
 
   void RecordNavigationMetrics(
       const LoadCommittedDetails& details,
