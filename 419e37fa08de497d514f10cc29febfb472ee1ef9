@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9b2fa376_9f883460",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2018-02-07T00:27:03Z",
+      "side": 1,
+      "message": "It\u0027s convenient because it lets all call sites use a single call:\n\nwidget-\u003eAddObserver(observer);\n\nThe observer here needs to know the initial state of the widget as it needs to be *in sync* with widget-\u003eIsVisible(). If we don\u0027t have this callback all call sites are essentially:\n\nobserver-\u003eSetInitialWidgetState(widget-\u003eIsVisible());\nwidget-\u003eAddObserver(observer);\n\nThis pattern *is brittle* because all call sites (7 of them, + new code) will need to remember the SetInitialWidgetState() call. Also we\u0027d need a public SetInitialWidgetState which is just wonky.\n\nAn alternative is:\n\nObserver /* does not inherit from WidgetObserver as it\u0027s error prone (AddObserver does not set initial state) */ {\n  void ObserveWidget(widget) {\n    SetState(widget-\u003eIsVisible());\n    widget-\u003eAddObserver(\u0026widget_observer_proxy_);\n  }\n  private:\n    WidgetObserverProxy {\n      ctor(Observer* parent) : parent_(parent)\n      void OnWidgetVisibilityChanged(widget, visible) override { parent-\u003eSetState(visible); }\n      void OnWidgetDestroying(widget) { widget-\u003eRemoveObserver(this); }\n    }\n};\n\nBut then we can\u0027t use WidgetObserver directly and instead need boilerplate code (as code style forbids protected inheritance). Is this pattern recommended / do you see any other patterns? I don\u0027t want the solution to be as brittle as having all code sites duplicate SetInitialState + AddObserver.",
+      "parentUuid": "eb32e3cd_ee16dfa7",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
