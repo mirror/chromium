@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba92dbf_9d2236a0",
+        "filename": "chrome/browser/ui/extensions/hosted_app_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2018-02-07T07:14:39Z",
+      "side": 0,
+      "message": "I think we should keep this if the app is a hosted (non-bookmark) app. E.g. the webstore should have App Info as it has special permissions.",
+      "revId": "98ee9e3a869332fd6a7ce91907ffc518ad99e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
