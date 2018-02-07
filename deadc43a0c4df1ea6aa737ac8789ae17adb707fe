@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9673bf64_5fcf0842",
+        "filename": "chrome/browser/media/router/providers/cast/cast_app_availability_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-02-07T21:40:20Z",
+      "side": 1,
+      "message": "Do we need to decrease count if count_it-\u003esecond !\u003d 1?",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "deadc43a0c4df1ea6aa737ac8789ae17adb707fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419ab2b3_92a1e4a0",
+        "filename": "chrome/browser/media/router/providers/cast/cast_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-02-07T21:40:20Z",
+      "side": 1,
+      "message": "Seems not necessary to keep a callback list for the same |media_source|, since all callbacks are just CastMediaRouteProvider::OnSinkQueryUpdated. I might miss sth here though...",
+      "revId": "deadc43a0c4df1ea6aa737ac8789ae17adb707fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f80bb14_7cc7fdca",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-02-07T21:40:20Z",
+      "side": 1,
+      "message": "Shall we use enable_cast_sink_query to be consistent with names above?",
+      "range": {
+        "startLine": 788,
+        "startChar": 17,
+        "endLine": 788,
+        "endChar": 36
+      },
+      "revId": "deadc43a0c4df1ea6aa737ac8789ae17adb707fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
