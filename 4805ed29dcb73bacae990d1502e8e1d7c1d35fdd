@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "53649163_2774e175",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T22:09:31Z",
+      "side": 1,
+      "message": "oh yeah I see, makes sense.",
+      "parentUuid": "ecf48055_bedd9b84",
+      "range": {
+        "startLine": 238,
+        "startChar": 58,
+        "endLine": 238,
+        "endChar": 77
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f503388_3cf4ae17",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 3
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ea070d5a_f6f0876b",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T22:09:31Z",
+      "side": 1,
+      "message": "\u003e Are you saying Acquire_Load + Release_Store is faster than NoBarrier_AtomicExchange + MemoryBarrier?\n\nOh yes definitely. On x86/amd64 at least, both acquire_load and release_store become just standard \"mov\" instruction ([1] is my go-to reference table) because the x86/64 OOO model intrinsically guarantees that the speculative execution HW inside the CPU keeps track of data dependencies and makes it invisible to the code.\n\nA MemoryBarrier() instead IIRC becomes a mfence in x86, which is really invasive because pessimistically requires the CPU to commit the stores in flight and barriers the reordering of the loads .\nmfence is really perf intrusive. It showed up in all perf benchmarks once when I introduced it accidentally in the allocator path because a bug in the sysroot, see crbug.com/593344 .\n\n\n[1] https://www.cl.cam.ac.uk/~pes20/cpp/cpp0xmappings.html",
+      "parentUuid": "adbce4cf_4b9be7c4",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f093ce00_803cd0aa",
         "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
         "patchSetId": 3
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Let me outline the basics of the algorithm.\n\nWe\u0027re accumulating incoming memory allocation sizes and once the accumulated value reaches the current sample size we record a sample, attributing it with the stack of the thread that hit the threshold.\n\nThe problem with accumulating the value and comparing to the threshold is that I\u0027d have to keep these two in sync.\nSo instead I do it by counting down towards zero. In the beginning I put the next sample size into g_bytes_left and start subtracting incoming allocation sizes. Once it reaches zero the sample is finished (check at 227). Then all the threads start to pass the check at 227, so 232 makes sure only the thread that in fact responsible for crossing threshold is going to record the sample. Others will just bail out at this point.\n\nI could do it with spin locks, but I believe my version is much faster. The fast path (where most allocation will end up) is just a single atomic increment and then a check.",
       "parentUuid": "f093ce00_803cd0aa",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 1
+      },
+      "revId": "4805ed29dcb73bacae990d1502e8e1d7c1d35fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431a5691_c7248eb5",
+        "filename": "third_party/WebKit/Source/platform/memory_profiler/SamplingNativeHeapProfiler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-02-07T22:09:31Z",
+      "side": 1,
+      "message": "ok I see. Well let\u0027s see it this way: in the very worst case you\u0027ll have some spurious accounting.\nWould be great if these could be two words packed in the same atomic word, which would be possible on 64 bit but sadly I think not on 32 bit (does atomic64 work on 32 bit arch? I don\u0027t think so but not 100% sure)",
+      "parentUuid": "40c1e120_dc4f4fc5",
       "range": {
         "startLine": 254,
         "startChar": 0,
