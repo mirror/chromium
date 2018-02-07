@@ -22,7 +22,7 @@ source_set("display") {
   ]
 
   if (use_ozone) {
-    if (is_chromeos) {
+    if (internal_window_mode) {
       sources += [
         "output_protection.cc",
         "output_protection.h",
@@ -33,17 +33,24 @@ source_set("display") {
       ]
 
       deps += [
-        "//chromeos",
         "//services/ui/public/interfaces/display",
         "//ui/display/manager",
         "//ui/display/mojo:interfaces",
         "//ui/ozone",
       ]
+
+      if (is_chromeos) {
+        deps += [ "//chromeos" ]
+      }
     } else {
       sources += [
         "screen_manager_ozone_external.cc",
         "screen_manager_ozone_external.h",
       ]
+    }
+
+    if (internal_window_mode) {
+      defines = [ "INTERNAL_WINDOW_MODE" ]
     }
   } else {
     sources += [

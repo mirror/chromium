@@ -7,28 +7,6 @@ import("//build/config/ui.gni")
 
 jumbo_component("manager") {
   sources = [
-    "chromeos/apply_content_protection_task.cc",
-    "chromeos/apply_content_protection_task.h",
-    "chromeos/configure_displays_task.cc",
-    "chromeos/configure_displays_task.h",
-    "chromeos/default_touch_transform_setter.cc",
-    "chromeos/default_touch_transform_setter.h",
-    "chromeos/display_change_observer.cc",
-    "chromeos/display_change_observer.h",
-    "chromeos/display_configurator.cc",
-    "chromeos/display_configurator.h",
-    "chromeos/display_layout_manager.h",
-    "chromeos/display_util.cc",
-    "chromeos/display_util.h",
-    "chromeos/query_content_protection_task.cc",
-    "chromeos/query_content_protection_task.h",
-    "chromeos/touch_device_manager.cc",
-    "chromeos/touch_device_manager.h",
-    "chromeos/touch_transform_controller.cc",
-    "chromeos/touch_transform_controller.h",
-    "chromeos/touch_transform_setter.h",
-    "chromeos/update_display_configuration_task.cc",
-    "chromeos/update_display_configuration_task.h",
     "display_layout_store.cc",
     "display_layout_store.h",
     "display_manager.cc",
@@ -43,6 +21,28 @@ jumbo_component("manager") {
     "fake_display_snapshot.h",
     "forwarding_display_delegate.cc",
     "forwarding_display_delegate.h",
+    "internal/apply_content_protection_task.cc",
+    "internal/apply_content_protection_task.h",
+    "internal/configure_displays_task.cc",
+    "internal/configure_displays_task.h",
+    "internal/default_touch_transform_setter.cc",
+    "internal/default_touch_transform_setter.h",
+    "internal/display_change_observer.cc",
+    "internal/display_change_observer.h",
+    "internal/display_configurator.cc",
+    "internal/display_configurator.h",
+    "internal/display_layout_manager.h",
+    "internal/display_util.cc",
+    "internal/display_util.h",
+    "internal/query_content_protection_task.cc",
+    "internal/query_content_protection_task.h",
+    "internal/touch_device_manager.cc",
+    "internal/touch_device_manager.h",
+    "internal/touch_transform_controller.cc",
+    "internal/touch_transform_controller.h",
+    "internal/touch_transform_setter.h",
+    "internal/update_display_configuration_task.cc",
+    "internal/update_display_configuration_task.h",
     "json_converter.cc",
     "json_converter.h",
     "managed_display_info.cc",
@@ -64,6 +64,10 @@ jumbo_component("manager") {
   ]
 
   defines = [ "DISPLAY_MANAGER_IMPLEMENTATION" ]
+
+  if (internal_window_mode) {
+    defines += [ "INTERNAL_WINDOW_MODE" ]
+  }
 
   if (is_chromeos) {
     deps += [ "//chromeos" ]

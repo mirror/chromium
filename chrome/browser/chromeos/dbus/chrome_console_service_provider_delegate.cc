@@ -7,7 +7,7 @@
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/internal/display_configurator.h"
 
 namespace chromeos {
 
