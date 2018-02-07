@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "f1c0ca7b_381b52b5",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 11137,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2018-02-07T10:38:24Z",
+      "side": 1,
+      "message": "IIUC default_for_enterprise_users only affects user policy and is a no-op for device policy, so it would be misleading to have it here.\nSee crbug.com/809653",
+      "parentUuid": "829777a4_80ebbc04",
+      "range": {
+        "startLine": 11137,
+        "startChar": 6,
+        "endLine": 11137,
+        "endChar": 26
+      },
+      "revId": "9ec961d844f875f1b25687a78d4b5afc4b1bea97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7abb77f4_6bc21763",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 6
