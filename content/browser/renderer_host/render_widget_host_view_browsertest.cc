@@ -107,7 +107,8 @@ class RenderWidgetHostViewBrowserTest : public ContentBrowserTest {
   // Callback when using CopyFromSurface() API.
   void FinishCopyFromSurface(const base::Closure& quit_closure,
                              const SkBitmap& bitmap,
-                             ReadbackResponse response) {
+                             ReadbackResponse response,
+                             bool at_top) {
     ++callback_invoke_count_;
     if (response == READBACK_SUCCESS) {
       ++frames_captured_;
@@ -330,7 +331,8 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
 
   void ReadbackRequestCallbackTest(base::Closure quit_callback,
                                    const SkBitmap& bitmap,
-                                   ReadbackResponse response) {
+                                   ReadbackResponse response,
+                                   bool at_top) {
     readback_response_ = response;
     if (response != READBACK_SUCCESS) {
       quit_callback.Run();

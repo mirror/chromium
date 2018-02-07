@@ -57,6 +57,9 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
   // Returns the requested result format.
   ResultFormat result_format() const { return result_format_; }
 
+  void set_at_top(bool at_top) { at_top_ = at_top; }
+  bool at_top() { return at_top_; }
+
   // Requests that the result callback be run as a task posted to the given
   // |task_runner|. If this is not set, the result callback could be run from
   // any context.
@@ -138,6 +141,7 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
                                    std::unique_ptr<CopyOutputRequest>>;
 
   const ResultFormat result_format_;
+  bool at_top_ = false;
   CopyOutputRequestCallback result_callback_;
   scoped_refptr<base::TaskRunner> result_task_runner_;
   gfx::Vector2d scale_from_;

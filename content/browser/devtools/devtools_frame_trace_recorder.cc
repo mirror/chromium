@@ -60,8 +60,10 @@ class TraceableDevToolsScreenshot
   SkBitmap frame_;
 };
 
-void FrameCaptured(base::TimeTicks timestamp, const SkBitmap& bitmap,
-    ReadbackResponse response) {
+void FrameCaptured(base::TimeTicks timestamp,
+                   const SkBitmap& bitmap,
+                   ReadbackResponse response,
+                   bool at_top) {
   if (response != READBACK_SUCCESS)
     return;
   int current_frame_count = base::subtle::NoBarrier_Load(&frame_data_count);

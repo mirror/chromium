@@ -55,7 +55,8 @@ class CONTENT_EXPORT NavigationEntryScreenshotManager {
   // This sets the screenshot on the navigation entry.
   void OnScreenshotTaken(int unique_id,
                          const SkBitmap& bitmap,
-                         ReadbackResponse response);
+                         ReadbackResponse response,
+                         bool at_top);
 
   // Returns the number of entries with screenshots.
   int GetScreenshotCount() const;
