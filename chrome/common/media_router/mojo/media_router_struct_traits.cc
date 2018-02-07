@@ -203,6 +203,12 @@ bool StructTraits<media_router::mojom::MediaRouteDataView,
 
   out->set_media_sink_id(media_sink_id);
 
+  media_router::MediaRouteProviderId provider_id;
+  if (!data.ReadProviderId(&provider_id))
+    return false;
+
+  out->set_provider_id(provider_id);
+
   std::string description;
   if (!data.ReadDescription(&description))
     return false;

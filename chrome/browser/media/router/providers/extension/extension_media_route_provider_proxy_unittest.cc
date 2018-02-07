@@ -55,6 +55,7 @@ class ExtensionMediaRouteProviderProxyTest : public testing::Test {
 
  protected:
   void SetUp() override {
+    route_.set_provider_id(MediaRouteProviderId::EXTENSION);
     request_manager_ = static_cast<MockEventPageRequestManager*>(
         EventPageRequestManagerFactory::GetInstance()->SetTestingFactoryAndUse(
             &profile_, &MockEventPageRequestManager::Create));
@@ -70,12 +71,8 @@ class ExtensionMediaRouteProviderProxyTest : public testing::Test {
   }
 
   const MediaSource media_source_ = MediaSource(kSource);
-  const MediaRoute route_ = MediaRoute(kRouteId,
-                                       media_source_,
-                                       kSinkId,
-                                       kDescription,
-                                       false,
-                                       false);
+  MediaRoute route_ =
+      MediaRoute(kRouteId, media_source_, kSinkId, kDescription, false, false);
   std::unique_ptr<ExtensionMediaRouteProviderProxy> provider_proxy_;
   mojom::MediaRouteProviderPtr provider_proxy_ptr_;
   StrictMock<MockMediaRouteProvider> mock_provider_;
