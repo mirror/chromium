@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//media/media_options.gni")
 import("//third_party/libaom/options.gni")
 
-source_set("filters") {
+jumbo_source_set("filters") {
   # Do not expand the visibility here without double-checking with OWNERS, this
   # is a roll-up target which is part of the //media component. Most other DEPs
   # should be using //media and not directly DEP this roll-up target.
@@ -90,6 +91,11 @@ source_set("filters") {
     "wsola_internals.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "source_buffer_stream.cc",
+  ]
+
   configs += [
     # TODO(crbug.com/167187): Fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",
@@ -145,6 +151,10 @@ source_set("filters") {
         "media_file_checker.cc",
         "media_file_checker.h",
       ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "media_file_checker.cc",
+      ]
     }
   }
 
@@ -160,6 +170,10 @@ source_set("filters") {
     sources += [
       "aom_video_decoder.cc",
       "aom_video_decoder.h",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols (GetThreadCount())
+      "aom_video_decoder.cc",
     ]
     deps += [ "//third_party/libaom" ]
   }
@@ -185,6 +199,10 @@ source_set("filters") {
       sources += [
         "ffmpeg_video_decoder.cc",
         "ffmpeg_video_decoder.h",
+      ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "ffmpeg_video_decoder.cc",  # kDecodeThreads, kMaxDecodeThreads, GetThreadCount()
       ]
     }
   }

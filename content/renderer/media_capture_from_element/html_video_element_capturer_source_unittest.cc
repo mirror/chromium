@@ -21,6 +21,7 @@ using ::testing::Mock;
 using ::testing::SaveArg;
 
 namespace content {
+namespace html_video_element_capturer_source_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -194,4 +195,5 @@ TEST_F(HTMLVideoElementCapturerSourceTest,
   Mock::VerifyAndClearExpectations(this);
 }
 
+}  // namespace html_video_element_capturer_source_unittest
 }  // namespace content

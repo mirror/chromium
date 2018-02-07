@@ -62,8 +62,7 @@ using ui::DidOverscrollParams;
 using ui::WebInputEventTraits;
 
 namespace content {
-
-namespace {
+namespace input_router_impl_unittest {
 
 bool ShouldBlockEventStream(const blink::WebInputEvent& event) {
   return ui::WebInputEventTraits::ShouldBlockEventStream(
@@ -99,8 +98,6 @@ enum WheelScrollingMode {
   kWheelScrollLatching,
   kAsyncWheelEvents,
 };
-
-}  // namespace
 
 // TODO(dtapuska): Remove this class when we don't have multiple implementations
 // of InputRouters.
@@ -2386,4 +2383,6 @@ TEST_F(InputRouterImplScaleGestureEventTest, MAYBE_GestureFlingStart) {
   EXPECT_FLOAT_EQ(sent_delta_x, 2 * filter_event->data.scroll_update.delta_x);
   EXPECT_FLOAT_EQ(sent_delta_y, 2 * filter_event->data.scroll_update.delta_y);
 }
+
+}  // namespace input_router_impl_unittest
 }  // namespace content

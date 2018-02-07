@@ -37,6 +37,10 @@ class VideoCaptureManager;
 using MediaDeviceEnumeration =
     std::array<MediaDeviceInfoArray, NUM_MEDIA_DEVICE_TYPES>;
 
+namespace media_devices_manager_unittest {
+class MediaDevicesManagerTest;
+}
+
 // MediaDevicesManager is responsible for doing media-device enumerations.
 // In addition it implements caching for enumeration results and device
 // monitoring in order to keep caches consistent.
@@ -128,7 +132,7 @@ class CONTENT_EXPORT MediaDevicesManager
   }
 
  private:
-  friend class MediaDevicesManagerTest;
+  friend class media_devices_manager_unittest::MediaDevicesManagerTest;
   struct EnumerationRequest;
 
   struct SubscriptionRequest {

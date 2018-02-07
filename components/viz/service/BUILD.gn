@@ -155,6 +155,15 @@ viz_component("service") {
     "viz_service_export.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Macros colliding between third_party/mesa/src/include/GL/glext.h
+    #    and gpu/GPLES2/gl2extchromium.h
+    "gl/gpu_service_impl.cc", # GL_FALSE, GL_TRUE, GL_ZERO, GL_ONE,
+                              # GL_NONE, GL_NO_ERROR, ....
+
+    # Symbols
+  ]
+
   defines = [ "VIZ_SERVICE_IMPLEMENTATION" ]
 
   configs = [ "//build/config/compiler:no_size_t_to_int_warning" ]
@@ -254,6 +263,7 @@ viz_component("service") {
 }
 
 viz_source_set("unit_tests") {
+  never_build_jumbo = true  # Not tested but bots don't like it.
   testonly = true
   sources = [
     "display/bsp_tree_unittest.cc",

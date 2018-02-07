@@ -20,7 +20,7 @@ cd "$1"
   --enable-gold=default \
   --enable-plugins \
   --enable-threads \
-  --prefix=/build/output
+  --prefix=/home/bratell/src/binutils/build/output
 
 
 make -j8 all

@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("resource_coordinator_cpp_base") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("resource_coordinator_cpp_base") {
   sources = [
     "coordination_unit_id.cc",
     "coordination_unit_id.h",
@@ -17,7 +19,7 @@ component("resource_coordinator_cpp_base") {
   ]
 }
 
-component("resource_coordinator_cpp") {
+jumbo_component("resource_coordinator_cpp") {
   sources = [
     "frame_resource_coordinator.cc",
     "frame_resource_coordinator.h",

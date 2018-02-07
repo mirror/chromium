@@ -21,11 +21,15 @@ import os
 NOOP_FILE_SUFFIXES = (
   ".css",
   ".g",
+  ".hpp",
   ".idl",
+  ".inl",
   ".inc",
+  ".inl",
   ".js",
   ".json",
   ".py",
+  ".y",
 )
 
 

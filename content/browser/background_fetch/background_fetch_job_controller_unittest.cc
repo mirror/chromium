@@ -30,7 +30,7 @@
 using testing::_;
 
 namespace content {
-namespace {
+namespace background_fetch_job_controller_unittest {
 
 const int64_t kExampleServiceWorkerRegistrationId = 1;
 const char kExampleDeveloperId[] = "my-example-id";
@@ -312,5 +312,5 @@ TEST_F(BackgroundFetchJobControllerTest, Progress) {
   EXPECT_EQ(last_downloaded_, strlen(kExampleResponseData));
 }
 
-}  // namespace
+}  // namespace background_fetch_job_controller_unittest
 }  // namespace content

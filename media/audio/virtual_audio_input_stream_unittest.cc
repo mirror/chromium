@@ -26,8 +26,7 @@ using ::testing::InvokeWithoutArgs;
 using ::testing::NotNull;
 
 namespace media {
-
-namespace {
+namespace virtual_audio_input_stream_unittest {
 
 const AudioParameters kParams(
     AudioParameters::AUDIO_PCM_LOW_LATENCY, CHANNEL_LAYOUT_STEREO, 8000, 8, 10);
@@ -94,8 +93,6 @@ class TestAudioSource : public SineWaveAudioSource {
 
   DISALLOW_COPY_AND_ASSIGN(TestAudioSource);
 };
-
-}  // namespace
 
 class VirtualAudioInputStreamTest : public testing::TestWithParam<bool> {
  public:
@@ -355,4 +352,5 @@ INSTANTIATE_TEST_CASE_P(SingleVersusMultithreaded,
                         VirtualAudioInputStreamTest,
                         ::testing::Values(false, true));
 
+}  // namespace virtual_audio_input_stream_unittest
 }  // namespace media

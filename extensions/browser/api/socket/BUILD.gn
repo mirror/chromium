@@ -2,12 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 
 assert(enable_extensions,
        "Cannot depend on extensions because enable_extensions=false.")
 
-source_set("socket") {
+jumbo_source_set("socket") {
   sources = [
     "socket.cc",
     "socket.h",
@@ -19,6 +20,11 @@ source_set("socket") {
     "tls_socket.h",
     "udp_socket.cc",
     "udp_socket.h",
+  ]
+
+  jumbo_excluded_sources = [
+    "tcp_socket.cc",
+    "udp_socket.cc",
   ]
 
   if (is_chromeos) {

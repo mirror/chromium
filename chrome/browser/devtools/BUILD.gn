@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 
 if (!is_android) {
@@ -98,7 +99,7 @@ if (!is_android) {
   }
 }
 
-static_library("devtools") {
+jumbo_static_library("devtools") {
   # Note: new sources and deps should be generally added in (!is_android) below.
   sources = [
     "devtools_protocol.cc",
@@ -194,6 +195,17 @@ static_library("devtools") {
       "serialize_host_descriptions.h",
       "url_constants.cc",
       "url_constants.h",
+    ]
+
+    jumbo_excluded_sources = [
+      "device/adb/adb_device_provider.cc",  # kHostTransportCommand
+      "device/android_device_manager.cc",  # kBufferSize
+      "device/android_web_socket.cc",  # kBufferSize
+      "device/devtools_device_discovery.cc",  # kWebViewSocketPrefix, NoOp
+      "device/port_forwarding_controller.cc",  # kBufferSize
+      "device/usb/android_usb_socket.cc",  # kMaxPayload
+      "device/usb/usb_device_provider.cc",  # kBufferSize
+      "devtools_file_watcher.cc",  # impl_task_runner()
     ]
     if (enable_service_discovery) {
       sources += [

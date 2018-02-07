@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("security_interstitial_page") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("security_interstitial_page") {
   sources = [
     "security_interstitial_controller_client.cc",
     "security_interstitial_controller_client.h",

@@ -1154,4 +1154,6 @@ bool QuicSession::use_control_frame_manager() const {
   return connection_->use_control_frame_manager();
 }
 
+#undef ENDPOINT
+
 }  // namespace net

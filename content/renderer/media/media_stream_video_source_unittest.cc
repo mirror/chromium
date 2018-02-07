@@ -28,6 +28,7 @@ using ::testing::DoAll;
 using ::testing::SaveArg;
 
 namespace content {
+namespace media_stream_video_source_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -693,4 +694,5 @@ TEST_F(MediaStreamVideoSourceTest, StopSuspendedTrack) {
   EXPECT_FALSE(mock_source()->is_suspended());
 }
 
+}  // namespace media_stream_video_source_unittest
 }  // namespace content

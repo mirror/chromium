@@ -36,6 +36,7 @@ using ::testing::ValuesIn;
 using blink::WebString;
 
 namespace content {
+namespace media_recorder_handler_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -434,4 +435,5 @@ TEST_P(MediaRecorderHandlerTest, WebmMuxerErrorWhileEncoding) {
   media_recorder_handler_.reset();
 }
 
+}  // namespace media_recorder_handler_unittest
 }  // namespace content

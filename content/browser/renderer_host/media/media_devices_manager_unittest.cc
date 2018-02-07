@@ -33,8 +33,7 @@ using testing::_;
 using testing::SaveArg;
 
 namespace content {
-
-namespace {
+namespace media_devices_manager_unittest {
 
 const int kRenderProcessId = 1;
 const int kRenderFrameId = 3;
@@ -147,8 +146,6 @@ class MockMediaDevicesListener : public blink::mojom::MediaDevicesListener {
  private:
   mojo::BindingSet<blink::mojom::MediaDevicesListener> bindings_;
 };
-
-}  // namespace
 
 class MediaDevicesManagerTest : public ::testing::Test {
  public:
@@ -681,4 +678,5 @@ TEST_F(MediaDevicesManagerTest, GuessVideoGroupID) {
             short_label_video.device_id);
 }
 
+}  // namespace media_devices_manager_unittest
 }  // namespace content

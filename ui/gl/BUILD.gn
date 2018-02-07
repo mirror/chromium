@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/chrome_build.gni")
 import("//build/config/linux/pkg_config.gni")
 import("//build/config/ui.gni")
@@ -45,7 +46,7 @@ config("gl_config") {
   }
 }
 
-component("gl") {
+jumbo_component("gl") {
   output_name = "gl_wrapper"  # Avoid colliding with OS X"s libGL.dylib.
 
   sources = [
@@ -145,6 +146,20 @@ component("gl") {
     "trace_util.h",
   ]
 
+  jumbo_excluded_sources = [
+    # OSMesaCreateContext and other functions are declared as a macro
+    # in gl/gl_bindings_autogen_osmesa.cc and as a function in
+    # <GL/osmesa.h>. gl_context_osmesa.cc, gl_surface_osmesa.cc use
+    # <GL/osmesa.h> so can't compile with the rest.
+    "gl_context_osmesa.cc",
+    "gl_surface_osmesa.cc",
+
+    # glActiveTexture and other macros are defined both in
+    # <GLES2/gl2.h> and in "gpu/GLES2/gl2chromium_autogen.h".
+    # gl_enums use <GLES2/gl2.h> so can't compile with the rest.
+    "gl_enums.cc",
+  ]
+
   configs += [ "//build/config:precompiled_headers" ]
   defines = [ "GL_IMPLEMENTATION" ]
 
@@ -199,6 +214,10 @@ component("gl") {
       sources += [
         "gl_image_native_pixmap.cc",
         "gl_image_native_pixmap.h",
+      ]
+      jumbo_excluded_sources += [
+        # Symbols
+        "gl_image_native_pixmap.cc",
       ]
     }
 
@@ -258,6 +277,11 @@ component("gl") {
       "gl_surface_glx.h",
       "gl_visual_picker_glx.cc",
       "gl_visual_picker_glx.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # Symbols
+      "gl_surface_glx.cc",
     ]
 
     configs += [
@@ -336,7 +360,7 @@ component("gl") {
   }
 }
 
-static_library("gl_unittest_utils") {
+jumbo_static_library("gl_unittest_utils") {
   testonly = true
   sources = [
     "egl_bindings_autogen_mock.cc",
@@ -352,6 +376,11 @@ static_library("gl_unittest_utils") {
     "gpu_timing_fake.cc",
     "gpu_timing_fake.h",
   ]
+  jumbo_excluded_sources = [
+    # Shares a MakeFunctionUnique with gl_bindings_autogen_mock.cc and
+    # a MockInvalidFunction with ... also gl_bindings_autogen_mock.cc.
+    "egl_bindings_autogen_mock.cc",
+  ]
 
   configs += [ "//third_party/khronos:khronos_headers" ]
 
@@ -362,7 +391,7 @@ static_library("gl_unittest_utils") {
   ]
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "test/gl_image_test_support.cc",

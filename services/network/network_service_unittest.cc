@@ -25,7 +25,7 @@
 
 namespace network {
 
-namespace {
+namespace network_service_unittest {
 
 const char kNetworkServiceName[] = "network";
 
@@ -464,6 +464,6 @@ TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
   manager_client.WaitForNotification(mojom::ConnectionType::CONNECTION_3G);
 }
 
-}  // namespace
+}  // namespace network_service_unittest
 
 }  // namespace network

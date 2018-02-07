@@ -39,15 +39,13 @@ bool operator==(const WebTouchEvent& lhs, const WebTouchEvent& rhs) {
 }  // namespace blink
 
 namespace content {
-namespace {
+namespace main_thread_event_queue_unittest {
 
 // Simulate a 16ms frame signal.
 const base::TimeDelta kFrameInterval = base::TimeDelta::FromMilliseconds(16);
 
 const char* kCoalescedCountHistogram =
     "Event.MainThreadEventQueue.CoalescedCount";
-
-}  // namespace
 
 class HandledTask {
  public:
@@ -1404,4 +1402,5 @@ TEST_F(MainThreadEventQueueTest, UnbufferedDispatchMouseEvent) {
   EXPECT_FALSE(needs_main_frame_);
 }
 
+}  // namespace main_thread_event_queue_unittest
 }  // namespace content

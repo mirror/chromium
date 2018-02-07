@@ -15,8 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-
-namespace {
+namespace background_fetch_delegate_proxy_unittest {
 
 const char kExampleUniqueId[] = "7e57ab1e-c0de-a150-ca75-1e75f005ba11";
 const char kExampleUniqueId2[] = "17467386-60b4-4c5b-b66c-aabf793fd39b";
@@ -126,8 +125,6 @@ scoped_refptr<BackgroundFetchRequestInfo> CreateRequestInfo(
   return request;
 }
 
-}  // namespace
-
 TEST_F(BackgroundFetchDelegateProxyTest, SetDelegate) {
   EXPECT_TRUE(delegate_.client().get());
 }
@@ -203,4 +200,5 @@ TEST_F(BackgroundFetchDelegateProxyTest, Abort) {
   EXPECT_TRUE(controller2.request_completed_) << "Normal job did not complete";
 }
 
+}  // namespace background_fetch_delegate_proxy_unittest
 }  // namespace content

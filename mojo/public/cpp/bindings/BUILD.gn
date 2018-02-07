@@ -3,6 +3,10 @@
 # found in the LICENSE file.
 
 import("//build/buildflag_header.gni")
+import("//build/config/jumbo.gni")
+
+# Can't do jumbo_component because there is another bindings target in
+# interfaces which use the same output directory.
 declare_args() {
   enable_mojo_tracing = false
 }
@@ -15,7 +19,7 @@ buildflag_header("mojo_features") {
 
 # Headers and sources which generated bindings can depend upon. No need for
 # other targets to depend on this directly: just use the "bindings" target.
-component("bindings_base") {
+jumbo_component("bindings_base") {
   sources = [
     "array_data_view.h",
     "array_traits.h",
@@ -93,7 +97,27 @@ component("bindings_base") {
   ]
 }
 
-component("bindings") {
+jumbo_component("bindings") {
+  never_build_jumbo = true # Strange error with two bindings_jumbo_1.cc
+#   public_deps = [
+#     ":mojo_features",
+#     ":struct_traits",
+#     "//base",
+#     "//ipc:message_support",
+#     "//ipc:param_traits",
+#     "//mojo/public/cpp/system",
+#   ]
+
+#   deps = [
+#     ":bindings_sources",
+#     "//base",
+#     "//ipc:native_handle_type_converters",
+#     "//mojo/public/interfaces/bindings:bindings__generator",
+#     "//mojo/public/interfaces/bindings:bindings_shared__generator",
+#   ]
+# }
+
+# jumbo_source_set("bindings_sources") {
   sources = [
     "associated_binding.h",
     "associated_binding_set.h",
@@ -169,7 +193,7 @@ component("bindings") {
     "//mojo/public/interfaces/bindings",
   ]
 
-  deps = [
+  public_deps += [
     "//ipc:native_handle_type_converters",
   ]
 

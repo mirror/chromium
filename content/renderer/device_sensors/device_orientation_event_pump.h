@@ -11,6 +11,12 @@
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 
 namespace content {
+namespace device_orientation_event_pump_unittest {
+class DeviceAbsoluteOrientationEventPumpTest;
+class DeviceOrientationEventPumpTest;
+FORWARD_DECLARE_TEST(DeviceOrientationEventPumpTest,
+                     SensorInitializedButItsSharedBufferIsNot);
+}  // namespace device_orientation_event_pump_unittest
 
 class RenderThread;
 
@@ -40,8 +46,8 @@ class CONTENT_EXPORT DeviceOrientationEventPump
   SensorEntry absolute_orientation_sensor_;
 
  private:
-  friend class DeviceOrientationEventPumpTest;
-  friend class DeviceAbsoluteOrientationEventPumpTest;
+  friend device_orientation_event_pump_unittest::DeviceOrientationEventPumpTest;
+  friend device_orientation_event_pump_unittest::DeviceAbsoluteOrientationEventPumpTest;
 
   // DeviceSensorEventPump:
   bool SensorsReadyOrErrored() const override;
