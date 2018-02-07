@@ -11,6 +11,7 @@
 namespace blink {
 
 class HTMLVideoElement;
+class PictureInPictureWindow;
 
 class MODULES_EXPORT PictureInPictureController
     : public GarbageCollectedFinalized<PictureInPictureController>,
@@ -47,6 +48,14 @@ class MODULES_EXPORT PictureInPictureController
 
   HTMLVideoElement* PictureInPictureElement() const;
 
+  // Meant to be called by HTMLVideoElementPictureInPicture, and DOM objects but
+  // not internally.
+  PictureInPictureWindow* CreatePictureInPictureWindow(int, int);
+
+  // Meant to be called by DocumentPictureInPicture,
+  // HTMLVideoElementPictureInPicture, and DOM objects but not internally.
+  void SetNullDimensionsForPictureInPictureWindow();
+
   void Trace(blink::Visitor*) override;
 
  private:
@@ -55,6 +64,9 @@ class MODULES_EXPORT PictureInPictureController
   bool picture_in_picture_enabled_ = true;
 
   Member<HTMLVideoElement> picture_in_picture_element_;
+
+  // The Picture-in-Picture window for the associated document.
+  Member<PictureInPictureWindow> picture_in_picture_window_;
 };
 
 }  // namespace blink
