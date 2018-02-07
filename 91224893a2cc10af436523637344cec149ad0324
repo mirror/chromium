@@ -46,6 +46,30 @@
       "revId": "91224893a2cc10af436523637344cec149ad0324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61773b5_101e9e3d",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-02-07T18:09:54Z",
+      "side": 1,
+      "message": "Showing up in feedback report is a great thing to have. Let\u0027s use LOG for this purpose.",
+      "parentUuid": "cbbc0ba9_cae9f323",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 7
+      },
+      "revId": "91224893a2cc10af436523637344cec149ad0324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
