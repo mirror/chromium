@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7efbe68a_a3c67527",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2018-02-07T00:33:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure the context for this string, but consider whether it should end in a period.",
+      "range": {
+        "startLine": 682,
+        "startChar": 39,
+        "endLine": 682,
+        "endChar": 0
+      },
+      "revId": "403e58369394906fe619472bf596215883886bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
