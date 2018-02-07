@@ -79,7 +79,21 @@
 #endif
 
 #if defined(OS_WIN)
+#include <vector>
+
+#include "base/files/file_path.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/path_service.h"
+#include "base/sha1.h"
+#include "base/strings/string16.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
+#include "base/win/windows_version.h"
+#include "sandbox/win/src/app_container_profile.h"
 #include "sandbox/win/src/sandbox_policy.h"
+#include "sandbox/win/src/sid.h"
 #include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/gfx/switches.h"
 #include "ui/gfx/win/rendering_window_manager.h"
@@ -232,6 +246,17 @@ void OnGpuProcessHostDestroyedOnUI(int host_id, const std::string& message) {
 #endif
 }
 
+enum class GPUAppContainerStatus {
+  SUCCESS = 0,
+  EXE_FILE = 1,
+  PROFILE_CREATE = 2,
+  IMPERSONATION_CAP = 3,
+  BASE_CAP = 4,
+  ACCESS_CHECK = 5,
+  PREVIOUS_CRASH = 6,
+  MAX_STATUS,
+};
+
 // NOTE: changes to this class need to be reviewed by the security team.
 class GpuSandboxedProcessLauncherDelegate
     : public SandboxedProcessLauncherDelegate {
@@ -250,6 +275,8 @@ class GpuSandboxedProcessLauncherDelegate
   bool DisableDefaultPolicy() override {
     return true;
   }
+
+  static void DisableAppContainer() { disable_appcontainer_ = true; }
 
   // For the GPU process we gotten as far as USER_LIMITED. The next level
   // which is USER_RESTRICTED breaks both the DirectX backend and the OpenGL
@@ -280,18 +307,15 @@ class GpuSandboxedProcessLauncherDelegate
               JOB_OBJECT_UILIMIT_EXITWINDOWS |
               JOB_OBJECT_UILIMIT_DISPLAYSETTINGS,
           policy);
-
-      policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+      scoped_refptr<sandbox::AppContainerProfile> profile;
+      if (IsAppContainerEnabled() && GetAppContainerProfile(&profile)) {
+        sandbox::ResultCode result =
+            policy->SetAppContainerProfile(profile.get());
+        DCHECK(result == sandbox::SBOX_ALL_OK);
+      } else {
+        policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+      }
     }
-
-    // Allow the server side of GPU sockets, which are pipes that have
-    // the "chrome.gpu" namespace and an arbitrary suffix.
-    sandbox::ResultCode result = policy->AddRule(
-        sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
-        sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
-        L"\\\\.\\pipe\\chrome.gpu.*");
-    if (result != sandbox::SBOX_ALL_OK)
-      return false;
 
     // Block this DLL even if it is not loaded by the browser process.
     policy->AddDllToUnload(L"cmsetac.dll");
@@ -299,9 +323,9 @@ class GpuSandboxedProcessLauncherDelegate
     if (cmd_line_.HasSwitch(switches::kEnableLogging)) {
       base::string16 log_file_path = logging::GetLogFileFullPath();
       if (!log_file_path.empty()) {
-        result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
-                                 sandbox::TargetPolicy::FILES_ALLOW_ANY,
-                                 log_file_path.c_str());
+        sandbox::ResultCode result = policy->AddRule(
+            sandbox::TargetPolicy::SUBSYS_FILES,
+            sandbox::TargetPolicy::FILES_ALLOW_ANY, log_file_path.c_str());
         if (result != sandbox::SBOX_ALL_OK)
           return false;
       }
@@ -323,9 +347,120 @@ class GpuSandboxedProcessLauncherDelegate
 
  private:
 #if defined(OS_WIN)
+
+  static void RecordAppContainerStatus(GPUAppContainerStatus status) {
+    base::UmaHistogramSparse("GPU.AppContainer.Status",
+                             static_cast<int>(status));
+  }
+
+  static bool GetAppContainerProfile(
+      scoped_refptr<sandbox::AppContainerProfile>* profile) {
+    if (disable_appcontainer_) {
+      DLOG(ERROR) << "AppContainer disabled due to previous crash";
+      RecordAppContainerStatus(GPUAppContainerStatus::PREVIOUS_CRASH);
+      return false;
+    }
+
+    base::FilePath file_exe;
+    if (!base::PathService::Get(base::FILE_EXE, &file_exe)) {
+      RecordAppContainerStatus(GPUAppContainerStatus::EXE_FILE);
+      return false;
+    }
+
+    std::string normalized_exe_path =
+        base::WideToUTF8(base::ToLowerASCII(file_exe.value()));
+    std::string sha1 = base::SHA1HashString(normalized_exe_path);
+    std::string profile_name = "Chrome.GPU.Sandbox.";
+    profile_name += base::HexEncode(sha1.data(), sha1.size());
+
+    auto profile_check = sandbox::AppContainerProfile::Create(
+        base::UTF8ToWide(profile_name).c_str(), L"Chrome GPU Sandbox",
+        L"Profile for Chrome GPU Sandbox");
+    if (!profile_check) {
+      DLOG(ERROR) << "AppContainerProfile::Create() failed";
+      RecordAppContainerStatus(GPUAppContainerStatus::PROFILE_CREATE);
+      return false;
+    }
+
+    const wchar_t* impersonation_caps[] = {
+        L"chromeInstallFiles",
+    };
+
+    for (const wchar_t* cap : impersonation_caps) {
+      if (!profile_check->AddImpersonationCapability(cap)) {
+        DLOG(ERROR)
+            << "AppContainerProfile::AddImpersonationCapability() failed";
+        RecordAppContainerStatus(GPUAppContainerStatus::IMPERSONATION_CAP);
+        return false;
+      }
+    }
+
+    std::vector<base::string16> base_caps = {
+        L"lpacChromeInstallFiles", L"registryRead",
+    };
+
+    const base::CommandLine& command_line =
+        *base::CommandLine::ForCurrentProcess();
+
+    auto cmdline_caps = base::SplitString(
+        command_line.GetSwitchValueNative(
+            service_manager::switches::kAddGpuAppContainerCaps),
+        L",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+    base_caps.insert(base_caps.end(), cmdline_caps.begin(), cmdline_caps.end());
+
+    for (const auto& cap : base_caps) {
+      if (!profile_check->AddCapability(cap.c_str())) {
+        DLOG(ERROR) << "AppContainerProfile::AddCapability() failed";
+        RecordAppContainerStatus(GPUAppContainerStatus::BASE_CAP);
+        return false;
+      }
+    }
+
+    DWORD granted_access;
+    BOOL granted_access_status;
+    if (!profile_check->AccessCheck(file_exe.value().c_str(), SE_FILE_OBJECT,
+                                    GENERIC_READ | GENERIC_EXECUTE,
+                                    &granted_access, &granted_access_status) ||
+        !granted_access_status) {
+      DLOG(ERROR) << "AppContainerProfile::AccessCheck() failed";
+      RecordAppContainerStatus(GPUAppContainerStatus::ACCESS_CHECK);
+      return false;
+    }
+
+    if (!command_line.HasSwitch(service_manager::switches::kDisableGpuLpac)) {
+      profile_check->SetEnableLowPrivilegeAppContainer(true);
+    }
+
+    RecordAppContainerStatus(GPUAppContainerStatus::SUCCESS);
+    *profile = profile_check;
+    return true;
+  }
+
+  static bool IsAppContainerEnabled() {
+    if (base::win::GetVersion() < base::win::VERSION_WIN10_RS1)
+      return false;
+    const base::CommandLine& command_line =
+        *base::CommandLine::ForCurrentProcess();
+    const std::string appcontainer_group_name =
+        base::FieldTrialList::FindFullName("EnableGpuAppContainer");
+    if (command_line.HasSwitch(
+            service_manager::switches::kDisableGpuAppContainer))
+      return false;
+    if (command_line.HasSwitch(
+            service_manager::switches::kEnableGpuAppContainer))
+      return true;
+    return base::StartsWith(appcontainer_group_name, "Enabled",
+                            base::CompareCase::INSENSITIVE_ASCII);
+  }
+
   base::CommandLine cmd_line_;
+  static bool disable_appcontainer_;
 #endif  // OS_WIN
 };
+
+#if defined(OS_WIN)
+bool GpuSandboxedProcessLauncherDelegate::disable_appcontainer_ = false;
+#endif  // defined(OS_WIN)
 
 #if defined(OS_ANDROID)
 template <typename Interface>
@@ -1265,6 +1400,10 @@ void GpuProcessHost::RecordProcessCrash() {
 
       crashed_before_ = true;
       last_gpu_crash_time = current_time;
+#if defined(OS_WIN)
+      // TODO: Remove once GPU AppContainer enabled by default.
+      GpuSandboxedProcessLauncherDelegate::DisableAppContainer();
+#endif  // defined(OS_WIN)
 
       if ((gpu_recent_crash_count_ >= kGpuMaxCrashCount ||
            status_ == FAILURE) &&
