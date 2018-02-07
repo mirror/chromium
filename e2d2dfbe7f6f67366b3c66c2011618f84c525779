@@ -52,6 +52,24 @@
       "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6464db_20758a8c",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2018-02-07T22:47:12Z",
+      "side": 1,
+      "message": "good to know it\u0027s special cased.  then we don\u0027t need the other flag, removed.",
+      "parentUuid": "6af7d1c3_9121ffc0",
+      "revId": "e2d2dfbe7f6f67366b3c66c2011618f84c525779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
