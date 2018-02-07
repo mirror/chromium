@@ -22,6 +22,30 @@
       "revId": "24df691fe830aa731e63b1337bc6b19b5a1abca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68434ac_b6e37de8",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/service-is-removed.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2018-02-07T18:35:31Z",
+      "side": 1,
+      "message": "Sure, no problem",
+      "parentUuid": "db4641ef_f9263a1b",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "24df691fe830aa731e63b1337bc6b19b5a1abca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
