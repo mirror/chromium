@@ -227,6 +227,24 @@
       "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec97340_9eb55be4",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-02-07T11:49:05Z",
+      "side": 1,
+      "message": "I didn\u0027t read it correctly.  I updated the comment. Thanks!",
+      "parentUuid": "6a6f6a95_f1d42a85",
+      "revId": "5182ceca2f10e22cf3e2568930c7729b64ed68b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
