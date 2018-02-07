@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e05cd2b_2ebf7a7d",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T23:49:33Z",
+      "side": 1,
+      "message": "nit: Declare variables closer to first use? i.e. Move this down to between lines 515-516.",
+      "revId": "e0edf10e1e970a278a52cc5f6c263da5b9481a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
