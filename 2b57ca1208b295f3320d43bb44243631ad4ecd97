@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b6214e7_8e13b8d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 39
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-07T02:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39870508_eec47ef4",
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91076fb1_d1f58a3f",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 39
@@ -30,6 +48,30 @@
       "writtenOn": "2018-02-02T03:30:54Z",
       "side": 1,
       "message": "What\u0027s with these TODOs? Isn\u0027t that the change being made by this CL?\n\n(Am I mistaken about what PROCEED does here?) If this does make a change, can you remove this TODO, update the CL description, and add these bugs to the Bug list?",
+      "range": {
+        "startLine": 286,
+        "startChar": 5,
+        "endLine": 286,
+        "endChar": 27
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6fbdde_08f58da4",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-07T02:17:30Z",
+      "side": 1,
+      "message": "This patch maintains the status quo of all NEW_FOREGROUND_TAB navigations being captured. This includes Ctrl + Shift + Click and trying to open a new tab in a new browser window e.g. when Ctrl + Clicking a link inside an app when there are no browser windows.\n\nWe don\u0027t want to capture Ctrl + Shift + Click but we need more refactoring to be able to distinguish between Ctrl + Shift + Click and new tab in new browser window. So for now capture both types of navigations and add this TODO to ignore Ctrl + Shift + Click navigations in the future.\n\nSimilarly with NEW_WINDOW. This patch keeps the current behavior of capturing all NEW_WINDOW navigations e.g. Shift + Click. But in the future we want to only capture these navigations when they came from an app.",
+      "parentUuid": "91076fb1_d1f58a3f",
       "range": {
         "startLine": 286,
         "startChar": 5,
@@ -62,6 +104,30 @@
       "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b2c6d8_66b9103d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-07T02:17:30Z",
+      "side": 1,
+      "message": "I initially had this because macOS uses Meta instead of Ctrl. Changed it to blink::WebInputEvent::Modifiers and special cased kControlKey on macOS.",
+      "parentUuid": "b97ddad1_cc4c6b78",
+      "range": {
+        "startLine": 189,
+        "startChar": 46,
+        "endLine": 189,
+        "endChar": 54
+      },
+      "revId": "2b57ca1208b295f3320d43bb44243631ad4ecd97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
