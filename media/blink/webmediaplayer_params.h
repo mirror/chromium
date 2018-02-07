@@ -23,6 +23,9 @@
 #include "media/mojo/interfaces/media_metrics_provider.mojom.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 
+#include "base/unguessable_token.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+
 namespace base {
 class SingleThreadTaskRunner;
 class TaskRunner;

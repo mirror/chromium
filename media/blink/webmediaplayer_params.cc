@@ -7,6 +7,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/task_runner.h"
 #include "media/base/audio_renderer_sink.h"
+// #include "components/viz/common/surfaces/frame_sink_id.h"
+// #include "base/unguessable_token.h"
 
 namespace media {
 

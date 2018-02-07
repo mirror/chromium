@@ -131,6 +131,7 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
 
   virtual void PictureInPictureStarted() = 0;
   virtual void PictureInPictureStopped() = 0;
+  virtual bool IsInPictureInPictureMode() = 0;
 
   // Returns whether the media element has native controls. It does not mean
   // that the controls are currently visible.
