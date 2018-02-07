@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "55ec80a6_41e061ca",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-07T16:17:04Z",
+      "side": 1,
+      "message": "I meant, after GrowthKit has settled and testing is satisfied, disabling the server-controlled feature flag would simply fall through to line 179.\n\nI definitely agree with keeping the existing handling code until GrowthKit has been proven out.",
+      "parentUuid": "8d21b4a7_58b323e8",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 62
+      },
+      "revId": "2bef73053e569774ba2a2eb7c6a3141073ae5fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f3edfc_8dc7c106",
         "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
         "patchSetId": 5

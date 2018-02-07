@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a80a7f1f_7e2dc9a3",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-07T16:17:04Z",
+      "side": 1,
+      "message": "Done.  That reads much better.  It\u0027s amazing how quickly the forest disappears when you\u0027re editing one tree at a time.",
+      "parentUuid": "a17ff8b7_cdb422b4",
+      "range": {
+        "startLine": 206,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 38
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c16a7dd_7407f57f",
         "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-06T02:56:47Z",
       "side": 1,
       "message": "A comment here for why enabled case does not need \"detail item\" would be helpful.",
+      "range": {
+        "startLine": 190,
+        "startChar": 6,
+        "endLine": 190,
+        "endChar": 63
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c581a07_3fab7cc1",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-07T16:17:04Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment.  What this boils down to is that the code that would provide this information is private to GrowthKit.  No other clients have this use cases because they show more than one intent which cannot be distilled down to one detail text.  They all open our settings via row labeled \"Google app settings\".",
+      "parentUuid": "0c16a7dd_7407f57f",
       "range": {
         "startLine": 190,
         "startChar": 6,
@@ -68,6 +116,30 @@
       "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a320b285_ff3225b6",
+        "filename": "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1256818
+      },
+      "writtenOn": "2018-02-07T16:17:04Z",
+      "side": 1,
+      "message": "Good catch. I keep forgetting there are all these layers of potential nil/null-ness.",
+      "parentUuid": "b69869cd_a618b0bd",
+      "range": {
+        "startLine": 234,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 22
+      },
+      "revId": "f2e5d6b16f5d306f218a3484db7754d9033a8574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
