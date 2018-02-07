@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "335a4505_ec4ca8e6",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T05:52:03Z",
+      "side": 1,
+      "message": "Sure - it\u0027s to ensure that this is truly asynchronous and we don\u0027t start a layout until the next microtask.",
+      "parentUuid": "45af1d10_2aa91fff",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4246457_558b9e19",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T05:36:16Z",
       "side": 1,
       "message": "If element_ is weak, you need to check nullness every time you use it.",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce1ea0a_fa58f867",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T05:52:03Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "b4246457_558b9e19",
       "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "353b0d3e_89964630",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T05:52:03Z",
+      "side": 1,
+      "message": "So that I can use the USING_GARBAGE_COLLECTED_MIXIN macro below, and GetExecutionContext in the .cpp file.",
+      "parentUuid": "ca4576ee_0f312fda",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15a0e40_7b4c4978",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-07T05:36:16Z",
       "side": 1,
       "message": "Does this need to be a weak member?",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c6b408_24207674",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2018-02-07T05:52:03Z",
+      "side": 1,
+      "message": "I think so, so that it can be garbage collected.",
+      "parentUuid": "b15a0e40_7b4c4978",
       "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
