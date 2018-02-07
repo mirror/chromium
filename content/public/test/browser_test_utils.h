@@ -20,6 +20,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
+#include "cc/trees/render_frame_metadata.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "content/public/browser/notification_observer.h"
@@ -738,9 +739,17 @@ class MainThreadFrameObserver : public IPC::Listener {
   // Overridden IPC::Listener methods.
   bool OnMessageReceived(const IPC::Message& msg) override;
 
+  const cc::RenderFrameMetadata& last_render_frame_metadata() {
+    return last_render_frame_metadata_;
+  }
+
  private:
+  void OnRenderFrameMetadata(const cc::RenderFrameMetadata& metadata);
+  void OnWaitForNextFrameForTestsACK();
+  void QuitOnUIThread();
   void Quit();
 
+  cc::RenderFrameMetadata last_render_frame_metadata_;
   RenderWidgetHost* render_widget_host_;
   std::unique_ptr<base::RunLoop> run_loop_;
   int routing_id_;

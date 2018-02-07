@@ -27,6 +27,8 @@
 #include "cc/input/touch_action.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_host.h"
+#include "cc/trees/render_frame_metadata.h"
+#include "cc/trees/render_frame_metadata_observer.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "content/common/drag_event_source_info.h"
@@ -363,6 +365,149 @@ static bool PreferCompositingToLCDText(CompositorDependencies* compositor_deps,
   return DeviceScaleEnsuresTextQuality(device_scale_factor);
 }
 
+// Implementation of cc::RenderFrameMetadataObserver which observers frame
+// submission, then notifies both the widget, and optional test interface, of
+// the metadata.
+//
+// This class operates across three threads.
+//   - Creation occurs on the renderer's main thread.
+//   - IPCs to/from the browser process occur on the IO thread.
+//   - Notifications of frame submission occur on the compositor thread.
+//
+// This class instantiates an IPC::MessageFilter which it uses to receive
+// command signals from the browser process on the IO thread. This is used so
+// that the messages are received before targeting, which occurs on the main
+// thread, which can be blocked.
+class RenderFrameMetadataObserverImpl : public cc::RenderFrameMetadataObserver {
+ public:
+  RenderFrameMetadataObserverImpl(int32_t routing_id);
+  ~RenderFrameMetadataObserverImpl() override;
+
+  // Should be ran on the compositor thread. Updates our enabled state to begin
+  // observing frame submission. Also sets |requested_routing_id| for tests.
+  void SetEnabled(bool enabled, int requested_routing_id);
+
+  // cc::RenderFrameMetadataObserver:
+  void OnRenderFrameSubmission(cc::RenderFrameMetadata* metadata) override;
+  void SetCompositorTaskRunner(scoped_refptr<base::SingleThreadTaskRunner>
+                                   compositor_task_runner) override;
+
+ private:
+  // Receives control signals from the browser proces on the IO thread. Then
+  // posts handling of these messages to the compositor thread so that
+  // RenderFrameMetadataObserverImpl can be updated appropriately
+  class RenderWidgetMessageFilter : public IPC::MessageFilter {
+   public:
+    RenderWidgetMessageFilter(RenderFrameMetadataObserverImpl* impl)
+        : impl_(impl) {}
+
+    // Sets the task runner so that callbacks to RenderFrameMetadataObserverImpl
+    // can be ran on the compositor thread.
+    void SetCompositorTaskRunner(
+        scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner);
+
+    // IPC::MessageFilter:
+    bool OnMessageReceived(const IPC::Message& message) override;
+
+   protected:
+    ~RenderWidgetMessageFilter() override {}
+
+   private:
+    // Handles the ipc for ViewMsg_WaitForNextFrameForTests
+    void OnWaitNextFrameForTests(int routing_id);
+
+    // Task runner for compositor thread. Used to run callbacks into
+    // RenderFrameMetadataObserverImpl.
+    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_ =
+        nullptr;
+    // Owns |this| used to update enabled state based on ipcs.
+    RenderFrameMetadataObserverImpl* impl_;
+    DISALLOW_COPY_AND_ASSIGN(RenderWidgetMessageFilter);
+  };
+
+  // The routing id requested by a testing interface.
+  int32_t requested_routing_id_ = 0;
+  // The routing id for the widget.
+  int32_t routing_id_;
+
+  // IPC::MessageFilter to receive control signals on the IO thread.
+  scoped_refptr<RenderWidgetMessageFilter> message_filter_;
+  // IPC::Sender used to send ipcs to the browser process on the IO thread.
+  scoped_refptr<IPC::SyncMessageFilter> sync_message_filter_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderFrameMetadataObserverImpl);
+};
+
+RenderFrameMetadataObserverImpl::RenderFrameMetadataObserverImpl(
+    int32_t routing_id)
+    : routing_id_(routing_id),
+      message_filter_(new RenderWidgetMessageFilter(this)),
+      sync_message_filter_(RenderThreadImpl::current()->sync_message_filter()) {
+  RenderThread::Get()->AddFilter(message_filter_.get());
+}
+
+RenderFrameMetadataObserverImpl::~RenderFrameMetadataObserverImpl() {
+  // Posts a task so no thread concern.
+  if (RenderThread::Get())
+    RenderThread::Get()->RemoveFilter(message_filter_.get());
+}
+
+void RenderFrameMetadataObserverImpl::SetEnabled(bool enabled,
+                                                 int requested_routing_id) {
+  // If there is no sync_message_filter then this is being used by a test where
+  // there is no gpu process, and therefore no frame submission. Crash so that
+  // the test can then be fixed.
+  CHECK(sync_message_filter_);
+  RenderFrameMetadataObserver::SetEnabled(enabled);
+  requested_routing_id_ = requested_routing_id;
+}
+
+void RenderFrameMetadataObserverImpl::OnRenderFrameSubmission(
+    cc::RenderFrameMetadata* metadata) {
+  // Notify the widget
+  sync_message_filter_->Send(
+      new ViewHostMsg_OnRenderFrameSubmitted(routing_id_, *metadata));
+
+  // Notify the test interface.
+  if (requested_routing_id_) {
+    sync_message_filter_->Send(new ViewHostMsg_OnRenderFrameSubmitted(
+        requested_routing_id_, *metadata));
+  }
+}
+
+void RenderFrameMetadataObserverImpl::SetCompositorTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner) {
+  message_filter_->SetCompositorTaskRunner(compositor_task_runner);
+}
+
+void RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    SetCompositorTaskRunner(
+        scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner) {
+  compositor_task_runner_ = compositor_task_runner;
+}
+
+bool RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    OnMessageReceived(const IPC::Message& message) {
+  // TODO(jonross): add generic control signals for non test observers in the
+  // browser process. Consume those.
+  IPC_BEGIN_MESSAGE_MAP(RenderWidgetMessageFilter, message)
+    IPC_MESSAGE_HANDLER(ViewMsg_WaitForNextFrameForTests,
+                        OnWaitNextFrameForTests)
+  IPC_END_MESSAGE_MAP()
+  // Currently do not block the propogation of this event.
+  // TODO(jonross): eliminate all usage in RenderWidget
+  return false;
+}
+
+void RenderFrameMetadataObserverImpl::RenderWidgetMessageFilter::
+    OnWaitNextFrameForTests(int routing_id) {
+  if (compositor_task_runner_) {
+    compositor_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&RenderFrameMetadataObserverImpl::SetEnabled,
+                                  base::Unretained(impl_), true, routing_id));
+  }
+}
+
 }  // namespace
 
 // RenderWidget ---------------------------------------------------------------
@@ -597,6 +742,7 @@ void RenderWidget::Init(const ShowCallback& show_callback,
   mouse_lock_dispatcher_.reset(new RenderWidgetMouseLockDispatcher(this));
 
   RenderThread::Get()->AddRoute(routing_id_, this);
+
   // Take a reference on behalf of the RenderThread.  This will be balanced
   // when we receive ViewMsg_Close.
   AddRef();
@@ -604,6 +750,10 @@ void RenderWidget::Init(const ShowCallback& show_callback,
     RenderThreadImpl::current()->WidgetCreated();
     if (is_hidden_)
       RenderThreadImpl::current()->WidgetHidden();
+    // Create the observer before the main thread is blocked by javascript. So
+    // that test IPCs can still be handle
+    compositor_->SetRenderFrameObserver(
+        std::make_unique<RenderFrameMetadataObserverImpl>(routing_id_));
   }
 }
 
