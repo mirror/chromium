@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8288402_f0ed15da",
+        "filename": "chrome/common/extensions/docs/examples/extensions/mappy/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T23:08:21Z",
+      "side": 1,
+      "message": "This is pretty inefficient.  Instead of the background page watching for tab updates and then messaging the tab to see if there\u0027s an address, the content script should just message the background page if there is one.",
+      "revId": "74cd8abf32c411a655f154c5493ac0d2821b9ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e1b538_2cf52899",
+        "filename": "chrome/common/extensions/docs/examples/extensions/mappy/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T23:08:21Z",
+      "side": 1,
+      "message": "great opportunity to use an event page :)",
+      "revId": "74cd8abf32c411a655f154c5493ac0d2821b9ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
