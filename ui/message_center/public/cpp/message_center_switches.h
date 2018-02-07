@@ -5,22 +5,18 @@
 #ifndef UI_MESSAGE_CENTER_PUBLIC_CPP_MESSAGE_CENTER_SWITCHES_H_
 #define UI_MESSAGE_CENTER_PUBLIC_CPP_MESSAGE_CENTER_SWITCHES_H_
 
+#include "base/feature_list.h"
 #include "ui/message_center/public/cpp/message_center_public_export.h"
 
 namespace message_center {
 
+// This feature controls whether the new (material design) style notifications
+// should be used.
+extern const base::Feature kNewStyleNotifications;
+
 // Returns if new style notification is enabled, i.e. NotificationViewMD is
 // used instead of NotificationView.
 bool MESSAGE_CENTER_PUBLIC_EXPORT IsNewStyleNotificationEnabled();
-
-namespace switches {
-
-MESSAGE_CENTER_PUBLIC_EXPORT extern const char
-    kEnableMessageCenterNewStyleNotification[];
-MESSAGE_CENTER_PUBLIC_EXPORT extern const char
-    kDisableMessageCenterNewStyleNotification[];
-
-}  // namespace switches
 
 }  // namespace message_center
 
