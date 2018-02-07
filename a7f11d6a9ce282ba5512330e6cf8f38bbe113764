@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd55222c_0338699d",
+        "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "957103d6_d1bd629c",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b4432e5_4fed71e9",
         "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f125d57_9496b80a",
+        "filename": "chrome/browser/extensions/api/tabs/app_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 0,
+      "message": "git cl lint will let me know about missing includes, but not unnecessary includes.  Is it expected to do the latter, too?  (But did remove session_tab_helper.h)",
+      "parentUuid": "8b4432e5_4fed71e9",
+      "range": {
+        "startLine": 77,
+        "startChar": 31,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "a7f11d6a9ce282ba5512330e6cf8f38bbe113764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6605a155_361316c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cce0534_9bec64da",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d04d48_79a5f90c",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a3b5bf_3bceae3d",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d04d48_79a5f90c",
+      "range": {
+        "startLine": 361,
+        "startChar": 14,
+        "endLine": 361,
+        "endChar": 20
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5ee8a18b_a80a3802",
+        "filename": "chrome/browser/extensions/api/tabs/windows_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ab7506_5aa3812a",
+      "range": {
+        "startLine": 209,
+        "startChar": 26,
+        "endLine": 209,
+        "endChar": 36
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163ebf39_92265b3b",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "42b82174_d21ae107",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163ebf39_92265b3b",
+      "range": {
+        "startLine": 106,
+        "startChar": 37,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881f8baf_76b84fa4",
         "filename": "chrome/browser/extensions/extension_tab_util.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71086ffb_4c75e057",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "This returns true whenever Browser::app_name_ is non-empty, and it looks like that can happen even when we create a new browser for an extension (see callers of Browser::CreateParams::CreateForApp()).\n\nThis is all pretty convoluted, and I don\u0027t feel like we\u0027ve sufficiently audited all the use cases yet to fully remove this, but I\u0027ll investigate doing so in a followup, if that SGTY?",
+      "parentUuid": "881f8baf_76b84fa4",
+      "range": {
+        "startLine": 111,
+        "startChar": 15,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "0ede49bd_6968f506",
+        "filename": "chrome/browser/extensions/extension_tab_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a7ea28_4f9cca13",
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "513806f1_8cc64010",
         "filename": "chrome/browser/extensions/extension_tab_util.h",
         "patchSetId": 3
@@ -171,6 +309,30 @@
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042355fa_783519a7",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513806f1_8cc64010",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +359,30 @@
     },
     {
       "key": {
+        "uuid": "955a6c00_60cd8f31",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98063613_b3532585",
+      "range": {
+        "startLine": 126,
+        "startChar": 15,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12649db2_d3ba7652",
         "filename": "chrome/browser/extensions/extension_tab_util.h",
         "patchSetId": 3
@@ -217,6 +403,30 @@
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851d9d0a_56ab5f16",
+        "filename": "chrome/browser/extensions/extension_tab_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12649db2_d3ba7652",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "e0c98590_df9c121a",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f08ffbe_d5333a5a",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30007ff0_4a33c362",
         "filename": "chrome/browser/extensions/window_controller.cc",
         "patchSetId": 3
@@ -266,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "c09c095c_0cae7809",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30007ff0_4a33c362",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde48906_a978193b",
         "filename": "chrome/browser/extensions/window_controller.h",
         "patchSetId": 3
@@ -286,6 +544,30 @@
       "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff7a236_af32c834",
+        "filename": "chrome/browser/extensions/window_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:35:02Z",
+      "side": 1,
+      "message": "Done, though unfortunately the comment isn\u0027t very helpful. :/",
+      "parentUuid": "fde48906_a978193b",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 75
+      },
+      "revId": "011be40a0f83cf8dbeb6a1839fe1d31abbd62edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
