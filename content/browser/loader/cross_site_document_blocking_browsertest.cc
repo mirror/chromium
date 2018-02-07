@@ -9,6 +9,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -19,10 +20,15 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/cpp/network_switches.h"
+#include "services/network/test/test_url_loader_client.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace content {
+
+using testing::Not;
+using testing::HasSubstr;
 
 namespace {
 
@@ -79,6 +85,28 @@ void InspectHistograms(const base::HistogramTester& histograms,
                 testing::ElementsAre(base::Bucket(resource_type, 1)))
         << "The wrong Blocked bucket was incremented.";
   }
+}
+
+// Simulates a HTTP GET request from |frame| to |url, intercepting results in
+// |test_client|.
+void SimulateNetworkRequestFromFrame(RenderFrameHostImpl* frame,
+                                     network::TestURLLoaderClient* test_client,
+                                     const GURL& url) {
+  // |request_id| is for compatibility with the existing Chrome IPC.
+  static int32_t request_id = 123;
+  constexpr int32_t options = 0;
+
+  network::ResourceRequest url_request;
+  url_request.url = url;
+  url_request.request_initiator = frame->GetLastCommittedOrigin();
+
+  network::mojom::URLLoaderPtr url_loader;
+  frame->url_loader_factory_for_testing()->CreateLoaderAndStart(
+      mojo::MakeRequest(&url_loader), frame->GetRoutingID(), request_id++,
+      options, url_request, test_client->CreateInterfacePtr(),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+
+  test_client->RunUntilComplete();
 }
 
 }  // namespace
@@ -319,6 +347,47 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockForVariousTargets) {
 
   // TODO(creis): Wait for all the subresources to load and ensure renderer
   // process is still alive.
+}
+
+IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockHeaders) {
+  GURL foo_url("http://foo.com/title1.html");
+  EXPECT_TRUE(NavigateToURL(shell(), foo_url));
+
+  // Simulate a network request from the frame and store the results in
+  // |loader_client|.
+  //
+  // Note: we want to verify that the blocking prevents the data from being sent
+  // over IPC.  Testing later (e.g. via Response/Headers Web APIs) might give a
+  // false sense of security, since some sanitization happens inside the
+  // renderer (e.g. via FetchResponseData::CreateCORSFilteredResponse).
+  RenderFrameHostImpl* frame = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  network::TestURLLoaderClient loader_client;
+  SimulateNetworkRequestFromFrame(
+      frame, &loader_client,
+      GURL("http://bar.com/cross_site_document_blocking/headers-test.json"));
+
+  // Verify that sensitive response headers have been removed by XSDB.
+  const std::string& headers =
+      loader_client.response_head().headers->raw_headers();
+  EXPECT_THAT(headers, Not(HasSubstr("Content-Length")));
+  EXPECT_THAT(headers, Not(HasSubstr("X-My-Secret-Header")));
+  EXPECT_THAT(headers, Not(HasSubstr("MySecretCookieKey")));
+  EXPECT_THAT(headers, Not(HasSubstr("MySecretCookieValue")));
+
+  // Verify that safelisted headers have not been removed by XSDB.
+  EXPECT_THAT(headers, HasSubstr("Content-Language: TestLanguage"));
+  EXPECT_THAT(headers,
+              HasSubstr("Content-Type: application/json; charset=utf-8"));
+  EXPECT_THAT(headers,
+              HasSubstr("Last-Modified: Wed, 07 Feb 2018 13:55:00 PST"));
+
+  // Verify that the body is empty.
+  char buffer[128];
+  uint32_t num_bytes = sizeof(buffer);
+  EXPECT_EQ(MOJO_RESULT_OK, loader_client.response_body().ReadData(
+                                buffer, &num_bytes, MOJO_READ_DATA_FLAG_NONE));
+  EXPECT_EQ(0u, num_bytes);
 }
 
 // This test class sets up a service worker that can be used to try to respond

@@ -694,6 +694,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Notifies the render frame that a user gesture was received.
   void SetHasReceivedUserGesture();
 
+  // Gets a URLLoaderFactory that can be used by tests to simulate network
+  // requests as-if they have been made from the renderer hosting this frame.
+  const network::mojom::URLLoaderFactoryPtr& url_loader_factory_for_testing() {
+    return url_loader_factory_;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -938,9 +944,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Service-backed factories and send to |RenderFrame|.
   void OnNetworkServiceConnectionError();
 
+  // Creates a Network Service-backed factory from appropriate |NetworkContext|.
+  void CreateNetworkServiceDefaultFactory(
+      network::mojom::URLLoaderFactoryRequest default_factory_request);
+
   // Creates a Network Service-backed factory from appropriate |NetworkContext|
-  // and sets a connection error handler to trigger
-  // |OnNetworkServiceConnectionError()| if the factory is out-of-process.
+  // and clones the URLLoaderFactory in order to 1) set a connection error
+  // handler that triggers |OnNetworkServiceConnectionError()| if needed and 2)
+  // enable simulating URL requests from browser tests.
   void CreateNetworkServiceDefaultFactoryAndObserve(
       network::mojom::URLLoaderFactoryRequest default_factory_request);
 
@@ -1462,11 +1473,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
   std::unique_ptr<KeepAliveHandleFactory> keep_alive_handle_factory_;
   base::TimeDelta keep_alive_timeout_;
 
-  // For observing Network Service connection errors only. Will trigger
+  // For observing Network Service connection errors. Will trigger
   // |OnNetworkServiceConnectionError()| and push updated factories to
   // |RenderFrame|.
-  network::mojom::URLLoaderFactoryPtr
-      network_service_connection_error_handler_holder_;
+  //
+  // Also exposed to tests via url_loader_factory_for_testing().
+  network::mojom::URLLoaderFactoryPtr url_loader_factory_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

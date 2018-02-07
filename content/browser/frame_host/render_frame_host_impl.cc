@@ -2201,8 +2201,8 @@ void RenderFrameHostImpl::ViewSource() {
 }
 
 void RenderFrameHostImpl::FlushNetworkAndNavigationInterfacesForTesting() {
-  DCHECK(network_service_connection_error_handler_holder_);
-  network_service_connection_error_handler_holder_.FlushForTesting();
+  DCHECK(url_loader_factory_);
+  url_loader_factory_.FlushForTesting();
 
   if (!navigation_control_)
     GetNavigationControl();
@@ -3235,7 +3235,7 @@ void RenderFrameHostImpl::ResetWaitingState() {
   }
   send_before_unload_start_time_ = base::TimeTicks();
   render_view_host_->is_waiting_for_close_ack_ = false;
-  network_service_connection_error_handler_holder_.reset();
+  url_loader_factory_.reset();
 }
 
 bool RenderFrameHostImpl::CanCommitOrigin(
@@ -4074,8 +4074,8 @@ void RenderFrameHostImpl::UpdatePermissionsForNavigation(
 
 void RenderFrameHostImpl::OnNetworkServiceConnectionError() {
   DCHECK(base::FeatureList::IsEnabled(network::features::kNetworkService));
-  DCHECK(network_service_connection_error_handler_holder_.is_bound() &&
-         network_service_connection_error_handler_holder_.encountered_error());
+  DCHECK(url_loader_factory_.is_bound() &&
+         url_loader_factory_.encountered_error());
   network::mojom::URLLoaderFactoryPtrInfo default_factory_info;
   CreateNetworkServiceDefaultFactoryAndObserve(
       mojo::MakeRequest(&default_factory_info));
@@ -4088,7 +4088,7 @@ void RenderFrameHostImpl::OnNetworkServiceConnectionError() {
       std::move(subresource_loader_factories));
 }
 
-void RenderFrameHostImpl::CreateNetworkServiceDefaultFactoryAndObserve(
+void RenderFrameHostImpl::CreateNetworkServiceDefaultFactory(
     network::mojom::URLLoaderFactoryRequest default_factory_request) {
   StoragePartitionImpl* storage_partition =
       static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
@@ -4104,17 +4104,19 @@ void RenderFrameHostImpl::CreateNetworkServiceDefaultFactoryAndObserve(
         std::move(default_factory_request), GetProcess()->GetID(),
         original_factory.PassInterface());
   }
+}
+
+void RenderFrameHostImpl::CreateNetworkServiceDefaultFactoryAndObserve(
+    network::mojom::URLLoaderFactoryRequest default_factory_request) {
+  CreateNetworkServiceDefaultFactory(mojo::MakeRequest(&url_loader_factory_));
+  url_loader_factory_->Clone(std::move(default_factory_request));
 
   // Add connection error observer when Network Service is running
   // out-of-process.
   if (IsOutOfProcessNetworkService()) {
-    storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
-        mojo::MakeRequest(&network_service_connection_error_handler_holder_),
-        GetProcess()->GetID());
-    network_service_connection_error_handler_holder_
-        .set_connection_error_handler(base::BindOnce(
-            &RenderFrameHostImpl::OnNetworkServiceConnectionError,
-            weak_ptr_factory_.GetWeakPtr()));
+    url_loader_factory_.set_connection_error_handler(
+        base::BindOnce(&RenderFrameHostImpl::OnNetworkServiceConnectionError,
+                       weak_ptr_factory_.GetWeakPtr()));
   }
 }
 
