@@ -153,7 +153,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&,
-      scoped_refptr<base::SingleThreadTaskRunner>) override;
+      scoped_refptr<base::SingleThreadTaskRunner>,
+      network::mojom::blink::URLLoaderFactoryPtr) override;
 
   ResourceLoadScheduler::ThrottlingPolicy InitialLoadThrottlingPolicy()
       const override {
