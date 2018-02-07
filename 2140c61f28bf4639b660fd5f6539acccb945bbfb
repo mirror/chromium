@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3629065b_ddbbb2b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T06:35:40Z",
+      "side": 1,
+      "message": "Laout -\u003e Layout (throughout this description)",
+      "revId": "2140c61f28bf4639b660fd5f6539acccb945bbfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
