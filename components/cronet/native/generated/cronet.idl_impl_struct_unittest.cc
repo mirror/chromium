@@ -23,30 +23,32 @@ class CronetStructTest : public ::testing::Test {
   DISALLOW_COPY_AND_ASSIGN(CronetStructTest);
 };
 
-// Test Struct Cronet_Exception setters and getters.
-TEST_F(CronetStructTest, TestCronet_Exception) {
-  Cronet_ExceptionPtr first = Cronet_Exception_Create();
-  Cronet_ExceptionPtr second = Cronet_Exception_Create();
+// Test Struct Cronet_Error setters and getters.
+TEST_F(CronetStructTest, TestCronet_Error) {
+  Cronet_ErrorPtr first = Cronet_Error_Create();
+  Cronet_ErrorPtr second = Cronet_Error_Create();
 
   // Copy values from |first| to |second|.
-  Cronet_Exception_set_error_code(second,
-                                  Cronet_Exception_get_error_code(first));
-  EXPECT_EQ(Cronet_Exception_get_error_code(first),
-            Cronet_Exception_get_error_code(second));
-  Cronet_Exception_set_internal_error_code(
-      second, Cronet_Exception_get_internal_error_code(first));
-  EXPECT_EQ(Cronet_Exception_get_internal_error_code(first),
-            Cronet_Exception_get_internal_error_code(second));
-  Cronet_Exception_set_immediately_retryable(
-      second, Cronet_Exception_get_immediately_retryable(first));
-  EXPECT_EQ(Cronet_Exception_get_immediately_retryable(first),
-            Cronet_Exception_get_immediately_retryable(second));
-  Cronet_Exception_set_quic_detailed_error_code(
-      second, Cronet_Exception_get_quic_detailed_error_code(first));
-  EXPECT_EQ(Cronet_Exception_get_quic_detailed_error_code(first),
-            Cronet_Exception_get_quic_detailed_error_code(second));
-  Cronet_Exception_Destroy(first);
-  Cronet_Exception_Destroy(second);
+  Cronet_Error_set_errorCode(second, Cronet_Error_get_errorCode(first));
+  EXPECT_EQ(Cronet_Error_get_errorCode(first),
+            Cronet_Error_get_errorCode(second));
+  Cronet_Error_set_message(second, Cronet_Error_get_message(first));
+  EXPECT_STREQ(Cronet_Error_get_message(first),
+               Cronet_Error_get_message(second));
+  Cronet_Error_set_internalErrorCode(second,
+                                     Cronet_Error_get_internalErrorCode(first));
+  EXPECT_EQ(Cronet_Error_get_internalErrorCode(first),
+            Cronet_Error_get_internalErrorCode(second));
+  Cronet_Error_set_immediatelyRetryable(
+      second, Cronet_Error_get_immediatelyRetryable(first));
+  EXPECT_EQ(Cronet_Error_get_immediatelyRetryable(first),
+            Cronet_Error_get_immediatelyRetryable(second));
+  Cronet_Error_set_quicDetailedErrorCode(
+      second, Cronet_Error_get_quicDetailedErrorCode(first));
+  EXPECT_EQ(Cronet_Error_get_quicDetailedErrorCode(first),
+            Cronet_Error_get_quicDetailedErrorCode(second));
+  Cronet_Error_Destroy(first);
+  Cronet_Error_Destroy(second);
 }
 
 // Test Struct Cronet_QuicHint setters and getters.
@@ -240,4 +242,14 @@ TEST_F(CronetStructTest, TestCronet_UrlRequestParams) {
   // TODO(mef): Test array |annotations|.
   Cronet_UrlRequestParams_Destroy(first);
   Cronet_UrlRequestParams_Destroy(second);
+}
+
+// Test Struct Cronet_RequestFinishedInfo setters and getters.
+TEST_F(CronetStructTest, TestCronet_RequestFinishedInfo) {
+  Cronet_RequestFinishedInfoPtr first = Cronet_RequestFinishedInfo_Create();
+  Cronet_RequestFinishedInfoPtr second = Cronet_RequestFinishedInfo_Create();
+
+  // Copy values from |first| to |second|.
+  Cronet_RequestFinishedInfo_Destroy(first);
+  Cronet_RequestFinishedInfo_Destroy(second);
 }
