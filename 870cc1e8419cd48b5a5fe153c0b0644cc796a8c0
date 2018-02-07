@@ -16,6 +16,24 @@
       "revId": "870cc1e8419cd48b5a5fe153c0b0644cc796a8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86e639d_c96e41b3",
+        "filename": "android_webview/browser/aw_url_checker_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T09:37:53Z",
+      "side": 1,
+      "message": "\u003e If a request continues to load even after the corresponding frame is gone (Kinuko: is that possible?)\n\nYes this should be possible.\n\nI think the behavior you described here makes sense to me (while I\u0027m not sure if over-applying SafeBrowsing could introduce any undesirable consequences; I hope not)",
+      "parentUuid": "a4977e51_0950bd5a",
+      "revId": "870cc1e8419cd48b5a5fe153c0b0644cc796a8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
