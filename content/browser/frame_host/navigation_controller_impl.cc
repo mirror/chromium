@@ -771,9 +771,10 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
 
   // For subframes, create a pending entry with a corresponding frame entry.
   int frame_tree_node_id = params.frame_tree_node_id;
-  if (frame_tree_node_id != -1 || !params.frame_name.empty()) {
+  if (frame_tree_node_id != RenderFrameHost::kNoFrameTreeNodeId ||
+      !params.frame_name.empty()) {
     FrameTreeNode* node =
-        params.frame_tree_node_id != -1
+        params.frame_tree_node_id != RenderFrameHost::kNoFrameTreeNodeId
             ? delegate_->GetFrameTree()->FindByID(params.frame_tree_node_id)
             : delegate_->GetFrameTree()->FindByName(params.frame_name);
     if (node && !node->IsMainFrame()) {
