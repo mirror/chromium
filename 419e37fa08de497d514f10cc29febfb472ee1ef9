@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "4b7d0c2f_780f32c5",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T19:21:39Z",
+      "side": 1,
+      "message": "\u003e If the object should always responsible for attaching itself we shouldn\u0027t have public WidgetObserver inheritance right (or other code would be able to attach the observer for the widget, which breaks the code).\n\nThe style guide says no private inheritance. But yes, in many cases in Chrome observer inheritance should be thought of as a private. It\u0027s an implementation detail.\n\n\u003e It\u0027s error prone because there\u0027s no automatic enforcement that the attachment is done by the observer that way. Example:\n\u003e \n\u003e Observer (public WidgetObserver):\n\u003e   void AttachToWidget(views::Widget* widget):\n\u003e     SetInitialStateBasedOnWidgetState(widget);\n\u003e     widget-\u003eAddObserver(this);\n\u003e \n\u003e We would then expect that the call sites call:\n\u003e \n\u003e observer-\u003eAttachToWidget(widget);\n\u003e \n\u003e But there is no enforcement of this, so:\n\u003e \n\u003e widget-\u003eAddObserver(observer);\n\u003e \n\u003e This will still compile and run fine, but the observer cannot set its initial state based on the widget, and parts of the functionality (observing when the widget goes invisible), still works.\n\u003e \n\u003e So long as WidgetObserver is public inheritance we can\u0027t reasonably enforce that attachment is done using the correct method. My current workaround plan is to have:\n\u003e \n\u003e AttachToWidget(widget):\n\u003e   attached_using_correct_method_ \u003d true;\n\u003e \n\u003e OnWidgetVisibilityChanged(widget, visibility):\n\u003e  DCHECK(attached_using_correct_method_);\n\u003e \n\u003e To just enforce that AddObserver is *not used* to attach this externally from call sites. I think it would be preferable if there was only one way to attach the observer to and observe the widget, and that\u0027s using Widget/WidgetObserver APIs.\n\u003e \n\u003e Does this reasoning make sense? SetInitialStateBasedOnWidgetState() is an important call for us to be in sync with the widget in this case and not just observe future changes.\n\nAnother option (which is typically not used in chrome code), is to move the inheritance of the observer to a private internal class. That avoids the problem you mention here.",
+      "parentUuid": "f8ba233c_62ec232c",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
