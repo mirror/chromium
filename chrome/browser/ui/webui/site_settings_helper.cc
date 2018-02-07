@@ -63,6 +63,7 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_POPUPS, "popups"},
     {CONTENT_SETTINGS_TYPE_GEOLOCATION, "location"},
     {CONTENT_SETTINGS_TYPE_NOTIFICATIONS, "notifications"},
+    {CONTENT_SETTINGS_TYPE_NOTIFICATION_INDICATORS, "notification-indicators"},
     {CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC, "media-stream-mic"},
     {CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA, "media-stream-camera"},
     {CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS, "register-protocol-handler"},

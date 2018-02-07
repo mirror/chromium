@@ -113,6 +113,8 @@ Polymer({
       case settings.ContentSettingsTypes.GEOLOCATION:
       case settings.ContentSettingsTypes.MIC:
       case settings.ContentSettingsTypes.NOTIFICATIONS:
+      case settings.ContestSettingsTypes.NOTIFICATION_INDICATORS:
+
       case settings.ContentSettingsTypes.UNSANDBOXED_PLUGINS:
       case settings.ContentSettingsTypes.MIDI_DEVICES:
         // "Ask" vs "Blocked".
