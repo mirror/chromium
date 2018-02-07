@@ -164,6 +164,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9ba765_b96f30b2",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2018-02-07T19:33:07Z",
+      "side": 1,
+      "message": "I want mouse bevavior for chrome os. touch behavior for android. This is done at emulator side: when it\u0027s booting chrome os, it\u0027s sending out mouse event. And when booting android, it\u0027s sending out touch events. Here is the capacity, any suggestion?\n\nconst DeviceAbsoluteAxis goldfishAbsAxes[] \u003d {\n    {ABS_X, {0, 0, 32767, 0, 0, 0}},\n    {ABS_Y, {0, 0, 32767, 0, 0, 0}},\n    {ABS_Z, {0, 0, 1, 0, 0, 0}},\n    {ABS_MT_SLOT, {0, 0, 9, 0, 0, 0}},\n    {ABS_MT_TOUCH_MAJOR, {0, 0, 2147483647, 0, 0, 0}},\n    {ABS_MT_POSITION_X, {0, 0, 32767, 0, 0, 0}},\n    {ABS_MT_POSITION_Y, {0, 0, 32767, 0, 0, 0}},\n    {ABS_MT_TRACKING_ID, {0, 0, 10, 0, 0, 0}},\n    {ABS_MT_PRESSURE, {0, 0, 256, 0, 0, 0}},\n};\nconst DeviceCapabilities goldfish \u003d {\n    /* path */ \"/sys/devices/platform/GFSH0002:00/input/input2/event2\",\n    /* name */ \"qwerty2\",\n    /* phys */ \"\",\n    /* uniq */ \"\",\n    /* bustype */ \"0019\",\n    /* vendor */ \"0000\",\n    /* product */ \"0000\",\n    /* version */ \"0000\",\n    /* prop */ \"0\",\n    /* ev */ \"2f\",\n    /* key */ \"1f0 0 ffffffffffffffff ffffffffffffffff ffffffff00000000 70000 fffffeffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffe\",\n    /* rel */ \"100\",\n    /* abs */ \"661800000000007\",\n    /* msc */ \"0\",\n    /* sw */ \"17\",\n    /* led */ \"0\",\n    /* ff */ \"0\",\n    goldfishAbsAxes,\n    arraysize(goldfishAbsAxes),\n};",
+      "parentUuid": "a2b57e46_e2d611c4",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
