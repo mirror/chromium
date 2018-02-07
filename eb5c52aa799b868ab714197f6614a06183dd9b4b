@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96312a91_2c42784e",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-02-07T21:25:31Z",
+      "side": 1,
+      "message": "I think we prefer WeakPtrFactory. I can\u0027t find the original thread, but here\u0027s a related thread:\nhttps://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/N6w_CkKEwvE",
+      "revId": "eb5c52aa799b868ab714197f6614a06183dd9b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
