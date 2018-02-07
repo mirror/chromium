@@ -32,6 +32,11 @@ class ShellContentBrowserClient : public content::ContentBrowserClient {
       content::BrowserContext* context,
       content::StoragePartition* partition,
       storage::OptionalQuotaSettingsCallback callback) override;
+  std::unique_ptr<base::Value> GetServiceManifestOverlay(
+      base::StringPiece name) override;
+  std::vector<ServiceManifestInfo> GetExtraServiceManifests() override;
+  void RegisterOutOfProcessServices(OutOfProcessServiceMap* services) override;
+  void RegisterInProcessServices(StaticServiceMap* services) override;
 
  private:
   ShellBrowserMainParts* shell_browser_main_parts_;

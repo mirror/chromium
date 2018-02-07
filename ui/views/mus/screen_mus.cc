@@ -68,7 +68,7 @@ void ScreenMus::Init(service_manager::Connector* connector) {
     // In this case we install a default display and assume the process is
     // going to exit shortly so that the real value doesn't matter.
     display_list().AddDisplay(
-        display::Display(0xFFFFFFFF, gfx::Rect(0, 0, 801, 802)), Type::PRIMARY);
+        display::Display(2200000000, gfx::Rect(0, 0, 801, 802)), Type::PRIMARY);
   }
 }
 
