@@ -12,11 +12,24 @@
 
 namespace device {
 
-class CTAPRequestParam {
+class CtapRequestParam {
  public:
-  CTAPRequestParam();
-  virtual ~CTAPRequestParam();
+  CtapRequestParam();
+  virtual ~CtapRequestParam();
   virtual base::Optional<std::vector<uint8_t>> Encode() const = 0;
+
+  // Below functions are only implemented by CTAPMakeCredentialRequestParam and
+  // CTAPGetAssertionRequestParam classes as they are parameters for requests
+  // that have direct correspondence with U2F register and U2F sign requests.
+  virtual bool CheckU2fInteropCriteria() const;
+  virtual std::vector<uint8_t> GetU2fApplicationParameter() const;
+  virtual std::vector<uint8_t> GetU2fChallengeParameter() const;
+
+  // The application parameter is the SHA-256 hash of the UTF-8 encoding of
+  // the application identity (i.e. relying_party_id) of the application
+  // requesting the registration.
+  virtual std::vector<std::vector<uint8_t>> GetU2fRegisteredKeysParameter()
+      const;
 };
 
 }  // namespace device
