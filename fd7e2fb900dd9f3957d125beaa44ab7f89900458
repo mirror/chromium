@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65624d4c_8ccde73d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-07T07:51:38Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with this API: is it possible for this to be called in a document that was synchronously detached from the DOM? In that case, GetFrame() might return null?",
+      "revId": "fd7e2fb900dd9f3957d125beaa44ab7f89900458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
