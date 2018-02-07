@@ -45,6 +45,144 @@
       "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634f6368_79d8047b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 53
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "Please add a comment here indicating that these should not be called direclty and should only be used through GetAllocationPendingLock.... alternately you could make these private and friend the lock?",
+      "range": {
+        "startLine": 177,
+        "startChar": 15,
+        "endLine": 177,
+        "endChar": 39
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad74b89_f936d059",
+        "filename": "content/browser/renderer_host/scoped_allocation_pending_lock.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "you should #include the lock .h file first.",
+      "range": {
+        "startLine": 5,
+        "startChar": 40,
+        "endLine": 5,
+        "endChar": 68
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8708fe63_078874b4",
+        "filename": "content/browser/renderer_host/scoped_allocation_pending_lock.h",
+        "patchSetId": 53
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "2018",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cfe06a_cf31e799",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 2887,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right... we take the lock after all operations have been issued, so it doesn\u0027t really do anything.... Don\u0027t we want to hold the lock only while calling delegate_-\u003eResizeDueToAutoResize but not while calling view-\u003eResizeDueToAutoResize()?\n\nShouldn\u0027t this be:\n\nRenderWidgetHostViewBase* view \u003d\n    static_cast\u003cRenderWidgetHostViewBase*\u003e(GetRenderWidgetHostView());\n\nif (delegate_) {\n  base::Optional\u003ccontent::ScopedAllocationPendingLock\u003e allocation_pending_lock;\n  if (view)\n    allocation_pending_lock \u003d view-\u003eGetAllocationPendingLock();\n\n  delegate_-\u003eResizeDueToAutoResize(this, new_size);\n}\n\nif (view)\n  view-\u003eResizeDueToAutoResize(new_size, sequence_number);",
+      "range": {
+        "startLine": 2887,
+        "startChar": 19,
+        "endLine": 2887,
+        "endChar": 26
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e36ac4_37cfe303",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "This still has the issue that AutoResizeCompositor will overwrite local_surface_id_ with whatever is passed in, preventing the synthesis of parent/child ID we want. You already update things in HandlePotentialLocalSurfaceIdConflict, so just pass in |local_surface_id_|.\n\nDid this get messed up in a merge?",
+      "range": {
+        "startLine": 683,
+        "startChar": 4,
+        "endLine": 683,
+        "endChar": 24
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f24052_7a74e5f9",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-02-07T01:30:00Z",
+      "side": 1,
+      "message": "Same question here...?",
+      "range": {
+        "startLine": 1415,
+        "startChar": 4,
+        "endLine": 1415,
+        "endChar": 21
+      },
+      "revId": "4896fd72945563cc2a149f28fc5ad9077d744cbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
