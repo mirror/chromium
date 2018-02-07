@@ -489,6 +489,7 @@ source_set("test_support") {
     "//base",
     "//extensions/browser",
     "//extensions/browser/api/declarative_net_request:test_support",
+    "//extensions/browser/value_store:test_support",
     "//extensions/common",
     "//extensions/common:test_support",
     "//testing/gtest",
