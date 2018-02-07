@@ -23,7 +23,8 @@ class PrefetchedPagesTracker {
 
   // Add a callback, which will be called when the initialization is completed.
   // If the tracker has been initialized already, the callback is called
-  // immediately.
+  // immediately. If this is the first callback added, the initialization will
+  // be started.
   virtual void AddInitializationCompletedCallback(
       base::OnceCallback<void()> callback) = 0;
 

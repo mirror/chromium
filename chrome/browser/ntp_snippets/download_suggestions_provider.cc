@@ -176,12 +176,6 @@ DownloadSuggestionsProvider::DownloadSuggestionsProvider(
   } else {
     download_history_ = nullptr;
   }
-
-  if (!download_manager_) {
-    // Usually, all downloads are fetched when the download manager is loaded,
-    // but now it is disabled, so offline pages are fetched here instead.
-    AsynchronouslyFetchOfflinePagesDownloads(/*notify=*/true);
-  }
 }
 
 DownloadSuggestionsProvider::~DownloadSuggestionsProvider() {
@@ -207,6 +201,13 @@ CategoryStatus DownloadSuggestionsProvider::GetCategoryStatus(
 
 CategoryInfo DownloadSuggestionsProvider::GetCategoryInfo(Category category) {
   DCHECK_EQ(provided_category_, category);
+
+  // Loading OfflinePages on Chrome startup becomes very expensive as more
+  // offline pages are accumulated. Initiate Offline Pages fetch here since
+  // fetching Category Info is one of the actions NTP does when it is loading.
+  // The UI might update right after it appears.
+  AsynchronouslyFetchOfflinePagesDownloads(/*notify=*/true);
+
   return CategoryInfo(
       l10n_util::GetStringUTF16(IDS_NTP_DOWNLOAD_SUGGESTIONS_SECTION_HEADER),
       ntp_snippets::ContentSuggestionsCardLayout::FULL_CARD,
@@ -537,7 +538,6 @@ void DownloadSuggestionsProvider::FetchAssetsDownloads() {
 void DownloadSuggestionsProvider::
     AsynchronouslyFetchAllDownloadsAndSubmitSuggestions() {
   FetchAssetsDownloads();
-  AsynchronouslyFetchOfflinePagesDownloads(/*notify=*/true);
 }
 
 void DownloadSuggestionsProvider::SubmitContentSuggestions() {

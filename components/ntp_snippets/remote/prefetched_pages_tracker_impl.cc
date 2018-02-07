@@ -33,12 +33,6 @@ PrefetchedPagesTrackerImpl::PrefetchedPagesTrackerImpl(
       offline_page_model_(offline_page_model),
       weak_ptr_factory_(this) {
   DCHECK(offline_page_model_);
-  // If Offline Page model is not loaded yet, it will process our query
-  // once it has finished loading.
-  offline_page_model_->GetPagesByNamespace(
-      offline_pages::kSuggestedArticlesNamespace,
-      base::Bind(&PrefetchedPagesTrackerImpl::Initialize,
-                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 PrefetchedPagesTrackerImpl::~PrefetchedPagesTrackerImpl() {
@@ -53,8 +47,18 @@ void PrefetchedPagesTrackerImpl::AddInitializationCompletedCallback(
     base::OnceCallback<void()> callback) {
   if (IsInitialized()) {
     std::move(callback).Run();
+  } else {
+    initialization_completed_callbacks_.push_back(std::move(callback));
+    // The call to get pages might be already in flight, started by previous
+    // calls to this method. In this case, there is at least one callback
+    // already waiting.
+    if (initialization_completed_callbacks_.size() == 1) {
+      offline_page_model_->GetPagesByNamespace(
+          offline_pages::kSuggestedArticlesNamespace,
+          base::BindRepeating(&PrefetchedPagesTrackerImpl::Initialize,
+                              weak_ptr_factory_.GetWeakPtr()));
+    }
   }
-  initialization_completed_callbacks_.push_back(std::move(callback));
 }
 
 bool PrefetchedPagesTrackerImpl::PrefetchedOfflinePageExists(
@@ -112,6 +116,7 @@ void PrefetchedPagesTrackerImpl::Initialize(
   for (auto& callback : initialization_completed_callbacks_) {
     std::move(callback).Run();
   }
+  initialization_completed_callbacks_.clear();
 }
 
 void PrefetchedPagesTrackerImpl::AddOfflinePage(
