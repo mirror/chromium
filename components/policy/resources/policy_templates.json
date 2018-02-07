@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 420
+#   For your editing convenience: highest ID currently used: 422
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -11231,6 +11231,48 @@
       'desc': '''Allows you to set the time period over which <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> relaunch notifications are shown to apply a pending update.
 
       This policy setting can be used to control the time period, in milliseconds, over which a user is progressively informed that <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> must be relaunched (or <ph name="PRODUCT_OS_NAME">$2<ex>Google Chrome OS</ex></ph> must be restarted) for an update. Over this time period, the user will be repeatedly informed of the need for an update based on the setting of the <ph name="RELAUNCH_NOTIFICATION_POLICY_NAME">RelaunchNotification</ph> policy. If not set, the default period of 604800000 milliseconds (one week) is used.''',
+    },
+    {
+      'name': 'PasswordProtectionEmailDomains',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': ['chrome.*:66-', 'chrome_os:66-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': ['mydomain.com', 'myuniversity.edu'],
+      'id': 421,
+      'caption': '''Configure the GSUITE domain names (without @) for password protection.''',
+      'tags': [],
+      'desc': '''Configure the GSUITE domain names (without @) that will be protected by password protection service.
+
+      If this setting is enabled, then password protection service can monitor the reuses of passwords of these specified domains.
+      If this setting is disabled or not set, then default password protection is applied.''',
+    },
+    {
+      'name': 'SafeBrowsingWhitelistDomains',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': ['chrome.*:66-', 'chrome_os:66-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': ['mydomain.com', 'myuniversity.edu'],
+      'id': 422,
+      'caption': '''Configure the list of domains on which Safe Browsing will not trigger warnings.''',
+      'tags': [],
+      'desc': '''Configure the list of domains on which Safe Browsing will trust. That means Safe Browsing will not check for dangerous resources on these domains, or trigger warnings.
+
+      If this setting is enabled, then Safe Browsing will trust these domains.
+      If this setting is disabled or not set, then default Safe Browsing protection is applied to all resources.''',
     },
   ],
 

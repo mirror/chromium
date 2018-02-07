@@ -53,6 +53,17 @@ extern const char kSafeBrowsingScoutReportingEnabled[];
 // password reuses.
 extern const char kSafeBrowsingUnhandledSyncPasswordReuses[];
 
+// List of domains where Safe Browsing should trust. That means Safe Browsing
+// won't check for malware /phishing / Uws on resources on these domains, or
+// trigger warnings.
+extern const char kSafeBrowsingWhitelistDomains[];
+
+// List of strings indicating the Email domains on which password protection
+// service warns for password reuses.
+// This is managed by enterprise policy and has no effect on users who are not
+// managed by enterprise policy.
+extern const char kPasswordProtectionEmailDomains[];
+
 // Integer indicating the password protection warning trigger. This is managed
 // by enterprise policy and has no effect on users who are not managed by
 // enterprise policy.
@@ -191,6 +202,16 @@ void UpdatePrefsBeforeSecurityInterstitial(PrefService* prefs);
 // preferences are passed as an alternating sequence of preference names and
 // values represented as strings.
 base::ListValue GetSafeBrowsingPreferencesList(PrefService* prefs);
+
+// Returns a list of valid domains that Safe Browsing service trusts.
+void GetSafeBrowsingWhitelistDomainsPref(
+    const PrefService& prefs,
+    std::vector<std::string>* out_canonicalized_domain_list);
+
+// Helper function to validate and canonicalize a list of domain strings.
+void CanonicalizeDomainList(
+    const base::ListValue& raw_domain_list,
+    std::vector<std::string>* out_canonicalized_domain_list);
 
 }  // namespace safe_browsing
 

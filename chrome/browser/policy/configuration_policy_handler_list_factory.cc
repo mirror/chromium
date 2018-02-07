@@ -295,6 +295,12 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kPasswordProtectionRiskTrigger,
     prefs::kPasswordProtectionRiskTrigger,
     base::Value::Type::INTEGER},
+  { key::kPasswordProtectionEmailDomains,
+    prefs::kPasswordProtectionEmailDomains,
+    base::Value::Type::LIST},
+  { key::kSafeBrowsingWhitelistDomains,
+    prefs::kSafeBrowsingWhitelistDomains,
+    base::Value::Type::LIST},
 #if defined(OS_POSIX)
   { key::kNtlmV2Enabled,
     prefs::kNtlmV2Enabled,
