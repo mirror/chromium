@@ -241,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "7ef30170_d1c54ddc",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T22:04:27Z",
+      "side": 1,
+      "message": "OnWidgetDestroyed isn\u0027t the same as OnRemoved. OnWidgetDestroyed won\u0027t be called if the observer is removed by another object before the widget is destroyed.\n\nI hope you understand my perspective on this and why I think this doesn\u0027t belong in WidgetObserver or similar observer classes (except for the case of async observers, but this isn\u0027t one).",
+      "parentUuid": "62b6eac2_f43ce8a6",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
