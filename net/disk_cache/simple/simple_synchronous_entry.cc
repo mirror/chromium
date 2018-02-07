@@ -88,6 +88,13 @@ bool CanOmitEmptyFile(int file_index) {
   return file_index == simple_util::GetFileIndexFromStreamIndex(2);
 }
 
+bool CanLazyLoadFile(int file_index) {
+  // ### experiment.
+  DCHECK_GE(file_index, 0);
+  DCHECK_LT(file_index, kSimpleEntryNormalFileCount);
+  return file_index == simple_util::GetFileIndexFromStreamIndex(2);
+}
+
 bool TruncatePath(const FilePath& filename_to_truncate) {
   File file_to_truncate;
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
@@ -320,7 +327,7 @@ int SimpleSynchronousEntry::Doom() {
     file_tracker_->Doom(this, &entry_file_key_);
 
     for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-      if (!empty_file_omitted_[i]) {
+      if (load_state_[i] != LOAD_EMPTY_OMITTED) {
         File::Error out_error;
         FilePath old_name = path_.AppendASCII(
             GetFilenameFromEntryFileKeyAndFileIndex(orig_key, i));
@@ -377,6 +384,17 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
   DCHECK(initialized_);
   DCHECK_NE(0, in_entry_op.index);
   int file_index = GetFileIndexFromStreamIndex(in_entry_op.index);
+
+  // If we deferred opening a file, do it now.
+  // ### stat?
+  File::Error error;
+  if (load_state_[file_index] == LOAD_LAZY &&
+      !MaybeOpenFile(file_index, FILE_REQUIRED, &error)) {
+    *out_result = net::ERR_FAILED;
+    Doom();
+    return;
+  }
+
   SimpleFileTracker::FileHandle file =
       file_tracker_->Acquire(this, SubFileForFileIndex(file_index));
 
@@ -391,7 +409,7 @@ void SimpleSynchronousEntry::ReadData(const EntryOperationData& in_entry_op,
   // Zero-length reads and reads to the empty streams of omitted files should
   // be handled in the SimpleEntryImpl.
   DCHECK_GT(in_entry_op.buf_len, 0);
-  DCHECK(!empty_file_omitted_[file_index]);
+  DCHECK_EQ(LOAD_NORMAL, load_state_[file_index]);
   int bytes_read =
       file->Read(file_offset, out_buf->data(), in_entry_op.buf_len);
   if (bytes_read > 0) {
@@ -434,8 +452,19 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
   DCHECK_NE(0, in_entry_op.index);
   int index = in_entry_op.index;
   int file_index = GetFileIndexFromStreamIndex(index);
+
+  // If we deferred opening a file, do it now.
+  // ### stat?
+  File::Error error;
+  if (load_state_[file_index] == LOAD_LAZY &&
+      !MaybeOpenFile(file_index, FILE_REQUIRED, &error)) {
+    *out_result = net::ERR_FAILED;
+    Doom();
+    return;
+  }
+
   if (header_and_key_check_needed_[file_index] &&
-      !empty_file_omitted_[file_index]) {
+      load_state_[file_index] != LOAD_EMPTY_OMITTED) {
     SimpleFileTracker::FileHandle file =
         file_tracker_->Acquire(this, SubFileForFileIndex(file_index));
     if (!file.IsOK() || !CheckHeaderAndKey(file.get(), file_index)) {
@@ -452,7 +481,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
       key_.size(), in_entry_op.offset, in_entry_op.index);
   bool extending_by_write = offset + buf_len > out_entry_stat->data_size(index);
 
-  if (empty_file_omitted_[file_index]) {
+  if (load_state_[file_index] == LOAD_EMPTY_OMITTED) {
     // Don't create a new file if the entry has been doomed, to avoid it being
     // mixed up with a newly-created entry with the same key.
     if (doomed) {
@@ -478,7 +507,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
       return;
     }
   }
-  DCHECK(!empty_file_omitted_[file_index]);
+  DCHECK_EQ(LOAD_NORMAL, load_state_[file_index]);
 
   // This needs to be grabbed after the above block, since that's what may
   // create the file (for stream 2/file 1).
@@ -833,7 +862,7 @@ void SimpleSynchronousEntry::Close(
        it != crc32s_to_write->end(); ++it) {
     const int stream_index = it->index;
     const int file_index = GetFileIndexFromStreamIndex(stream_index);
-    if (empty_file_omitted_[file_index])
+    if (load_state_[file_index] != LOAD_NORMAL)
       continue;
 
     SimpleFileTracker::FileHandle file =
@@ -892,7 +921,7 @@ void SimpleSynchronousEntry::Close(
     }
   }
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    if (empty_file_omitted_[i])
+    if (load_state_[i] != LOAD_NORMAL)
       continue;
 
     if (header_and_key_check_needed_[i]) {
@@ -908,11 +937,6 @@ void SimpleSynchronousEntry::Close(
     CloseSparseFile();
   }
 
-  if (files_created_) {
-    const int stream2_file_index = GetFileIndexFromStreamIndex(2);
-    SIMPLE_CACHE_UMA(BOOLEAN, "EntryCreatedAndStream2Omitted", cache_type_,
-                     empty_file_omitted_[stream2_file_index]);
-  }
   SIMPLE_CACHE_UMA(TIMES, "DiskCloseLatency", cache_type_,
                    close_time.Elapsed());
   RecordCloseResult(cache_type_, CLOSE_RESULT_SUCCESS);
@@ -936,7 +960,7 @@ SimpleSynchronousEntry::SimpleSynchronousEntry(net::CacheType cache_type,
       file_tracker_(file_tracker),
       sparse_file_open_(false) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i)
-    empty_file_omitted_[i] = false;
+    load_state_[i] = LOAD_CLOSED;
 }
 
 SimpleSynchronousEntry::~SimpleSynchronousEntry() {
@@ -945,12 +969,19 @@ SimpleSynchronousEntry::~SimpleSynchronousEntry() {
     CloseFiles();
 }
 
-bool SimpleSynchronousEntry::MaybeOpenFile(
-    int file_index,
-    File::Error* out_error) {
+bool SimpleSynchronousEntry::MaybeOpenFile(int file_index,
+                                           FileRequired file_required,
+                                           File::Error* out_error) {
   DCHECK(out_error);
 
   FilePath filename = GetFilenameFromFileIndex(file_index);
+
+  if (CanLazyLoadFile(file_index) && file_required == FILE_NOT_REQUIRED &&
+      base::PathExists(filename)) {
+    load_state_[file_index] = LOAD_LAZY;
+    return true;
+  }
+
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
   std::unique_ptr<base::File> file =
@@ -959,13 +990,14 @@ bool SimpleSynchronousEntry::MaybeOpenFile(
 
   if (CanOmitEmptyFile(file_index) && !file->IsValid() &&
       *out_error == File::FILE_ERROR_NOT_FOUND) {
-    empty_file_omitted_[file_index] = true;
+    load_state_[file_index] = LOAD_EMPTY_OMITTED;
     return true;
   }
 
   if (file->IsValid()) {
     file_tracker_->Register(this, SubFileForFileIndex(file_index),
                             std::move(file));
+    load_state_[file_index] = LOAD_NORMAL;
     return true;
   }
   return false;
@@ -978,7 +1010,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   DCHECK(out_error);
 
   if (CanOmitEmptyFile(file_index) && file_required == FILE_NOT_REQUIRED) {
-    empty_file_omitted_[file_index] = true;
+    load_state_[file_index] = LOAD_EMPTY_OMITTED;
     return true;
   }
 
@@ -1002,7 +1034,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   if (file->IsValid()) {
     file_tracker_->Register(this, SubFileForFileIndex(file_index),
                             std::move(file));
-    empty_file_omitted_[file_index] = false;
+    load_state_[file_index] = LOAD_NORMAL;
     return true;
   }
   return false;
@@ -1017,7 +1049,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
     if (i == 1)
       file_1_open_start = base::Time::Now();
 
-    if (!MaybeOpenFile(i, &error)) {
+    if (!MaybeOpenFile(i, FILE_NOT_REQUIRED, &error)) {
       // TODO(morlovich): Remove one each of these triplets of histograms. We
       // can calculate the third as the sum or difference of the other two.
       RecordSyncOpenResult(cache_type_, OPEN_ENTRY_PLATFORM_FILE_ERROR,
@@ -1046,19 +1078,26 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
   base::Time after_open_files = base::Time::Now();
   base::TimeDelta entry_age = after_open_files - base::Time::UnixEpoch();
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    if (empty_file_omitted_[i]) {
+    if (load_state_[i] == LOAD_EMPTY_OMITTED) {
       out_entry_stat->set_data_size(i + 1, 0);
       continue;
     }
 
     File::Info file_info;
-    SimpleFileTracker::FileHandle file =
-        file_tracker_->Acquire(this, SubFileForFileIndex(i));
-    bool success = file.IsOK() && file->GetInfo(&file_info);
+    bool success;
+
+    if (load_state_[i] == LOAD_LAZY) {
+      success = base::GetFileInfo(GetFilenameFromFileIndex(i), &file_info);
+    } else {
+      SimpleFileTracker::FileHandle file =
+          file_tracker_->Acquire(this, SubFileForFileIndex(i));
+      success = file.IsOK() && file->GetInfo(&file_info);
+    }
     if (!success) {
       DLOG(WARNING) << "Could not get platform file info.";
-      continue;
+      return false;
     }
+
     out_entry_stat->set_last_used(file_info.last_accessed);
     out_entry_stat->set_last_modified(file_info.last_modified);
 
@@ -1154,9 +1193,8 @@ bool SimpleSynchronousEntry::CreateFiles(SimpleEntryStat* out_entry_stat) {
 }
 
 void SimpleSynchronousEntry::CloseFile(int index) {
-  if (empty_file_omitted_[index]) {
-    empty_file_omitted_[index] = false;
-  } else {
+  DCHECK_NE(load_state_[index], LOAD_CLOSED);
+  if (load_state_[index] != LOAD_EMPTY_OMITTED) {
     // We want to delete files that were renamed for doom here; and we should do
     // this before calling SimpleFileTracker::Close, since that would make the
     // name available to other threads.
@@ -1166,8 +1204,10 @@ void SimpleSynchronousEntry::CloseFile(int index) {
               GetFilenameFromEntryFileKeyAndFileIndex(entry_file_key_, index)),
           false);
     }
-    file_tracker_->Close(this, SubFileForFileIndex(index));
+    if (load_state_[index] == LOAD_NORMAL)
+      file_tracker_->Close(this, SubFileForFileIndex(index));
   }
+  load_state_[index] = LOAD_CLOSED;
 }
 
 void SimpleSynchronousEntry::CloseFiles() {
@@ -1248,7 +1288,7 @@ int SimpleSynchronousEntry::InitializeForOpen(
     return net::ERR_FAILED;
   }
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    if (empty_file_omitted_[i])
+    if (load_state_[i] == LOAD_EMPTY_OMITTED)
       continue;
 
     if (key_.empty()) {
@@ -1297,13 +1337,13 @@ int SimpleSynchronousEntry::InitializeForOpen(
   bool removed_stream2 = false;
   const int stream2_file_index = GetFileIndexFromStreamIndex(2);
   DCHECK(CanOmitEmptyFile(stream2_file_index));
-  if (!empty_file_omitted_[stream2_file_index] &&
+  if (load_state_[stream2_file_index] != LOAD_EMPTY_OMITTED &&
       out_entry_stat->data_size(2) == 0) {
     DVLOG(1) << "Removing empty stream 2 file.";
     CloseFile(stream2_file_index);
     DeleteFileForEntryHash(path_, entry_file_key_.entry_hash,
                            stream2_file_index);
-    empty_file_omitted_[stream2_file_index] = true;
+    load_state_[stream2_file_index] = LOAD_EMPTY_OMITTED;
     removed_stream2 = true;
   }
 
@@ -1356,7 +1396,7 @@ int SimpleSynchronousEntry::InitializeForCreate(
     return net::ERR_FILE_EXISTS;
   }
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    if (empty_file_omitted_[i])
+    if (load_state_[i] != LOAD_NORMAL)
       continue;
 
     CreateEntryResult result;
