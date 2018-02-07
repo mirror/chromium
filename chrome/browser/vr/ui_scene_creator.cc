@@ -578,7 +578,7 @@ void UiSceneCreator::CreateScene() {
   CreateOmnibox();
   CreateCloseButton();
   CreateFullscreenToast();
-  CreateUnderDevelopmentNotice();
+  // CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup();
   CreateContentRepositioningAffordance();
   CreateExitWarning();
@@ -664,6 +664,9 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
   repositioner->AddBinding(VR_BIND_FUNC(
       gfx::Vector3dF, Model, model_, model->controller.laser_direction,
       Repositioner, repositioner.get(), set_laser_direction));
+  repositioner->AddBinding(
+      VR_BIND(bool, Model, model_, model->controller.recentered, Repositioner,
+              repositioner.get(), if (value) { view->Reset(); }));
   scene_->AddUiElement(k2dBrowsingRoot, std::move(repositioner));
 
   element = Create<UiElement>(k2dBrowsingVisibiltyControlForVoice, kPhaseNone);
@@ -1209,27 +1212,6 @@ void UiSceneCreator::CreateViewportAwareRoot() {
 }
 
 void UiSceneCreator::CreateVoiceSearchUiGroup() {
-  auto voice_search_button = Create<DiscButton>(
-      kVoiceSearchButton, kPhaseForeground,
-      base::BindRepeating(&UiBrowserInterface::SetVoiceSearchActive,
-                          base::Unretained(browser_), true),
-      vector_icons::kMicIcon);
-  voice_search_button->SetSize(kVoiceSearchButtonDiameterDMM,
-                               kVoiceSearchButtonDiameterDMM);
-  voice_search_button->set_hover_offset(kButtonZOffsetHoverDMM);
-  voice_search_button->SetTranslate(0.f, -kVoiceSearchButtonYOffsetDMM, 0.f);
-  voice_search_button->set_y_anchoring(BOTTOM);
-  voice_search_button->set_y_centering(TOP);
-  voice_search_button->set_contributes_to_parent_bounds(false);
-  VR_BIND_VISIBILITY(voice_search_button,
-                     model->speech.has_or_can_request_audio_permission &&
-                         !model->incognito &&
-                         !model->capturing_state.audio_capture_enabled);
-  VR_BIND_BUTTON_COLORS(model_, voice_search_button.get(),
-                        &ColorScheme::button_colors,
-                        &DiscButton::SetButtonColors);
-  scene_->AddUiElement(kUrlBar, std::move(voice_search_button));
-
   auto speech_recognition_root = std::make_unique<UiElement>();
   speech_recognition_root->SetName(kSpeechRecognitionRoot);
   speech_recognition_root->SetTranslate(0.f, 0.f, -kContentDistance);
@@ -1395,6 +1377,13 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   BIND_VISIBILITY_CONTROL_FOR_VOICE(
       scene_->GetUiElementByName(kOmniboxVisibiltyControlForVoice), model_,
       omnibox_editing_enabled());
+
+  auto visibility_control_root =
+      Create<UiElement>(kKeyboardVisibilityControlForVoice, kPhaseNone);
+  BIND_VISIBILITY_CONTROL_FOR_VOICE(visibility_control_root.get(), model_,
+                                    editing_enabled());
+  scene_->AddParentUiElement(kKeyboardDmmRoot,
+                             std::move(visibility_control_root));
 }
 
 void UiSceneCreator::CreateContentRepositioningAffordance() {
@@ -1617,11 +1606,6 @@ std::unique_ptr<TextInput> UiSceneCreator::CreateTextInput(
 }
 
 void UiSceneCreator::CreateKeyboard() {
-  auto visibility_control_root =
-      Create<UiElement>(kKeyboardVisibilityControlForVoice, kPhaseNone);
-  BIND_VISIBILITY_CONTROL_FOR_VOICE(visibility_control_root.get(), model_,
-                                    editing_enabled());
-
   auto scaler = std::make_unique<ScaledDepthAdjuster>(kKeyboardDistance);
   scaler->SetName(kKeyboardDmmRoot);
 
@@ -1632,9 +1616,7 @@ void UiSceneCreator::CreateKeyboard() {
   VR_BIND_VISIBILITY(keyboard,
                      model->editing_input || model->editing_web_input);
   scaler->AddChild(std::move(keyboard));
-  visibility_control_root->AddChild(std::move(scaler));
-  scene_->AddUiElement(k2dBrowsingRepositioner,
-                       std::move(visibility_control_root));
+  scene_->AddUiElement(k2dBrowsingRepositioner, std::move(scaler));
 }
 
 void UiSceneCreator::CreateUrlBar() {
@@ -1716,7 +1698,6 @@ void UiSceneCreator::CreateUrlBar() {
   origin_content->SetTranslate(kUrlBarOriginContentOffsetDMM, 0, 0);
   origin_content->set_x_anchoring(LEFT);
   origin_content->set_x_centering(LEFT);
-  VR_BIND_VISIBILITY(origin_content, !model->fullscreen_enabled());
   origin_content->AddBinding(
       VR_BIND_FUNC(ToolbarState, Model, model_, model->toolbar_state, UrlBar,
                    origin_content.get(), SetToolbarState));
@@ -1726,6 +1707,22 @@ void UiSceneCreator::CreateUrlBar() {
   VR_BIND_COLOR(model_, origin_content.get(), &ColorScheme::element_background,
                 &TexturedElement::SetBackgroundColor);
   scene_->AddUiElement(kUrlBarOriginRegion, std::move(origin_content));
+
+  auto hint_text = std::make_unique<Text>(kOmniboxTextHeightDMM);
+  hint_text->SetType(kTypeTextInputHint);
+  hint_text->SetDrawPhase(kPhaseForeground);
+  hint_text->set_focusable(false);
+  hint_text->set_x_anchoring(LEFT);
+  hint_text->set_x_centering(LEFT);
+  hint_text->SetSize(1, 1);
+  hint_text->SetTranslate(kUrlBarHintTextPadding, 0.f, 0.f);
+  hint_text->SetLayoutMode(TextLayoutMode::kSingleLineFixedHeight);
+  hint_text->SetAlignment(UiTexture::kTextAlignmentLeft);
+  hint_text->SetText(l10n_util::GetStringUTF16(IDS_SEARCH_OR_TYPE_URL));
+  VR_BIND_VISIBILITY(hint_text, !model->toolbar_state.should_display_url);
+  VR_BIND_COLOR(model_, hint_text.get(), &ColorScheme::omnibox_hint,
+                &Text::SetColor);
+  scene_->AddUiElement(kUrlBarOriginRegion, std::move(hint_text));
 }
 
 void UiSceneCreator::CreateLoadingIndicator() {

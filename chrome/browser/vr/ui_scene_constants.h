@@ -73,6 +73,7 @@ static constexpr float kUrlBarOfflineIconTextSpacingDMM = 0.004f;
 static constexpr float kUrlBarSecuritySeparatorHeightDMM = 0.026f;
 static constexpr float kUrlBarOriginFadeWidth = 0.044f;
 static constexpr float kUrlBarOriginMinimumPathWidth = 0.044f;
+static constexpr float kUrlBarHintTextPadding = 0.016f;
 
 static constexpr float kOverlayPlaneDistance = 2.3f;
 
