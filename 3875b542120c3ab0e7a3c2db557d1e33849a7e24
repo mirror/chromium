@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd6602ea_43e14b0f",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Which bug are you referring? The TODO one in web_app_manifest.h? Was prefer to not duplicating it.",
+      "parentUuid": "4bb4532f_21671a14",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 56
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6612d02_bba3f10c",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-07T16:12:50Z",
       "side": 1,
       "message": "FWIW, I\u0027m doubtful that a destructor is the correct place to make an IPC call, especially since the app is supposed to have control of whether the abort was successful. I would prefer to remove everything inside of the destructor, but you might know this code better.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3372a8b9_7aa05a30",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "In my opinion, this is better than nothing, even after implementing PaymentRequest.abort. It will try to abort the payment app, and we do not have much to do if it fails.",
+      "parentUuid": "d6612d02_bba3f10c",
       "range": {
         "startLine": 87,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "576130ee_3f5c4f87",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6bf419_d4f72d66",
+      "range": {
+        "startLine": 196,
+        "startChar": 49,
+        "endLine": 196,
+        "endChar": 77
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a5d26d_7071ce81",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "37dfa45c_e84f7205",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a5d26d_7071ce81",
+      "range": {
+        "startLine": 225,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 65
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f19e06c_7a3259b2",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-07T16:12:50Z",
       "side": 1,
       "message": "Please add a TODO to make installable payment apps return \"true\" for PaymentRequest.canMakePayment().",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 18
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1eae054_a4154eaa",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "This is not like a TODO since I made it return false deliberately as on Android. We can modify them in a following up CL after we have a concrete decision, WDYT?",
+      "parentUuid": "2f19e06c_7a3259b2",
       "range": {
         "startLine": 289,
         "startChar": 0,
@@ -137,6 +257,30 @@
       "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f3fc28_0f913aa5",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f764001_c1ea0c5a",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 59
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "76a61785_1272faa0",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done, ah, my bad, missed this, good catch,",
+      "parentUuid": "913a7bff_fc49baed",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816797a4_db5663fb",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1efd295_52006151",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75eb8f83_ba09508d",
         "filename": "components/payments/content/service_worker_payment_instrument.cc",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d30759c_8a0e823b",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75eb8f83_ba09508d",
+      "range": {
+        "startLine": 334,
+        "startChar": 13,
+        "endLine": 334,
+        "endChar": 22
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "d65d87b8_ca456549",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3fcb28_ae9b4f3a",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 72
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2194fa_4d023b56",
         "filename": "components/payments/content/service_worker_payment_instrument.h",
         "patchSetId": 3
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "f48bb6d8_230ea0c7",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e2194fa_4d023b56",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70117d55_101e162e",
         "filename": "components/payments/content/service_worker_payment_instrument.h",
         "patchSetId": 3
@@ -269,6 +533,24 @@
       "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f844df_29d4d94e",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-02-07T22:59:35Z",
+      "side": 1,
+      "message": "Done. Was thinking to keep it consistent with Android, so we could combine the same payment app with multiple payment methods.",
+      "parentUuid": "70117d55_101e162e",
+      "revId": "3875b542120c3ab0e7a3c2db557d1e33849a7e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
