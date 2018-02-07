@@ -46,6 +46,30 @@
       "revId": "403e58369394906fe619472bf596215883886bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa86a6d4_9652a7de",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-02-07T00:40:25Z",
+      "side": 1,
+      "message": "Added \"No period at the end\" to the description, just to be clearer.",
+      "parentUuid": "ec1c3de9_c8bf4eb2",
+      "range": {
+        "startLine": 682,
+        "startChar": 39,
+        "endLine": 682,
+        "endChar": 0
+      },
+      "revId": "403e58369394906fe619472bf596215883886bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
