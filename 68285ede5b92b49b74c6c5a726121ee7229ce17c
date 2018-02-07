@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49e43b92_db9409d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsCustomContextMenuItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-02-07T19:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2eb17e4_69e4e4f6",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e823ae_4a2b1b3c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-07T05:42:17Z",
       "side": 1,
       "message": "I think we should consider having a color here. The client likely wont give both resource ID and Uri.",
+      "range": {
+        "startLine": 102,
+        "startChar": 37,
+        "endLine": 102,
+        "endChar": 53
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24eb0a38_89f2c3ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-02-07T19:58:37Z",
+      "side": 1,
+      "message": "tedchoc@: do we have any common default behavior when a icon is loaded asynchronously?",
+      "parentUuid": "d6e823ae_4a2b1b3c",
       "range": {
         "startLine": 102,
         "startChar": 37,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "280bfb60_eb327225",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-02-07T19:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d56d8c3_c5ea2d4c",
+      "range": {
+        "startLine": 107,
+        "startChar": 56,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d306fe_5b18a015",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adcc9ab_5a918f89",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2018-02-07T19:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d306fe_5b18a015",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 56
+      },
+      "revId": "68285ede5b92b49b74c6c5a726121ee7229ce17c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
