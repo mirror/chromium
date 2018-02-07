@@ -9,46 +9,46 @@
 namespace device {
 
 // static
-CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateGetInfoParam() {
-  return CTAPAuthenticatorRequestParam(
+CtapAuthenticatorRequestParam
+CtapAuthenticatorRequestParam::CreateGetInfoParam() {
+  return CtapAuthenticatorRequestParam(
       CtapRequestCommand::kAuthenticatorGetInfo);
 }
 
 // static
-CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateGetNextAssertionParam() {
-  return CTAPAuthenticatorRequestParam(
+CtapAuthenticatorRequestParam
+CtapAuthenticatorRequestParam::CreateGetNextAssertionParam() {
+  return CtapAuthenticatorRequestParam(
       CtapRequestCommand::kAuthenticatorGetNextAssertion);
 }
 
 // static
-CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateResetParam() {
-  return CTAPAuthenticatorRequestParam(CtapRequestCommand::kAuthenticatorReset);
+CtapAuthenticatorRequestParam
+CtapAuthenticatorRequestParam::CreateResetParam() {
+  return CtapAuthenticatorRequestParam(CtapRequestCommand::kAuthenticatorReset);
 }
 
 // static
-CTAPAuthenticatorRequestParam
-CTAPAuthenticatorRequestParam::CreateCancelParam() {
-  return CTAPAuthenticatorRequestParam(
+CtapAuthenticatorRequestParam
+CtapAuthenticatorRequestParam::CreateCancelParam() {
+  return CtapAuthenticatorRequestParam(
       CtapRequestCommand::kAuthenticatorCancel);
 }
 
-CTAPAuthenticatorRequestParam::CTAPAuthenticatorRequestParam(
-    CTAPAuthenticatorRequestParam&& that) = default;
+CtapAuthenticatorRequestParam::CtapAuthenticatorRequestParam(
+    CtapAuthenticatorRequestParam&& that) = default;
 
-CTAPAuthenticatorRequestParam& CTAPAuthenticatorRequestParam::operator=(
-    CTAPAuthenticatorRequestParam&& that) = default;
+CtapAuthenticatorRequestParam& CtapAuthenticatorRequestParam::operator=(
+    CtapAuthenticatorRequestParam&& that) = default;
 
-CTAPAuthenticatorRequestParam::~CTAPAuthenticatorRequestParam() = default;
+CtapAuthenticatorRequestParam::~CtapAuthenticatorRequestParam() = default;
 
-base::Optional<std::vector<uint8_t>> CTAPAuthenticatorRequestParam::Encode()
+base::Optional<std::vector<uint8_t>> CtapAuthenticatorRequestParam::Encode()
     const {
   return std::vector<uint8_t>{base::strict_cast<uint8_t>(cmd_)};
 }
 
-CTAPAuthenticatorRequestParam::CTAPAuthenticatorRequestParam(
+CtapAuthenticatorRequestParam::CtapAuthenticatorRequestParam(
     CtapRequestCommand cmd)
     : cmd_(cmd) {}
 

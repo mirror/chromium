@@ -12,33 +12,33 @@
 
 #include "base/optional.h"
 #include "device/fido/ctap_constants.h"
-#include "device/fido/ctap_request_param.h"
+#include "device/fido/fido_request_param.h"
 
 namespace device {
 
 // Represents CTAP requests with empty parameters, including
 // AuthenticatorGetInfo, AuthenticatorCancel, AuthenticatorReset and
 // AuthenticatorGetNextAssertion commands.
-class CTAPAuthenticatorRequestParam : public CTAPRequestParam {
+class CtapAuthenticatorRequestParam : public FidoRequestParam {
  public:
-  static CTAPAuthenticatorRequestParam CreateGetInfoParam();
-  static CTAPAuthenticatorRequestParam CreateGetNextAssertionParam();
-  static CTAPAuthenticatorRequestParam CreateResetParam();
-  static CTAPAuthenticatorRequestParam CreateCancelParam();
+  static CtapAuthenticatorRequestParam CreateGetInfoParam();
+  static CtapAuthenticatorRequestParam CreateGetNextAssertionParam();
+  static CtapAuthenticatorRequestParam CreateResetParam();
+  static CtapAuthenticatorRequestParam CreateCancelParam();
 
-  CTAPAuthenticatorRequestParam(CTAPAuthenticatorRequestParam&& that);
-  CTAPAuthenticatorRequestParam& operator=(
-      CTAPAuthenticatorRequestParam&& that);
-  ~CTAPAuthenticatorRequestParam() override;
+  CtapAuthenticatorRequestParam(CtapAuthenticatorRequestParam&& that);
+  CtapAuthenticatorRequestParam& operator=(
+      CtapAuthenticatorRequestParam&& that);
+  ~CtapAuthenticatorRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> Encode() const override;
 
  private:
-  explicit CTAPAuthenticatorRequestParam(CtapRequestCommand cmd);
+  explicit CtapAuthenticatorRequestParam(CtapRequestCommand cmd);
 
   CtapRequestCommand cmd_;
 
-  DISALLOW_COPY_AND_ASSIGN(CTAPAuthenticatorRequestParam);
+  DISALLOW_COPY_AND_ASSIGN(CtapAuthenticatorRequestParam);
 };
 
 }  // namespace device

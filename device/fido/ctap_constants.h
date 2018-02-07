@@ -160,6 +160,8 @@ enum class CtapRequestCommand : uint8_t {
   kAuthenticatorReset = 0x07,
 };
 
+enum class DigitalSignatureAlgorithm : int { kCoseEs256 = -7 };
+
 // String key values for CTAP request optional parameters and
 // AuthenticatorGetInfo response.
 extern const char kResidentKeyMapKey[];
