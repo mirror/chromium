@@ -34,6 +34,24 @@
       "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5bd6d3a_754e9d4b",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2018-02-07T18:58:44Z",
+      "side": 1,
+      "message": "Oops, though I had checked whether that reference was const. :(\n\nOne other alternative: What if, instead of calling AllowLoad() in CanRequestInternal(), we converted FetchContext::IsAdResource() to incorporate the work AllowLoad() does (including potentially cancelling the request)? That removes the need to cache results and centralizes calls to SubresourceFilter, but it means there\u0027s one more function on FetchContext that can block the request. I think that might be a good tradeoff, but I\u0027m not certain.",
+      "parentUuid": "051bed7d_2c8555af",
+      "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
