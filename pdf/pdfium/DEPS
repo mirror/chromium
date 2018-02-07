@@ -5,5 +5,6 @@ include_rules = [
   "+printing/units.h",
   "+third_party/pdfium/public",
   "+ui/gfx/codec/jpeg_codec.h",
+  "+ui/gfx/geometry/point_f.h",
   "+ui/gfx/geometry/rect.h",
 ]
