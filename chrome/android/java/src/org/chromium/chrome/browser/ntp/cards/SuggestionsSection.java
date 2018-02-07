@@ -86,11 +86,19 @@ public class SuggestionsSection extends InnerNode {
     public SuggestionsSection(Delegate delegate, SuggestionsUiDelegate uiDelegate,
             SuggestionsRanker ranker, OfflinePageBridge offlinePageBridge,
             SuggestionsCategoryInfo info) {
+        this(delegate, uiDelegate, ranker, offlinePageBridge, info, false, false);
+    }
+
+    public SuggestionsSection(Delegate delegate, SuggestionsUiDelegate uiDelegate,
+            SuggestionsRanker ranker, OfflinePageBridge offlinePageBridge,
+            SuggestionsCategoryInfo info, boolean isExpandable, boolean isExpanded) {
         mDelegate = delegate;
         mCategoryInfo = info;
         mSuggestionsSource = uiDelegate.getSuggestionsSource();
 
-        mHeader = new SectionHeader(info.getTitle());
+        mHeader = isExpandable
+                ? new SectionHeader(info.getTitle(), isExpanded, this ::updateSuggestionsVisibility)
+                : new SectionHeader(info.getTitle());
         mSuggestionsList = new SuggestionsList(mSuggestionsSource, ranker, info);
         mMoreButton = new ActionItem(this, ranker);
 
@@ -109,6 +117,8 @@ public class SuggestionsSection extends InnerNode {
         if (!isChromeHomeEnabled) {
             mStatus.setVisible(!hasSuggestions());
         }
+
+        if (mHeader.isExpandable()) updateSuggestionsVisibility();
     }
 
     private static class SuggestionsList extends ChildNode implements Iterable<SnippetArticle> {
@@ -254,7 +264,7 @@ public class SuggestionsSection extends InnerNode {
         // track down what's going wrong.
         assert (mStatus == null) == FeatureUtilities.isChromeHomeEnabled();
         if (mStatus != null) {
-            mStatus.setVisible(!hasSuggestions());
+            mStatus.setVisible(canShowSuggestions() && !hasSuggestions());
         }
 
         // When the ActionItem stops being dismissable, it is possible that it was being
@@ -267,7 +277,11 @@ public class SuggestionsSection extends InnerNode {
     @Override
     public void dismissItem(int position, Callback<String> itemRemovedCallback) {
         if (getSectionDismissalRange().contains(position)) {
-            mDelegate.dismissSection(this);
+            if (mHeader.isExpandable()) {
+                mHeader.toggleHeader();
+            } else {
+                mDelegate.dismissSection(this);
+            }
             itemRemovedCallback.onResult(getHeaderText());
             return;
         }
@@ -481,6 +495,7 @@ public class SuggestionsSection extends InnerNode {
      * Returns whether the list of suggestions can be updated at the moment.
      */
     private boolean canUpdateSuggestions(int numberOfSuggestionsExposed) {
+        if (!canShowSuggestions()) return false;
         if (!hasSuggestions()) return true; // If we don't have any, we always accept updates.
 
         if (CardsVariationParameters.ignoreUpdatesForExistingSuggestions()) {
@@ -589,6 +604,13 @@ public class SuggestionsSection extends InnerNode {
     }
 
     /**
+     * @return Whether or not the suggestions can be shown in this section.
+     */
+    public boolean canShowSuggestions() {
+        return !mHeader.isExpandable() || mHeader.isExpanded();
+    }
+
+    /**
      * @return The set of indices corresponding to items that can dismiss this entire section
      * (as opposed to individual items in it).
      */
@@ -602,6 +624,21 @@ public class SuggestionsSection extends InnerNode {
 
         assert statusCardIndex + 1 == getStartingOffsetForChild(mMoreButton);
         return new HashSet<>(Arrays.asList(statusCardIndex, statusCardIndex + 1));
+    }
+
+    /** Update the visibility of the suggestions based on whether the header is expanded. */
+    private void updateSuggestionsVisibility() {
+        assert mHeader.isExpandable();
+        clearData();
+        if (mHeader.isExpanded()) {
+            updateSuggestions();
+            setStatus(mSuggestionsSource.getCategoryStatus(getCategory()));
+        } else {
+            mMoreButton.updateState(ActionItem.State.HIDDEN);
+        }
+        if (!FeatureUtilities.isChromeHomeEnabled()) {
+            mStatus.setVisible(canShowSuggestions() && !hasSuggestions());
+        }
     }
 
     public SuggestionsCategoryInfo getCategoryInfo() {

@@ -4,6 +4,11 @@
 
 package org.chromium.chrome.browser.ntp.snippets;
 
+import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.ImageView;
+
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeVisitor;
@@ -12,13 +17,33 @@ import org.chromium.chrome.browser.ntp.cards.OptionalLeaf;
 /**
  * Represents the data for a header of a group of snippets.
  */
-public class SectionHeader extends OptionalLeaf {
+public class SectionHeader extends OptionalLeaf implements View.OnClickListener {
     /** The header text to be shown. */
     private final String mHeaderText;
 
+    private ImageView mIconView;
+    private Runnable mToggleCallback;
+    private boolean mIsExpanded;
+
+    /**
+     * Constructor for non-expandable header.
+     * @param headerText The title of the header.
+     */
     public SectionHeader(String headerText) {
         this.mHeaderText = headerText;
         setVisibilityInternal(true);
+    }
+
+    /**
+     * Constructor for expandable header.
+     * @param headerText The title of the header.
+     * @param isExpanded Whether the header is expanded initially.
+     * @param toggleCallback The callback to run when the header is toggled.
+     */
+    public SectionHeader(String headerText, boolean isExpanded, @NonNull Runnable toggleCallback) {
+        this(headerText);
+        mToggleCallback = toggleCallback;
+        mIsExpanded = isExpanded;
     }
 
     @Override
@@ -31,9 +56,45 @@ public class SectionHeader extends OptionalLeaf {
         return mHeaderText;
     }
 
+    /**
+     * @return Whether or not the header is expandable.
+     */
+    public boolean isExpandable() {
+        return mToggleCallback != null;
+    }
+
+    /**
+     * @return Whether or not the header is currently at the expanded state.
+     */
+    public boolean isExpanded() {
+        return mIsExpanded;
+    }
+
+    /**
+     * Toggle the expanded state of the header.
+     */
+    public void toggleHeader() {
+        mIsExpanded = !mIsExpanded;
+        mIconView.setImageResource(mIsExpanded ? R.drawable.ic_collapsed : R.drawable.ic_expanded);
+        mToggleCallback.run();
+    }
+
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
         ((SectionHeaderViewHolder) holder).onBindViewHolder(this);
+
+        if (isExpandable()) {
+            mIconView = holder.itemView.findViewById(R.id.header_icon);
+            mIconView.setVisibility(isExpandable() ? View.VISIBLE : View.GONE);
+            mIconView.setImageResource(
+                    mIsExpanded ? R.drawable.ic_collapsed : R.drawable.ic_expanded);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        assert isExpandable() : "onClick() is called on a non-expandable section header.";
+        toggleHeader();
     }
 
     @Override

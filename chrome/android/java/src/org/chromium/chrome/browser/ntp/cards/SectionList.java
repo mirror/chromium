@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
@@ -75,10 +76,15 @@ public class SectionList
             if (SnippetsBridge.isCategoryEnabled(categoryStatus)) {
                 resetSection(category, categoryStatus, alwaysAllowEmptySections,
                         shouldReportPrefetchedSuggestionsMetrics(category));
+            } else if (category == KnownCategories.ARTICLES) {
+                maybeAddSectionForHeader(category);
             }
         }
 
-        maybeHideArticlesHeader();
+        if (!ChromeFeatureList.isEnabled(
+                    ChromeFeatureList.NTP_ARTICLE_SUGGESTIONS_EXPANDABLE_HEADER)) {
+            maybeHideArticlesHeader();
+        }
         recordDisplayedSuggestions(categories);
     }
 
@@ -113,8 +119,13 @@ public class SectionList
         // Create the section if needed.
         if (section == null) {
             SuggestionsRanker suggestionsRanker = mUiDelegate.getSuggestionsRanker();
-            section = new SuggestionsSection(
-                    this, mUiDelegate, suggestionsRanker, mOfflinePageBridge, info);
+            boolean isExpandable =
+                    ChromeFeatureList.isEnabled(
+                            ChromeFeatureList.NTP_ARTICLE_SUGGESTIONS_EXPANDABLE_HEADER)
+                    && category == KnownCategories.ARTICLES;
+            // TODO(huayinz): use preference instead of hard-coded value for isExpanded.
+            section = new SuggestionsSection(this, mUiDelegate, suggestionsRanker,
+                    mOfflinePageBridge, info, isExpandable, true);
             mSections.put(category, section);
             suggestionsRanker.registerCategory(category);
             addChild(section);
@@ -124,7 +135,7 @@ public class SectionList
 
         // Set the new suggestions.
         section.setStatus(categoryStatus);
-        if (!section.isLoading()) {
+        if (!section.isLoading() && section.canShowSuggestions()) {
             section.appendSuggestions(
                     suggestions, /* keepSectionSize = */ true, reportPrefetchedSuggestionsCount);
         }
@@ -339,6 +350,19 @@ public class SectionList
         if (articlesSection == null) return;
 
         articlesSection.setHeaderVisibility(false);
+    }
+
+    private void maybeAddSectionForHeader(@CategoryInt int category) {
+        if (!ChromeFeatureList.isEnabled(
+                    ChromeFeatureList.NTP_ARTICLE_SUGGESTIONS_EXPANDABLE_HEADER))
+            return;
+
+        // TODO(huayinz): check if user is controlled.
+        SuggestionsSection section = mSections.get(category);
+        if (section != null) return;
+
+        int status = mUiDelegate.getSuggestionsSource().getCategoryStatus(category);
+        resetSection(category, status, true, shouldReportPrefetchedSuggestionsMetrics(category));
     }
 
     /**

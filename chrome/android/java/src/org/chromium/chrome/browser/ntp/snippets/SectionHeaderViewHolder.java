@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.util.MathUtils;
@@ -23,19 +24,32 @@ public class SectionHeaderViewHolder extends NewTabPageViewHolder {
     private final int mMaxSnippetHeaderHeight;
     private final MarginResizer mMarginResizer;
 
+    private final TextView mTitleView;
+
     public SectionHeaderViewHolder(final SuggestionsRecyclerView recyclerView, UiConfig config) {
         super(LayoutInflater.from(recyclerView.getContext())
-                        .inflate(R.layout.new_tab_page_snippets_header, recyclerView, false));
+                        .inflate(
+                                ChromeFeatureList.isEnabled(
+                                        ChromeFeatureList.NTP_ARTICLE_SUGGESTIONS_EXPANDABLE_HEADER)
+                                        ? R.layout.new_tab_page_snippets_expandable_header
+                                        : R.layout.new_tab_page_snippets_header,
+                                recyclerView, false));
         mMaxSnippetHeaderHeight = itemView.getResources().getDimensionPixelSize(
                 R.dimen.snippets_article_header_height);
 
         int wideLateralMargin = recyclerView.getResources().getDimensionPixelSize(
                 R.dimen.ntp_wide_card_lateral_margins);
         mMarginResizer = new MarginResizer(itemView, config, 0, wideLateralMargin);
+
+        mTitleView = ChromeFeatureList.isEnabled(
+                             ChromeFeatureList.NTP_ARTICLE_SUGGESTIONS_EXPANDABLE_HEADER)
+                ? itemView.findViewById(R.id.header_title)
+                : (TextView) itemView;
     }
 
     public void onBindViewHolder(SectionHeader header) {
-        ((TextView) itemView).setText(header.getHeaderText());
+        itemView.setOnClickListener(header.isExpandable() ? header : null);
+        mTitleView.setText(header.getHeaderText());
         updateDisplay(0, false);
         mMarginResizer.attach();
     }
