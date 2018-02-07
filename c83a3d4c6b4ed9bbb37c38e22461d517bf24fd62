@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6e7e46_885c8824",
+        "filename": "pdf/pdfium/fuzzers/pdfium_fuzzer_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T22:38:11Z",
+      "side": 1,
+      "message": "Since this never gets destroyed, TestCase::platform won\u0027t actually get destroyed either. Yet LSAN is ok with this, so...",
+      "revId": "c83a3d4c6b4ed9bbb37c38e22461d517bf24fd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
