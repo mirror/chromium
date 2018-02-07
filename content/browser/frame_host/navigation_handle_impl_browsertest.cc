@@ -39,6 +39,18 @@ namespace {
 // Text to place in an HTML body. Should not contain any markup.
 const char kBodyTextContent[] = "some plain text content";
 
+std::string TestHTML() {
+  return base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent);
+}
+
+void CheckBodyTextContent(content::RenderFrameHost* rfh) {
+  std::string result;
+  const std::string javascript =
+      "domAutomationController.send(document.body.textContent)";
+  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
+  EXPECT_EQ(kBodyTextContent, result);
+}
+
 }  // namespace
 
 namespace content {
@@ -2018,35 +2030,49 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplDownloadBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
-                       ThrottleFailureWithErrorPageContent) {
-  if (!IsBrowserSideNavigationEnabled())
-    return;
-
+                       WillFailRequestWithErrorPageContent) {
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
+
   GURL url(https_server.GetURL("/title1.html"));
 
-  NavigationThrottle::ThrottleCheckResult cancel_result = {
-      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
-      base::StringPrintf("<html><body>%s</body><html>", kBodyTextContent)};
-
   NavigationHandleObserver observer(shell()->web_contents(), url);
+  NavigationThrottle::ThrottleCheckResult result(
+      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+      TestHTML());
+
   TestNavigationThrottleInstaller installer(
       shell()->web_contents(), NavigationThrottle::PROCEED,
-      NavigationThrottle::PROCEED, cancel_result, NavigationThrottle::PROCEED);
+      NavigationThrottle::PROCEED, result, NavigationThrottle::PROCEED);
 
   EXPECT_FALSE(NavigateToURL(shell(), url));
 
   EXPECT_TRUE(observer.has_committed());
   EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
+}
 
-  std::string result;
-  const std::string javascript =
-      "domAutomationController.send(document.body.textContent)";
-  content::RenderFrameHost* rfh = shell()->web_contents()->GetMainFrame();
-  ASSERT_TRUE(content::ExecuteScriptAndExtractString(rfh, javascript, &result));
-  EXPECT_EQ(kBodyTextContent, result);
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       WillProcessResponseWithErrorPageContent) {
+  GURL url(embedded_test_server()->GetURL("/title1.html"));
+
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  NavigationThrottle::ThrottleCheckResult result(
+      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+      TestHTML());
+
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED, result);
+
+  EXPECT_FALSE(NavigateToURL(shell(), url));
+
+  EXPECT_TRUE(observer.has_committed());
+  EXPECT_TRUE(observer.is_error());
+  ASSERT_NO_FATAL_FAILURE(
+      CheckBodyTextContent(shell()->web_contents()->GetMainFrame()));
 }
 
 // The set of tests...
