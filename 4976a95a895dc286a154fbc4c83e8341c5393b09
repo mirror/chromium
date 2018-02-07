@@ -16,6 +16,24 @@
       "revId": "4976a95a895dc286a154fbc4c83e8341c5393b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9c96d1_a138e468",
+        "filename": "content/shell/android/java/src/org/chromium/content_shell/ShellViewAndroidDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-07T18:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839befa7_963d2991",
+      "revId": "4976a95a895dc286a154fbc4c83e8341c5393b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

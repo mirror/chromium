@@ -16,6 +16,24 @@
       "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b607101_0a194f65",
+        "filename": "content/shell/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-02-07T18:44:03Z",
+      "side": 0,
+      "message": "This jinja_template is not test only target. We were trying to remove test only from content_shell_java also, but that is not doable right now. But I guess we can defer this to another CL.",
+      "parentUuid": "b52beb30_8705768f",
+      "revId": "58e060dd9de6bd597f0111e4789cc6bce26b197a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
