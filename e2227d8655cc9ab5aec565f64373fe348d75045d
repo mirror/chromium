@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd1ccc0f_f2ec60ff",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-02-07T19:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f521bd_55f25444",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba0f9bc_978e584e",
         "filename": "ash/system/power/power_button_controller.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8562e80b_49bcc227",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-02-07T19:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba0f9bc_978e584e",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07701235_55637ee7",
         "filename": "ash/system/power/power_button_controller.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2a23d5_e8ddbf51",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-02-07T19:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07701235_55637ee7",
+      "revId": "e2227d8655cc9ab5aec565f64373fe348d75045d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
