@@ -3218,7 +3218,7 @@ crbug.com/806017 [ Linux ] virtual/gpu/fast/canvas/canvas-strokePath-shadow.html
 crbug.com/809152 netinfo/estimate-multiple-frames.html [ Pass Failure ]
 
 # Sheriff failures 2018-02-07
-crbug.com/809998 [ Linux ] external/wpt/media-source/mediasource-duration [ Pass Crash Failure ]
+crbug.com/809998 [ Linux ] external/wpt/media-source/mediasource-duration,html [ Pass Crash Failure ]
 crbug.com/810009 [ Linux ] paint/invalidation/image/canvas-composite-repaint-by-all-imagesource.html [ Pass Timeout ]
 crbug.com/810009 [ Linux ] virtual/spv175/paint/invalidation/image/canvas-composite-repaint-by-all-imagesource.html [ Pass Timeout ]
 
