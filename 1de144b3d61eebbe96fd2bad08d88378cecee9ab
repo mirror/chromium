@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d654a9c_95f2de4e",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T20:59:04Z",
+      "side": 1,
+      "message": "Can we make existing ViewShown() to take a display_id instead of adding a new method?",
+      "revId": "1de144b3d61eebbe96fd2bad08d88378cecee9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac6e539_847edd99",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T20:59:04Z",
+      "side": 1,
+      "message": "Looks like we did not hook up AppListViewDelegate::ViewClosing(). Let\u0027s add that and use it to reset the cached display id.",
+      "revId": "1de144b3d61eebbe96fd2bad08d88378cecee9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
