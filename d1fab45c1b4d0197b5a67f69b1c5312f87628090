@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b241c011_bff45535",
+        "filename": "third_party/WebKit/LayoutTests/virtual/mojo-blob-urls/external/wpt/FileAPI/url/cross-global-revoke.sub-expected.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2018-02-07T05:35:38Z",
+      "side": 1,
+      "message": "Thank you for explaining, you\u0027re right. Sorry for the noise.",
+      "parentUuid": "b63346bb_a41e42f7",
+      "revId": "d1fab45c1b4d0197b5a67f69b1c5312f87628090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4eb7ce9_a23ac9f4",
         "filename": "third_party/WebKit/LayoutTests/virtual/mojo-blob-urls/external/wpt/FileAPI/url/url-with-fetch.any-expected.txt",
         "patchSetId": 16
