@@ -236,6 +236,30 @@
       "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f6903f_1e6cefe6",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T21:05:53Z",
+      "side": 1,
+      "message": "You\u0027re not going to get behavior \"just like a Chromebook\" through the goldfish device no matter how hard you try.\n\nIf you really want to do this well, what you should do is have the emulator create an emulated tablet for the developer\u0027s mouse, and an emulated touchscreen for the developer\u0027s touchscreen, and an emulated keyboard for the developer\u0027s keyboard, and so on.\n\nDespite it looking like you can just shove all this into one linux input device, you actually can\u0027t, because there\u0027s only one set of absolute axes and at least 3 different input modalities that reuse those axes in incompatible ways.\n\nTL;DR Choosing mouse input for this device is going to break touch input, and vice versa. You will break someone\u0027s expectations either way.",
+      "parentUuid": "d5c01472_6cc9ae4a",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
