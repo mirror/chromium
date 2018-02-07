@@ -104,7 +104,7 @@
 }
 
 - (void)tabSwitcher:(id<TabSwitcher>)tabSwitcher
-    dismissTransitionWillStartWithActiveModel:(TabModel*)tabModel {
+    shouldFinishWithActiveModel:(TabModel*)tabModel {
   [self setDismissAnimationStarted:YES];
 }
 
