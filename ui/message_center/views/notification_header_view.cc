@@ -9,6 +9,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
@@ -38,8 +39,17 @@ constexpr gfx::Insets kHeaderOuterPadding(2, 2, 0, 2);
 
 // Paddings of the views of texts.
 // Top: 9px = 11px (from the mock) - 2px (outer padding)
-// Buttom: 6px from the mock
+// Buttom: 6px from the mock.
+#if defined(OS_WIN)
+// The spec uses Roboto-Regular font, but the system font in Windows is Segoe UI
+// which means the font metrics are slightly different (one pixel off). This is
+// accounted for here to make them align the same way vertically.
+constexpr gfx::Insets kTextViewPadding(8, 0, 6, 0);
+constexpr int kFontListHeight = 16;
+#else
 constexpr gfx::Insets kTextViewPadding(9, 0, 6, 0);
+constexpr int kFontListHeight = 15;
+#endif
 
 // Paddings of the entire header.
 // Left: 14px = 16px (from the mock) - 2px (outer padding)
@@ -188,9 +198,9 @@ NotificationHeaderView::NotificationHeaderView(
   DCHECK_EQ(kInnerHeaderHeight, app_icon_view_->GetPreferredSize().height());
   app_info_container->AddChildView(app_icon_view_);
 
-  // Font list for text views. The height must be 15px to match with the mock.
+  // Font list for text views.
   gfx::FontList font_list = GetHeaderTextFontList();
-  DCHECK_EQ(15, font_list.GetHeight());
+  DCHECK_EQ(kFontListHeight, font_list.GetHeight());
 
   const int font_list_height = font_list.GetHeight();
 
