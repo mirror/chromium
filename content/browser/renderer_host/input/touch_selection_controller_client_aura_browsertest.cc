@@ -896,8 +896,8 @@ IN_PROC_BROWSER_TEST_F(TouchSelectionControllerClientAuraTest,
   rwhva->OnGestureEvent(&scroll_begin);
 
   const int window_width = rwhva->GetNativeView()->bounds().width();
-  const float overscroll_threshold =
-      GetOverscrollConfig(OverscrollConfig::THRESHOLD_START_TOUCHSCREEN);
+  const float overscroll_threshold = OverscrollConfig::GetThreshold(
+      OverscrollConfig::Threshold::kStartTouchscreen);
   const float scroll_amount = window_width * overscroll_threshold + 1;
   event_x += scroll_amount;
   ui::GestureEventDetails scroll_update_details(ui::ET_GESTURE_SCROLL_UPDATE,

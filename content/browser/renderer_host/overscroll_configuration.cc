@@ -37,20 +37,54 @@ float GetStartThresholdMultiplier() {
 
 namespace content {
 
-float GetOverscrollConfig(OverscrollConfig config) {
-  switch (config) {
-    case OverscrollConfig::THRESHOLD_COMPLETE_TOUCHPAD:
+bool OverscrollConfig::is_mode_initialized_ = false;
+
+OverscrollConfig::Mode OverscrollConfig::mode_ =
+    OverscrollConfig::Mode::kSimple;
+
+// static
+OverscrollConfig::Mode OverscrollConfig::GetMode() {
+  if (is_mode_initialized_)
+    return mode_;
+
+  is_mode_initialized_ = true;
+
+  const std::string mode =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kOverscrollHistoryNavigation);
+  if (mode == "0")
+    mode_ = Mode::kDisabled;
+  else if (mode == "1")
+    mode_ = Mode::kEnabled;
+
+  return mode_;
+}
+
+// static
+bool OverscrollConfig::IsEnabled() {
+  return GetMode() != Mode::kDisabled;
+}
+
+// static
+bool OverscrollConfig::IsScreenshotUi() {
+  return GetMode() == Mode::kEnabled;
+}
+
+// static
+float OverscrollConfig::GetThreshold(Threshold threshold) {
+  switch (threshold) {
+    case Threshold::kCompleteTouchpad:
       return kThresholdCompleteTouchpad;
 
-    case OverscrollConfig::THRESHOLD_COMPLETE_TOUCHSCREEN:
+    case Threshold::kCompleteTouchscreen:
       return kThresholdCompleteTouchscreen;
 
-    case OverscrollConfig::THRESHOLD_START_TOUCHPAD:
+    case Threshold::kStartTouchpad:
       static const float threshold_start_touchpad =
           GetStartThresholdMultiplier() * kThresholdStartTouchpad;
       return threshold_start_touchpad;
 
-    case OverscrollConfig::THRESHOLD_START_TOUCHSCREEN:
+    case Threshold::kStartTouchscreen:
       static const float threshold_start_touchscreen =
           GetStartThresholdMultiplier() * kThresholdStartTouchscreen;
       return threshold_start_touchscreen;

@@ -5,28 +5,51 @@
 #ifndef CONTENT_PUBLIC_BROWSER_OVERSCROLL_CONFIGURATION_H_
 #define CONTENT_PUBLIC_BROWSER_OVERSCROLL_CONFIGURATION_H_
 
+#include "base/macros.h"
 #include "content/common/content_export.h"
 
 namespace content {
 
-// Sets and retrieves various overscroll related configuration values.
-enum class OverscrollConfig {
-  // Threshold to complete touchpad overscroll, in terms of the percentage of
-  // the display size.
-  THRESHOLD_COMPLETE_TOUCHPAD,
+class CONTENT_EXPORT OverscrollConfig {
+ public:
+  // Determines overscroll history navigation mode according to its
+  // corresponding flag.
+  enum class Mode {
+    kDisabled,
+    kEnabled,
+    kSimple,
+  };
 
-  // Threshold to complete touchscreen overscroll, in terms of the percentage of
-  // the display size.
-  THRESHOLD_COMPLETE_TOUCHSCREEN,
+  // Specifies an overscroll controller threshold.
+  enum class Threshold {
+    // Threshold to complete touchpad overscroll, in terms of the percentage of
+    // the display size.
+    kCompleteTouchpad,
 
-  // Threshold to start touchpad overscroll, in DIPs.
-  THRESHOLD_START_TOUCHPAD,
+    // Threshold to complete touchscreen overscroll, in terms of the percentage
+    // of
+    // the display size.
+    kCompleteTouchscreen,
 
-  // Threshold to start touchscreen overscroll, in DIPs.
-  THRESHOLD_START_TOUCHSCREEN,
+    // Threshold to start touchpad overscroll, in DIPs.
+    kStartTouchpad,
+
+    // Threshold to start touchscreen overscroll, in DIPs.
+    kStartTouchscreen,
+  };
+
+  static Mode GetMode();
+  static bool IsEnabled();
+  static bool IsScreenshotUi();
+
+  static float GetThreshold(Threshold threshold);
+
+ private:
+  static bool is_mode_initialized_;
+  static Mode mode_;
+
+  DISALLOW_IMPLICIT_CONSTRUCTORS(OverscrollConfig);
 };
-
-CONTENT_EXPORT float GetOverscrollConfig(OverscrollConfig config);
 
 }  // namespace content
 
