@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "008e6884_8513b831",
+        "filename": "tools/gn/bootstrap/bootstrap.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2018-02-07T20:37:42Z",
+      "side": 1,
+      "message": "You mean all the time?  It would break normal builds that use the gn from depot_tools if the user doesn\u0027t have build_dir/gn.",
+      "parentUuid": "5b4de437_8121ebf5",
+      "revId": "91b6a336e683bcb511790b95b864310412f14a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3f4cd56_e11d1639",
         "filename": "tools/gn/filesystem_utils.cc",
         "patchSetId": 1
