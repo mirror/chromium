@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "541d26c1_73fa3df9",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2018-02-07T17:56:19Z",
+      "side": 1,
+      "message": "Given the #ifdef in 236, this isn\u0027t needed, right? It\u0027s a noop",
+      "revId": "2555a4a6ff717b3246ecd4f8ad751c1901cecf64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
