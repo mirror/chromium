@@ -90,7 +90,7 @@ class CORE_EXPORT ScrollingCoordinator final
   // Called when any frame has done its layout or compositing has changed.
   void NotifyGeometryChanged(LocalFrameView*);
   // Called when any layoutBox has transform changed
-  void NotifyTransformChanged(const LayoutBox&);
+  void NotifyTransformChanged(LocalFrame*, const LayoutBox&);
 
   void UpdateAfterCompositingChangeIfNeeded(LocalFrameView*);
 
@@ -122,7 +122,7 @@ class CORE_EXPORT ScrollingCoordinator final
   void ScrollableAreaScrollbarLayerDidChange(ScrollableArea*,
                                              ScrollbarOrientation);
   void UpdateLayerPositionConstraint(PaintLayer*);
-  void TouchEventTargetRectsDidChange();
+  void TouchEventTargetRectsDidChange(LocalFrame*);
   void WillDestroyLayer(PaintLayer*);
 
   void UpdateScrollParentForGraphicsLayer(GraphicsLayer* child,
@@ -132,7 +132,7 @@ class CORE_EXPORT ScrollingCoordinator final
   Region ComputeShouldHandleScrollGestureOnMainThreadRegion(
       const LocalFrame*) const;
 
-  void UpdateTouchEventTargetRectsIfNeeded();
+  void UpdateTouchEventTargetRectsIfNeeded(LocalFrame*);
 
   void UpdateUserInputScrollable(ScrollableArea*);
 
@@ -148,7 +148,7 @@ class CORE_EXPORT ScrollingCoordinator final
 
   // For testing purposes only. This ScrollingCoordinator is reused between
   // layout test, and must be reset for the results to be valid.
-  void Reset();
+  void Reset(LocalFrame*);
 
  protected:
   explicit ScrollingCoordinator(Page*);
@@ -165,12 +165,13 @@ class CORE_EXPORT ScrollingCoordinator final
 
  private:
   void SetShouldUpdateScrollLayerPositionOnMainThread(
+      LocalFrame*,
       MainThreadScrollingReasons);
 
   void SetShouldHandleScrollGestureOnMainThreadRegion(const Region&,
                                                       LocalFrameView*);
-  void SetTouchEventTargetRects(LayerHitTestRects&);
-  void ComputeTouchEventTargetRects(LayerHitTestRects&);
+  void SetTouchEventTargetRects(LocalFrame*, LayerHitTestRects&);
+  void ComputeTouchEventTargetRects(LocalFrame*, LayerHitTestRects&);
 
   WebScrollbarLayer* AddWebScrollbarLayer(ScrollableArea*,
                                           ScrollbarOrientation,
@@ -179,7 +180,7 @@ class CORE_EXPORT ScrollingCoordinator final
                                           ScrollbarOrientation);
   void RemoveWebScrollbarLayer(ScrollableArea*, ScrollbarOrientation);
 
-  bool FrameScrollerIsDirty() const;
+  bool FrameScrollerIsDirty(LocalFrameView*) const;
 
   std::unique_ptr<CompositorAnimationHost> animation_host_;
   std::unique_ptr<CompositorAnimationTimeline>
@@ -190,9 +191,7 @@ class CORE_EXPORT ScrollingCoordinator final
   ScrollbarMap horizontal_scrollbars_;
   ScrollbarMap vertical_scrollbars_;
   HashSet<const PaintLayer*> layers_with_touch_rects_;
-  bool was_frame_scrollable_;
 
-  MainThreadScrollingReasons last_main_thread_scrolling_reasons_;
   DISALLOW_COPY_AND_ASSIGN(ScrollingCoordinator);
 };
 

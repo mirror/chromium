@@ -970,12 +970,18 @@ class CORE_EXPORT LocalFrameView final
   // scrollable regions updated by ScrollingCoordinator. Should only ever be
   // called on the local root's view.
   bool ScrollGestureRegionIsDirty() const;
+  bool TouchEventTargetRectsAreDirty() const;
+  bool ShouldScrollOnMainThreadIsDirty() const;
+  bool FrameIsScrollableDidChange();
 
   // Updates a flag on the local root's LocalFrameView to mark the local
   // subtree as needing to update its regions with ScrollingCoordinator.
   // Only ScrollingCoordinator should ever call this function with |dirty| set
   // to |false|.
   void SetScrollGestureRegionIsDirty(bool dirty);
+  void SetTouchEventTargetRectsAreDirty(bool dirty);
+  void SetShouldScrollOnMainThreadIsDirty(bool dirty);
+  void ClearFrameIsScrollableDidChange();
 
   // Should be called whenever this LocalFrameView adds or removes a
   // scrollable area, or gains/loses a composited layer.
@@ -1342,6 +1348,9 @@ class CORE_EXPORT LocalFrameView final
   bool needs_intersection_observation_;
   bool needs_forced_compositing_update_;
   bool scroll_gesture_region_is_dirty_;
+  bool touch_event_target_rects_are_dirty_;
+  bool should_scroll_on_main_thread_is_dirty_;
+  bool was_scrollable_;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 
