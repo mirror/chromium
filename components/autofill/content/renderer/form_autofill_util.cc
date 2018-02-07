@@ -41,6 +41,7 @@
 #include "third_party/WebKit/public/web/WebOptionElement.h"
 #include "third_party/WebKit/public/web/WebSelectElement.h"
 
+using autofill::FormFieldData;
 using blink::WebDocument;
 using blink::WebElement;
 using blink::WebElementCollection;
@@ -263,7 +264,8 @@ base::string16 FindChildTextWithIgnoreList(
 
 // Shared function for InferLabelFromPrevious() and InferLabelFromNext().
 base::string16 InferLabelFromSibling(const WebFormControlElement& element,
-                                     bool forward) {
+                                     bool forward,
+                                     FormFieldData::LabelSource* label_source) {
   base::string16 inferred_label;
   WebNode sibling = element;
   while (true) {
@@ -293,6 +295,7 @@ base::string16 InferLabelFromSibling(const WebFormControlElement& element,
       base::string16 value = FindChildText(sibling);
       // A text node's value will be empty if it is for a line break.
       bool add_space = sibling.IsTextNode() && value.empty();
+      *label_source = FormFieldData::LabelSource::COMBINED;
       inferred_label =
           CombineAndCollapseWhitespace(value, inferred_label, add_space);
       continue;
@@ -302,8 +305,10 @@ base::string16 InferLabelFromSibling(const WebFormControlElement& element,
     // element, consider the label to be complete.
     base::string16 trimmed_label;
     base::TrimWhitespace(inferred_label, base::TRIM_ALL, &trimmed_label);
-    if (!trimmed_label.empty())
+    if (!trimmed_label.empty()) {
+      *label_source = FormFieldData::LabelSource::COMBINED;
       break;
+    }
 
     // <img> and <br> tags often appear between the input element and its
     // label text, so skip over them.
@@ -315,8 +320,12 @@ base::string16 InferLabelFromSibling(const WebFormControlElement& element,
     // We only expect <p> and <label> tags to contain the full label text.
     CR_DEFINE_STATIC_LOCAL(WebString, kPage, ("p"));
     CR_DEFINE_STATIC_LOCAL(WebString, kLabel, ("label"));
-    if (HasTagName(sibling, kPage) || HasTagName(sibling, kLabel))
+    bool has_label_tag = HasTagName(sibling, kLabel);
+    if (HasTagName(sibling, kPage) || has_label_tag) {
       inferred_label = FindChildText(sibling);
+      *label_source = has_label_tag ? FormFieldData::LabelSource::LABEL_TAG
+                                    : FormFieldData::LabelSource::P_TAG;
+    }
 
     break;
   }
@@ -333,14 +342,17 @@ base::string16 InferLabelFromSibling(const WebFormControlElement& element,
 // or   <label>Some Text</label> <input ...>
 // or   Some Text <img><input ...>
 // or   <b>Some Text</b><br/> <input ...>.
-base::string16 InferLabelFromPrevious(const WebFormControlElement& element) {
-  return InferLabelFromSibling(element, false /* forward? */);
+base::string16 InferLabelFromPrevious(
+    const WebFormControlElement& element,
+    FormFieldData::LabelSource* label_source) {
+  return InferLabelFromSibling(element, false /* forward? */, label_source);
 }
 
 // Same as InferLabelFromPrevious(), but in the other direction.
 // Useful for cases like: <span><input type="checkbox">Label For Checkbox</span>
-base::string16 InferLabelFromNext(const WebFormControlElement& element) {
-  return InferLabelFromSibling(element, true /* forward? */);
+base::string16 InferLabelFromNext(const WebFormControlElement& element,
+                                  FormFieldData::LabelSource* label_source) {
+  return InferLabelFromSibling(element, true /* forward? */, label_source);
 }
 
 // Helper for |InferLabelForElement()| that infers a label, if possible, from
@@ -664,57 +676,71 @@ bool IsLabelValid(base::StringPiece16 inferred_label,
 // Infers corresponding label for |element| from surrounding context in the DOM,
 // e.g. the contents of the preceding <p> tag or text element.
 base::string16 InferLabelForElement(const WebFormControlElement& element,
-    const std::vector<base::char16>& stop_words) {
+                                    const std::vector<base::char16>& stop_words,
+                                    FormFieldData::LabelSource* label_source) {
   base::string16 inferred_label;
 
   if (IsCheckableElement(ToWebInputElement(&element))) {
-    inferred_label = InferLabelFromNext(element);
+    inferred_label = InferLabelFromNext(element, label_source);
     if (IsLabelValid(inferred_label, stop_words))
       return inferred_label;
   }
 
-  inferred_label = InferLabelFromPrevious(element);
+  inferred_label = InferLabelFromPrevious(element, label_source);
   if (IsLabelValid(inferred_label, stop_words))
     return inferred_label;
 
   // If we didn't find a label, check for placeholder text.
   inferred_label = InferLabelFromPlaceholder(element);
-  if (IsLabelValid(inferred_label, stop_words))
+  if (IsLabelValid(inferred_label, stop_words)) {
+    *label_source = FormFieldData::LabelSource::PLACE_HOLDER;
     return inferred_label;
+  }
 
   // For all other searches that involve traversing up the tree, the search
   // order is based on which tag is the closest ancestor to |element|.
   std::vector<std::string> tag_names = AncestorTagNames(element);
   std::set<std::string> seen_tag_names;
+  FormFieldData::LabelSource ancestor_label_source =
+      FormFieldData::LabelSource::UNKNOWN;
   for (const std::string& tag_name : tag_names) {
     if (base::ContainsKey(seen_tag_names, tag_name))
       continue;
 
     seen_tag_names.insert(tag_name);
     if (tag_name == "LABEL") {
+      ancestor_label_source = FormFieldData::LabelSource::LABEL_TAG;
       inferred_label = InferLabelFromEnclosingLabel(element);
     } else if (tag_name == "DIV") {
+      ancestor_label_source = FormFieldData::LabelSource::DIV_TABLE;
       inferred_label = InferLabelFromDivTable(element);
     } else if (tag_name == "TD") {
+      ancestor_label_source = FormFieldData::LabelSource::TD_TAG;
       inferred_label = InferLabelFromTableColumn(element);
       if (!IsLabelValid(inferred_label, stop_words))
         inferred_label = InferLabelFromTableRow(element);
     } else if (tag_name == "DD") {
+      ancestor_label_source = FormFieldData::LabelSource::DD_TAG;
       inferred_label = InferLabelFromDefinitionList(element);
     } else if (tag_name == "LI") {
+      ancestor_label_source = FormFieldData::LabelSource::LI_TAG;
       inferred_label = InferLabelFromListItem(element);
     } else if (tag_name == "FIELDSET") {
       break;
     }
 
-    if (IsLabelValid(inferred_label, stop_words))
+    if (IsLabelValid(inferred_label, stop_words)) {
+      *label_source = ancestor_label_source;
       return inferred_label;
+    }
   }
 
   // If we didn't find a label, check the value attr used as the placeholder.
   inferred_label = InferLabelFromValueAttr(element);
-  if (IsLabelValid(inferred_label, stop_words))
+  if (IsLabelValid(inferred_label, stop_words)) {
+    *label_source = FormFieldData::LabelSource::VALUE;
     return inferred_label;
+  }
   return base::string16();
 }
 
@@ -1122,8 +1148,8 @@ bool FormOrFieldsetsToFormData(
 
     const WebFormControlElement& control_element = control_elements[i];
     if (form_fields[field_idx]->label.empty()) {
-      form_fields[field_idx]->label = InferLabelForElement(control_element,
-                                                           stop_words);
+      form_fields[field_idx]->label = InferLabelForElement(
+          control_element, stop_words, &(form_fields[field_idx]->label_source));
     }
     TruncateString(&form_fields[field_idx]->label, kMaxDataLength);
 
@@ -1838,8 +1864,9 @@ base::string16 FindChildTextWithIgnoreListForTesting(
 
 base::string16 InferLabelForElementForTesting(
     const WebFormControlElement& element,
-    const std::vector<base::char16>& stop_words) {
-  return InferLabelForElement(element, stop_words);
+    const std::vector<base::char16>& stop_words,
+    FormFieldData::LabelSource* label_source) {
+  return InferLabelForElement(element, stop_words, label_source);
 }
 
 }  // namespace form_util
