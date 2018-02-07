@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37c4e5fd_76861f6b",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-07T19:41:15Z",
+      "side": 1,
+      "message": "ah right sweet",
+      "parentUuid": "603d65b6_1deb3f6d",
+      "revId": "4d33761ad8b24bf7115fdbc9352f45d30f7ca317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6859c3e5_41a5359c",
         "filename": "content/browser/dom_storage/dom_storage_session.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4d33761ad8b24bf7115fdbc9352f45d30f7ca317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c6d4b5_ab783156",
+        "filename": "content/browser/dom_storage/dom_storage_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-07T19:41:15Z",
+      "side": 1,
+      "message": "I think because I\u0027m doing stuff on the sequence_helper_ in the destructor, I\u0027d like to keep the destruction in there too so it\u0027s not confusing to people.",
+      "parentUuid": "6859c3e5_41a5359c",
+      "revId": "4d33761ad8b24bf7115fdbc9352f45d30f7ca317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
