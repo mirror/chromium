@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9190cbcc_aced264d",
+        "filename": "chrome/browser/ui/browser_ui_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:36:55Z",
+      "side": 1,
+      "message": "It looks like this is a time period.  It would be nice to register it as a TimeDelta directly, so you could set and read it as a TimeDelta and avoid any potential for misconversion.\n\nWe have RegisterTimePref(), but that\u0027s not quite what you want.  Internally, however, that converts to a TimeDelta (since the epoch) and writes as an Int64 pref.  You could add a RegisterTimeDeltaPref() that does just the latter, and layer the former on top of it.  You\u0027d also need to add PrefService::Get/SetTimeDelta() (and probably change the existing Get/SetTime() functions to call them).",
+      "revId": "837783543599bc233c7dc721e8fcd8c2e9432766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
