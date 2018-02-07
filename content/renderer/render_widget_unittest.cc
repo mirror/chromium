@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_widget.h"
 
+#include <iostream>
 #include <tuple>
 #include <vector>
 
@@ -404,6 +405,55 @@ TEST_F(RenderWidgetUnittest, AckResizeOnHide) {
   widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
   EXPECT_TRUE(widget()->sink()->GetUniqueMessageMatching(
       ViewHostMsg_ResizeOrRepaint_ACK::ID));
+}
+
+// Tests that if a RenderWidget is auto-resized, it allocates its own
+// viz::LocalSurfaceId
+TEST_F(RenderWidgetUnittest, AutoResizeAlloatedLocalSurfaceId) {
+#if !defined(USE_AURA)
+  // Only Aura platforms support child allocation of viz::LocalSurfaceIds
+  return;
+#endif
+  constexpr gfx::Size size(200, 200);
+  widget()->DidAutoResize(size);
+
+  widget()->sink()->ClearMessages();
+  widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
+  viz::LocalSurfaceId local_surface_id1;
+  ASSERT_EQ(1u, widget()->sink()->message_count());
+  {
+    const IPC::Message* msg = widget()->sink()->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewHostMsg_ResizeOrRepaint_ACK::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    local_surface_id1 = std::get<5>(params);
+    std::cout << local_surface_id1 << std::endl;
+  }
+
+  constexpr gfx::Size size2(100, 100);
+  widget()->DidAutoResize(size2);
+
+  widget()->sink()->ClearMessages();
+  widget()->OnMessageReceived(ViewMsg_WasHidden(widget()->routing_id()));
+  viz::LocalSurfaceId local_surface_id2;
+  ASSERT_EQ(1u, widget()->sink()->message_count());
+  {
+    const IPC::Message* msg = widget()->sink()->GetMessageAt(0);
+    EXPECT_EQ(static_cast<uint32_t>(ViewHostMsg_ResizeOrRepaint_ACK::ID),
+              msg->type());
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Param params;
+    ViewMsg_SetLocalSurfaceIdForAutoResize::Read(msg, &params);
+    local_surface_id2 = std::get<5>(params);
+    std::cout << local_surface_id2 << std::endl;
+  }
+
+  EXPECT_NE(local_surface_id1, local_surface_id2);
+  EXPECT_EQ(local_surface_id1.parent_sequence_number(),
+            local_surface_id2.parent_sequence_number());
+  EXPECT_EQ(local_surface_id1.child_Sequence_number() + 1,
+            local_surface_id2.child_sequence_number());
+  EXPECT_EQ(local_surface_id1.nonce(), local_surface_id2.nonce());
 }
 
 class PopupRenderWidget : public RenderWidget {
