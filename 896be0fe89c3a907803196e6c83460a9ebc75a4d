@@ -16,6 +16,24 @@
       "revId": "896be0fe89c3a907803196e6c83460a9ebc75a4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2340560a_1b0e95f1",
+        "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-07T22:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482765da_b0cae389",
+      "revId": "896be0fe89c3a907803196e6c83460a9ebc75a4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

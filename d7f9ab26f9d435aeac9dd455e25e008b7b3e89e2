@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "68e81efa_ea607264",
+        "filename": "chrome/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-07T22:11:30Z",
+      "side": 1,
+      "message": "chrome/browser/safe_browsing doesn\u0027t depend on chrome/browser/loader.\nMoreover, DataReductionProxyResourceThrottle is not compiled at all on non-android platform.\n\nI think with the current code it shouldn\u0027t be too hard to discover that they are logically connected: DataReductionProxyResourceThrottle calls this function.\n\nWDYT? Thanks!",
+      "parentUuid": "f7edbfb5_c3b2d2fc",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5003b8bd_cf02f8fb",
         "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
         "patchSetId": 12
