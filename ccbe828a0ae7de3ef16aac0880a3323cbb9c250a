@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32b33dd4_729519b8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T09:47:43Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve made it a static function again.",
+      "parentUuid": "3164a23a_b804ff7c",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1319830c_aaae0812",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5668e383_f39dcb2a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T09:47:43Z",
+      "side": 1,
+      "message": "Right, I\u0027ll keep these two functions here then.",
+      "parentUuid": "2f3f0bf3_43a3931c",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "902e4909_cb95f73f",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 3
@@ -104,6 +140,24 @@
       "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d54ebb8_55d7f4a2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-02-07T09:47:43Z",
+      "side": 1,
+      "message": "Annotated types are supported, but not all IDL files (and specs) have been converted. Several IDL files in Source/core/css and Source/core/html still have [TreatNullAs] before the \"attribute\" keyword, for example.",
+      "parentUuid": "bff07f0c_4b7bdebc",
+      "revId": "ccbe828a0ae7de3ef16aac0880a3323cbb9c250a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
