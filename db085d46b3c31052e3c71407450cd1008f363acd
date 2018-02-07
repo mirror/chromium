@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a77d154a_82774ee2",
+        "filename": "content/browser/cache_storage/cache_storage_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:32:57Z",
+      "side": 1,
+      "message": "Ah, I might have been unclear: the two options you have are mojo::ReportBadMesage \u0026 call the callback, or simply call bindings_.ReportBadMessage() which will close the pipe for you eliminating the need to call the callback.",
+      "parentUuid": "67901097_f27de932",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb8aeee_759ca9cb",
         "filename": "content/common/cache_storage/cache_storage_struct_traits.h",
         "patchSetId": 15
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I tried to move there, but due to its dependency on Blob, which in turn depends on //storage/ it failed, specifically failed to link on \"service_worker_fetch_response_mojom_traits.cc\" where referencing \"storage::BlobHandle\".\n\nSo I\u0027m proposing to keep here for the time being, probably until we solve the content::ServiceWorkerReponse/BlobHandle story.",
       "parentUuid": "c9f86c6b_2f4e2c45",
+      "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30390e73_e8401714",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_response.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-07T17:32:57Z",
+      "side": 1,
+      "message": "Not sure what dependency on blob you\u0027re describing here... The Blob mojo type is alrady in WebKit/common, and shouldn\u0027t do any typemapping or cause any dependencies on storage::BlobHandle. It is true that currently ServiceWorkerResponse holds the blob as a storage::BlobHandle, but that is only as a temporary measure/for legacy IPC reasons, as ServiceWorkerResponse unfortunately currently needs to be copyable.\n\nIf you did the suggested \"change ServiceWorkerResponse\" into a mojom struct, the struct would just hold BlobPtr directly, so no more dependency on storage::BlobHandle (really no new code should use storage::BlobHandle anyway imho). But that then of course runs into the problem that the mojo struct would be move-only while currently ServiceWorkerResponse is copied all over the place.",
+      "parentUuid": "0d71b74f_963b0f67",
       "revId": "db085d46b3c31052e3c71407450cd1008f363acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
