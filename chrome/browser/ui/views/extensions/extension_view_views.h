@@ -41,9 +41,6 @@ class ExtensionViewViews : public views::WebView,
   // extensions::ExtensionView:
   Browser* GetBrowser() override;
 
-  // views::WebView:
-  void VisibilityChanged(View* starting_from, bool is_visible) override;
-
   void set_minimum_size(const gfx::Size& minimum_size) {
     minimum_size_ = minimum_size;
   }
@@ -51,6 +48,9 @@ class ExtensionViewViews : public views::WebView,
 
  private:
   friend class extensions::ExtensionHost;
+
+  // views::WebView:
+  void VisibilityChanged(View* starting_from, bool is_visible) override;
 
   // extensions::ExtensionView:
   gfx::NativeView GetNativeView() override;
