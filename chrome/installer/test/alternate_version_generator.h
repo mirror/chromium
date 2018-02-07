@@ -20,6 +20,8 @@ enum Direction {
   NEXT_VERSION
 };
 
+enum CompressionLevel { NO_COMPRESSION, COMPRESSION };
+
 // Generates an alternate mini_installer.exe using the one indicated by
 // |original_installer_path|, giving the new one a lower or higher version than
 // the original and placing it in |target_path|.  Any previous file at
@@ -29,6 +31,7 @@ enum Direction {
 bool GenerateAlternateVersion(const base::FilePath& original_installer_path,
                               const base::FilePath& target_path,
                               Direction direction,
+                              CompressionLevel compression_level,
                               base::string16* original_version,
                               base::string16* new_version);
 
