@@ -1823,7 +1823,7 @@ COMMON_GTESTS = {
   'vr_browser_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.FYI_ONLY,
+        'predicate': Predicates.FYI_AND_OPTIONAL,
         'os_types': ['win']
       },
     ],
@@ -1831,6 +1831,7 @@ COMMON_GTESTS = {
     'disabled_tester_configs': [
       {
         'names': [
+          'Optional Win7 Release (NVIDIA)',
           'Win7 Release (NVIDIA)',
           'Win7 Debug (NVIDIA)',
           'Win7 dEQP Release (NVIDIA)',
