@@ -67,7 +67,7 @@ MetricsWebContentsObserver::MetricsWebContentsObserver(
     content::WebContents* web_contents,
     std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface)
     : content::WebContentsObserver(web_contents),
-      in_foreground_(web_contents->IsVisible()),
+      last_visibility_(web_contents->GetVisibility()),
       embedder_interface_(std::move(embedder_interface)),
       has_navigated_(false),
       page_load_metrics_binding_(web_contents, this) {
@@ -76,7 +76,7 @@ MetricsWebContentsObserver::MetricsWebContentsObserver(
   const bool is_prerender =
       prerender::PrerenderContents::FromWebContents(web_contents) != nullptr;
   if (is_prerender)
-    in_foreground_ = false;
+    last_visibility_ = content::Visibility::HIDDEN;
 
   RegisterInputEventObserver(web_contents->GetRenderViewHost());
 }
@@ -201,9 +201,9 @@ void MetricsWebContentsObserver::WillStartNavigationRequest(
   auto insertion_result = provisional_loads_.insert(std::make_pair(
       navigation_handle,
       std::make_unique<PageLoadTracker>(
-          in_foreground_, embedder_interface_.get(), currently_committed_url,
-          navigation_handle, user_initiated_info, chain_size,
-          chain_size_same_url)));
+          last_visibility_ == content::Visibility::VISIBLE,
+          embedder_interface_.get(), currently_committed_url, navigation_handle,
+          user_initiated_info, chain_size, chain_size_same_url)));
   DCHECK(insertion_result.second)
       << "provisional_loads_ already contains NavigationHandle.";
   for (auto& observer : testing_observers_)
@@ -480,25 +480,26 @@ void MetricsWebContentsObserver::DidRedirectNavigation(
   it->second->Redirect(navigation_handle);
 }
 
-void MetricsWebContentsObserver::WasShown() {
-  if (in_foreground_)
-    return;
-  in_foreground_ = true;
-  if (committed_load_)
-    committed_load_->WebContentsShown();
-  for (const auto& kv : provisional_loads_) {
-    kv.second->WebContentsShown();
-  }
-}
-
-void MetricsWebContentsObserver::WasHidden() {
-  if (!in_foreground_)
-    return;
-  in_foreground_ = false;
-  if (committed_load_)
-    committed_load_->WebContentsHidden();
-  for (const auto& kv : provisional_loads_) {
-    kv.second->WebContentsHidden();
+void MetricsWebContentsObserver::OnVisibilityChanged(
+    content::Visibility visibility) {
+  if (visibility == content::Visibility::VISIBLE &&
+      last_visibility_ != content::Visibility::VISIBLE) {
+    last_visibility_ = visibility;
+    if (committed_load_)
+      committed_load_->WebContentsShown();
+    for (const auto& kv : provisional_loads_) {
+      kv.second->WebContentsShown();
+    }
+  } else if (visibility != content::Visibility::VISIBLE &&
+             last_visibility_ == content::Visibility::VISIBLE) {
+    last_visibility_ = visibility;
+    if (committed_load_)
+      committed_load_->WebContentsHidden();
+    for (const auto& kv : provisional_loads_) {
+      kv.second->WebContentsHidden();
+    }
+  } else {
+    last_visibility_ = visibility;
   }
 }
 

@@ -51,19 +51,20 @@ void PopupTracker::DidFinishNavigation(
   // we've committed the first navigation in this WebContents.
   if (!first_load_visibility_tracker_) {
     first_load_visibility_tracker_ = std::make_unique<ScopedVisibilityTracker>(
-        tick_clock_.get(), web_contents()->IsVisible());
+        tick_clock_.get(),
+        web_contents()->GetVisibility() == content::Visibility::VISIBLE);
   } else {
     web_contents()->RemoveUserData(UserDataKey());
     // Destroys this object.
   }
 }
 
-void PopupTracker::WasShown() {
-  if (first_load_visibility_tracker_)
-    first_load_visibility_tracker_->OnShown();
+void PopupTracker::OnVisibilityChanged(content::Visibility visibility) {
+  if (first_load_visibility_tracker_) {
+    if (visibility == content::Visibility::VISIBLE)
+      first_load_visibility_tracker_->OnShown();
+    else
+      first_load_visibility_tracker_->OnHidden();
+  }
 }
 
-void PopupTracker::WasHidden() {
-  if (first_load_visibility_tracker_)
-    first_load_visibility_tracker_->OnHidden();
-}

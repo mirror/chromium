@@ -33,7 +33,7 @@ BackgroundTabNavigationThrottle::MaybeCreateThrottleFor(
   content::WebContents* web_contents = navigation_handle->GetWebContents();
 
   // Never delay foreground tabs.
-  if (web_contents->IsVisible())
+  if (web_contents->GetVisibility() == content::Visibility::VISIBLE)
     return nullptr;
 
   // Never delay the tab when there is opener, so the created window can talk

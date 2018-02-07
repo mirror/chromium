@@ -48,8 +48,8 @@ class WebViewTestViewsDelegate : public views::TestViewsDelegate {
   DISALLOW_COPY_AND_ASSIGN(WebViewTestViewsDelegate);
 };
 
-// Provides functionality to observe events on a WebContents like WasShown/
-// WasHidden/WebContentsDestroyed.
+// Provides functionality to observe events on a WebContents like
+// OnVisibilityChanged/WebContentsDestroyed.
 class WebViewTestWebContentsObserver : public content::WebContentsObserver {
  public:
   WebViewTestWebContentsObserver(content::WebContents* web_contents)
@@ -72,18 +72,18 @@ class WebViewTestWebContentsObserver : public content::WebContentsObserver {
     web_contents_ = NULL;
   }
 
-  void WasShown() override {
+  void OnVisibilityChanged(content::Visibility visibility) override {
+    if (visibility == content::Visibility::VISIBLE) {
 #if defined(USE_AURA)
     valid_root_while_shown_ =
         web_contents()->GetNativeView()->GetRootWindow() != NULL;
 #endif
     was_shown_ = true;
     ++shown_count_;
-  }
-
-  void WasHidden() override {
-    was_shown_ = false;
-    ++hidden_count_;
+    } else {
+      was_shown_ = false;
+      ++hidden_count_;
+    }
   }
 
   bool was_shown() const { return was_shown_; }
