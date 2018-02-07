@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "96346793_d1d1fde5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-02-07T09:47:23Z",
+      "side": 1,
+      "message": "Could call Tommy. FWIW, you could DCHECK _after_ if you check whether PIP was allowed because it shouldn\u0027t on \u003caudio\u003e elements. The check is probably not that expensive anyway.",
+      "parentUuid": "71371814_06986c75",
+      "revId": "a489d8849c74d085e274711f413441aa5ef08ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1d1e250_b94e1955",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 11
