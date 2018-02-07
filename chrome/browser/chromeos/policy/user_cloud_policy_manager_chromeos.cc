@@ -20,6 +20,8 @@
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/users/affiliation.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos.h"
 #include "chrome/browser/chromeos/policy/policy_oauth2_token_fetcher.h"
 #include "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.h"
 #include "chrome/browser/chromeos/policy/wildcard_login_checker.h"
@@ -317,6 +319,24 @@ void UserCloudPolicyManagerChromeOS::OnPolicyFetched(
 void UserCloudPolicyManagerChromeOS::OnRegistrationStateChanged(
     CloudPolicyClient* cloud_policy_client) {
   DCHECK_EQ(client(), cloud_policy_client);
+
+  if (!client()->user_affiliation_ids().empty()) {
+    const chromeos::AffiliationIDSet set_of_user_affiliation_ids(
+        client()->user_affiliation_ids().begin(),
+        client()->user_affiliation_ids().end());
+    const policy::BrowserPolicyConnectorChromeOS* connector =
+        g_browser_process->platform_part()->browser_policy_connector_chromeos();
+    const bool is_affiliated = chromeos::IsUserAffiliated(
+        set_of_user_affiliation_ids, connector->GetDeviceAffiliationIDs(),
+        account_id_.GetUserEmail());
+    std::string dm_token;
+    if (is_affiliated) {
+      const policy::DeviceCloudPolicyManagerChromeOS* policy_manager =
+          connector->GetDeviceCloudPolicyManager();
+      dm_token = policy_manager->core()->client()->dm_token();
+    }
+    client()->SetDeviceDMToken(dm_token);
+  }
 
   if (waiting_for_policy_fetch_) {
     time_client_registered_ = base::Time::Now();

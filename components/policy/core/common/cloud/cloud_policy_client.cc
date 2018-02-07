@@ -245,6 +245,10 @@ void CloudPolicyClient::SetInvalidationInfo(int64_t version,
   invalidation_payload_ = payload;
 }
 
+void CloudPolicyClient::SetDeviceDMToken(const std::string& device_dm_token) {
+  device_dm_token_ = device_dm_token;
+}
+
 void CloudPolicyClient::FetchPolicy() {
   CHECK(is_registered());
   CHECK(!types_to_fetch_.empty());
@@ -277,6 +281,8 @@ void CloudPolicyClient::FetchPolicy() {
 
     // These fields are included only in requests for chrome policy.
     if (IsChromePolicy(type_to_fetch.first)) {
+      if (!device_dm_token_.empty())
+        fetch_request->set_device_dm_token(device_dm_token_);
       if (!last_policy_timestamp_.is_null())
         fetch_request->set_timestamp(last_policy_timestamp_.ToJavaTime());
       if (!invalidation_payload_.empty()) {
@@ -611,6 +617,9 @@ void CloudPolicyClient::OnRegisterCompleted(
           response.register_response().enrollment_type());
     }
 
+    user_affiliation_ids_.clear();
+    for (const auto& id : response.register_response().user_affiliation_ids())
+      user_affiliation_ids_.push_back(id);
     NotifyRegistrationStateChanged();
   } else {
     NotifyClientError();

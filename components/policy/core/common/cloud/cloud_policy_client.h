@@ -136,6 +136,9 @@ class POLICY_EXPORT CloudPolicyClient {
   // to determine which version of policy was fetched.
   void SetInvalidationInfo(int64_t version, const std::string& payload);
 
+  // Sets device dm token for affiliated users policy requested.
+  void SetDeviceDMToken(const std::string& device_dm_token);
+
   // Requests a policy fetch. The client being registered is a prerequisite to
   // this operation and this call will CHECK if the client is not in registered
   // state. FetchPolicy() triggers a policy fetch from the cloud. A policy
@@ -264,6 +267,9 @@ class POLICY_EXPORT CloudPolicyClient {
 
   const std::string& dm_token() const { return dm_token_; }
   const std::string& client_id() const { return client_id_; }
+  const std::vector<std::string>& user_affiliation_ids() const {
+    return user_affiliation_ids_;
+  }
 
   // The device mode as received in the registration request.
   DeviceMode device_mode() const { return device_mode_; }
@@ -420,11 +426,13 @@ class POLICY_EXPORT CloudPolicyClient {
 
   std::string dm_token_;
   DeviceMode device_mode_ = DEVICE_MODE_NOT_SET;
+  std::vector<std::string> user_affiliation_ids_;
   std::string client_id_;
   base::Time last_policy_timestamp_;
   int public_key_version_ = -1;
   bool public_key_version_valid_ = false;
   std::string robot_api_auth_code_;
+  std::string device_dm_token_;
 
   // Information for the latest policy invalidation received.
   int64_t invalidation_version_ = 0;
