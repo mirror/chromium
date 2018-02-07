@@ -4,9 +4,11 @@
 
 #include "core/editing/VisibleUnits.h"
 
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "platform/text/TextBoundaries.h"
 
 namespace blink {
 
@@ -36,11 +38,23 @@ class VisibleUnitsWordTest : public EditingTestBase {
 
   std::string DoNextWord(const std::string& selection_text) {
     const Position position = SetSelectionTextToBody(selection_text).Base();
+    const Position result =
+        NextWordPosition(CreateVisiblePosition(position)).DeepEquivalent();
+    if (result.IsNull())
+      return GetSelectionTextFromBody(SelectionInDOMTree());
     return GetSelectionTextFromBody(
-        SelectionInDOMTree::Builder()
-            .Collapse(NextWordPosition(CreateVisiblePosition(position))
-                          .DeepEquivalent())
-            .Build());
+        SelectionInDOMTree::Builder().Collapse(result).Build());
+  }
+
+  std::string DoWordAroundPosition(
+      const std::string& selection_text,
+      AppendTrailingWhitespace append_trailing_whitespace =
+          AppendTrailingWhitespace::kDontAppend) {
+    const Position position = SetSelectionTextToBody(selection_text).Base();
+    const EphemeralRangeInFlatTree range = ComputeWordAroundPosition(
+        ToPositionInFlatTree(position), append_trailing_whitespace);
+    return GetSelectionTextInFlatTreeFromBody(
+        SelectionInFlatTree::Builder().SetBaseAndExtent(range).Build());
   }
 };
 
@@ -218,6 +232,25 @@ TEST_F(VisibleUnitsWordTest, EndOfWordTextSecurity) {
   EXPECT_EQ("abc<s>foo bar</s>baz|", DoEndOfWord("abc<s>foo bar|</s>baz"));
   EXPECT_EQ("abc<s>foo bar</s>baz|", DoEndOfWord("abc<s>foo bar</s>|baz"));
   EXPECT_EQ("abc<s>foo bar</s>baz|", DoEndOfWord("abc<s>foo bar</s>b|az"));
+}
+
+TEST_F(VisibleUnitsWordTest, WordAroundPositionCollapsedWhitespace) {
+  EXPECT_EQ("  ^abc|  def  ", DoWordAroundPosition("|  abc  def  "));
+  EXPECT_EQ("  ^abc|  def  ", DoWordAroundPosition(" | abc  def  "));
+  EXPECT_EQ("  ^abc|  def  ", DoWordAroundPosition("  |abc  def  "));
+  EXPECT_EQ("  ^abc|  def  ", DoWordAroundPosition("  a|bc  def  "));
+  EXPECT_EQ("  ^abc|  def  ", DoWordAroundPosition("  ab|c  def  "));
+  EXPECT_EQ("  abc^ | def  ", DoWordAroundPosition("  abc|  def  "));
+  EXPECT_EQ("  abc  ^def|  ", DoWordAroundPosition("  abc | def  "));
+  EXPECT_EQ("  abc  ^def|  ", DoWordAroundPosition("  abc  |def  "));
+  EXPECT_EQ("  abc  ^def|  ", DoWordAroundPosition("  abc  d|ef  "));
+  EXPECT_EQ("  abc  ^def|  ", DoWordAroundPosition("  abc  de|f  "));
+  EXPECT_EQ("  abc  def|  ", DoWordAroundPosition("  abc  def|  "))
+      << "Trailing whitespaces are collapsed.";
+  EXPECT_EQ("  abc  def|  ", DoWordAroundPosition("  abc  def | "))
+      << "Trailing whitespaces are collapsed.";
+  EXPECT_EQ("  abc  def|  ", DoWordAroundPosition("  abc  def  |"))
+      << "Trailing whitespaces are collapsed.";
 }
 
 TEST_F(VisibleUnitsWordTest, NextWordBasic) {
