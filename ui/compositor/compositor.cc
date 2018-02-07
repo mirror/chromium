@@ -46,6 +46,7 @@
 #include "ui/compositor/external_begin_frame_client.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animator_collection.h"
+#include "ui/compositor/overscroll/ui_scroll_input_manager.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/icc_profile.h"
@@ -177,6 +178,10 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   settings.gpu_memory_policy.priority_cutoff_when_visible =
       gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE;
 
+#if defined(OS_MACOSX)
+  settings.enable_elastic_overscroll = true;
+#endif
+
   settings.disallow_non_exact_resource_reuse =
       command_line->HasSwitch(switches::kDisallowNonExactResourceReuse);
 
@@ -202,6 +207,13 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   host_ = cc::LayerTreeHost::CreateSingleThreaded(this, &params);
   UMA_HISTOGRAM_TIMES("GPU.CreateBrowserCompositor",
                       base::TimeTicks::Now() - before_create);
+
+  // Tie composited scrolling with whether the platform wants elastic scrolling.
+  // TODO(tapted): Use composited scrolling on all platforms.
+  if (settings.enable_elastic_overscroll) {
+    scroll_input_manager_.reset(
+        new UIScrollInputManager(host_->GetInputHandler()));
+  }
 
   animation_timeline_ =
       cc::AnimationTimeline::Create(cc::AnimationIdProvider::NextTimelineId());
