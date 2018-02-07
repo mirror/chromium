@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b046df1d_154156c9",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.12/paint/invalidation/filters/filter-on-html-element-with-fixed-position-child-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T19:23:08Z",
+      "side": 1,
+      "message": "This change is because the .png for Mac 10.12 matches that for windows,\nwhereas other mac platforms have a slightly different output. I don\u0027t know\nwhy, must be something to do with rounding of pixels during raster in Skia.",
+      "revId": "c51ffcca94d300d078a1893505a4b50fd4a64832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

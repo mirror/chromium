@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37de91b9_1d366ea1",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/filters/filter-on-html-element-with-fixed-position-child-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T19:23:08Z",
+      "side": 0,
+      "message": "These are no longer happening because we are now going through the invalidation path\nin PaintLayerScrollableArea, which has also recently been optimized by szager to avoid\nsubtree invalidations.\n\nThe other invalidation changes are the same.\n\nI verified manually that all of these examples show the correct pixels. We also have\n.png expectations for them.",
+      "revId": "0095e187f231edcb64722e5dabec80c26a864ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
