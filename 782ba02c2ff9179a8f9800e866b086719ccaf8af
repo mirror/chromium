@@ -22,6 +22,30 @@
       "revId": "782ba02c2ff9179a8f9800e866b086719ccaf8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc67467_b9296acd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabLayoutManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T17:59:55Z",
+      "side": 0,
+      "message": "From what I can tell, the coordinates are only used for animations (in SimpleAnimationLayout), and the incognito flag certainly doesn\u0027t apply to custom tabs, but I don\u0027t think the reduction in overhead for getting the values even if they\u0027re not required is worth potentially having bugs because of missing logic.",
+      "parentUuid": "d78fb3db_4bc1866b",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 87
+      },
+      "revId": "782ba02c2ff9179a8f9800e866b086719ccaf8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
