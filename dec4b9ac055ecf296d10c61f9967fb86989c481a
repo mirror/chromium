@@ -52,6 +52,24 @@
       "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "855a1763_33215e3d",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2018-02-07T19:56:02Z",
+      "side": 1,
+      "message": "This would require CanRequestInternal() to always be followed by FetchContext::IsAdResource() but that wouldn\u0027t be possible in CanRequest() but in all the callers of CanRequest() since that\u0027s where ResourceRequest is non-const. The dependency that CanRequest() and IsAdResource() should both be invoked together seems hard to maintain.\n\nAlthough the current design requires 2 points of invocation for subresourceFilter: one for deciding whether to block and another to decide if tagging should happen but I feel more comfortable in keeping the 2 separate rather than together because of the maintenance risk.",
+      "parentUuid": "c5bd6d3a_754e9d4b",
+      "revId": "dec4b9ac055ecf296d10c61f9967fb86989c481a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
