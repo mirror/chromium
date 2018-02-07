@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "637cfcfe_91ee727f",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T23:13:32Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad381fb_dfa7ddb2",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T23:13:32Z",
+      "side": 1,
+      "message": "Would be best to add a timeout here, so the tests would report an error instead of waiting indefinitely. You\u0027ll probably need to use select() to implement it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b403499_60d8c8cc",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T23:13:32Z",
+      "side": 1,
+      "message": "Looks like this comment is out of date.",
+      "range": {
+        "startLine": 59,
+        "startChar": 61,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a777e51b_acc82c18",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T23:13:32Z",
+      "side": 1,
+      "message": "RemoteTestServerConfig doesn\u0027t use this.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735ba762_716ea39e",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-02-07T23:13:32Z",
+      "side": 1,
+      "message": "With this change we will always have testserver address set to localhost. This will allow some cleanups in RemoteTestServer and RemoteTestServerConfig. We will only need spawner port number in the config - it\u0027s essentially what we had before I added RemoteTestServerConfig.\nMaybe file a bug, so we don\u0027t forget about it when the old runner is removed?",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
