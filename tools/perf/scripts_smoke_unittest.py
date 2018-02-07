@@ -17,7 +17,10 @@ class ScriptsSmokeTest(unittest.TestCase):
   perf_dir = os.path.dirname(__file__)
 
   def RunPerfScript(self, command):
-    args = [sys.executable] + command.split(' ')
+    main_command = [sys.executable]
+    if not os.getenv('VIRTUAL_ENV'):
+       main_command = ['vpython']
+    args = main_command + command.split(' ')
     proc = subprocess.Popen(args, stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT, cwd=self.perf_dir)
     stdout = proc.communicate()[0]
