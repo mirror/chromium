@@ -14,11 +14,11 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/ui/display/output_protection.h"
-#include "ui/display/manager/chromeos/default_touch_transform_setter.h"
-#include "ui/display/manager/chromeos/display_change_observer.h"
-#include "ui/display/manager/chromeos/touch_transform_controller.h"
 #include "ui/display/manager/display_layout_store.h"
 #include "ui/display/manager/display_manager_utilities.h"
+#include "ui/display/manager/internal/default_touch_transform_setter.h"
+#include "ui/display/manager/internal/display_change_observer.h"
+#include "ui/display/manager/internal/touch_transform_controller.h"
 #include "ui/display/screen.h"
 #include "ui/display/screen_base.h"
 #include "ui/display/types/display_snapshot.h"
@@ -128,12 +128,14 @@ void ScreenManagerOzoneInternal::Init(ScreenManagerDelegate* delegate) {
         ui::OzonePlatform::GetInstance()->CreateNativeDisplayDelegate();
   }
 
+#if defined(OS_CHROMEOS)
   // The FakeDisplayController gives us a way to make the NativeDisplayDelegate
   // pretend something display related has happened.
   if (!chromeos::IsRunningAsSystemCompositor()) {
     fake_display_controller_ =
         native_display_delegate_->GetFakeDisplayController();
   }
+#endif
 
   // Configure display manager. ScreenManager acts as an observer to find out
   // display changes and as a delegate to find out when changes start/stop.
@@ -152,7 +154,9 @@ void ScreenManagerOzoneInternal::Init(ScreenManagerDelegate* delegate) {
   display_configurator_.set_configure_display(true);
   display_configurator_.AddObserver(display_change_observer_.get());
   display_configurator_.set_state_controller(display_change_observer_.get());
+#if defined(OS_CHROMEOS)
   display_configurator_.set_mirroring_controller(display_manager_.get());
+#endif
 
   // Perform initial configuration.
   display_configurator_.Init(std::move(native_display_delegate_), false);
@@ -321,7 +325,9 @@ void ScreenManagerOzoneInternal::PostDisplayConfigurationChange() {
     }
   }
 
+#if defined(OS_CHROMEOS)
   touch_transform_controller_->UpdateTouchTransforms();
+#endif
 
   DVLOG(1) << "PostDisplayConfigurationChange";
 }

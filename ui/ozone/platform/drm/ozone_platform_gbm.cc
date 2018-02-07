@@ -292,7 +292,7 @@ class OzonePlatformGbm : public OzonePlatform {
                                 "invalid startup order.\n";
     // Defer the actual startup of the DRM thread to here.
     auto safe_binding_resquest_drainer = CreateSafeOnceCallback(base::BindOnce(
-        &OzonePlatformGbm::DrainBindingRequests, weak_factory_.GetWeakPtr()));
+        &OzonePlatformGbm::DrainBindingRequests, base::Unretained(this)));
 
     drm_thread_proxy_->StartDrmThread(std::move(safe_binding_resquest_drainer));
   }
