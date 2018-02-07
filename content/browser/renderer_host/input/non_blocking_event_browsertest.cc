@@ -123,8 +123,8 @@ class NonBlockingEventBrowserTest : public ContentBrowserTest {
     TitleWatcher watcher(shell()->web_contents(), ready_title);
     ignore_result(watcher.WaitAndGetTitle());
 
-    MainThreadFrameObserver main_thread_sync(host);
-    main_thread_sync.Wait();
+    MainThreadFrameObserver observer(host);
+    observer.Wait();
   }
 
   int ExecuteScriptAndExtractInt(const std::string& script) {
@@ -186,10 +186,14 @@ class NonBlockingEventBrowserTest : public ContentBrowserTest {
             &NonBlockingEventBrowserTest::OnSyntheticGestureCompleted,
             base::Unretained(this)));
 
+    MainThreadFrameObserver observer(GetWidgetHost());
     // Expect that the compositor scrolled at least one pixel while the
     // main thread was in a busy loop.
-    while (frame_watcher.LastMetadata().root_scroll_offset.y() <= 0)
-      frame_watcher.WaitFrames(1);
+    while (
+        GetWidgetHost()->last_render_frame_metadata().root_scroll_offset.y() <=
+        0) {
+      observer.Wait();
+    }
   }
 
  private:
