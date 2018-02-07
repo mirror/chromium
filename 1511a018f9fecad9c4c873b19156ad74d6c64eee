@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d05ab2_3bf307e6",
+        "filename": "third_party/zlib/patches/README",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-07T13:28:42Z",
+      "side": 1,
+      "message": "nit: the \"FEATURE\" part of this flag should be the name zlib feature that we modified. So for example, code that changes crc32 should have a CRC32_FOO_BAR feature flag, if it was inflate then INFLATE_FOO_BAR, etc.",
+      "revId": "1511a018f9fecad9c4c873b19156ad74d6c64eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
