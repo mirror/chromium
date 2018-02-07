@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a557c2c_e33306db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:17:38Z",
+      "side": 1,
+      "message": "Omit. Most readers probably don\u0027t need to know it\u0027s in some handler code in the git commit summary.",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "b533fdaa7dfd08890c13b125adb6554a91bbc9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c6db1c_d40d16da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:17:38Z",
+      "side": 1,
+      "message": "directories?",
+      "range": {
+        "startLine": 7,
+        "startChar": 49,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "b533fdaa7dfd08890c13b125adb6554a91bbc9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a673c5d_fdaff476",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:17:38Z",
+      "side": 1,
+      "message": "nit: Add a blank line above the comments, like lines 83 and 86.",
+      "revId": "b533fdaa7dfd08890c13b125adb6554a91bbc9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c700a9b_8c0795aa",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-07T19:17:38Z",
+      "side": 1,
+      "message": "I think if you omit this, readers can still figure out |directory| is a directory.",
+      "range": {
+        "startLine": 94,
+        "startChar": 38,
+        "endLine": 94,
+        "endChar": 47
+      },
+      "revId": "b533fdaa7dfd08890c13b125adb6554a91bbc9a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
