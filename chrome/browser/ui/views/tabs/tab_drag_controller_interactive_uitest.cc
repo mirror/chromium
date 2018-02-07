@@ -80,6 +80,13 @@
 #include "ui/events/test/event_generator.h"
 #endif
 
+#if defined(OS_WIN)
+#include "base/test/scoped_feature_list.h"
+#include "content/browser/renderer_host/legacy_render_widget_host_win.h"
+#include "content/browser/renderer_host/render_widget_host_view_aura.h"
+#include "ui/base/ui_base_features.h"
+#endif
+
 using content::WebContents;
 
 namespace test {
@@ -705,6 +712,151 @@ IN_PROC_BROWSER_TEST_P(DetachToBrowserTabDragControllerTest,
   EXPECT_FALSE(tab_strip->GetWidget()->HasCapture());
   EXPECT_FALSE(tab_strip2->GetWidget()->HasCapture());
 }
+
+#if defined(OS_WIN)
+class DirectManipulationDetachToBrowserTabDragControllerTest
+    : public DetachToBrowserTabDragControllerTest {
+ public:
+  DirectManipulationDetachToBrowserTabDragControllerTest() {
+    scoped_feature_list_.InitAndEnableFeature(features::kPrecisionTouchpad);
+  }
+
+  ~DirectManipulationDetachToBrowserTabDragControllerTest() override {}
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(
+      DirectManipulationDetachToBrowserTabDragControllerTest);
+};
+
+class EmptyCompositorAnimationObserver
+    : public ui::CompositorAnimationObserver {
+ public:
+  void OnAnimationStep(base::TimeTicks timestamp) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+};
+
+// Creates two browsers, drags from first into second. Ensure the
+// CompositorAnimationOberver removed for first window.
+IN_PROC_BROWSER_TEST_P(DirectManipulationDetachToBrowserTabDragControllerTest,
+                       DragToSeparateWindow) {
+  TabStrip* tab_strip = GetTabStripForBrowser(browser());
+
+  // Add another tab to browser().
+  AddTabAndResetBrowser(browser());
+
+  // Add AnimationObserver to tab to simulate direct manipulation start.
+  std::unique_ptr<ui::CompositorAnimationObserver> observer_ptr =
+      std::make_unique<EmptyCompositorAnimationObserver>();
+  ui::CompositorAnimationObserver* observer = observer_ptr.get();
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  content::RenderWidgetHostViewAura* rwhv =
+      static_cast<content::RenderWidgetHostViewAura*>(
+          web_contents->GetRenderWidgetHostView());
+  rwhv->legacy_render_widget_host_HWND_->AddAnimationObserverForTesting(
+      std::move(observer_ptr));
+  ui::Compositor* compositor = rwhv->GetNativeView()->GetHost()->compositor();
+  DCHECK(compositor->HasAnimationObserver(observer));
+
+  // Create another browser.
+  Browser* browser2 = CreateAnotherWindowBrowserAndRelayout();
+  TabStrip* tab_strip2 = GetTabStripForBrowser(browser2);
+
+  // Move to the seconde tab and drag it enough so that it detaches, but not
+  // enough that it attaches to browser2.
+  gfx::Point tab_1_center(GetCenterInScreenCoordinates(tab_strip->tab_at(0)));
+  ASSERT_TRUE(PressInput(tab_1_center));
+  ASSERT_TRUE(DragInputToNotifyWhenDone(
+      tab_1_center.x(), tab_1_center.y() + GetDetachY(tab_strip),
+      base::Bind(&DragToSeparateWindowStep2, this, tab_strip, tab_strip2)));
+  QuitWhenNotDragging();
+
+  // Should now be attached to tab_strip2.
+  ASSERT_TRUE(tab_strip2->IsDragSessionActive());
+  ASSERT_FALSE(tab_strip->IsDragSessionActive());
+  ASSERT_TRUE(TabDragController::IsActive());
+  EXPECT_FALSE(GetIsDragged(browser()));
+
+  // Release mouse or touch, stopping the drag session.
+  ASSERT_TRUE(ReleaseInput());
+  ASSERT_FALSE(tab_strip2->IsDragSessionActive());
+  ASSERT_FALSE(tab_strip->IsDragSessionActive());
+  ASSERT_FALSE(TabDragController::IsActive());
+  EXPECT_EQ("100 0", IDString(browser2->tab_strip_model()));
+  EXPECT_EQ("1", IDString(browser()->tab_strip_model()));
+  EXPECT_FALSE(GetIsDragged(browser2));
+
+  // The animation observer should be removed.
+  EXPECT_FALSE(compositor->HasAnimationObserver(observer));
+}
+
+// Creates two tabs, add DirectManipulation CompositorAnimationOberver then
+// close that tab. Ensure the CompositorAnimationOberver removed window.
+IN_PROC_BROWSER_TEST_P(DirectManipulationDetachToBrowserTabDragControllerTest,
+                       CloseTab) {
+  TabStrip* tab_strip = GetTabStripForBrowser(browser());
+
+  // Add another tab to browser().
+  AddTabAndResetBrowser(browser());
+
+  // Add AnimationObserver to tab to simulate direct manipulation start.
+  std::unique_ptr<ui::CompositorAnimationObserver> observer_ptr =
+      std::make_unique<EmptyCompositorAnimationObserver>();
+  ui::CompositorAnimationObserver* observer = observer_ptr.get();
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  content::RenderWidgetHostViewAura* rwhv =
+      static_cast<content::RenderWidgetHostViewAura*>(
+          web_contents->GetRenderWidgetHostView());
+  rwhv->legacy_render_widget_host_HWND_->AddAnimationObserverForTesting(
+      std::move(observer_ptr));
+  ui::Compositor* compositor = rwhv->GetNativeView()->GetHost()->compositor();
+  DCHECK(compositor->HasAnimationObserver(observer));
+
+  Tab* tab1 = tab_strip->tab_at(1);
+  tab_strip->CloseTab(tab1, CLOSE_TAB_FROM_MOUSE);
+
+  // The animation observer should be removed.
+  EXPECT_FALSE(compositor->HasAnimationObserver(observer));
+}
+
+// Creates two tabs, add DirectManipulation CompositorAnimationOberver then
+// switch to other tab. Ensure the CompositorAnimationOberver removed window.
+IN_PROC_BROWSER_TEST_P(DirectManipulationDetachToBrowserTabDragControllerTest,
+                       SwitchTab) {
+  TabStrip* tab_strip = GetTabStripForBrowser(browser());
+
+  // Add another tab to browser().
+  AddTabAndResetBrowser(browser());
+
+  // Add AnimationObserver to tab to simulate direct manipulation start.
+  std::unique_ptr<ui::CompositorAnimationObserver> observer_ptr =
+      std::make_unique<EmptyCompositorAnimationObserver>();
+  ui::CompositorAnimationObserver* observer = observer_ptr.get();
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  content::RenderWidgetHostViewAura* rwhv =
+      static_cast<content::RenderWidgetHostViewAura*>(
+          web_contents->GetRenderWidgetHostView());
+  rwhv->legacy_render_widget_host_HWND_->AddAnimationObserverForTesting(
+      std::move(observer_ptr));
+  ui::Compositor* compositor = rwhv->GetNativeView()->GetHost()->compositor();
+  DCHECK(compositor->HasAnimationObserver(observer));
+
+  // Switch to another tab.
+  Tab* tab0 = tab_strip->tab_at(0);
+  tab_strip->SelectTab(tab0);
+
+  // The animation observer should be removed.
+  EXPECT_FALSE(compositor->HasAnimationObserver(observer));
+}
+
+INSTANTIATE_TEST_CASE_P(TabDragging,
+                        DirectManipulationDetachToBrowserTabDragControllerTest,
+                        ::testing::Values("mouse"));
+#endif
 
 namespace {
 

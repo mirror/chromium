@@ -64,6 +64,15 @@ class OnScreenKeyboardObserver;
 #endif
 }
 
+#if defined(OS_WIN)
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     DragToSeparateWindow);
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     CloseTab);
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     SwitchTab);
+#endif
+
 namespace content {
 #if defined(OS_WIN)
 class LegacyRenderWidgetHostHWND;
@@ -411,6 +420,17 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            NewContentRenderingTimeout);
   FRIEND_TEST_ALL_PREFIXES(WebContentsViewAuraTest,
                            WebContentsViewReparent);
+#if defined(OS_WIN)
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      DragToSeparateWindow);
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      CloseTab);
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      SwitchTab);
+#endif
 
   class WindowObserver;
   friend class WindowObserver;

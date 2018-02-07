@@ -15,10 +15,19 @@
 
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "ui/compositor/compositor_animation_observer.h"
 #include "ui/gfx/geometry/rect.h"
+
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     DragToSeparateWindow);
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     CloseTab);
+FORWARD_DECLARE_TEST(DirectManipulationDetachToBrowserTabDragControllerTest,
+                     SwitchTab);
 
 namespace ui {
 class AXSystemCaretWin;
+class DirectManipulationHelper;
 class WindowEventTarget;
 namespace win {
 class DirectManipulationHelper;
@@ -95,6 +104,7 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
     MESSAGE_HANDLER_EX(WM_NCCALCSIZE, OnNCCalcSize)
     MESSAGE_HANDLER_EX(WM_SIZE, OnSize)
     MESSAGE_HANDLER_EX(WM_WINDOWPOSCHANGED, OnWindowPosChanged)
+    MESSAGE_HANDLER_EX(DM_POINTERHITTEST, OnPointerHitTest)
   END_MSG_MAP()
 
   HWND hwnd() { return m_hWnd; }
@@ -122,10 +132,24 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   // Changes the position of the system caret used for accessibility.
   void MoveCaretTo(const gfx::Rect& bounds);
 
+  // DirectManipulation needs to pull for new events every frame while finger
+  // gesturing on touchpad.
+  void OnAnimationStep();
+
  protected:
   void OnFinalMessage(HWND hwnd) override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      DragToSeparateWindow);
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      CloseTab);
+  FRIEND_TEST_ALL_PREFIXES(
+      ::DirectManipulationDetachToBrowserTabDragControllerTest,
+      SwitchTab);
+
   explicit LegacyRenderWidgetHostHWND(HWND parent);
   ~LegacyRenderWidgetHostHWND() override;
 
@@ -154,6 +178,13 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   LRESULT OnSize(UINT message, WPARAM w_param, LPARAM l_param);
   LRESULT OnWindowPosChanged(UINT message, WPARAM w_param, LPARAM l_param);
 
+  LRESULT OnPointerHitTest(UINT message, WPARAM w_param, LPARAM l_param);
+  void RemoveAnimationObserver();
+
+  // Add passed CompositorAnimationObserver for testing purpose.
+  void AddAnimationObserverForTesting(
+      std::unique_ptr<ui::CompositorAnimationObserver> observer);
+
   Microsoft::WRL::ComPtr<IAccessible> window_accessible_;
 
   // Set to true if we turned on mouse tracking.
@@ -169,6 +200,9 @@ class CONTENT_EXPORT LegacyRenderWidgetHostHWND
   // in Chrome on Windows 10.
   std::unique_ptr<ui::win::DirectManipulationHelper>
       direct_manipulation_helper_;
+
+  std::unique_ptr<ui::CompositorAnimationObserver>
+      compositor_animation_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(LegacyRenderWidgetHostHWND);
 };

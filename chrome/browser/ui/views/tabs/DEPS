@@ -1,0 +1,6 @@
+specific_include_rules = {
+  "tab_drag_controller_interactive_uitest\.cc": [
+    "+content/browser/renderer_host/legacy_render_widget_host_win.h",
+    "+content/browser/renderer_host/render_widget_host_view_aura.h"
+  ],
+}
