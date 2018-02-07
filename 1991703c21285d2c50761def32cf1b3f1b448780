@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ef5134_e7aca901",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "Originally, I thought just allowing file:///foo/bar and file:///foo/bar#123 to be same-site might be sufficient (e.g., to fix tests like FindInPageControllerTest.FindStayVisibleOnAnchorLoad).  Unfortunately, I later found tests that rely on navigations between files in different paths staying in the same process (ChromeRenderWidgetHostViewMacHistorySwiperTest.TestIframeHistorySwiping), or between files in same paths but different query string (inspector-protocol/emulation/device-emulation-restore.js layout test).  Similarly, some tests rely on navigations between different data URLs staying in the same process (org.chromium.android_webview.test.AwSettingsTest#testLoadWithOverviewModeWithTwoViews__multiprocess_mode and org.chromium.android_webview.test.AwSettingsTest#testLoadWithOverviewModeViewportTagWithTwoViews__multiprocess_mode from Android webview_instrumentation_test_apk).\n\nIt seemed undesirable to have SiteInstanceImpl::IsSameWebSite() return true for those cases, so instead I skipped them entirely here.  I don\u0027t know if swapping BIs for those cases would win us much, even if we were to fix all the broken tests.\n\nAs of right now, we\u0027ll skip BI swaps for any source URL to data: or file:.  I could relax the check so we skip BI swaps only for data-to-data or file-to-file cases, but still swap for, say http-to-file.\n\nIt also might still be desirable to return true from SiteInstanceImpl::IsSameWebSite() for two URLs that match ignoring the hash, since that\u0027s supposed to be a same-document navigation, even for file: URLs.  I spun that off into another CL here: https://chromium-review.googlesource.com/c/chromium/src/+/900309, so we can discuss whether that\u0027s a good idea separately.  It\u0027s not required for this CL, but might prevent other problems down the road.",
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c57523_4ecdb255",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "The problem is that a browser-initiated navigation to about:blank is left in the old SiteInstance (thanks to a special case for dest_url being about:blank in SiteInstanceImpl::IsSameWebSite()), and the next navigation away from about:blank is always treated as cross-site by IsCurrentlySameSite(), even if it\u0027s to the site we were on before about:blank.  That\u0027s because last_successful_url() is non-empty (\"about:blank\"), it\u0027s cross-site from a normal URL, and its origin is unique since browser-initiated about:blank doesn\u0027t inherit the origin.  Without the new BI swap, however, we used to return a descriptor for a new related SI, which would find the old SI because the site URL is the same, and stay in the same process.\n\nThere shouldn\u0027t be a correctness problem if we were to swap BIs in a case like \"foo -\u003e about:blank -\u003e foo\", but it\u0027s unlikely to help much with unwanted process sharing, and it was causing a failure in telemetry_unittests:  telemetry.page.cache_temperature_unittest.CacheTemperatureTests.testEnsureHotFromScratch relied on same process behavior.  So for now, I skipped this case here, which effectively keeps the old behavior.  Does that sound reasonable?\n\nI added a test, RenderFrameHostManagerTest.NavigateToAboutBlankThenSameSiteKeepsSiteInstance, so we won\u0027t need to dig through telemetry_unittests for this case again.\n\nI originally tried to fix this by adding another case to SiteInstanceImpl::IsSameWebSite() to compare site URLs in this case, but I realized that\u0027s unreliable: it wouldn\u0027t be able to tell the difference between \"foo -\u003e bar -\u003e about:blank -\u003e foo\" and \"foo -\u003e about:blank -\u003e foo\". Before the about:blank navigation, the two sequences have the same \"foo\" site URL (assuming foo -\u003e bar is renderer-initiated), yet about:blank -\u003e foo should be cross-site in the first case and same-site in the second.",
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6add320_3993a21a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "I double-checked with pkasting@: when using tab-to-search (e.g., searching cs.chromium.org from omnibox), actual navigations with the search URL will use KEYWORD, and KEYWORD_GENERATED are fake visits that we shouldn\u0027t ever see here (used for autocomplete to think that that URL is relevant for search results even though you\u0027ve never visited it).",
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e809c770_71fa26ec",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "Note that AUTO_TOPLEVEL isn\u0027t here.  This is used by, for example, DevTools, which would break if we included it here.  The problem is that IsCurrentlySameSite() returns false for going to chrome-devtools://devtools/..., even for same-site cases, thanks to HasWrongProcessForURL(), which returns false due to IsSuitableHost() returning false because of WebUI bindings mismatch.  This is a known problem of DevTools using a WebUI process that doesn’t actually have bindings, yet we think the URL needs them - https://crbug.com/733767.  Solving that seems out of scope here.",
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde48461_5915cc79",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "Oops, will remove in next PS.",
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbbec28_04a8ac6e",
+        "filename": "content/public/test/content_browser_test_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 1,
+      "message": "There are two sets of tests:\n1. Tests that expect NavigateToURL to stay in the same BrowsingInstance, typically using it as a shortcut to navigate the main frame, but they don\u0027t really care whether it\u0027s browser-initiated or renderer-initiated.\n2. Tests that expect NavigateToURL to actually simulate a browser-initiated, typed transition from the address bar.\n\nSet 1 is about 30 content_browsertests, set 2 is about 10 and mostly constrained to navigation_controller_impl_browsertest.  \n\nThis CL has to break one of these sets. :)  Currently, I chose to \"break\" set 2 and changed NavigateToURL to use PAGE_TRANSITION_LINK, which won\u0027t swap BIs. I also introduced another helper for the address bar navigations below, and changed set 2 to use that.  But I can also go the other direction with this, leave the existing NavigateToURL alone and instead fix up set 1 to use something else; it\u0027s just a bit more work.  WDYT?",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "1991703c21285d2c50761def32cf1b3f1b448780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

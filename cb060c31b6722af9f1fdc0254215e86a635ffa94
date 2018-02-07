@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b8b343_20c9975e",
+        "filename": "chrome/browser/extensions/app_process_apitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T18:08:49Z",
+      "side": 0,
+      "message": "We discussed this test offline.  I don\u0027t think there\u0027s a magic scenario in which postMessage still needs work after a browser-initiated, cross-process, app-to-non-app navigation, so I\u0027m changing that expectation.  Renderer-initiated app-to-non-app navigation should keep postMessage working though, so I\u0027m now checking that too.  The test was introduced in https://codereview.chromium.org/86973002.",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 10
+      },
+      "revId": "cb060c31b6722af9f1fdc0254215e86a635ffa94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
