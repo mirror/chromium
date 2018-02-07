@@ -114,6 +114,30 @@
       "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95165b7_f8f1e94a",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-02-07T17:19:28Z",
+      "side": 1,
+      "message": "It\u0027s not video playback. The experience consists of 3D animations that update while the music track is playing. Music playback isn\u0027t starting, and the 3D animation doesn\u0027t proceed away from the opening scene, but it\u0027s still doing continuous 3D rendering of the starting scene, so I think it\u0027s a valid test.\n\nBrian, maybe rephrase the comment so that it doesn\u0027t refer to \"video\" specifically?",
+      "parentUuid": "c498a892_304247bb",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
