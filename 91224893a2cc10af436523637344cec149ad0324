@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5eb3633_68da958d",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-02-07T15:06:34Z",
+      "side": 1,
+      "message": "Do we need LOG or is DLOG OK?\n\nIf LOG, can we use VLOG?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 7
+      },
+      "revId": "91224893a2cc10af436523637344cec149ad0324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
