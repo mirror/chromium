@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4d3d22b6_b50081b7",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "nit: \"Start\" seems redundant since this is a \"StartType\". How about kSuspendAfterMetadata? In the future, maybe we can have other \"suspend\" modes as well.",
+      "range": {
+        "startLine": 91,
+        "startChar": 5,
+        "endLine": 91,
+        "endChar": 10
+      },
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f0a3c2_80d1c7ce",
         "filename": "media/base/pipeline_impl.cc",
         "patchSetId": 7
@@ -16,6 +39,149 @@
       "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70281f58_a59a9901",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "This is slightly confusing. There\u0027s \"nothing left to do\" in this function, but after it returns, we\u0027ll continue to run pending tasks, e.g. initialize the Renderer.",
+      "range": {
+        "startLine": 995,
+        "startChar": 15,
+        "endLine": 995,
+        "endChar": 41
+      },
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcbda80_8791b1ba",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "This is not normal, might be worth adding a comment saying \"abort other tasks and suspend the pipeline\".",
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73039be9_c47b115f",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "nit: s/suspended/is_suspended/ to be consistent?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 35,
+        "endLine": 1452,
+        "endChar": 44
+      },
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bc9054_94af23b9",
+        "filename": "media/base/pipeline_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "This is very similar to StartPipelineAndExpect() and it seems the only difference is they expect different \"start_status\". But it\u0027s a bit confusing to have two of them, especially since they use different naming conventions.\n\nHow about we have one single function handling both cases?\n\nenum StartStatus {\n  kOk,  // or kStarted,or kNormal\n  kSuspendedAfterMetadata,\n  kFailure,\n}\n\nvoid StartPipelineAndExpect(\n    StartStatus start_status,\n    Pipeline::StartType start_type \u003d Pipeline::StartType::kNormal) {\n\nThe other option is to keep two of them (as you have right now), but the second one is renamed to StartPipelineAndExpectSuspended(...).",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 29
+      },
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802f5bc7_4362eacc",
+        "filename": "media/base/pipeline_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "Can we call StartPipeline() here?",
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54228118_8d842dc0",
+        "filename": "media/base/pipeline_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "Here and above (after line 218), can we actually check IsRunning() or IsSuspended() based on the expected |start_status|?",
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17df125b_4c793506",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T18:00:51Z",
+      "side": 1,
+      "message": "nit: needs to be updated?",
+      "range": {
+        "startLine": 242,
+        "startChar": 20,
+        "endLine": 242,
+        "endChar": 27
+      },
+      "revId": "24843e3c3b46b1301c2dd7e20e83a9c1036a378e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
