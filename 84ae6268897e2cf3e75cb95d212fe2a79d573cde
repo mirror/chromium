@@ -22,6 +22,30 @@
       "revId": "84ae6268897e2cf3e75cb95d212fe2a79d573cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8c051f_294851c0",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-07T03:05:53Z",
+      "side": 0,
+      "message": "I don\u0027t know, about: urls have lots of exceptions/weirdness to it :/",
+      "parentUuid": "6d6f67ba_2e357e26",
+      "range": {
+        "startLine": 214,
+        "startChar": 10,
+        "endLine": 214,
+        "endChar": 41
+      },
+      "revId": "84ae6268897e2cf3e75cb95d212fe2a79d573cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

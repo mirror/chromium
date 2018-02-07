@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3611b9bb_869d4a4a",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_permissions_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-07T03:05:53Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 241,
+        "startChar": 28,
+        "endLine": 241,
+        "endChar": 32
+      },
+      "revId": "1a70b56b4783fc227760abb77f056223ba2609f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

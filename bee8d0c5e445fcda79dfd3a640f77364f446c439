@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f498fa4_0a73cbac",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-07T03:05:53Z",
+      "side": 1,
+      "message": "A quick comment here would be nice.",
+      "revId": "bee8d0c5e445fcda79dfd3a640f77364f446c439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24833ef4_a0489a8f",
         "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
         "patchSetId": 1
@@ -18,6 +35,53 @@
         "startChar": 2,
         "endLine": 64,
         "endChar": 8
+      },
+      "revId": "bee8d0c5e445fcda79dfd3a640f77364f446c439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59e4e68_2ffb0214",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-07T03:05:53Z",
+      "side": 1,
+      "message": "ack. It feels harder to read this way though.",
+      "parentUuid": "24833ef4_a0489a8f",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "bee8d0c5e445fcda79dfd3a640f77364f446c439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74b072a_e23c4f46",
+        "filename": "extensions/browser/api/web_request/web_request_permissions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2018-02-07T03:05:53Z",
+      "side": 1,
+      "message": "here and below: prefer not using auto and use the actual type (where the type isn\u0027t immediately deducible)",
+      "range": {
+        "startLine": 250,
+        "startChar": 6,
+        "endLine": 250,
+        "endChar": 10
       },
       "revId": "bee8d0c5e445fcda79dfd3a640f77364f446c439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
