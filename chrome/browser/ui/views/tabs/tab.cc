@@ -42,6 +42,7 @@
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
+#include "ui/compositor/clip_recorder.h"
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/canvas.h"
@@ -122,36 +123,45 @@ void DrawHighlight(gfx::Canvas* canvas,
 
 // Returns a path corresponding to the tab's content region inside the outer
 // stroke.
-gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
+gfx::Path GetInteriorPath(float scale,
+                          const gfx::Size& size,
+                          float endcap_width,
+                          float horizontal_inset = 0) {
   const float right = size.width() * scale;
   // The bottom of the tab needs to be pixel-aligned or else when we call
   // ClipPath with anti-aliasing enabled it can cause artifacts.
   const float bottom = std::ceil(size.height() * scale);
+  gfx::Path right_path;
+  right_path.moveTo(right - 1, bottom);
+  right_path.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale,
+                      -2 * scale, -1.5 * scale);
+  right_path.lineTo(right - 1 - (endcap_width - 2) * scale, 2.5 * scale);
+  right_path.rCubicTo(-0.375 * scale, -1 * scale, -1.25 * scale,
+                      -1.5 * scale, -2 * scale, -1.5 * scale);
+  right_path.lineTo(0, scale);
+  right_path.lineTo(0, bottom);
+  right_path.close();
 
-  gfx::Path fill;
-  fill.moveTo(right - 1, bottom);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
-                -1.5 * scale);
-  fill.lineTo(right - 1 - (endcap_width - 2) * scale, 2.5 * scale);
-  // Prevent overdraw in the center near minimum width (only happens if
-  // scale < 2).  We could instead avoid this by increasing the tab inset
-  // values, but that would shift all the content inward as well, unless we
-  // then overlapped the content on the endcaps, by which point we'd have a
-  // huge mess.
+  gfx::Path left_path;
   const float scaled_endcap_width = 1 + endcap_width * scale;
-  const float overlap = scaled_endcap_width * 2 - right;
-  const float offset = (overlap > 0) ? (overlap / 2) : 0;
-  fill.rCubicTo(-0.375 * scale, -1 * scale, -1.25 * scale + offset,
-                -1.5 * scale, -2 * scale + offset, -1.5 * scale);
-  if (overlap < 0)
-    fill.lineTo(scaled_endcap_width, scale);
-  fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale - offset, 0.5 * scale,
-                -2 * scale - offset, 1.5 * scale);
-  fill.lineTo(1 + 2 * scale, bottom - 1.5 * scale);
-  fill.rCubicTo(-0.375 * scale, scale, -1.25 * scale, 1.5 * scale, -2 * scale,
-                1.5 * scale);
-  fill.close();
-  return fill;
+  left_path.moveTo(scaled_endcap_width, scale);
+  left_path.rCubicTo(-0.75 * scale, 0, -1.625 * scale, 0.5 * scale,
+                     -2 * scale, 1.5 * scale);
+  left_path.lineTo(1 + 2 * scale, bottom - 1.5 * scale);
+  left_path.rCubicTo(-0.375 * scale, scale, -1.25 * scale, 1.5 * scale,
+                     -2 * scale, 1.5 * scale);
+  left_path.lineTo(right, bottom);
+  left_path.lineTo(right, scale);
+  left_path.close();
+
+  if (horizontal_inset > 0) {
+    left_path.offset(horizontal_inset * scale, 0);
+    right_path.offset(-horizontal_inset * scale, 0);
+  }
+
+  gfx::Path complete_path;
+  Op(left_path, right_path, SkPathOp::kIntersect_SkPathOp, &complete_path);
+  return complete_path;
 }
 
 // Returns a path corresponding to the tab's outer border for a given tab
@@ -542,15 +552,28 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
   PaintTab(canvas, clip);
 }
 
+void Tab::PaintChildren(const views::PaintInfo& info) {
+  // Clip children because icon can be larger than tab's fill when we don't
+  // have enough space.
+  ui::ClipRecorder clip_recorder(info.context());
+  const int padding =
+      TabIcon::GetFaviconEffect() == TabIcon::FaviconEffect::kClipWithPadding ?
+      1 : 0;
+  clip_recorder.ClipPathWithAntiAliasing(
+      GetInteriorPath(1 /* scale */, size(), GetTabEndcapWidth(), padding));
+  View::PaintChildren(info);
+}
+
 void Tab::Layout() {
   const gfx::Rect lb = GetContentsBounds();
   const bool was_showing_icon = showing_icon_;
   showing_icon_ = ShouldShowIcon();
 
   // See comments in IconCapacity().
+  const int icon_capacity = IconCapacity();
   const int extra_padding =
       (controller_->ShouldHideCloseButtonForInactiveTabs() ||
-       (IconCapacity() < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
+       (icon_capacity < 3)) ? 0 : kExtraLeftPaddingToBalanceCloseButtonPadding;
   const int start = lb.x() + extra_padding;
 
   // The bounds for the favicon will include extra width for the attention
@@ -562,8 +585,21 @@ void Tab::Layout() {
     favicon_bounds.set_y(lb.y() + (lb.height() - gfx::kFaviconSize + 1) / 2);
     favicon_bounds.set_size(gfx::Size(icon_->GetPreferredSize().width(),
                                       lb.height() - favicon_bounds.y()));
-    MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    if (icon_capacity >= 1) {
+      MaybeAdjustLeftForPinnedTab(&favicon_bounds, gfx::kFaviconSize);
+    } else {
+      // Align center when we don't have enough space.
+      favicon_bounds.set_x(GetContentsBounds().CenterPoint().x() -
+                           gfx::kFaviconSize / 2);
+    }
+
+    int fade_offset = lb.x() - favicon_bounds.x();
+    if (fade_offset >= 0)
+      icon_->SetFadeOffset(fade_offset);
+    else
+      icon_->SetFadeOffset(0);
   }
+
   icon_->SetBoundsRect(favicon_bounds);
   icon_->SetVisible(showing_icon_);
 
@@ -902,7 +938,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
   // cache based on the hover states.
   if (fill_id || paint_hover_effect) {
     gfx::Path fill_path =
-        GetFillPath(canvas->image_scale(), size(), endcap_width);
+        GetInteriorPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
                                           endcap_width, size());
     PaintTabBackgroundFill(canvas, fill_path, active, paint_hover_effect,
@@ -920,7 +956,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
   if (!cache.CacheKeyMatches(canvas->image_scale(), size(), active_color,
                              inactive_color, stroke_color)) {
     gfx::Path fill_path =
-        GetFillPath(canvas->image_scale(), size(), endcap_width);
+        GetInteriorPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
                                           endcap_width, size());
     cc::PaintRecorder recorder;

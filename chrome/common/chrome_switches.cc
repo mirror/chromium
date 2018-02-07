@@ -988,6 +988,9 @@ const char kEnableWaylandServer[] = "enable-wayland-server";
 #if defined(OS_WIN) || defined(OS_LINUX)
 const char kDisableInputImeAPI[] = "disable-input-ime-api";
 const char kEnableInputImeAPI[] = "enable-input-ime-api";
+const char kRecognizableTabFavicon[] = "recognizable-tab-favicon";
+const char kRecognizableTabFaviconClipWithPadding[] = "clip-with-padding";
+const char kRecognizableTabFaviconFading[] = "fading";
 #endif
 
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)

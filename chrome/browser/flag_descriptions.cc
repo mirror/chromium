@@ -1167,6 +1167,12 @@ const char kPushApiBackgroundModeDescription[] =
 const char kQuicName[] = "Experimental QUIC protocol";
 const char kQuicDescription[] = "Enable experimental QUIC protocol support.";
 
+const char kRecognizableTabFaviconName[] = "More recognizable tab";
+const char kRecognizableTabFaviconDescription[] =
+    "Show favicon when tab is narrow.";
+const char kRecognizableTabFaviconClipWithPadding[] = "Clip with padding";
+const char kRecognizableTabFaviconFading[] = "Fading";
+
 const char kReducedReferrerGranularityName[] =
     "Reduce default 'referer' header granularity.";
 const char kReducedReferrerGranularityDescription[] =

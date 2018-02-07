@@ -1175,6 +1175,18 @@ const FeatureEntry::FeatureVariation kWebXrRenderPathVariations[] = {
      nullptr}};
 #endif  // defined(OS_ANDROID) && BUILDFLAG(ENABLE_VR)
 
+#if defined(OS_WIN) || defined(OS_LINUX)
+const FeatureEntry::Choice kRecognizableTabFaviconChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kRecognizableTabFaviconClipWithPadding,
+     switches::kRecognizableTabFavicon,
+     switches::kRecognizableTabFaviconClipWithPadding},
+    {flag_descriptions::kRecognizableTabFaviconFading,
+     switches::kRecognizableTabFavicon,
+     switches::kRecognizableTabFaviconFading},
+};
+#endif
+
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
 // The first line of the entry is the internal name.
@@ -2408,6 +2420,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableInputImeApiDescription, kOsWin | kOsLinux,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableInputImeAPI,
                                switches::kDisableInputImeAPI)},
+    {"recognizable-tab-favicon",
+     flag_descriptions::kRecognizableTabFaviconName,
+     flag_descriptions::kRecognizableTabFaviconDescription,
+     kOsWin | kOsLinux | kOsCrOS,
+     MULTI_VALUE_TYPE(kRecognizableTabFaviconChoices)},
 #endif  // OS_WIN || OS_LINUX
     {"enable-origin-trials", flag_descriptions::kOriginTrialsName,
      flag_descriptions::kOriginTrialsDescription, kOsAll,

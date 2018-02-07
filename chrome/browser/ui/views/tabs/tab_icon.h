@@ -33,6 +33,14 @@ class TabIcon : public views::View {
     kTabWantsAttentionStatus = 1 << 2,  // Tab::SetTabNeedsAttention() called.
   };
 
+  // Effects which can be applied to favicon when icon bounds is too small.
+  enum class FaviconEffect {
+    kClip,
+    kClipWithPadding,
+    kFading,
+  };
+  static FaviconEffect GetFaviconEffect();
+
   TabIcon();
   ~TabIcon() override;
 
@@ -43,6 +51,10 @@ class TabIcon : public views::View {
 
   // Sets the icon. Depending on the URL the icon may be automatically themed.
   void SetIcon(const GURL& url, const gfx::ImageSkia& favicon);
+
+  // |offset| mustn't be negative. If |offset| is positive, both side of
+  // favicon will be faded.
+  void SetFadeOffset(int offset);
 
   // For certain types of tabs the loading animation is not desired so the
   // caller can set inhibit_loading_animation to true. When false, the loading
@@ -132,6 +144,8 @@ class TabIcon : public views::View {
   std::unique_ptr<CrashAnimation> crash_animation_;
 
   bool can_paint_to_layer_ = false;
+
+  int fade_offset_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TabIcon);
 };
