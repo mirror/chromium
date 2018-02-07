@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfa08503_f8b1bbf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814ff1e9_2fa7d86a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "028ef52d_9f9412fc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acec3ed2_7e4a18bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "028ef52d_9f9412fc",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 51
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3515b29c_b71b399f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6d65c7_39f2b04f",
+      "range": {
+        "startLine": 128,
+        "startChar": 46,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462b431e_09de0ef3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ae2076_9b261291",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462b431e_09de0ef3",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 64
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "21985498_454095cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e14eebd8_29a43850",
+      "range": {
+        "startLine": 355,
+        "startChar": 17,
+        "endLine": 355,
+        "endChar": 41
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c2b2f3a_9e834206",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2018-02-07T01:55:14Z",
       "side": 1,
       "message": "Is this TODO for supervised users?",
+      "range": {
+        "startLine": 360,
+        "startChar": 43,
+        "endLine": 360,
+        "endChar": 53
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab933dc_9c0f20a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "This is for both supervised user and enterprise policy.",
+      "parentUuid": "0c2b2f3a_9e834206",
       "range": {
         "startLine": 360,
         "startChar": 43,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "40eb4055_30a8140b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683d541a_16468e8f",
+      "range": {
+        "startLine": 100,
+        "startChar": 69,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "def29057_bb4de27c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "6a943a82_e62f8b8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "This is actually not needed. I was intended to hide the \"More\" button for initialization if header is not collapsed but turns out that it will get updated during SuggestionsSection#setStatus().",
+      "parentUuid": "def29057_bb4de27c",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 66
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d67fe7f9_31c22b49",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -197,6 +389,30 @@
       "writtenOn": "2018-02-07T01:55:14Z",
       "side": 1,
       "message": "When the header is expandable, should the articles section become undismissable?",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 20
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc54f77_326fc27b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Yes, should be undismissable IMO. dismissSection will also call dismissCategory [1], which seems to unregister the correspond provider. Looks like this is the only place dismissSection is called (when dismissing an item can trigger dismissal of the entire section). If the section is explicitly disabled (for enterprise/supervised user), SectionList#removeSection would be called instead.\n\n[1] https://cs.chromium.org/chromium/src/components/ntp_snippets/content_suggestions_service.cc?type\u003dcs\u0026q\u003dDismissCategory",
+      "parentUuid": "d67fe7f9_31c22b49",
       "range": {
         "startLine": 280,
         "startChar": 12,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "e52b99e0_cd8f151c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123aa453_bf0812cd",
+      "range": {
+        "startLine": 609,
+        "startChar": 19,
+        "endLine": 609,
+        "endChar": 37
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7947e1a7_95f2e119",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "7659315c_071a35c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7947e1a7_95f2e119",
+      "range": {
+        "startLine": 629,
+        "startChar": 89,
+        "endLine": 629,
+        "endChar": 90
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3604ed7_68ac37d0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -275,6 +539,30 @@
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936fb06e_552ffc95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3604ed7_68ac37d0",
+      "range": {
+        "startLine": 639,
+        "startChar": 30,
+        "endLine": 639,
+        "endChar": 49
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -317,6 +605,54 @@
         "startChar": 12,
         "endLine": 88,
         "endChar": 79
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd688741_81d11d25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582c92cc_af2deeef",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 79
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75e18f41_f3cd3cd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Updated and moved to ViewHolder",
+      "parentUuid": "12c71e4b_ec720f71",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 51
       },
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "ce993b45_3f4ba08a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559e96ae_597b8290",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eabba5dc_868b3e35",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
         "patchSetId": 1
@@ -391,6 +751,30 @@
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582aee1e_e5604318",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-02-07T20:04:04Z",
+      "side": 1,
+      "message": "That is a good idea. Done.",
+      "parentUuid": "eabba5dc_868b3e35",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
