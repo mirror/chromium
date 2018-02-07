@@ -890,7 +890,7 @@ void RenderWidgetHostViewAura::CopyFromSurface(
     const ReadbackRequestCallback& callback,
     const SkColorType preferred_color_type) {
   if (!IsSurfaceAvailableForCopy()) {
-    callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE);
+    callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE, false);
     return;
   }
   delegated_frame_host_->CopyFromCompositingSurface(

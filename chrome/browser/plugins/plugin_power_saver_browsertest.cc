@@ -227,7 +227,8 @@ void CompareSnapshotToReference(const base::FilePath& reference,
                                 bool* snapshot_matches,
                                 const base::Closure& done_cb,
                                 const SkBitmap& bitmap,
-                                content::ReadbackResponse response) {
+                                content::ReadbackResponse response,
+                                bool at_top) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   DCHECK(snapshot_matches);
   ASSERT_EQ(content::READBACK_SUCCESS, response);

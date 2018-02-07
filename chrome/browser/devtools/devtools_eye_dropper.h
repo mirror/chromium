@@ -37,7 +37,7 @@ class DevToolsEyeDropper : public content::WebContentsObserver {
 
   void UpdateFrame();
   void ResetFrame();
-  void FrameUpdated(const SkBitmap&, content::ReadbackResponse);
+  void FrameUpdated(const SkBitmap&, content::ReadbackResponse, bool at_top);
   bool HandleMouseEvent(const blink::WebMouseEvent& event);
   void UpdateCursor();
 

@@ -610,7 +610,7 @@ void WebContentsAndroid::GetContentBitmap(
       ScopedJavaGlobalRef<jobject>(env, obj),
       ScopedJavaGlobalRef<jobject>(env, jcallback));
   if (!view) {
-    result_callback.Run(SkBitmap(), READBACK_FAILED);
+    result_callback.Run(SkBitmap(), READBACK_FAILED, false);
     return;
   }
   view->CopyFromSurface(gfx::Rect(), gfx::Size(width, height), result_callback,

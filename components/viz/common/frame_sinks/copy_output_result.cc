@@ -9,8 +9,10 @@
 
 namespace viz {
 
-CopyOutputResult::CopyOutputResult(Format format, const gfx::Rect& rect)
-    : format_(format), rect_(rect) {
+CopyOutputResult::CopyOutputResult(Format format,
+                                   const gfx::Rect& rect,
+                                   bool at_top)
+    : format_(format), rect_(rect), at_top_(at_top) {
   DCHECK(format_ == Format::RGBA_BITMAP || format_ == Format::RGBA_TEXTURE ||
          format_ == Format::I420_PLANES);
 }
@@ -78,14 +80,16 @@ bool CopyOutputResult::ReadI420Planes(uint8_t* y_out,
 }
 
 CopyOutputSkBitmapResult::CopyOutputSkBitmapResult(const gfx::Rect& rect,
-                                                   const SkBitmap& bitmap)
-    : CopyOutputSkBitmapResult(Format::RGBA_BITMAP, rect, bitmap) {}
+                                                   const SkBitmap& bitmap,
+                                                   bool at_top)
+    : CopyOutputSkBitmapResult(Format::RGBA_BITMAP, rect, bitmap, at_top) {}
 
 CopyOutputSkBitmapResult::CopyOutputSkBitmapResult(
     CopyOutputResult::Format format,
     const gfx::Rect& rect,
-    const SkBitmap& bitmap)
-    : CopyOutputResult(format, rect) {
+    const SkBitmap& bitmap,
+    bool at_top)
+    : CopyOutputResult(format, rect, at_top) {
   DCHECK(format == Format::RGBA_BITMAP || format == Format::I420_PLANES);
   if (!rect.IsEmpty()) {
     // Hold a reference to the |bitmap|'s pixels, for AsSkBitmap().
@@ -127,8 +131,9 @@ CopyOutputTextureResult::CopyOutputTextureResult(
     const gpu::Mailbox& mailbox,
     const gpu::SyncToken& sync_token,
     const gfx::ColorSpace& color_space,
+    bool at_top,
     std::unique_ptr<SingleReleaseCallback> release_callback)
-    : CopyOutputResult(Format::RGBA_TEXTURE, rect),
+    : CopyOutputResult(Format::RGBA_TEXTURE, rect, at_top),
       texture_result_(mailbox, sync_token, color_space),
       release_callback_(std::move(release_callback)) {
   DCHECK_EQ(rect.IsEmpty(), mailbox.IsZero());
