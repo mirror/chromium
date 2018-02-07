@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b78a6940_f29d5917",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-07T22:26:46Z",
+      "side": 1,
+      "message": "I\u0027m leaving it here as it\u0027s semantically correct, even though it\u0027s technically redundant.",
+      "parentUuid": "e2d5c54f_fb039b05",
+      "range": {
+        "startLine": 952,
+        "startChar": 8,
+        "endLine": 952,
+        "endChar": 25
+      },
+      "revId": "5adad519b84460d33cbdbf1d44ea545232e84566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01bd5abb_1a9e19d4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5adad519b84460d33cbdbf1d44ea545232e84566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cc788b_26d8a217",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2018-02-07T22:26:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01bd5abb_1a9e19d4",
+      "range": {
+        "startLine": 998,
+        "startChar": 21,
+        "endLine": 998,
+        "endChar": 38
+      },
+      "revId": "5adad519b84460d33cbdbf1d44ea545232e84566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
