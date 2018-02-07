@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc64a8c5_937f4cf8",
+        "filename": "content/browser/loader/signed_exchange_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2018-02-07T06:53:48Z",
+      "side": 1,
+      "message": "This caused crash in windows dbg layout test when ptr_ \u003d\u003d buf_.size().",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "29c55f45e91ee628b17090a790b4d05de830f385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
