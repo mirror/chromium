@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54eba527_8167f38f",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T23:29:49Z",
+      "side": 1,
+      "message": "How about creating a more accurate @typedef for this?",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "f40fdf4a74728d99d14ec7bc6baa425ddcccc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a438746_a7e80ad7",
+        "filename": "chrome/browser/resources/pdf/open_pdf_params_parser.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T23:29:49Z",
+      "side": 1,
+      "message": "I believe there is more room for improvement, instead of using callbacks, by using Promises. Specifically:\n\n- Make getViewportFromUrlParams() return a Promise to its callers.\n- Inside OpenPdfParamsParser keep track of a PromiseResolver from https://cs.chromium.org/chromium/src/ui/webui/resources/js/promise_resolver.js.\n- Once the plugin response, simply resolve() the Promise that the callers are holding.\n\nNo need for callbacks. You can maintain an Array of PromiseResolvers instead of outstandingRequests_, or a Map of request ID to PromiseResolver, if the order is not guaranteed.\n\nWDYT?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 59
+      },
+      "revId": "f40fdf4a74728d99d14ec7bc6baa425ddcccc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cf771b_385c4b74",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-07T23:29:49Z",
+      "side": 1,
+      "message": "@private {...} missing",
+      "revId": "f40fdf4a74728d99d14ec7bc6baa425ddcccc358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
