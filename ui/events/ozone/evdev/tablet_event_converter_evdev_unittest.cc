@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/events/ozone/evdev/tablet_event_converter_evdev.h"
+#include "ui/events/ozone/evdev/event_converter_evdev_impl.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -110,7 +110,7 @@ const ui::DeviceCapabilities EpsonBrightLink1430 = {
 
 namespace ui {
 
-class MockTabletEventConverterEvdev : public TabletEventConverterEvdev {
+class MockTabletEventConverterEvdev : public EventConverterEvdevImpl {
  public:
   MockTabletEventConverterEvdev(base::ScopedFD fd,
                                 base::FilePath path,
@@ -170,12 +170,12 @@ MockTabletEventConverterEvdev::MockTabletEventConverterEvdev(
     CursorDelegateEvdev* cursor,
     const EventDeviceInfo& devinfo,
     DeviceEventDispatcherEvdev* dispatcher)
-    : TabletEventConverterEvdev(std::move(fd),
-                                path,
-                                1,
-                                cursor,
-                                devinfo,
-                                dispatcher) {
+    : EventConverterEvdevImpl(std::move(fd),
+                              path,
+                              1,
+                              devinfo,
+                              cursor,
+                              dispatcher) {
   int fds[2];
 
   if (pipe(fds))
