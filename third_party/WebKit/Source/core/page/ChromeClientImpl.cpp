@@ -72,7 +72,6 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/PopupOpeningObserver.h"
-#include "core/paint/compositing/CompositedSelection.h"
 #include "platform/Cursor.h"
 #include "platform/Histogram.h"
 #include "platform/LayoutTestSupport.h"
@@ -754,9 +753,8 @@ void ChromeClientImpl::ClearCompositedSelection(LocalFrame* frame) {
     layer_tree_view->ClearSelection();
 }
 
-void ChromeClientImpl::UpdateCompositedSelection(
-    LocalFrame* frame,
-    const CompositedSelection& selection) {
+void ChromeClientImpl::UpdateWebSelection(LocalFrame* frame,
+                                          const WebSelection& selection) {
   LocalFrame& local_root = frame->LocalFrameRoot();
   WebFrameWidgetBase* widget =
       WebLocalFrameImpl::FromFrame(&local_root)->FrameWidget();

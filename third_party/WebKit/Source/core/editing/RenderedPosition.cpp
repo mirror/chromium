@@ -43,7 +43,7 @@
 #include "core/html/forms/TextControlElement.h"
 #include "core/layout/api/LineLayoutAPIShim.h"
 #include "core/paint/PaintLayer.h"
-#include "core/paint/compositing/CompositedSelection.h"
+#include "platform/graphics/GraphicsLayer.h"
 
 namespace blink {
 
@@ -353,51 +353,68 @@ static bool IsVisible(const LayoutObject& rect_layout_object,
   return text_control_object->BorderBoxRect().Contains(position_in_input);
 }
 
-static CompositedSelectionBound ComputeSelectionBound(
+static WebSelectionBound ComputeSelectionBound(
     const PositionWithAffinity& position,
     const LayoutObject& layout_object,
     const LayoutPoint& edge_top_in_layer,
-    const LayoutPoint& edge_bottom_in_layer) {
-  CompositedSelectionBound bound;
-  bound.is_text_direction_rtl =
+    const LayoutPoint& edge_bottom_in_layer,
+    WebSelection::SelectionType selection_type,
+    bool is_start) {
+  bool is_text_direction_rtl =
       layout_object.HasFlippedBlocksWritingMode() ||
       PrimaryDirectionOf(*position.AnchorNode()) == TextDirection::kRtl;
-  bound.edge_top_in_layer =
-      LocalToInvalidationBackingPoint(edge_top_in_layer, layout_object);
-  bound.edge_bottom_in_layer =
-      LocalToInvalidationBackingPoint(edge_bottom_in_layer, layout_object);
-  bound.layer = GetGraphicsLayerBacking(layout_object);
-  bound.hidden =
+  DCHECK_NE(selection_type, WebSelection::SelectionType::kNoSelection);
+  WebSelectionBound::Type type = WebSelectionBound::kCaret;
+  if (selection_type == WebSelection::SelectionType::kRangeSelection) {
+    if (is_start) {
+      type = is_text_direction_rtl ? WebSelectionBound::kSelectionRight
+                                   : WebSelectionBound::kSelectionLeft;
+    } else {
+      type = is_text_direction_rtl ? WebSelectionBound::kSelectionLeft
+                                   : WebSelectionBound::kSelectionRight;
+    }
+  }
+  WebSelectionBound bound(type);
+
+  bound.layer_id =
+      GetGraphicsLayerBacking(layout_object)->PlatformLayer()->Id();
+  bound.edge_top_in_layer = RoundedIntPoint(
+      LocalToInvalidationBackingPoint(edge_top_in_layer, layout_object));
+  bound.edge_bottom_in_layer = RoundedIntPoint(
+      LocalToInvalidationBackingPoint(edge_bottom_in_layer, layout_object));
+  bound.is_text_direction_rtl = bound.hidden =
       !IsVisible(layout_object, edge_top_in_layer, edge_bottom_in_layer);
   return bound;
 }
 
-static CompositedSelectionBound StartPositionInGraphicsLayerBacking(
-    const PositionWithAffinity& position) {
+static WebSelectionBound StartPositionInGraphicsLayerBacking(
+    const PositionWithAffinity& position,
+    WebSelection::SelectionType selection_type) {
   const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
   const LayoutObject* const layout_object = local_caret_rect.layout_object;
   if (!layout_object)
-    return CompositedSelectionBound();
+    return WebSelectionBound();
 
   LayoutPoint edge_top_in_layer, edge_bottom_in_layer;
   std::tie(edge_top_in_layer, edge_bottom_in_layer) =
       GetLocalSelectionStartpoints(local_caret_rect);
   return ComputeSelectionBound(position, *layout_object, edge_top_in_layer,
-                               edge_bottom_in_layer);
+                               edge_bottom_in_layer, selection_type, true);
 }
 
-static CompositedSelectionBound EndPositionInGraphicsLayerBacking(
-    const PositionWithAffinity& position) {
+static WebSelectionBound EndPositionInGraphicsLayerBacking(
+    const PositionWithAffinity& position,
+    WebSelection::SelectionType selection_type) {
   const LocalCaretRect& local_caret_rect = LocalCaretRectOfPosition(position);
   const LayoutObject* const layout_object = local_caret_rect.layout_object;
   if (!layout_object)
-    return CompositedSelectionBound();
+    return WebSelectionBound();
 
   LayoutPoint edge_top_in_layer, edge_bottom_in_layer;
   std::tie(edge_top_in_layer, edge_bottom_in_layer) =
       GetLocalSelectionEndpoints(local_caret_rect);
   return ComputeSelectionBound(position, *layout_object, edge_top_in_layer,
-                               edge_bottom_in_layer);
+                               edge_bottom_in_layer, selection_type, false);
 }
 
 bool LayoutObjectContainsPosition(LayoutObject* target,
@@ -411,36 +428,37 @@ bool LayoutObjectContainsPosition(LayoutObject* target,
   return false;
 }
 
-CompositedSelection RenderedPosition::ComputeCompositedSelection(
+WebSelection RenderedPosition::ComputeWebSelection(
     const FrameSelection& frame_selection) {
   if (!frame_selection.IsHandleVisible() || frame_selection.IsHidden())
-    return {};
+    return WebSelection();
 
   // TODO(yoichio): Compute SelectionInDOMTree w/o VS canonicalization.
   // crbug.com/789870 for detail.
   const SelectionInDOMTree& visible_selection =
       frame_selection.ComputeVisibleSelectionInDOMTree().AsSelection();
+  DCHECK(!visible_selection.IsNone());
   // Non-editable caret selections lack any kind of UI affordance, and
   // needn't be tracked by the client.
   if (visible_selection.IsCaret() &&
       !IsEditablePosition(visible_selection.ComputeStartPosition()))
-    return {};
+    return WebSelection();
 
-  CompositedSelection selection;
-  selection.start = StartPositionInGraphicsLayerBacking(
-      visible_selection.ComputeStartPosition());
-  if (!selection.start.layer)
-    return {};
+  WebSelection::SelectionType type =
+      visible_selection.IsRange()
+          ? WebSelection::SelectionType::kRangeSelection
+          : WebSelection::SelectionType::kCaretSelection;
 
-  selection.end =
-      EndPositionInGraphicsLayerBacking(visible_selection.ComputeEndPosition());
-  if (!selection.end.layer)
-    return {};
+  WebSelectionBound start = StartPositionInGraphicsLayerBacking(
+      visible_selection.ComputeStartPosition(), type);
+  if (!start.layer_id)
+    return WebSelection();
+  WebSelectionBound end = EndPositionInGraphicsLayerBacking(
+      visible_selection.ComputeEndPosition(), type);
+  if (!end.layer_id)
+    return WebSelection();
 
-  DCHECK(!visible_selection.IsNone());
-  selection.type =
-      visible_selection.IsRange() ? kRangeSelection : kCaretSelection;
-  return selection;
+  return WebSelection(type, start, end);
 }
 
 }  // namespace blink
