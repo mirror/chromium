@@ -29,6 +29,7 @@
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/ime/text_input_type.h"
+#include "ui/base/platform_hook/platform_hook.h"
 #include "ui/base/ui_base_features.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/direct_manipulation.h"
@@ -798,6 +799,19 @@ void HWNDMessageHandler::ReleaseCapture() {
 
 bool HWNDMessageHandler::HasCapture() const {
   return ::GetCapture() == hwnd();
+}
+
+void HWNDMessageHandler::LockKeys() {
+  if (!platform_hook_) {
+    platform_hook_ = ui::PlatformHook::Create(
+        base::BindRepeating(&HWNDMessageHandlerDelegate::HandleKeyEvent,
+                            base::Unretained(delegate_)));
+  }
+  platform_hook_->Register();
+}
+
+void HWNDMessageHandler::UnlockKeys() {
+  platform_hook_.reset();
 }
 
 void HWNDMessageHandler::SetVisibilityChangedAnimationsEnabled(bool enabled) {
