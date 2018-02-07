@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "937b5dee_0c17de83",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad15e990_e76210f6",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4955f2de_09991554",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38e3d0e_e94ee065",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4955f2de_09991554",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b448f8ee_807f1c64",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c963efa_5dcbe504",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a34ba0_48afda17",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-07T07:02:07Z",
       "side": 1,
       "message": "Should the callback also give some error code?\n\nAlso document the behavior about what happens when Fetcher is destructed on its way. (We have a test, that is nice!)",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f64ecf_cab3e2e9",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "I don\u0027t think we need error code.\n\"If certUrl is present\" and failed to fetch the cert, we can treat as \"invalid\".\n\nAdded comment of the fetcher destruction.",
+      "parentUuid": "d4a34ba0_48afda17",
       "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ca371ebb_a1e35b54",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff681f45_d976dd36",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299e218a_c7368e48",
         "filename": "content/public/common/resource_type.h",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2018-02-07T07:06:09Z",
       "side": 1,
       "message": "Would it make sense to just use this one, while we can add requester_type for other checks? (As I chatted offline we\u0027re deprecating ResourceType, if we don\u0027t need to add it we don\u0027t need to add it)",
+      "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8521cb6c_b1265ee1",
+        "filename": "content/public/common/resource_type.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-02-07T08:02:37Z",
+      "side": 1,
+      "message": "OK. Removed.",
+      "parentUuid": "299e218a_c7368e48",
       "revId": "1328e7b2ef922bd5974aa17ad62f271e2b8fca43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
