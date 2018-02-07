@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a109f29d_d8f7e9ff",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2018-02-07T21:22:15Z",
+      "side": 1,
+      "message": "Should check provider for nil-ness here too, right?\nIs there another way of doing this to avoid the need to check for provider being nil? Would a dummy implementation of a provider that is just no-op on everything?\nIf not, you should check all other uses of GetMailtoHandlerProvider() to make sure that a nil provider is properly handled.",
+      "range": {
+        "startLine": 1121,
+        "startChar": 22,
+        "endLine": 1121,
+        "endChar": 32
+      },
+      "revId": "fecdae1480edc27c5be7f086b4d91a3adbff173f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
