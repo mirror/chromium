@@ -19,6 +19,9 @@ class GPU_EXPORT GpuMemoryBufferImplAndroidHardwareBuffer
  public:
   ~GpuMemoryBufferImplAndroidHardwareBuffer() override;
 
+  static constexpr gfx::GpuMemoryBufferType kBufferType =
+      gfx::ANDROID_HARDWARE_BUFFER;
+
   static std::unique_ptr<GpuMemoryBufferImplAndroidHardwareBuffer> Create(
       gfx::GpuMemoryBufferId id,
       const gfx::Size& size,
@@ -32,9 +35,6 @@ class GPU_EXPORT GpuMemoryBufferImplAndroidHardwareBuffer
                    gfx::BufferFormat format,
                    gfx::BufferUsage usage,
                    const DestructionCallback& callback);
-
-  static bool IsConfigurationSupported(gfx::BufferFormat format,
-                                       gfx::BufferUsage usage);
 
   static base::Closure AllocateForTesting(const gfx::Size& size,
                                           gfx::BufferFormat format,

@@ -29,11 +29,6 @@ GpuMemoryBufferImplDXGI::CreateFromHandle(
                                                       callback, handle.handle));
 }
 
-bool GpuMemoryBufferImplDXGI::IsConfigurationSupported(gfx::BufferFormat format,
-                                                       gfx::BufferUsage usage) {
-  return gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage);
-}
-
 base::Closure GpuMemoryBufferImplDXGI::AllocateForTesting(
     const gfx::Size& size,
     gfx::BufferFormat format,

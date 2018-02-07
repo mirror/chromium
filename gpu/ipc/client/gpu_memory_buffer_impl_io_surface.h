@@ -24,15 +24,15 @@ class GPU_EXPORT GpuMemoryBufferImplIOSurface : public GpuMemoryBufferImpl {
  public:
   ~GpuMemoryBufferImplIOSurface() override;
 
+  static constexpr gfx::GpuMemoryBufferType kBufferType =
+      gfx::IO_SURFACE_BUFFER;
+
   static std::unique_ptr<GpuMemoryBufferImplIOSurface> CreateFromHandle(
       const gfx::GpuMemoryBufferHandle& handle,
       const gfx::Size& size,
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       const DestructionCallback& callback);
-
-  static bool IsConfigurationSupported(gfx::BufferFormat format,
-                                       gfx::BufferUsage usage);
 
   static base::Closure AllocateForTesting(const gfx::Size& size,
                                           gfx::BufferFormat format,

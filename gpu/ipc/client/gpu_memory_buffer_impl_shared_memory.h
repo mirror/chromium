@@ -20,6 +20,9 @@ class GPU_EXPORT GpuMemoryBufferImplSharedMemory : public GpuMemoryBufferImpl {
  public:
   ~GpuMemoryBufferImplSharedMemory() override;
 
+  static constexpr gfx::GpuMemoryBufferType kBufferType =
+      gfx::SHARED_MEMORY_BUFFER;
+
   static std::unique_ptr<GpuMemoryBufferImplSharedMemory> Create(
       gfx::GpuMemoryBufferId id,
       const gfx::Size& size,

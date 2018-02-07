@@ -83,13 +83,6 @@ GpuMemoryBufferImplIOSurface::CreateFromHandle(
 }
 
 // static
-bool GpuMemoryBufferImplIOSurface::IsConfigurationSupported(
-    gfx::BufferFormat format,
-    gfx::BufferUsage usage) {
-  return gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage);
-}
-
-// static
 base::Closure GpuMemoryBufferImplIOSurface::AllocateForTesting(
     const gfx::Size& size,
     gfx::BufferFormat format,
