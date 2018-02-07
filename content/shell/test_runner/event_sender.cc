@@ -266,6 +266,8 @@ void InitMouseEvent(WebMouseEvent::Button b,
 
 void InitGestureEventFromMouseWheel(const WebMouseWheelEvent& wheel_event,
                                     WebGestureEvent* gesture_event) {
+  gesture_event->primary_pointer_type =
+      blink::WebPointerProperties::PointerType::kMouse;
   gesture_event->source_device = blink::kWebGestureDeviceTouchpad;
   gesture_event->x = wheel_event.PositionInWidget().x;
   gesture_event->y = wheel_event.PositionInWidget().y;
@@ -1335,9 +1337,12 @@ void EventSender::Reset() {
   current_drag_data_.Reset();
   current_drag_effect_ = blink::kWebDragOperationNone;
   current_drag_effects_allowed_ = blink::kWebDragOperationNone;
-  if (widget() && current_pointer_state_[kRawMousePointerId].pressed_button_ !=
-                      WebMouseEvent::Button::kNoButton)
-    widget()->MouseCaptureLost();
+  if (widget()) {
+    widget()->SetCursorVisibilityState(true);
+    if (current_pointer_state_[kRawMousePointerId].pressed_button_ !=
+        WebMouseEvent::Button::kNoButton)
+      widget()->MouseCaptureLost();
+  }
   current_pointer_state_.clear();
   is_drag_mode_ = true;
   force_layout_on_events_ = true;
@@ -2843,6 +2848,24 @@ void EventSender::ReplaySavedEvents() {
   replaying_saved_events_ = false;
 }
 
+void EventSender::UpdateCursorVisibility(const WebInputEvent* event) {
+  if (WebInputEvent::IsMouseEventType(event->GetType())) {
+    widget()->SetCursorVisibilityState(true);
+  } else if (WebInputEvent::IsTouchEventType(event->GetType())) {
+    widget()->SetCursorVisibilityState(false);
+  } else if (WebInputEvent::IsGestureEventType(event->GetType())) {
+    const WebGestureEvent* gesture_event =
+        static_cast<const WebGestureEvent*>(event);
+    if (gesture_event->source_device == blink::kWebGestureDeviceTouchscreen &&
+        gesture_event->primary_pointer_type !=
+            WebPointerProperties::PointerType::kMouse) {
+      widget()->SetCursorVisibilityState(false);
+    } else {
+      widget()->SetCursorVisibilityState(true);
+    }
+  }
+}
+
 WebInputEventResult EventSender::HandleInputEventOnViewOrPopup(
     const WebInputEvent& raw_event) {
   last_event_timestamp_ = raw_event.TimeStampSeconds();
@@ -2864,6 +2887,7 @@ WebInputEventResult EventSender::HandleInputEventOnViewOrPopup(
   const WebInputEvent* event =
       widget_event.get() ? static_cast<WebMouseEvent*>(widget_event.get())
                          : &raw_event;
+  UpdateCursorVisibility(event);
   return widget()->HandleInputEvent(blink::WebCoalescedInputEvent(*event));
 }
 

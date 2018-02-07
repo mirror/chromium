@@ -204,6 +204,8 @@ class EventSender {
   blink::WebInputEventResult HandleInputEventOnViewOrPopup(
       const blink::WebInputEvent& event);
 
+  void UpdateCursorVisibility(const blink::WebInputEvent* event);
+
   void SendGesturesForMouseWheelEvent(
       const blink::WebMouseWheelEvent wheel_event);
 
