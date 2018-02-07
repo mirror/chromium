@@ -178,7 +178,6 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h"
-#include "components/task_scheduler_util/browser/initialization.h"
 #include "components/task_scheduler_util/common/variations_util.h"
 #include "components/translate/core/common/translate_switches.h"
 #include "components/url_formatter/url_fixer.h"
@@ -1879,11 +1878,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   StackSamplingConfiguration::Get()->AppendCommandLineSwitchForChildProcess(
       process_type,
       command_line);
-
-  if (process_type == switches::kRendererProcess) {
-    task_scheduler_util::AddVariationParamsToCommandLine("Renderer",
-                                                         command_line);
-  }
 }
 
 void ChromeContentBrowserClient::AdjustUtilityServiceProcessCommandLine(
@@ -3688,7 +3682,7 @@ void ChromeContentBrowserClient::CreateMediaRemoter(
 
 std::unique_ptr<base::TaskScheduler::InitParams>
 ChromeContentBrowserClient::GetTaskSchedulerInitParams() {
-  return task_scheduler_util::GetBrowserTaskSchedulerInitParamsFromVariations();
+  return task_scheduler_util::GetTaskSchedulerInitParams("");
 }
 
 base::FilePath ChromeContentBrowserClient::GetLoggingFileName(
