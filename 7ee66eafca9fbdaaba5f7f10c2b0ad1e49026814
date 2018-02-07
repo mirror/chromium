@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75130c38_87e16b4a",
+        "filename": "ui/events/ozone/evdev/event_converter_evdev_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T17:59:36Z",
+      "side": 1,
+      "message": "Add the has_tablet_ here and use that.",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35eb37a_eeaa6b7e",
+        "filename": "ui/events/ozone/evdev/input_device_factory_evdev.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T17:59:36Z",
+      "side": 1,
+      "message": "Should be able to remove this an let it fall through.",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba8ebf4_8592f2da",
+        "filename": "ui/events/ozone/evdev/tablet_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2018-02-07T17:59:36Z",
+      "side": 1,
+      "message": "Can you move this check into EventConverterEvdevImpl and only call TabletHandler::ProcessEvents() when its true? I\u0027d like it to be easier to see that no tablet processing happens for non-tablets.",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "7ee66eafca9fbdaaba5f7f10c2b0ad1e49026814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
