@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0be9282_2ddfd38c",
+        "filename": "tools/perf/contrib/vr_benchmarks/data/webvr_wpr.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:06:23Z",
+      "side": 1,
+      "message": "I assume because all the benchmarks are tagged as being only supported on Android currently https://cs.chromium.org/chromium/src/tools/perf/contrib/vr_benchmarks/vr_benchmarks.py?q\u003dvr_benchmarks.py\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d41",
+      "parentUuid": "e2147c96_5e54002b",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cce61ae_2609219f",
         "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db02fbf0_768cedc3",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cce61ae_2609219f",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b2fa70b_5cb0542f",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:06:23Z",
+      "side": 1,
+      "message": "The way WPR works is that when you run tools/perf/record_wpr, it essentially runs through the specified benchmark without tracing enabled (meaning we also don\u0027t get the 10 second sleep as part of MeasureMemory) and records all of Chrome\u0027s network traffic while accessing the live site. So, recorded/recording throughout the CL refers to that process, as opposed to running the benchmark and using the existing WPR files, which is what happens when you run tools/perf/run_benchmark.",
+      "parentUuid": "91e2edfe_dbbc05d3",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71303b9e_b7a836cb",
         "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2018-02-07T15:47:53Z",
       "side": 1,
       "message": "What is the thing?",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4490582e_8f44f6ff",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:06:23Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure, as the whole experience doesn\u0027t make a whole lot of sense to me. I\u0027ve made the comment slightly more descriptive, though.",
+      "parentUuid": "71303b9e_b7a836cb",
       "range": {
         "startLine": 107,
         "startChar": 23,
@@ -138,6 +234,30 @@
       "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9df0b8_b6aa7d3e",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b95165b7_f8f1e94a",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 11
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
