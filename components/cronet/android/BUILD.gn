@@ -660,7 +660,7 @@ android_library("cronet_javatests") {
     "//third_party/junit",
   ]
   data = [
-    "test/assets/test/",
+    "//components/cronet/test/assets/test/",
   ]
 }
 
@@ -855,6 +855,10 @@ test("cronet_unittests") {
     "//net:test_support",
     "//net/android:net_java",
     "//testing/gtest",
+  ]
+
+  data = [
+    "//components/cronet/test/assets/test/",
   ]
 
   if (is_android) {
@@ -1302,7 +1306,7 @@ copy("cronet_package_copy_native_test_lib_unstripped") {
 copy("cronet_package_copy_test_assets") {
   testonly = true
   sources = [
-    "test/assets",
+    "//components/cronet/test/assets",
   ]
   outputs = [
     "$_test_package_dir/assets",
