@@ -12,6 +12,7 @@ namespace client_hints {
 
 void GetAllowedClientHintsFromSource(
     const GURL& url,
+    const std::string& document_host,
     const ContentSettingsForOneType& client_hints_rules,
     blink::WebEnabledClientHints* client_hints) {
   if (client_hints_rules.empty())
@@ -21,6 +22,10 @@ void GetAllowedClientHintsFromSource(
     return;
 
   const GURL& origin = url.GetOrigin();
+  // Client hints are allowed only for the resources that belong to the same
+  // host as the current document.
+  if (url.host() != document_host)
+    return;
 
   for (const auto& rule : client_hints_rules) {
     // Look for an exact match since persisted client hints are disabled by

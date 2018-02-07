@@ -504,14 +504,18 @@ void ContentSettingsObserver::PersistClientHints(
 void ContentSettingsObserver::GetAllowedClientHintsFromSource(
     const blink::WebURL& url,
     blink::WebEnabledClientHints* client_hints) const {
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+
   if (!content_setting_rules_)
     return;
 
   if (content_setting_rules_->client_hints_rules.empty())
     return;
 
+  // Pass the host of the URL of the top webframe.
   client_hints::GetAllowedClientHintsFromSource(
-      url, content_setting_rules_->client_hints_rules, client_hints);
+      url, frame->Top()->GetSecurityOrigin().Host().Ascii(),
+      content_setting_rules_->client_hints_rules, client_hints);
 }
 
 void ContentSettingsObserver::DidNotAllowPlugins() {
