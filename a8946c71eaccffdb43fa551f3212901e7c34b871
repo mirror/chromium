@@ -46,6 +46,30 @@
       "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519b410f_1aeddef1",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T21:57:50Z",
+      "side": 1,
+      "message": "app_launcher_login_handler.* is accidentally included by gerrit. I meant only user_manager.h|cc. :)\n\napp_list_service_disabled.cc is only built when enable_app_list build flag is false. ChromeOS has enable_app_list\u003dtrue, so it is excluded for chromeos build.\n\nwebui/profile_helper.cc is included to build on chromeos but no code actually calls it. I guess compiler optimized the code out.\n\nNot sure about startup_browser_creator.cc though. The ShowUserManagerOnStartup call in StartupBrowserCreator::LaunchBrowserForLastProfiles looks like could run on chromeos.",
+      "parentUuid": "58e557ee_be962277",
+      "range": {
+        "startLine": 1537,
+        "startChar": 0,
+        "endLine": 1539,
+        "endChar": 0
+      },
+      "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

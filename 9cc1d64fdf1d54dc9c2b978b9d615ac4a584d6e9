@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336cc17b_57da297d",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T21:57:50Z",
+      "side": 1,
+      "message": "We probably should put it under a\n\n#if !defined(OS_ANDROID) \u0026\u0026 !defined(OS_CHROMEOS)\n\nblock.",
+      "revId": "9cc1d64fdf1d54dc9c2b978b9d615ac4a584d6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2613fa12_44968dd1",
+        "filename": "chrome/browser/ui/webui/profile_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-02-07T21:57:50Z",
+      "side": 1,
+      "message": "No code on chromeos should call into any code in this file. We probably can exclude webui/profiel_helper.* from building on ChromeOS.",
+      "revId": "9cc1d64fdf1d54dc9c2b978b9d615ac4a584d6e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
