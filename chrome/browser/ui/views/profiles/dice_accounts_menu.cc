@@ -9,6 +9,8 @@
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/canvas.h"
+#include "ui/gfx/image/canvas_image_source.h"
 #include "ui/views/view.h"
 
 namespace {
@@ -18,9 +20,32 @@ constexpr int kAvatarIconSize = 16;
 // Used to identify the "Use another account" button.
 constexpr int kUseAnotherAccountCmdId = std::numeric_limits<int>::max();
 
+constexpr int kVerticalImagePadding = 10;
+constexpr int kHorizontalImagePadding = 10;
+
+class PaddedImageSource : public gfx::CanvasImageSource {
+ public:
+  PaddedImageSource(gfx::Image image)
+      : CanvasImageSource(gfx::Size(image.Width() + 2 * kHorizontalImagePadding,
+                                    image.Height() + 2 * kVerticalImagePadding),
+                          false),
+        image_(image) {}
+  void Draw(gfx::Canvas* canvas) override {
+    canvas->DrawImageInt(*image_.ToImageSkia(), kHorizontalImagePadding,
+                         kVerticalImagePadding);
+  }
+
+ private:
+  gfx::Image image_;
+};
+
 gfx::Image SizeAndCircleIcon(const gfx::Image& icon) {
-  return profiles::GetSizedAvatarIcon(icon, true, kAvatarIconSize,
-                                      kAvatarIconSize, profiles::SHAPE_CIRCLE);
+  gfx::Image circled_icon = profiles::GetSizedAvatarIcon(
+      icon, true, kAvatarIconSize, kAvatarIconSize, profiles::SHAPE_CIRCLE);
+
+  gfx::Image padded_icon = gfx::Image(gfx::ImageSkia(
+      std::make_unique<PaddedImageSource>(circled_icon), 1 /* scale */));
+  return padded_icon;
 }
 
 }  // namespace
@@ -42,7 +67,6 @@ DiceAccountsMenu::DiceAccountsMenu(const std::vector<AccountInfo>& accounts,
     menu_.SetIcon(
         menu_.GetIndexOfCommandId(idx),
         SizeAndCircleIcon(icons[idx].IsEmpty() ? default_icon : icons[idx]));
-    menu_.AddSeparator(ui::SPACING_SEPARATOR);
   }
   // Add the "Use another account" button at the bottom.
   menu_.AddItem(
