@@ -33,6 +33,24 @@
       "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbff09c4_22bbc1e5",
+        "filename": "chrome/browser/extensions/api/media_perception_private/media_perception_api_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-07T01:01:39Z",
+      "side": 1,
+      "message": "can the Load call on L52 ever run OnLoadCallback synchronously, or does it always load it async? we shouldn\u0027t be running callbacks asynchronously (although if we do, it\u0027d be better to fix Load instead of handling the issue here)",
+      "parentUuid": "ea549041_85fd8edf",
+      "revId": "a2de8bb446009785a26267279cc8ac1365cb8e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
