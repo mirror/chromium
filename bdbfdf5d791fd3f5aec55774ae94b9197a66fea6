@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfad4ad9_77c8d784",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 0,
+      "message": "Removing this is a great milestone. Well done!",
+      "revId": "bdbfdf5d791fd3f5aec55774ae94b9197a66fea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9f7f8d_c087cda7",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "would align with the Did* ones above, and just say DidNavigateClient()",
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e848f0b3_70b56005",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "ignore -\u003e fail",
+      "range": {
+        "startLine": 1171,
+        "startChar": 52,
+        "endLine": 1171,
+        "endChar": 59
+      },
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68de497_5add11db",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "Don\u0027t need the second sentence now.",
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cc0cad_d4c2bec0",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "for a",
+      "range": {
+        "startLine": 1186,
+        "startChar": 35,
+        "endLine": 1186,
+        "endChar": 38
+      },
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a89ddb_17b42f5d",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "\"This service worker is not allowed to...\"?",
+      "range": {
+        "startLine": 1219,
+        "startChar": 29,
+        "endLine": 1219,
+        "endChar": 31
+      },
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb7369c_6ce15508",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "I don\u0027t think URL has to do with the failure. Let\u0027s also split these up for better debugging:\n\n if (!provider_host {\n    std::move(callback).Run(nullptr /* client */,\n                            \"The client was not found.\");\n    return;\n }\n if (provider_host-\u003eactive_version() !\u003d this) {\n    std::move(callback).Run(nullptr /* client */,\n                            \"This service worker is not the client\u0027s active service worker.\");\n    return;\n }",
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a864cfb7_132eddb8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2018-02-07T05:19:33Z",
+      "side": 1,
+      "message": "To align with my suggestion above, I think this can just be \"The client was not found.\"",
+      "revId": "ef431b41c2246e7f5c2e270175e1a2bff8b17891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
