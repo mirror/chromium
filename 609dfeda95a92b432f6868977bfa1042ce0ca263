@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7c247f46_f302ad0c",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1264433
+      },
+      "writtenOn": "2018-02-07T10:16:06Z",
+      "side": 1,
+      "message": "For other potential benefits of XSDB, take a look at https://tools.ietf.org/html/draft-west-first-party-cookies-07#section-1.1\n\nBasically, there are interesting classes of side channel leaks that rely on loading a cross-origin document from victim.com and inferring something about its contents. Preventing the delivery of such responses to the attacker\u0027s context can, in some cases, help prevent this. As a strawman example, if the browser implements the Transfer Size API (https://github.com/WICG/transfer-size) without mitigations to prevent the disclosure of cross-origin resource sizes, then XSDB would likely prevent the leak (for HTML resources) because the attacker\u0027s process would not get the actual size of the document. XSDB wouldn\u0027t directly address timing leaks, but might potentially help if it can make a decision about whether to expose the response to the attacker\u0027s origin as soon as it sees the response headers, without downloading the entire response.",
+      "parentUuid": "cf292b76_cfc090bc",
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3cfa0e_846852f2",
         "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
         "patchSetId": 6
@@ -842,6 +860,30 @@
       "side": 1,
       "message": "\u003e I wonder if this could be abused as a cross-origin information leak. For example, if evil.com loads victim.com/resource as a \u003cscript\u003e, then it will be able to infer if XSDB kicked in based on the absence of a JS error. Since XSDB kicks in based on the C-T, the attacker might be able to distinguish between response with a MIME type that triggers XSDB (document) vs. one with a MIME ignored by XSDB (resource) even if the actual responses both trigger JS parsing errors (and thus would be indistinguishable without XSDB).\n\u003e \n\u003e One plausible example is a URL which returns resources which the attacker cannot directly observe cross-origin, but which, under certain conditions (e.g. depending on whether the user is logged in), shows an HTML error page. It\u0027s not a very compelling scenario, but might be worth thinking about more and/or documenting somewhere.\n\nSure.  We should compare it to the status quo, where the syntax errors themselves can provide a data leak based on the content of the document, and not just the meta level of whether XSDB thought it was worth protecting.",
       "parentUuid": "0aea956d_cb6f3361",
+      "range": {
+        "startLine": 281,
+        "startChar": 18,
+        "endLine": 282,
+        "endChar": 56
+      },
+      "revId": "609dfeda95a92b432f6868977bfa1042ce0ca263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9390f9c8_794ec757",
+        "filename": "content/browser/loader/cross_site_document_blocking_explainer.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1264433
+      },
+      "writtenOn": "2018-02-07T10:16:06Z",
+      "side": 1,
+      "message": "\u003e \u003e I wonder if this could be abused as a cross-origin information leak. \n\u003e \n\u003e Sure.  We should compare it to the status quo, where the syntax errors themselves can provide a data leak based on the content of the document, and not just the meta level of whether XSDB thought it was worth protecting.\n\nSounds good, though I would suggest focusing explicitly on the extra information the attacker gets with XSDB, compared to the status quo. That is, currently, for responses which don\u0027t parse as a valid resource (e.g. as valid JS) an attacker shouldn\u0027t be able to distinguish between a text/html and text/javascript C-T in the response; XSDB would expose this difference.\n\nFWIW I think we agree that it\u0027s quite minor compared to the current leaky behavior, but a note about this somewhere in the explainer/spec might be nice.",
+      "parentUuid": "0e7c5052_3c5e23b4",
       "range": {
         "startLine": 281,
         "startChar": 18,
