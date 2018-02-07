@@ -46,6 +46,30 @@
       "revId": "721c0d569375645f457d13c729fd9c88cd9c9506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d4fb2fb_0c7ed8e1",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:52:23Z",
+      "side": 1,
+      "message": "\u003e Apparently the JS Compiler does not catch a return without a corresponding @return statement in this case, which is puzzling since I have seen \"missing @return\" errors in the past.\n\nProbably because this returns undefined, which is the same as any JS function without a return statement, right?  But would be nice if they caught it, since it\u0027s usually not the intention.",
+      "parentUuid": "253caff1_ff354cd9",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "721c0d569375645f457d13c729fd9c88cd9c9506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
