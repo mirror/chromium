@@ -1967,13 +1967,6 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(ash::switches::kAshSidebarEnabled,
                                ash::switches::kAshSidebarDisabled)},
 #endif  // OS_CHROMEOS
-    {"enable-message-center-new-style-notification",
-     flag_descriptions::kMessageCenterNewStyleNotificationName,
-     flag_descriptions::kMessageCenterNewStyleNotificationDescription,
-     kOsDesktop,
-     ENABLE_DISABLE_VALUE_TYPE(
-         message_center::switches::kEnableMessageCenterNewStyleNotification,
-         message_center::switches::kDisableMessageCenterNewStyleNotification)},
     {"enable-policy-tool", flag_descriptions::kEnablePolicyToolName,
      flag_descriptions::kEnablePolicyToolDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kPolicyTool)},
