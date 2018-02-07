@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6ea6af_b71c3a68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "Super nit: Don\u0027t need?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cd324e_52c7f407",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "Come to think of it, doesn\u0027t the caller already print the file_path? Might be easier to just not print this here.",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 78
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829f7ba0_149db006",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "NIT: Comma splice. Start new sentence (like MappedFileWriter)?",
+      "range": {
+        "startLine": 23,
+        "startChar": 61,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cb6b6e_e7ad7b4c",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "For structs, I think you can instantiate directly with list initializer without constructor . So (try with () first; if that doesn\u0027t work, then {}).\n\n const FileNames file_names{\"is_dummyly_opened_old_file\",\n                            \"is_dummyly_opened_patch_file\",\n                            \"is_dummyly_opened_new_file\", true};",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab243ab0_a0dfcbe6",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "Test replacement problem?\n\nPerhaps make it shorter with \"\u003cold_file\u003e\", \"\u003cpatch_file\u003e\", \"\u003cnew_file\u003e\" like in help?",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "ab5d30315ff399794f0afbcdd6f54e45372d9a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

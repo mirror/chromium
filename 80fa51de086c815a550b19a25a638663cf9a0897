@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b3861c82_18298809",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-02-07T22:46:01Z",
+      "side": 1,
+      "message": "Didn\u0027t expect you to use buffer_.IsValid() in\n\nbool HasError() { return !error_.empty() || !buffer_.IsValid(); }\n\nIn this case, then the comment should come back.",
+      "parentUuid": "448e2667_f70fbb84",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 71
+      },
+      "revId": "80fa51de086c815a550b19a25a638663cf9a0897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62245b7b_848bd233",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 2
