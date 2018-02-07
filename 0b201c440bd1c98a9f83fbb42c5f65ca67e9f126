@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa97371a_f2fce08b",
+        "filename": "components/crash/content/app/breakpad_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2018-02-07T21:17:30Z",
+      "side": 1,
+      "message": "Is it useful to write the package_name() in this case?",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 564,
+        "endChar": 11
+      },
+      "revId": "0b201c440bd1c98a9f83fbb42c5f65ca67e9f126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
