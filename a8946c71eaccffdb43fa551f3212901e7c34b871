@@ -70,6 +70,30 @@
       "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ae0c03_cd85e537",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T23:31:45Z",
+      "side": 1,
+      "message": "okay, I reverted app_list_service_disabled.cc changes. Hopefully my latest patch set is correct.",
+      "parentUuid": "519b410f_1aeddef1",
+      "range": {
+        "startLine": 1537,
+        "startChar": 0,
+        "endLine": 1539,
+        "endChar": 0
+      },
+      "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
