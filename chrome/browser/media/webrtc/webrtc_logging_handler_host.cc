@@ -249,6 +249,14 @@ void WebRtcLoggingHandlerHost::StopRtpDump(
   rtp_dump_handler_->StopDump(type, callback);
 }
 
+// TODO: !!! Move me.
+void WebRtcLoggingHandlerHost::StartEventLogging(size_t max_log_size_bytes, std::string& metadata) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  // DCHECK(!callback.is_null());  // TODO: !!!
+
+  printf("ELAD!!! WOOHOO max_log_size_bytes = %lu, metadata = %s\n", max_log_size_bytes, metadata.c_str());
+}
+
 #if defined(OS_LINUX) || defined(OS_CHROMEOS)
 void WebRtcLoggingHandlerHost::GetLogsDirectory(
     const LogsDirectoryCallback& callback,

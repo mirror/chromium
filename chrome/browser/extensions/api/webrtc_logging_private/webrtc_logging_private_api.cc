@@ -69,6 +69,8 @@ namespace StartAudioDebugRecordings =
     api::webrtc_logging_private::StartAudioDebugRecordings;
 namespace StopAudioDebugRecordings =
     api::webrtc_logging_private::StopAudioDebugRecordings;
+namespace StartEventLogging =
+    api::webrtc_logging_private::StartEventLogging;
 namespace GetLogsDirectory = api::webrtc_logging_private::GetLogsDirectory;
 
 namespace {
@@ -521,6 +523,34 @@ bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
       base::Bind(&WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::
                      FireErrorCallback,
                  this));
+  return true;
+}
+
+bool WebrtcLoggingPrivateStartEventLoggingFunction::RunAsync() {
+  printf("ELAD!!! WebrtcLoggingPrivateStartEventLoggingFunction::RunAsync\n");
+
+  std::unique_ptr<StartEventLogging::Params> params(
+    StartEventLogging::Params::Create(*args_));
+  EXTENSION_FUNCTION_VALIDATE(params.get());
+
+  printf("ELAD!!! Haven't crashed yet. %d [%s]\n", params->max_log_size_bytes, params->metadata.c_str());
+
+  scoped_refptr<WebRtcLoggingHandlerHost> webrtc_event_log_handler_host(
+      base::UserDataAdapter<WebRtcLoggingHandlerHost>::Get(
+          host, WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey));
+  if (!webrtc_logging_handler_host.get()) {
+    return false;
+  }
+
+  WebRtcLoggingHandlerHost::GenericDoneCallback callback = base::Bind(
+      &WebrtcLoggingPrivateStartEventLoggingFunction::FireCallback, this);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&WebRtcLoggingHandlerHost::StartEventLogging,
+                     webrtc_logging_handler_host, type, callback));
+
+  // TODO: !!!
   return true;
 }
 

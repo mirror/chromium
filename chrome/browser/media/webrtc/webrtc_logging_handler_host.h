@@ -117,6 +117,9 @@ class WebRtcLoggingHandlerHost : public content::BrowserMessageFilter {
   // done.
   void StopRtpDump(RtpDumpType type, const GenericDoneCallback& callback);
 
+  // TODO: !!! Move me.
+  void StartEventLogging(size_t max_log_size_bytes, std::string& metadata);
+
   // Called when an RTP packet is sent or received. Must be called on the UI
   // thread.
   void OnRtpPacket(std::unique_ptr<uint8_t[]> packet_header,

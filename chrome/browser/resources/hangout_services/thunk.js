@@ -179,13 +179,18 @@ chrome.runtime.onMessageExternal.addListener(function(
       chrome.webrtcLoggingPrivate.stopAudioDebugRecordings(
           requestInfo, origin, doSendResponse);
       return true;
+    } else if (method == 'logging.startEventLogging') {
+      var maxLogSizeBytes = message['maxLogSizeBytes'] || 0;
+      var metadata = message['metadata'] || '';
+      chrome.webrtcLoggingPrivate.startEventLogging(
+          requestInfo, origin, maxLogSizeBytes, metadata, doSendResponse);
+      return true;
     } else if (method == 'setAudioExperiments') {
       var experiments = message['experiments'];
       chrome.webrtcAudioPrivate.setAudioExperiments(
           requestInfo, origin, experiments, doSendResponse);
       return true;
     }
-
     throw new Error('Unknown method: ' + method);
   } catch (e) {
     doSendResponse(null, e.name + ': ' + e.message);
