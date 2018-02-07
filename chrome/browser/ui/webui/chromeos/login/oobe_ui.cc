@@ -143,42 +143,28 @@ content::WebUIDataSource* CreateOobeUIDataSource(
                             IDR_CUSTOM_ELEMENTS_OOBE_HTML);
     source->AddResourcePath(kCustomElementsJSPath, IDR_CUSTOM_ELEMENTS_OOBE_JS);
   } else if (display_type == OobeUI::kLockDisplay) {
-    if (command_line->HasSwitch(chromeos::switches::kShowNonMdLogin)) {
-      source->SetDefaultResource(IDR_LOCK_HTML);
-      source->AddResourcePath(kLockJSPath, IDR_LOCK_JS);
-      source->AddResourcePath(kCustomElementsPinKeyboardHTMLPath,
-                              IDR_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML);
-      source->AddResourcePath(kCustomElementsPinKeyboardJSPath,
-                              IDR_CUSTOM_ELEMENTS_PIN_KEYBOARD_JS);
-    } else {
-      source->SetDefaultResource(IDR_MD_LOCK_HTML);
-      source->AddResourcePath(kLockJSPath, IDR_MD_LOCK_JS);
-      source->AddResourcePath(kCustomElementsPinKeyboardHTMLPath,
-                              IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML);
-      source->AddResourcePath(kCustomElementsPinKeyboardJSPath,
-                              IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_JS);
-    }
+    source->SetDefaultResource(IDR_MD_LOCK_HTML);
+    source->AddResourcePath(kLockJSPath, IDR_MD_LOCK_JS);
+    source->AddResourcePath(kCustomElementsPinKeyboardHTMLPath,
+                            IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML);
+    source->AddResourcePath(kCustomElementsPinKeyboardJSPath,
+                            IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_JS);
     source->AddResourcePath(kCustomElementsHTMLPath,
                             IDR_CUSTOM_ELEMENTS_LOCK_HTML);
     source->AddResourcePath(kCustomElementsJSPath, IDR_CUSTOM_ELEMENTS_LOCK_JS);
     source->AddResourcePath(kCustomElementsUserPodHTMLPath,
                             IDR_CUSTOM_ELEMENTS_USER_POD_HTML);
   } else {
-    if (command_line->HasSwitch(chromeos::switches::kShowNonMdLogin)) {
-      source->SetDefaultResource(IDR_LOGIN_HTML);
-      source->AddResourcePath(kLoginJSPath, IDR_LOGIN_JS);
-    } else {
-      source->SetDefaultResource(IDR_MD_LOGIN_HTML);
-      source->AddResourcePath(kLoginJSPath, IDR_MD_LOGIN_JS);
-    }
+    source->SetDefaultResource(IDR_MD_LOGIN_HTML);
+    source->AddResourcePath(kLoginJSPath, IDR_MD_LOGIN_JS);
     source->AddResourcePath(kCustomElementsHTMLPath,
                             IDR_CUSTOM_ELEMENTS_LOGIN_HTML);
     source->AddResourcePath(kCustomElementsJSPath,
                             IDR_CUSTOM_ELEMENTS_LOGIN_JS);
     source->AddResourcePath(kCustomElementsPinKeyboardHTMLPath,
-                            IDR_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML);
+                            IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_HTML);
     source->AddResourcePath(kCustomElementsPinKeyboardJSPath,
-                            IDR_CUSTOM_ELEMENTS_PIN_KEYBOARD_JS);
+                            IDR_MD_CUSTOM_ELEMENTS_PIN_KEYBOARD_JS);
     source->AddResourcePath(kCustomElementsUserPodHTMLPath,
                             IDR_CUSTOM_ELEMENTS_USER_POD_HTML);
   }
