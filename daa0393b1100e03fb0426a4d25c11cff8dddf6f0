@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "789fc362_11f55f8d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4942,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-02-07T17:42:16Z",
+      "side": 1,
+      "message": "Yes.  Well, technically, it\u0027s for Pepper plugin fullscreen.  The only way to get this set is via RenderFrameImpl::CreatePepperFullscreenContainer, which is only called in PepperPluginInstanceImpl::FlashSetFullscreen().  HTML fullscreen doesn\u0027t use these paths at all.",
+      "parentUuid": "4e827c4d_1d738901",
+      "range": {
+        "startLine": 4942,
+        "startChar": 19,
+        "endLine": 4942,
+        "endChar": 24
+      },
+      "revId": "daa0393b1100e03fb0426a4d25c11cff8dddf6f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0e72e6e_045efbb7",
         "filename": "content/browser/web_contents/web_contents_impl_browsertest.cc",
         "patchSetId": 2
