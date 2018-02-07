@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f42eaee3_511f9744",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T22:03:44Z",
+      "side": 1,
+      "message": "Can you add this info to a comment?",
+      "parentUuid": "15435f1f_c3ec4792",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48a780c_07d6c201",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 6
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I have (total area saved)/(total area draw without draw occlusion).\nI can add this one as well.",
       "parentUuid": "8807e661_76924792",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeaeda64_9c4e6576",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-02-07T22:03:44Z",
+      "side": 1,
+      "message": "Oh I see it now, my bad. I think what you have is good.",
+      "parentUuid": "e1ec90af_95cda1e3",
       "revId": "594502072acef6a8c7761985255213a32a0be66e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
