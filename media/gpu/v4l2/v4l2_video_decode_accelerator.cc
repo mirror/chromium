@@ -1255,6 +1255,7 @@ void V4L2VideoDecodeAccelerator::Enqueue() {
 
   // Drain the pipe of completed decode buffers.
   const int old_inputs_queued = input_buffer_queued_count_;
+  bool send_decoder_cmd_stop_done = false;
   while (!input_ready_queue_.empty()) {
     const int buffer = input_ready_queue_.front();
     InputRecord& input_record = input_buffer_map_[buffer];
@@ -1275,6 +1276,7 @@ void V4L2VideoDecodeAccelerator::Enqueue() {
         input_ready_queue_.pop();
         free_input_buffers_.push_back(buffer);
         input_record.input_id = -1;
+        send_decoder_cmd_stop_done = true;
       } else {
         break;
       }
@@ -1295,6 +1297,12 @@ void V4L2VideoDecodeAccelerator::Enqueue() {
       IOCTL_OR_ERROR_RETURN(VIDIOC_STREAMON, &type);
       input_streamon_ = true;
     }
+  } else if (send_decoder_cmd_stop_done) {
+    // Execute NotifyFlushDoneIfNeeded in the case that no input buffer
+    // which contains header info required to decode frames are enqueued before
+    // Flush dummy buffer.
+    // This can be found by checking coded_size_.IsEmpty().
+    NotifyFlushDoneIfNeeded();
   }
 
   // Enqueue all the outputs we can.
@@ -1647,7 +1655,8 @@ void V4L2VideoDecodeAccelerator::NotifyFlushDoneIfNeeded() {
     DVLOGF(3) << "Waiting for image processor to complete.";
     return;
   }
-  if (flush_awaiting_last_output_buffer_) {
+  if (flush_awaiting_last_output_buffer_ && coded_size_.IsEmpty()) {
+    // Waits for the last buffer only if coded_size is known.
     DVLOGF(3) << "Waiting for last output buffer.";
     return;
   }
