@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e08d6e_0b467ef9",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-07T19:31:27Z",
+      "side": 1,
+      "message": "Should this be a constexpr?\n\nI\u0027d just put it as\nconstexpr const char* kSupplementName \u003d \"XXX\";",
+      "revId": "f6fb95892e167ba91ea1064a90a62bcb8a7d21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32321bbf_ef9d9951",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-02-07T19:31:27Z",
+      "side": 1,
+      "message": "I believe US spellings are preferred.",
+      "range": {
+        "startLine": 79,
+        "startChar": 49,
+        "endLine": 79,
+        "endChar": 60
+      },
+      "revId": "f6fb95892e167ba91ea1064a90a62bcb8a7d21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
