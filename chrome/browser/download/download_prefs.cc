@@ -24,6 +24,7 @@
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/download/download_core_service_impl.h"
+#include "chrome/browser/download/download_prompt_status.h"
 #include "chrome/browser/download/download_target_determiner.h"
 #include "chrome/browser/download/trusted_sources_manager.h"
 #include "chrome/browser/profiles/profile.h"
@@ -228,7 +229,9 @@ void DownloadPrefs::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kOpenPdfDownloadInSystemReader, false);
 #endif
 #if defined(OS_ANDROID)
-  registry->RegisterBooleanPref(prefs::kPromptForDownloadAndroid, false);
+  registry->RegisterIntegerPref(
+      prefs::kPromptForDownloadAndroid,
+      static_cast<int>(DownloadPromptStatus::SHOW_INITIAL));
 #endif
 }
 
@@ -310,7 +313,10 @@ bool DownloadPrefs::PromptForDownload() const {
 
 // Return the Android prompt for download only.
 #if defined(OS_ANDROID)
-  return *prompt_for_download_android_;
+  // As long as they haven't indicated in preferences they do not want the
+  // dialog shown, show the dialog.
+  return *prompt_for_download_android_ !=
+         static_cast<int>(DownloadPromptStatus::DONT_SHOW);
 #endif
 
   return *prompt_for_download_;

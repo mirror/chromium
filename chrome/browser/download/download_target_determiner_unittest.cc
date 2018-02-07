@@ -25,6 +25,7 @@
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
 #include "chrome/browser/download/download_confirmation_result.h"
 #include "chrome/browser/download/download_prefs.h"
+#include "chrome/browser/download/download_prompt_status.h"
 #include "chrome/browser/download/download_stats.h"
 #include "chrome/browser/download/download_target_determiner.h"
 #include "chrome/browser/download/download_target_info.h"
@@ -321,6 +322,10 @@ void DownloadTargetDeterminerTest::SetUp() {
   download_prefs_->SetDownloadPath(test_download_dir());
   delegate_.SetupDefaults();
   SetUpFileTypePolicies();
+#if defined(OS_ANDROID)
+  profile()->GetTestingPrefService()->SetInteger(
+      prefs::kPromptForDownloadAndroid, DownloadPromptStatus::DONT_SHOW);
+#endif
 }
 
 void DownloadTargetDeterminerTest::TearDown() {

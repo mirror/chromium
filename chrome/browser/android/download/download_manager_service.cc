@@ -71,6 +71,7 @@ void DownloadManagerService::OnDownloadCanceled(
       ConvertUTF8ToJavaString(env, download->GetURL().ExtractFileName());
   Java_DownloadManagerService_onDownloadItemCanceled(env, jname,
                                                      has_no_external_storage);
+
   DownloadController::RecordDownloadCancelReason(reason);
 }
 
