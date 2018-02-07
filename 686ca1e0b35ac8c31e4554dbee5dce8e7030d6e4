@@ -16,6 +16,24 @@
       "revId": "686ca1e0b35ac8c31e4554dbee5dce8e7030d6e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775e2cff_0dae5527",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2018-02-07T13:35:02Z",
+      "side": 1,
+      "message": "That\u0027s basically the boat I found myself in too. ¯\\_(ツ)_/¯",
+      "parentUuid": "ed2b46d9_48958c2f",
+      "revId": "686ca1e0b35ac8c31e4554dbee5dce8e7030d6e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
