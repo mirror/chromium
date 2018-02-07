@@ -2433,8 +2433,14 @@ void RenderViewContextMenu::ExecCopyLinkText() {
 
 void RenderViewContextMenu::ExecCopyImageAt() {
   RenderFrameHost* frame_host = GetRenderFrameHost();
-  if (frame_host)
-    frame_host->CopyImageAt(params_.x, params_.y);
+  if (!frame_host)
+    return;
+
+  content::RenderWidgetHostView* view = frame_host->GetView();
+  gfx::PointF point = view->TransformRootPointToViewCoordSpace(
+      gfx::PointF(params_.x, params_.y));
+
+  frame_host->CopyImageAt(point.x(), point.y());
 }
 
 void RenderViewContextMenu::ExecSearchWebForImage() {
