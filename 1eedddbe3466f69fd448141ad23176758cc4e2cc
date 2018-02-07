@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec2c409_650e0192",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Please put this function in the anonymous namespace above.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7123b561_dd6af253",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Could you insert\n\n DCHECK_CURRENTLY_ON(content::BrowserThread::UI);\n\nto the beginning of the function? It is an error to call this function on other threads. We use this DCHECK as both a debug runtime check and a documentation.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 68
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "221a724d_c8d87c42",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "I guess we also need to make sure file_system_url.mount_path() \u003d\u003d kFileSystemTypeExternal. hirono@ to confirm.",
+      "range": {
+        "startLine": 147,
+        "startChar": 26,
+        "endLine": 147,
+        "endChar": 48
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd35a6e4_0ccdd76c",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "In Chrome, async functions usually does not return success/failure and always invokes callback. In this case, callback will be called with an empty GURL. Could you do so?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb951bf_0278a516",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Could you use base::OnceCallback instead?\n\n base::OnceCallback\u003cvoid(const GURL\u0026 content_url)\u003e callback\n\nYes, it\u0027s unfortunate ArcDocumentsProviderRoot still uses base::Callback... However we want to use base::{Once,Repeating}Callback in new codes.",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93f7f8c_aff8b2a6",
+        "filename": "chrome/browser/chromeos/file_manager/path_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "nit: Could you use \u003d default wherever appropriate?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655bc294_0db03203",
+        "filename": "chrome/browser/chromeos/file_manager/path_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Please avoid using new operator as far as possible. In this case:\n\n profile_manager_ \u003d std::make_unique\u003cTestingProfileManager\u003e(TestingBrowserProcess::GetGlobal());",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 71
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b238e48e_09899587",
+        "filename": "chrome/browser/chromeos/file_manager/path_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Same here. In this case you might need to swap the order:\n\n auto fake_user_manager \u003d std::make_unique\u003cchromeos::FakeChromeUserManager\u003e();\n ... set up fake_user_manager ...\n user_manager_enabler_ \u003d std::make_unique\u003cuser_manager::ScopedUserManager\u003e(std::move(fake_user_manager));",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecb4dd2_4f97ede6",
+        "filename": "chrome/browser/chromeos/file_manager/path_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Optional: Do we want to split this test similarly as ConvertFileSystemUrlToContentUrl_* below? I\u0027m not very sure.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 64
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d392f37_a3b5598a",
+        "filename": "chrome/browser/chromeos/file_manager/path_util_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2018-02-07T09:20:04Z",
+      "side": 1,
+      "message": "Could you add a test to exercise the ArcDocumentsProvider file system code path?\n\nThis might be a lot of work, though... Let\u0027s discuss offline about how to test it.",
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
