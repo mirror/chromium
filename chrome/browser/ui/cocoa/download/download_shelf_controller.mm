@@ -34,7 +34,7 @@
 #import "ui/base/cocoa/nsview_additions.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
-using content::DownloadItem;
+using download::DownloadItem;
 
 // Download shelf autoclose behavior:
 //

@@ -23,6 +23,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "content/public/test/mock_download_item.h"
+#include "content/public/test/mock_download_item_delegate.h"
 #include "content/public/test/mock_download_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -66,7 +67,7 @@ class DownloadItemNotificationTest : public testing::Test {
     ON_CALL(*download_item_, GetGuid())
         .WillByDefault(ReturnRefOfCopy(base::GenerateGUID()));
     ON_CALL(*download_item_, GetState())
-        .WillByDefault(Return(content::DownloadItem::IN_PROGRESS));
+        .WillByDefault(Return(download::DownloadItem::IN_PROGRESS));
     ON_CALL(*download_item_, IsDangerous()).WillByDefault(Return(false));
     ON_CALL(*download_item_, GetFileNameToReportUser())
         .WillByDefault(Return(base::FilePath("TITLE.bin")));
@@ -77,8 +78,12 @@ class DownloadItemNotificationTest : public testing::Test {
     ON_CALL(*download_item_, IsDone()).WillByDefault(Return(false));
     ON_CALL(*download_item_, GetURL()).WillByDefault(ReturnRefOfCopy(
         GURL("http://www.example.com/download.bin")));
-    ON_CALL(*download_item_, GetBrowserContext())
-        .WillByDefault(Return(profile_));
+
+    std::unique_ptr<content::MockDownloadItemDelegate> delegate =
+        base::MakeUnique<
+            ::testing::NiceMock<content::MockDownloadItemDelegate>>();
+    ON_CALL(*delegate, GetBrowserContext()).WillByDefault(Return(profile_));
+    download_item_->SetDelegate(std::move(delegate));
   }
 
   void TearDown() override {
@@ -193,7 +198,7 @@ TEST_F(DownloadItemNotificationTest, PauseAndResumeNotification) {
 
 TEST_F(DownloadItemNotificationTest, OpenDownload) {
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
 
   // Shows a notification.
@@ -240,7 +245,7 @@ TEST_F(DownloadItemNotificationTest, OpenWhenComplete) {
 
   // Downloading is completed.
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
   download_item_->NotifyObserversDownloadUpdated();
 
@@ -260,7 +265,7 @@ TEST_F(DownloadItemNotificationTest, DisablePopup) {
 
   // Downloading is completed.
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
   download_item_->NotifyObserversDownloadUpdated();
 
