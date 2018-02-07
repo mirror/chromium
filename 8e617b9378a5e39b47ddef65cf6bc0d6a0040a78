@@ -16,6 +16,24 @@
       "revId": "8e617b9378a5e39b47ddef65cf6bc0d6a0040a78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b3ac4a_af5cf882",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 40
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2018-02-07T20:20:02Z",
+      "side": 0,
+      "message": "We might be adding that target more permanently in the future so I\u0027m going to hold off on removing it in this change and do a followup change to rename/address it",
+      "parentUuid": "4556ef62_824ada8b",
+      "revId": "8e617b9378a5e39b47ddef65cf6bc0d6a0040a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

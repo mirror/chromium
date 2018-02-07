@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe57dbd3_314601b7",
+        "filename": "tools/perf/core/results_dashboard.py",
+        "patchSetId": 40
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2018-02-07T20:20:02Z",
+      "side": 1,
+      "message": "Yes we do! For now it\u0027s only failing on android and windows bots which this code isn\u0027t run on except for one test to make sure things compile so it works to just pass for now\nOnce I make the update to the test to run with vpython, I\u0027ll be able to remove the try except and have it work as expected\n\nwrt requests, good to know! This file is currently a copy of build/scripts/slave/results_dashboard.py and we\u0027re trying to keep them in sync while moving the code over. Once the code is moved over and the original is deleted, it will be worth going back in to make that change",
+      "parentUuid": "7ad97bf6_34723371",
+      "revId": "ab9f1d7a8987afbe2143f87b292961776a39da59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b079d682_f0b5d480",
         "filename": "tools/perf/core/results_merger.py",
         "patchSetId": 40
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T20:13:44Z",
       "side": 1,
       "message": "I feel like we must already have another version of this src-side, somewhere? Maybe check w/ martiniss@?",
+      "revId": "ab9f1d7a8987afbe2143f87b292961776a39da59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee708621_0bd39f1b",
+        "filename": "tools/perf/core/results_merger.py",
+        "patchSetId": 40
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2018-02-07T20:20:02Z",
+      "side": 1,
+      "message": "I\u0027ll look into that and hopefully delete this file in a future cl :)",
+      "parentUuid": "b079d682_f0b5d480",
       "revId": "ab9f1d7a8987afbe2143f87b292961776a39da59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
