@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f572f3aa_f83216cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptCompilerPlugin.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-02-07T23:29:59Z",
+      "side": 1,
+      "message": "why? you should be able to translate uiSourceCode decorations in the SourceFrame to display them properly",
+      "revId": "e741ed279adbcea666aae5508442f6e07c3de084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
