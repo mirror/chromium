@@ -331,6 +331,7 @@ bool SiteInstanceImpl::IsSameWebSite(BrowserContext* browser_context,
       should_compare_effective_urls
           ? SiteInstanceImpl::GetEffectiveURL(browser_context, real_src_url)
           : real_src_url;
+
   GURL dest_url =
       should_compare_effective_urls
           ? SiteInstanceImpl::GetEffectiveURL(browser_context, real_dest_url)

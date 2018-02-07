@@ -88,6 +88,22 @@ bool NavigateToURL(Shell* window, const GURL& url) {
   return window->web_contents()->GetLastCommittedURL() == url;
 }
 
+bool NavigateToURLFromAddressBar(Shell* window, const GURL& url) {
+  WaitForLoadStop(window->web_contents());
+
+  TestNavigationObserver observer(window->web_contents());
+  window->LoadURLForFrame(
+      url, std::string(),
+      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                ui::PAGE_TRANSITION_FROM_ADDRESS_BAR));
+  observer.Wait();
+
+  if (!IsLastCommittedEntryOfPageType(window->web_contents(), PAGE_TYPE_NORMAL))
+    return false;
+
+  return window->web_contents()->GetLastCommittedURL() == url;
+}
+
 bool NavigateToURLAndExpectNoCommit(Shell* window, const GURL& url) {
   NavigationEntry* old_entry =
       window->web_contents()->GetController().GetLastCommittedEntry();
