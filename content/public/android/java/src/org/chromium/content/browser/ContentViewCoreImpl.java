@@ -1314,7 +1314,9 @@ public class ContentViewCoreImpl
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && getSelectionPopupController().isActionModeValid()) {
             hidePopupsAndPreserveSelection();
-            getSelectionPopupController().showActionModeOrClearOnFailure();
+            if (mWebContents != null) {
+                getSelectionPopupController().showActionModeOrClearOnFailure();
+            }
         }
         mTextSuggestionHost.hidePopups();
 
