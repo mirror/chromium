@@ -70,6 +70,7 @@ class VIEWS_EXPORT BaseScrollBar : public ScrollBar,
   void OnMouseCaptureLost() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnMouseWheel(const ui::MouseWheelEvent& event) override;
+  void OnScrollEvent(ui::ScrollEvent* event) override;
 
   // ui::EventHandler overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;

@@ -956,6 +956,10 @@ void Layer::SetScrollable(const gfx::Size& container_bounds) {
   cc_layer_->SetUserScrollable(true, true);
 }
 
+cc::ElementId Layer::GetElementId() const {
+  return cc_layer_->element_id();
+}
+
 gfx::ScrollOffset Layer::CurrentScrollOffset() const {
   const Compositor* compositor = GetCompositor();
   gfx::ScrollOffset offset;

@@ -379,6 +379,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // needs to be created.
   void SetScrollable(const gfx::Size& container_bounds);
 
+  // Gets the ElementId. For a ui::Layer, this has primaryId equal to the
+  // LayerImpl's id() and a secondaryId of 0.
+  cc::ElementId GetElementId() const;
+
   // Gets and sets the current scroll offset of the layer.
   gfx::ScrollOffset CurrentScrollOffset() const;
   void SetScrollOffset(const gfx::ScrollOffset& offset);
