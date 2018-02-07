@@ -5,7 +5,9 @@
 #ifndef CHROME_BROWSER_UI_WEBUI_SIGNIN_SYNC_CONFIRMATION_UI_H_
 #define CHROME_BROWSER_UI_WEBUI_SIGNIN_SYNC_CONFIRMATION_UI_H_
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "chrome/browser/ui/webui/signin/signin_web_dialog_ui.h"
@@ -21,10 +23,13 @@ class WebUI;
 class SyncConfirmationUI : public SigninWebDialogUI {
  public:
   explicit SyncConfirmationUI(content::WebUI* web_ui);
-  ~SyncConfirmationUI() override {}
+  ~SyncConfirmationUI() override;
 
   // SigninWebDialogUI:
   void InitializeMessageHandlerWithBrowser(Browser* browser) override;
+
+ private:
+  std::map<std::string, int> string_to_grd_id_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncConfirmationUI);
 };
