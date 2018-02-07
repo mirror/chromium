@@ -59,7 +59,7 @@ class GCMEncryptionProvider {
   // "" for non-InstanceID GCM registrations.
   void GetEncryptionInfo(const std::string& app_id,
                          const std::string& authorized_entity,
-                         const EncryptionInfoCallback& callback);
+                         EncryptionInfoCallback callback);
 
   // Removes all encryption information associated with the |app_id| +
   // |authorized_entity| pair, then invokes |callback|. |authorized_entity|
@@ -89,11 +89,11 @@ class GCMEncryptionProvider {
 
   void DidGetEncryptionInfo(const std::string& app_id,
                             const std::string& authorized_entity,
-                            const EncryptionInfoCallback& callback,
+                            EncryptionInfoCallback callback,
                             const KeyPair& pair,
                             const std::string& auth_secret);
 
-  void DidCreateEncryptionInfo(const EncryptionInfoCallback& callback,
+  void DidCreateEncryptionInfo(EncryptionInfoCallback callback,
                                const KeyPair& pair,
                                const std::string& auth_secret);
 

@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/callback_helpers.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -39,8 +40,8 @@ namespace gcm {
 // rather than returning the result. Do not rely on the timing of the callbacks.
 class GCMKeyStore {
  public:
-  using KeysCallback = base::Callback<void(const KeyPair& pair,
-                                           const std::string& auth_secret)>;
+  using KeysCallback = base::OnceCallback<void(const KeyPair& pair,
+                                               const std::string& auth_secret)>;
 
   GCMKeyStore(
       const base::FilePath& key_store_path,
@@ -57,7 +58,7 @@ class GCMKeyStore {
   void GetKeys(const std::string& app_id,
                const std::string& authorized_entity,
                bool fallback_to_empty_authorized_entity,
-               const KeysCallback& callback);
+               KeysCallback callback);
 
   // Creates a new public/private key-pair for the |app_id| +
   // |authorized_entity| pair, and invokes |callback| when they are available,
@@ -67,7 +68,7 @@ class GCMKeyStore {
   // registration and one or more InstanceID tokens is not supported.
   void CreateKeys(const std::string& app_id,
                   const std::string& authorized_entity,
-                  const KeysCallback& callback);
+                  KeysCallback callback);
 
   // Removes the keys associated with the |app_id| + |authorized_entity| pair,
   // and invokes |callback| when the operation has finished. |authorized_entity|
@@ -75,11 +76,11 @@ class GCMKeyStore {
   // all InstanceID tokens, or "" for non-InstanceID GCM registrations.
   void RemoveKeys(const std::string& app_id,
                   const std::string& authorized_entity,
-                  const base::Closure& callback);
+                  base::OnceClosure callback);
 
  private:
   // Initializes the database if necessary, and runs |done_closure| when done.
-  void LazyInitialize(const base::Closure& done_closure);
+  void LazyInitialize(const base::OnceClosure done_closure);
 
   void DidInitialize(bool success);
   void DidLoadKeys(bool success,
@@ -87,10 +88,10 @@ class GCMKeyStore {
 
   void DidStoreKeys(const KeyPair& pair,
                     const std::string& auth_secret,
-                    const KeysCallback& callback,
+                    KeysCallback callback,
                     bool success);
 
-  void DidRemoveKeys(const base::Closure& callback, bool success);
+  void DidRemoveKeys(const base::OnceClosure callback, bool success);
 
   // Private implementations of the API that will be executed when the database
   // has either been successfully loaded, or failed to load.
@@ -98,13 +99,13 @@ class GCMKeyStore {
   void GetKeysAfterInitialize(const std::string& app_id,
                               const std::string& authorized_entity,
                               bool fallback_to_empty_authorized_entity,
-                              const KeysCallback& callback);
+                              KeysCallback callback);
   void CreateKeysAfterInitialize(const std::string& app_id,
                                  const std::string& authorized_entity,
-                                 const KeysCallback& callback);
+                                 KeysCallback callback);
   void RemoveKeysAfterInitialize(const std::string& app_id,
                                  const std::string& authorized_entity,
-                                 const base::Closure& callback);
+                                 const base::OnceClosure callback);
 
   // Path in which the key store database will be saved.
   base::FilePath key_store_path_;
