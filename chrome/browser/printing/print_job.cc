@@ -34,9 +34,9 @@ using base::TimeDelta;
 namespace printing {
 
 // Helper function to ensure |owner| is valid until at least |callback| returns.
-void HoldRefCallback(const scoped_refptr<PrintJobWorkerOwner>& owner,
-                     const base::Closure& callback) {
-  callback.Run();
+void HoldRefCallback(scoped_refptr<PrintJobWorkerOwner> owner,
+                     base::OnceClosure callback) {
+  std::move(callback).Run();
 }
 
 PrintJob::PrintJob()
