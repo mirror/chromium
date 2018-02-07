@@ -209,6 +209,30 @@
       "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de656e76_9a18129d",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 14
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-07T09:49:43Z",
+      "side": 1,
+      "message": "Hmmm, I don\u0027t like have branded chrome differ from chromium when at all possible. Since we test chromium a whole lot more but ship chrome...\n\nDo we have official Chromium builds on the waterfall? I\u0027m fine doing compression only for is_official_build by default (so long as those are tested on waterfall).\n\nI\u0027m trying to find a balance here between skipping a mostly redundant but very slow phase (compression), while still keeping coverage for it. Waterfall felt like a good option, this should never change (and hence never fail) but who knows...",
+      "parentUuid": "1fa255ea_f32d710b",
+      "range": {
+        "startLine": 2096,
+        "startChar": 44,
+        "endLine": 2096,
+        "endChar": 76
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
