@@ -16,6 +16,7 @@
 #include "base/android/jni_android.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
 #include "components/safe_browsing/android/safe_browsing_api_handler.h"
@@ -35,6 +36,8 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
 
  private:
   void Initialize();
+
+  void OnFinishedThreadedCheck();
 
   // Responsible for calling into Java from a separate sequence than the
   // SafeBrowsingApiHandlerBridge.
@@ -63,6 +66,9 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
     DISALLOW_COPY_AND_ASSIGN(Core);
   };
 
+  // The number of checks pending on |core_|.
+  size_t pending_checks_ = 0u;
+
   // nullptr if |this| and |core_| should live on the same sequence. Otherwise
   // it will be the sequence that |core_| lives on.
   scoped_refptr<base::SequencedTaskRunner> api_task_runner_;
@@ -71,8 +77,11 @@ class SafeBrowsingApiHandlerBridge : public SafeBrowsingApiHandler {
   // disabled.
   std::unique_ptr<Core> core_;
 
+  base::WeakPtrFactory<SafeBrowsingApiHandlerBridge> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingApiHandlerBridge);
 };
 
 }  // namespace safe_browsing
+
 #endif  // COMPONENTS_SAFE_BROWSING_ANDROID_SAFE_BROWSING_API_HANDLER_BRIDGE_H_

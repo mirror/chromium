@@ -149,7 +149,8 @@ void JNI_SafeBrowsingApiBridge_OnUrlCheckDone(
 //
 // SafeBrowsingApiHandlerBridge
 //
-SafeBrowsingApiHandlerBridge::SafeBrowsingApiHandlerBridge() {}
+SafeBrowsingApiHandlerBridge::SafeBrowsingApiHandlerBridge()
+    : weak_factory_(this) {}
 
 SafeBrowsingApiHandlerBridge::~SafeBrowsingApiHandlerBridge() {
   if (api_task_runner_)
@@ -163,6 +164,11 @@ void SafeBrowsingApiHandlerBridge::Initialize() {
     api_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
         {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
   }
+}
+
+void SafeBrowsingApiHandlerBridge::OnFinishedThreadedCheck() {
+  DCHECK_LT(0u, pending_checks_);
+  pending_checks_--;
 }
 
 void SafeBrowsingApiHandlerBridge::StartURLCheck(
@@ -186,13 +192,18 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
     core_->StartURLCheck(std::move(callback), url, threat_types);
     return;
   }
-  // Unretained is safe because the task to delete |core_| will be sequenced
-  // after any task posted here.
-  api_task_runner_->PostTask(
+  // Unretained is safe because the task to delete |core_| will be
+  // sequenced after any task posted here.
+  pending_checks_++;
+  api_task_runner_->PostTaskAndReply(
       FROM_HERE,
       base::BindOnce(&SafeBrowsingApiHandlerBridge::Core::StartURLCheck,
                      base::Unretained(core_.get()), base::Passed(&callback),
-                     url, threat_types));
+                     url, threat_types),
+      base::BindOnce(&SafeBrowsingApiHandlerBridge::OnFinishedThreadedCheck,
+                     weak_factory_.GetWeakPtr()));
+  UMA_HISTOGRAM_COUNTS_1000("SB2.RemoteCall.PendingDispatchTasks",
+                            pending_checks_);
 }
 
 SafeBrowsingApiHandlerBridge::Core::Core() {
