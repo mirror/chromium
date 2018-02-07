@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "95158b2a_02a38132",
+        "filename": "tools/perf/contrib/vr_benchmarks/data/webvr_wpr.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:24:08Z",
+      "side": 1,
+      "message": "I don\u0027t see any reason why it shouldn\u0027t, unless they send different data depending on the user agent string or something. Considering there isn\u0027t anything saying that it\u0027s Android specific, my guess is that it will be reusable without re-recording whenever we make the benchmarks usable on Windows, as well.",
+      "parentUuid": "d0a6e46d_b6057b68",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cce61ae_2609219f",
         "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
         "patchSetId": 1
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "Nice one. Kinda wanna see this page now, haha.",
       "parentUuid": "4490582e_8f44f6ff",
+      "range": {
+        "startLine": 107,
+        "startChar": 23,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "27c36dabf051e31b7df8661fa8780371152702ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b65d7d13_d705b493",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_wpr_pages.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-02-07T18:24:08Z",
+      "side": 1,
+      "message": "You\u0027d have to watch in non-VR (works on desktop), since as stated below, you can\u0027t seem to get past the opening while in VR.",
+      "parentUuid": "cc3834e3_fdbc3d19",
       "range": {
         "startLine": 107,
         "startChar": 23,
