@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34cdd49_5377f630",
+        "filename": "components/filename_generation/filename_generation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2018-02-07T09:42:54Z",
+      "side": 1,
+      "message": "nit: it\u0027s weird to mention this constant here given that it\u0027s internal to the cc file. Maybe something like:\n\n\"Only truncates if the base filename can maintain a minimum length (currently a hardcoded internal constant, but could be parameterized if ever required).\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "2f5fccd2c5f26433003a36549e899cbd0c84ec0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
