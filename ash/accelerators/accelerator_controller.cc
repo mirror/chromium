@@ -264,6 +264,7 @@ void HandleMediaNextTrack() {
 }
 
 void HandleMediaPlayPause() {
+  base::RecordAction(UserMetricsAction("Accel_PlayPause"));
   Shell::Get()->media_controller()->HandleMediaPlayPause();
 }
 
