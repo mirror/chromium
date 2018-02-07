@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "5a9cf38c_d6af890f",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-07T20:50:44Z",
+      "side": 1,
+      "message": "What is unique about this argument in comparison to any other observer we have in Chrome? I think it equally applies to all observers, yet we have very few functions like you are proposing being added. And again, I think that\u0027s because the object adding the observer should be responsible for taking the steps to ensure whatever state the observer needs is setup at the time the observer is added.\n\nIf you are to add an OnAdded like function, why not a OnRemoved function? The same argument applies, right? In particular if another object is adding/removing the observer implementation then how does the observer implementation know it is no longer observing? This again is why I think the observer implementation should be the one adding itself, not another object.",
+      "parentUuid": "d689c85a_e81f4d22",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "419e37fa08de497d514f10cc29febfb472ee1ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca54beac_4c6ba442",
         "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.cc",
         "patchSetId": 1
