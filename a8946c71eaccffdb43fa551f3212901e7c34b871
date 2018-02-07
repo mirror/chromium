@@ -22,6 +22,30 @@
       "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e557ee_be962277",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-07T21:30:11Z",
+      "side": 1,
+      "message": "A local build seems to pass when I just move the user_manager.* files to the same sources block as user_manager_view.*, but I don\u0027t clearly understand why that works; in fact, now I\u0027m confused why this current patch set builds. There seem to be code built for OS_CHROMEOS that uses UserManager::Show (etc.), but that symbol is not defined (nor even declared with your suggested change). I would expect these specific instances to cause compile/link failures:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_window.cc?rcl\u003d5c0dbe25a50aa420d01598317a91612b0a6bdce6\u0026l\u003d357\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/profile_helper.cc?rcl\u003ddfa3260ac4018426e5f6b63911d17e500e7c6380\u0026l\u003d31\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/app_list/app_list_service_disabled.cc?rcl\u003d5c0dbe25a50aa420d01598317a91612b0a6bdce6\u0026l\u003d93\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/startup/startup_browser_creator.cc?rcl\u003d3cdf78d66cb26061e5451e759204d435084433d1\u0026l\u003d279\n\nI\u0027ve gone ahead and preemptively limited those instances to !OS_CHROMEOS, I hope that makes sense.\n(I\u0027m leaving app_launcher_login_handler.* as-is, instead of refactoring AppLauncherLoginHandler::ShouldShow for Chrome OS, that can be handled separately)",
+      "parentUuid": "a637dc34_a4d524db",
+      "range": {
+        "startLine": 1537,
+        "startChar": 0,
+        "endLine": 1539,
+        "endChar": 0
+      },
+      "revId": "a8946c71eaccffdb43fa551f3212901e7c34b871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
