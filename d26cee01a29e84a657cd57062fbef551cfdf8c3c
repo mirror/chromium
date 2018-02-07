@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "683d541a_16468e8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T16:18:21Z",
+      "side": 1,
+      "message": "Nit: No space before ::",
+      "range": {
+        "startLine": 100,
+        "startChar": 69,
+        "endLine": 100,
+        "endChar": 70
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def29057_bb4de27c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -317,6 +340,53 @@
         "startChar": 4,
         "endLine": 98,
         "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559e96ae_597b8290",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T16:18:21Z",
+      "side": 1,
+      "message": "Yes please. Nothing in this class should directly hold on to views, because those might get reused and/or removed from the view hierarchy.",
+      "parentUuid": "d5713539_c61e2dcd",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabba5dc_868b3e35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2018-02-07T16:18:21Z",
+      "side": 1,
+      "message": "You could even assign the ID findViewTraversal to the root view in new_tab_page_snippets_header.xml, so you could use findViewById in both cases.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 58
       },
       "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
