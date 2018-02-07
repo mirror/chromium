@@ -643,12 +643,14 @@ IN_PROC_BROWSER_TEST_P(WebContentsVideoCaptureDeviceBrowserTestP,
                   content::Visibility::HIDDEN);
         break;
       case 2:
+        /*
         VLOG(1) << "Visibility case: WebContents is showing, but occluded.";
         shell()->web_contents()->WasShown();
         shell()->web_contents()->WasOccluded();
         base::RunLoop().RunUntilIdle();
         ASSERT_EQ(shell()->web_contents()->GetVisibility(),
                   content::Visibility::OCCLUDED);
+        */
         break;
     }
 

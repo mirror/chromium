@@ -5,6 +5,7 @@
 #include "ui/aura/window_occlusion_tracker.h"
 
 #include "base/containers/adapters.h"
+#include "base/debug/stack_trace.h"
 #include "base/stl_util.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "third_party/skia/include/core/SkRegion.h"
@@ -117,6 +118,10 @@ WindowOcclusionTracker::~WindowOcclusionTracker() = default;
 void WindowOcclusionTracker::MaybeRecomputeOcclusion() {
   if (g_num_pause_occlusion_tracking)
     return;
+
+  bool previous_is_computing = is_computing_;
+  is_computing_ = true;
+
   for (auto& root_window_pair : root_windows_) {
     RootWindowState& root_window_state = root_window_pair.second;
     if (root_window_state.dirty == true) {
@@ -130,6 +135,8 @@ void WindowOcclusionTracker::MaybeRecomputeOcclusion() {
       DCHECK(!root_window_state.dirty);
     }
   }
+
+  is_computing_ = previous_is_computing;
 }
 
 bool WindowOcclusionTracker::RecomputeOcclusionImpl(
@@ -191,8 +198,11 @@ void WindowOcclusionTracker::CleanupAnimatedWindows() {
       return false;
     animator->RemoveObserver(this);
     auto root_window_state_it = root_windows_.find(window->GetRootWindow());
-    if (root_window_state_it != root_windows_.end())
+    if (root_window_state_it != root_windows_.end()) {
       root_window_state_it->second.dirty = true;
+      if (is_computing_)
+        base::debug::StackTrace().Print();
+    }
     return true;
   });
 }
@@ -258,6 +268,8 @@ void WindowOcclusionTracker::MarkRootWindowAsDirtyAndMaybeRecomputeOcclusionIf(
     return;
   if (predicate()) {
     root_window_state_it->second.dirty = true;
+    if (is_computing_)
+      base::debug::StackTrace().Print();
     MaybeRecomputeOcclusion();
   }
 }
@@ -320,6 +332,8 @@ void WindowOcclusionTracker::TrackedWindowAddedToRoot(Window* window) {
   if (root_window_state.num_tracked_windows == 1)
     AddObserverToWindowAndDescendants(root_window);
   root_window_state.dirty = true;
+  if (is_computing_)
+    base::debug::StackTrace().Print();
   MaybeRecomputeOcclusion();
 }
 
@@ -488,6 +502,8 @@ void WindowOcclusionTracker::OnWindowLayerRecreated(Window* window) {
   auto root_window_state_it = root_windows_.find(window->GetRootWindow());
   if (root_window_state_it != root_windows_.end()) {
     root_window_state_it->second.dirty = true;
+    if (is_computing_)
+      base::debug::StackTrace().Print();
     MaybeRecomputeOcclusion();
   }
 }

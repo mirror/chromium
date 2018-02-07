@@ -60,6 +60,7 @@
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/aura/window_tree_host_observer.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -423,13 +424,10 @@ class WebContentsViewAura::WindowObserver
                                intptr_t old) override {
     if (key != aura::client::kMirroringEnabledKey)
       return;
-    if (window->GetProperty(aura::client::kMirroringEnabledKey)) {
+    if (window->GetProperty(aura::client::kMirroringEnabledKey))
       view_->web_contents_->IncrementCapturerCount(gfx::Size());
-      view_->web_contents_->UpdateWebContentsVisibility(true);
-    } else {
+    else
       view_->web_contents_->DecrementCapturerCount();
-      view_->web_contents_->UpdateWebContentsVisibility(window->IsVisible());
-    }
   }
 
   // Overridden WindowTreeHostObserver:
@@ -497,7 +495,6 @@ WebContentsViewAura::~WebContentsViewAura() {
     return;
 
   window_observer_.reset();
-  window_->RemoveObserver(this);
 
   // Window needs a valid delegate during its destructor, so we explicitly
   // delete it here.
@@ -779,7 +776,6 @@ void WebContentsViewAura::CreateAuraWindow(aura::Window* context) {
   window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
   window_->SetName("WebContentsViewAura");
   window_->Init(ui::LAYER_NOT_DRAWN);
-  window_->AddObserver(this);
   aura::Window* root_window = context ? context->GetRootWindow() : nullptr;
   if (root_window) {
     // There are places where there is no context currently because object
@@ -794,6 +790,7 @@ void WebContentsViewAura::CreateAuraWindow(aura::Window* context) {
                                           root_window->GetBoundsInScreen());
   }
   window_->layer()->SetMasksToBounds(true);
+  aura::WindowOcclusionTracker::Track(window_.get());
 
   // WindowObserver is not interesting and is problematic for Browser Plugin
   // guests.
@@ -1147,6 +1144,15 @@ void WebContentsViewAura::OnWindowDestroyed(aura::Window* window) {
 void WebContentsViewAura::OnWindowTargetVisibilityChanged(bool visible) {
 }
 
+void WebContentsViewAura::OnWindowOcclusionChanged(bool is_occluded) {
+  if (!window_->IsVisible() || !window_->GetRootWindow())
+    web_contents_->OnVisibilityChanged(Visibility::HIDDEN);
+  else if (is_occluded)
+    web_contents_->OnVisibilityChanged(Visibility::OCCLUDED);
+  else
+    web_contents_->OnVisibilityChanged(Visibility::VISIBLE);
+}
+
 bool WebContentsViewAura::HasHitTestMask() const {
   return false;
 }
@@ -1316,19 +1322,6 @@ int WebContentsViewAura::OnPerformDrop(const ui::DropTargetEvent& event) {
     drag_dest_delegate_->OnDrop();
   current_drop_data_.reset();
   return ConvertFromWeb(current_drag_op_);
-}
-
-void WebContentsViewAura::OnWindowVisibilityChanged(aura::Window* window,
-                                                    bool visible) {
-  // Ignore any visibility changes in the hierarchy below.
-  if (window != window_.get() && window_->Contains(window))
-    return;
-
-  // |visible| indicates whether |window| (which points to |window_| or one of
-  // its ancestors) is visible within its parent. What we really need is
-  // |window_->IsVisible()|, which indicates whether |window_| and all its
-  // ancestors are visible.
-  web_contents_->UpdateWebContentsVisibility(window_->IsVisible());
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
