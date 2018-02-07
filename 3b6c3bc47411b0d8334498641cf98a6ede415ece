@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "0f06b08d_c0a03b90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-07T00:37:22Z",
+      "side": 1,
+      "message": "The setEditable(false)/android:editable\u003d\"false\" makes the textbox look weird (greyed out, not focusable/clickable) so the setKeyListener was the \"fastest\" way to make it still look ok. I will double check with TalkBack though!",
+      "parentUuid": "150d7ee9_814806cb",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b5d983_4cae4283",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7
@@ -187,6 +211,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a47925b_99c73403",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-07T00:37:22Z",
+      "side": 1,
+      "message": "Yes setFileLocation calls DownloadDirectoryList.getNameForFile which takes this path and matches it to the readable name we have stored for the path.",
+      "parentUuid": "96b5d983_4cae4283",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "1039e23b_b7a2d419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-07T00:37:22Z",
+      "side": 1,
+      "message": "Updated with enum values for PromptForDownloadAndroid preference.",
+      "parentUuid": "b75dbf41_671f6b73",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 123,
+        "endChar": 79
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5cfd66b_c34824a8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7
@@ -280,6 +352,30 @@
       "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f96569_58237f8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-07T00:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5cfd66b_c34824a8",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
