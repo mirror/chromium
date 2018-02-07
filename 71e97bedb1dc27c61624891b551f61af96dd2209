@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "1c24cf5f_77c714c4",
+        "filename": "content/browser/loader/signed_exchange_cert_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-07T02:40:21Z",
+      "side": 1,
+      "message": "I see, we might be on its way... let me ask a few more for my understanding. We reset the loader/client, which should stop pumping the data pipe, is that right?  Do we still need if (!callback_) part in OnDataAvailable?",
+      "parentUuid": "a3521703_3be2baeb",
+      "revId": "71e97bedb1dc27c61624891b551f61af96dd2209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20835583_64c9dc8c",
         "filename": "content/browser/loader/signed_exchange_cert_fetcher.h",
         "patchSetId": 6
