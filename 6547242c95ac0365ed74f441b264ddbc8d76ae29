@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72f60e2_eb76e6fb",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "Once we use NGPaintFragment, we don\u0027t need to pass |is_forward_contiguous|\nto text fragment painter since detection of line wrap is cheap.",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a4edcc_2a2accea",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "Could you add a comment for this new struct?",
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc114e2_338b75a7",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "|may_have_line_wrap| is better name?",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef429559_678d9e24",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 711,
+        "startChar": 20,
+        "endLine": 711,
+        "endChar": 41
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4f363d_deee5f26",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "Could you use NGPaintFragment for ease of accessing next sibling?\nWe may want to pass PaintSelection() with NGPaintFragment instead of\nNGPhysicalTextFragment.\n\nNote: We can get NGPhysicalTextFragment from NGPaintFragment.",
+      "range": {
+        "startLine": 73,
+        "startChar": 36,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8b4e68_39a4b1e9",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "This should not be happened.\nPlease change to DCHECK(block_flow)",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c8fc79_125b28a9",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-07T05:18:51Z",
+      "side": 1,
+      "message": "Could you support vertical writing mode?",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "6547242c95ac0365ed74f441b264ddbc8d76ae29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
