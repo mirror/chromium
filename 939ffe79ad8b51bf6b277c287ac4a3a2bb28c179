@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbc982a2_5bc6fee5",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-07T11:17:45Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "b42fdb47_341cb1a3",
+      "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35f0445d_ad770c97",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 3
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "aa0d6071_eddd8b49",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-07T11:17:45Z",
+      "side": 1,
+      "message": "Went with _INPUT and _OUTPUT.",
+      "parentUuid": "419e649e_dceeb5e5",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d00f525e_399b807f",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 3
@@ -86,6 +128,30 @@
       "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fb9f4e_3bd3e397",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-07T11:17:45Z",
+      "side": 1,
+      "message": "Changed to INFLATE_FAST_MIN_OUTPUT",
+      "parentUuid": "d00f525e_399b807f",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "939ffe79ad8b51bf6b277c287ac4a3a2bb28c179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
