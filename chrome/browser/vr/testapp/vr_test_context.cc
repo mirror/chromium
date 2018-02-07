@@ -547,6 +547,8 @@ void VrTestContext::CycleOrigin() {
       {GURL("http://domaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaain.com"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},
+      {GURL(""), security_state::SecurityLevel::HTTP_SHOW_WARNING,
+       &toolbar::kHttpIcon, base::string16(), false, false},
       {GURL("http://domain.com/a/"),
        security_state::SecurityLevel::HTTP_SHOW_WARNING, &toolbar::kHttpIcon,
        base::string16(), true, false},

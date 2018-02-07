@@ -28,11 +28,11 @@ class Repositioner : public UiElement {
   ~Repositioner() override;
 
   void set_laser_direction(const gfx::Vector3dF& laser_direction) {
-    last_laser_direction_ = laser_direction_;
     laser_direction_ = laser_direction;
   }
 
   void SetEnabled(bool enabled);
+  void Reset();
 
  private:
   gfx::Transform LocalTransform() const override;
@@ -44,11 +44,12 @@ class Repositioner : public UiElement {
   void DumpGeometry(std::ostringstream* os) const override;
 #endif
 
-  gfx::Transform transform_;
   bool enabled_ = false;
+  gfx::Transform transform_;
   gfx::Vector3dF laser_direction_;
-  gfx::Vector3dF last_laser_direction_;
-  bool snap_to_world_up_ = false;
+
+  gfx::Transform initial_transform_;
+  gfx::Vector3dF initial_laser_direction_;
 
   DISALLOW_COPY_AND_ASSIGN(Repositioner);
 };

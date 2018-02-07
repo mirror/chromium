@@ -70,6 +70,17 @@ class UiScene {
   SkiaSurfaceProvider* SurfaceProviderForTesting() { return provider_; }
 
  private:
+  struct PendingAncestorAddition {
+    PendingAncestorAddition(UiElementName descendant,
+                            std::unique_ptr<UiElement> ancestor);
+    ~PendingAncestorAddition();
+    UiElementName descendant = kNone;
+    std::unique_ptr<UiElement> ancestor;
+  };
+  typedef std::vector<std::unique_ptr<PendingAncestorAddition>>
+      PendingAncestorAdditions;
+
+  void ProcessPendingAdditions();
   void InitializeElement(UiElement* element);
 
   std::unique_ptr<UiElement> root_element_;
@@ -85,6 +96,13 @@ class UiScene {
   bool is_dirty_ = false;
 
   SkiaSurfaceProvider* provider_ = nullptr;
+
+  // We often want to insert visibility toggles in the tree, but the element
+  // whose visibility we want to alter has not yet been created. The result is a
+  // call to |AddParentUiElement|, but |child| does not exist. When this
+  // happens, we store the pending addition in this vector. As we add new
+  // elements to the tree, we check if |child| is in the new subtree
+  PendingAncestorAdditions pending_ancestor_additions_;
 
   DISALLOW_COPY_AND_ASSIGN(UiScene);
 };
