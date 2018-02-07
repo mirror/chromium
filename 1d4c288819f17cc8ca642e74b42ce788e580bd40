@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0ea52b61_37ec662e",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-07T22:59:47Z",
+      "side": 1,
+      "message": "Okay, this makes sense if you\u0027re trying to capture it exactly as it is in the translation file.",
+      "parentUuid": "4acc5be5_dbb38bfc",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641d9119_00a7dd3a",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "That\u0027s a good point! We\u0027ll treat that as consent revokation, which we\u0027ll also record. I\u0027ll address that in a followup CL.\n\nWe could theoretically hold on recording until the user leaves settings, but that seems more error-prone, and also not exactly achieving the goal of recording what *exactly* the user saw when granting consent. Recording that the user read the dialog, consented (or rather - acknowledged in this case), then went to settings and revoked consent from there is a better representation of reality than saying that the user consented to the text of the dialog by leaving settings in a different way than clicking the \"Cancel\" button.",
       "parentUuid": "641d9119_00a7dd3a",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bdca590_82babf9c",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-07T22:59:47Z",
+      "side": 1,
+      "message": "Just a heads up, based on the current code in tip of tree, the only way user can \"cancel\" after they get to the settings page is by hitting the back button.. there\u0027s recently a large thread discussing this and we do plan on adding a more obvious button in the page that just says \"cancel\", but that\u0027s not in yet, so I don\u0027t know if there\u0027s an obvious place right now for you to add the revoke code in settings.",
+      "parentUuid": "f2015ae7_9b242b6e",
       "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "354bd145_7266f0eb",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-07T22:59:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76577789_707f43d4",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eca22c74_eaec1b1a",
         "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
         "patchSetId": 5
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "Despite my expectation that \"this\" is \"sync-confirmation-app\", it doesn\u0027t. It\u0027s actually not clear to me why.",
       "parentUuid": "eca22c74_eaec1b1a",
+      "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf1bdf9_67702184",
+        "filename": "chrome/browser/resources/signin/dice_sync_confirmation/sync_confirmation_app.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-02-07T22:59:47Z",
+      "side": 1,
+      "message": "I patched this CL hoping to investigate this a little bit, but unfortunately it seems like there\u0027s conflicts with master and I\u0027m not able to compile :(",
+      "parentUuid": "f7961dce_06464bf0",
       "revId": "1d4c288819f17cc8ca642e74b42ce788e580bd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
