@@ -11,6 +11,7 @@
 #include "base/strings/string_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/bookmarks/bookmark_utils.h"
+#include "chrome/browser/ui/browser_window_observer.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/test/base/testing_profile.h"
@@ -20,7 +21,22 @@
 #import "third_party/ocmock/gtest_support.h"
 
 // Main test class.
-class BrowserWindowCocoaTest : public CocoaProfileTest {
+class BrowserWindowCocoaTest : public CocoaProfileTest,
+                               public BrowserWindowObserver {
+ protected:
+  // Returns whether OnShowStateChanged() has been called since the last time
+  // this was checked.
+  bool CheckShowStateChanged() {
+    bool show_state_changed = show_state_changed_;
+    // Reset the OnShowStateChanged tracker.
+    show_state_changed_ = false;
+    return show_state_changed;
+  }
+
+  BrowserWindowController* controller_ = nullptr;
+
+ private:
+  // CocoaProfileTest:
   void SetUp() override {
     CocoaProfileTest::SetUp();
     ASSERT_TRUE(browser());
@@ -34,8 +50,10 @@ class BrowserWindowCocoaTest : public CocoaProfileTest {
     CocoaProfileTest::TearDown();
   }
 
- public:
-  BrowserWindowController* controller_;
+  // BrowserWindowObserver:
+  void OnShowStateChanged() override { show_state_changed_ = true; }
+
+  bool show_state_changed_ = false;
 };
 
 TEST_F(BrowserWindowCocoaTest, TestBookmarkBarVisible) {
@@ -79,15 +97,26 @@ TEST_F(BrowserWindowCocoaTest, TestMinimizeState) {
     return;  // Fails when swarmed. http://crbug.com/660582
   std::unique_ptr<BrowserWindowCocoa> bwc(
       new BrowserWindowCocoa(browser(), controller_));
+  bwc->AddObserver(this);
 
+  EXPECT_FALSE(bwc->IsMaximized());
   EXPECT_FALSE(bwc->IsMinimized());
+  EXPECT_FALSE(CheckShowStateChanged());
+
   bwc->Maximize();
   EXPECT_TRUE(bwc->IsMaximized());
   EXPECT_FALSE(bwc->IsMinimized());
+  EXPECT_TRUE(CheckShowStateChanged());
+
   bwc->Minimize();
   EXPECT_FALSE(bwc->IsMaximized());
   EXPECT_TRUE(bwc->IsMinimized());
+  EXPECT_TRUE(CheckShowStateChanged());
+
   bwc->Restore();
+  EXPECT_TRUE(bwc->IsMaximized());
+  EXPECT_FALSE(bwc->IsMinimized());
+  EXPECT_TRUE(CheckShowStateChanged());
 }
 
 // Tests that BrowserWindowCocoa::Close mimics the behavior of

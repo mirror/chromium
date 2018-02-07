@@ -690,8 +690,11 @@ bool IsTabDetachingInFullscreenEnabled() {
 }
 
 // Called when we have been minimized.
+// TODO(michaelpg): Who calls this function, or what are we observing? Will
+// all miniaturize events on a BrowserWindowCocoa trigger this function?
 - (void)windowDidMiniaturize:(NSNotification *)notification {
   [self saveWindowPositionIfNeeded];
+  static_cast<BrowserWindowCocoa*>([self browserWindow])->ShowStateChanged();
 }
 
 // Called when we have been unminimized.
@@ -699,6 +702,7 @@ bool IsTabDetachingInFullscreenEnabled() {
   // Make sure the window's show_state (which is now ui::SHOW_STATE_NORMAL)
   // gets saved.
   [self saveWindowPositionIfNeeded];
+  static_cast<BrowserWindowCocoa*>([self browserWindow])->ShowStateChanged();
 }
 
 // Called when the user clicks the zoom button (or selects it from the Window
