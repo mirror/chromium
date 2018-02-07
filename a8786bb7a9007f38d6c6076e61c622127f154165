@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "932e29d5_1f50de23",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T21:21:28Z",
+      "side": 1,
+      "message": "AFAIK it\u0027s for all strings that can contain \"Chrome\" vs. \"Chromium\" at all.  I don\u0027t fully know why, I think maybe because in some contexts the words surrounding those names will be translated differently for different names?  (Silly hypothetical, imagine that whether the next word should begin with a vowel depends on whether this word ends in one; then if we just have one string we sub Chrome vs. Chromium into it can\u0027t be translated correctly in both cases)\n\nYou might want to verify with a true l10n expert what the guidance on those files\u0027 usage is, though.  And if you find out the definitive rule tell me :)",
+      "parentUuid": "7deb9744_e2be5aad",
+      "revId": "a8786bb7a9007f38d6c6076e61c622127f154165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e543761b_7eee2565",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
