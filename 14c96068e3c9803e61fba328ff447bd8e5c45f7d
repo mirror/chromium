@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5dd30ace_0167a436",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T20:35:08Z",
+      "side": 1,
+      "message": "I still think that adding this setting to accessibilityFeatures API might be a better direction to take (and it should at least be discussed).\n\nIf this is needed short term, I\u0027m OK with going ahead with this, but can you please file a bug for exposing screenMagnifierScale setting via chrome.accessibilityFeatures API (we should avoid whitelisting private APIs whenever possible)",
+      "parentUuid": "1695017e_ac4935ac",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1418cc63_672a4fbd",
         "filename": "chrome/common/extensions/api/_api_features.json",
         "patchSetId": 2
