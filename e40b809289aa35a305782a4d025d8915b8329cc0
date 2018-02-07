@@ -16,6 +16,24 @@
       "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836050a9_def96463",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2018-02-07T04:48:22Z",
+      "side": 1,
+      "message": "Is the distinction specific to desktop? I thought mobile would use the same internal representation.",
+      "parentUuid": "b399d733_86901ffc",
+      "revId": "e40b809289aa35a305782a4d025d8915b8329cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
