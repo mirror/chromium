@@ -6,6 +6,8 @@
 #define CHROME_BROWSER_UI_VIEWS_OMNIBOX_OMNIBOX_RESULT_VIEW_H_
 
 #include <stddef.h>
+#include <memory>
+#include <utility>
 
 #include "base/macros.h"
 #include "components/omnibox/browser/autocomplete_match.h"
@@ -18,6 +20,8 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/view.h"
 
+#include "chrome/browser/ui/views/omnibox/omnibox_result_color.h"
+
 class OmniboxPopupContentsView;
 
 namespace gfx {
@@ -26,33 +30,15 @@ class Image;
 class RenderText;
 }
 
+class ClassifiedTextView;
+
 class OmniboxResultView : public views::View,
                           private gfx::AnimationDelegate {
  public:
-  // Keep these ordered from least dominant (normal) to most dominant
-  // (selected).
-  enum ResultViewState {
-    NORMAL = 0,
-    HOVERED,
-    SELECTED,
-    NUM_STATES
-  };
-
-  enum ColorKind {
-    BACKGROUND = 0,
-    TEXT,
-    DIMMED_TEXT,
-    URL,
-    INVISIBLE_TEXT,
-    NUM_KINDS
-  };
-
   OmniboxResultView(OmniboxPopupContentsView* model,
                     int model_index,
                     const gfx::FontList& font_list);
   ~OmniboxResultView() override;
-
-  SkColor GetColor(ResultViewState state, ColorKind kind) const;
 
   // Updates the match used to paint the contents of this result view. We copy
   // the match so that we can continue to paint the last result even after the
@@ -66,7 +52,7 @@ class OmniboxResultView : public views::View,
   // Invoked when this result view has been selected.
   void OnSelected();
 
-  ResultViewState GetState() const;
+  OmniboxResultColor::HighlightState GetState() const;
 
   // Notification that the match icon has changed and schedules a repaint.
   void OnMatchIconUpdated();
@@ -85,50 +71,12 @@ class OmniboxResultView : public views::View,
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
  private:
-  enum RenderTextType {
-    CONTENTS = 0,
-    SEPARATOR,
-    DESCRIPTION,
-    NUM_TYPES
-  };
-
   // Returns the height of the text portion of the result view.
   int GetTextHeight() const;
-
-  // Paints the given |match| using the RenderText instances |contents| and
-  // |description| at offset |x| in the bounds of this view.
-  void PaintMatch(const AutocompleteMatch& match,
-                  gfx::RenderText* contents,
-                  gfx::RenderText* description,
-                  gfx::Canvas* canvas,
-                  int x) const;
-
-  // Draws given |render_text| on |canvas| at given location (|x|, |y|).
-  // |contents| indicates if the |render_text| is for the match contents,
-  // separator, or description.  Additional properties from |match| are used to
-  // render tail suggestions correctly.  If |max_width| is a non-negative
-  // number, the text will be elided to fit within |max_width|.  Returns the x
-  // position to the right of the string.
-  int DrawRenderText(const AutocompleteMatch& match,
-                     gfx::RenderText* render_text,
-                     RenderTextType render_text_type,
-                     gfx::Canvas* canvas,
-                     int x,
-                     int y,
-                     int max_width) const;
 
   // Creates a RenderText with given |text| and rendering defaults.
   std::unique_ptr<gfx::RenderText> CreateRenderText(
       const base::string16& text) const;
-
-  // Creates a RenderText with default rendering for the given |text|. The
-  // |classifications| and |force_dim| are used to style the text.
-  std::unique_ptr<gfx::RenderText> CreateClassifiedRenderText(
-      const base::string16& text,
-      const ACMatchClassifications& classifications,
-      bool force_dim) const;
-
-  const gfx::Rect& text_bounds() const { return text_bounds_; }
 
   gfx::Image GetIcon() const;
 
@@ -139,37 +87,8 @@ class OmniboxResultView : public views::View,
   // the keyword match will hide even the icon of the regular match.
   bool ShowOnlyKeywordMatch() const;
 
-  // Initializes |contents_rendertext_| if it is NULL.
-  void InitContentsRenderTextIfNecessary() const;
-
-  // Returns the font to use for the description section of answer suggestions.
-  const gfx::FontList& GetAnswerFont() const;
-
-  // Returns the height of the the description section of answer suggestions.
-  int GetAnswerHeight() const;
-
   // Returns the margin that should appear at the top and bottom of the result.
   int GetVerticalMargin() const;
-
-  // Creates a RenderText with text and styling from the image line.
-  std::unique_ptr<gfx::RenderText> CreateAnswerText(
-      const SuggestionAnswer::ImageLine& line,
-      const gfx::FontList& font_list) const;
-
-  // Adds |text| to |destination|.  |text_type| is an index into the
-  // kTextStyles constant defined in the .cc file and is used to style the text,
-  // including setting the font size, color, and baseline style.  See the
-  // TextStyle struct in the .cc file for more.
-  void AppendAnswerText(gfx::RenderText* destination,
-                        const base::string16& text,
-                        int text_type) const;
-
-  // AppendAnswerText will break up the |text| into bold and non-bold pieces
-  // and pass each to this helper with the correct |is_bold| value.
-  void AppendAnswerTextHelper(gfx::RenderText* destination,
-                              const base::string16& text,
-                              int text_type,
-                              bool is_bold) const;
 
   // Sets the hovered state of this result.
   void SetHovered(bool hovered);
@@ -183,6 +102,15 @@ class OmniboxResultView : public views::View,
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
 
+  std::unique_ptr<ClassifiedTextView> CreateClassifiedTextView(
+      const base::string16& text,
+      const ACMatchClassifications& classifications,
+      OmniboxResultColor::HighlightState state);
+
+  std::unique_ptr<ClassifiedTextView> CreateClassifiedTextView(
+      const SuggestionAnswer::ImageLine& line,
+      OmniboxResultColor::HighlightState state);
+
   // This row's model and model index.
   OmniboxPopupContentsView* model_;
   size_t model_index_;
@@ -194,13 +122,15 @@ class OmniboxResultView : public views::View,
   const gfx::FontList font_list_;
   int font_height_;
 
+#if 0
   // A context used for mirroring regions.
   class MirroringContext;
   std::unique_ptr<MirroringContext> mirroring_context_;
+#endif
 
   AutocompleteMatch match_;
 
-  gfx::Rect text_bounds_;
+  gfx::Rect answer_icon_bounds_;
   gfx::Rect icon_bounds_;
 
   gfx::Rect keyword_text_bounds_;
@@ -211,15 +141,19 @@ class OmniboxResultView : public views::View,
   // If the answer has an icon, cache the image.
   gfx::ImageSkia answer_image_;
 
+  mutable std::unique_ptr<ClassifiedTextView> content_view_;
+  mutable std::unique_ptr<ClassifiedTextView> description_view_;
+  mutable std::unique_ptr<ClassifiedTextView> separator_view_;
+  mutable std::unique_ptr<ClassifiedTextView> keyword_content_view_;
+  mutable std::unique_ptr<ClassifiedTextView> keyword_description_view_;
+
   // We preserve these RenderTexts so that we won't recreate them on every call
   // to OnPaint().
-  mutable std::unique_ptr<gfx::RenderText> contents_rendertext_;
-  mutable std::unique_ptr<gfx::RenderText> description_rendertext_;
   mutable std::unique_ptr<gfx::RenderText> separator_rendertext_;
-  mutable std::unique_ptr<gfx::RenderText> keyword_contents_rendertext_;
-  mutable std::unique_ptr<gfx::RenderText> keyword_description_rendertext_;
 
   mutable int separator_width_;
+
+  int outer_height_;
 
   DISALLOW_COPY_AND_ASSIGN(OmniboxResultView);
 };
