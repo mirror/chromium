@@ -233,6 +233,30 @@
       "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94383632_c9a7a260",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 14
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2018-02-07T10:17:47Z",
+      "side": 1,
+      "message": "Yes, we have official builder here.\nhttps://ci.chromium.org/p/chromium/g/chromium.chrome/console\nwhich has is_chrome_branded \u003d true and is_official_build \u003d true in args.gn\n\nI chose is_chrome_branded because is_official_build is flag for enabling some additional optimization in compile.\n\nIf this behavior difference is not acceptable, I reconsider the other way.",
+      "parentUuid": "de656e76_9a18129d",
+      "range": {
+        "startLine": 2096,
+        "startChar": 44,
+        "endLine": 2096,
+        "endChar": 76
+      },
+      "revId": "c4ac8688ded7e0d2461ff0091d8a3ea59e163cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
