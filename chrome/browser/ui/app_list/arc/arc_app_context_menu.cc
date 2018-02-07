@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/app_list/arc/arc_app_context_menu.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_context_menu_delegate.h"
@@ -100,9 +102,17 @@ void ArcAppContextMenu::ShowPackageInfo() {
             << app_id() << ".";
     return;
   }
-  if (arc::ShowPackageInfo(app_info->package_name,
-                           arc::mojom::ShowPackageInfoPage::MAIN,
-                           controller()->GetAppListDisplayId())) {
-    controller()->DismissView();
-  }
+  controller()->GetAppListDisplayId(base::BindOnce(
+      [](AppListControllerDelegate* controller, const std::string& package_name,
+         int64_t display_id) {
+        if (!controller)
+          return;
+
+        if (arc::ShowPackageInfo(package_name,
+                                 arc::mojom::ShowPackageInfoPage::MAIN,
+                                 display_id)) {
+          controller->DismissView();
+        }
+      },
+      controller(), app_info->package_name));
 }

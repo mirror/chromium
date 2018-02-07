@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ash/public/cpp/shelf_types.h"
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
@@ -22,9 +23,12 @@ class AppListControllerDelegateAsh : public AppListControllerDelegate {
   ~AppListControllerDelegateAsh() override;
 
   // AppListControllerDelegate overrides:
-  int64_t GetAppListDisplayId() override;
   void DismissView() override;
-  gfx::Rect GetAppInfoDialogBounds() override;
+  using GetAppListDisplayIdCallback = base::OnceCallback<void(int64_t)>;
+  void GetAppListDisplayId(GetAppListDisplayIdCallback callback) override;
+  using GetAppInfoDialogBoundsCallback =
+      base::OnceCallback<void(const gfx::Rect&)>;
+  void GetAppInfoDialogBounds(GetAppInfoDialogBoundsCallback callback) override;
   bool IsAppPinned(const std::string& app_id) override;
   bool IsAppOpen(const std::string& app_id) const override;
   void PinApp(const std::string& app_id) override;

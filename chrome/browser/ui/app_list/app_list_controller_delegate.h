@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "base/memory/weak_ptr.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "extensions/common/constants.h"
 #include "ui/base/page_transition_types.h"
@@ -29,7 +30,8 @@ class Rect;
 // Interface to allow the view delegate to call out to whatever is controlling
 // the app list. This will have different implementations for different
 // platforms.
-class AppListControllerDelegate {
+class AppListControllerDelegate
+    : public base::SupportsWeakPtr<AppListControllerDelegate> {
  public:
   // Indicates the source of an app list activation, for tracking purposes.
   enum AppListSource {
@@ -54,13 +56,16 @@ class AppListControllerDelegate {
   // Handles the view being closed.
   virtual void ViewClosing();
 
+  // Gets display ID of app list window.
+  using GetAppListDisplayIdCallback = base::OnceCallback<void(int64_t)>;
+  virtual void GetAppListDisplayId(GetAppListDisplayIdCallback callback) = 0;
+
   // Gets the content bounds of the app info dialog of the app list in the
   // screen coordinates. On platforms that do not use views, this returns a 0x0
   // rectangle.
-  virtual gfx::Rect GetAppInfoDialogBounds();
-
-  // Gets display ID of app list window.
-  virtual int64_t GetAppListDisplayId() = 0;
+  using GetAppInfoDialogBoundsCallback =
+      base::OnceCallback<void(const gfx::Rect&)>;
+  virtual void GetAppInfoDialogBounds(GetAppInfoDialogBoundsCallback callback);
 
   // Control of pinning apps.
   virtual bool IsAppPinned(const std::string& app_id) = 0;

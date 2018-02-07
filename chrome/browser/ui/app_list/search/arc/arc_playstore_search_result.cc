@@ -216,14 +216,18 @@ std::unique_ptr<SearchResult> ArcPlayStoreSearchResult::Duplicate() const {
 }
 
 void ArcPlayStoreSearchResult::Open(int event_flags) {
-  if (!LaunchIntent(install_intent_uri().value(),
-                    list_controller_->GetAppListDisplayId())) {
-    return;
-  }
+  list_controller_->GetAppListDisplayId(base::BindOnce(
+      [](const std::string& install_intent_uri, bool is_instant_app,
+         int64_t display_id) {
+        if (!LaunchIntent(install_intent_uri, display_id)) {
+          return;
+        }
 
-  // Open the installing page of this result in Play Store.
-  RecordHistogram(is_instant_app() ? PLAY_STORE_INSTANT_APP
-                                   : PLAY_STORE_UNINSTALLED_APP);
+        // Open the installing page of this result in Play Store.
+        RecordHistogram(is_instant_app ? PLAY_STORE_INSTANT_APP
+                                       : PLAY_STORE_UNINSTALLED_APP);
+      },
+      install_intent_uri().value(), is_instant_app()));
 }
 
 ui::MenuModel* ArcPlayStoreSearchResult::GetContextMenuModel() {

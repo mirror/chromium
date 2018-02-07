@@ -50,14 +50,21 @@ const char* ArcAppItem::GetItemType() const {
 }
 
 void ArcAppItem::Activate(int event_flags) {
-  if (!arc::LaunchApp(profile(), id(), event_flags,
-                      GetController()->GetAppListDisplayId())) {
-    return;
-  }
+  GetController()->GetAppListDisplayId(base::BindOnce(
+      [](AppListControllerDelegate* controller, Profile* profile,
+         const std::string& app_id, int event_flags, int64_t display_id) {
+        if (!controller || !profile)
+          return;
 
-  // Manually close app_list view because focus is not changed on ARC app start,
-  // and current view remains active.
-  GetController()->DismissView();
+        if (!arc::LaunchApp(profile, app_id, event_flags, display_id)) {
+          return;
+        }
+
+        // Manually close app_list view because focus is not changed on ARC app
+        // start, and current view remains active.
+        controller->DismissView();
+      },
+      GetController(), profile(), id(), event_flags));
 }
 
 void ArcAppItem::ExecuteLaunchCommand(int event_flags) {

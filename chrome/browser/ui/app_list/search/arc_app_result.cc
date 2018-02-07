@@ -48,14 +48,21 @@ void ArcAppResult::Open(int event_flags) {
   if (display_type() != DISPLAY_RECOMMENDATION)
     RecordHistogram(APP_SEARCH_RESULT);
 
-  if (!arc::LaunchApp(profile(), app_id(), event_flags,
-                      controller()->GetAppListDisplayId())) {
-    return;
-  }
+  controller()->GetAppListDisplayId(base::BindOnce(
+      [](AppListControllerDelegate* controller, Profile* profile,
+         const std::string& app_id, int event_flags, int64_t display_id) {
+        if (!controller || !profile)
+          return;
 
-  // Manually close app_list view because focus is not changed on ARC app start,
-  // and current view remains active.
-  controller()->DismissView();
+        if (!arc::LaunchApp(profile, app_id, event_flags, display_id)) {
+          return;
+        }
+
+        // Manually close app_list view because focus is not changed on ARC app
+        // start, and current view remains active.
+        controller->DismissView();
+      },
+      controller(), profile(), app_id(), event_flags));
 }
 
 std::unique_ptr<SearchResult> ArcAppResult::Duplicate() const {
