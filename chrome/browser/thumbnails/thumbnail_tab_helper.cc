@@ -303,6 +303,9 @@ void ThumbnailTabHelper::StartThumbnailCaptureIfNecessary(
       &thumbnailing_context_->requested_copy_size);
   copy_from_surface_start_time_ = base::TimeTicks::Now();
   waiting_for_capture_ = true;
+  //  LOG(ERROR) << "copy_rect " << copy_rect.ToString() << " request_size: " <<
+  //  thumbnailing_context_->requested_copy_size.ToString();
+
   view->CopyFromSurface(copy_rect, thumbnailing_context_->requested_copy_size,
                         base::Bind(&ThumbnailTabHelper::ProcessCapturedBitmap,
                                    weak_factory_.GetWeakPtr(), trigger),
@@ -312,11 +315,15 @@ void ThumbnailTabHelper::StartThumbnailCaptureIfNecessary(
 void ThumbnailTabHelper::ProcessCapturedBitmap(
     TriggerReason trigger,
     const SkBitmap& bitmap,
-    content::ReadbackResponse response) {
+    content::ReadbackResponse response,
+    bool at_top) {
   // If |waiting_for_capture_| is false, that means something happened in the
   // meantime which makes the captured image unsafe to use.
   bool was_canceled = !waiting_for_capture_;
   waiting_for_capture_ = false;
+  LOG(ERROR) << "--------------------------at top is: " << at_top;
+  LOG(ERROR) << "++++++++++++++++++++++++ at top is: "
+             << thumbnailing_context_->score.at_top;
 
   base::TimeDelta copy_from_surface_time =
       base::TimeTicks::Now() - copy_from_surface_start_time_;

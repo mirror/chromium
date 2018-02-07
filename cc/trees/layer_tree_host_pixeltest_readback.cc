@@ -134,7 +134,7 @@ class LayerTreeHostReadbackPixelTest
     release_callback->Run(gpu::SyncToken(), false);
 
     ReadbackResultAsBitmap(std::make_unique<viz::CopyOutputSkBitmapResult>(
-        result->rect(), bitmap));
+        result->rect(), bitmap, result->at_top()));
   }
 
   ReadbackType readback_type_;

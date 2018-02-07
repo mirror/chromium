@@ -155,7 +155,8 @@ class PageHandler : public DevToolsDomainHandler,
   void InnerSwapCompositorFrame();
   void ScreencastFrameCaptured(viz::CompositorFrameMetadata metadata,
                                const SkBitmap& bitmap,
-                               ReadbackResponse response);
+                               ReadbackResponse response,
+                               bool at_top);
   void ScreencastFrameEncoded(viz::CompositorFrameMetadata metadata,
                               const base::Time& timestamp,
                               const std::string& data);

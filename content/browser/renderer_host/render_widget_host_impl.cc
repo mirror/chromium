@@ -2546,7 +2546,8 @@ void RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived(
     int snapshot_id,
     int retry_count,
     const SkBitmap& bitmap,
-    ReadbackResponse response) {
+    ReadbackResponse response,
+    bool at_top) {
   static const int kMaxRetries = 5;
   if (response != READBACK_SUCCESS && retry_count < kMaxRetries) {
     GetView()->CopyFromSurface(

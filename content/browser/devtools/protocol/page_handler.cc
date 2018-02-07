@@ -857,7 +857,8 @@ void PageHandler::InnerSwapCompositorFrame() {
 
 void PageHandler::ScreencastFrameCaptured(viz::CompositorFrameMetadata metadata,
                                           const SkBitmap& bitmap,
-                                          ReadbackResponse response) {
+                                          ReadbackResponse response,
+                                          bool at_top) {
   if (response != READBACK_SUCCESS) {
     if (capture_retry_count_) {
       --capture_retry_count_;
