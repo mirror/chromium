@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <sys/syscall.h>
 #include <unistd.h>
+#include <type_traits>
 
 #include "base/logging.h"
 #include "base/macros.h"
@@ -89,7 +90,8 @@ class DirReaderLinux {
 
  private:
   const int fd_;
-  unsigned char buf_[512];
+  unsigned char buf_[512]
+      __attribute__((aligned(std::alignment_of<linux_dirent>())));
   size_t offset_;
   size_t size_;
 
