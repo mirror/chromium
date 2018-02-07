@@ -110,4 +110,10 @@ void EventCountView::RecordEvent(ui::Event* event) {
     event->SetHandled();
 }
 
+ResizeAwareParentView::ResizeAwareParentView() {}
+
+void ResizeAwareParentView::ChildPreferredSizeChanged(View* child) {
+  Layout();
+}
+
 }  // namespace views

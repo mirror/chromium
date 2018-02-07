@@ -94,7 +94,7 @@ void ExtensionActionPlatformDelegateViews::CloseOverflowMenu() {
       BrowserView::GetBrowserViewForBrowser(controller_->browser())
           ->toolbar()
           ->app_menu_button();
-  if (app_menu_button->IsMenuShowing())
+  if (app_menu_button && app_menu_button->IsMenuShowing())
     app_menu_button->CloseMenu();
 }
 
