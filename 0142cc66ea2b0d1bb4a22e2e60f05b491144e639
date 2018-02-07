@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6510f1f1_9cff2279",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/4944770-2.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-02-07T19:22:59Z",
+      "side": 0,
+      "message": "Funny that we changed the behavior but didn\u0027t change the description text...",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 67
+      },
+      "revId": "0142cc66ea2b0d1bb4a22e2e60f05b491144e639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
