@@ -22,6 +22,30 @@
       "revId": "1324ea47d5870af00fccd488d06bb1bf68d00947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ee0f4f_7003e98c",
+        "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-07T17:35:00Z",
+      "side": 1,
+      "message": "yes, this was accidental... good catch",
+      "parentUuid": "96899dbc_8f44b12c",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "1324ea47d5870af00fccd488d06bb1bf68d00947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
