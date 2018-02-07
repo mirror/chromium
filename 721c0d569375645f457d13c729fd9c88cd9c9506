@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ea3670_beaec182",
+        "filename": "chrome/browser/resources/md_extensions/options_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T02:20:11Z",
+      "side": 1,
+      "message": "why the return?",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "721c0d569375645f457d13c729fd9c88cd9c9506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
