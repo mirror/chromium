@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99a153f5_273b480c",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-02-07T19:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebc9122_968b088f",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 29
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a44f9af3_55cdd22b",
         "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "22fcbe5c_4ac384b8",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-02-07T19:50:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7c2f8184_82db9724",
+      "range": {
+        "startLine": 639,
+        "startChar": 21,
+        "endLine": 640,
+        "endChar": 69
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e12911c_6f98e65f",
         "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
         "patchSetId": 2
@@ -106,6 +154,30 @@
       "writtenOn": "2018-02-06T17:28:46Z",
       "side": 1,
       "message": "So this code stores the total time duration during which the device was non-idle for each day bucket IIUC.\nHowever, we always overwrite the user - if N\u003e1 users were using a device on a day, this may give misleading results. Are we fine with that?",
+      "range": {
+        "startLine": 690,
+        "startChar": 4,
+        "endLine": 690,
+        "endChar": 59
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83364b31_ab24c7ab",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-02-07T19:50:01Z",
+      "side": 1,
+      "message": "Changed to aggregate by day by user.",
+      "parentUuid": "7e12911c_6f98e65f",
       "range": {
         "startLine": 690,
         "startChar": 4,
@@ -138,6 +210,30 @@
       "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85889bb_53eb72c0",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2018-02-07T19:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df21875d_8f5705e7",
+      "range": {
+        "startLine": 715,
+        "startChar": 8,
+        "endLine": 715,
+        "endChar": 52
+      },
+      "revId": "072fb07bc4e0499dea1a063dbe7883a8d2803bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
