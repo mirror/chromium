@@ -574,24 +574,6 @@ TEST_F(ProcessUtilTest, InheritSpecifiedHandles) {
 
 namespace {
 
-// Returns the maximum number of files that a process can have open.
-// Returns 0 on error.
-int GetMaxFilesOpenInProcess() {
-  struct rlimit rlim;
-  if (getrlimit(RLIMIT_NOFILE, &rlim) != 0) {
-    return 0;
-  }
-
-  // rlim_t is a uint64_t - clip to maxint. We do this since FD #s are ints
-  // which are all 32 bits on the supported platforms.
-  rlim_t max_int = static_cast<rlim_t>(std::numeric_limits<int32_t>::max());
-  if (rlim.rlim_cur > max_int) {
-    return max_int;
-  }
-
-  return rlim.rlim_cur;
-}
-
 const int kChildPipe = 20;  // FD # for write end of pipe in child process.
 
 #if defined(OS_MACOSX)
@@ -663,7 +645,7 @@ MULTIPROCESS_TEST_MAIN(ProcessUtilsLeakFDChildProcess) {
   // number out to a pipe connected to the parent.
   int num_open_files = 0;
   int write_pipe = kChildPipe;
-  int max_files = GetMaxFilesOpenInProcess();
+  int max_files = GetMaxFds();
   for (int i = STDERR_FILENO + 1; i < max_files; i++) {
 #if defined(OS_MACOSX)
     // Ignore guarded or invalid file descriptors.
