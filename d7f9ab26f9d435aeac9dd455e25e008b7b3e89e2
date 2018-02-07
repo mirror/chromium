@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bd62335_01d5267c",
+        "filename": "chrome/browser/data_reduction_proxy_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-07T21:47:01Z",
+      "side": 1,
+      "message": "The DataReductionProxyResourceThrottle is only defined on android. And the only purpose of this check (for me) is to check whether the DataReductionProxyResourceThrottle takes effect.\n\nI changed the name to IsDataReductionProxyResourceThrottleEnabledForUrl()? Does that make sense?\n\nThanks!",
+      "parentUuid": "a8f953c5_e234757a",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5003b8bd_cf02f8fb",
         "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T21:26:00Z",
       "side": 1,
       "message": "This doesn\u0027t seem safe because there are plenty of reasons that the Data Reduction Proxy logic may later decide not to send a request through Google servers and we shouldn\u0027t let the fact that DRP is enabled let all non-cryptographic URLs past Safe Browsing.",
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29d3eff_4e9c3228",
+        "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-07T21:47:01Z",
+      "side": 1,
+      "message": "This is consistent with the current logic for ResourceThrottle: if the data reduction proxy is enabled, we skip adding the safe browsing resource throttle:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc?rcl\u003d425707a6dd77d641fe984743e8db47944579b417\u0026l\u003d670",
+      "parentUuid": "5003b8bd_cf02f8fb",
       "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7c2831_268892a4",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-02-07T21:47:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c3e4c4_b42bbaff",
+      "range": {
+        "startLine": 866,
+        "startChar": 44,
+        "endLine": 867,
+        "endChar": 16
+      },
+      "revId": "d7f9ab26f9d435aeac9dd455e25e008b7b3e89e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
