@@ -1,0 +1,347 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d66285_3ecbd543",
+        "filename": "media/gpu/d3d11_mocks.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "It might make sense to redefine something like to save some space and make the code slightly easier to read (IMHO):\n\nMOCK_STD_METHOD1",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b4b234_ba8bb2f1",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: Is this formatted by clang format? Just FWIW, it seems most DEFINE_GUID in the code base use a different style. But those could be old code.\n\nhttps://cs.chromium.org/search/?q\u003dDEFINE_GUID",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe1eff6_3de839dc",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: add empty line between two methods.",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d057d26_6e29c565",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "Do you need \"\u0026\"? e.g. \u0026D3D11CreateDevice",
+      "range": {
+        "startLine": 39,
+        "startChar": 46,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8cea46_48873838",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "I think a CdmProxy should only be initialized once. If that\u0027s not clear, we should fix cdm_proxy.h.\n\nWith that, you can add a NOTREACHED() here to catch contract violations.",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee793fc_3ce0d96e",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "It makes more sense to me to have a Protocol::kNone, or Protocol::kUnknown for the failure case. I am also hitting this a lot in my code. WDYT?",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 78
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd95a9fc_bb7a3c7c",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "DLOG, as in most cases nobody will look at these logs in release mode. If we are really interested in this data, we should report them to UMA, or send them to about://gpu-internals.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 7
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3dd052_acd88024",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: do we care about hresult here?",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411d20b0_44dec665",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: \"status\" seems not needed since it\u0027s actually a \"result\". How about just:\n\n\"Failed to get ID3D11VideoContext: \" \u003c\u003c hresult",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 59
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c57222_8dee622b",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "Is it possible that you have two sessions (two different |crypto_session_id|s) with the same |key_id|?",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1da79ff_8dbff1b0",
+        "filename": "media/gpu/intel_csme_cdm_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "Is it possible that this will override an existing entry (I guess so)? Maybe add a comment to clarify it a bit?",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27f4fa7_6639b39c",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "I think we only use this ordering for implementations and tests, not subclasses.",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b055183b_69f11c3d",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "As discussed offline, media/ layer should not know about Widevine, so we need to pass the Widevine stream ID into this class. To do that, we need to define the Widevine stream ID in widevine_cdm_common.h.\n\nI\u0027ll also provide helper functions to wrap GetContentDecryptionCaps and put it under media/cdm, so that this class, or chrome/browser, or chrome/gpu code can all call it.",
+      "range": {
+        "startLine": 23,
+        "startChar": 23,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfe4dbf_4ce8508c",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: Provide a comment to briefly introduce ComPtr, so people would know that this is kinda like a ref-counted pointer:\n\nhttps://msdn.microsoft.com/en-us/library/br244983.aspx\n\nCreates a smart pointer type that represents the interface specified by the template parameter. ComPtr automatically maintains a reference count for the underlying interface pointer and releases the interface when the reference count goes to zero.",
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a0355f_a3b0ea59",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "nit: You can use alias template to typedef Microsoft::WRL::ComPtr into a shorter name like ComPtr:\n\nhttp://en.cppreference.com/w/cpp/language/type_alias",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf49b8c_416c58ce",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "s/unnecessary/they are not needed/",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9a7ca1_354bd25c",
+        "filename": "media/gpu/intel_csme_cdm_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-02-07T20:53:00Z",
+      "side": 1,
+      "message": "This whole class is about CSME. Then do we need \"csme\" here? Will |crypto_session_id| work as well? Or do we want to differentiate this with \"media crypto session\"?",
+      "range": {
+        "startLine": 83,
+        "startChar": 11,
+        "endLine": 83,
+        "endChar": 15
+      },
+      "revId": "dced593d4369f98497616bba1367e37cdba3f8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
