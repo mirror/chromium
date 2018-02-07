@@ -46,6 +46,30 @@
       "revId": "8805151b1210031046088b742a3a3a489a980439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349c68b6_15527135",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/MonochromeApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-02-07T18:33:57Z",
+      "side": 1,
+      "message": "Tip of my hat...thank you for the explanation.",
+      "parentUuid": "9a4f4a50_ff39f46f",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "8805151b1210031046088b742a3a3a489a980439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
