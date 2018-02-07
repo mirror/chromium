@@ -101,13 +101,28 @@ size_t FindSubdomainAnchoredSubpattern(base::StringPiece url,
   const bool is_fuzzy =
       (subpattern.find(kSeparatorPlaceholder) != base::StringPiece::npos);
 
-  for (size_t position = 0; position <= url.size(); ++position) {
-    position = is_fuzzy ? FindFuzzy(url, subpattern, position)
-                        : url.find(subpattern, position);
+  for (size_t position = static_cast<size_t>(host.begin);
+       position <= static_cast<size_t>(host.end()); ++position) {
+    // Enforce as a loop precondition that we are always anchored at a
+    // sub-domain before calling find. This is to reduce the number of potential
+    // searches for |subpattern|.
+    DCHECK(IsSubdomainAnchored(url, host, position));
+
+    // Any match found after the end of the host will be discarded, so just
+    // avoid searching there for the subpattern to begin with.
+    base::StringPiece sub_url = url.substr(0, host.end() + subpattern.length());
+    position = is_fuzzy ? FindFuzzy(sub_url, subpattern, position)
+                        : sub_url.find(subpattern, position);
     if (position == base::StringPiece::npos ||
         IsSubdomainAnchored(url, host, position)) {
       return position;
     }
+
+    // Enforce the loop precondition. This skips |position| to the next '.',
+    // which the loop itself increments to the anchored sub-domain.
+    position = url.find('.', position + 1);
+    if (position == base::StringPiece::npos)
+      break;
   }
   return base::StringPiece::npos;
 }
