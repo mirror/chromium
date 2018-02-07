@@ -17,7 +17,7 @@ common_packages="\
 atk1.0 \
 dee \
 freetype \
-libappindicator1 \
+libappindicator3-1 \
 libasound2 \
 libatk-bridge2.0-0 \
 libatspi2.0-0 \
