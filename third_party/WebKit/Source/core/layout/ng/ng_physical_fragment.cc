@@ -7,6 +7,7 @@
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/ng/geometry/ng_border_edges.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
+#include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -284,6 +285,40 @@ void NGPhysicalFragment::PropagateContentsVisualRect(
   NGPhysicalOffsetRect visual_rect = VisualRectWithContents();
   visual_rect.offset += Offset();
   parent_visual_rect->Unite(visual_rect);
+}
+
+bool NGPhysicalFragment::IsAfterLineWrap(
+    const NGPhysicalLineBoxFragment& current_line,
+    const NGPhysicalLineBoxFragment* last_line) const {
+  // TODO(xiaochengh): We should set a flag in the inline layout algorithm,
+  // instead of trying to recover the information after layout. Besides,
+  // we need to decide what's the correct behaviro with mixed BiDi.
+
+  if (!last_line)
+    return false;
+  // A fragment after line wrap must be the first logical leaf in its line.
+  if (this != current_line.FirstLogicalLeaf())
+    return false;
+  DCHECK(last_line->BreakToken());
+  DCHECK(last_line->BreakToken()->IsInlineType());
+  DCHECK(!last_line->BreakToken()->IsFinished());
+  return !ToNGInlineBreakToken(last_line->BreakToken())->IsForcedBreak();
+}
+
+bool NGPhysicalFragment::IsBeforeLineWrap(
+    const NGPhysicalLineBoxFragment& current_line) const {
+  // TODO(xiaochengh): We should set a flag in the inline layout algorithm,
+  // instead of trying to recover the information after layout. Besides,
+  // we need to decide what's the correct behaviro with mixed BiDi.
+
+  // A fragment before line wrap must be the last logical leaf in its line.
+  if (this != current_line.LastLogicalLeaf())
+    return false;
+  DCHECK(current_line.BreakToken());
+  DCHECK(current_line.BreakToken()->IsInlineType());
+  const NGInlineBreakToken& break_token =
+      ToNGInlineBreakToken(*current_line.BreakToken());
+  return !break_token.IsFinished() && !break_token.IsForcedBreak();
 }
 
 scoped_refptr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset()
