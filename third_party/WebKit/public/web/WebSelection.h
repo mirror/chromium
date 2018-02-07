@@ -10,17 +10,14 @@
 
 namespace blink {
 
-struct CompositedSelection;
-
 // The active selection region, containing compositing data for the selection
 // end points as well as metadata for the selection region.
 class BLINK_EXPORT WebSelection {
  public:
   enum SelectionType { kNoSelection, kCaretSelection, kRangeSelection };
 
-#if INSIDE_BLINK
-  explicit WebSelection(const CompositedSelection&);
-#endif
+  WebSelection();
+  WebSelection(SelectionType, WebSelectionBound start, WebSelectionBound end);
   WebSelection(const WebSelection&);
 
   const WebSelectionBound& Start() const { return start_; }

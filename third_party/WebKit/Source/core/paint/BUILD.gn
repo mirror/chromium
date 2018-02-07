@@ -224,7 +224,6 @@ blink_core_sources("paint") {
     "ViewPainter.h",
     "compositing/CompositedLayerMapping.cpp",
     "compositing/CompositedLayerMapping.h",
-    "compositing/CompositedSelection.h",
     "compositing/CompositedSelectionBound.h",
     "compositing/CompositingInputsUpdater.cpp",
     "compositing/CompositingInputsUpdater.h",

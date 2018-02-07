@@ -10,7 +10,6 @@
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/frame/Settings.h"
 #include "core/html/forms/HTMLInputElement.h"
-#include "core/paint/compositing/CompositedSelection.h"
 
 namespace blink {
 
@@ -42,10 +41,10 @@ TEST_F(RenderedPositionTest, MAYBE_ComputeCompositedSelection) {
       SetSelectionOptions::Builder().SetShouldShowHandle(true).Build());
   UpdateAllLifecyclePhases();
 
-  const CompositedSelection& composited_selection =
-      RenderedPosition::ComputeCompositedSelection(Selection());
-  EXPECT_FALSE(composited_selection.start.hidden);
-  EXPECT_TRUE(composited_selection.end.hidden);
+  const WebSelection& web_selection =
+      RenderedPosition::ComputeWebSelection(Selection());
+  EXPECT_FALSE(web_selection.Start().hidden);
+  EXPECT_TRUE(web_selection.end().hidden);
 }
 
 }  // namespace blink

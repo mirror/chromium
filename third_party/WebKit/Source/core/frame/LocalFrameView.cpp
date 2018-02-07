@@ -89,7 +89,6 @@
 #include "core/paint/PaintTiming.h"
 #include "core/paint/PrePaintTreeWalk.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
-#include "core/paint/compositing/CompositedSelection.h"
 #include "core/paint/compositing/CompositingInputsUpdater.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/probe/CoreProbes.h"
@@ -2072,11 +2071,11 @@ void LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
   }
 }
 
-static CompositedSelection ComputeCompositedSelection(LocalFrame& frame) {
+static WebSelection ComputeWebSelection(LocalFrame& frame) {
   if (!frame.View() || frame.View()->ShouldThrottleRendering())
-    return {};
+    return WebSelection();
 
-  return RenderedPosition::ComputeCompositedSelection(frame.Selection());
+  return RenderedPosition::ComputeWebSelection(frame.Selection());
 }
 
 void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
@@ -2096,10 +2095,9 @@ void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
           : nullptr;
 
   if (local_frame) {
-    const CompositedSelection& selection =
-        ComputeCompositedSelection(*local_frame);
-    if (selection.type != kNoSelection) {
-      page->GetChromeClient().UpdateCompositedSelection(local_frame, selection);
+    const WebSelection& selection = ComputeWebSelection(*local_frame);
+    if (!selection.IsNone()) {
+      page->GetChromeClient().UpdateWebSelection(local_frame, selection);
       return;
     }
   }

@@ -36,12 +36,12 @@
 #include "core/layout/line/InlineBox.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"
+#include "public/web/WebSelection.h"
 
 namespace blink {
 
 class FrameSelection;
 class LayoutObject;
-struct CompositedSelection;
 
 class CORE_EXPORT RenderedPosition {
   STACK_ALLOCATED();
@@ -85,7 +85,7 @@ class CORE_EXPORT RenderedPosition {
 
   // TODO(editing-dev): This function doesn't use RenderedPosition
   // instance anymore. Consider moving.
-  static CompositedSelection ComputeCompositedSelection(const FrameSelection&);
+  static WebSelection ComputeWebSelection(const FrameSelection&);
 
  private:
   bool operator==(const RenderedPosition&) const { return false; }
