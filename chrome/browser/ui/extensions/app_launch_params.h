@@ -19,6 +19,10 @@
 
 class Profile;
 
+namespace content {
+class RenderFrameHost;
+}
+
 namespace extensions {
 class Extension;
 }
@@ -78,6 +82,8 @@ struct AppLaunchParams {
   // display::kInvalidDisplayId means that the display does not exist or is not
   // set.
   int64_t display_id;
+
+  content::RenderFrameHost* opener;
 };
 
 // Helper to create AppLaunchParams using extensions::GetLaunchContainer with

@@ -180,6 +180,49 @@ void ExecuteContextMenuLinkCommandAndWait(content::WebContents* web_contents,
   observer->WaitForNavigationFinished();
 }
 
+// Calls window.open() with |target_url| on the main frame of |web_contents|.
+// Returns once the new window has navigated to |target_url|.
+void WindowOpenAndWait(content::WebContents* web_contents,
+                       const GURL& target_url) {
+  auto observer = GetTestNavigationObserver(target_url);
+  const std::string script = base::StringPrintf(
+      "(() => {"
+      "window.open('%s');"
+      "})();",
+      target_url.spec().c_str());
+  ASSERT_TRUE(content::ExecuteScript(web_contents, script));
+  observer->WaitForNavigationFinished();
+}
+
+// Calls window.open() with |target_url| on the main frame of |web_contents|.
+// Returns true if the resulting child window is allowed to access members of
+// its opener.
+bool CanChildWindowAccessOpener(content::WebContents* web_contents,
+                                const GURL& target_url) {
+  WindowOpenAndWait(web_contents, target_url);
+
+  content::WebContents* new_contents =
+      chrome::FindLastActive()->tab_strip_model()->GetActiveWebContents();
+
+  const std::string script = base::StringPrintf(
+      "(() => {"
+      "try {"
+      "if (window.opener.location.href === '%s')"
+      "window.domAutomationController.send(true);"
+      "} catch (e) {"
+      "if (e.name === 'SecurityError')"
+      "window.domAutomationController.send(false);"
+      "}"
+      "})();",
+      web_contents->GetLastCommittedURL().spec().c_str());
+
+  bool child_can_access;
+  CHECK(content::ExecuteScriptAndExtractBool(new_contents, script,
+                                             &child_can_access));
+
+  return child_can_access;
+}
+
 // Creates an <a> element, sets its href and target to |link_url| and |target|
 // respectively, adds it to the DOM, and clicks on it. Returns once |target_url|
 // has loaded.
@@ -289,6 +332,7 @@ const char kLaunchingPageHost[] = "launching-page.com";
 const char kLaunchingPagePath[] = "/index.html";
 
 const char kAppUrlHost[]        = "app.com";
+const char kOtherAppUrlHost[]   = "other-app.com";
 const char kAppScopePath[]      = "/in_scope/";
 const char kAppUrlPath[]        = "/in_scope/index.html";
 const char kInScopeUrlPath[]    = "/in_scope/other.html";
@@ -325,18 +369,28 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
   }
 
   void InstallTestBookmarkApp() {
-    ASSERT_TRUE(embedded_test_server()->Start());
+    test_bookmark_app_ = InstallTestBookmarkApp(kAppUrlHost);
+  }
+
+  void InstallOtherTestBookmarkApp() {
+    other_test_bookmark_app_ = InstallTestBookmarkApp(kOtherAppUrlHost);
+  }
+
+  const Extension* InstallTestBookmarkApp(const std::string& app_host) {
+    if (!embedded_test_server()->Started()) {
+      EXPECT_TRUE(embedded_test_server()->Start());
+    }
 
     WebApplicationInfo web_app_info;
     web_app_info.app_url =
-        embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+        embedded_test_server()->GetURL(app_host, kAppUrlPath);
     web_app_info.scope =
-        embedded_test_server()->GetURL(kAppUrlHost, kAppScopePath);
+        embedded_test_server()->GetURL(app_host, kAppScopePath);
     web_app_info.title = base::UTF8ToUTF16("Test app");
     web_app_info.description = base::UTF8ToUTF16("Test description");
     web_app_info.open_as_window = true;
 
-    test_bookmark_app_ = InstallBookmarkApp(web_app_info);
+    return InstallBookmarkApp(web_app_info);
   }
 
   // Installs a Bookmark App that immediately redirects to a URL with
@@ -375,6 +429,16 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
 
   // Navigates the active tab to the launching page.
   void NavigateToLaunchingPage() { NavigateToLaunchingPage(browser()); }
+
+  // Navigates the browser's current active tab to the test app's URL. It does
+  // not open a new app window.
+  void NavigateToTestAppURL() {
+    const GURL app_url =
+        embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+    NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_TYPED);
+    ASSERT_TRUE(TestTabActionDoesNotOpenAppWindow(
+        app_url, base::BindOnce(&NavigateToURLWrapper, &params)));
+  }
 
   // Checks that, after running |action|, the initial tab's window doesn't have
   // any new tabs, the initial tab did not navigate, and that no new windows
@@ -471,6 +535,22 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
                               ->GetLastCommittedURL());
   }
 
+  // Same as TestTabActionOpensAppWindow(), but also tests that the newly opened
+  // app window has an opener.
+  void TestTabActionOpensAppWindowWithOpener(const GURL& target_url,
+                                             base::OnceClosure action) {
+    TestTabActionOpensAppWindow(target_url, std::move(action));
+
+    content::WebContents* app_web_contents =
+        chrome::FindLastActive()->tab_strip_model()->GetActiveWebContents();
+
+    bool has_opener;
+    ASSERT_TRUE(content::ExecuteScriptAndExtractBool(
+        app_web_contents,
+        "window.domAutomationController.send(!!window.opener);", &has_opener));
+    EXPECT_TRUE(has_opener);
+  }
+
   // Checks that no new windows are opened after running |action| and that the
   // existing |browser| window is still the active one and navigated to
   // |target_url|. Returns true if there were no errors.
@@ -528,6 +608,48 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
     EXPECT_EQ(target_url, new_tab->GetLastCommittedURL());
   }
 
+  // Checks that a new app window is opened, that the new window is in the
+  // foreground, that the |app_browser| didn't navigate and that the new window
+  // has an opener.
+  void TestAppActionOpensAppWindowWithOpener(Browser* app_browser,
+                                             const GURL& target_url,
+                                             base::OnceClosure action) {
+    size_t num_browsers = chrome::GetBrowserCount(profile());
+    int num_tabs_browser = browser()->tab_strip_model()->count();
+    int num_tabs_app_browser = app_browser->tab_strip_model()->count();
+
+    content::WebContents* app_web_contents =
+        app_browser->tab_strip_model()->GetActiveWebContents();
+    content::WebContents* initial_tab =
+        browser()->tab_strip_model()->GetActiveWebContents();
+
+    GURL initial_app_url = app_web_contents->GetLastCommittedURL();
+    GURL initial_tab_url = initial_tab->GetLastCommittedURL();
+
+    std::move(action).Run();
+
+    EXPECT_EQ(++num_browsers, chrome::GetBrowserCount(profile()));
+
+    Browser* new_app_browser = chrome::FindLastActive();
+    EXPECT_NE(new_app_browser, browser());
+    EXPECT_NE(new_app_browser, app_browser);
+
+    EXPECT_EQ(num_tabs_browser, browser()->tab_strip_model()->count());
+    EXPECT_EQ(num_tabs_app_browser, app_browser->tab_strip_model()->count());
+
+    EXPECT_EQ(initial_app_url, app_web_contents->GetLastCommittedURL());
+
+    content::WebContents* new_app_web_contents =
+        new_app_browser->tab_strip_model()->GetActiveWebContents();
+    EXPECT_EQ(target_url, new_app_web_contents->GetLastCommittedURL());
+
+    bool has_opener;
+    ASSERT_TRUE(content::ExecuteScriptAndExtractBool(
+        new_app_web_contents,
+        "window.domAutomationController.send(!!window.opener);", &has_opener));
+    EXPECT_TRUE(has_opener);
+  }
+
   // Checks that no new windows are opened after running |action| and that the
   // main browser window is still the active one and navigated to |target_url|.
   // Returns true if there were no errors.
@@ -574,6 +696,7 @@ class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
 
  private:
   const Extension* test_bookmark_app_;
+  const Extension* other_test_bookmark_app_;
   base::HistogramTester histogram_tester_;
   std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
 };
@@ -757,15 +880,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
 IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        BackNavigation) {
   InstallTestBookmarkApp();
-
-  // Navigate to the app's URL.
-  {
-    const GURL app_url =
-        embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
-    NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_TYPED);
-    ASSERT_TRUE(TestTabActionDoesNotOpenAppWindow(
-        app_url, base::BindOnce(&NavigateToURLWrapper, &params)));
-  }
+  NavigateToTestAppURL();
 
   // Navigate to an in-scope URL to generate a link navigation that didn't
   // get intercepted. The navigation won't get intercepted because the target
@@ -1413,12 +1528,7 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
 IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
                        InWebsiteNavigation) {
   InstallTestBookmarkApp();
-
-  // Navigate to app's page. Shouldn't open a new window.
-  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
-  NavigateParams params(browser(), app_url, ui::PAGE_TRANSITION_TYPED);
-  ASSERT_TRUE(TestTabActionDoesNotOpenAppWindow(
-      app_url, base::BindOnce(&NavigateToURLWrapper, &params)));
+  NavigateToTestAppURL();
 
   base::HistogramTester scoped_histogram;
   const GURL in_scope_url =
@@ -1432,6 +1542,94 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleLinkBrowserTest,
   ExpectNavigationResultHistogramEquals(
       scoped_histogram,
       {{ProcessNavigationResult::kProceedInBrowserSameScope, 1}});
+}
+
+class BookmarkAppNavigationThrottleWindowOpenBrowserTest
+    : public BookmarkAppNavigationThrottleBrowserTest,
+      public ::testing::WithParamInterface<std::string> {};
+
+// Tests that same-origin or cross-origin apps created with window.open() from
+// a regular browser window have an opener.
+IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleWindowOpenBrowserTest,
+                       WindowOpenInBrowser) {
+  InstallTestBookmarkApp();
+  InstallOtherTestBookmarkApp();
+
+  NavigateToTestAppURL();
+
+  // Call window.open() with |target_url| URL.
+  const GURL target_url =
+      embedded_test_server()->GetURL(GetParam(), kAppUrlPath);
+  TestTabActionOpensAppWindowWithOpener(
+      target_url,
+      base::BindOnce(&WindowOpenAndWait,
+                     browser()->tab_strip_model()->GetActiveWebContents(),
+                     target_url));
+}
+
+// Tests that asme-origin or cross-origin apps created with window.open() from
+// another app window have an opener.
+IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleWindowOpenBrowserTest,
+                       WindowOpenInApp) {
+  InstallTestBookmarkApp();
+  InstallOtherTestBookmarkApp();
+
+  // Open app window.
+  Browser* app_browser = OpenTestBookmarkApp();
+  content::WebContents* app_web_contents =
+      app_browser->tab_strip_model()->GetActiveWebContents();
+
+  // Call window.open() with |target_url| URL.
+  const GURL target_url =
+      embedded_test_server()->GetURL(GetParam(), kAppUrlPath);
+  TestAppActionOpensAppWindowWithOpener(
+      app_browser, target_url,
+      base::BindOnce(&WindowOpenAndWait, app_web_contents, target_url));
+}
+
+INSTANTIATE_TEST_CASE_P(
+    /* no prefix */,
+    BookmarkAppNavigationThrottleWindowOpenBrowserTest,
+    testing::Values(kAppUrlHost, kOtherAppUrlHost));
+
+// Tests that a child window can access its opener, when the opener is a regular
+// browser tab.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       AccessOpenerBrowserWindowFromChildWindow) {
+  InstallTestBookmarkApp();
+  InstallOtherTestBookmarkApp();
+
+  NavigateToTestAppURL();
+
+  content::WebContents* current_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+  EXPECT_TRUE(CanChildWindowAccessOpener(current_tab, app_url));
+
+  const GURL other_app_url =
+      embedded_test_server()->GetURL(kOtherAppUrlHost, kAppUrlPath);
+  EXPECT_FALSE(CanChildWindowAccessOpener(current_tab, other_app_url));
+}
+
+// Tests that a child window can access its opener, when the opener is another
+// app.
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       AccessOpenerAppWindowFromChildWindow) {
+  InstallTestBookmarkApp();
+  InstallOtherTestBookmarkApp();
+
+  // Open app window.
+  Browser* app_browser = OpenTestBookmarkApp();
+  content::WebContents* app_web_contents =
+      app_browser->tab_strip_model()->GetActiveWebContents();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlHost, kAppUrlPath);
+  EXPECT_TRUE(CanChildWindowAccessOpener(app_web_contents, app_url));
+
+  const GURL other_app_url =
+      embedded_test_server()->GetURL(kOtherAppUrlHost, kAppUrlPath);
+  EXPECT_FALSE(CanChildWindowAccessOpener(app_web_contents, other_app_url));
 }
 
 // Tests that in-browser navigations with all the following characteristics
