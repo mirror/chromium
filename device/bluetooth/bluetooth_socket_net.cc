@@ -255,11 +255,9 @@ void BluetoothSocketNet::SendFrontWriteRequest() {
     return;
 
   linked_ptr<WriteRequest> request = write_queue_.front();
-  net::CompletionCallback callback =
-      base::Bind(&BluetoothSocketNet::OnSocketWriteComplete,
-                 this,
-                 request->success_callback,
-                 request->error_callback);
+  net::CompletionOnceCallback callback = base::BindOnce(
+      &BluetoothSocketNet::OnSocketWriteComplete, this,
+      request->success_callback, std::move(request->error_callback));
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("bluetooth_socket", R"(
         semantics {
@@ -285,10 +283,10 @@ void BluetoothSocketNet::SendFrontWriteRequest() {
             "not implemented for other platforms."
         })");
   int send_result =
-      tcp_socket_->Write(request->buffer.get(), request->buffer_size, callback,
-                         traffic_annotation);
+      tcp_socket_->Write(request->buffer.get(), request->buffer_size,
+                         std::move(callback), traffic_annotation);
   if (send_result != net::ERR_IO_PENDING) {
-    callback.Run(send_result);
+    std::move(callback).Run(send_result);
   }
 }
 

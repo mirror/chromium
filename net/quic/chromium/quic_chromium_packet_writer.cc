@@ -107,7 +107,8 @@ WriteResult QuicChromiumPacketWriter::WritePacketToSocket(
 
 WriteResult QuicChromiumPacketWriter::WritePacketToSocketImpl() {
   base::TimeTicks now = base::TimeTicks::Now();
-  int rv = socket_->Write(packet_.get(), packet_->size(), write_callback_);
+  int rv = socket_->Write(packet_.get(), packet_->size(),
+                          std::move(write_callback_));
 
   if (MaybeRetryAfterWriteError(rv))
     return WriteResult(WRITE_STATUS_BLOCKED, ERR_IO_PENDING);

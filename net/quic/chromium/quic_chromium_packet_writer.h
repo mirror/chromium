@@ -109,7 +109,7 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
   // Timer set when a packet should be retried after ENOBUFS.
   base::OneShotTimer retry_timer_;
 
-  CompletionCallback write_callback_;
+  CompletionOnceCallback write_callback_;
   base::WeakPtrFactory<QuicChromiumPacketWriter> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicChromiumPacketWriter);

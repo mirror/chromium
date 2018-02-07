@@ -148,12 +148,10 @@ int WebSocketBasicStream::ReadFrames(
     // destructor. The caller of ReadFrames() is required to keep |frames|
     // valid.
     int result = connection_->socket()->Read(
-        read_buffer_.get(),
-        read_buffer_->size(),
-        base::Bind(&WebSocketBasicStream::OnReadComplete,
-                   base::Unretained(this),
-                   base::Unretained(frames),
-                   callback));
+        read_buffer_.get(), read_buffer_->size(),
+        base::BindOnce(&WebSocketBasicStream::OnReadComplete,
+                       base::Unretained(this), base::Unretained(frames),
+                       std::move(callback)));
     if (result == ERR_IO_PENDING)
       return result;
     result = HandleReadResult(result, frames);
@@ -236,8 +234,8 @@ int WebSocketBasicStream::WriteEverything(
     // disconnect the socket, preventing any further callbacks.
     int result = connection_->socket()->Write(
         buffer.get(), buffer->BytesRemaining(),
-        base::Bind(&WebSocketBasicStream::OnWriteComplete,
-                   base::Unretained(this), buffer, callback),
+        base::BindOnce(&WebSocketBasicStream::OnWriteComplete,
+                       base::Unretained(this), buffer, std::move(callback)),
         kTrafficAnnotation);
     if (result > 0) {
       UMA_HISTOGRAM_COUNTS_100000("Net.WebSocket.DataUse.Upstream", result);

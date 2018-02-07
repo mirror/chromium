@@ -111,14 +111,14 @@ void AndroidUsbSocket::Terminated(bool closed_by_device) {
 
 int AndroidUsbSocket::Read(net::IOBuffer* buffer,
                            int length,
-                           const net::CompletionCallback& callback) {
+                           net::CompletionOnceCallback callback) {
   DCHECK(!callback.is_null());
   if (!is_connected_)
     return device_.get() ? net::ERR_SOCKET_NOT_CONNECTED : 0;
 
   DCHECK(read_callback_.is_null());
   if (read_buffer_.empty()) {
-    read_callback_ = callback;
+    read_callback_ = std::move(callback);
     read_io_buffer_ = buffer;
     read_length_ = length;
     return net::ERR_IO_PENDING;
@@ -137,7 +137,7 @@ int AndroidUsbSocket::Read(net::IOBuffer* buffer,
 int AndroidUsbSocket::Write(
     net::IOBuffer* buffer,
     int length,
-    const net::CompletionCallback& callback,
+    net::CompletionOnceCallback callback,
     const net::NetworkTrafficAnnotationTag& /*traffic_annotation*/) {
   DCHECK(!callback.is_null());
   if (!is_connected_)
@@ -147,7 +147,7 @@ int AndroidUsbSocket::Write(
     length = kMaxPayload;
 
   DCHECK(write_callback_.is_null());
-  write_callback_ = callback;
+  write_callback_ = std::move(callback);
   write_length_ = length;
   device_->Send(AdbMessage::kCommandWRTE, local_id_, remote_id_,
                 std::string(buffer->data(), length));
@@ -164,7 +164,7 @@ int AndroidUsbSocket::SetSendBufferSize(int32_t size) {
   return net::ERR_NOT_IMPLEMENTED;
 }
 
-int AndroidUsbSocket::Connect(const net::CompletionCallback& callback) {
+int AndroidUsbSocket::Connect(net::CompletionOnceCallback callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!callback.is_null());
   if (!device_.get())
@@ -172,7 +172,7 @@ int AndroidUsbSocket::Connect(const net::CompletionCallback& callback) {
 
   DCHECK(!is_connected_);
   DCHECK(connect_callback_.is_null());
-  connect_callback_ = callback;
+  connect_callback_ = std::move(callback);
   device_->Send(AdbMessage::kCommandOPEN, local_id_, 0, command_);
   return net::ERR_IO_PENDING;
 }

@@ -176,10 +176,10 @@ AdbClientSocket::AdbClientSocket(int port)
 AdbClientSocket::~AdbClientSocket() {
 }
 
-void AdbClientSocket::Connect(const net::CompletionCallback& callback) {
+void AdbClientSocket::Connect(net::CompletionOnceCallback callback) {
   net::IPAddress ip_address;
   if (!ip_address.AssignFromIPLiteral(host_)) {
-    callback.Run(net::ERR_FAILED);
+    std::move(callback).Run(net::ERR_FAILED);
     return;
   }
 
@@ -187,9 +187,9 @@ void AdbClientSocket::Connect(const net::CompletionCallback& callback) {
       net::AddressList::CreateFromIPAddress(ip_address, port_);
   socket_.reset(new net::TCPClientSocket(address_list, NULL, NULL,
                                          net::NetLogSource()));
-  int result = socket_->Connect(callback);
+  int result = socket_->Connect(std::move(callback));
   if (result != net::ERR_IO_PENDING)
-    callback.Run(result);
+    std::move(callback).Run(result);
 }
 
 void AdbClientSocket::SendCommand(const std::string& command,

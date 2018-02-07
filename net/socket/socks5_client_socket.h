@@ -47,7 +47,7 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   // StreamSocket implementation.
 
   // Does the SOCKS handshake and completes the protocol.
-  int Connect(const CompletionCallback& callback) override;
+  int Connect(CompletionOnceCallback callback) override;
   void Disconnect() override;
   bool IsConnected() const override;
   bool IsConnectedAndIdle() const override;
@@ -67,10 +67,10 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
-           const CompletionCallback& callback) override;
+           CompletionOnceCallback callback) override;
   int Write(IOBuffer* buf,
             int buf_len,
-            const CompletionCallback& callback,
+            CompletionOnceCallback callback,
             const NetworkTrafficAnnotationTag& traffic_annotation) override;
 
   int SetReceiveBufferSize(int32_t size) override;
@@ -108,7 +108,7 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
 
   void DoCallback(int result);
   void OnIOComplete(int result);
-  void OnReadWriteComplete(const CompletionCallback& callback, int result);
+  void OnReadWriteComplete(CompletionOnceCallback callback, int result);
 
   int DoLoop(int last_io_result);
   int DoHandshakeRead();
@@ -132,7 +132,7 @@ class NET_EXPORT_PRIVATE SOCKS5ClientSocket : public StreamSocket {
   State next_state_;
 
   // Stores the callback to the layer above, called on completing Connect().
-  CompletionCallback user_callback_;
+  CompletionOnceCallback user_callback_;
 
   // This IOBuffer is used by the class to read and write
   // SOCKS handshake data. The length contains the expected size to
