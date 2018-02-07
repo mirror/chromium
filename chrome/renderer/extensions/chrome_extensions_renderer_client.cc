@@ -39,6 +39,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "url/origin.h"
 
 using extensions::Extension;
 
@@ -215,19 +216,28 @@ bool ChromeExtensionsRendererClient::AllowPopup() {
   }
 }
 
-bool ChromeExtensionsRendererClient::WillSendRequest(
+void ChromeExtensionsRendererClient::WillSendRequest(
     blink::WebLocalFrame* frame,
     ui::PageTransition transition_type,
     const blink::WebURL& url,
-    GURL* new_url) {
+    base::Optional<url::Origin> initiator_origin,
+    GURL* new_url,
+    bool* attach_same_site_cookies) {
+  if (initiator_origin &&
+      initiator_origin.value().scheme() == extensions::kExtensionScheme) {
+    const extensions::RendererExtensionRegistry* extension_registry =
+        extensions::RendererExtensionRegistry::Get();
+    const Extension* extension =
+        extension_registry->GetByID(initiator_origin.value().host());
+    if (extension)
+      *attach_same_site_cookies = true;
+  }
+
   if (url.ProtocolIs(extensions::kExtensionScheme) &&
       !resource_request_policy_->CanRequestResource(GURL(url), frame,
                                                     transition_type)) {
     *new_url = GURL(chrome::kExtensionInvalidRequestURL);
-    return true;
   }
-
-  return false;
 }
 
 void ChromeExtensionsRendererClient::SetExtensionDispatcherForTest(
