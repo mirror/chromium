@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15435f1f_c3ec4792",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T22:01:35Z",
+      "side": 1,
+      "message": "The 160 is the \"skip rect\" size used in the layer occlusion: https://cs.chromium.org/chromium/src/cc/trees/layer_tree_settings.cc?type\u003dcs\u0026q\u003d%22160,+160%22\u0026sq\u003dpackage:chromium\u0026l\u003d15 \n\nI wanted to compare the skip rect size I choose with the one in the layer occlusion. This metrics will be removed when we turn this feature on in dev channel.",
+      "parentUuid": "d5b0f932_7cdcbe5a",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48a780c_07d6c201",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "594502072acef6a8c7761985255213a32a0be66e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d0965e_6ac1ebe5",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T22:01:35Z",
+      "side": 1,
+      "message": "yes, updated.",
+      "parentUuid": "c48a780c_07d6c201",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1ec90af_95cda1e3",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T22:01:35Z",
+      "side": 1,
+      "message": "I have (total area saved)/(total area draw without draw occlusion).\nI can add this one as well.",
+      "parentUuid": "8807e661_76924792",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c01cc53_a383abff",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-07T20:25:21Z",
       "side": 1,
       "message": "This is the same as origin_rect !\u003d visible_rect, I think, which is easier to think about?",
+      "revId": "594502072acef6a8c7761985255213a32a0be66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d0540d_f5f60c7c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2018-02-07T22:01:35Z",
+      "side": 1,
+      "message": "yes. Updated.",
+      "parentUuid": "1c01cc53_a383abff",
       "revId": "594502072acef6a8c7761985255213a32a0be66e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
