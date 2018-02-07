@@ -371,13 +371,13 @@ void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
     // We have to activate animations here or "IsActive()" is true on the layers
     // but the animations aren't activated yet so they get ignored by
     // UpdateDrawProperties.
-    ActivateAnimations();
+    ActivateKeyframeModels();
   }
 
   // Start animations before UpdateDrawProperties and PrepareTiles, as they can
   // change the results. When doing commit to the active tree, this must happen
-  // after ActivateAnimations() in order for this ticking to be propogated to
-  // layers on the active tree.
+  // after ActivateKeyframeModels() in order for this ticking to be propogated
+  // to layers on the active tree.
   if (CommitToActiveTree())
     Animate();
   else
@@ -2421,7 +2421,7 @@ void LayerTreeHostImpl::ActivateSyncTree() {
 
     // If we commit to the active tree directly, this is already done during
     // commit.
-    ActivateAnimations();
+    ActivateKeyframeModels();
   } else {
     active_tree_->ProcessUIResourceRequestQueue();
   }
@@ -4203,8 +4203,8 @@ void LayerTreeHostImpl::UpdateAnimationState(bool start_ready_animations) {
     SetNeedsOneBeginImplFrame();
 }
 
-void LayerTreeHostImpl::ActivateAnimations() {
-  const bool activated = mutator_host_->ActivateAnimations();
+void LayerTreeHostImpl::ActivateKeyframeModels() {
+  const bool activated = mutator_host_->ActivateKeyframeModels();
   if (activated) {
     // Activating an animation changes layer draw properties, such as
     // screen_space_transform_is_animating. So when we see a new animation get

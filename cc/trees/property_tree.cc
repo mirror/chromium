@@ -1958,7 +1958,7 @@ CombinedAnimationScale PropertyTrees::GetAnimationScales(
           node->element_id, list_type,
           &cached_data_.animation_scales[transform_node_id]
                .local_maximum_animation_target_scale);
-      layer_tree_impl->mutator_host()->AnimationStartScale(
+      layer_tree_impl->mutator_host()->KeyframeModelStartScale(
           node->element_id, list_type,
           &cached_data_.animation_scales[transform_node_id]
                .local_starting_animation_scale);

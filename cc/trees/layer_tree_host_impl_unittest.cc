@@ -1954,7 +1954,7 @@ TEST_F(CommitToPendingTreeLayerTreeHostImplTest,
   did_request_redraw_ = false;
   did_request_commit_ = false;
 
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
 
   // On activating an animation, we should request another frame so that we'll
   // continue ticking the animation.
@@ -2057,7 +2057,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingOnLayerDestruction) {
   EXPECT_TRUE(did_request_next_frame_);
   did_request_next_frame_ = false;
 
-  host_impl_->ActivateAnimations();
+  host_impl_->ActivateKeyframeModels();
   // On activating an animation, we should request another frame so that we'll
   // continue ticking the animation.
   EXPECT_TRUE(did_request_next_frame_);
@@ -12080,7 +12080,7 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedAborted) {
 
   // The instant scroll should have marked the smooth scroll animation as
   // aborted.
-  EXPECT_FALSE(GetImplAnimationHost()->HasTickingAnimationForTesting(
+  EXPECT_FALSE(GetImplAnimationHost()->HasTickingKeyframeModelForTesting(
       scrolling_layer->element_id()));
 
   EXPECT_VECTOR2DF_EQ(gfx::ScrollOffset(0, y + 50),

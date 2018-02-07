@@ -86,7 +86,7 @@ TEST(LayerAnimationSequenceTest, SingleThreadedElement) {
 
   for (int i = 0; i < 2; ++i) {
     int starting_group_id = 1;
-    sequence.set_animation_group_id(starting_group_id);
+    sequence.set_keyframe_model_group_id(starting_group_id);
     start_time = effective_start + delta;
     sequence.set_start_time(start_time);
     delegate.SetOpacityFromAnimation(start,
@@ -97,7 +97,7 @@ TEST(LayerAnimationSequenceTest, SingleThreadedElement) {
     effective_start = start_time + delta;
     sequence.OnThreadedAnimationStarted(effective_start,
                                         cc::TargetProperty::OPACITY,
-                                        sequence.animation_group_id());
+                                        sequence.keyframe_model_group_id());
     sequence.Progress(effective_start + delta/2, &delegate);
     EXPECT_FLOAT_EQ(middle, sequence.last_progressed_fraction());
     EXPECT_TRUE(sequence.IsFinished(effective_start + delta));
@@ -138,7 +138,7 @@ TEST(LayerAnimationSequenceTest, MultipleElement) {
 
   for (int i = 0; i < 2; ++i) {
     int starting_group_id = 1;
-    sequence.set_animation_group_id(starting_group_id);
+    sequence.set_keyframe_model_group_id(starting_group_id);
     start_time = opacity_effective_start + 4 * delta;
     sequence.set_start_time(start_time);
     delegate.SetOpacityFromAnimation(start_opacity,
@@ -150,10 +150,10 @@ TEST(LayerAnimationSequenceTest, MultipleElement) {
     sequence.Progress(start_time, &delegate);
     EXPECT_FLOAT_EQ(0.0, sequence.last_progressed_fraction());
     opacity_effective_start = start_time + delta;
-    EXPECT_EQ(starting_group_id, sequence.animation_group_id());
+    EXPECT_EQ(starting_group_id, sequence.keyframe_model_group_id());
     sequence.OnThreadedAnimationStarted(opacity_effective_start,
                                         cc::TargetProperty::OPACITY,
-                                        sequence.animation_group_id());
+                                        sequence.keyframe_model_group_id());
     sequence.Progress(opacity_effective_start + delta/2, &delegate);
     EXPECT_FLOAT_EQ(0.5, sequence.last_progressed_fraction());
     sequence.Progress(opacity_effective_start + delta, &delegate);
@@ -178,10 +178,10 @@ TEST(LayerAnimationSequenceTest, MultipleElement) {
                             delegate.GetTransformForAnimation());
     EXPECT_FLOAT_EQ(0.0, sequence.last_progressed_fraction());
     transform_effective_start = opacity_effective_start + 3 * delta;
-    EXPECT_NE(starting_group_id, sequence.animation_group_id());
+    EXPECT_NE(starting_group_id, sequence.keyframe_model_group_id());
     sequence.OnThreadedAnimationStarted(transform_effective_start,
                                         cc::TargetProperty::TRANSFORM,
-                                        sequence.animation_group_id());
+                                        sequence.keyframe_model_group_id());
     sequence.Progress(transform_effective_start + delta/2, &delegate);
     EXPECT_FLOAT_EQ(0.5, sequence.last_progressed_fraction());
     EXPECT_TRUE(sequence.IsFinished(transform_effective_start + delta));
@@ -285,7 +285,7 @@ TEST(LayerAnimationSequenceTest, ToString) {
 
   std::unique_ptr<LayerAnimationElement> brightness =
       LayerAnimationElement::CreateBrightnessElement(1.0f, delta);
-  int brightness_id = brightness->animation_id();
+  int brightness_id = brightness->keyframe_model_id();
   sequence.AddElement(std::move(brightness));
   EXPECT_EQ(
       base::StringPrintf(
@@ -298,10 +298,10 @@ TEST(LayerAnimationSequenceTest, ToString) {
 
   std::unique_ptr<LayerAnimationElement> opacity =
       LayerAnimationElement::CreateOpacityElement(1.0f, delta);
-  int opacity_id = opacity->animation_id();
+  int opacity_id = opacity->keyframe_model_id();
   sequence.AddElement(std::move(opacity));
   sequence.set_is_cyclic(true);
-  sequence.set_animation_group_id(1973);
+  sequence.set_keyframe_model_group_id(1973);
   EXPECT_EQ(
       base::StringPrintf(
           "LayerAnimationSequence{size=2, properties=OPACITY|BRIGHTNESS, "

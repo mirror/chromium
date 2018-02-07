@@ -14,7 +14,7 @@ namespace blink {
 
 std::unique_ptr<CompositorAnimationPlayer> CompositorAnimationPlayer::Create() {
   return std::make_unique<CompositorAnimationPlayer>(
-      cc::SingleTickerAnimationPlayer::Create(
+      cc::SingleKeyframeEffectAnimationPlayer::Create(
           cc::AnimationIdProvider::NextPlayerId()));
 }
 
@@ -30,7 +30,7 @@ CompositorAnimationPlayer::CreateWorkletPlayer(
 }
 
 CompositorAnimationPlayer::CompositorAnimationPlayer(
-    scoped_refptr<cc::SingleTickerAnimationPlayer> player)
+    scoped_refptr<cc::SingleKeyframeEffectAnimationPlayer> player)
     : animation_player_(player), delegate_() {}
 
 CompositorAnimationPlayer::~CompositorAnimationPlayer() {
@@ -41,8 +41,8 @@ CompositorAnimationPlayer::~CompositorAnimationPlayer() {
     animation_player_->animation_timeline()->DetachPlayer(animation_player_);
 }
 
-cc::SingleTickerAnimationPlayer* CompositorAnimationPlayer::CcAnimationPlayer()
-    const {
+cc::SingleKeyframeEffectAnimationPlayer*
+CompositorAnimationPlayer::CcAnimationPlayer() const {
   return animation_player_.get();
 }
 
@@ -66,23 +66,23 @@ bool CompositorAnimationPlayer::IsElementAttached() const {
 
 void CompositorAnimationPlayer::AddAnimation(
     std::unique_ptr<CompositorAnimation> animation) {
-  animation_player_->AddAnimation(animation->ReleaseCcAnimation());
+  animation_player_->AddKeyframeModel(animation->ReleaseCcAnimation());
 }
 
 void CompositorAnimationPlayer::RemoveAnimation(int animation_id) {
-  animation_player_->RemoveAnimation(animation_id);
+  animation_player_->RemoveKeyframeModel(animation_id);
 }
 
 void CompositorAnimationPlayer::PauseAnimation(int animation_id,
                                                double time_offset) {
-  animation_player_->PauseAnimation(animation_id, time_offset);
+  animation_player_->PauseKeyframeModel(animation_id, time_offset);
 }
 
 void CompositorAnimationPlayer::AbortAnimation(int animation_id) {
-  animation_player_->AbortAnimation(animation_id);
+  animation_player_->AbortKeyframeModel(animation_id);
 }
 
-void CompositorAnimationPlayer::NotifyAnimationStarted(
+void CompositorAnimationPlayer::NotifyKeyframeModelStarted(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
@@ -91,7 +91,7 @@ void CompositorAnimationPlayer::NotifyAnimationStarted(
         (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
-void CompositorAnimationPlayer::NotifyAnimationFinished(
+void CompositorAnimationPlayer::NotifyKeyframeModelFinished(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
@@ -100,7 +100,7 @@ void CompositorAnimationPlayer::NotifyAnimationFinished(
         (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
-void CompositorAnimationPlayer::NotifyAnimationAborted(
+void CompositorAnimationPlayer::NotifyKeyframeModelAborted(
     base::TimeTicks monotonic_time,
     int target_property,
     int group) {
@@ -109,7 +109,7 @@ void CompositorAnimationPlayer::NotifyAnimationAborted(
         (monotonic_time - base::TimeTicks()).InSecondsF(), group);
 }
 
-void CompositorAnimationPlayer::NotifyAnimationTakeover(
+void CompositorAnimationPlayer::NotifyKeyframeModelTakeover(
     base::TimeTicks monotonic_time,
     int target_property,
     base::TimeTicks animation_start_time,
