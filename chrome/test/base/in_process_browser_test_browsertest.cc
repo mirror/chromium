@@ -8,9 +8,13 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/test/base/accessibility_checks.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/navigation_handle.h"
@@ -20,6 +24,8 @@
 #include "net/base/filename_util.h"
 #include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/ui_features.h"
+#include "ui/views/controls/button/image_button.h"
 
 namespace {
 
@@ -92,5 +98,31 @@ IN_PROC_BROWSER_TEST_F(InProcessBrowserTest, ExternalConnectionFail) {
 IN_PROC_BROWSER_TEST_F(InProcessBrowserTest, AfterStartupTaskUtils) {
   EXPECT_TRUE(AfterStartupTaskUtils::IsBrowserStartupComplete());
 }
+
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+// Test that a view that is not accessible will fail the accessibility audit.
+IN_PROC_BROWSER_TEST_F(InProcessBrowserTest,
+                       VerifyAccessibilityChecksFailAndPass) {
+  BrowserWindow* browser_window = browser()->window();
+  BrowserView* browser_view = static_cast<BrowserView*>(browser_window);
+
+  // Create nameless accessibility button and add to browser view.
+  // UI accessibility check should fail.
+  views::ImageButton* button = new views::ImageButton(nullptr);
+  button->SetVisible(true);
+  button->SetFocusBehavior(BrowserNonClientFrameView::FocusBehavior::ALWAYS);
+  browser_view->AddChildView(button);
+  // Disable until we can figure out how to ignore DCHECK in views.
+  std::string test_result_nameless;
+  EXPECT_FALSE(RunUIAccessibilityChecks(&test_result_nameless));
+  EXPECT_NE("", test_result_nameless);
+
+  // Give it an accessible name. UI accessibility check should pass now.
+  std::string test_result_name;
+  button->SetAccessibleName(base::ASCIIToUTF16("Some name"));
+  EXPECT_TRUE(RunUIAccessibilityChecks(&test_result_name));
+  EXPECT_EQ("", test_result_name);
+}
+#endif  // !OS_MACOSX || BUILDFLAG(MAC_VIEWS_BROWSER)
 
 }  // namespace
