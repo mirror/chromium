@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0988036c_08d4ff4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "Not need for chromium: in chromium -- yeah, I know, you \ndo need this prefix in CrOs, but not in Chromium :-)",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84a9580_dd9ee213",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t TEST\u003d be a single line/paragraph of prose?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb81972e_1a3bc249",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "nit: dlopen()s ?",
+      "range": {
+        "startLine": 1155,
+        "startChar": 21,
+        "endLine": 1155,
+        "endChar": 27
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ed3e62_a14116ce",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "I remember this strange construction. What about correcting\nit now to:\n\"if VAAPI libraries are not present\" \n?",
+      "range": {
+        "startLine": 1164,
+        "startChar": 15,
+        "endLine": 1164,
+        "endChar": 38
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac785400_93233945",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "This should have {} per style guide. But, couldn\u0027t we do\naway with SetVAStubsInit() and the associate member var, \nand query instead the semi-auto-generated \n  media_gpu_vaapi::IsVaInitialized() \nin VADisplayState::Initialize() ?\n(see out/gn/gen/media/gpu/vaapi/va_stubs.{cc,h} )",
+      "range": {
+        "startLine": 1169,
+        "startChar": 8,
+        "endLine": 1171,
+        "endChar": 0
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58c9efb_460f71e9",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-02-07T14:59:15Z",
+      "side": 1,
+      "message": "\"in so doing it dlopen()s the associated libraries\"\n?",
+      "range": {
+        "startLine": 1172,
+        "startChar": 57,
+        "endLine": 1173,
+        "endChar": 11
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
