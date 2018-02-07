@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "66912537_16470988",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T23:29:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b212530_2496f829",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 13
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3780e52_fe1f7e9a",
         "filename": "ash/display/persistent_window_controller.cc",
         "patchSetId": 12
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "I think you mean DCHECK_EQ? It fails on compile: https://paste.googleplex.com/5686800865558528\n\nmarcheu said it could happen but it is rare. We could ignore this case.",
       "parentUuid": "f3780e52_fe1f7e9a",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 10
+      },
+      "revId": "011523f995af7126a7fdf1dffa7fb0ba2e5e136e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1182c1_28357a2a",
+        "filename": "ash/display/persistent_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-07T23:29:59Z",
+      "side": 1,
+      "message": "Add comment about this case then.",
+      "parentUuid": "1575a36d_17ad7453",
       "range": {
         "startLine": 112,
         "startChar": 4,
