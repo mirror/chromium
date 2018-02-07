@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bed807eb_e9908dd4",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Nit: Is there any way to get the browser to just be created with this in the first place for this test, so we need not swap awkwardly?\n\nMaybe better dependency injection somewhere?",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79b1d79_6276d8eb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Nit: Now that we\u0027ve moved this down here, we can eliminate the temp and just return this computation directly.",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a32b82_7492da03",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Note that the consequence of this code is that if a user selects part of the URL and then clicks out of the omnibox, they\u0027ll lose their selection, even if the \"editing\" and \"interactive\" text are the same.\n\nMaybe we should only revert if !input_in_progress _and_ the selection range is empty (so if you select some text, we preserve the \"editing\" version of the text on focus loss).",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a5e211_0cd69f9f",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Nit: Actually your previous capitalization was correct team style (much to my annoyance).  We\u0027re supposed to use only one leading cap even on abbreviations like URL.",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d89e7e_ca6e3a1f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Nit: Inline into next statement?",
+      "revId": "cd2fb26f10f16a0cc41f3ca942a9be2c20fd67b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

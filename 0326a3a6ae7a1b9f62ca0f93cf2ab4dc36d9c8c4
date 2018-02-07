@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "84246fc7_5a38cc98",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Huh.  That\u0027s a strange CL.  I agree with you that it\u0027s a separate issue.  It would be good to dig into this more deeply and understand why this out-of-sync state happens, since I suspect the right fix is to replace this line with some other missing call elsewhere.  Even if this is the right fix, we need a comment about what scenario can cause this to be necessary.\n\nMaybe a TODO or bug on this.",
+      "parentUuid": "8295f113_f38c5293",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b74f5edf_d6345880",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 9
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "I did a bit of investigation. For my purposes, this belongs in model()-\u003eOnKillFocus() after the focus state is actually set to false - as I want it to operate on Cocoa as well.\n\nI noticed that this code snippet (added here: https://codereview.chromium.org/1060613004) doesn\u0027t exist in the Cocoa version. Any specific reason for that?\n\nI\u0027m leaning towards: Leave this snippet as-is, and have an independent clause in OmniboxEditModel::OnKillFocus to trigger a revert for the steady state elisions.",
       "parentUuid": "fc7426ca_9d783099",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609729f8_51fd023c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Not in the Cocoa version is probably because I never bothered testing on Mac or trying to fix it there.  Cocoa omnibox has lots of problems, which is why Mac Views Browser will be good :)\n\nI don\u0027t care if we collapse in this CL or later, but it does seem like this code should basically move into OnKillFocus eventually -- I don\u0027t think it\u0027s Views-specific?\n\nAlthough when I wrote that paragraph, I wrote \"should move into OnWillKillFocus eventually\", and now that you\u0027re in OnKillFocus instead, I don\u0027t know if the change causes any problems for merging these two.",
+      "parentUuid": "233c2b3f_6cdf1f86",
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -294,6 +330,24 @@
       "side": 1,
       "message": "Done. I changed it to GetCurrentPermanentURLText, and updated the comment. I also made it return by value instead of reference btw, since I noticed it was easy to create a subtle bug where there member variable referred to changes unexpectedly.",
       "parentUuid": "fb77e2dc_847167c9",
+      "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68443ce0_483a0133",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-07T01:30:38Z",
+      "side": 1,
+      "message": "Good catch on returning by value.",
+      "parentUuid": "f44f7b24_6f537e97",
       "revId": "0326a3a6ae7a1b9f62ca0f93cf2ab4dc36d9c8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
