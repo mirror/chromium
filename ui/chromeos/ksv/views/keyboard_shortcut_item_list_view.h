@@ -12,17 +12,20 @@ namespace keyboard_shortcut_viewer {
 
 class KeyboardShortcutItemView;
 
-// Displays a list of KeyboardShortcutItemView.
+// Displays a list of KeyboardShortcutItemView. In search result page, all
+// KeyboardShortcutItemView are grouped by ShortcutCategory and can be scrolled
+// in a single page. A text label to indicate the ShortcutCategory will be
+// diplayed at the beginning of the group of KeyboardShortcutItemView.
 class KeyboardShortcutItemListView : public views::View {
  public:
   KeyboardShortcutItemListView();
   ~KeyboardShortcutItemListView() override = default;
 
-  void AddItemView(KeyboardShortcutItemView* item_view);
+  // In search result page, a text label is added at the beginning of the group
+  // of KeyboardShortcutItemView to indicate the ShortcutCategory.
+  void AddCategoryLabel(const base::string16& text);
 
  private:
-  // The parent view of the list of KeyboardShortcutItemView.
-  views::View* shortcut_item_views_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardShortcutItemListView);
 };
