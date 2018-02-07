@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d256f253_323d080b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:54:51Z",
+      "side": 1,
+      "message": "Done (habit from Rietveld, where IIRC, you needed to put them on multiple lines to be properly linkified)",
+      "parentUuid": "3dfe7d2b_a018b93f",
+      "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e09eb676_8203b640",
         "filename": "extensions/renderer/i18n_hooks_util.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ca04a773_825dc993",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e09eb676_8203b640",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feaa3a78_d5b9f1c2",
         "filename": "extensions/renderer/i18n_hooks_util.cc",
         "patchSetId": 9
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "05179135_1eadd157",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feaa3a78_d5b9f1c2",
+      "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f726533_3ab8f088",
         "filename": "extensions/renderer/i18n_hooks_util.cc",
         "patchSetId": 9
@@ -73,6 +133,24 @@
       "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee12029_52fbe232",
+        "filename": "extensions/renderer/i18n_hooks_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f726533_3ab8f088",
+      "revId": "8e2e9f3067fd1e923ee9371653f57e65d31f8999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
