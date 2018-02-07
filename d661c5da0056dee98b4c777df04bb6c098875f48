@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ad97dd_3c26b2ef",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/printing/thead-under-multicol-expected.png",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-02-07T18:37:14Z",
+      "side": 1,
+      "message": "Do you know the cause of the image diff here?  Is it worth investigating further?",
+      "revId": "d661c5da0056dee98b4c777df04bb6c098875f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
