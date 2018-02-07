@@ -5,6 +5,7 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.h"
 
 #include "base/bind.h"
+#include "base/debug/dump_without_crashing.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
@@ -64,6 +65,7 @@ GpuMemoryBufferImplIOSurface::CreateFromHandle(
       IOSurfaceLookupFromMachPort(handle.mach_port.get()));
   if (!io_surface) {
     LOG(ERROR) << "Failed to open IOSurface via mach port returned to client.";
+    base::debug::DumpWithoutCrashing();
     return nullptr;
   }
 
