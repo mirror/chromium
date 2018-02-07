@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fecbdee_0d4ba961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47a33bb_ea9b2c61",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84c7d027_d3c17dff",
         "filename": "components/viz/common/surfaces/local_surface_id.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b936e7_1ffe7614",
+        "filename": "components/viz/common/surfaces/local_surface_id.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "I\u0027m fine with both, so I\u0027ve done as you find more appropriate",
+      "parentUuid": "84c7d027_d3c17dff",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ecc10c8d_7b164cbe",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Added it once for local purposes, forgot to remove.\nNow removed.",
+      "parentUuid": "16f9c6b6_09e27328",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a1b053_dd7279c9",
         "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9215d597_d2a5640a",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a1b053_dd7279c9",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "56563955_15da4c31",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce6f5746_f103fdc5",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d3f25f_59ab96b8",
         "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "999d3567_b7232916",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d3f25f_59ab96b8",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06abd135_437725da",
         "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2018-02-07T21:04:33Z",
       "side": 1,
       "message": "what is shy stands for?",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8386d535_b9cd07f2",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "I tried to use an antonym to verbose to denote the cases where logging is not set to verbose.\nChanged the name to brief.",
+      "parentUuid": "06abd135_437725da",
       "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "4644b1eb_fd0ee83b",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8f0d89_d4e341e1",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "724997b0_9a648639",
         "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
         "patchSetId": 7
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a458c7fe_1f43a2c0",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "724997b0_9a648639",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f8f7d3b_65f93354",
         "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ab0c73_62b9435f",
+        "filename": "components/viz/common/surfaces/local_surface_id_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1263600
+      },
+      "writtenOn": "2018-02-07T21:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8f7d3b_65f93354",
+      "revId": "5d8bbc7aa6e4ca1f202bdac40ee700b8b313f300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
