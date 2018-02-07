@@ -239,9 +239,11 @@ void CoreTabHelper::DidStartLoading() {
   UpdateContentRestrictions(0);
 }
 
-void CoreTabHelper::WasShown() {
-  web_cache::WebCacheManager::GetInstance()->ObserveActivity(
-      web_contents()->GetMainFrame()->GetProcess()->GetID());
+void CoreTabHelper::OnVisibilityChanged(content::Visibility visibility) {
+  if (visibility == content::Visibility::VISIBLE) {
+    web_cache::WebCacheManager::GetInstance()->ObserveActivity(
+        web_contents()->GetMainFrame()->GetProcess()->GetID());
+  }
 }
 
 void CoreTabHelper::WebContentsDestroyed() {

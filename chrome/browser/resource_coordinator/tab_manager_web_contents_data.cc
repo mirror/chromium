@@ -78,10 +78,12 @@ void TabManager::WebContentsData::DidFinishNavigation(
                                           ukm::SourceIdType::NAVIGATION_ID);
 }
 
-void TabManager::WebContentsData::WasShown() {
-  if (tab_data_.last_inactive_time.is_null())
-    return;
-  ReportUKMWhenBackgroundTabIsClosedOrForegrounded(true);
+void TabManager::WebContentsData::OnVisibilityChanged(
+    content::Visibility visibility) {
+  if (visibility == content::Visibility::VISIBLE &&
+      !tab_data_.last_inactive_time.is_null()) {
+    ReportUKMWhenBackgroundTabIsClosedOrForegrounded(true);
+  }
 }
 
 void TabManager::WebContentsData::WebContentsDestroyed() {
@@ -102,8 +104,10 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
 
   ReportUKMWhenTabIsClosed();
 
-  if (!web_contents()->IsVisible() && !tab_data_.last_inactive_time.is_null())
+  if (web_contents()->GetVisibility() != content::Visibility::VISIBLE &&
+      !tab_data_.last_inactive_time.is_null()) {
     ReportUKMWhenBackgroundTabIsClosedOrForegrounded(false);
+  }
 
   SetTabLoadingState(TAB_IS_NOT_LOADING);
   SetIsInSessionRestore(false);
