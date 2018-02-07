@@ -116,6 +116,24 @@
       "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba2674f7_a5e56312",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-02-07T19:03:01Z",
+      "side": 1,
+      "message": "Yes we do. Blacklist decisions are now made at GPU process launch time, so falling back to SwiftShader will give us totally different workarounds and blacklisting, which is the desired behavior. Only we need to make the rest code be aware of this possible change of decisions.",
+      "parentUuid": "53766e8c_5aa8302c",
+      "revId": "1a4023e53e057c05e049355511760bcf916e8fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
