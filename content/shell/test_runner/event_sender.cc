@@ -2576,6 +2576,10 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
   if (force_layout_on_events_)
     widget()->UpdateAllLifecyclePhases();
 
+  if (event.source_device == blink::kWebGestureDeviceTouchscreen &&
+      event.primary_pointer_type != WebPointerProperties::PointerType::kMouse)
+    widget()->SetCursorVisibilityState(false);
+
   WebInputEventResult result = HandleInputEventOnViewOrPopup(event);
 
   // Long press might start a drag drop session. Complete it if so.
