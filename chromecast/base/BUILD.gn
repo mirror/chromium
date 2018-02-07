@@ -272,7 +272,12 @@ if (is_android) {
       "$java_src_dir/org/chromium/chromecast/base/CastSettingsManager.java",
       "$java_src_dir/org/chromium/chromecast/base/ChromecastConfigAndroid.java",
       "$java_src_dir/org/chromium/chromecast/base/CircularBuffer.java",
+      "$java_src_dir/org/chromium/chromecast/base/CompositeTypes.java",
       "$java_src_dir/org/chromium/chromecast/base/DumpstateWriter.java",
+      "$java_src_dir/org/chromium/chromecast/base/Functions.java",
+      "$java_src_dir/org/chromium/chromecast/base/Itertools.java",
+      "$java_src_dir/org/chromium/chromecast/base/Matching.java",
+      "$java_src_dir/org/chromium/chromecast/base/StateMachine.java",
       "$java_src_dir/org/chromium/chromecast/base/SystemTimeChangeNotifierAndroid.java",
     ]
 
@@ -285,6 +290,10 @@ if (is_android) {
     java_test_dir = "//chromecast/base/java/test"
     java_files = [
       "$java_test_dir/org/chromium/chromecast/base/CircularBufferTest.java",
+      "$java_test_dir/org/chromium/chromecast/base/CompositeTypesTest.java",
+      "$java_test_dir/org/chromium/chromecast/base/ItertoolsTest.java",
+      "$java_test_dir/org/chromium/chromecast/base/MatchingTest.java",
+      "$java_test_dir/org/chromium/chromecast/base/StateMachineTest.java",
     ]
     deps = [
       ":base_java",
