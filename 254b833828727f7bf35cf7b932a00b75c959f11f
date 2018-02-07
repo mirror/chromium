@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60be282b_6f2a1ed0",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-07T00:45:01Z",
+      "side": 1,
+      "message": "This feels generous; is there a sanity-check value that we could use instead, e.g. 1MB?",
+      "range": {
+        "startLine": 1005,
+        "startChar": 9,
+        "endLine": 1005,
+        "endChar": 41
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032931a7_b9d3e2cf",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-07T00:45:01Z",
+      "side": 1,
+      "message": "The intention of GetMaxFilesOpenInProcess() appears to be to provide the highest-possible FD value, for the loop to iterate up to, so this seems a reasonable substitute; the difference will be that GetMaxFds() has per-platform \"default\" limits that it will assume if getrlimit() fails.",
+      "range": {
+        "startLine": 648,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a8d5a7_88036644",
+        "filename": "base/time/pr_time_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-07T00:45:01Z",
+      "side": 1,
+      "message": "(This and the time_unittest.cc change were small cleanups that went along with an asctime_r-\u003estrftime change; asctime_r() has been restored on Fuchsia, though, so I\u0027ve switched the calls back and kept the cleanups)",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "254b833828727f7bf35cf7b932a00b75c959f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
