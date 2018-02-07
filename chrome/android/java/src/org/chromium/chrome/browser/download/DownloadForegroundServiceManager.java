@@ -252,7 +252,11 @@ public class DownloadForegroundServiceManager {
         mBoundService = null;
 
         // Only if the notification was handled properly (ie. detached or killed), reset stored ID.
-        if (notificationHandledProperly) mPinnedNotificationId = INVALID_NOTIFICATION_ID;
+        if (notificationHandledProperly) {
+            mPinnedNotificationId = INVALID_NOTIFICATION_ID;
+            DownloadForegroundServiceObservers.removeObserver(
+                    DownloadNotificationServiceObserver.class);
+        }
     }
 
     @VisibleForTesting
