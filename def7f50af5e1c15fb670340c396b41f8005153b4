@@ -52,6 +52,24 @@
       "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ea67c3_bed6a79a",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-02-07T17:04:49Z",
+      "side": 1,
+      "message": "Apparently setting cursor visibility for each event doesn\u0027t work. some tests set cursor visibility using interal function. (cursor may be invisible when scroll by touchpad)\nI use the same method (internals.setIsCursorVisible) to by pass the fake mouse move issue for this test in patchset 8. It should work now. PTAL, thanks!",
+      "parentUuid": "c25daa74_af8681fc",
+      "revId": "def7f50af5e1c15fb670340c396b41f8005153b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
