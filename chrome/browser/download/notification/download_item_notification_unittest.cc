@@ -66,7 +66,7 @@ class DownloadItemNotificationTest : public testing::Test {
     ON_CALL(*download_item_, GetGuid())
         .WillByDefault(ReturnRefOfCopy(base::GenerateGUID()));
     ON_CALL(*download_item_, GetState())
-        .WillByDefault(Return(content::DownloadItem::IN_PROGRESS));
+        .WillByDefault(Return(download::DownloadItem::IN_PROGRESS));
     ON_CALL(*download_item_, IsDangerous()).WillByDefault(Return(false));
     ON_CALL(*download_item_, GetFileNameToReportUser())
         .WillByDefault(Return(base::FilePath("TITLE.bin")));
@@ -193,7 +193,7 @@ TEST_F(DownloadItemNotificationTest, PauseAndResumeNotification) {
 
 TEST_F(DownloadItemNotificationTest, OpenDownload) {
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
 
   // Shows a notification.
@@ -240,7 +240,7 @@ TEST_F(DownloadItemNotificationTest, OpenWhenComplete) {
 
   // Downloading is completed.
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
   download_item_->NotifyObserversDownloadUpdated();
 
@@ -260,7 +260,7 @@ TEST_F(DownloadItemNotificationTest, DisablePopup) {
 
   // Downloading is completed.
   EXPECT_CALL(*download_item_, GetState())
-      .WillRepeatedly(Return(content::DownloadItem::COMPLETE));
+      .WillRepeatedly(Return(download::DownloadItem::COMPLETE));
   EXPECT_CALL(*download_item_, IsDone()).WillRepeatedly(Return(true));
   download_item_->NotifyObserversDownloadUpdated();
 

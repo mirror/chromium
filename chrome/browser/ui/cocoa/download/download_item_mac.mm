@@ -9,10 +9,10 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_item_model.h"
 #import "chrome/browser/ui/cocoa/download/download_item_controller.h"
-#include "content/public/browser/download_item.h"
+#include "components/download/public/common/download_item.h"
 #include "ui/gfx/image/image.h"
 
-using content::DownloadItem;
+using download::DownloadItem;
 
 // DownloadItemMac -------------------------------------------------------------
 
