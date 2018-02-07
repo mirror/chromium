@@ -104,6 +104,10 @@ Polymer({
   expandList_: function() {
     this.expanded_ = true;
     this.moreItemsLinkText_ = '';
+    this.$$('#more-items-button').setAttribute('aria-expanded', 'true');
+    // this.$$('#ei-0').focus();
+    // this.$$('#more-items-button').focus();
+    this.$$('#last-initial-item').focus();
   },
 
   /**
@@ -156,5 +160,25 @@ Polymer({
    */
   remainingItemsClass_: function(expanded) {
     return expanded ? 'visible-item' : 'hidden-item';
+  },
+
+  getInitialItemId_: function(index) {
+    return index == settings.CHROME_CLEANUP_DEFAULT_ITEMS_TO_SHOW - 2 ?
+        'last-initial-item' :
+        '';
+  },
+
+  getExpandedItemId_: function(index) {
+    return 'ei-' + index;
+  },
+
+  getAriaControlsIdList_: function(remainingItems) {
+    if (remainingItems.length == 0)
+      return '';
+
+    let res = 'ei-0';
+    for (let i = 1; i < remainingItems.length; ++i)
+      res += ' ei-' + i;
+    return res;
   },
 });

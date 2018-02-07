@@ -2,6 +2,7 @@
 
 <link rel="import" href="chrome://resources/cr_elements/shared_vars_css.html">
 <link rel="import" href="chrome://resources/html/util.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
 <link rel="import" href="../settings_shared_css.html">
 <link rel="import" href="chrome_cleanup_proxy.html">
@@ -28,26 +29,27 @@
     <div id="title" class="secondary" hidden="[[!titleVisible]]">
       [[title]]
     </div>
-    <ul class="secondary">
+    <ul id="removed-items" class="secondary">
       <template is="dom-repeat" items="[[initialItems_]]">
-        <li class="visible-item">[[item]]</li>
+        <li id$="[[getInitialItemId_(index)]]" class="visible-item">
+          [[item]]
+        </li>
       </template>
-      <li id="more-items-link" hidden="[[expanded_]]" on-tap="expandList_">
-        [[moreItemsLinkText_]]
-      </li>
-    </ul>
-    <!-- Remaining items are kept in a separate <ul> element so that screen
-         readers don't get confused when the list is expanded. If new items are
-         simply added to the first <ul> element, the first new item (which will
-         replace the "N more" link), will be skipped by the reader. As a
-         consequence, visual impaired users will only have a chance to inspect
-         that item if they move up on the list, which can't be considered an
-         expected action. -->
-    <ul id="remaining-list" hidden="[[!expanded_]]" class="secondary">
       <template is="dom-repeat" items="[[remainingItems_]]">
-        <li class$="[[remainingItemsClass_(expanded_)]]">[[item]]</li>
+        <li id$="[[getExpandedItemId_(index)]]"
+            class$="[[remainingItemsClass_(expanded_)]]"
+            hidden="[[!expanded_]]">
+          [[item]]
+        </li>
       </template>
     </ul>
+    <paper-button id="more-items-button"
+        hidden="[[expanded_]]"
+        class="primary-button" on-tap="expandList_"
+        aria-expanded="false"
+        aria-controls$="[[getAriaControlsIdList_(remainingItems_)]]">
+      [[moreItemsLinkText_]]
+    </paper-button>
   </template>
   <script src="items_to_remove_list.js"></script>
 </dom-module>
