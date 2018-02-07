@@ -157,6 +157,11 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Returns true if the mouse pointer is currently locked.
   virtual bool IsMouseLocked() = 0;
 
+  // Activates / Deactivates Keyboard lock.  Note that the actual lock may not
+  // take effect immediately.
+  virtual void LockKeyboard(const std::vector<std::string>& keys_to_lock) = 0;
+  virtual void UnlockKeyboard() = 0;
+
   // Retrives the size of the viewport for the visible region. May be smaller
   // than the view size if a portion of the view is obstructed (e.g. by a
   // virtual keyboard).
