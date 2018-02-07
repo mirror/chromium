@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 
+#include <iostream>
 #include <set>
 #include <utility>
 
@@ -716,7 +717,7 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
   // If the primary surface was evicted, we should create a new primary.
   if (features::IsSurfaceSynchronizationEnabled() && delegated_frame_host_ &&
       delegated_frame_host_->IsPrimarySurfaceEvicted()) {
-    WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+    WasResized(cc::DeadlinePolicy::UseDefaultDeadline(), viz::LocalSurfaceId());
   }
 
   TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
@@ -2046,8 +2047,17 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 }
 
 void RenderWidgetHostViewAura::WasResized(
-    const cc::DeadlinePolicy& deadline_policy) {
-  window_->AllocateLocalSurfaceId();
+    const cc::DeadlinePolicy& deadline_policy,
+    const viz::LocalSurfaceId& child_allocated_local_surface_id) {
+  std::cout << "RenderWidgetHostViewAura::WasResized" << std::endl;
+  DCHECK(window_);
+  DCHECK(!window_->IsAllocationPending());
+  if (child_allocated_local_surface_id.is_valid()) {
+    window_->UpdateLocalSurfaceIdWithChildSequenceNumber(
+        child_allocated_local_surface_id);
+  } else {
+    window_->AllocateLocalSurfaceId();
+  }
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized(deadline_policy);
   if (host_->auto_resize_enabled()) {
@@ -2486,16 +2496,33 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
 }
 
 void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
-  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+  WasResized(cc::DeadlinePolicy::UseDefaultDeadline(), viz::LocalSurfaceId());
 }
 
-void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
-                                                     uint64_t sequence_number) {
-  WasResized(cc::DeadlinePolicy::UseDefaultDeadline());
+void RenderWidgetHostViewAura::ResizeDueToAutoResize(
+    const gfx::Size& new_size,
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& local_surface_id) {
+  WasResized(cc::DeadlinePolicy::UseDefaultDeadline(), local_surface_id);
+}
+
+bool RenderWidgetHostViewAura::IsAllocationPending() const {
+  DCHECK(window_);
+  return window_->IsAllocationPending();
+}
+
+void RenderWidgetHostViewAura::SetAllocationPendingFlag() const {
+  DCHECK(window_);
+  window_->SetAllocationPendingFlag();
+}
+
+void RenderWidgetHostViewAura::ClearAllocationPendingFlag() const {
+  DCHECK(window_);
+  window_->ClearAllocationPendingFlag();
 }
 
 void RenderWidgetHostViewAura::DidNavigate() {
-  WasResized(cc::DeadlinePolicy::UseExistingDeadline());
+  WasResized(cc::DeadlinePolicy::UseExistingDeadline(), viz::LocalSurfaceId());
   if (delegated_frame_host_)
     delegated_frame_host_->DidNavigate();
 }
