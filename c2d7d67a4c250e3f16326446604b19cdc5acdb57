@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f6c459e_f38bf21c",
+        "filename": "net/network_error_logging/network_error_logging_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2018-02-07T20:22:00Z",
+      "side": 1,
+      "message": "I\u0027d drop \"Monitored\" here.",
+      "revId": "c2d7d67a4c250e3f16326446604b19cdc5acdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d381e3d8_ef6022a3",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2018-02-07T20:22:00Z",
+      "side": 1,
+      "message": "I\u0027d drop \"Monitored\" here -- URLRequest doesn\u0027t actually check if it\u0027s a monitored origin.",
+      "revId": "c2d7d67a4c250e3f16326446604b19cdc5acdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
