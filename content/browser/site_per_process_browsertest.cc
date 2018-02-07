@@ -73,6 +73,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/public/test/navigation_handle_observer.h"
@@ -1043,7 +1044,11 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ViewBoundsInNestedFrameTest) {
   // deterministic, so this simply verifies that the OOPIF moved from its
   // earlier position.
   gfx::Rect update_rect = filter->last_rect();
-  EXPECT_LT(update_rect.y(), bounds.y() - rwhv_root->GetViewBounds().y());
+  int expected =
+      IsUseZoomForDSFEnabled()
+          ? update_rect.y() / GetFrameDeviceScaleFactor(shell()->web_contents())
+          : update_rect.y();
+  EXPECT_LT(expected, bounds.y() - rwhv_root->GetViewBounds().y());
 }
 
 // This test verifies that scroll bubbling from an OOPIF properly forwards
