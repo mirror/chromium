@@ -15,20 +15,20 @@
 
 #include "base/macros.h"
 
-// Struct Cronet_Exception.
-struct Cronet_Exception {
+// Struct Cronet_Error.
+struct Cronet_Error {
  public:
-  Cronet_Exception();
-  ~Cronet_Exception();
+  Cronet_Error();
+  ~Cronet_Error();
 
-  Cronet_Exception_ERROR_CODE error_code =
-      Cronet_Exception_ERROR_CODE_ERROR_CALLBACK;
-  int32_t internal_error_code = 0;
-  bool immediately_retryable = false;
-  int32_t quic_detailed_error_code = 0;
+  Cronet_Error_ERROR_CODE errorCode = Cronet_Error_ERROR_CODE_ERROR_CALLBACK;
+  std::string message;
+  int32_t internalErrorCode = 0;
+  bool immediatelyRetryable = false;
+  int32_t quicDetailedErrorCode = 0;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(Cronet_Exception);
+  DISALLOW_COPY_AND_ASSIGN(Cronet_Error);
 };
 
 // Struct Cronet_QuicHint.
@@ -136,6 +136,16 @@ struct Cronet_UrlRequestParams {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Cronet_UrlRequestParams);
+};
+
+// Struct Cronet_RequestFinishedInfo.
+struct Cronet_RequestFinishedInfo {
+ public:
+  Cronet_RequestFinishedInfo();
+  ~Cronet_RequestFinishedInfo();
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(Cronet_RequestFinishedInfo);
 };
 
 #endif  // COMPONENTS_CRONET_NATIVE_GENERATED_CRONET_IDL_IMPL_STRUCT_H_
