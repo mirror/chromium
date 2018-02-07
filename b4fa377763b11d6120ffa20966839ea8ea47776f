@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e60f2ed1_b3642386",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-02-07T20:52:26Z",
+      "side": 1,
+      "message": "Yea, removing kShowNonMdLogin sgtm.",
+      "parentUuid": "921f9b2b_e02aedff",
+      "revId": "b4fa377763b11d6120ffa20966839ea8ea47776f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59ff2b4c_4c6fd3ea",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/pin_keyboard.js",
         "patchSetId": 3
