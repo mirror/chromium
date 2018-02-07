@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fecf2562_dc936e2f",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f57225c_f1b39b76",
+      "range": {
+        "startLine": 85,
+        "startChar": 15,
+        "endLine": 85,
+        "endChar": 74
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32cc9a51_3e0625b8",
         "filename": "media/base/pipeline.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dfb743_f71f34dc",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32cc9a51_3e0625b8",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "eda062ba_8a28a57e",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c65a1730_efe9405c",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 41
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "135f6868_ee24e18c",
         "filename": "media/base/pipeline.h",
         "patchSetId": 3
@@ -102,6 +174,24 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba91041_1f71dfe9",
+        "filename": "media/base/pipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "sgtm, I\u0027ll send a separate CL to rename IsRunning though.",
+      "parentUuid": "135f6868_ee24e18c",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "562861db_b5bac6f5",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Actually, this is doable with SerialRunner without refactoring, it\u0027s capable of being destroyed midcallback. I\u0027ve cleaned up the code to do this, it\u0027s definitely simpler.",
+      "parentUuid": "a7378b6a_f5918b32",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ec16387_f783381e",
         "filename": "media/base/pipeline_impl.cc",
         "patchSetId": 3
@@ -136,6 +244,24 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78065a0b_a65616b3",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec16387_f783381e",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +285,30 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f3a562_f82addf7",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f571569_50e6f89a",
+      "range": {
+        "startLine": 123,
+        "startChar": 48,
+        "endLine": 123,
+        "endChar": 53
+      },
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "77bf0e2c_2c70f7f0",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "Whoops, yes I confused |state| and |state_|. Fixed.\n\nI agree this is not the most natural code flow, but I feel any simplifications here are better left for a followup CL. There are definitely some complexities around waiting for seek and soon to be waiting for track change that are not obvious here. It\u0027s definitely possible introducing the IsSuspended method allows for some simplification.",
+      "parentUuid": "8203d320_039676b6",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ad5e1c_56c5af55",
         "filename": "media/filters/pipeline_controller.h",
         "patchSetId": 3
@@ -247,6 +415,24 @@
       "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b6b3d3_49ea9b27",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2018-02-07T00:18:19Z",
+      "side": 1,
+      "message": "if (base::Feature \u0026\u0026 preload \u003d\u003d metadata)\n  start_type \u003d has_poster ? kSuspendedStart : kStartSuspendedForAudioOnly;\nelse\n  start_type \u003d kNormal;",
+      "parentUuid": "e4ad5e1c_56c5af55",
+      "revId": "77ca620fa55d68fe20a0ce78dc8d68642b98134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
