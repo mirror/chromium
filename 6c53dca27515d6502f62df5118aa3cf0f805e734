@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a055d4_3be52f27",
+        "filename": "third_party/WebKit/Source/platform/mac/ScrollAnimatorMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-02-07T23:15:46Z",
+      "side": 1,
+      "message": "What happens if there is no horizontal scrollbar? Will this crash?\n\nI can\u0027t read Objective C too well :)",
+      "revId": "6c53dca27515d6502f62df5118aa3cf0f805e734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
