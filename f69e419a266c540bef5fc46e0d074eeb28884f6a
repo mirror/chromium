@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8b2acdf_f283ce7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-07T21:28:31Z",
+      "side": 1,
+      "message": "I am probably misreading this, but making content depend on ContentView (as opposite to contain it inside) does not change anything in the terms of dependencies and what belongs where.\n\nIf you say that embedders are providing ContentView to content/, does it mean you plan on reversing the content-\u003eContentView dependency somehow?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd5c13a_e065d4df",
+        "filename": "content/shell/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-07T21:28:31Z",
+      "side": 1,
+      "message": "bikeshedding: I\u0027d say components/content_view is too generic for android-specific stuff. WDYT about android_content_view?",
+      "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
