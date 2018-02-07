@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddf32bcc_232f206e",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "Thinking about this, should this actually be part of test setup instead?",
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8d66ae_93f49f4d",
+        "filename": "content/browser/renderer_host/input/touch_action_browsertest.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "nit: Since I think this has no external use, no need to put this in a separate method. We can just set the variable in TearDown / Setup",
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d08e07_dfce7a0c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "We should have an actual bug filed about this.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17074e8_90750598",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "Since accumulated pinch scale assumes that pinch may be allowed as far as I can tell, this seems like it could cause a discrepancy in scroll distance. i.e. if pinch zoom turns out to later not be allowed we should technically undo the scaling on the accumulated scrolling.\n\nSimilarly if scrolling is whitelisted it will immediately scroll by the scaled amount I think.",
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8aa98ab_a0979981",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "Given that the whitelisted touch action is overly restrictive, we may erroneously turn double taps into taps if we don\u0027t know the real touch action setting allow_current_double_tap_event_ based on the whitelisted action.",
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c52855_d4218f25",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2018-02-07T16:12:09Z",
+      "side": 1,
+      "message": "Thinking this through, won\u0027t this allow a double tap if we still don\u0027t know the real touch action?",
+      "revId": "04fb1419de8a99766e32c20f06f68bded0d47838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
