@@ -154,6 +154,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
       blink::WebLayoutAndPaintAsyncCallback* callback) override;
   void CompositeAndReadbackAsync(
       blink::WebCompositeAndReadbackAsyncCallback* callback) override;
+  void SynchronouslyCompositeNoRaster() override;
   void SetDeferCommits(bool defer_commits) override;
   void RegisterViewportLayers(
       const blink::WebLayerTreeView::ViewportLayers& viewport_layers) override;
@@ -238,7 +239,8 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void LayoutAndUpdateLayers();
   void InvokeLayoutAndPaintCallback();
   bool CompositeIsSynchronous() const;
-  void SynchronouslyComposite();
+  void SynchronouslyComposite(bool raster,
+                              std::unique_ptr<cc::SwapPromise> swap_promise);
 
   RenderWidgetCompositorDelegate* const delegate_;
   CompositorDependencies* const compositor_deps_;
