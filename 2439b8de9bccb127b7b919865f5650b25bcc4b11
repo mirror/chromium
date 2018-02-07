@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4be46d2a_eda02585",
+        "filename": "chromecast/public/media/media_pipeline_backend.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2018-02-07T08:36:20Z",
+      "side": 1,
+      "message": "Caller needs to keep a reference to the buffer anyway, otherwise when deleting the decryptor during pipeline flush, it will cause memory leak.\n\nI guess your suggestion is to static_cast CastDecoderBuffer to DecoderBufferBase in the callback so that caller won\u0027t need a queue, right? If not, what\u0027s the purpose for returning buffer here? Compare it with the caller\u0027s reference and fail decryption when they don\u0027t match?",
+      "parentUuid": "1b357199_8ba21c98",
+      "range": {
+        "startLine": 203,
+        "startChar": 37,
+        "endLine": 203,
+        "endChar": 49
+      },
+      "revId": "2439b8de9bccb127b7b919865f5650b25bcc4b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "326dadee_7a85eaac",
         "filename": "chromecast/public/media/media_pipeline_backend.h",
         "patchSetId": 5
