@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899865c1_465f1ca2",
+        "filename": "chrome/browser/extensions/extension_keybinding_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "nit: `extensions::` not needed",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 19
+      },
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de94caa_3ad23888",
+        "filename": "chrome/browser/extensions/extension_keybinding_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "perhaps\n\n  // If media keys were not already being watched, this must have been the first.\n  DCHECK(Command::IsMediaKey(accelerator));",
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c30adec_6b33a7ff",
+        "filename": "chrome/browser/extensions/extension_keybinding_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "nit:\n  return NotifyEventTargets(accelerator)\n      ? ui::MediaKeysListener::MediaKeysHandleResult::kSuppressPropagation\n      : ui::MediaKeysListener::MediaKeysHandleResult::kIgnore;",
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe3eb5b_ca8dfd7f",
+        "filename": "chrome/browser/extensions/global_shortcut_listener_mac.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "public ui::MediaKeysListener::Delegate",
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7c6295_de585b59",
+        "filename": "ui/base/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "move into the main list above",
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e2a01c_87303cfb",
+        "filename": "ui/base/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-02-07T00:21:27Z",
+      "side": 1,
+      "message": "media_keys_listener_empty.cc -\u003e media_keys_listener_stub.cc",
+      "revId": "2b7498986bfd97bec9510cad5f43ce46d128a4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
