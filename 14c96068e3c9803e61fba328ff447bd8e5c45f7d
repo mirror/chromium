@@ -87,6 +87,24 @@
       "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63cede63_8919aa01",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-02-07T10:09:24Z",
+      "side": 1,
+      "message": "The way I test was wrong. I expect that adding whitelist to _permission_features will work if it\u0027s tested correctly.",
+      "parentUuid": "436ca017_a3576500",
+      "revId": "14c96068e3c9803e61fba328ff447bd8e5c45f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
