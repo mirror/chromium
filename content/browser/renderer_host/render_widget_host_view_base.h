@@ -21,6 +21,7 @@
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
+#include "content/browser/renderer_host/scoped_allocation_pending_lock.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/common/input_event_ack_state.h"
@@ -95,6 +96,13 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                                                 public IPC::Listener {
  public:
   ~RenderWidgetHostViewBase() override;
+
+  virtual bool IsAllocationPending() const;
+  virtual void SetAllocationPendingFlag() const;
+  virtual void ClearAllocationPendingFlag() const;
+  ScopedAllocationPendingLock GetAllocationPendingLock() {
+    return ScopedAllocationPendingLock(this);
+  }
 
   float current_device_scale_factor() const {
     return current_device_scale_factor_;
