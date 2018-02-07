@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13e52aaa_da6b5255",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-07T21:05:38Z",
+      "side": 1,
+      "message": "Talked about this with wez, we thought that exclusion lists are a better representation of the intent behind temporary exceptions.",
+      "parentUuid": "94062bd4_01f38372",
+      "revId": "c09ce3d408b493aa9f5bfd1e202ef8faa3865ee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5704964f_45d8e624",
         "filename": "testing/test.gni",
         "patchSetId": 1
