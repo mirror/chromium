@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e60090_ed6681a2",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2018-02-07T01:58:44Z",
+      "side": 1,
+      "message": "I noticed that you used Member here rather than TraceWrapperMember. Just want to make sure this is the intended behavior - there\u0027s no problem otherwise.\n\nFYI (I had to double check I remembered this correctly), the distinction is that using Member, expando properties on the XRDevice can be lost, if you do, e.g.:\n{\n  let xrdevice \u003d createXRDevice(); // or whatever\n  xrdevice.foo \u003d \"bar\";\n  gl.setCompatibleXRDevice(xrdevice);\n}\n// ... some time later, garbage is collected, and then\ngl.getContextAttributes().compatibleXRDevice.foo; // might be undefined because the wrapper was garbage collected.\n\nThis behavior should be testable using --js-flags\u003d--expose-gc + window.gc(), if you want to test it (we do this in the WebGL CTS).",
+      "revId": "10be84c55826ff341f7f6a2d091ee41436285930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
