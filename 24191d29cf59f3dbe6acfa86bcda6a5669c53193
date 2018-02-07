@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690433fd_7e832627",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/UkmIncognitoTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-02-07T19:58:28Z",
+      "side": 1,
+      "message": "Maybe we should convert this to return a boolean?",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "24191d29cf59f3dbe6acfa86bcda6a5669c53193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
