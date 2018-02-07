@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be2e653_f37418e2",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1735,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2018-02-07T20:21:41Z",
+      "side": 1,
+      "message": "During initialization, GetFrameWidget() returns null, where before RenderViewImpl::webview() was guaranteed non-null. That means we now skip setting the device scale factor at startup (in InitializeLayerTreeView). Since RenderWidget::device_scale_factor_ will be set, we may never set the correct DSF unless it changes.",
+      "revId": "3c07b33798715fee176f564bc53a341489b02956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
