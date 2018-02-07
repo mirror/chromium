@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <iostream>
 #include <tuple>
 #include <utility>
 
@@ -32,6 +33,7 @@
 #include "components/viz/common/gl_helper.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/compositor_frame_metadata.h"
+#include "components/viz/common/surfaces/child_local_surface_id_allocator.h"
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -2449,6 +2451,44 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithBrowserInitiatedResize) {
     EXPECT_NE(local_surface_id1, local_surface_id3);
     EXPECT_NE(local_surface_id2, local_surface_id3);
   }
+}
+
+// This test verifies that in AutoResize mode a child-allocated
+// viz::LocalSurfaceId will be properly routed and stored in the parent.
+TEST_F(RenderWidgetHostViewAuraTest, ChildAllocationAcceptedInParent) {
+#if !defined(USE_AURA)
+  // Only Aura platforms support child allocation of viz::LocalSurfaceIds
+  return;
+#endif
+  view_->InitAsChild(nullptr);
+  aura::client::ParentWindowWithContext(
+      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
+      gfx::Rect());
+  sink_->ClearMessages();
+  viz::LocalSurfaceId local_surface_id1(view_->GetLocalSurfaceId());
+  EXPECT_TRUE(local_surface_id1.is_valid());
+
+  widget_host_->SetAutoResize(true, gfx::Size(50, 50), gfx::Size(100, 100));
+  ViewHostMsg_ResizeOrRepaint_ACK_Params params;
+  params.view_size = gfx::Size(75, 75);
+  params.sequence_number = 1;
+  viz::ChildLocalSurfaceIdAllocator child_allocator;
+  child_allocator.UpdateParentSequenceAndNonce(
+      local_surface_id1.parent_sequence_number(), local_surface_id1.nonce());
+  viz::LocalSurfaceId local_surface_id2 = child_allocator.GenerateId();
+  params.child_allocated_local_surface_id = local_surface_id2;
+  widget_host_->OnResizeOrRepaintACK(params);
+
+  // RenderWidgetHostImpl has delayed auto-resize processing. Yield here to
+  // let it complete.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                run_loop.QuitClosure());
+  run_loop.Run();
+
+  viz::LocalSurfaceId local_surface_id3(view_->GetLocalSurfaceId());
+  EXPECT_NE(local_surface_id1, local_surface_id3);
+  EXPECT_EQ(local_surface_id2, local_surface_id3);
 }
 
 // Checks that InputMsg_CursorVisibilityChange IPC messages are dispatched

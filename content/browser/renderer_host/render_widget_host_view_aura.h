@@ -206,6 +206,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnSynchronizedDisplayPropertiesChanged() override;
   void ResizeDueToAutoResize(const gfx::Size& new_size,
                              uint64_t sequence_number) override;
+
+  bool IsAllocationPending() const override;
+  void SetAllocationPendingFlag() const override;
+  void ClearAllocationPendingFlag() const override;
+
   void DidNavigate() override;
 
   // Overridden from ui::TextInputClient:
@@ -375,6 +380,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            SkippedDelegatedFrames);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
                            ResizeAfterReceivingFrame);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           ChildGeneratedResizeRoutesLocalSurfaceId);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, MissingFramesDontLock);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, OutputSurfaceIdChange);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
@@ -426,7 +433,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   void UpdateCursorIfOverSelf();
 
-  void WasResized(const cc::DeadlinePolicy& deadline_policy);
+  void WasResized(const cc::DeadlinePolicy& deadline_policy,
+                  const viz::LocalSurfaceId& child_allocated_local_surface_id);
 
   // Tracks whether SnapToPhysicalPixelBoundary() has been called.
   bool has_snapped_to_boundary() { return has_snapped_to_boundary_; }
