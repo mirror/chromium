@@ -30,6 +30,8 @@ class URLRequestContext;
 
 namespace network {
 class NetworkService;
+class ResourceScheduler;
+class ResourceSchedulerClient;
 class UDPSocketFactory;
 class URLRequestContextBuilderMojo;
 
@@ -81,9 +83,16 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
 
   NetworkService* network_service() { return network_service_; }
 
+  ResourceScheduler* resource_scheduler() { return resource_scheduler_.get(); }
+
   KeepaliveStatisticsRecorder* keepalive_statistics_recorder() {
     return &keepalive_statistics_recorder_;
   }
+
+  void CreateURLLoaderFactory(
+      mojom::URLLoaderFactoryRequest request,
+      uint32_t process_id,
+      scoped_refptr<ResourceSchedulerClient> resource_scheduler_client);
 
   // mojom::NetworkContext implementation:
   void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request,
@@ -135,6 +144,8 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
 
   NetworkService* const network_service_;
 
+  std::unique_ptr<ResourceScheduler> resource_scheduler_;
+
   // Holds owning pointer to |url_request_context_|. Will contain a nullptr for
   // |url_request_context| when the NetworkContextImpl doesn't own its own
   // URLRequestContext.
@@ -155,6 +166,11 @@ class COMPONENT_EXPORT(NETWORK_SERVICE) NetworkContext
   std::unique_ptr<CookieManager> cookie_manager_;
 
   std::unique_ptr<UDPSocketFactory> udp_socket_factory_;
+
+  int current_resource_scheduler_client_id_ = 0;
+
+  // TODO(yhirano): Consult with switches::kDisableResourceScheduler.
+  constexpr static bool enable_resource_scheduler_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };
