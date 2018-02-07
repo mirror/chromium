@@ -16,6 +16,24 @@
       "revId": "9a82f804f626551baea4236085422ec237eaa922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5d9396_acf16a3f",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-02-07T09:34:41Z",
+      "side": 1,
+      "message": "I think that\u0027s scary.\n\nIn the case of PostTask: it\u0027s reasonable to expect to be able to be deleted on posting or destination sequence as the objects are created on posting sequence and used on target sequence (i.e. they support both).\n\nIn the case of replies though: objects are created on the current sequence and only ever expected to be used again (including deletion) on this same sequence. So they could very well be sequence-affine (e.g. use SequenceLocalStorage and/or TLS). Leaking them if the reply sequence is dead when the reply is ready is the safest thing IMO.\n\nAnd re. changing the contract for replies: that\u0027s not really possible given the number of callsites and possible subtle dependencies on this IMO.",
+      "parentUuid": "a60c1046_1a9ce401",
+      "revId": "9a82f804f626551baea4236085422ec237eaa922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
