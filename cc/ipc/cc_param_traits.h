@@ -7,6 +7,7 @@
 #ifndef CC_IPC_CC_PARAM_TRAITS_H_
 #define CC_IPC_CC_PARAM_TRAITS_H_
 
+#include "base/optional.h"
 #include "cc/ipc/cc_ipc_export.h"
 #include "cc/ipc/cc_param_traits_macros.h"
 #include "cc/paint/filter_operation.h"
@@ -88,6 +89,16 @@ struct CC_IPC_EXPORT ParamTraits<viz::FrameSinkId> {
 template <>
 struct CC_IPC_EXPORT ParamTraits<viz::LocalSurfaceId> {
   typedef viz::LocalSurfaceId param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct CC_IPC_EXPORT ParamTraits<base::Optional<viz::LocalSurfaceId>> {
+  typedef base::Optional<viz::LocalSurfaceId> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,

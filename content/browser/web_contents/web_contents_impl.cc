@@ -2865,7 +2865,8 @@ void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
 void WebContentsImpl::ResizeDueToAutoResize(
     RenderWidgetHostImpl* render_widget_host,
     const gfx::Size& new_size,
-    uint64_t sequence_number) {
+    uint64_t sequence_number,
+    const viz::LocalSurfaceId& local_surface_id) {
   if (render_widget_host != GetRenderViewHost()->GetWidget())
     return;
 
@@ -2883,13 +2884,20 @@ void WebContentsImpl::ResizeDueToAutoResize(
     }
   }
 
-  if (delegate_)
-    delegate_->ResizeDueToAutoResize(this, new_size);
-
   RenderWidgetHostViewBase* view =
       static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
+
+  if (delegate_) {
+    base::Optional<content::ScopedAllocationPendingLock>
+        allocation_pending_lock;
+    if (view)
+      allocation_pending_lock = view->GetAllocationPendingLock();
+
+    delegate_->ResizeDueToAutoResize(this, new_size);
+  }
+
   if (view)
-    view->ResizeDueToAutoResize(new_size, sequence_number);
+    view->ResizeDueToAutoResize(new_size, sequence_number, local_surface_id);
 }
 
 gfx::Size WebContentsImpl::GetAutoResizeSize() {
