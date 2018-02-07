@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "72e1d148_f26ce542",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T08:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bedf79bd_7b25392b",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07733cdc_1d962979",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284d7729_f17b94fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T08:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07733cdc_1d962979",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2b4d2b9c_18a9a7b0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T08:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ab7d83_e65087bd",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec55439e_4ebcb868",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54af1555_27d363c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/contenteditable/contentEditable-slotted-inherit.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-02-07T08:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec55439e_4ebcb868",
+      "range": {
+        "startLine": 39,
+        "startChar": 33,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "f6888379cc23fc484b0a3443889b27cfab2ddaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
