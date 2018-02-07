@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811e476e_84b9a040",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-07T00:53:40Z",
+      "side": 1,
+      "message": "if (!profile-\u003eIsPrimaryProfile())\n  return;",
+      "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
