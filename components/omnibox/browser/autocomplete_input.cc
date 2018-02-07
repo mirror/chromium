@@ -147,15 +147,17 @@ void AutocompleteInput::Init(
       canonicalized_url.is_valid() &&
       (!canonicalized_url.IsStandard() || canonicalized_url.SchemeIsFile() ||
        canonicalized_url.SchemeIsFileSystem() ||
-       !canonicalized_url.host().empty()) &&
-      // Treat "URLs" whose host is a TLD ("http://co.uk") as unlikely to be
-      // navigable. This prevents the alternate nav machinery from attempting
-      // TCP connections to these, which can leak user data. See
-      // crbug.com/669785.
-      !net::registry_controlled_domains::IsRegistry(
-          canonicalized_url,
-          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
-    canonicalized_url_ = canonicalized_url;
+       !canonicalized_url.host().empty())) {
+    // Treat "URLs" whose host is a TLD ("http://co.uk") as unlikely to be
+    // navigable. This prevents the alternate nav machinery from attempting
+    // TCP connections to these, which can leak user data. See
+    // crbug.com/669785.
+    if (!(type_ == metrics::OmniboxInputType::UNKNOWN &&
+          net::registry_controlled_domains::IsRegistry(
+              canonicalized_url,
+              net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES)))
+      canonicalized_url_ = canonicalized_url;
+  }
 }
 
 AutocompleteInput::AutocompleteInput(const AutocompleteInput& other) = default;
