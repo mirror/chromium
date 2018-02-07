@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96899dbc_8f44b12c",
+        "filename": "chrome/browser/extensions/api/preference/preference_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-07T17:09:05Z",
+      "side": 1,
+      "message": "I think this was an unintentional behavior change.  I think it should have been:\n\n} else if (PreferenceAPI::Get(profile)-\u003eDoesExtensionControlPref(\n                       extension-\u003eid(), browser_pref, \u0026from_incognito) \u0026\u0026\n           from_incognito) {\n  ...\n}\n\nNote the ! on the DoesExtensionControlPref value.  Right now, this says \"if the extension does *not* control the pref, restrict it to the normal profile\", which isn\u0027t correct.\n\nLooks like this happened between patch set 4 and 5, as a result of trying to remove the !incognito check but missing the deletion of the unary operator:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/882508/4..5/chrome/browser/extensions/api/preference/preference_helpers.cc\n\nToni, can you confirm that this was accidental?  If so, I\u0027ll see if I can fix it and tweak our tests (they should have caught this, but were racy.)",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "1324ea47d5870af00fccd488d06bb1bf68d00947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
