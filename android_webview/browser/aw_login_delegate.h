@@ -15,7 +15,6 @@
 
 namespace net {
 class AuthChallengeInfo;
-class URLRequest;
 }
 
 namespace android_webview {
@@ -23,8 +22,10 @@ namespace android_webview {
 class AwLoginDelegate :
     public content::ResourceDispatcherHostLoginDelegate {
  public:
-  AwLoginDelegate(net::AuthChallengeInfo* auth_info,
-                  net::URLRequest* request);
+  AwLoginDelegate(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      bool first_auth_attempt);
 
   virtual void Proceed(const base::string16& user,
                        const base::string16& password);
@@ -46,7 +47,6 @@ class AwLoginDelegate :
 
   std::unique_ptr<AwHttpAuthHandler> aw_http_auth_handler_;
   scoped_refptr<net::AuthChallengeInfo> auth_info_;
-  net::URLRequest* request_;
 };
 
 }  // namespace android_webview

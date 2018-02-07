@@ -33,13 +33,6 @@ void ResourceDispatcherHostDelegate::DownloadStarting(
     bool is_new_request,
     std::vector<std::unique_ptr<ResourceThrottle>>* throttles) {}
 
-ResourceDispatcherHostLoginDelegate*
-    ResourceDispatcherHostDelegate::CreateLoginDelegate(
-        net::AuthChallengeInfo* auth_info,
-        net::URLRequest* request) {
-  return nullptr;
-}
-
 bool ResourceDispatcherHostDelegate::HandleExternalProtocol(
     const GURL& url,
     ResourceRequestInfo* info) {

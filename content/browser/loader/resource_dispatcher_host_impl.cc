@@ -30,6 +30,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "base/supports_user_data.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
@@ -78,6 +79,7 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
+#include "content/public/browser/resource_dispatcher_host_login_delegate.h"
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/browser/stream_info.h"
@@ -272,6 +274,14 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
   if (load_flags & net::LOAD_DISABLE_CACHE)
     RecordCacheFlags(HISTOGRAM_DISABLE_CACHE);
 }
+
+const char* kAuthAttemptsKey = "resource_dispatcher_host_impl_auth_attempts";
+
+class UrlRequestAuthAttemptsData : public base::SupportsUserData::Data {
+ public:
+  UrlRequestAuthAttemptsData() : auth_attempts_(0) {}
+  int auth_attempts_;
+};
 
 }  // namespace
 
@@ -565,7 +575,41 @@ ResourceDispatcherHostImpl::CreateLoginDelegate(
   if (!delegate_)
     return nullptr;
 
-  return delegate_->CreateLoginDelegate(auth_info, loader->request());
+  net::URLRequest* request = loader->request();
+
+  UrlRequestAuthAttemptsData* count = static_cast<UrlRequestAuthAttemptsData*>(
+      request->GetUserData(kAuthAttemptsKey));
+
+  if (count == nullptr) {
+    count = new UrlRequestAuthAttemptsData();
+    request->SetUserData(kAuthAttemptsKey, base::WrapUnique(count));
+  }
+
+  ResourceRequestInfo::WebContentsGetter web_contents_getter =
+      ResourceRequestInfo::ForRequest(request)
+          ->GetWebContentsGetterForRequest();
+
+  const content::ResourceRequestInfo* resource_request_info =
+      ResourceRequestInfo::ForRequest(request);
+  DCHECK(resource_request_info);
+  bool is_main_frame = resource_request_info->IsMainFrame();
+
+  GURL url = request->url();
+
+  ResourceDispatcherHostLoginDelegate* login_delegate =
+      GetContentClient()->browser()->CreateLoginDelegate(
+          auth_info, web_contents_getter, is_main_frame, url,
+          (count->auth_attempts_ == 0));
+
+  count->auth_attempts_++;
+
+  if (login_delegate) {
+    login_delegate->set_auth_required_callback(
+        base::Bind(&ResourceDispatcherHostImpl::RunAuthRequiredCallback,
+                   base::Unretained(this), request));
+  }
+
+  return login_delegate;
 }
 
 bool ResourceDispatcherHostImpl::HandleExternalProtocol(ResourceLoader* loader,
@@ -2543,6 +2587,21 @@ bool ResourceDispatcherHostImpl::HasRequestsFromMultipleActiveTabs() {
     }
   }
   return false;
+}
+
+void ResourceDispatcherHostImpl::RunAuthRequiredCallback(
+    net::URLRequest* url_request,
+    const net::AuthCredentials& credentials) {
+  if (!url_request)
+    return;
+
+  if (credentials.Empty()) {
+    url_request->CancelAuth();
+  } else {
+    url_request->SetAuth(credentials);
+  }
+
+  ResourceDispatcherHost::Get()->ClearLoginDelegateForRequest(url_request);
 }
 
 // static

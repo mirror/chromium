@@ -4,34 +4,12 @@
 
 #include "content/shell/browser/shell_resource_dispatcher_host_delegate.h"
 
-#include "base/command_line.h"
-#include "build/build_config.h"
-#include "content/shell/browser/shell_login_dialog.h"
-#include "content/shell/common/shell_switches.h"
-
 namespace content {
 
 ShellResourceDispatcherHostDelegate::ShellResourceDispatcherHostDelegate() {
 }
 
 ShellResourceDispatcherHostDelegate::~ShellResourceDispatcherHostDelegate() {
-}
-
-ResourceDispatcherHostLoginDelegate*
-ShellResourceDispatcherHostDelegate::CreateLoginDelegate(
-    net::AuthChallengeInfo* auth_info, net::URLRequest* request) {
-  if (!login_request_callback_.is_null()) {
-    login_request_callback_.Run();
-    login_request_callback_.Reset();
-    return nullptr;
-  }
-
-#if !defined(OS_MACOSX)
-// TODO: implement ShellLoginDialog for other platforms, drop this #if
-  return nullptr;
-#else
-  return new ShellLoginDialog(auth_info, request);
-#endif
 }
 
 }  // namespace content

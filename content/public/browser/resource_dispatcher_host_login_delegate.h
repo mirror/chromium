@@ -5,8 +5,10 @@
 #ifndef CONTENT_PUBLIC_BROWSER_RESOURCE_DISPATCHER_HOST_LOGIN_DELEGATE_H_
 #define CONTENT_PUBLIC_BROWSER_RESOURCE_DISPATCHER_HOST_LOGIN_DELEGATE_H_
 
+#include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
+#include "net/base/auth.h"
 
 namespace content {
 
@@ -18,13 +20,25 @@ namespace content {
 class CONTENT_EXPORT ResourceDispatcherHostLoginDelegate
     : public base::RefCountedThreadSafe<ResourceDispatcherHostLoginDelegate> {
  public:
+  typedef base::Callback<void(const net::AuthCredentials&)>
+      AuthRequiredCallback;
+
+  ResourceDispatcherHostLoginDelegate();
+
   // Notify the login delegate that the request was cancelled.
   // This function can only be called from the IO thread.
   virtual void OnRequestCancelled() = 0;
 
+  void set_auth_required_callback(
+      const AuthRequiredCallback& auth_required_callback) {
+    auth_required_callback_ = auth_required_callback;
+  }
+
  protected:
   friend class base::RefCountedThreadSafe<ResourceDispatcherHostLoginDelegate>;
-  virtual ~ResourceDispatcherHostLoginDelegate() {}
+  virtual ~ResourceDispatcherHostLoginDelegate();
+
+  AuthRequiredCallback auth_required_callback_;
 };
 
 }  // public content

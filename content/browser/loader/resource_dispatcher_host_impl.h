@@ -682,6 +682,9 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       bool must_download,
       bool is_new_request);
 
+  void RunAuthRequiredCallback(net::URLRequest* url_request,
+                               const net::AuthCredentials& credentials);
+
   // Returns true if there are two or more tabs that are not network 2-quiet
   // (i.e. have at least three outstanding requests).
   bool HasRequestsFromMultipleActiveTabs();

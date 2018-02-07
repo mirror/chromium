@@ -16,7 +16,6 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
-#include "net/url_request/url_request.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
@@ -30,10 +29,12 @@
 // have been called.
 class LoginHandlerViews : public LoginHandler, public views::DialogDelegate {
  public:
-  LoginHandlerViews(net::AuthChallengeInfo* auth_info, net::URLRequest* request)
-      : LoginHandler(auth_info, request),
-        login_view_(NULL),
-        dialog_(NULL) {
+  LoginHandlerViews(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter)
+      : LoginHandler(auth_info, web_contents_getter),
+        login_view_(nullptr),
+        dialog_(nullptr) {
     chrome::RecordDialogCreation(chrome::DialogIdentifier::LOGIN_HANDLER);
   }
 
@@ -148,10 +149,10 @@ class LoginHandlerViews : public LoginHandler, public views::DialogDelegate {
 };
 
 namespace chrome {
-
-LoginHandler* CreateLoginHandlerViews(net::AuthChallengeInfo* auth_info,
-                                      net::URLRequest* request) {
-  return new LoginHandlerViews(auth_info, request);
+LoginHandler* CreateLoginHandlerViews(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  return new LoginHandlerViews(auth_info, web_contents_getter);
 }
 
 }  // namespace chrome

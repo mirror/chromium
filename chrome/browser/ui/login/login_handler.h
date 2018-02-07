@@ -23,13 +23,12 @@ class PopunderPreventer;
 
 namespace content {
 class NotificationRegistrar;
+class StoragePartition;
 class WebContents;
 }  // namespace content
 
 namespace net {
 class AuthChallengeInfo;
-class HttpNetworkSession;
-class URLRequest;
 }  // namespace net
 
 // This is the base implementation for the OS-specific classes that route
@@ -54,12 +53,15 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
     const autofill::PasswordForm& form;
   };
 
-  LoginHandler(net::AuthChallengeInfo* auth_info, net::URLRequest* request);
+  LoginHandler(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter);
 
   // Builds the platform specific LoginHandler. Used from within
   // CreateLoginPrompt() which creates tasks.
-  static LoginHandler* Create(net::AuthChallengeInfo* auth_info,
-                              net::URLRequest* request);
+  static LoginHandler* Create(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter);
 
   void SetInterstitialDelegate(
       const base::WeakPtr<LoginInterstitialDelegate> delegate) {
@@ -138,6 +140,11 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
  private:
   friend LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                          net::URLRequest* request);
+  friend LoginHandler* CreateLoginPrompt(
+      net::AuthChallengeInfo* auth_info,
+      content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+      bool is_main_frame,
+      const GURL& url);
   FRIEND_TEST_ALL_PREFIXES(LoginHandlerTest, DialogStringsAndRealm);
 
   // Starts observing notifications from other LoginHandlers.
@@ -170,6 +177,8 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
 
   // Closes the view_contents from the UI loop.
   void CloseContentsDeferred();
+
+  void GetStoragePartition();
 
   // Get the signon_realm under which this auth info should be stored.
   //
@@ -217,12 +226,7 @@ class LoginHandler : public content::ResourceDispatcherHostLoginDelegate,
   // Who/where/what asked for the authentication.
   scoped_refptr<net::AuthChallengeInfo> auth_info_;
 
-  // The request that wants login data.
-  // This should only be accessed on the IO loop.
-  net::URLRequest* request_;
-
-  // The HttpNetworkSession |request_| is associated with.
-  const net::HttpNetworkSession* http_network_session_;
+  content::StoragePartition* storage_partition_;
 
   // The PasswordForm sent to the PasswordManager. This is so we can refer to it
   // when later notifying the password manager if the credentials were accepted
@@ -300,7 +304,10 @@ class AuthSuppliedLoginNotificationDetails : public LoginNotificationDetails {
 // which can be used to set or cancel authentication programmatically.  The
 // caller must invoke OnRequestCancelled() on this LoginHandler before
 // destroying the net::URLRequest.
-LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
-                                net::URLRequest* request);
+LoginHandler* CreateLoginPrompt(
+    net::AuthChallengeInfo* auth_info,
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool is_main_frame,
+    const GURL& url);
 
 #endif  // CHROME_BROWSER_UI_LOGIN_LOGIN_HANDLER_H_
