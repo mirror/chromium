@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4f45bb_7afe0ac8",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-07T19:30:11Z",
+      "side": 1,
+      "message": "nit: \"}],\" on the same line, like line 709 in the current version",
+      "range": {
+        "startLine": 725,
+        "startChar": 2,
+        "endLine": 726,
+        "endChar": 4
+      },
+      "revId": "a6702e8a615a23ba2b8eabc9d7b993e222e12909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
