@@ -44,22 +44,32 @@ class CHROMEOS_EXPORT CertificateImporterImpl : public CertificateImporter {
   ~CertificateImporterImpl() override;
 
   // CertificateImporter overrides
-  void ImportCertificates(std::unique_ptr<OncParsedCertificates> certificates,
+  void ImportCertificates(const OncParsedCertificates* certificates,
                           ::onc::ONCSource source,
                           DoneCallback done_callback) override;
 
+  void ImportClientCertificates(const OncParsedCertificates* certificates,
+                                ::onc::ONCSource source,
+                                DoneCallback done_callback) override;
+
  private:
-  void RunDoneCallback(DoneCallback callback,
-                       bool success,
-                       net::ScopedCERTCertificateList onc_trusted_certificates);
+  enum class ImportType { kClientCertificatesOnly, kAllCertificates };
+
+  void RunDoneCallback(CertificateImporter::DoneCallback callback,
+                       bool success);
+
+  void ImportCertificates(ImportType import_type,
+                          const OncParsedCertificates* certificates,
+                          ::onc::ONCSource source,
+                          DoneCallback done_callback);
 
   // This is the synchronous implementation of ImportCertificates. It is
   // executed on the given |io_task_runner_|.
-  static void StoreCertificates(
-      ::onc::ONCSource source,
-      DoneCallback done_callback,
-      std::unique_ptr<OncParsedCertificates> certificates,
-      net::NSSCertDatabase* nssdb);
+  static void StoreCertificates(ImportType import_type,
+                                ::onc::ONCSource source,
+                                DoneCallback done_callback,
+                                const OncParsedCertificates* certificates,
+                                net::NSSCertDatabase* nssdb);
 
   // Imports the Server or CA certificate |certificate|. Web trust is only
   // applied if the certificate requests the TrustBits attribute "Web" and if
@@ -69,8 +79,7 @@ class CHROMEOS_EXPORT CertificateImporterImpl : public CertificateImporter {
       ::onc::ONCSource source,
       bool allow_trust_imports,
       const OncParsedCertificates::ServerOrAuthorityCertificate& certificate,
-      net::NSSCertDatabase* nssdb,
-      net::ScopedCERTCertificateList* onc_trusted_certificates);
+      net::NSSCertDatabase* nssdb);
 
   static bool StoreClientCertificate(
       const OncParsedCertificates::ClientCertificate& certificate,

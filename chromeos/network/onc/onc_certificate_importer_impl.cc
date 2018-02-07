@@ -17,9 +17,11 @@
 #include "base/logging.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chromeos/network/network_event_log.h"
+#include "chromeos/network/onc/onc_parsed_certificates.h"
 #include "chromeos/network/onc/onc_utils.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/base/net_errors.h"
@@ -34,11 +36,9 @@ namespace {
 void CallBackOnOriginLoop(
     const scoped_refptr<base::SingleThreadTaskRunner>& origin_loop,
     CertificateImporter::DoneCallback callback,
-    bool success,
-    net::ScopedCERTCertificateList onc_trusted_certificates) {
+    bool success) {
   origin_loop->PostTask(FROM_HERE,
-                        base::BindOnce(std::move(callback), success,
-                                       std::move(onc_trusted_certificates)));
+                        base::BindOnce(std::move(callback), success));
 }
 
 }  // namespace
@@ -55,7 +55,28 @@ CertificateImporterImpl::CertificateImporterImpl(
 CertificateImporterImpl::~CertificateImporterImpl() = default;
 
 void CertificateImporterImpl::ImportCertificates(
-    std::unique_ptr<OncParsedCertificates> certificates,
+    const OncParsedCertificates* certificates,
+    ::onc::ONCSource source,
+    DoneCallback done_callback) {
+  // Permanently importing server or authority certificates is only accepted
+  // from user imports.
+  CHECK(source == ::onc::ONC_SOURCE_USER_IMPORT);
+
+  ImportCertificates(ImportType::kAllCertificates, certificates, source,
+                     std::move(done_callback));
+}
+
+void CertificateImporterImpl::ImportClientCertificates(
+    const OncParsedCertificates* certificates,
+    ::onc::ONCSource source,
+    DoneCallback done_callback) {
+  ImportCertificates(ImportType::kClientCertificatesOnly, certificates, source,
+                     std::move(done_callback));
+}
+
+void CertificateImporterImpl::ImportCertificates(
+    ImportType import_type,
+    const OncParsedCertificates* certificates,
     ::onc::ONCSource source,
     DoneCallback done_callback) {
   VLOG(2) << "ONC file has "
@@ -63,7 +84,6 @@ void CertificateImporterImpl::ImportCertificates(
           << " server/authority certificates, "
           << certificates->client_certificates().size()
           << " client certificates";
-
   // |done_callback| must only be called as long as |this| still exists.
   // Thereforce, call back to |this|. This check of |this| must happen last and
   // on the origin thread.
@@ -78,8 +98,8 @@ void CertificateImporterImpl::ImportCertificates(
 
   // This is the actual function that imports the certificates.
   base::OnceClosure import_certs_callback = base::BindOnce(
-      &StoreCertificates, source, std::move(callback_on_origin_loop),
-      std::move(certificates), target_nssdb_);
+      &StoreCertificates, import_type, source,
+      std::move(callback_on_origin_loop), certificates, target_nssdb_);
 
   // The NSSCertDatabase must be accessed on |io_task_runner_|
   io_task_runner_->PostTask(FROM_HERE, std::move(import_certs_callback));
@@ -87,28 +107,29 @@ void CertificateImporterImpl::ImportCertificates(
 
 // static
 void CertificateImporterImpl::StoreCertificates(
+    ImportType import_type,
     ::onc::ONCSource source,
     DoneCallback done_callback,
-    std::unique_ptr<OncParsedCertificates> certificates,
+    const OncParsedCertificates* certificates,
     net::NSSCertDatabase* nssdb) {
   // Web trust is only granted to certificates imported by the user.
   bool allow_trust_imports = source == ::onc::ONC_SOURCE_USER_IMPORT;
-  net::ScopedCERTCertificateList onc_trusted_certificates;
 
   // Even if the certificate parsing had an error at some point, we try to
   // import the certificates which could be parsed.
   bool success = !certificates->has_error();
 
-  for (const OncParsedCertificates::ServerOrAuthorityCertificate&
-           server_or_authority_cert :
-       certificates->server_or_authority_certificates()) {
-    if (!StoreServerOrCaCertificate(source, allow_trust_imports,
-                                    server_or_authority_cert, nssdb,
-                                    &onc_trusted_certificates)) {
-      success = false;
-    } else {
-      VLOG(2) << "Successfully imported certificate with GUID "
-              << server_or_authority_cert.guid();
+  if (import_type == ImportType::kAllCertificates) {
+    for (const OncParsedCertificates::ServerOrAuthorityCertificate&
+             server_or_authority_cert :
+         certificates->server_or_authority_certificates()) {
+      if (!StoreServerOrCaCertificate(source, allow_trust_imports,
+                                      server_or_authority_cert, nssdb)) {
+        success = false;
+      } else {
+        VLOG(2) << "Successfully imported certificate with GUID "
+                << server_or_authority_cert.guid();
+      }
     }
   }
 
@@ -122,24 +143,21 @@ void CertificateImporterImpl::StoreCertificates(
     }
   }
 
-  std::move(done_callback).Run(success, std::move(onc_trusted_certificates));
+  std::move(done_callback).Run(success);
 }
 
-void CertificateImporterImpl::RunDoneCallback(
-    DoneCallback callback,
-    bool success,
-    net::ScopedCERTCertificateList onc_trusted_certificates) {
+void CertificateImporterImpl::RunDoneCallback(DoneCallback callback,
+                                              bool success) {
   if (!success)
     NET_LOG_ERROR("ONC Certificate Import Error", "");
-  std::move(callback).Run(success, std::move(onc_trusted_certificates));
+  std::move(callback).Run(success);
 }
 
 bool CertificateImporterImpl::StoreServerOrCaCertificate(
     ::onc::ONCSource source,
     bool allow_trust_imports,
     const OncParsedCertificates::ServerOrAuthorityCertificate& certificate,
-    net::NSSCertDatabase* nssdb,
-    net::ScopedCERTCertificateList* onc_trusted_certificates) {
+    net::NSSCertDatabase* nssdb) {
   // Device policy can't import certificates.
   if (source == ::onc::ONC_SOURCE_DEVICE_POLICY) {
     // This isn't a parsing error.
@@ -217,9 +235,6 @@ bool CertificateImporterImpl::StoreServerOrCaCertificate(
       return false;
     }
   }
-
-  if (certificate.web_trust_requested() && onc_trusted_certificates)
-    onc_trusted_certificates->push_back(std::move(x509_cert));
 
   return true;
 }
