@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a6f826a_63cf69d6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-07T18:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc3af6e_1360437b",
+      "revId": "187e38afa176b31f65e339b1990a7ea0af6b5b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc0aba31_979f662a",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls_scrubbing_message.css",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T11:02:44Z",
       "side": 1,
       "message": "What\u0027s going to happen in case of overflow? Should this be `overflow: hidden;`? (surely, we don\u0027t want an overflow but if it happens, we want the bug to be obvious)",
+      "revId": "187e38afa176b31f65e339b1990a7ea0af6b5b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8499c759_2a3006b7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls_scrubbing_message.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2018-02-07T18:24:39Z",
+      "side": 1,
+      "message": "In the case of overflow, e.g. the localized text is too long and spills onto a third line, we just show the third line. I figured that would be better than cutting off the third line, since at least the user could read what was supposed to be there. WDYT? Is the bug more obvious if we use overflow: hidden to hide the third line?",
+      "parentUuid": "fc0aba31_979f662a",
       "revId": "187e38afa176b31f65e339b1990a7ea0af6b5b81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
