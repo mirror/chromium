@@ -40,6 +40,7 @@
 #include "modules/webgl/WebGLExtensionName.h"
 #include "modules/webgl/WebGLTexture.h"
 #include "modules/webgl/WebGLVertexArrayObjectBase.h"
+#include "modules/xr/XRDevice.h"
 #include "platform/Timer.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -608,6 +609,9 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   scoped_refptr<StaticBitmapImage> GetStaticBitmapImage(
       std::unique_ptr<viz::SingleReleaseCallback>* out_release_callback);
 
+  ScriptPromise setCompatibleXRDevice(ScriptState*, XRDevice*);
+  bool IsXRDeviceCompatible(const XRDevice*);
+
  protected:
   friend class EXTDisjointTimerQuery;
   friend class EXTDisjointTimerQueryWebGL2;
@@ -737,6 +741,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   TraceWrapperMember<WebGLProgram> current_program_;
   TraceWrapperMember<WebGLFramebuffer> framebuffer_binding_;
   TraceWrapperMember<WebGLRenderbuffer> renderbuffer_binding_;
+
+  Member<XRDevice> compatible_xr_device_;
 
   HeapVector<TextureUnitState> texture_units_;
   unsigned long active_texture_unit_;
@@ -1695,6 +1701,11 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }
+
+  // Returns true if the context is compatible with the given device as defined
+  // by https://immersive-web.github.io/webxr/spec/latest/#contextcompatibility
+  bool ContextCreatedOnCompatibleAdapter(const XRDevice*);
+
   bool CopyRenderingResultsFromDrawingBuffer(CanvasResourceProvider*,
                                              SourceDrawingBuffer) const;
   void HoldReferenceToDrawingBuffer(DrawingBuffer*);
