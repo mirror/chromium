@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "ab2c6c1d_c7287da6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2018-02-07T23:24:47Z",
+      "side": 1,
+      "message": "Do we really need to add the flag here? For string values, we can just check null before calling this function.",
+      "parentUuid": "8042b343_7d3a894c",
+      "revId": "6705be968b0e1566cb06dd76c1e73b3940aacac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aefaa7d_965053d5",
         "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
         "patchSetId": 6
