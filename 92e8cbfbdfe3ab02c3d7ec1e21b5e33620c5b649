@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5879250_1942bfd5",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-02-07T20:52:52Z",
+      "side": 1,
+      "message": "You\u0027ll likely need to set up a pydeps for this (e.g. https://codesearch.chromium.org/chromium/src/build/android/BUILD.gn?rcl\u003d348bbca831edfbcea84934decaca02c10e1a0c85\u0026l\u003d110)",
+      "revId": "92e8cbfbdfe3ab02c3d7ec1e21b5e33620c5b649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
