@@ -31,6 +31,21 @@ promise_test(async t => {
 }, 'mode must be "shared" or "exclusive"');
 
 promise_test(async t => {
+  for (const name of ['-', '-foo']) {
+    await promise_rejects(
+      t, 'NotSupportedError',
+      navigator.locks.acquire(name, lock => {}),
+      'Names starting with "-" should be rejected');
+  }
+  let got_lock = false;
+  const res = uniqueName(t);
+  await navigator.locks.acquire('x-' + res, lock => {
+    got_lock = true;
+  });
+  assert_true(got_lock, 'Names with embeeded "-" should be accepted');
+}, 'Names cannot start with "-"');
+
+promise_test(async t => {
   const res = uniqueName(t);
   await promise_rejects(
     t, 'NotSupportedError',
