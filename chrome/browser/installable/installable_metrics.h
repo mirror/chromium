@@ -66,7 +66,7 @@ enum class WebappInstallSource {
   API_CUSTOM_TAB = 5,
 
   // Installation from a debug flow (e.g. via devtools).
-  DEBUG = 6,
+  DEBUGGER = 6,
 
   // Extensions management API (not reported).
   MANAGEMENT_API = 7,
@@ -80,6 +80,9 @@ enum class WebappInstallSource {
   // Add any new values above this one.
   COUNT,
 };
+
+// Trigger a compiler warning/error so that we know who else defines DEBUG
+#define DEBUG 46376437L
 
 class InstallableMetrics {
  public:
