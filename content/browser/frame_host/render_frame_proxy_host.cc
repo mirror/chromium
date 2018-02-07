@@ -23,6 +23,7 @@
 #include "content/browser/site_instance_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/wrapper_shared_url_loader_factory.h"
 #include "content/public/browser/browser_thread.h"
 #include "ipc/ipc_message.h"
 
@@ -267,6 +268,25 @@ void RenderFrameProxyHost::OnOpenURL(
   GURL validated_url(params.url);
   GetProcess()->FilterURL(false, &validated_url);
 
+  mojo::ScopedMessagePipeHandle blob_url_loader_factory_handle(
+      params.blob_url_loader_factory);
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory_ptr(
+      network::mojom::URLLoaderFactoryPtrInfo(
+          std::move(blob_url_loader_factory_handle),
+          network::mojom::URLLoaderFactory::Version_));
+  scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory;
+  if (blob_url_loader_factory_ptr) {
+    if (!validated_url.SchemeIsBlob()) {
+      bad_message::ReceivedBadMessage(
+          GetProcess(),
+          bad_message::RFPH_BLOB_URL_LOADER_FACTORY_FOR_NON_BLOB_URL);
+      return;
+    }
+    blob_url_loader_factory =
+        base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
+            std::move(blob_url_loader_factory_ptr));
+  }
+
   // Verify that we are in the same BrowsingInstance as the current
   // RenderFrameHost.
   RenderFrameHostImpl* current_rfh = frame_tree_node_->current_frame_host();
@@ -297,7 +317,7 @@ void RenderFrameProxyHost::OnOpenURL(
       params.referrer, ui::PAGE_TRANSITION_LINK, GlobalRequestID(),
       params.should_replace_current_entry, params.uses_post ? "POST" : "GET",
       params.resource_request_body, params.extra_headers,
-      params.suggested_filename);
+      params.suggested_filename, std::move(blob_url_loader_factory));
 }
 
 void RenderFrameProxyHost::OnRouteMessageEvent(

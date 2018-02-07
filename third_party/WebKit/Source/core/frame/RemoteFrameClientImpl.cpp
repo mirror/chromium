@@ -109,11 +109,14 @@ base::UnguessableToken RemoteFrameClientImpl::GetDevToolsFrameToken() const {
   return base::UnguessableToken::Create();
 }
 
-void RemoteFrameClientImpl::Navigate(const ResourceRequest& request,
-                                     bool should_replace_current_entry) {
+void RemoteFrameClientImpl::Navigate(
+    const ResourceRequest& request,
+    bool should_replace_current_entry,
+    network::mojom::blink::URLLoaderFactoryPtr blob_url_loader_factory) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->Navigate(WrappedResourceRequest(request),
-                                   should_replace_current_entry);
+    web_frame_->Client()->Navigate(
+        WrappedResourceRequest(request), should_replace_current_entry,
+        blob_url_loader_factory.PassInterface().PassHandle());
   }
 }
 

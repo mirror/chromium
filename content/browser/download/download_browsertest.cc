@@ -44,6 +44,7 @@
 #include "content/public/browser/resource_throttle.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_paths.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/webplugininfo.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -65,6 +66,7 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -2768,6 +2770,41 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeInvalidURL) {
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, DownloadAttributeBlobURL) {
+  GURL document_url =
+      embedded_test_server()->GetURL("/download/download-attribute-blob.html");
+  DownloadItem* download = StartDownloadAndReturnItem(shell(), document_url);
+  WaitForCompletion(download);
+
+  EXPECT_STREQ(FILE_PATH_LITERAL("suggested-filename.txt"),
+               download->GetTargetFilePath().BaseName().value().c_str());
+}
+
+class DownloadContentTestWithMojoBlobURLs : public DownloadContentTest {
+ public:
+  DownloadContentTestWithMojoBlobURLs() {
+    scoped_feature_list_.InitAndEnableFeature(
+        network::features::kNetworkService);
+  }
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    DownloadContentTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kEnableBlinkFeatures,
+                                    "MojoBlobURLs");
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+#if defined(OS_ANDROID)
+// Times out on android due to its dependency on network service.
+#define MAYBE_DownloadAttributeBlobURL DISABLED_DownloadAttributeBlobURL
+#else
+#define MAYBE_DownloadAttributeBlobURL DownloadAttributeBlobURL
+#endif
+
+IN_PROC_BROWSER_TEST_F(DownloadContentTestWithMojoBlobURLs,
+                       MAYBE_DownloadAttributeBlobURL) {
   GURL document_url =
       embedded_test_server()->GetURL("/download/download-attribute-blob.html");
   DownloadItem* download = StartDownloadAndReturnItem(shell(), document_url);

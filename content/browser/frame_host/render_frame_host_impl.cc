@@ -1447,6 +1447,26 @@ void RenderFrameHostImpl::OnFrameFocused() {
 void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
   GURL validated_url(params.url);
   GetProcess()->FilterURL(false, &validated_url);
+
+  mojo::ScopedMessagePipeHandle blob_url_loader_factory_handle(
+      params.blob_url_loader_factory);
+  network::mojom::URLLoaderFactoryPtr blob_url_loader_factory_ptr(
+      network::mojom::URLLoaderFactoryPtrInfo(
+          std::move(blob_url_loader_factory_handle),
+          network::mojom::URLLoaderFactory::Version_));
+  scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory;
+  if (blob_url_loader_factory_ptr) {
+    if (!validated_url.SchemeIsBlob()) {
+      bad_message::ReceivedBadMessage(
+          GetProcess(),
+          bad_message::RFH_BLOB_URL_LOADER_FACTORY_FOR_NON_BLOB_URL);
+      return;
+    }
+    blob_url_loader_factory =
+        base::MakeRefCounted<WrapperSharedURLLoaderFactory>(
+            std::move(blob_url_loader_factory_ptr));
+  }
+
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanReadRequestBody(
           GetSiteInstance(), params.resource_request_body)) {
     bad_message::ReceivedBadMessage(GetProcess(),
@@ -1470,7 +1490,8 @@ void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
       this, validated_url, params.uses_post, params.resource_request_body,
       params.extra_headers, params.referrer, params.disposition,
       params.should_replace_current_entry, params.user_gesture,
-      params.triggering_event_info, params.suggested_filename);
+      params.triggering_event_info, params.suggested_filename,
+      std::move(blob_url_loader_factory));
 }
 
 void RenderFrameHostImpl::CancelInitialHistoryLoad() {

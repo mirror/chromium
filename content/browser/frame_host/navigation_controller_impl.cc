@@ -252,6 +252,21 @@ std::unique_ptr<NavigationEntry> NavigationController::CreateNavigationEntry(
     bool is_renderer_initiated,
     const std::string& extra_headers,
     BrowserContext* browser_context) {
+  return NavigationControllerImpl::CreateNavigationEntry(
+      url, referrer, transition, is_renderer_initiated, extra_headers,
+      browser_context, nullptr);
+}
+
+// static
+std::unique_ptr<NavigationEntry>
+NavigationControllerImpl::CreateNavigationEntry(
+    const GURL& url,
+    const Referrer& referrer,
+    ui::PageTransition transition,
+    bool is_renderer_initiated,
+    const std::string& extra_headers,
+    BrowserContext* browser_context,
+    scoped_refptr<SharedURLLoaderFactory> blob_url_loader_factory) {
   // Fix up the given URL before letting it be rewritten, so that any minor
   // cleanup (e.g., removing leading dots) will not lead to a virtual URL.
   GURL dest_url(url);
@@ -270,8 +285,8 @@ std::unique_ptr<NavigationEntry> NavigationController::CreateNavigationEntry(
   NavigationEntryImpl* entry = new NavigationEntryImpl(
       nullptr,  // The site instance for tabs is sent on navigation
                 // (WebContents::GetSiteInstance).
-      loaded_url, referrer, base::string16(), transition,
-      is_renderer_initiated);
+      loaded_url, referrer, base::string16(), transition, is_renderer_initiated,
+      blob_url_loader_factory);
   entry->SetVirtualURL(dest_url);
   entry->set_user_typed_url(dest_url);
   entry->set_update_virtual_url_with_url(reverse_on_redirect);
@@ -449,7 +464,8 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
       NavigationEntryImpl* nav_entry = NavigationEntryImpl::FromNavigationEntry(
           CreateNavigationEntry(
               entry->GetURL(), entry->GetReferrer(), entry->GetTransitionType(),
-              false, entry->extra_headers(), browser_context_).release());
+              false, entry->extra_headers(), browser_context_, nullptr)
+              .release());
 
       // Mark the reload type as NO_RELOAD, so navigation will not be considered
       // a reload in the renderer.
@@ -789,7 +805,7 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
           node, -1, -1, nullptr,
           static_cast<SiteInstanceImpl*>(params.source_site_instance.get()),
           params.url, params.referrer, params.redirect_chain, PageState(),
-          "GET", -1);
+          "GET", -1, params.blob_url_loader_factory);
     }
   }
 
@@ -800,7 +816,8 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
     base::ReplaceChars(params.extra_headers, "\n", "\r\n", &extra_headers_crlf);
     entry = NavigationEntryImpl::FromNavigationEntry(CreateNavigationEntry(
         params.url, params.referrer, params.transition_type,
-        params.is_renderer_initiated, extra_headers_crlf, browser_context_));
+        params.is_renderer_initiated, extra_headers_crlf, browser_context_,
+        params.blob_url_loader_factory));
     entry->set_source_site_instance(
         static_cast<SiteInstanceImpl*>(params.source_site_instance.get()));
     entry->SetRedirectChain(params.redirect_chain);
@@ -1170,7 +1187,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
         rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
         params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
         params.url, params.referrer, params.redirects, params.page_state,
-        params.method, params.post_id);
+        params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
         frame_entry, true, rfh->frame_tree_node(),
@@ -1450,7 +1467,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   // The redirected to page should not inherit the favicon from the previous
   // page.
@@ -1518,7 +1535,7 @@ void NavigationControllerImpl::RendererDidNavigateToSamePage(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   DiscardNonCommittedEntries();
 }
@@ -1549,7 +1566,7 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
       rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id));
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */));
 
   std::unique_ptr<NavigationEntryImpl> new_entry =
       GetLastCommittedEntry()->CloneAndReplace(
@@ -1619,7 +1636,7 @@ bool NavigationControllerImpl::RendererDidNavigateAutoSubframe(
       rfh->frame_tree_node(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
       params.url, params.referrer, params.redirects, params.page_state,
-      params.method, params.post_id);
+      params.method, params.post_id, nullptr /* blob_url_loader_factory */);
 
   return send_commit_notification;
 }
