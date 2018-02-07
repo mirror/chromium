@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4494c164_645daf44",
+        "filename": "cc/trees/render_frame_metadata_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "bool enabled() const...",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbaa6cb_f41c47b8",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "This class needs a bunch of documentation.",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65d8a58_55ab7bef",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "Why not just have this always injected? I don\u0027t see the point of only enabling this for a test message.",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f6626_841f62cf",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "nit: drop {",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea6a69b_819ac228",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "So all this code is only for tests? Maybe move this to a separate file? Perhaps in content/tests?",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a81293_ac4f871c",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "render_frame_metadata_observer_ \u003d\n  std::make_unique\u003cRenderFrameMetadataObserverImpl\u003e(routing_id);",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7a587_82bd339a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2735,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-07T01:25:11Z",
+      "side": 1,
+      "message": "How about always installing the observer?",
+      "revId": "9b4f34aed5f8adf25bcd7a926f608fc342b6c8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
