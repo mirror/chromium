@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca144a8f_afbfb66c",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2018-02-07T23:05:35Z",
+      "side": 0,
+      "message": "This was inlined into OpenPDFParamsParser.getViewportFromUrlParams() now that we can send PDFViewer.postMessage() as callback.",
+      "revId": "5c0dbe25a50aa420d01598317a91612b0a6bdce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
