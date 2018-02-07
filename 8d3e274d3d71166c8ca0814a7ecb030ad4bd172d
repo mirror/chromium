@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b1a5afb_36a5141d",
+        "filename": "third_party/WebKit/LayoutTests/fast/js/webidl-type-mapping.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-02-07T09:58:25Z",
+      "side": 1,
+      "message": "nit: Remove spaces at the end of line.",
+      "range": {
+        "startLine": 642,
+        "startChar": 50,
+        "endLine": 642,
+        "endChar": 54
+      },
+      "revId": "8d3e274d3d71166c8ca0814a7ecb030ad4bd172d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
