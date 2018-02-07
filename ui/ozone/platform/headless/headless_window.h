@@ -5,6 +5,8 @@
 #ifndef UI_OZONE_PLATFORM_HEADLESS_HEADLESS_WINDOW_H_
 #define UI_OZONE_PLATFORM_HEADLESS_HEADLESS_WINDOW_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
@@ -32,6 +34,8 @@ class HeadlessWindow : public PlatformWindow {
   void PrepareForShutdown() override;
   void SetCapture() override;
   void ReleaseCapture() override;
+  void LockKeys(const std::vector<int>& native_key_codes) override;
+  void UnlockKeys() override;
   void ToggleFullscreen() override;
   void Maximize() override;
   void Minimize() override;

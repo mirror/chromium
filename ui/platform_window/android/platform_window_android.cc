@@ -196,6 +196,14 @@ void PlatformWindowAndroid::ReleaseCapture() {
   NOTIMPLEMENTED();
 }
 
+void PlatformWindowAndroid::LockKeys(const std::vector<int>& native_key_codes) {
+  NOTIMPLEMENTED();
+}
+
+void PlatformWindowAndroid::UnlockKeys() {
+  NOTIMPLEMENTED();
+}
+
 void PlatformWindowAndroid::ToggleFullscreen() {
   NOTIMPLEMENTED();
 }

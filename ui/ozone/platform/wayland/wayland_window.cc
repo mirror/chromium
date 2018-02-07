@@ -141,6 +141,14 @@ void WaylandWindow::ReleaseCapture() {
   NOTIMPLEMENTED();
 }
 
+void WaylandWindow::LockKeys(const std::vector<int>& native_key_codes) {
+  NOTIMPLEMENTED();
+}
+
+void WaylandWindow::UnlockKeys() {
+  NOTIMPLEMENTED();
+}
+
 void WaylandWindow::ToggleFullscreen() {
   DCHECK(xdg_surface_);
 
