@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "6f73b5c3_530cf070",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-02-07T15:59:52Z",
+      "side": 1,
+      "message": "Would you also mind changing this to \u0027auto ... \u003d Create\u003cDiscButton\u003e()\u0027 ?  We\u0027ve been updating scene creator whenever it gets touched.  Thanks!",
+      "revId": "e7e1f92ab15f0750c32717710166b35d5b8ff0f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c02d5887_6d45db1c",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 3
