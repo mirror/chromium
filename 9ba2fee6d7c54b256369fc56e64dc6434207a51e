@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8498ed0f_bd5a7452",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-02-07T20:24:17Z",
+      "side": 0,
+      "message": "You missed a few overrides of this; the compile failures are real.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 29
+      },
+      "revId": "9ba2fee6d7c54b256369fc56e64dc6434207a51e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
