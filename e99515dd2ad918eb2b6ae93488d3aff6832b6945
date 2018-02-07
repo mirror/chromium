@@ -16,6 +16,24 @@
       "revId": "e99515dd2ad918eb2b6ae93488d3aff6832b6945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e4582d_acbe3020",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2018-02-07T18:52:35Z",
+      "side": 1,
+      "message": "I\u0027m sorry I lack the context here. Why does it need to be duplicated there?",
+      "parentUuid": "401e3897_f41a700a",
+      "revId": "e99515dd2ad918eb2b6ae93488d3aff6832b6945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
