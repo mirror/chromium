@@ -106,7 +106,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdySession : public QuicSession {
   // resulting PRIORITY frame.
   size_t WritePriority(QuicStreamId id,
                        QuicStreamId parent_stream_id,
-                       int weight,
+                       SpdyPriority priority,
                        bool exclusive);
 
   // Write |headers| for |promised_stream_id| on |original_stream_id| in a

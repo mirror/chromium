@@ -35,7 +35,7 @@ enum QuicTransportVersion {
   QUIC_VERSION_41 = 41,  // RST_STREAM, ACK and STREAM frames match IETF format.
   QUIC_VERSION_42 = 42,  // Initial packet number is randomly chosen from
                          // [1:2^31],
-  QUIC_VERSION_43 = 43,  // Use IETF packet header format.
+  QUIC_VERSION_43 = 43,  // Server can receive PRIORITY frames.
 
   // IMPORTANT: if you are adding to this list, follow the instructions at
   // http://sites/quic/adding-and-removing-versions
