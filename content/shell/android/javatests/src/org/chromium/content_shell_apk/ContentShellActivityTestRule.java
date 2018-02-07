@@ -23,7 +23,7 @@ import org.junit.Assert;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.UrlUtils;
-import org.chromium.content.browser.ContentView;
+import org.chromium.components.content_view.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewCoreImpl;
 import org.chromium.content.browser.RenderCoordinates;
@@ -286,8 +286,7 @@ public class ContentShellActivityTestRule extends ActivityTestRule<ContentShellA
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                ContentView cv = ContentView.createContentView(
-                        getActivity(), getContentViewCore());
+                ContentView cv = ContentView.createContentView(getActivity(), getContentViewCore());
                 ((ViewGroup) getContentViewCore().getContainerView().getParent()).addView(cv);
                 getContentViewCore().setContainerView(cv);
                 getContentViewCore().setContainerViewInternals(cv);

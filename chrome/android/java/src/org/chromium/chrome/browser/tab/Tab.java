@@ -98,6 +98,7 @@ import org.chromium.chrome.browser.widget.AnchoredPopupWindow;
 import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.ViewRectProvider;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
+import org.chromium.components.content_view.ContentView;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
