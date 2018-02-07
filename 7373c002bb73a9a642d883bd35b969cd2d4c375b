@@ -16,6 +16,24 @@
       "revId": "7373c002bb73a9a642d883bd35b969cd2d4c375b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc89abe_6f8c783e",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2018-02-07T18:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac8f594_cea516b5",
+      "revId": "7373c002bb73a9a642d883bd35b969cd2d4c375b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
