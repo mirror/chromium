@@ -308,9 +308,11 @@ void WindowPortMus::SetFrameSinkIdFromServer(
 
 const viz::LocalSurfaceId& WindowPortMus::GetOrAllocateLocalSurfaceId(
     const gfx::Size& surface_size_in_pixels) {
+  DCHECK(window_);
   if (last_surface_size_in_pixels_ != surface_size_in_pixels ||
       !local_surface_id_.is_valid()) {
-    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    if (!window_->IsAllocationPending())
+      local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
     last_surface_size_in_pixels_ = surface_size_in_pixels;
   }
 
@@ -402,8 +404,22 @@ WindowPortMus::ChangeSource WindowPortMus::OnTransientChildRemoved(
 }
 
 void WindowPortMus::AllocateLocalSurfaceId() {
-  local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+  DCHECK(window_);
+  if (!window_->IsAllocationPending())
+    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
   UpdatePrimarySurfaceId();
+}
+
+void WindowPortMus::SetLocalSurfaceId(
+    const viz::LocalSurfaceId& local_surface_id) {
+  local_surface_id_ = local_surface_id;
+}
+
+void WindowPortMus::UpdateLocalSurfaceIdWithChildSequenceNumber(
+    const viz::LocalSurfaceId& local_surface_id) {
+  SetLocalSurfaceId(
+      parent_local_surface_id_allocator_.UpdateChildSequenceNumber(
+          local_surface_id.child_sequence_number()));
 }
 
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
@@ -461,7 +477,9 @@ void WindowPortMus::OnPreInit(Window* window) {
 
 void WindowPortMus::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                                float new_device_scale_factor) {
-  if (local_surface_id_.is_valid() && local_layer_tree_frame_sink_) {
+  DCHECK(window_);
+  if (local_surface_id_.is_valid() && local_layer_tree_frame_sink_ &&
+      !window_->IsAllocationPending()) {
     local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
     local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
   }
