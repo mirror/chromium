@@ -165,7 +165,10 @@ void GvrKeyboardDelegate::OnGvrKeyboardEvent(EventType event) {
       auto info = GetTextInfo();
       DCHECK(!pause_keyboard_update_);
       if (info != cached_text_input_info_) {
-        ui_->OnInputEdited(GetTextInfo());
+        EditedText output;
+        output.current = info;
+        output.previous = cached_text_input_info_;
+        ui_->OnInputEdited(output);
         pause_keyboard_update_ = true;
       }
       break;
