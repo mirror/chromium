@@ -11,30 +11,36 @@
 #include <vector>
 
 #include "base/optional.h"
-#include "device/fido/ctap_request_param.h"
 #include "device/fido/public_key_credential_descriptor.h"
+#include "device/fido/u2f_transferable_param.h"
 
 namespace device {
 
 // Object that encapsulates request parameters for AuthenticatorGetAssertion as
 // specified in the CTAP spec.
-class CTAPGetAssertionRequestParam : public CTAPRequestParam {
+class CtapGetAssertionRequestParam : public U2fTransferableParam {
  public:
-  CTAPGetAssertionRequestParam(std::string rp_id,
+  CtapGetAssertionRequestParam(std::string rp_id,
                                std::vector<uint8_t> client_data_hash);
-  CTAPGetAssertionRequestParam(CTAPGetAssertionRequestParam&& that);
-  CTAPGetAssertionRequestParam& operator=(CTAPGetAssertionRequestParam&& other);
-  ~CTAPGetAssertionRequestParam() override;
+  CtapGetAssertionRequestParam(CtapGetAssertionRequestParam&& that);
+  CtapGetAssertionRequestParam& operator=(CtapGetAssertionRequestParam&& other);
+  ~CtapGetAssertionRequestParam() override;
 
   base::Optional<std::vector<uint8_t>> Encode() const override;
-  CTAPGetAssertionRequestParam& SetUserVerificationRequired(
+  bool CheckU2fInteropCriteria() const override;
+  std::vector<uint8_t> GetU2fApplicationParameter() const override;
+  std::vector<uint8_t> GetU2fChallengeParameter() const override;
+  std::vector<std::vector<uint8_t>> GetU2fRegisteredKeysParameter()
+      const override;
+
+  CtapGetAssertionRequestParam& SetUserVerificationRequired(
       bool user_verfication_required);
-  CTAPGetAssertionRequestParam& SetUserPresenceRequired(
+  CtapGetAssertionRequestParam& SetUserPresenceRequired(
       bool user_presence_required);
-  CTAPGetAssertionRequestParam& SetAllowList(
+  CtapGetAssertionRequestParam& SetAllowList(
       std::vector<PublicKeyCredentialDescriptor> allow_list);
-  CTAPGetAssertionRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);
-  CTAPGetAssertionRequestParam& SetPinProtocol(uint8_t pin_protocol);
+  CtapGetAssertionRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);
+  CtapGetAssertionRequestParam& SetPinProtocol(uint8_t pin_protocol);
 
  private:
   std::string rp_id_;
@@ -46,7 +52,7 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
   base::Optional<std::vector<uint8_t>> pin_auth_;
   base::Optional<uint8_t> pin_protocol_;
 
-  DISALLOW_COPY_AND_ASSIGN(CTAPGetAssertionRequestParam);
+  DISALLOW_COPY_AND_ASSIGN(CtapGetAssertionRequestParam);
 };
 
 }  // namespace device

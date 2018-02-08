@@ -116,7 +116,7 @@ TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
       .SetDisplayName("John P. Smith")
       .SetIconUrl(GURL("https://pics.acme.com/00/p/aBjjjpqPb.png"));
 
-  CTAPMakeCredentialRequestParam make_credential_param(
+  CtapMakeCredentialRequestParam make_credential_param(
       std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)),
       std::move(rp), std::move(user),
       PublicKeyCredentialParams({{"public-key", 7}, {"public-key", 257}}));
@@ -196,7 +196,7 @@ TEST(CTAPRequestTest, TestConstructGetAssertionRequest) {
       // clang-format on
   };
 
-  CTAPGetAssertionRequestParam get_assertion_req(
+  CtapGetAssertionRequestParam get_assertion_req(
       "acme.com",
       std::vector<uint8_t>(kClientDataHash, std::end(kClientDataHash)));
 
@@ -233,21 +233,21 @@ TEST(CTAPRequestTest, TestConstructCtapAuthenticatorRequestParam) {
   static constexpr uint8_t kSerializedResetCmd = 0x07;
 
   auto get_info_cmd =
-      CTAPAuthenticatorRequestParam::CreateGetInfoParam().Encode();
+      CtapAuthenticatorRequestParam::CreateGetInfoParam().Encode();
   ASSERT_TRUE(get_info_cmd);
   EXPECT_THAT(*get_info_cmd, testing::ElementsAre(kSerializedGetInfoCmd));
 
   auto get_next_assertion_cmd =
-      CTAPAuthenticatorRequestParam::CreateGetNextAssertionParam().Encode();
+      CtapAuthenticatorRequestParam::CreateGetNextAssertionParam().Encode();
   ASSERT_TRUE(get_next_assertion_cmd);
   EXPECT_THAT(*get_next_assertion_cmd,
               testing::ElementsAre(kSerializedGetNextAssertionCmd));
 
-  auto cancel_cmd = CTAPAuthenticatorRequestParam::CreateCancelParam().Encode();
+  auto cancel_cmd = CtapAuthenticatorRequestParam::CreateCancelParam().Encode();
   ASSERT_TRUE(cancel_cmd);
   EXPECT_THAT(*cancel_cmd, testing::ElementsAre(kSerializedCancelCmd));
 
-  auto reset_cmd = CTAPAuthenticatorRequestParam::CreateResetParam().Encode();
+  auto reset_cmd = CtapAuthenticatorRequestParam::CreateResetParam().Encode();
   ASSERT_TRUE(reset_cmd);
   EXPECT_THAT(*reset_cmd, testing::ElementsAre(kSerializedResetCmd));
 }
