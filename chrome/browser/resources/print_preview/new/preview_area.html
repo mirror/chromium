@@ -12,6 +12,7 @@
 <link rel="import" href="../data/size.html">
 <link rel="import" href="model.html">
 <link rel="import" href="settings_behavior.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-preview-area">
   <template>
@@ -132,12 +133,12 @@
         </div>
 
         <div class="preview-area-preview-failed-message preview-area-message"
-          hidden$="[[!state.previewFailed]]">
+          hidden$="[[!previewFailed_]]">
           $i18n{previewFailed}
         </div>
 
         <div class="preview-area-print-failed preview-area-message"
-          hidden$="[[!state.invalidSettings]]">
+          hidden$="[[!invalidSettings_]]">
           <div>$i18n{invalidPrinterSettings}</div>
           <div class="preview-area-print-failed-action-area">
             <button class="preview-area-open-system-dialog-button">

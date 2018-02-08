@@ -62,7 +62,7 @@ const STICKY_SETTING_NAMES = [
 Polymer({
   is: 'print-preview-model',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /**
@@ -234,6 +234,8 @@ Polymer({
         'destination.id, destination.capabilities, ' +
         'documentInfo.isModifiable, documentInfo.hasCssMediaStyles,' +
         'documentInfo.hasSelection)',
+    'updateSettingsValid_(' +
+        'settings.scaling.valid, settings.pages.valid, settings.copies.valid)',
     'updateRecentDestinations_(destination, destination.capabilities)',
     'stickySettingsChanged_(' +
         'settings.collate.value, settings.layout.value, settings.color.value,' +
@@ -427,6 +429,16 @@ Polymer({
   },
 
   /** @private */
+  updateSettingsValid_: function() {
+    if (!this.settings.copies.valid || !this.settings.scaling.valid ||
+        !this.settings.pages.valid) {
+      this.transitTo(print_preview_new.State.INVALID_TICKET);
+    } else if (this.state == print_preview_new.State.INVALID_TICKET) {
+      this.transitTo(print_preview_new.State.READY);
+    }
+  },
+
+  /** @private */
   stickySettingsChanged_: function() {
     if (!this.initialized_)
       return;
@@ -460,7 +472,7 @@ Polymer({
       landscape: this.getSettingValue('layout'),
       color: destination.getNativeColorModel(
           /** @type {boolean} */ (this.getSettingValue('color'))),
-      headerFooterEnabled: this.getSettingValue('headerFooter'),
+      headerFooterEnabled: false,  // only used in print preview
       marginsType: this.getSettingValue('margins'),
       duplex: this.getSettingValue('duplex') ?
           print_preview_new.DuplexMode.LONG_EDGE :
@@ -468,7 +480,7 @@ Polymer({
       copies: this.getSettingValue('copies'),
       collate: this.getSettingValue('collate'),
       shouldPrintBackgrounds: this.getSettingValue('cssBackground'),
-      shouldPrintSelectionOnly: this.getSettingValue('selectionOnly'),
+      shouldPrintSelectionOnly: false,  // only used in print preview
       previewModifiable: this.documentInfo.isModifiable,
       printToPDF: destination.id ==
           print_preview.Destination.GooglePromotedId.SAVE_AS_PDF,

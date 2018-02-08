@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-scaling-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @type {Object} */

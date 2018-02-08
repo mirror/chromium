@@ -5,13 +5,14 @@
 <link rel="import" href="number_settings_section.html">
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="settings_behavior.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-scaling-settings">
   <template>
     <style include="print-preview-shared checkbox-radio">
     </style>
     <print-preview-number-settings-section max-value=200 min-value=10
-        default-value="100" input-label="$i18n{scalingLabel}"
+        default-value="100" input-label="$i18n{scalingLabel}" state="[[state]]"
         input-string="{{inputString_}}" input-valid="{{inputValid_}}"
         hint-message="$i18n{scalingInstruction}" class="multirow-controls">
       <div slot="opt-outside-content" class="checkbox"

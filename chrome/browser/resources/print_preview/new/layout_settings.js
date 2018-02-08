@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-layout-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   observers: ['onLayoutSettingChange_(settings.layout.value)'],
 

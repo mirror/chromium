@@ -5,6 +5,8 @@
 Polymer({
   is: 'print-preview-number-settings-section',
 
+  behaviors: [StateBehavior],
+
   properties: {
     /** @type {string} */
     inputString: {
@@ -33,6 +35,14 @@ Polymer({
 
     /** @type {string} */
     hintMessage: String,
+  },
+
+  /**
+   * @return {boolean} Whether the input should be disabled.
+   * @private
+   */
+  getDisabled_: function() {
+    return this.getDisabled() && this.inputValid;
   },
 
   /**

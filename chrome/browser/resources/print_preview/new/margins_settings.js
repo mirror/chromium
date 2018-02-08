@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-margins-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   observers: ['onMarginsSettingChange_(settings.margins.value)'],
 

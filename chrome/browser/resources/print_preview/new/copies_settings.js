@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-copies-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @private {string} */

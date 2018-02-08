@@ -14,7 +14,7 @@ const PagesInputErrorState = {
 Polymer({
   is: 'print-preview-pages-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @type {!print_preview.DocumentInfo} */
@@ -69,6 +69,14 @@ Polymer({
     'onRangeChange_(errorState_, rangesToPrint_)',
     'onRadioChange_(allSelected_, customSelected_)'
   ],
+
+  /**
+   * @return {boolean} Whether the controls should be disabled.
+   * @private
+   */
+  getDisabled_: function() {
+    return this.getSetting('pages').valid && this.getDisabled();
+  },
 
   /**
    * @return {!Array<number>}

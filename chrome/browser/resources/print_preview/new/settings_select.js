@@ -17,7 +17,7 @@ print_preview_new.SelectOption;
 Polymer({
   is: 'print-preview-settings-select',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @type {{ option: Array<!print_preview_new.SelectOption> }} */

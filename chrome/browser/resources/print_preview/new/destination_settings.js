@@ -5,6 +5,8 @@
 Polymer({
   is: 'print-preview-destination-settings',
 
+  behaviors: [StateBehavior],
+
   properties: {
     /** @type {!print_preview.Destination} */
     destination: Object,
@@ -26,6 +28,16 @@ Polymer({
   },
 
   observers: ['onDestinationSet_(destination, destination.id)'],
+
+  /**
+   * @return {boolean} Whether the destination change button should be disabled.
+   * @private
+   */
+  isButtonDisabled_: function() {
+    return !this.destinationStore ||
+        (this.getDisabled() &&
+         this.state != print_preview_new.State.INVALID_PRINTER);
+  },
 
   /** @private */
   onDestinationSet_: function() {

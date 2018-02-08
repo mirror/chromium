@@ -5,6 +5,7 @@
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="settings_behavior.html">
 <link rel="import" href="settings_section.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-other-options-settings">
   <template>
@@ -19,12 +20,14 @@
         <label aria-live="polite"
             hidden$="[[!settings.headerFooter.available]]">
           <input type="checkbox" id="header-footer"
+              disabled$="[[getDisabled(state)]]"
               on-change="onHeaderFooterChange_"
               checked$="[[settings.headerFooter.value]]">
           <span>$i18n{optionHeaderFooter}</span>
         </label>
         <label aria-live="polite" hidden$="[[!settings.duplex.available]]">
           <input type="checkbox" id="duplex" on-change="onDuplexChange_"
+              disabled$="[[getDisabled(state)]]"
               checked$="[[settings.duplex.value]]">
           <span>$i18n{optionTwoSided}</span>
         </label>
@@ -32,18 +35,20 @@
             hidden$="[[!settings.cssBackground.available]]">
           <input type="checkbox" id="css-background"
               on-change="onCssBackgroundChange_"
+              disabled$="[[getDisabled(state)]]"
               checked$="[[settings.cssBackground.value]]">
           <span>$i18n{optionBackgroundColorsAndImages}</span>
         </label>
         <label aria-live="polite" hidden$="[[!settings.rasterize.available]]">
           <input type="checkbox" id="rasterize"
-              on-change="onRasterizeChange_"
+              disabled$="[[getDisabled(state)]]" on-change="onRasterizeChange_"
               checked$="[[settings.rasterize.value]]">
           <span>$i18n{optionRasterize}</span>
         </label>
         <label aria-live="polite"
             hidden$="[[!settings.selectionOnly.available]]">
           <input type="checkbox" id="selection-only"
+              disabled$="[[getDisabled(state)]]"
               on-change="onSelectionOnlyChange_"
               checked$="[[settings.selectionOnly.value]]">
           <span>$i18n{optionSelectionOnly}</span>

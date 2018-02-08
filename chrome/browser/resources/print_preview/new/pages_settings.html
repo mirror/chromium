@@ -7,6 +7,7 @@
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="settings_behavior.html">
 <link rel="import" href="settings_section.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-pages-settings">
   <template>
@@ -30,16 +31,19 @@
       <div slot="controls">
         <div class="radio">
           <label><input type="radio" name="pages" id="all-radio-button"
-              checked="{{allSelected_::change}}">
+              checked="{{allSelected_::change}}"
+              disabled$="[[getDisabled_(state, settings.pages.valid)]]">
             <span>$i18n{optionAllPages}</span>
           </label>
           <label class="custom-input-wrapper"
               for="page-settings-custom-input" tabindex=-1>
             <input type="radio" name="pages" id="custom-radio-button"
+                disabled$="[[getDisabled_(state, settings.pages.valid)]]"
                 on-click="onCustomRadioClick_">
             <input class="user-value" type="text"
                 value="{{inputString_::input}}" id="page-settings-custom-input"
                 checked="{{customSelected_::change}}"
+                disabled$="[[getDisabled_(state, settings.pages.valid)]]"
                 pattern="([0-9]*(-)?[0-9]*(,)( )?)*([0-9]*(-)?[0-9]*(,)?( )?)?"
                 on-focus="onCustomInputFocus_" on-blur="onCustomInputBlur_"
                 placeholder="$i18n{examplePageRangeText}"
