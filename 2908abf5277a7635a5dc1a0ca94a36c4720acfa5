@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30072646_dff917f8",
+        "filename": "third_party/WebKit/LayoutTests/css3/blending/background-blend-mode-gif-color-2.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-08T02:43:02Z",
+      "side": 0,
+      "message": "There is already a version which does it with the first frame (https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/css3/blending/background-blend-mode-gif-color.html)",
+      "parentUuid": "4ded7eae_ddefa7af",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d114164_18fd086a",
         "filename": "third_party/WebKit/LayoutTests/images/animated-png.html",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "83264173_588f2694",
+        "filename": "third_party/WebKit/LayoutTests/images/animated-png.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-08T02:43:02Z",
+      "side": 0,
+      "message": "I\u0027ve moved this to a pixel test in BitmapImageTest.",
+      "parentUuid": "4d114164_18fd086a",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00ae4198_2f35aa70",
         "filename": "third_party/WebKit/LayoutTests/images/dispose-previous.html",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2b4603_c1f33768",
+        "filename": "third_party/WebKit/LayoutTests/images/dispose-previous.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-02-08T02:43:02Z",
+      "side": 0,
+      "message": "Moved this to a pixel test in BitmapImageTest.",
+      "parentUuid": "00ae4198_2f35aa70",
+      "revId": "2908abf5277a7635a5dc1a0ca94a36c4720acfa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
