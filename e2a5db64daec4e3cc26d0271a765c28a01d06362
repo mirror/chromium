@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f58246ce_d87638ef",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2018-02-08T01:57:54Z",
+      "side": 1,
+      "message": "By re-adding a delay before running the maintenance tasks, these file\u0027s changes are not strictly needed anymore. Nonetheless, the file copying happening here makes it more robust, as an error in one test that causes any of those files to be deleted will not affect subsequent tests.\n\nSo I was considering leaving them here. romax@ WDYT?",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 550,
+        "endChar": 73
+      },
+      "revId": "e2a5db64daec4e3cc26d0271a765c28a01d06362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
