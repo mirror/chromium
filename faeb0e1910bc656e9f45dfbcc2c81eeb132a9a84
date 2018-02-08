@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f3e7f6_e1bd37b2",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T00:38:07Z",
+      "side": 1,
+      "message": "UpdateFromParent(const LocalSurfaceId\u0026 parent_allocated_local_surface_id); + a comment explaining what this does.",
+      "revId": "faeb0e1910bc656e9f45dfbcc2c81eeb132a9a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22269540_3cda3893",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T00:38:07Z",
+      "side": 1,
+      "message": "UpdateFromChild(const LocalSurfaceId\u0026 child_allocated_local_surface_id); + a comment explaining what this does.",
+      "revId": "faeb0e1910bc656e9f45dfbcc2c81eeb132a9a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
