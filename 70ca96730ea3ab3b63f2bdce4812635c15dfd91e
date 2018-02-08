@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60ab740_7e450546",
+        "filename": "chrome/browser/spellchecker/spell_check_host_chrome_impl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "I hope we can simplify this once the mojom uses EnabledIf. It\u0027s a bit difficult to see how the different pieces work together here, since not-Mac means you get the behavior of the base class. This seems a bit unintuitive.",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9122a077_0d581cb2",
+        "filename": "chrome/browser/spellchecker/spellcheck_message_filter_platform_mac.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Nit: please pass by value, the Google style guide disallows rvalue references except for implementing move semantics (i.e. move constructors and assignment operators) and perfect forwarding",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b832305c_898d10ee",
+        "filename": "components/spellcheck/browser/spellchecker_session_bridge_android.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Nit: please pass by value, rvalue references are only allowed for implementing move semantics",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a62f05_78a6ca6c",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 51
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Are these route IDs render frame routing IDs?\n\n(I\u0027m trying to understand how the document tag that\u0027s calculated from this is used)",
+      "range": {
+        "startLine": 55,
+        "startChar": 56,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c940b1e0_258e967a",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 51
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Should we delete spellcheck_messages.h as well now?",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7291cbe7_8fb741f2",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "This is pretty hacky (and I notice it\u0027s sprinkled throughout the code).\n\n1) Should this be checking embedder_provider_ instead of content::RenderThread::Get()?\n\n2) If we\u0027re checking everywhere before we call this method, shouldn\u0027t GetSpellCheckHost() just DCHECK() that embedder_provider_ is set?\n\n3) How hard would it be to fix the unit tests to just pass in the appropriate thing here? It doesn\u0027t seem nice to have to check these conditions in so many places. It should be easy to create a LocalInterfaceProvider stub that returns interface pointers that are never routed anywhere.\n\n(This same comment applies elsewhere)",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53459d55_4e46bbb9",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Minor nit: can we order methods in the .cc file that they are in the .h file?\n\nSee https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting: \"Function declaration order should match function definition order.\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 1
+      },
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c83f2f_9a552a1b",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:19:40Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "70ca96730ea3ab3b63f2bdce4812635c15dfd91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
