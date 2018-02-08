@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8831dc63_76cb43b3",
+        "filename": "build/linux/sysroot_scripts/install-sysroot.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-02-08T01:28:14Z",
+      "side": 1,
+      "message": "use `ARCH_TRANSLATIONS.get(options.arch, options.arch)`",
+      "revId": "ac80f140e3ac12c250ca65fc5c9f993fd898082a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
