@@ -1523,6 +1523,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"multidevice", flag_descriptions::kMultideviceName,
      flag_descriptions::kMultideviceDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kMultidevice)},
+    {"multidevice-service", flag_descriptions::kMultiDeviceServiceName,
+     flag_descriptions::kMultiDeviceServiceDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kMultiDeviceService)},
     {"mus", flag_descriptions::kUseMusName,
      flag_descriptions::kUseMusDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kMus)},
@@ -3425,8 +3428,7 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableManualFallbacksFillingName,
      flag_descriptions::kEnableManualFallbacksFillingDescription,
      kOsDesktop | kOsAndroid,
-     FEATURE_VALUE_TYPE(
-         password_manager::features::kManualFallbacksFilling)},
+     FEATURE_VALUE_TYPE(password_manager::features::kManualFallbacksFilling)},
 
 #if !defined(OS_ANDROID)
     {"voice-search-on-local-ntp", flag_descriptions::kVoiceSearchOnLocalNtpName,

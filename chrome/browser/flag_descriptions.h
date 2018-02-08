@@ -1650,6 +1650,9 @@ extern const char kMtpWriteSupportDescription[];
 extern const char kMultideviceName[];
 extern const char kMultideviceDescription[];
 
+extern const char kMultiDeviceServiceName[];
+extern const char kMultiDeviceServiceDescription[];
+
 extern const char kNativeSmbName[];
 extern const char kNativeSmbDescription[];
 

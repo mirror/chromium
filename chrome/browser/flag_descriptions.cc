@@ -2656,6 +2656,11 @@ const char kMultideviceName[] = "Enable multidevice features";
 const char kMultideviceDescription[] =
     "Enables UI for controlling multidevice features.";
 
+const char kMultiDeviceServiceName[] = "Enables MultiDevice Services";
+const char kMultiDeviceServiceDescription[] =
+    "Enable Mojo-based services which provides synced device metadata and the "
+    "ability to connect to other devices associated with a Google account.";
+
 const char kNativeSmbName[] = "Native Smb Client";
 const char kNativeSmbDescription[] =
     "If enabled, allows connections to an smb filesystem via Files app";
