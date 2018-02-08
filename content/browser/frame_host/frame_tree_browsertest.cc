@@ -913,7 +913,7 @@ IN_PROC_BROWSER_TEST_F(IsolateIcelandFrameTreeBrowserTest,
       " Site A ------------ proxies for B\n"
       "   +--Site B ------- proxies for A\n"
       "Where A = http://a.com/\n"
-      "      B = http://b.is/",
+      "      B = chrome-error://chromewebdata/",
       FrameTreeVisualizer().DepictFrameTree(root));
 }
 
