@@ -34,6 +34,24 @@
       "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57079e65_397e4c27",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-02-08T00:03:41Z",
+      "side": 1,
+      "message": "Ah, sorry, I must have missed AssociatedBinding when adding these methods. No reason it shouldn\u0027t also have ReportBadMessage (after all AssociatedBindingSet does have it)",
+      "parentUuid": "29672e70_87862261",
+      "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
