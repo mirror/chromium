@@ -16,6 +16,24 @@
       "revId": "0765fa273eb31224337afff09c4878fb119c9995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef570d4_eb5e543b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-02-08T00:14:29Z",
+      "side": 1,
+      "message": "That\u0027s covered in resource-names.html\n\nHmmm... now I wonder if I should move this to that file. Probably.",
+      "parentUuid": "5fdcb545_21b15951",
+      "revId": "0765fa273eb31224337afff09c4878fb119c9995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
