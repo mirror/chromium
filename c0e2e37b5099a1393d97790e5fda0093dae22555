@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fbf4505_d677f5d7",
+        "filename": "services/network/network_context.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-08T02:11:07Z",
+      "side": 1,
+      "message": "Document when this one (over the other one) is called.",
+      "revId": "c0e2e37b5099a1393d97790e5fda0093dae22555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452958bd_31ab5855",
+        "filename": "services/network/network_service_url_loader_factory.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-08T02:11:07Z",
+      "side": 1,
+      "message": "Should this also talk about the situation in the browser process (or in other cases)? In my understanding we didn\u0027t use to have scheduler throttling for loading from the browser process, how would it be processed in the new code? (Sorry if this is already discussed, the discussion thread is long and I haven\u0027t read all)",
+      "revId": "c0e2e37b5099a1393d97790e5fda0093dae22555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31398216_90ee4074",
+        "filename": "services/network/network_service_url_loader_factory.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-08T02:11:07Z",
+      "side": 1,
+      "message": "nit: clien -\u003e client",
+      "revId": "c0e2e37b5099a1393d97790e5fda0093dae22555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9c8ac9_cb30798b",
         "filename": "services/network/url_loader.cc",
         "patchSetId": 38
