@@ -502,6 +502,8 @@ void RootWindowController::Shutdown() {
 
 void RootWindowController::CloseChildWindows() {
   // NOTE: this may be called multiple times.
+  // TODO: Only call this once. The multiple calls cause complexity in the
+  // dependent Shelf and ShelfWidget code.
 
   // Deactivate keyboard container before closing child windows and shutting
   // down associated layout managers.
@@ -536,6 +538,7 @@ void RootWindowController::CloseChildWindows() {
     while (!toplevel_windows.windows().empty())
       delete toplevel_windows.Pop();
   }
+
   // And then remove the containers.
   while (!root->children().empty()) {
     aura::Window* child = root->children()[0];
@@ -545,6 +548,7 @@ void RootWindowController::CloseChildWindows() {
       root->RemoveChild(child);
   }
 
+  // ShelfWidget must outlive ShelfLayoutManager.
   shelf_->DestroyShelfWidget();
 
   aura::client::SetDragDropClient(GetRootWindow(), nullptr);
