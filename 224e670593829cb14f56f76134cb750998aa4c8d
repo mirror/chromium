@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d78018f_1b3cc3c4",
+        "filename": "third_party/WebKit/Source/modules/webdatabase/SQLStatement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-08T02:19:06Z",
+      "side": 1,
+      "message": "What\u0027s a benefit of creating an Impl class? i.e., can we simply use OnSuccessCallback?",
+      "revId": "224e670593829cb14f56f76134cb750998aa4c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
