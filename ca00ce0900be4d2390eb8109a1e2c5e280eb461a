@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f620bb_8c567c8b",
+        "filename": "third_party/WebKit/Source/core/editing/PositionIteratorTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T01:34:10Z",
+      "side": 0,
+      "message": "Thanks to fix this!",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "ca00ce0900be4d2390eb8109a1e2c5e280eb461a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

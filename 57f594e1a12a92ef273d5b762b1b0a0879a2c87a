@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c04b52f_a6ef225e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T01:34:10Z",
+      "side": 1,
+      "message": "Please add 697283. This patch fix the issue 697283 too per changes in\n\"core/editing/PositionIteratorTest.cpp\".",
+      "revId": "57f594e1a12a92ef273d5b762b1b0a0879a2c87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8651a8d3_2c28e6a9",
+        "filename": "third_party/WebKit/LayoutTests/editing/assert_selection.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T01:34:10Z",
+      "side": 1,
+      "message": "Nice!",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 22
+      },
+      "revId": "57f594e1a12a92ef273d5b762b1b0a0879a2c87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
