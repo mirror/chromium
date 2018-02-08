@@ -24,7 +24,7 @@ std::unique_ptr<media::VideoCaptureJpegDecoder> CreateJpegDecoder() {
 
 namespace video_capture {
 
-MockDeviceTest::MockDeviceTest() : ref_factory_(base::Bind(&base::DoNothing)) {}
+MockDeviceTest::MockDeviceTest() : ref_factory_(base::DoNothing()) {}
 
 MockDeviceTest::~MockDeviceTest() = default;
 

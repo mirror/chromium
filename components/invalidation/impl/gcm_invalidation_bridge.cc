@@ -302,15 +302,7 @@ void GCMInvalidationBridge::Unregister() {
   if (gcm_driver_ == nullptr)
     return;
 
-  gcm_driver_->Unregister(
-      kInvalidationsAppId,
-      base::Bind(&GCMInvalidationBridge::UnregisterFinishedNoOp));
-}
-
-// static
-void GCMInvalidationBridge::UnregisterFinishedNoOp(
-    gcm::GCMClient::Result result) {
-  // No-op.
+  gcm_driver_->Unregister(kInvalidationsAppId, base::DoNothing());
 }
 
 void GCMInvalidationBridge::SubscribeForIncomingMessages() {

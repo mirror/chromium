@@ -40,11 +40,10 @@ constexpr base::TimeDelta kMaxLameDuckTime = base::TimeDelta::FromMinutes(5);
 
 int CreateInflightRequest(ServiceWorkerVersion* version) {
   version->StartWorker(ServiceWorkerMetrics::EventType::PUSH,
-                       base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+                       base::DoNothing());
   base::RunLoop().RunUntilIdle();
-  return version->StartRequest(
-      ServiceWorkerMetrics::EventType::PUSH,
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  return version->StartRequest(ServiceWorkerMetrics::EventType::PUSH,
+                               base::DoNothing());
 }
 
 static void SaveStatusCallback(bool* called,
@@ -124,8 +123,7 @@ class ServiceWorkerRegistrationTest : public testing::Test {
   void SetUp() override {
     helper_.reset(new EmbeddedWorkerTestHelper(base::FilePath()));
 
-    context()->storage()->LazyInitializeForTest(
-        base::BindOnce(&base::DoNothing));
+    context()->storage()->LazyInitializeForTest(base::DoNothing());
     base::RunLoop().RunUntilIdle();
   }
 
@@ -396,7 +394,7 @@ class ServiceWorkerActivationTest : public ServiceWorkerRegistrationTest {
         ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
     registration_->SetWaitingVersion(version_2);
     version_2->StartWorker(ServiceWorkerMetrics::EventType::INSTALL,
-                           base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+                           base::DoNothing());
     version_2->SetStatus(ServiceWorkerVersion::INSTALLED);
 
     // Set it to activate when ready. The original version should still be
@@ -708,7 +706,7 @@ class ServiceWorkerRegistrationObjectHostTest
   }
 
   int64_t SetUpRegistration(const GURL& scope, const GURL& script_url) {
-    storage()->LazyInitializeForTest(base::BindOnce(&base::DoNothing));
+    storage()->LazyInitializeForTest(base::DoNothing());
     base::RunLoop().RunUntilIdle();
 
     // Prepare ServiceWorkerRegistration.
