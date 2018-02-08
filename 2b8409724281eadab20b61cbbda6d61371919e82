@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "8870bc3d_46dacbff",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "i\u0027ll defer to your judgement if you\u0027ve tried it and found that it makes the code harder to follow, but the compositing part of this code feels like it\u0027s pretty self-contained, and i have trouble seeing/understanding the overall flow when it\u0027s combined with the locking code like this.",
+      "parentUuid": "b0314fef_12a41a6a",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed79c0c_a03476f5",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
