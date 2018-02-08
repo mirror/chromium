@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/callback_forward.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 
 namespace test {
@@ -17,6 +18,7 @@ class TestAppListControllerDelegate : public AppListControllerDelegate {
   ~TestAppListControllerDelegate() override;
 
   int64_t GetAppListDisplayId() override;
+  void SetAppListDisplayId(int64_t display_id) override;
   void DismissView() override;
   bool IsAppPinned(const std::string& app_id) override;
   void PinApp(const std::string& app_id) override;
