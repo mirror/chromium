@@ -22,6 +22,30 @@
       "revId": "9ba2fee6d7c54b256369fc56e64dc6434207a51e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde8cd0c_00d80122",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-02-08T00:16:46Z",
+      "side": 0,
+      "message": "Spurious line.  Our zlib/contrib/*/* never add this line.  This was the one and only instance of it.  So for consistency, consistency, and consistency, sending it to /dev/null",
+      "parentUuid": "be8a3b2e_dbe86c90",
+      "range": {
+        "startLine": 6,
+        "startChar": 73,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "9ba2fee6d7c54b256369fc56e64dc6434207a51e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
