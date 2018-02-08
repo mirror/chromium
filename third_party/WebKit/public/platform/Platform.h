@@ -76,6 +76,7 @@ class GpuMemoryBufferManager;
 
 namespace service_manager {
 class Connector;
+class InterfaceProvider;
 }
 
 namespace v8 {
@@ -287,7 +288,8 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Cache Storage ----------------------------------------------------------
 
   virtual std::unique_ptr<WebServiceWorkerCacheStorage> CreateCacheStorage(
-      const WebSecurityOrigin&);
+      const WebSecurityOrigin&,
+      service_manager::InterfaceProvider* mojo_provider);
 
   // Gamepad -------------------------------------------------------------
 
