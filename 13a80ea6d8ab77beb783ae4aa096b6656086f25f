@@ -22,6 +22,30 @@
       "revId": "13a80ea6d8ab77beb783ae4aa096b6656086f25f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c26b0bb_910ec702",
+        "filename": "ui/webui/resources/cr_components/cr_components_resources.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-08T00:54:40Z",
+      "side": 1,
+      "message": "This was a previous suggestion of mine in the same CL, in an effort to minimize the size impact of this CL. \n\nBasically, if all users of those files are already bundling them within the generated *vulcanized.html files when optimize_webui\u003dtrue, this files are no longer needed as standalone files. They are only needed in when optimize_webui\u003dfalse.",
+      "parentUuid": "38186d8d_2563c4da",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "13a80ea6d8ab77beb783ae4aa096b6656086f25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
