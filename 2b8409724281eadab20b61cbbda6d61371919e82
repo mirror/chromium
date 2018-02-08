@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b508ae49_bab8d689",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5108287_5f8c5346",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d312cac9_5df2b834",
         "filename": "ash/system/power/power_event_observer.cc",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "993b8615_ccfe70e1",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d312cac9_5df2b834",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 6
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17cddb2c_a4662974",
         "filename": "ash/system/power/power_event_observer.cc",
         "patchSetId": 10
@@ -53,6 +95,24 @@
       "writtenOn": "2018-02-07T22:03:57Z",
       "side": 1,
       "message": "it\u0027s possible for SuspendDone to be called before the lock screen is ready and compositors have been stopped. is this case handled? in particular, will we stop observing compositors as expected if this happens?",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e442c9_06f133a5",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "it will not stop observing compositors here - it will stop observing a compositor when it gets OnCompositingEnded for a compositor, or when the screen is unlocked.\n\nThe idea is not to bind the compositor observing to suspend event, but to lock event.\nWe only care that we see a frame after screen is locked (i.e. not necessarily a frame after suspend started), so this adds compositor observers after lock screen is shown, and once all compositors get through compositing, it marks the state as ready to suspend (i.e. on suspend it will immediately stop compositing and suspend displays)\nThe current SuspendDone handling matches this logic.\n\nThough, if you\u0027d prefer I can switch this up, and have compositor observes start up on SuspendImminent, and block suspend until compositing observers are done (in which case it would make sense to stop compositor observing here).",
+      "parentUuid": "17cddb2c_a4662974",
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +139,30 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc173fb_7492ee9b",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc5b529_7b39b0d1",
+      "range": {
+        "startLine": 145,
+        "startChar": 61,
+        "endLine": 145,
+        "endChar": 73
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "818a7772_21e8f327",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03e92186_042d8680",
+      "range": {
+        "startLine": 148,
+        "startChar": 19,
+        "endLine": 148,
+        "endChar": 26
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29c89d9d_9a9cd3c8",
         "filename": "ash/system/power/power_event_observer.cc",
         "patchSetId": 10
@@ -133,6 +241,24 @@
       "writtenOn": "2018-02-07T22:03:57Z",
       "side": 1,
       "message": "this class is now quite complicated due to this compositing-related code being spread throughout it. would it be possible to move the compositor-observing code into a separate helper class, possibly just defined at the top of this .cc file? specifically, i\u0027m thinking of a class with a simple interface like this:\n\n  // One-shot class that runs a callback after all compositors start and\n  // complete a cycle.\n  class CompositorWatcher {\n   public:\n    explicit CompositorWatcher(base::OnceClosure callback);\n    ...\n  };",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0314fef_12a41a6a",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "yeah, I can do that (this was my initial intention, but then I changed my mind while implementing it).",
+      "parentUuid": "29c89d9d_9a9cd3c8",
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "3a4492ef_15128a13",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed79c0c_a03476f5",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5590d98c_19908461",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -182,6 +332,30 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a036a7b5_88304612",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5590d98c_19908461",
+      "range": {
+        "startLine": 30,
+        "startChar": 52,
+        "endLine": 30,
+        "endChar": 59
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "924eb0db_2c6f694b",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179c09b8_c3331bca",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de954ebf_2185e34e",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -254,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "01996368_2036e682",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de954ebf_2185e34e",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92fce72d_4da54433",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -268,6 +478,24 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3b80f9_3a2807da",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92fce72d_4da54433",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "ab2c5f80_702c396e",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9700bc02_ff5aeea7",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2fed48a_98b8cb37",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -308,6 +560,24 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b961ef_c6d05e3b",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2fed48a_98b8cb37",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -334,6 +604,30 @@
     },
     {
       "key": {
+        "uuid": "19ceaa4a_8ccff085",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5a27ab3_903b1893",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d827c4a6_2d29c961",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -348,6 +642,24 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e58f94_5d9ea336",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d827c4a6_2d29c961",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +680,24 @@
     },
     {
       "key": {
+        "uuid": "ed3fcc80_cd257f3a",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d27759_eae71de4",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "954726d6_6e2c1807",
         "filename": "ash/system/power/power_event_observer.h",
         "patchSetId": 10
@@ -382,6 +712,24 @@
       "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2193a565_8550dd63",
+        "filename": "ash/system/power/power_event_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954726d6_6e2c1807",
+      "revId": "2b8409724281eadab20b61cbbda6d61371919e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
