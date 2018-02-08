@@ -14,6 +14,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/mock_download_item.h"
+#include "content/public/test/mock_download_item_delegate.h"
 #include "content/public/test/mock_download_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/common/extension.h"
@@ -24,7 +25,7 @@ using ::testing::Return;
 using ::testing::ReturnRefOfCopy;
 using ::testing::SaveArg;
 using ::testing::_;
-using content::DownloadItem;
+using download::DownloadItem;
 
 namespace {
 
@@ -74,8 +75,12 @@ DownloadShelfTest::DownloadShelfTest() : profile_(new TestingProfile()) {
   ON_CALL(*download_item_, IsTemporary()).WillByDefault(Return(false));
   ON_CALL(*download_item_, ShouldOpenFileBasedOnExtension())
       .WillByDefault(Return(false));
-  ON_CALL(*download_item_, GetBrowserContext())
-      .WillByDefault(Return(profile()));
+
+  std::unique_ptr<content::MockDownloadItemDelegate> delegate =
+      base::MakeUnique<
+          ::testing::NiceMock<content::MockDownloadItemDelegate>>();
+  ON_CALL(*delegate, GetBrowserContext()).WillByDefault(Return(profile()));
+  download_item_->SetDelegate(std::move(delegate));
 
   download_manager_.reset(
       new ::testing::NiceMock<content::MockDownloadManager>());

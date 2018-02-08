@@ -28,13 +28,13 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/features.h"
+#include "components/download/public/common/download_item.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/download_item.h"
 #include "net/base/filename_util.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
-using content::DownloadItem;
+using download::DownloadItem;
 
 namespace {
 
