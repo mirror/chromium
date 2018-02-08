@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d12afe28_ea551d3b",
+        "filename": "chrome/common/client_hints/client_hints.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-02-08T01:37:32Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t get it... we usually compare origin (scheme/host/port) but not host, say, http://example.com/ and https://example.com:8888/ are completely different origin. Even if we only assume https we still can have different ports. Are we sure that we only care about host?",
+      "revId": "e0edf10e1e970a278a52cc5f6c263da5b9481a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e05cd2b_2ebf7a7d",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 21
