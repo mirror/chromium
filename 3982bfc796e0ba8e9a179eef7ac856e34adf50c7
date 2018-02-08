@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59713b78_ad7b6ee1",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-02-08T02:00:59Z",
+      "side": 1,
+      "message": "@yiyix: Can we DCHECK() here that the transform is always invertible?",
+      "revId": "3982bfc796e0ba8e9a179eef7ac856e34adf50c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
