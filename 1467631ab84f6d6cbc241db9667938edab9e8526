@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3168b398_3a0d047f",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-08T00:49:46Z",
+      "side": 1,
+      "message": "It is a bit odd to modify the input parameters, without mentioning this in the docs. Perhaps just clone |position| instead?",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 16
+      },
+      "revId": "1467631ab84f6d6cbc241db9667938edab9e8526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fdca90_c81d8d2f",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-08T00:49:46Z",
+      "side": 1,
+      "message": "Instead of this, can me make |config| a required parameter for positionDialog_, and provide the default value at line 339 instead? Basically convert the optional param to a required one, at the highest layer possible.",
+      "range": {
+        "startLine": 362,
+        "startChar": 49,
+        "endLine": 362,
+        "endChar": 62
+      },
+      "revId": "1467631ab84f6d6cbc241db9667938edab9e8526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
