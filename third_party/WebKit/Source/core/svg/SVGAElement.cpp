@@ -52,8 +52,7 @@ using namespace HTMLNames;
 inline SVGAElement::SVGAElement(Document& document)
     : SVGGraphicsElement(SVGNames::aTag, document),
       SVGURIReference(this),
-      svg_target_(SVGAnimatedString::Create(this, SVGNames::targetAttr)),
-      was_focused_by_mouse_(false) {
+      svg_target_(SVGAnimatedString::Create(this, SVGNames::targetAttr)) {
   AddToPropertyMap(svg_target_);
 }
 
@@ -165,28 +164,6 @@ bool SVGAElement::SupportsFocus() const {
 
 bool SVGAElement::ShouldHaveFocusAppearance() const {
   return !was_focused_by_mouse_ || SVGGraphicsElement::SupportsFocus();
-}
-
-// TODO(lanwei): Will add the InputDeviceCapabilities when SVGAElement gets
-// focus later, see https://crbug.com/476530.
-void SVGAElement::DispatchFocusEvent(
-    Element* old_focused_element,
-    WebFocusType type,
-    InputDeviceCapabilities* source_capabilities) {
-  if (type != kWebFocusTypePage)
-    was_focused_by_mouse_ = type == kWebFocusTypeMouse;
-  SVGGraphicsElement::DispatchFocusEvent(old_focused_element, type,
-                                         source_capabilities);
-}
-
-void SVGAElement::DispatchBlurEvent(
-    Element* new_focused_element,
-    WebFocusType type,
-    InputDeviceCapabilities* source_capabilities) {
-  if (type != kWebFocusTypePage)
-    was_focused_by_mouse_ = false;
-  SVGGraphicsElement::DispatchBlurEvent(new_focused_element, type,
-                                        source_capabilities);
 }
 
 bool SVGAElement::IsURLAttribute(const Attribute& attribute) const {

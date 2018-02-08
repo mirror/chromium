@@ -537,6 +537,11 @@ class CORE_EXPORT Node : public EventTarget {
   virtual const Node* FocusDelegate() const;
   // This is called only when the node is focused.
   virtual bool ShouldHaveFocusAppearance() const;
+  // This is called to determine if the node was focused using a
+  // device other than a mouse.
+  // This is used to figure out if the node should match the
+  // :focus-visible pseudo class.
+  virtual bool ShouldHaveFocusVisible() const;
 
   // Whether the node is inert:
   // https://html.spec.whatwg.org/multipage/interaction.html#inert
