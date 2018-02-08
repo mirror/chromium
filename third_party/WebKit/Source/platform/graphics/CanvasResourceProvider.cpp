@@ -375,13 +375,15 @@ PaintCanvas* CanvasResourceProvider::Canvas() {
       image_provider = &*canvas_image_provider_;
     }
 
+    const bool automatic_flushing = true;
     if (ColorParams().NeedsSkColorSpaceXformCanvas()) {
       canvas_ = std::make_unique<cc::SkiaPaintCanvas>(
           GetSkSurface()->getCanvas(), ColorParams().GetSkColorSpace(),
-          std::move(image_provider));
+          std::move(image_provider), automatic_flushing);
     } else {
       canvas_ = std::make_unique<cc::SkiaPaintCanvas>(
-          GetSkSurface()->getCanvas(), std::move(image_provider));
+          GetSkSurface()->getCanvas(), std::move(image_provider),
+          automatic_flushing);
     }
   }
 

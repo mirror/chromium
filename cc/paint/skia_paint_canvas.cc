@@ -12,6 +12,7 @@
 #include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
 #include "third_party/skia/include/core/SkMetaData.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/utils/SkNWayCanvas.h"
 
 namespace cc {
@@ -19,20 +20,30 @@ namespace cc {
 const bool SkiaPaintCanvas::kCreateSkiaShaders = true;
 
 SkiaPaintCanvas::SkiaPaintCanvas(SkCanvas* canvas,
-                                 ImageProvider* image_provider)
-    : canvas_(canvas), image_provider_(image_provider) {}
+                                 ImageProvider* image_provider,
+                                 bool automatic_flushing)
+    : canvas_(canvas),
+      image_provider_(image_provider),
+      automatic_flushing_(automatic_flushing) {}
 
 SkiaPaintCanvas::SkiaPaintCanvas(const SkBitmap& bitmap)
-    : canvas_(new SkCanvas(bitmap)), owned_(canvas_) {}
+    : canvas_(new SkCanvas(bitmap)),
+      owned_(canvas_),
+      automatic_flushing_(false) {}
 
 SkiaPaintCanvas::SkiaPaintCanvas(const SkBitmap& bitmap,
                                  const SkSurfaceProps& props)
-    : canvas_(new SkCanvas(bitmap, props)), owned_(canvas_) {}
+    : canvas_(new SkCanvas(bitmap, props)),
+      owned_(canvas_),
+      automatic_flushing_(false) {}
 
 SkiaPaintCanvas::SkiaPaintCanvas(SkCanvas* canvas,
                                  sk_sp<SkColorSpace> target_color_space,
-                                 ImageProvider* image_provider)
-    : canvas_(canvas), image_provider_(image_provider) {
+                                 ImageProvider* image_provider,
+                                 bool automatic_flushing)
+    : canvas_(canvas),
+      image_provider_(image_provider),
+      automatic_flushing_(automatic_flushing) {
   WrapCanvasInColorSpaceXformCanvas(target_color_space);
 }
 
@@ -169,6 +180,7 @@ void SkiaPaintCanvas::drawLine(SkScalar x0,
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   SkiaPaintCanvas::canvas_->drawLine(x0, y0, x1, y1, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawRect(const SkRect& rect, const PaintFlags& flags) {
@@ -180,6 +192,7 @@ void SkiaPaintCanvas::drawRect(const SkRect& rect, const PaintFlags& flags) {
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawRect(rect, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawIRect(const SkIRect& rect, const PaintFlags& flags) {
@@ -191,6 +204,7 @@ void SkiaPaintCanvas::drawIRect(const SkIRect& rect, const PaintFlags& flags) {
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawIRect(rect, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawOval(const SkRect& oval, const PaintFlags& flags) {
@@ -202,6 +216,7 @@ void SkiaPaintCanvas::drawOval(const SkRect& oval, const PaintFlags& flags) {
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawOval(oval, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawRRect(const SkRRect& rrect, const PaintFlags& flags) {
@@ -213,6 +228,7 @@ void SkiaPaintCanvas::drawRRect(const SkRRect& rrect, const PaintFlags& flags) {
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawRRect(rrect, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawDRRect(const SkRRect& outer,
@@ -226,6 +242,7 @@ void SkiaPaintCanvas::drawDRRect(const SkRRect& outer,
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawDRRect(outer, inner, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawRoundRect(const SkRect& rect,
@@ -240,6 +257,7 @@ void SkiaPaintCanvas::drawRoundRect(const SkRect& rect,
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawRoundRect(rect, rx, ry, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawPath(const SkPath& path, const PaintFlags& flags) {
@@ -251,6 +269,7 @@ void SkiaPaintCanvas::drawPath(const SkPath& path, const PaintFlags& flags) {
   SkPaint paint = raster_flags.flags()->ToSkPaint();
 
   canvas_->drawPath(path, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawImage(const PaintImage& image,
@@ -269,6 +288,7 @@ void SkiaPaintCanvas::drawImage(const PaintImage& image,
   PlaybackParams params(image_provider_, canvas_->getTotalMatrix());
   DrawImageOp draw_image_op(image, left, top, nullptr);
   DrawImageOp::RasterWithFlags(&draw_image_op, raster_flags, canvas_, params);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
@@ -289,6 +309,7 @@ void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
   DrawImageRectOp draw_image_rect_op(image, src, dst, flags, constraint);
   DrawImageRectOp::RasterWithFlags(&draw_image_rect_op, raster_flags, canvas_,
                                    params);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawBitmap(const SkBitmap& bitmap,
@@ -306,6 +327,7 @@ void SkiaPaintCanvas::drawBitmap(const SkBitmap& bitmap,
   } else {
     canvas_->drawBitmap(bitmap, left, top, nullptr);
   }
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawTextBlob(scoped_refptr<PaintTextBlob> blob,
@@ -319,10 +341,18 @@ void SkiaPaintCanvas::drawTextBlob(scoped_refptr<PaintTextBlob> blob,
     return;
   SkPaint paint = raster_flags.flags()->ToSkPaint();
   canvas_->drawTextBlob(blob->ToSkTextBlob(), x, y, paint);
+  FlushAfterDrawIfNeeded();
 }
 
 void SkiaPaintCanvas::drawPicture(sk_sp<const PaintRecord> record) {
-  PlaybackParams params(image_provider_, canvas_->getTotalMatrix());
+  auto did_draw_op_cb =
+      automatic_flushing_
+          ? base::BindRepeating(&SkiaPaintCanvas::FlushAfterDrawIfNeeded,
+                                base::Unretained(this))
+          : PlaybackParams::DidDrawOpCallback();
+  PlaybackParams params(image_provider_, canvas_->getTotalMatrix(),
+                        PlaybackParams::CustomDataRasterCallback(),
+                        did_draw_op_cb);
   record->Playback(canvas_, params);
 }
 
@@ -356,9 +386,17 @@ void SkiaPaintCanvas::Annotate(AnnotationType type,
   }
 }
 
-void SkiaPaintCanvas::drawPicture(sk_sp<const PaintRecord> record,
-                                  const PlaybackParams& params) {
-  record->Playback(canvas_, params);
+void SkiaPaintCanvas::FlushAfterDrawIfNeeded() {
+  if (!automatic_flushing_)
+    return;
+
+  static const int kMaxDrawsBeforeFlushing = 50;
+  if (++num_of_ops_ > kMaxDrawsBeforeFlushing) {
+    TRACE_EVENT0("cc", "SkiaPaintCanvas::FlushGrContext");
+    num_of_ops_ = 0;
+    if (auto* context = canvas_->getGrContext())
+      context->flush();
+  }
 }
 
 }  // namespace cc
