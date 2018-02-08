@@ -29,17 +29,6 @@
     });
   }
 
-  function waitRefreshDatabaseRightClick() {
-    idbDatabaseTreeElement._refreshIndexedDB();
-    return waitUpdateDataView();
-  }
-
-  function waitUpdateDataView() {
-    return new Promise((resolve) => {
-      TestRunner.addSniffer(Resources.IDBDataView.prototype, '_updatedDataForTests', resolve, false);
-    });
-  }
-
   function waitDatabaseLoaded(callback) {
     var event = indexedDBModel.addEventListener(Resources.IndexedDBModel.Events.DatabaseLoaded, () => {
       Common.EventTarget.removeEventListeners([event]);
@@ -83,33 +72,27 @@
   await waitRefreshDatabase();
   TestRunner.addResult('Created second objectstore.');
   ApplicationTestRunner.dumpIndexedDBTree();
-  ApplicationTestRunner.dumpObjectStores();
+  await ApplicationTestRunner.dumpObjectStores();
 
   // Add entries
   await ApplicationTestRunner.addIDBValueAsync(databaseName, objectStoreName1, 'testKey', 'testValue');
   TestRunner.addResult('Added ' + objectStoreName1 + ' entry.');
-  ApplicationTestRunner.dumpObjectStores();
+  await ApplicationTestRunner.dumpObjectStores();
 
   // Refresh database view
   await waitRefreshDatabase();
-  await waitUpdateDataView();  // Wait for indexes and second object store to refresh.
-  await waitUpdateDataView();
-  await waitUpdateDataView();
   TestRunner.addResult('Refreshed database view.');
-  ApplicationTestRunner.dumpObjectStores();
+  await ApplicationTestRunner.dumpObjectStores();
 
   // Add entries
   await ApplicationTestRunner.addIDBValueAsync(databaseName, objectStoreName2, 'testKey2', 'testValue2');
   TestRunner.addResult('Added ' + objectStoreName2 + ' entry.');
-  ApplicationTestRunner.dumpObjectStores();
+  await ApplicationTestRunner.dumpObjectStores();
 
   // Right-click refresh database view
-  await waitRefreshDatabaseRightClick();
-  await waitUpdateDataView();  // Wait for indexes and second object store to refresh.
-  await waitUpdateDataView();
-  await waitUpdateDataView();
+  idbDatabaseTreeElement._refreshIndexedDB();
   TestRunner.addResult('Right-click refreshed database.');
-  ApplicationTestRunner.dumpObjectStores();
+  await ApplicationTestRunner.dumpObjectStores();
 
   await ApplicationTestRunner.deleteDatabaseAsync(databaseName);
   TestRunner.completeTest();

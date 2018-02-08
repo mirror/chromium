@@ -103,16 +103,18 @@ Resources.IDBDataView = class extends UI.SimpleView {
    * @param {!Resources.IndexedDBModel.DatabaseId} databaseId
    * @param {!Resources.IndexedDBModel.ObjectStore} objectStore
    * @param {?Resources.IndexedDBModel.Index} index
-   * @param {function()} refreshObjectStoreCallback
    */
-  constructor(model, databaseId, objectStore, index, refreshObjectStoreCallback) {
+  constructor(model, databaseId, objectStore, index) {
     super(Common.UIString('IDB'));
     this.registerRequiredCSS('resources/indexedDBViews.css');
 
     this._model = model;
     this._databaseId = databaseId;
     this._isIndex = !!index;
-    this._refreshObjectStoreCallback = refreshObjectStoreCallback;
+    this._expandController = new ObjectUI.ObjectPropertiesSectionExpandController();
+
+    this._pendingUpdatePromises = [];
+    this._pendingUpdateMainPromise = null;
 
     this.element.classList.add('indexed-db-data-view', 'storage-view');
 
@@ -125,10 +127,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._clearButton = new UI.ToolbarButton(Common.UIString('Clear object store'), 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearButtonClicked, this);
 
-    this._needsRefresh = new UI.ToolbarItem(UI.createLabel(Common.UIString('Data may be stale'), 'smallicon-warning'));
-    this._needsRefresh.setVisible(false);
-    this._needsRefresh.setTitle(Common.UIString('Some entries may have been modified'));
-
     this._createEditorToolbar();
 
     this._pageSize = 50;
@@ -136,6 +134,53 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
     this.update(objectStore, index);
     this._entries = [];
+  }
+
+  /**
+   * @override
+   */
+  wasShown() {
+    super.wasShown();
+    SDK.targetManager.addModelListener(
+        Resources.IndexedDBModel, Resources.IndexedDBModel.Events.IndexedDBContentUpdated,
+        this._indexedDBContentUpdated, this);
+    this.refreshData();
+  }
+
+  /**
+   * @override
+   */
+  willHide() {
+    SDK.targetManager.removeModelListener(
+        Resources.IndexedDBModel, Resources.IndexedDBModel.Events.IndexedDBContentUpdated,
+        this._indexedDBContentUpdated, this);
+    super.willHide();
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _indexedDBContentUpdated(event) {
+    if (this._databaseId.equals(event.data.databaseId) && this._objectStore.name === event.data.objectStoreName)
+      this.refreshData();
+  }
+
+  _waitForAllUpdates() {
+    if (this._pendingUpdatePromises.length === 0)
+      return Promise.resolve();
+    var promises = this._pendingUpdatePromises;
+    this._pendingUpdatePromises = [];
+    return Promise.all(promises).then(() => this._waitForAllUpdates());
+  }
+
+  /**
+   * @return {!Promise}
+   */
+  async getPendingUpdatePromise() {
+    if (this._pendingUpdateMainPromise)
+      return this._pendingUpdateMainPromise;
+    this._pendingUpdateMainPromise = this._waitForAllUpdates().then(() => this._pendingUpdateMainPromise = null);
+    return this._pendingUpdateMainPromise;
   }
 
   /**
@@ -230,8 +275,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._keyInputElement.addEventListener('cut', this._keyInputChanged.bind(this), false);
     this._keyInputElement.addEventListener('keypress', this._keyInputChanged.bind(this), false);
     this._keyInputElement.addEventListener('keydown', this._keyInputChanged.bind(this), false);
-
-    editorToolbar.appendToolbarItem(this._needsRefresh);
   }
 
   /**
@@ -296,6 +339,8 @@ Resources.IDBDataView = class extends UI.SimpleView {
     var pageSize = this._pageSize;
     var skipCount = this._skipCount;
     var selected = this._dataGrid.selectedNode ? this._dataGrid.selectedNode.data['number'] : 0;
+    var updateDoneCallback;
+    this._pendingUpdatePromises.push(new Promise(resolve => updateDoneCallback = resolve));
     selected = Math.max(selected, this._skipCount);  // Page forward should select top entry
     this._refreshButton.setEnabled(false);
     this._clearButton.setEnabled(!this._isIndex);
@@ -316,21 +361,18 @@ Resources.IDBDataView = class extends UI.SimpleView {
      * @param {boolean} hasMore
      * @this {Resources.IDBDataView}
      */
-    function callback(entries, hasMore) {
+    async function callback(entries, hasMore) {
+      var promises = [];
+      for (var i = 0; i < entries.length; ++i)
+        promises.push(Resources.IDBDataGridNode.create(entries[i], i + skipCount, this._expandController));
+      var nodes = await Promise.all(promises);
       this._refreshButton.setEnabled(true);
       this.clear();
       this._entries = entries;
       var selectedNode = null;
-      for (var i = 0; i < entries.length; ++i) {
-        var data = {};
-        data['number'] = i + skipCount;
-        data['key'] = entries[i].key;
-        data['primaryKey'] = entries[i].primaryKey;
-        data['value'] = entries[i].value;
-
-        var node = new Resources.IDBDataGridNode(data);
+      for (var node of nodes) {
         this._dataGrid.rootNode().appendChild(node);
-        if (data['number'] <= selected)
+        if (node.data['number'] <= selected)
           selectedNode = node;
       }
 
@@ -338,9 +380,8 @@ Resources.IDBDataView = class extends UI.SimpleView {
         selectedNode.select();
       this._pageBackButton.setEnabled(!!skipCount);
       this._pageForwardButton.setEnabled(hasMore);
-      this._needsRefresh.setVisible(false);
       this._updateToolbarEnablement();
-      this._updatedDataForTests();
+      updateDoneCallback();
     }
 
     var idbKeyRange = key ? window.IDBKeyRange.lowerBound(key) : null;
@@ -352,10 +393,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
       this._model.loadObjectStoreData(
           this._databaseId, this._objectStore.name, idbKeyRange, skipCount, pageSize, callback.bind(this));
     }
-  }
-
-  _updatedDataForTests() {
-    // Sniffed in tests.
   }
 
   /**
@@ -375,10 +412,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._updateData(true);
   }
 
-  markNeedsRefresh() {
-    this._needsRefresh.setVisible(true);
-  }
-
   /**
    * @param {?DataGrid.DataGridNode} node
    */
@@ -388,10 +421,9 @@ Resources.IDBDataView = class extends UI.SimpleView {
       if (!node)
         return;
     }
-    var key = /** @type {!SDK.RemoteObject} */ (this._isIndex ? node.data.primaryKey : node.data.key);
+    var key = /** @type {!SDK.RemoteObject} */ (this._isIndex ? node.entry.primaryKey : node.entry.key);
     var keyValue = /** @type {!Array<?>|!Date|number|string} */ (key.value);
     await this._model.deleteEntries(this._databaseId, this._objectStore.name, window.IDBKeyRange.only(keyValue));
-    this._refreshObjectStoreCallback();
   }
 
   clear() {
@@ -406,37 +438,79 @@ Resources.IDBDataView = class extends UI.SimpleView {
   }
 };
 
-/**
- * @unrestricted
- */
 Resources.IDBDataGridNode = class extends DataGrid.DataGridNode {
   /**
-   * @param {!Object.<string, *>} data
+   * @param {number} index
+   * @param {!Resources.IndexedDBModel.Entry} entry
+   * @param {!Element} keyElement
+   * @param {!Element} primaryKeyElement
+   * @param {!Element} valueElement
    */
-  constructor(data) {
-    super(data, false);
+  constructor(index, entry, keyElement, primaryKeyElement, valueElement) {
+    super({number: index, key: keyElement, primaryKey: primaryKeyElement, value: valueElement}, false);
     this.selectable = true;
+    this.entry = entry;
+  }
+
+  /**
+   * @param {!SDK.RemoteObject} key
+   * @return {?string}
+   */
+  static _keyToStringId(key) {
+    if (key.value !== undefined)
+      return `${key.value}:${key.type}`;
+    if (key.subtype === 'date')
+      return `${key.description}:date`;
+    return null;
+  }
+
+  /**
+   * @param {!SDK.RemoteObject} value
+   * @param {?string} id
+   * @param {string} field
+   * @param {!ObjectUI.ObjectPropertiesSectionExpandController} expandController
+   * @return {!Promise<!Element>}
+   */
+  static async _createElement(value, id, field, expandController) {
+    var objectElement = ObjectUI.ObjectPropertiesSection.defaultObjectPresentation(value, undefined, true);
+    var section = ObjectUI.ObjectPropertiesSection.fromElement(objectElement);
+    if (id && section)
+      await expandController.watchSection(`${id}:${field}`, section);
+    return objectElement;
+  }
+
+  /**
+   * @param {!Resources.IndexedDBModel.Entry} entry
+   * @param {number} index
+   * @param {!ObjectUI.ObjectPropertiesSectionExpandController} expandController
+   * @return {!Promise<!Resources.IDBDataGridNode>}
+   */
+  static async create(entry, index, expandController) {
+    var id = Resources.IDBDataGridNode._keyToStringId(entry.primaryKey);
+    var elements = await Promise.all([
+      Resources.IDBDataGridNode._createElement(entry.key, id, 'key', expandController),
+      Resources.IDBDataGridNode._createElement(entry.primaryKey, id, 'primaryKey', expandController),
+      Resources.IDBDataGridNode._createElement(entry.value, id, 'value', expandController)
+    ]);
+    return new Resources.IDBDataGridNode(index, entry, elements[0], elements[1], elements[2]);
   }
 
   /**
    * @override
+   * @param {string} columnIdentifier
    * @return {!Element}
    */
   createCell(columnIdentifier) {
     var cell = super.createCell(columnIdentifier);
-    var value = /** @type {!SDK.RemoteObject} */ (this.data[columnIdentifier]);
-
     switch (columnIdentifier) {
       case 'value':
       case 'key':
       case 'primaryKey':
         cell.removeChildren();
-        var objectElement = ObjectUI.ObjectPropertiesSection.defaultObjectPresentation(value, undefined, true);
-        cell.appendChild(objectElement);
+        cell.appendChild(/** @type {!Element} */ (this.data[columnIdentifier]));
         break;
       default:
     }
-
     return cell;
   }
 };

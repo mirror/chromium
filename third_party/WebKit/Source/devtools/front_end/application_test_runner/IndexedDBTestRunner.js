@@ -42,27 +42,26 @@ ApplicationTestRunner.dumpIndexedDBTree = function() {
   }
 };
 
-ApplicationTestRunner.dumpObjectStores = function() {
+ApplicationTestRunner._dumpRecords = async function(treeElement, prefix, label) {
+  treeElement.onselect(false);
+  var view = treeElement._view;
+  await view.getPendingUpdatePromise();
+  let entries = view._entries;
+  TestRunner.addResult(`${prefix}    ${label}: ${treeElement.title}`);
+  TestRunner.addResult(`${prefix}            Number of entries: ${entries.length}`);
+  for (var entry of entries) {
+    TestRunner.addResult(
+        `${prefix}            Key = ${entry.key._value}, value = ${JSON.stringify(entry.value.preview.properties)}`);
+  }
+};
+
+ApplicationTestRunner.dumpObjectStores = async function() {
   TestRunner.addResult('Dumping ObjectStore data:');
   let idbDatabaseTreeElement = UI.panels.resources._sidebar.indexedDBListTreeElement._idbDatabaseTreeElements[0];
-  for (let i = 0; i < idbDatabaseTreeElement.childCount(); ++i) {
-    let objectStoreTreeElement = idbDatabaseTreeElement.childAt(i);
-    objectStoreTreeElement.onselect(false);
-    TestRunner.addResult('    Object store: ' + objectStoreTreeElement.title);
-    let entries = objectStoreTreeElement._view._entries;
-    TestRunner.addResult('            Number of entries: ' + entries.length);
-    for (let j = 0; j < entries.length; ++j)
-      TestRunner.addResult('            Key = ' + entries[j].key._value + ', value = ' + entries[j].value);
-
-    for (let k = 0; k < objectStoreTreeElement.childCount(); ++k) {
-      let indexTreeElement = objectStoreTreeElement.childAt(k);
-      TestRunner.addResult('            Index: ' + indexTreeElement.title);
-      indexTreeElement.onselect(false);
-      let entries = indexTreeElement._view._entries;
-      TestRunner.addResult('                Number of entries: ' + entries.length);
-      for (let j = 0; j < entries.length; ++j)
-        TestRunner.addResult('                Key = ' + entries[j].primaryKey._value + ', value = ' + entries[j].value);
-    }
+  for (let objectStoreTreeElement of idbDatabaseTreeElement.children()) {
+    await ApplicationTestRunner._dumpRecords(objectStoreTreeElement, '', 'Object store');
+    for (let indexTreeElement of objectStoreTreeElement.children())
+      await ApplicationTestRunner._dumpRecords(indexTreeElement, '        ', 'Index');
   }
 };
 
@@ -82,6 +81,30 @@ ApplicationTestRunner.evaluateWithCallback = function(frameId, methodName, param
   var requestString = methodName + '(' + parametersString + ')';
   TestRunner.evaluateInPageAnonymously(requestString);
 };
+
+ApplicationTestRunner._findMatchingChild = function(parentTreeElement, condition) {
+  var matched = parentTreeElement.children().filter(condition);
+  return matched.length ? matched[0] : null;
+};
+
+ApplicationTestRunner.showObjectStoreView = async function(databaseName, objectStoreName, indexName) {
+  var panel = UI.panels.resources;
+  var dbElement = ApplicationTestRunner._findMatchingChild(
+      panel._sidebar.indexedDBListTreeElement, element => element._databaseId.name === databaseName);
+  if (!dbElement)
+    return null;
+  var objectStoreElement =
+      ApplicationTestRunner._findMatchingChild(dbElement, element => element._objectStore.name === objectStoreName);
+  var element = (objectStoreElement && indexName) ?
+      ApplicationTestRunner._findMatchingChild(objectStoreElement, element => element._index.name === indexName) :
+      objectStoreElement;
+  if (!element)
+    return null;
+  element.select();
+  await element._view.getPendingUpdatePromise();
+  return element._view;
+};
+
 
 ApplicationTestRunner._installIndexedDBSniffer = function() {
   ConsoleTestRunner.addConsoleSniffer(consoleMessageOverride, false);
@@ -179,6 +202,7 @@ ApplicationTestRunner.deleteIDBValueAsync = function(databaseName, objectStoreNa
   return TestRunner.evaluateInPageAsync(
       'deleteIDBValueAsync(\'' + databaseName + '\', \'' + objectStoreName + '\', \'' + key + '\')');
 };
+
 
 var __indexedDBHelpers = `
   function dispatchCallback(callbackId) {

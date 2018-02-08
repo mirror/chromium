@@ -22,57 +22,61 @@ Dumping ObjectStore data:
     Object store: testObjectStore1
             Number of entries: 0
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 0
     Object store: testObjectStore2
             Number of entries: 0
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 0
 Added testObjectStore1 entry.
 Dumping ObjectStore data:
     Object store: testObjectStore1
-            Number of entries: 0
+            Number of entries: 1
+            Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 1
+                    Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
     Object store: testObjectStore2
             Number of entries: 0
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 0
 Refreshed database view.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Number of entries: 1
-            Key = testKey, value = [object Object]
+            Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
             Index: testIndex
-                Number of entries: 1
-                Key = testKey, value = [object Object]
+                    Number of entries: 1
+                    Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
     Object store: testObjectStore2
             Number of entries: 0
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 0
 Added testObjectStore2 entry.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Number of entries: 1
-            Key = testKey, value = [object Object]
+            Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
             Index: testIndex
-                Number of entries: 1
-                Key = testKey, value = [object Object]
+                    Number of entries: 1
+                    Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
     Object store: testObjectStore2
-            Number of entries: 0
+            Number of entries: 1
+            Key = testKey2, value = [{"name":"test","type":"string","value":"testKey2"},{"name":"testValue","type":"string","value":"testValue2"}]
             Index: testIndex
-                Number of entries: 0
+                    Number of entries: 1
+                    Key = testKey2, value = [{"name":"test","type":"string","value":"testKey2"},{"name":"testValue","type":"string","value":"testValue2"}]
 Right-click refreshed database.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Number of entries: 1
-            Key = testKey, value = [object Object]
+            Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
             Index: testIndex
-                Number of entries: 1
-                Key = testKey, value = [object Object]
+                    Number of entries: 1
+                    Key = testKey, value = [{"name":"test","type":"string","value":"testKey"},{"name":"testValue","type":"string","value":"testValue"}]
     Object store: testObjectStore2
             Number of entries: 1
-            Key = testKey2, value = [object Object]
+            Key = testKey2, value = [{"name":"test","type":"string","value":"testKey2"},{"name":"testValue","type":"string","value":"testValue2"}]
             Index: testIndex
-                Number of entries: 1
-                Key = testKey2, value = [object Object]
+                    Number of entries: 1
+                    Key = testKey2, value = [{"name":"test","type":"string","value":"testKey2"},{"name":"testValue","type":"string","value":"testValue2"}]
 
