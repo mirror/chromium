@@ -16,6 +16,11 @@ struct WebSelectionBound {
   // |WebSelection| for determining bound orientation.
   enum Type { kCaret, kSelectionLeft, kSelectionRight };
 
+  WebSelectionBound()
+      : type(kCaret),
+        layer_id(0),
+        is_text_direction_rtl(false),
+        hidden(false) {}
   explicit WebSelectionBound(Type type)
       : type(type), layer_id(0), is_text_direction_rtl(false), hidden(false) {}
 

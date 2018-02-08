@@ -48,6 +48,7 @@
 #include "public/platform/WebEventListenerProperties.h"
 #include "public/platform/WebFocusType.h"
 #include "public/platform/WebOverscrollBehavior.h"
+#include "public/web/WebSelection.h"
 
 // To avoid conflicts with the CreateWindow macro from the Windows SDK...
 #undef CreateWindow
@@ -83,7 +84,6 @@ class WebLayerTreeView;
 class WebTappedInfo;
 class WebViewImpl;
 
-struct CompositedSelection;
 struct DateTimeChooserParameters;
 struct FrameLoadRequest;
 struct ViewportDescription;
@@ -258,8 +258,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
                                         Element* new_element) {}
 
   virtual void ClearCompositedSelection(LocalFrame*) {}
-  virtual void UpdateCompositedSelection(LocalFrame*,
-                                         const CompositedSelection&) {}
+  virtual void UpdateWebSelection(LocalFrame*, const WebSelection&) {}
 
   virtual void SetEventListenerProperties(LocalFrame*,
                                           WebEventListenerClass,
