@@ -22,6 +22,30 @@
       "revId": "cc61464ce1f6285f099b3eb5e48072e5d278607f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf5b3d5_2e0ccd87",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2018-02-08T01:35:09Z",
+      "side": 1,
+      "message": "That is my fault. This must be \"!coded_size_.IsEmpty()\".\nAfter changing, all the android.security.cts.StagefrightTest tests passed.\nConversely, this would be \"!coded_size_.IsEmpty()\" rather than \"state \u003d kInitialized\", since it means that header comes or not.\nAdditionally, state can be changed to kInitialized in ResetDoneTask(), while Reset doesn\u0027t affect VIDEO CAPTURE buffer and therefore FlushDone should be called.",
+      "parentUuid": "663be557_6461bc8d",
+      "range": {
+        "startLine": 1658,
+        "startChar": 44,
+        "endLine": 1658,
+        "endChar": 65
+      },
+      "revId": "cc61464ce1f6285f099b3eb5e48072e5d278607f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
