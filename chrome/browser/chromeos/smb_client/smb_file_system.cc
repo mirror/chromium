@@ -23,6 +23,14 @@ namespace {
 // bogus so it falls back to the generic icon.
 constexpr char kUnknownImageDataUri[] = "data:image/png;base64,X";
 
+// Initial number of entries to send during read directory. This number is
+// smaller than kReadDirectoryMaxBatchSize since we want the initial page to
+// load as quickly as possible.
+constexpr int32_t kReadDirectoryInitialBatchSize = 64;
+
+// Maximum number of entries to send at a time for read directory,
+constexpr int32_t kReadDirectoryMaxBatchSize = 2048;
+
 using file_system_provider::ProvidedFileSystemInterface;
 
 bool RequestedIsDirectory(
@@ -421,11 +429,24 @@ void SmbFileSystem::HandleRequestReadDirectoryCallback(
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback,
     smbprovider::ErrorType error,
     const smbprovider::DirectoryEntryListProto& entries) const {
+  int32_t batch_size = kReadDirectoryInitialBatchSize;
   storage::AsyncFileUtil::EntryList entry_list;
-  for (const smbprovider::DirectoryEntryProto& entry : entries.entries()) {
+
+  // Loop through the entries and send when the desired batch size is hit.
+  for (int i = 0; i < entries.entries_size(); ++i) {
+    if (i % batch_size == 0 && i != 0) {
+      callback.Run(base::File::FILE_OK, entry_list, true /* has_more */);
+      // Double the batch size until it gets to the maximum size.
+      if (batch_size < kReadDirectoryMaxBatchSize) {
+        batch_size *= 2;
+      }
+      entry_list.clear();
+    }
+
+    const smbprovider::DirectoryEntryProto& entry = entries.entries(i);
     entry_list.emplace_back(entry.name(), MapEntryType(entry.is_directory()));
   }
-  // TODO(allenvic): Implement has_more (crbug.com/796246).
+
   callback.Run(TranslateError(error), entry_list, false /* has_more */);
 }
 
