@@ -22,6 +22,30 @@
       "revId": "2a16096453b91c152d1c8c375049a9ab1598c34e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3831633d_42443fd4",
+        "filename": "chrome/browser/resources/settings/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2018-02-08T00:13:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c410de_e6cad608",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 71
+      },
+      "revId": "2a16096453b91c152d1c8c375049a9ab1598c34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
