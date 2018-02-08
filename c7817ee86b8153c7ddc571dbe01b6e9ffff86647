@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90ddb4b3_2fa7669b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-02-08T00:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65f69f22_540c72ab",
+      "range": {
+        "startLine": 64,
+        "startChar": 33,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336e3003_ce987990",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e2c02059_33c2225f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-02-08T00:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "336e3003_ce987990",
+      "range": {
+        "startLine": 130,
+        "startChar": 100,
+        "endLine": 130,
+        "endChar": 105
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0110ab43_262f3913",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-02-07T01:50:07Z",
       "side": 1,
       "message": "Check whether index \u003e -1 \u0026\u0026 index \u003c itemCount, here and on L167?\n\nIf the # of messages is smaller, e.g. console.clear(), selectedMessageIndex may no longer be in the [0, itemCount) range.  Alternatively, invalidate() could constrain selectedMessageIndex to the valid range.",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 29
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559d81f7_2b4b7dbe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-02-08T00:53:23Z",
+      "side": 1,
+      "message": "I constrained in invalidate. Thanks!",
+      "parentUuid": "0110ab43_262f3913",
       "range": {
         "startLine": 133,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a224f8e7_acff16e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-02-08T00:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c0e990_8b898c99",
+      "range": {
+        "startLine": 158,
+        "startChar": 37,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b734d65f_1af7b4d3",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2018-02-07T01:50:07Z",
       "side": 1,
       "message": "var hadFocus \u003d this.element.hasFocus() ?",
+      "range": {
+        "startLine": 471,
+        "startChar": 19,
+        "endLine": 471,
+        "endChar": 24
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee47592_73ca61cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-02-08T00:53:23Z",
+      "side": 1,
+      "message": "the prompt might have focus, so hasFocus() is too inclusive. And if this.element has focus already, we don\u0027t need to re-focus it.",
+      "parentUuid": "b734d65f_1af7b4d3",
       "range": {
         "startLine": 471,
         "startChar": 19,
