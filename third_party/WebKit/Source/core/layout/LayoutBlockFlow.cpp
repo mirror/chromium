@@ -4670,7 +4670,7 @@ PositionWithAffinity LayoutBlockFlow::PositionForPoint(
   if (!IsHorizontalWritingMode())
     point_in_logical_contents = point_in_logical_contents.TransposedPoint();
 
-  if (!FirstRootBox())
+  if (!FirstRootBox() && !ContainsFloats())
     return CreatePositionWithAffinity(0);
 
   bool lines_are_flipped = Style()->IsFlippedLinesWritingMode();
@@ -4719,6 +4719,45 @@ PositionWithAffinity LayoutBlockFlow::PositionForPoint(
           point_in_logical_contents.X());
       if (closest_box)
         break;
+    }
+  }
+
+  if (!closest_box && ContainsFloats()) {
+    // if y coordinate is below lowest floating object, pretend we hit it
+    LayoutUnit point_y =
+        point_in_logical_contents.Y() > LowestFloatLogicalBottom()
+            ? LowestFloatLogicalBottom()
+            : point_in_logical_contents.Y();
+    LayoutUnit point_x = point_in_logical_contents.X();
+    LayoutUnit min_offset = point_x;
+    LayoutBox* candidate = nullptr;
+    const FloatingObjectSet& floating_object_set = floating_objects_->Set();
+    FloatingObjectSetIterator begin = floating_object_set.begin();
+    for (FloatingObjectSetIterator it = floating_object_set.end();
+         it != begin;) {
+      --it;
+      const FloatingObject& floating_object = *it->get();
+      LayoutBox* layout_object = floating_object.GetLayoutObject();
+      LayoutUnit object_x = layout_object->Location().X();
+      if (point_y > layout_object->Location().Y() &&
+          point_y <= LogicalBottomForFloat(floating_object)) {
+        if (point_x > object_x &&
+            point_x <= LogicalRightForFloat(floating_object)) {
+          candidate = layout_object;
+        } else {
+          LayoutUnit offset = point_x - object_x.Abs();
+          if (offset < min_offset) {
+            min_offset = offset;
+            candidate = layout_object;
+          }
+        }
+      }
+    }
+    if (candidate) {
+      // FIXME: This is wrong if the child's writing-mode is different from the
+      // parent's.
+      LayoutPoint point_in_child_coordinates(point - candidate->Location());
+      return candidate->PositionForPoint(point_in_child_coordinates);
     }
   }
 
