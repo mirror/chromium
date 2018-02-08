@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e3ba3f_daae38ee",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-08T02:59:47Z",
+      "side": 1,
+      "message": "Hi Finnur, can you help me understand how this is different from a normal copy of a gfx::Image object? I gather from the comment about threading that you\u0027re looking for a threadsafe copy, but I think you need ImageSkia::DeepCopy[1] for that, and I don\u0027t believe this does that.\n\n[1] https://cs.chromium.org/chromium/src/ui/gfx/image/image_skia.h?rcl\u003d6425d6f4dfa49bc693b7e4a417a51db8346c5212\u0026l\u003d90",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "80dd7ea73d05e6dbebc2b380228f39f8fdd789dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92781cf_4d05d788",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-08T02:59:47Z",
+      "side": 1,
+      "message": "why does this one not need a deep copy?",
+      "range": {
+        "startLine": 182,
+        "startChar": 28,
+        "endLine": 182,
+        "endChar": 61
+      },
+      "revId": "80dd7ea73d05e6dbebc2b380228f39f8fdd789dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
