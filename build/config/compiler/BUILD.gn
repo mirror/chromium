@@ -341,6 +341,14 @@ config("compiler") {
       ldflags += [ "-Wl,--build-id=sha1" ]
     }
 
+    # Android gained .hash.gnu support in M, so we need both there.
+    # FIXME: in component builds only? maybe no hash at all needed
+    # in prod builds due to few exported symbols
+    if (!is_nacl && !is_android) {
+      # On Linux, opt in to .gnu.hash to speed up binary loading.
+      ldflags += [ "-Wl,--hash-style=gnu" ]
+    }
+
     if (!is_android) {
       defines += [
         # _FILE_OFFSET_BITS=64 should not be set on Android in order to maintain

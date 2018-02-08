@@ -992,6 +992,11 @@ if (!android_64bit_target_cpu ||
       deps += [ "//tools/cygprofile" ]
     }
 
+    # Monochrome supports Android N+. Android M added support for .gnu.hash,
+    # so save some binary size by not emitting the sysv .hash section too.
+    # (The linker's default is to emit both.)
+    ldflags = [ "-Wl,--hash-style=gnu" ]
+
     public_configs = extra_chrome_shared_library_configs
     deps += extra_chrome_shared_library_deps
   }
