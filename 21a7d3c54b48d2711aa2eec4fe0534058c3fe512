@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9d52dff_f9f8d54b",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-08T02:25:03Z",
+      "side": 1,
+      "message": "nit: not needed with below suggestion",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 57
+      },
+      "revId": "21a7d3c54b48d2711aa2eec4fe0534058c3fe512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eaad00b_74ae9d17",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2018-02-08T02:25:03Z",
+      "side": 1,
+      "message": "nit: just use kEmptyViewHeight",
+      "range": {
+        "startLine": 351,
+        "startChar": 22,
+        "endLine": 351,
+        "endChar": 73
+      },
+      "revId": "21a7d3c54b48d2711aa2eec4fe0534058c3fe512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
