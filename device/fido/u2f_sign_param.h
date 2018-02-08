@@ -7,9 +7,11 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <vector>
 
 #include "base/optional.h"
+#include "components/apdu/apdu_command.h"
 #include "device/fido/fido_request_param.h"
 
 namespace device {
@@ -22,6 +24,9 @@ class U2fSignParam : public FidoRequestParam {
   U2fSignParam(U2fSignParam&& that);
   U2fSignParam& operator=(U2fSignParam&& that);
   ~U2fSignParam() override;
+
+  // Creates Sign APDU command as specified by the U2F spec.
+  std::unique_ptr<apdu::ApduCommand> CreateU2fSignApduCommand() const;
 
   // Returns APDU formatted U2F sign request parameter.
   base::Optional<std::vector<uint8_t>> Encode() const override;

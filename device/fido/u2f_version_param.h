@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/optional.h"
+#include "components/apdu/apdu_command.h"
 #include "device/fido/fido_request_param.h"
 
 namespace device {
@@ -21,6 +22,11 @@ class U2fVersionParam : public FidoRequestParam {
   U2fVersionParam(U2fVersionParam&& that);
   U2fVersionParam& operator=(U2fVersionParam&& that);
   ~U2fVersionParam() override;
+
+  // Creates Apdu command with format specified in the U2F spec. If request is
+  // legacy version request, then two extra bytes are added as suffix.
+  // https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html
+  std::unique_ptr<apdu::ApduCommand> CreateU2fVersionApduCommand() const;
 
   // Returns APDU formatted serialized request to send to U2F authenticators.
   base::Optional<std::vector<uint8_t>> Encode() const override;

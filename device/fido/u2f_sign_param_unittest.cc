@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "device/fido/ctap_constants.h"
 #include "device/fido/ctap_get_assertion_request_param.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -48,4 +49,34 @@ TEST(CTAPU2fSignParamTest, TestConvertGetAssertionRequestToSign) {
   EXPECT_THAT(get_assertion_req.GetU2fChallengeParameter(),
               testing::ElementsAreArray(kClientDataHash));
 }
+
+TEST(ApduTest, TestCreateU2fSign) {
+  std::vector<uint8_t> app_id(kAppIdDigestLen, 0x01);
+  std::vector<uint8_t> challenge_parameter(kChallengeDigestLen, 0xff);
+  std::vector<uint8_t> key_handle(kMaxKeyHandleLength);
+
+  U2fSignParam sign_parameter =
+      U2fSignParam(app_id, challenge_parameter, key_handle);
+  auto encoded_sign_parameter = sign_parameter.Encode();
+  ASSERT_TRUE(encoded_sign_parameter);
+  EXPECT_THAT(
+      apdu::ApduCommand::CreateFromMessageForTesting(*encoded_sign_parameter)
+          ->GetEncodedCommand(),
+      testing::ContainerEq(*encoded_sign_parameter));
+
+  // Expect null result with incorrectly sized key handle.
+  key_handle.push_back(0x0f);
+  EXPECT_TRUE(U2fSignParam(app_id, challenge_parameter, key_handle).Encode());
+  key_handle.pop_back();
+
+  // Expect null result with incorrectly sized appid.
+  app_id.pop_back();
+  EXPECT_TRUE(U2fSignParam(app_id, challenge_parameter, key_handle).Encode());
+  app_id.push_back(0xff);
+
+  // Expect null result with incorrectly sized challenge.
+  challenge_parameter.push_back(0x0);
+  EXPECT_TRUE(U2fSignParam(app_id, challenge_parameter, key_handle).Encode());
+}
+
 }  // namespace device

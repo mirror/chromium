@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "device/fido/ctap_constants.h"
 #include "device/fido/ctap_make_credential_request_param.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -44,6 +45,55 @@ TEST(CTAPU2fRegisterParamTest, TestConvertMakeCredentialRequestToRegister) {
               testing::ElementsAreArray(kU2fApplicationParameter));
   EXPECT_THAT(make_credential_param.GetU2fChallengeParameter(),
               testing::ElementsAreArray(kClientDataHash));
+}
+
+TEST(ApduTest, TestCreateU2fRegister) {
+  constexpr bool kNoIndividualAttestation = false;
+  constexpr bool kIndividualAttestation = true;
+  std::vector<uint8_t> app_id(kAppIdDigestLen, 0x01);
+  std::vector<uint8_t> challenge_parameter(kChallengeDigestLen, 0xff);
+
+  U2fRegisterParam register_param(app_id, challenge_parameter,
+                                  kNoIndividualAttestation);
+  auto encoded_register_param = register_param.Encode();
+  ASSERT_TRUE(encoded_register_param);
+  ASSERT_LE(2u, encoded_register_param->size());
+
+  // Individual attestation bit should be cleared.
+  EXPECT_EQ(0, (*encoded_register_param)[2] & 0x80);
+  auto decoded_apdu_command =
+      apdu::ApduCommand::CreateFromMessageForTesting(*encoded_register_param);
+  ASSERT_TRUE(decoded_apdu_command);
+  EXPECT_THAT(decoded_apdu_command->GetEncodedCommand(),
+              testing::ContainerEq(*encoded_register_param));
+
+  register_param =
+      U2fRegisterParam(app_id, challenge_parameter, kIndividualAttestation);
+  encoded_register_param = register_param.Encode();
+  ASSERT_TRUE(encoded_register_param);
+  ASSERT_LE(2u, encoded_register_param->size());
+
+  // Individual attestation bit should be cleared.
+  EXPECT_EQ(0, (*encoded_register_param)[2] & 0x80);
+  decoded_apdu_command =
+      apdu::ApduCommand::CreateFromMessageForTesting(*encoded_register_param);
+
+  ASSERT_TRUE(decoded_apdu_command);
+  EXPECT_THAT(decoded_apdu_command->GetEncodedCommand(),
+              testing::ContainerEq(*encoded_register_param));
+
+  // Expect null result with incorrectly sized appid.
+  app_id.push_back(0xff);
+  EXPECT_EQ(nullptr, U2fRegisterParam(app_id, challenge_parameter,
+                                      kNoIndividualAttestation)
+                         .Encode());
+
+  // Expect null result with incorrectly sized challenge.
+  app_id.pop_back();
+  challenge_parameter.push_back(0xff);
+  EXPECT_EQ(nullptr, U2fRegisterParam(app_id, challenge_parameter,
+                                      kNoIndividualAttestation)
+                         .Encode());
 }
 
 }  // namespace device

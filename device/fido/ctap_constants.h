@@ -180,6 +180,27 @@ extern const uint8_t kHidMaxLockSeconds;
 // Messages are limited to an init packet and 128 continuation packets.
 extern const size_t kHidMaxMessageSize;
 
+// CTAP/U2F APDU encoding constants.
+// Ins instructions.
+extern const uint8_t kInsU2fEnroll;
+extern const uint8_t kInsU2fSign;
+extern const uint8_t kInsU2fVersion;
+
+// P1 instructions.
+extern const uint8_t kP1TupRequired;
+extern const uint8_t kP1TupConsumed;
+extern const uint8_t kP1TupRequiredConsumed;
+// Control byte used for check-only setting. The check-only command is used to
+// determine if the provided key handle was originally created by this token
+// and whether it was created for the provided application parameter.
+extern const uint8_t kP1CheckOnly;
+// Indicates that an individual attestation certificate is acceptable to
+// return with this registration.
+extern const uint8_t kP1IndividualAttestation;
+extern const size_t kMaxKeyHandleLength;
+extern const size_t kChallengeDigestLen;
+extern const size_t kAppIdDigestLen;
+
 }  // namespace device
 
 #endif  // DEVICE_FIDO_CTAP_CONSTANTS_H_
