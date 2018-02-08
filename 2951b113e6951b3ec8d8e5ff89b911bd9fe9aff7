@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e42260a9_a1255db3",
+        "filename": "chrome/browser/resources/feedback/js/feedback.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-08T01:50:01Z",
+      "side": 1,
+      "message": "Nit: left over log.",
+      "range": {
+        "startLine": 470,
+        "startChar": 0,
+        "endLine": 470,
+        "endChar": 41
+      },
+      "revId": "2951b113e6951b3ec8d8e5ff89b911bd9fe9aff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
