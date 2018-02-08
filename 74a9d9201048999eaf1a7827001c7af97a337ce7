@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "272fdea1_14116bb8",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T01:33:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69225ce6_2dec8064",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc32b5e_b1560a7f",
         "filename": "build/util/lib/common/chrome_test_server_spawner.py",
         "patchSetId": 1
@@ -425,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "6fca1134_9df85e42",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T01:33:44Z",
+      "side": 1,
+      "message": "As discussed, DIR_SOURCE_ROOT is the script-relative path to the Chromium source tree; it seems that we have a convention in these scripts of it being exported, though, so let\u0027s leave it as-is as well.",
+      "parentUuid": "76743407_4fd7b959",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "567ae41b_1ea3c36b",
         "filename": "build/util/lib/common/chrome_test_server_spawner.py",
         "patchSetId": 1
@@ -460,6 +508,30 @@
       "side": 1,
       "message": "This is called by BaseHTTPServer. The default implementation in BaseHTTPRequestHandler is to spew httpd logs to stdout.",
       "parentUuid": "567ae41b_1ea3c36b",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 10
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81d104df_7f1ee1b4",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T01:33:44Z",
+      "side": 1,
+      "message": "Aha; perhaps clarify that in the comment, e.g. \"Override HTTP logs to be ignored unless at least INFO logging is configured.\"?",
+      "parentUuid": "2af5a167_8bcc237a",
       "range": {
         "startLine": 402,
         "startChar": 0,

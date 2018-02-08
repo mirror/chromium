@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "369e49e3_34a42335",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T01:33:44Z",
+      "side": 1,
+      "message": "nit: Errant space. Also, can the \"see \u003clink\u003e really not fit with the comment on a single line?",
+      "range": {
+        "startLine": 114,
+        "startChar": 32,
+        "endLine": 114,
+        "endChar": 33
+      },
+      "revId": "5ad40a3fa4b1d6b678a21c5be6baa2e039a930d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
