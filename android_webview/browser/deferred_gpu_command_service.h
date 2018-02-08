@@ -21,6 +21,7 @@
 
 namespace gpu {
 struct GpuFeatureInfo;
+struct GpuPreferences;
 class SyncPointManager;
 }
 
@@ -44,8 +45,11 @@ class DeferredGpuCommandService
     : public gpu::InProcessCommandBuffer::Service,
       public base::RefCountedThreadSafe<DeferredGpuCommandService> {
  public:
-  static void SetInstance();
   static DeferredGpuCommandService* GetInstance();
+
+  // This should always be called after an instance of
+  // DeferredGpuCommandService is initialized.
+  static bool CanSupportThreadedTextureMailbox();
 
   void ScheduleTask(const base::Closure& task) override;
   void ScheduleDelayedWork(const base::Closure& task) override;
@@ -74,9 +78,15 @@ class DeferredGpuCommandService
   friend class ScopedAllowGL;
   static void RequestProcessGL(bool for_idle);
 
-  DeferredGpuCommandService(const gpu::GPUInfo& gpu_info,
+  DeferredGpuCommandService(const gpu::GpuPreferences& gpu_preferences,
+                            const gpu::GPUInfo& gpu_info,
                             const gpu::GpuFeatureInfo& gpu_feature_info);
+
+  static DeferredGpuCommandService* CreateDeferredGpuCommandService();
+
   size_t IdleQueueSize();
+
+  static bool can_support_threaded_texture_mailbox_;
 
   base::Lock tasks_lock_;
   base::queue<base::Closure> tasks_;

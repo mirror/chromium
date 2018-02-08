@@ -64,7 +64,6 @@
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/favicon_status.h"
-#include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -78,7 +77,6 @@
 #include "content/public/common/mhtml_generation_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/use_zoom_for_dsf_policy.h"
-#include "gpu/config/gpu_info.h"
 #include "jni/AwContents_jni.h"
 #include "net/base/auth.h"
 #include "net/cert/x509_certificate.h"
@@ -419,9 +417,11 @@ static jlong JNI_AwContents_Init(JNIEnv* env,
 static jboolean JNI_AwContents_HasRequiredHardwareExtensions(
     JNIEnv* env,
     const JavaParamRef<jclass>&) {
-  return content::GpuDataManager::GetInstance()
-      ->GetGPUInfo()
-      .can_support_threaded_texture_mailbox;
+  // Make sure GPUInfo is collected. This will initialize GL bindings,
+  // collect GPUInfo, and compute GpuFeatureInfo if they have not been
+  // already done.
+  DeferredGpuCommandService::GetInstance();
+  return DeferredGpuCommandService::CanSupportThreadedTextureMailbox();
 }
 
 static void JNI_AwContents_SetAwDrawSWFunctionTable(JNIEnv* env,
