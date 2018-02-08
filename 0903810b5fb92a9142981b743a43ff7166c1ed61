@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "6d329dbb_20678455",
+        "filename": "ui/base/platform_hook/platform_hook.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-08T00:55:19Z",
+      "side": 1,
+      "message": "Can you remove these and add when needed. It\u0027s confusing now. For example the return value isn\u0027t checked, and it\u0027s not clear when looking at HWNDMessageHandler why Register() is called outside the block creating it and Unregister is never called.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "0903810b5fb92a9142981b743a43ff7166c1ed61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "099f638a_148c97e3",
         "filename": "ui/base/platform_hook/platform_hook_win.cc",
         "patchSetId": 14
