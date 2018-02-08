@@ -9,6 +9,8 @@ aggregate_vector_icons("ash_public_vector_icons") {
   icon_directory = "."
 
   icons = [
+    "notification_download.icon",
+    "notification_end_of_support.icon",
     "window_control_left_snapped.1x.icon",
     "window_control_left_snapped.icon",
     "window_control_right_snapped.1x.icon",

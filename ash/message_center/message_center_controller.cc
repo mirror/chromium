@@ -5,8 +5,10 @@
 #include "ash/message_center/message_center_controller.h"
 
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/cpp/vector_icons/vector_icons.h"
 #include "base/command_line.h"
 #include "ui/message_center/message_center.h"
+#include "ui/message_center/public/cpp/notification.h"
 #include "ui/message_center/public/cpp/notification_delegate.h"
 #include "ui/message_center/public/cpp/notifier_id.h"
 
@@ -76,6 +78,9 @@ MessageCenterController::MessageCenterController()
     all_popup_blocker_ =
         std::make_unique<PopupNotificationBlocker>(MessageCenter::Get());
   }
+
+  message_center::RegisterVectorIcon(kNotificationDownloadIcon);
+  message_center::RegisterVectorIcon(kNotificationEndOfSupportIcon);
 }
 
 MessageCenterController::~MessageCenterController() = default;
