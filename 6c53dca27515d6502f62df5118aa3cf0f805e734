@@ -16,6 +16,24 @@
       "revId": "6c53dca27515d6502f62df5118aa3cf0f805e734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9d42e6_e81c5d2b",
+        "filename": "third_party/WebKit/Source/platform/mac/ScrollAnimatorMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-08T00:13:50Z",
+      "side": 1,
+      "message": "This is safe -- sending a message to nil is a no-op.",
+      "parentUuid": "44a055d4_3be52f27",
+      "revId": "6c53dca27515d6502f62df5118aa3cf0f805e734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
