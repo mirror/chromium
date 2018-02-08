@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d75332_5df49a8d",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2018-02-08T02:34:09Z",
+      "side": 1,
+      "message": "nit: you can remove the braces for one-line bodies.",
+      "range": {
+        "startLine": 1252,
+        "startChar": 30,
+        "endLine": 1252,
+        "endChar": 32
+      },
+      "revId": "a332880e44ae8e32758801d50de5592a7357f6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
