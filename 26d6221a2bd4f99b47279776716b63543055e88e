@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0da95d28_d93ea9d7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-08T02:56:16Z",
+      "side": 1,
+      "message": "Done. Yeah, we should keep such a style.",
+      "parentUuid": "0c9d76e0_fcdb8ab7",
+      "range": {
+        "startLine": 479,
+        "startChar": 2,
+        "endLine": 479,
+        "endChar": 47
+      },
+      "revId": "26d6221a2bd4f99b47279776716b63543055e88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a773f9d_4d724b34",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "792e0949_d139157a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-08T02:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a773f9d_4d724b34",
+      "range": {
+        "startLine": 480,
+        "startChar": 55,
+        "endLine": 481,
+        "endChar": 12
+      },
+      "revId": "26d6221a2bd4f99b47279776716b63543055e88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3617b7d1_8dd6bcd7",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "26d6221a2bd4f99b47279776716b63543055e88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93884767_369fc480",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-08T02:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3617b7d1_8dd6bcd7",
+      "range": {
+        "startLine": 506,
+        "startChar": 14,
+        "endLine": 506,
+        "endChar": 25
+      },
+      "revId": "26d6221a2bd4f99b47279776716b63543055e88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
