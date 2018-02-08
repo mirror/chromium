@@ -90,7 +90,11 @@ bool UrlCheckerDelegateImpl::IsUrlWhitelisted(const GURL& url) {
 
 bool UrlCheckerDelegateImpl::IsRequestWhitelisted(
     content::ResourceContext* resource_context,
-    const GURL& original_url) {
+    const GURL& original_url,
+    int frame_tree_node_id,
+    int render_process_id,
+    int render_frame_id,
+    bool originated_from_service_worker) {
   return !base::FeatureList::IsEnabled(network::features::kNetworkService) &&
          IsDataReductionProxyEnabledForUrl(resource_context, original_url);
 }
