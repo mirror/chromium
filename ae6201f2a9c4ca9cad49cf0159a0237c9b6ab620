@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a896f00b_caddd374",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T01:09:04Z",
+      "side": 1,
+      "message": "DCHECK_GE(parent_allocated_local_surface_id.parent_sequence_number(),\n          parent_sequence_number_);\n// This verifies that we only update the nonce if the parent sequence number has changed.\nDCHECK(parent_allocated_local_surface_id.parent_sequence_number() \u003e parent_sequence_number_ ||\n       nonce_ \u003d\u003d parent_allocated_local_surface_id.nonce());",
+      "revId": "ae6201f2a9c4ca9cad49cf0159a0237c9b6ab620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311599d8_7d1664ab",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T01:09:04Z",
+      "side": 1,
+      "message": "nit: Generally  pre-increment preferred to post-increment\n\n++current_child_sequence_number_;",
+      "revId": "ae6201f2a9c4ca9cad49cf0159a0237c9b6ab620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beffd052_eeec40d2",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T01:09:04Z",
+      "side": 1,
+      "message": "DCHECK_GE(child_allocated_local_surface_id.child_sequence_number(),\n          child_sequence_number_);",
+      "revId": "ae6201f2a9c4ca9cad49cf0159a0237c9b6ab620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905b89d4_5d641241",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-02-08T01:09:04Z",
+      "side": 1,
+      "message": "++current_parent_sequence_number_;",
+      "revId": "ae6201f2a9c4ca9cad49cf0159a0237c9b6ab620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
