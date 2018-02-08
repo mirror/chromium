@@ -36,6 +36,7 @@ class Offliner;
 class SavePageRequest;
 class ClientPolicyController;
 class OfflinePagesUkmReporter;
+class PendingStateUpdater;
 
 // Coordinates queueing and processing save page later requests.
 class RequestCoordinator : public KeyedService,
@@ -332,7 +333,10 @@ class RequestCoordinator : public KeyedService,
   void ScheduleAsNeeded();
 
   // Callback from the request picker when it has chosen our next request.
-  void RequestPicked(const SavePageRequest& request, bool cleanup_needed);
+  void RequestPicked(
+      const SavePageRequest& request,
+      std::vector<std::unique_ptr<SavePageRequest>> available_requests,
+      bool cleanup_needed);
 
   // Callback from the request picker when no more requests are in the queue.
   // The parameter is a signal for what (if any) conditions to schedule future
@@ -424,6 +428,10 @@ class RequestCoordinator : public KeyedService,
   // KeyedService implementation:
   void Shutdown() override;
 
+  // Set PendingState for multiple requests.
+  void SetRequestPendingStateCallback(
+      std::vector<std::unique_ptr<SavePageRequest>> requests);
+
   friend class RequestCoordinatorTest;
 
   // Cached value of whether low end device. Overwritable for testing.
@@ -491,6 +499,8 @@ class RequestCoordinator : public KeyedService,
   // Currently it's used as LIFO.
   // TODO(romax): see if LIFO is a good idea or change to FIFO. crbug.com/705106
   base::circular_deque<int64_t> prioritized_requests_;
+  // Updates a request's PendingState.
+  std::unique_ptr<PendingStateUpdater> pending_state_updater_;
   // Allows us to pass a weak pointer to callbacks.
   base::WeakPtrFactory<RequestCoordinator> weak_ptr_factory_;
 

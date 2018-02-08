@@ -34,6 +34,8 @@ static_library("background_offliner") {
     "offliner_policy.h",
     "offliner_policy_utils.cc",
     "offliner_policy_utils.h",
+    "pending_state_updater.cc",
+    "pending_state_updater.h",
     "pick_request_task.cc",
     "pick_request_task.h",
     "reconcile_task.cc",
