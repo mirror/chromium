@@ -32,14 +32,14 @@ void BackgroundWith1PxBorder::PaintFocusRing(gfx::Canvas* canvas,
       ui::NativeTheme::NativeTheme::kColorId_FocusedBorderColor);
   Paint(canvas, SK_ColorTRANSPARENT, focus_ring_color,
         GetBorderRadius(local_bounds.height() * canvas->image_scale()),
-        local_bounds);
+        local_bounds, blend_mode_);
 }
 
 void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
                                     views::View* view) const {
   Paint(canvas, get_color(), border_color_,
         GetBorderRadius(view->height() * canvas->image_scale()),
-        view->GetContentsBounds());
+        view->GetContentsBounds(), blend_mode_);
 }
 
 float BackgroundWith1PxBorder::GetBorderRadius(int height_in_px) const {
@@ -56,7 +56,8 @@ void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
                                     SkColor background,
                                     SkColor border,
                                     float inner_border_radius,
-                                    const gfx::Rect& bounds) {
+                                    const gfx::Rect& bounds,
+                                    SkBlendMode blend_mode) {
   gfx::ScopedCanvas scoped_canvas(canvas);
   const float scale = canvas->UndoDeviceScaleFactor();
   gfx::RectF border_rect_f(bounds);
@@ -78,6 +79,7 @@ void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
   outer_rect.outset(1, 1);
 
   cc::PaintFlags flags;
+  flags.setBlendMode(blend_mode);
   flags.setAntiAlias(true);
   flags.setStyle(cc::PaintFlags::kFill_Style);
 
