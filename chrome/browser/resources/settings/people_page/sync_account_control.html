@@ -131,7 +131,7 @@
       </div>
       <template is="dom-if" if="[[!syncStatus.signedIn]]" restamp>
         <dialog is="cr-action-menu" id="menu">
-          <template is="dom-repeat" items="[[storedAccounts_]]">
+          <template is="dom-repeat" items="[[accountsInList_]]">
             <button class="dropdown-item" on-tap="onAccountTap_" slot="item">
               <img class="account-icon small"
                   src="[[getAccountImageSrc_(item.avatarImage)]]">
