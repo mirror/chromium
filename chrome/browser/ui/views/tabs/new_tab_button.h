@@ -60,6 +60,10 @@ class NewTabButton : public views::ImageButton,
   void OnMouseReleased(const ui::MouseEvent& event) override;
 #endif
   void OnGestureEvent(ui::GestureEvent* event) override;
+  std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
+  void NotifyClick(const ui::Event& event) override;
+  std::unique_ptr<views::InkDrop> CreateInkDrop() override;
+  std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
   void PaintButtonContents(gfx::Canvas* canvas) override;
 
   // views::MaskedTargeterDelegate:
@@ -72,7 +76,7 @@ class NewTabButton : public views::ImageButton,
   // Note: This is different than the rect around the entire New Tab Button as
   // it extends to the top of the tabstrip for Fitts' Law interaction in a
   // maximized window. Used for anchoring the NewTabPromo.
-  gfx::Rect GetVisibleBounds();
+  gfx::Rect GetVisibleBounds() const;
 
   // Computes a path corresponding to the button's outer border for a given
   // |scale| and stores it in |path|.  |button_y| is used as the y-coordinate
@@ -100,6 +104,16 @@ class NewTabButton : public views::ImageButton,
 
   // The offset used to paint the background image.
   gfx::Point background_offset_;
+
+  // Whether this new tab button belongs to a tabstrip that is part of an
+  // incognito mode browser or not. Note that you can't drag a tab from one
+  // incognito browser to another non-incognito browser or vice versa.
+  const bool is_incognito_;
+
+  // In the touch-optimized UI, the new tab button has a plus icon, and an
+  // incognito icon if is in incognito mode.
+  gfx::ImageSkia plus_icon_;
+  gfx::ImageSkia incognito_icon_;
 
   // were we destroyed?
   bool* destroyed_;

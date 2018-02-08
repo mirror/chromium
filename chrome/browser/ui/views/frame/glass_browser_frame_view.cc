@@ -151,9 +151,13 @@ gfx::Rect GlassBrowserFrameView::GetBoundsForTabStrip(
       // In non-tablet mode, allow the new tab button to slide completely
       // under the profile switcher button.
       if (!IsMaximized()) {
-        end_x = std::min(end_x + GetLayoutSize(NEW_TAB_BUTTON).width() +
-                             kNewTabCaptionRestoredSpacing,
-                         old_end_x);
+        end_x = std::min(
+            end_x +
+                GetLayoutSize(NEW_TAB_BUTTON,
+                              browser_view()->tabstrip()->IsIncognito())
+                    .width() +
+                kNewTabCaptionRestoredSpacing,
+            old_end_x);
       }
     }
   }

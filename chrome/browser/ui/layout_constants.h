@@ -52,12 +52,14 @@ enum LayoutInset {
 
 enum LayoutSize {
   // The visible size of the new tab button; does not include any Fitts' Law
-  // extensions.
+  // extensions. Note that in touch-optimized UI mode, the new tab button's
+  // width is longer when the browser is in incognito mode. The height remains
+  // the same whether incognito or not.
   NEW_TAB_BUTTON,
 };
 
 int GetLayoutConstant(LayoutConstant constant);
 gfx::Insets GetLayoutInsets(LayoutInset inset);
-gfx::Size GetLayoutSize(LayoutSize size);
+gfx::Size GetLayoutSize(LayoutSize size, bool is_incognito);
 
 #endif  // CHROME_BROWSER_UI_LAYOUT_CONSTANTS_H_
