@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1772700b_a0c4de9f",
+        "filename": "chrome/browser/download/download_prompt_status.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-02-08T00:19:42Z",
+      "side": 1,
+      "message": "I like this a lot! :)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "a8272670c85e91915a0d939a073fe2fb2be7abfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
