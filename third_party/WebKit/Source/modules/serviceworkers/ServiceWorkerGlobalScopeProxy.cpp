@@ -125,6 +125,72 @@ ServiceWorkerGlobalScopeProxy::~ServiceWorkerGlobalScopeProxy() {
 
 void ServiceWorkerGlobalScopeProxy::Trace(blink::Visitor* visitor) {
   visitor->Trace(parent_frame_task_runners_);
+  WaitUntilObserverClient::Trace(visitor);
+}
+
+void ServiceWorkerGlobalScopeProxy::CompleteEvent(
+    WebServiceWorkerContextClient::EventType type,
+    int event_id,
+    mojom::ServiceWorkerEventStatus status,
+    double event_dispatch_time) {
+  switch (type) {
+    case WebServiceWorkerContextClient::kAbortPayment:
+      Client().DidHandleAbortPaymentEvent(event_id, status,
+                                          event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kActivate:
+      Client().DidHandleActivateEvent(event_id, status, event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kCanMakePayment:
+      Client().DidHandleCanMakePaymentEvent(event_id, status,
+                                            event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kFetch:
+      Client().DidHandleFetchEvent(event_id, status, event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kInstall:
+      WorkerGlobalScope()->SetIsInstalling(false);
+      Client().DidHandleInstallEvent(event_id, status, event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kMessage:
+      Client().DidHandleExtendableMessageEvent(event_id, status,
+                                               event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kNotificationClick:
+      Client().DidHandleNotificationClickEvent(event_id, status,
+                                               event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kNotificationClose:
+      Client().DidHandleNotificationCloseEvent(event_id, status,
+                                               event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kPush:
+      Client().DidHandlePushEvent(event_id, status, event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kSync:
+      Client().DidHandleSyncEvent(event_id, status, event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kPaymentRequest:
+      Client().DidHandlePaymentRequestEvent(event_id, status,
+                                            event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kBackgroundFetchAbort:
+      Client().DidHandleBackgroundFetchAbortEvent(event_id, status,
+                                                  event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kBackgroundFetchClick:
+      Client().DidHandleBackgroundFetchClickEvent(event_id, status,
+                                                  event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kBackgroundFetchFail:
+      Client().DidHandleBackgroundFetchFailEvent(event_id, status,
+                                                 event_dispatch_time);
+      break;
+    case WebServiceWorkerContextClient::kBackgroundFetched:
+      Client().DidHandleBackgroundFetchedEvent(event_id, status,
+                                               event_dispatch_time);
+      break;
+  }
 }
 
 void ServiceWorkerGlobalScopeProxy::SetRegistration(
@@ -138,7 +204,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchAbortEvent(
     const WebString& developer_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kBackgroundFetchAbort, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kBackgroundFetchAbort,
+      event_id, this);
 
   BackgroundFetchClickEventInit init;
   init.setId(developer_id);
@@ -155,7 +222,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchClickEvent(
     BackgroundFetchState status) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kBackgroundFetchClick, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kBackgroundFetchClick,
+      event_id, this);
 
   BackgroundFetchClickEventInit init;
   init.setId(developer_id);
@@ -184,7 +252,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchFailEvent(
     const WebVector<WebBackgroundFetchSettledFetch>& fetches) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kBackgroundFetchFail, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kBackgroundFetchFail,
+      event_id, this);
 
   BackgroundFetchFailEventInit init;
   init.setId(developer_id);
@@ -207,7 +276,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
     const WebVector<WebBackgroundFetchSettledFetch>& fetches) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kBackgroundFetched, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kBackgroundFetched,
+      event_id, this);
 
   BackgroundFetchedEventInit init;
   init.setId(developer_id);
@@ -226,7 +296,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
 void ServiceWorkerGlobalScopeProxy::DispatchActivateEvent(int event_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kActivate, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kActivate, event_id,
+      this);
   Event* event = ExtendableEvent::Create(EventTypeNames::activate,
                                          ExtendableEventInit(), observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
@@ -250,7 +321,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
   else
     source = ServiceWorkerClient::Create(client);
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kMessage, event_id,
+      this);
 
   Event* event = ExtendableMessageEvent::Create(std::move(msg.message), origin,
                                                 ports, source, observer);
@@ -273,7 +345,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
       ServiceWorker::From(worker_global_scope_->GetExecutionContext(),
                           base::WrapUnique(handle.release()));
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kMessage, event_id,
+      this);
 
   Event* event = ExtendableMessageEvent::Create(std::move(msg.message), origin,
                                                 ports, source, observer);
@@ -288,7 +361,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchFetchEvent(
   ScriptState::Scope scope(
       WorkerGlobalScope()->ScriptController()->GetScriptState());
   WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kFetch, fetch_event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kFetch,
+      fetch_event_id, this);
   FetchRespondWithObserver* respond_with_observer =
       FetchRespondWithObserver::Create(
           WorkerGlobalScope(), fetch_event_id, web_request.Url(),
@@ -368,11 +442,19 @@ void ServiceWorkerGlobalScopeProxy::OnNavigationPreloadComplete(
 void ServiceWorkerGlobalScopeProxy::DispatchInstallEvent(int event_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kInstall, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kInstall, event_id,
+      this);
   Event* event = InstallEvent::Create(
       EventTypeNames::install, ExtendableEventInit(), event_id, observer);
   WorkerGlobalScope()->SetIsInstalling(true);
+
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
+
+  // .......
+  // Figure out status based on scope's GetThread()->IsForciblyTerminated()
+  //  event_dispatch_state_ = GetThread()->IsForciblyTerminated() ?
+  //  EventDispatchState::kFailed : EventDispatchState::kDispatched
+  // Client()->DidHandleInstallEvent(event_id, status, event_dispatch_time);
 }
 
 void ServiceWorkerGlobalScopeProxy::DispatchNotificationClickEvent(
@@ -383,7 +465,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchNotificationClickEvent(
     const WebString& reply) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kNotificationClick, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kNotificationClick,
+      event_id, this);
   NotificationEventInit event_init;
   event_init.setNotification(Notification::Create(
       WorkerGlobalScope(), notification_id, data, true /* showing */));
@@ -401,7 +484,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchNotificationCloseEvent(
     const WebNotificationData& data) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kNotificationClose, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kNotificationClose,
+      event_id, this);
   NotificationEventInit event_init;
   event_init.setAction(WTF::String());  // initialize as null.
   event_init.setNotification(Notification::Create(
@@ -415,7 +499,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchPushEvent(int event_id,
                                                       const WebString& data) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kPush, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kPush, event_id,
+      this);
   Event* event = PushEvent::Create(EventTypeNames::push,
                                    PushMessageData::Create(data), observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
@@ -426,7 +511,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(int event_id,
                                                       bool last_chance) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kSync, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kSync, event_id,
+      this);
   Event* event =
       SyncEvent::Create(EventTypeNames::sync, id, last_chance, observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
@@ -435,7 +521,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(int event_id,
 void ServiceWorkerGlobalScopeProxy::DispatchAbortPaymentEvent(int event_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kAbortPayment, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kAbortPayment,
+      event_id, this);
   AbortPaymentRespondWithObserver* respond_with_observer =
       new AbortPaymentRespondWithObserver(WorkerGlobalScope(), event_id,
                                           wait_until_observer);
@@ -453,7 +540,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchCanMakePaymentEvent(
     const WebCanMakePaymentEventData& web_event_data) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kCanMakePayment, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kCanMakePayment,
+      event_id, this);
   CanMakePaymentRespondWithObserver* respond_with_observer =
       new CanMakePaymentRespondWithObserver(WorkerGlobalScope(), event_id,
                                             wait_until_observer);
@@ -474,7 +562,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchPaymentRequestEvent(
     const WebPaymentRequestEventData& web_app_request) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
-      WorkerGlobalScope(), WaitUntilObserver::kPaymentRequest, event_id);
+      WorkerGlobalScope(), WebServiceWorkerContextClient::kPaymentRequest,
+      event_id, this);
   PaymentRequestRespondWithObserver* respond_with_observer =
       PaymentRequestRespondWithObserver::Create(WorkerGlobalScope(), event_id,
                                                 wait_until_observer);

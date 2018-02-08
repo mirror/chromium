@@ -63,6 +63,24 @@ class WebString;
 // thread.
 class WebServiceWorkerContextClient {
  public:
+  enum EventType {
+    kAbortPayment,
+    kActivate,
+    kCanMakePayment,
+    kFetch,
+    kInstall,
+    kMessage,
+    kNotificationClick,
+    kNotificationClose,
+    kPaymentRequest,
+    kPush,
+    kSync,
+    kBackgroundFetchAbort,
+    kBackgroundFetchClick,
+    kBackgroundFetchFail,
+    kBackgroundFetched
+  };
+
   virtual ~WebServiceWorkerContextClient() = default;
 
   // For Clients#get(id). Requests the embedder to return the specified Client.

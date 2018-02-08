@@ -6,10 +6,11 @@
 #define WaitUntilObserver_h
 
 #include "base/callback.h"
+#include "bindings/core/v8/ScriptValue.h"
 #include "modules/ModulesExport.h"
-#include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "platform/Timer.h"
 #include "platform/wtf/Forward.h"
+#include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
 namespace blink {
 
@@ -17,6 +18,16 @@ class ExceptionState;
 class ExecutionContext;
 class ScriptPromise;
 class ScriptState;
+class WebServiceWorkerContextClient;
+
+class MODULES_EXPORT WaitUntilObserverClient : public GarbageCollectedMixin {
+ public:
+  virtual void CompleteEvent(WebServiceWorkerContextClient::EventType,
+                             int event_id,
+                             mojom::ServiceWorkerEventStatus,
+                             double event_dispatch_time) = 0;
+  void Trace(blink::Visitor* visitor) override {}
+};
 
 // Created for each ExtendableEvent instance.
 class MODULES_EXPORT WaitUntilObserver final
@@ -25,25 +36,10 @@ class MODULES_EXPORT WaitUntilObserver final
   using PromiseSettledCallback =
       base::RepeatingCallback<void(const ScriptValue&)>;
 
-  enum EventType {
-    kAbortPayment,
-    kActivate,
-    kCanMakePayment,
-    kFetch,
-    kInstall,
-    kMessage,
-    kNotificationClick,
-    kNotificationClose,
-    kPaymentRequest,
-    kPush,
-    kSync,
-    kBackgroundFetchAbort,
-    kBackgroundFetchClick,
-    kBackgroundFetchFail,
-    kBackgroundFetched
-  };
-
-  static WaitUntilObserver* Create(ExecutionContext*, EventType, int event_id);
+  static WaitUntilObserver* Create(ExecutionContext*,
+                                   WebServiceWorkerContextClient::EventType,
+                                   int event_id,
+                                   WaitUntilObserverClient*);
 
   // Must be called before dispatching the event.
   void WillDispatchEvent();
@@ -86,7 +82,10 @@ class MODULES_EXPORT WaitUntilObserver final
     kFailed
   };
 
-  WaitUntilObserver(ExecutionContext*, EventType, int event_id);
+  WaitUntilObserver(ExecutionContext*,
+                    WebServiceWorkerContextClient::EventType,
+                    int event_id,
+                    WaitUntilObserverClient*);
 
   void IncrementPendingPromiseCount();
   void DecrementPendingPromiseCount();
@@ -100,11 +99,16 @@ class MODULES_EXPORT WaitUntilObserver final
 
   void ConsumeWindowInteraction(TimerBase*);
 
-  void MaybeCompleteEvent();
+  void CompleteEvent(mojom::ServiceWorkerEventStatus);
+
+  bool IsDispatchFinished();
+
+  mojom::ServiceWorkerEventStatus GetEventStatus();
 
   Member<ExecutionContext> execution_context_;
-  EventType type_;
+  WebServiceWorkerContextClient::EventType type_;
   int event_id_;
+  Member<WaitUntilObserverClient> client_;
   int pending_promises_ = 0;
   EventDispatchState event_dispatch_state_ = EventDispatchState::kInitial;
   bool has_rejected_promise_ = false;
