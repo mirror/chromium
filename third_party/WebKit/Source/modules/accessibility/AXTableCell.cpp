@@ -158,6 +158,9 @@ AccessibilityRole AXTableCell::ScanToDecideHeaderRole() {
   if (IsColumnHeaderCell())
     return kColumnHeaderRole;
 
+  if (!layout_object_ || !layout_object_->IsTableCell())
+    return kCellRole;  // <th role="gridcell">.
+
   // Check the previous cell and the next cell on the same row.
   LayoutTableCell* layout_cell = ToLayoutTableCell(layout_object_);
   AccessibilityRole header_role = kCellRole;
