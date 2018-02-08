@@ -341,7 +341,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   EXPECT_CALL(*mock_instance_id(), ValidateToken(_, _, _, _)).Times(0);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   task_runner->RunUntilIdle();
 }
 
@@ -369,7 +369,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   EXPECT_CALL(*mock_instance_id(), ValidateToken(_, _, _, _)).Times(0);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   task_runner->FastForwardBy(time_to_validation -
                              base::TimeDelta::FromSeconds(1));
 
@@ -426,7 +426,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   handler->StopListening();
   task_runner->FastForwardBy(10 * GetTokenValidationPeriod());
 }
@@ -453,7 +453,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
           InvokeCallbackArgument<3>("token", InstanceID::Result::SUCCESS));
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that the validation schedule has changed. "Old validation" should not
   // happen because the token was retrieved recently.
@@ -488,7 +488,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Handler validates the token.
   EXPECT_CALL(*mock_instance_id(), GetToken(_, _, _, _))
@@ -527,7 +527,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that handler resubscribes with the new token after a validation, if
   // old is invalid.
@@ -559,7 +559,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that provider does not resubscribe if the old token is still valid
   // after validation.
@@ -598,7 +598,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   handler->StartListening(
       base::BindRepeating(
           [](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::BindRepeating([]() {}));
+      base::DoNothing());
 
   // The client stops listening for the push updates.
   handler->StopListening();
@@ -638,7 +638,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   handler->StartListening(
       base::BindRepeating(
           [](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::BindRepeating([]() {}));
+      base::DoNothing());
 
   task_runner->FastForwardBy(time_to_validation -
                              base::TimeDelta::FromSeconds(1));
@@ -694,7 +694,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
           InvokeCallbackArgument<3>("token", InstanceID::Result::SUCCESS));
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   EXPECT_TRUE(handler->IsListening());
 }
@@ -714,7 +714,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
           InvokeCallbackArgument<3>("token", InstanceID::Result::SUCCESS));
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   ASSERT_TRUE(handler->IsListening());
 
   handler->StopListening();
@@ -737,7 +737,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
           InvokeCallbackArgument<3>("token", InstanceID::Result::SUCCESS));
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   ASSERT_TRUE(handler->IsListening());
 
   handler->StopListening();
@@ -745,7 +745,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
 
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   EXPECT_TRUE(handler->IsListening());
 }
@@ -768,7 +768,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldForceSubscribeImmediatelyIfDue) {
 
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   EXPECT_CALL(*mock_subscription_manager(), Subscribe("token"));
   task_runner->RunUntilIdle();
 }
@@ -794,7 +794,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   // Check that handler does not force subscribe yet.
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   // TODO(vitaliii): Consider making FakeSubscriptionManager, because
   // IsSubscribed() affects forced subscriptions. Currently we have to carefully
   // avoid the initial subscription.
@@ -852,7 +852,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
   handler->StopListening();
   EXPECT_CALL(*mock_subscription_manager(), Subscribe("token")).Times(0);
   task_runner->FastForwardBy(10 * GetForcedSubscriptionPeriod());
@@ -878,7 +878,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Handler force subscribes.
   EXPECT_CALL(*mock_subscription_manager(), Subscribe("token"));
@@ -921,7 +921,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that the next validation is scheduled in time.
   EXPECT_CALL(*mock_instance_id(), GetToken(_, _, _, _)).Times(0);
@@ -956,7 +956,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldReportMissingAction) {
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   handler->OnMessage("com.google.breakingnews.gcm", gcm::IncomingMessage());
 
@@ -981,7 +981,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldReportInvalidAction) {
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   gcm::IncomingMessage message;
   message.data[kPushedActionKey] = "invalid_action";
@@ -1010,7 +1010,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldReportPushToRefreshAction) {
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   gcm::IncomingMessage message;
   message.data[kPushedActionKey] = "push-to-refresh";
@@ -1039,7 +1039,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldReportPushByValueAction) {
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   gcm::IncomingMessage message;
   message.data[kPushedActionKey] = "push-by-value";
@@ -1087,7 +1087,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   MockOnNewRemoteSuggestionCallback mock_on_new_remote_suggestion_callback;
 
   handler->StartListening(mock_on_new_remote_suggestion_callback.Get(),
-                          base::Bind([]() {}));
+                          base::DoNothing());
 
   gcm::IncomingMessage message;
   message.data[kPushedActionKey] = "push-by-value";
@@ -1138,7 +1138,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest, ShouldReportTokenRetrievalResult) {
                                           InstanceID::Result::NETWORK_ERROR));
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   EXPECT_THAT(
       histogram_tester.GetAllSamples(
@@ -1169,7 +1169,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that handler does not report the metric before the validation.
   task_runner->FastForwardBy(time_to_validation -
@@ -1216,7 +1216,7 @@ TEST_F(BreakingNewsGCMAppHandlerTest,
   std::unique_ptr<BreakingNewsGCMAppHandler> handler = MakeHandler(task_runner);
   handler->StartListening(
       base::Bind([](std::unique_ptr<RemoteSuggestion> remote_suggestion) {}),
-      base::Bind([]() {}));
+      base::DoNothing());
 
   // Check that handler does not report the metric before the validation.
   task_runner->FastForwardBy(time_to_validation -

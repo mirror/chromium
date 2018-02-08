@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
@@ -719,7 +720,7 @@ class DiskMountManagerImpl : public DiskMountManager,
             device_path,
             base::Bind(&DiskMountManagerImpl::OnGetDeviceProperties,
                        weak_ptr_factory_.GetWeakPtr()),
-            base::Bind(&base::DoNothing));
+            base::DoNothing());
         break;
       }
       case CROS_DISKS_DISK_REMOVED: {
