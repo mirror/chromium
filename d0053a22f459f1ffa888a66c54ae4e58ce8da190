@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85e7fd5e_2283014b",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-08T00:04:32Z",
+      "side": 1,
+      "message": "Say thank you to \"git cl format\"! Fixed.",
+      "parentUuid": "3b877013_27e7a578",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96830c94_d6a2c463",
         "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T23:19:38Z",
       "side": 1,
       "message": "should we have anything like DCHECK(token.is_empty()) or return null string if token is empty?",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc29a61_2049cc1e",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-08T00:04:32Z",
+      "side": 1,
+      "message": "DCHECK may trigger in tests, which I\u0027d like to avoid. Returning empty string instead.",
+      "parentUuid": "96830c94_d6a2c463",
       "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2506cc5_1aa0bc69",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTracingAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-08T00:04:32Z",
+      "side": 1,
+      "message": "Other instrumentation point uses it. Removed parameter name to avoid confusion.",
+      "parentUuid": "9d7cf61b_fee00212",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3db5a62_d0096b31",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorTracingAgent.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-02-07T23:19:38Z",
       "side": 1,
       "message": "you need to restore it from state then!",
+      "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c0460e_b3952d64",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTracingAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-02-08T00:04:32Z",
+      "side": 1,
+      "message": "Nice catch!",
+      "parentUuid": "b3db5a62_d0096b31",
       "revId": "d0053a22f459f1ffa888a66c54ae4e58ce8da190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
