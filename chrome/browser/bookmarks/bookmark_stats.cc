@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/bookmarks/bookmark_stats.h"
+#include "chrome/browser/search/search.h"
 
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -10,7 +11,8 @@
 
 using bookmarks::BookmarkNode;
 
-void RecordBookmarkLaunch(const BookmarkNode* node,
+void RecordBookmarkLaunch(const content::WebContents* contents,
+                          const BookmarkNode* node,
                           BookmarkLaunchLocation location) {
   if (location == BOOKMARK_LAUNCH_LOCATION_DETACHED_BAR ||
       location == BOOKMARK_LAUNCH_LOCATION_ATTACHED_BAR) {
@@ -19,6 +21,18 @@ void RecordBookmarkLaunch(const BookmarkNode* node,
   UMA_HISTOGRAM_ENUMERATION(
       "Bookmarks.LaunchLocation", location, BOOKMARK_LAUNCH_LOCATION_LIMIT);
 
+  // If New Tab Page state cannot be determined, nothing is recorded here.
+  if (contents) {
+    if (search::IsInstantNTP(contents)) {
+      UMA_HISTOGRAM_ENUMERATION("Bookmarks.LaunchLocation",
+                                BOOKMARK_LAUNCH_LOCATION_NTP,
+                                BOOKMARK_LAUNCH_LOCATION_LIMIT);
+    } else {
+      UMA_HISTOGRAM_ENUMERATION("Bookmarks.LaunchLocation",
+                                BOOKMARK_LAUNCH_LOCATION_NOT_NTP,
+                                BOOKMARK_LAUNCH_LOCATION_LIMIT);
+    }
+  }
   if (!node)
     return;
 
