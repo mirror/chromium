@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63c5ee9f_d30c420c",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: These values are no longer stored in the theme pack, and should be moved down.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdf734b_be671572",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "I believe putting in this conditional means people who use a theme with a custom toolbar color will still get default background tab colors (unless the theme also specifies those), or something like that?\n\nPretty sure rather than this, what you want is to specify an alternate set of tints for your HSL shift that convert the touch toolbar color into the touch background tab color in normal and incognito mode, respectively.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9363d0_eacec6fe",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: An alternative that duplicates less code (but is a little longer):\n\n  int id;\n  switch (button_state) {\n    case views::Button::STATE_HOVERED:\n      id \u003d ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_HOVER;\n      break;\n    ...\n  }\n  return theme_provider-\u003eGetColor(id);\n\nUp to you",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ab7156_6cf9b77b",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: Can omit",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a550b0_723a8c9f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n      return theme_provider-\u003eGetColor(\n          IsActive()\n              ? ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_ACTIVE\n              : ThemeProperties::COLOR_TAB_CLOSE_BUTTON_BACKGROUND_INACTIVE);",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5e4e8f_ef010074",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "To make sure I understand: we\u0027re saying that in non-touch UI, the right edge of the alert indicator should be flush with the (apparent) left edge of the tab button; but in touch UI, they should have padding between them equal to the amount of padding after the title?\n\nIf so, I\u0027d maybe call this variable |alert_to_close_spacing|.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92037e2e_c70e47d0",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "What pair?",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2871b4f2_884dd439",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: GetTouchIcon()?",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9696f67a_25be65a8",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: Could combine with return above using ?:",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2caf5f1_19124760",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t create a vector here; just do {...} directly in the loop below where you have |states|.\n\nThis will be ugly when wrapped, but more efficient than creating a vector each time.\n\nIf you really hate this, you could use a C array or std::array instead of a vector (and be constexpr in either case).",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a7c05e_1295768a",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Seems like we want to do this in SetResetToShrinkOnExit() instead, so we also don\u0027t call StackedLayoutMaybeChanged() (or do anything else anyone might add to this block in the future).",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19f7d75_d1b80c9b",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "This change can disappear if you follow my comment above.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08864540_3f69bd4c",
+        "filename": "ui/gfx/color_palette.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Per the email thread, we should go ahead and change all these color constants.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4138c9fe_c91d101b",
+        "filename": "ui/gfx/color_palette.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-02-08T00:56:09Z",
+      "side": 1,
+      "message": "Nit: I still don\u0027t think these two RedDark colors are real \"Google colors\" and should thus be in this file.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
