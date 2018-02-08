@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1acb37a_47a69fb2",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-08T01:13:28Z",
+      "side": 1,
+      "message": "Hmm, why is this marked as not_user_triggered?  The description makes it seem like it\u0027s user triggered...",
+      "range": {
+        "startLine": 1704,
+        "startChar": 4,
+        "endLine": 1704,
+        "endChar": 29
+      },
+      "revId": "f0a217c559b658c19199f264f4761cd2830cfff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5c9dab_9cca44b8",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-02-08T01:13:28Z",
+      "side": 1,
+      "message": "What\u0027s the advantage of recording these (and other related, non-user-triggered events) as user actions rather than as histograms?",
+      "range": {
+        "startLine": 1720,
+        "startChar": 0,
+        "endLine": 1736,
+        "endChar": 9
+      },
+      "revId": "f0a217c559b658c19199f264f4761cd2830cfff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
