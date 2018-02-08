@@ -286,6 +286,7 @@ class CORE_EXPORT HTMLMediaElement
 
   // ScriptWrappable functions.
   bool HasPendingActivity() const override;
+  bool HasPendingActivityInternal() const;
 
   AudioSourceProviderClient* AudioSourceNode() { return audio_source_node_; }
   void SetAudioSourceNode(AudioSourceProviderClient*);

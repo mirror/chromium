@@ -13,6 +13,7 @@
 
 #include "base/cancelable_callback.h"
 #include "base/compiler_specific.h"
+#include "base/debug/stack_trace.h"
 #include "base/macros.h"
 #include "base/memory/memory_pressure_listener.h"
 #include "base/memory/ref_counted.h"

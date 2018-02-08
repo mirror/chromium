@@ -38,6 +38,7 @@ void BlockingUrlProtocol::Abort() {
 }
 
 int BlockingUrlProtocol::Read(int size, uint8_t* data) {
+  LOG(ERROR) << __func__ << ": " << size;
   {
     // Read errors are unrecoverable.
     base::AutoLock lock(data_source_lock_);
@@ -90,6 +91,7 @@ bool BlockingUrlProtocol::GetPosition(int64_t* position_out) {
 
 bool BlockingUrlProtocol::SetPosition(int64_t position) {
   base::AutoLock lock(data_source_lock_);
+  LOG(ERROR) << __func__ << ": " << position;
   int64_t file_size;
   if (!data_source_ ||
       (data_source_->GetSize(&file_size) && position > file_size) ||

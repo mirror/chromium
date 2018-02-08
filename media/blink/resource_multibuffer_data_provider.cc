@@ -267,6 +267,7 @@ void ResourceMultiBufferDataProvider::DidReceiveResponse(
                                         GetCacheValidUntil(response));
 
   uint32_t reasons = GetReasonsForUncacheability(response);
+  LOG(ERROR) << "Did Cache? : " << reasons;
   destination_url_data->set_cacheable(reasons == 0);
   UMA_HISTOGRAM_BOOLEAN("Media.CacheUseful", reasons == 0);
   int shift = 0;

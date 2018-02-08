@@ -2523,6 +2523,7 @@ void Internals::mediaPlayerPlayingRemotelyChanged(
 
 void Internals::setMediaElementNetworkState(HTMLMediaElement* media_element,
                                             int state) {
+  LOG(ERROR) << __func__;
   DCHECK(media_element);
   DCHECK(state >= WebMediaPlayer::NetworkState::kNetworkStateEmpty);
   DCHECK(state <= WebMediaPlayer::NetworkState::kNetworkStateDecodeError);

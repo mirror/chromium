@@ -83,7 +83,7 @@ while (($n = read FILE, $data, 1024) != 0) {
 
     # Throttle if there is some.
     if ($chunkPerSec > 0) {
-        if ($limit == 0 || $total < $limit) {
+        if ($limit == 0 || $parsedRange[0] + $total < $limit) {
             select(undef, undef, undef, 1.0 / $chunkPerSec);
         }
     }

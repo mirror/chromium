@@ -368,7 +368,7 @@ void MultibufferDataSource::Read(int64_t position,
                                  int size,
                                  uint8_t* data,
                                  const DataSource::ReadCB& read_cb) {
-  DVLOG(1) << "Read: " << position << " offset, " << size << " bytes";
+
   // Reading is not allowed until after initialization.
   DCHECK(init_cb_.is_null());
   DCHECK(!read_cb.is_null());
@@ -386,8 +386,12 @@ void MultibufferDataSource::Read(int64_t position,
     // muxing as soon as possible. This works because TryReadAt is
     // thread-safe.
     if (reader_) {
+      LOG(ERROR) << "Read: " << position << " offset, " << size
+                 << " bytes, avail_at_0: " << reader_->AvailableAt(0)
+                 << ", at_pos: " << reader_->AvailableAt(position);
       int bytes_read = reader_->TryReadAt(position, data, size);
       if (bytes_read > 0) {
+        LOG(ERROR) << "Read from cache...";
         bytes_read_ += bytes_read;
         seek_positions_.push_back(position + bytes_read);
         if (seek_positions_.size() == 1) {
@@ -427,6 +431,7 @@ bool MultibufferDataSource::IsStreaming() {
 /////////////////////////////////////////////////////////////////////////////
 // This method is the place where actual read happens,
 void MultibufferDataSource::ReadTask() {
+  LOG(ERROR) << __func__;
   DCHECK(render_task_runner_->BelongsToCurrentThread());
 
   base::AutoLock auto_lock(lock_);

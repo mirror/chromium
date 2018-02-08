@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
+#include "base/timer/elapsed_timer.h"
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
@@ -1054,6 +1055,8 @@ void PipelineImpl::Stop() {
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  base::ElapsedTimer timer;
+
   if (!IsRunning()) {
     DVLOG(2) << "Media pipeline isn't running. Ignoring Stop()";
     return;
@@ -1095,6 +1098,8 @@ void PipelineImpl::Stop() {
   // Invalidate self weak pointers effectively canceling all pending
   // notifications in the message queue.
   weak_factory_.InvalidateWeakPtrs();
+
+  LOG(ERROR) << __func__ << ": " << timer.Elapsed();
 }
 
 void PipelineImpl::Seek(base::TimeDelta time, const PipelineStatusCB& seek_cb) {

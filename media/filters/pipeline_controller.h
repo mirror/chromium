@@ -29,7 +29,7 @@ class Demuxer;
 //   - Block invalid calls after an error occurs.
 class MEDIA_EXPORT PipelineController {
  public:
-  enum class State {
+  enum class State : int {
     STOPPED,
     STARTING,
     PLAYING,
