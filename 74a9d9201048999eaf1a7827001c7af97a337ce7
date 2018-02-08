@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "072a3939_829d43ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T00:37:18Z",
+      "side": 1,
+      "message": "nit: Capital :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb50dea0_95f48fc7",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T00:37:18Z",
+      "side": 1,
+      "message": "We\u0027re only doing this if the --verbose option is set, so is it really a problem?  What if we really _do_ want to get INFO logging out of the spawner?  Can we make -vv work for that, if not -v/--verbose?",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 55
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "637cfcfe_91ee727f",
         "filename": "build/fuchsia/runner_v2/net_test_server.py",
         "patchSetId": 1
@@ -110,6 +156,75 @@
         "startChar": 4,
         "endLine": 110,
         "endChar": 27
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b984ab_fc82b111",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T00:37:18Z",
+      "side": 1,
+      "message": "This restricts us to IPv4; can we support IPv6 and use the \u0027localhost\u0027 DNS name?",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc32b5e_b1560a7f",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T00:37:18Z",
+      "side": 1,
+      "message": "As per style-guide, globals should be made internal to the module (i.e. _logger, I think?) and exposed via public module functions where necesary.\n\n(We should similarly update our global constants to include the _ prefix to make them \"private\")",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567ae41b_1ea3c36b",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-02-08T00:37:18Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem to be used, nor does it seem to do anything?",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 10
       },
       "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
