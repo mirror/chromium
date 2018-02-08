@@ -4,21 +4,21 @@
 
 #include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 
-#include <stdint.h>
-
 #include "base/rand_util.h"
-#include "base/unguessable_token.h"
 
 namespace viz {
 
-ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator() : next_id_(1u) {}
-
-ParentLocalSurfaceIdAllocator::~ParentLocalSurfaceIdAllocator() {}
+LocalSurfaceId ParentLocalSurfaceIdAllocator::UpdateChildSequenceNumber(
+    uint32_t chid_sequence_number) {
+  child_sequence_number_ = child_sequence_number;
+  return LocalSurfaceId(current_parent_sequence_number_, child_sequence_number,
+                        nonce_);
+}
 
 LocalSurfaceId ParentLocalSurfaceIdAllocator::GenerateId() {
-  LocalSurfaceId id(next_id_, base::UnguessableToken::Create());
-  next_id_++;
-  return id;
+  current_parent_sequence_number_++;
+  return LocalSurfaceId(current_parent_sequence_number_, child_sequence_number_,
+                        base::UnguessableToken::Create());
 }
 
 }  // namespace viz
