@@ -69,6 +69,30 @@
       "revId": "e9f3c9e911fcd599894bf1e616308d2a7903c2e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d19352_143709e2",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T02:25:09Z",
+      "side": 1,
+      "message": "Yes, please!",
+      "parentUuid": "99fc18ce_6ce4c989",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 69
+      },
+      "revId": "e9f3c9e911fcd599894bf1e616308d2a7903c2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
