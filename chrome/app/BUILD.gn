@@ -4,6 +4,7 @@
 
 import("//build/config/ui.gni")
 import("//chrome/common/features.gni")
+import("//chromeos/assistant/assistant.gni")
 import("//components/nacl/features.gni")
 import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
@@ -414,6 +415,9 @@ if (enable_extensions) {
 if (is_chromeos) {
   chrome_packaged_services +=
       [ "//chrome/browser/chromeos:ash_pref_connector_manifest" ]
+  if (enable_cros_assistant) {
+    chrome_packaged_services += [ "//chromeos/services/assistant:manifest" ]
+  }
 }
 
 if (is_win) {

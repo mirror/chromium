@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//chromeos/assistant/assistant.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//extensions/features/features.gni")
@@ -1653,6 +1654,14 @@ source_set("chromeos") {
 
   if (use_cras) {
     defines = [ "USE_CRAS" ]
+  }
+
+  if (enable_cros_assistant) {
+    deps += [ "//chromeos/services/assistant:lib" ]
+    sources += [
+      "assistant/assistant_browser_part.cc",
+      "assistant/assistant_browser_part.h",
+    ]
   }
 }
 
