@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/time/clock.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/offline_pages/core/model/clear_storage_task.h"
 #include "components/offline_pages/core/offline_page_archiver.h"
@@ -38,6 +39,7 @@ class ArchiveManager;
 class ClientPolicyController;
 class OfflinePageArchiver;
 class OfflinePageMetadataStoreSQL;
+class SystemDownloadManager;
 
 // Implementaion of OfflinePageModel, which is a service for saving pages
 // offline. It's an entry point to get information about Offline Pages and the
@@ -67,6 +69,7 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   OfflinePageModelTaskified(
       std::unique_ptr<OfflinePageMetadataStoreSQL> store,
       std::unique_ptr<ArchiveManager> archive_manager,
+      std::unique_ptr<SystemDownloadManager> download_manager,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner,
       std::unique_ptr<base::Clock> clock);
   ~OfflinePageModelTaskified() override;
@@ -127,6 +130,10 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   ClientPolicyController* GetPolicyController() override;
 
   OfflineEventLogger* GetLogger() override;
+
+  void PublishArchiveDone(const SavePageCallback& save_page_callback,
+                          OfflinePageItem offline_page,
+                          PublishArchiveResult* archive_result);
 
   // Methods for testing only:
   OfflinePageMetadataStoreSQL* GetStoreForTesting() { return store_.get(); }
@@ -193,8 +200,14 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   void OnSelectItemsMarkedForUpgradeDone(
       const MultipleOfflinePageItemResult& pages_for_upgrade);
 
+  // Methods for publishing the page to the public directory.
+  void SavePageToDownloads(const OfflinePageItem& offline_page,
+                           const SavePageCallback& callback,
+                           OfflinePageArchiver* archiver);
+
   // Other utility methods.
   void RemovePagesMatchingUrlAndNamespace(const OfflinePageItem& page);
+  void ErasePendingArchiver(OfflinePageArchiver* archiver);
   void CreateArchivesDirectoryIfNeeded();
   base::Time GetCurrentTime();
 
@@ -203,6 +216,9 @@ class OfflinePageModelTaskified : public OfflinePageModel,
 
   // Manager for the offline archive files and directory.
   std::unique_ptr<ArchiveManager> archive_manager_;
+
+  // Manages interaction with the OS download manager, if present.
+  std::unique_ptr<SystemDownloadManager> download_manager_;
 
   // Controller of the client policies.
   std::unique_ptr<ClientPolicyController> policy_controller_;
@@ -233,6 +249,8 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   // This value will be affecting the CreateArchiveTasks that are created by the
   // model to skip saving original_urls.
   bool skip_clearing_original_url_for_testing_;
+
+  const scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   base::WeakPtrFactory<OfflinePageModelTaskified> weak_ptr_factory_;
 

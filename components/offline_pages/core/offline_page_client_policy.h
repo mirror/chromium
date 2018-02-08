@@ -49,6 +49,8 @@ struct LifetimePolicy {
 struct FeaturePolicy {
   // Whether pages are shown in download ui.
   bool is_supported_by_download;
+  // Whether a download was initiated in response to user action.
+  bool is_user_generated_download;
   // Whether pages are shown in recent tabs ui.
   bool is_supported_by_recent_tabs;
   // Whether pages should only be viewed in the tab they were generated in.
@@ -65,6 +67,7 @@ struct FeaturePolicy {
 
   FeaturePolicy()
       : is_supported_by_download(false),
+        is_user_generated_download(false),
         is_supported_by_recent_tabs(false),
         only_shown_in_original_tab(false),
         is_removed_on_cache_reset(true),
@@ -132,6 +135,13 @@ class OfflinePageClientPolicyBuilder {
   OfflinePageClientPolicyBuilder& SetIsSupportedByDownload(
       const bool is_downloaded) {
     policy_.feature_policy.is_supported_by_download = is_downloaded;
+    return *this;
+  }
+
+  OfflinePageClientPolicyBuilder& SetIsUserGeneratedDownload(
+      const bool is_user_generated_download) {
+    policy_.feature_policy.is_user_generated_download =
+        is_user_generated_download;
     return *this;
   }
 

@@ -34,6 +34,7 @@ ClientPolicyController::ClientPolicyController() {
       OfflinePageClientPolicyBuilder(kAsyncNamespace, LifetimeType::PERSISTENT,
                                      kUnlimitedPages, kUnlimitedPages)
           .SetIsSupportedByDownload(true)
+          .SetIsUserGeneratedDownload(true)
           .SetIsRemovedOnCacheReset(false)
           .Build()));
   policies_.insert(std::make_pair(
@@ -49,6 +50,7 @@ ClientPolicyController::ClientPolicyController() {
                               kUnlimitedPages, kUnlimitedPages)
                               .SetIsRemovedOnCacheReset(false)
                               .SetIsSupportedByDownload(true)
+                              .SetIsUserGeneratedDownload(true)
                               .Build()));
   policies_.insert(std::make_pair(
       kNTPSuggestionsNamespace,
@@ -127,6 +129,11 @@ bool ClientPolicyController::IsSupportedByDownload(
   return GetPolicy(name_space).feature_policy.is_supported_by_download;
 }
 
+bool ClientPolicyController::IsUserGeneratedDownload(
+    const std::string& name_space) const {
+  return GetPolicy(name_space).feature_policy.is_user_generated_download;
+}
+
 const std::vector<std::string>&
 ClientPolicyController::GetNamespacesRemovedOnCacheReset() const {
   if (cache_reset_namespace_cache_)
@@ -151,6 +158,20 @@ ClientPolicyController::GetNamespacesSupportedByDownload() const {
       download_namespace_cache_->emplace_back(policy_item.first);
   }
   return *download_namespace_cache_;
+}
+
+const std::vector<std::string>&
+ClientPolicyController::GetNamespacesForUserGeneratedDownload() const {
+  if (user_generated_download_namespace_cache_)
+    return *user_generated_download_namespace_cache_;
+
+  user_generated_download_namespace_cache_ =
+      std::make_unique<std::vector<std::string>>();
+  for (const auto& policy_item : policies_) {
+    if (policy_item.second.feature_policy.is_user_generated_download)
+      user_generated_download_namespace_cache_->emplace_back(policy_item.first);
+  }
+  return *user_generated_download_namespace_cache_;
 }
 
 bool ClientPolicyController::IsShownAsRecentlyVisitedSite(
