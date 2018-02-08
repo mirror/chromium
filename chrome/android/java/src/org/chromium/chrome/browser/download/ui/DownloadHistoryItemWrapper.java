@@ -594,7 +594,7 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
 
         @Override
         public boolean isSuggested() {
-            return mItem.isSuggested;
+            return true;
         }
 
         @Override

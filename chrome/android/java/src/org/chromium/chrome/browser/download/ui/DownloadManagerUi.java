@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download.ui;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.IntDef;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -341,6 +342,13 @@ public class DownloadManagerUi
      * Sets the download manager to the state that the url represents.
      */
     public void updateForUrl(String url) {
+        Uri uri = Uri.parse(url);
+        boolean fromPrefetchNotification =
+                uri.getBooleanQueryParameter(DownloadUtils.FROM_PREFETCH_NOTIFICATION, false);
+        if (fromPrefetchNotification) {
+            mHistoryAdapter.setSubsectionExpanded(true);
+        }
+
         int filter = DownloadFilter.getFilterFromUrl(url);
         onFilterChanged(filter);
     }

@@ -156,6 +156,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
             new FilePathsToDownloadItemsMap();
 
     private SubsectionHeader mPrefetchHeader;
+    private boolean mIsPrefetchHeaderExpanded;
     private final ComponentName mParentComponent;
     private final boolean mShowOffTheRecord;
     private final LoadingStateDelegate mLoadingDelegate;
@@ -592,6 +593,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         }
 
         mPrefetchHeader.update(prefetchedItems);
+        mPrefetchHeader.setIsExpanded(mIsPrefetchHeaderExpanded);
 
         ItemGroup prefetchItemGroup = new ItemGroup(mPrefetchHeader.getTimestamp()) {
             @Override
@@ -615,7 +617,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
         };
 
         prefetchItemGroup.addItem(mPrefetchHeader);
-        if (mPrefetchHeader.isExpanded()) {
+        if (mIsPrefetchHeaderExpanded) {
             for (TimedItem item : prefetchedItems) {
                 prefetchItemGroup.addItem(item);
             }
@@ -654,7 +656,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
      * @param expanded Whether the suggested pages should be expanded.
      */
     public void setSubsectionExpanded(boolean expanded) {
-        mPrefetchHeader.setIsExpanded(expanded);
+        mIsPrefetchHeaderExpanded = expanded;
         clear(false);
         filter(mFilter);
     }
