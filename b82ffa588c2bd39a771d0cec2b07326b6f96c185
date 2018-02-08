@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec0e860c_8d6d979f",
+        "filename": "chrome/browser/resources/settings/people_page/sync_account_control.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-08T02:12:58Z",
+      "side": 1,
+      "message": "Nit: Given that accountsInList_ is only used once, do we need the computed property? Maybe just a binding would be shorter. As follows:\n\n\u003ctemplate is\u003d\"dom-repeat\" items\u003d\"[[computeAccountsInList(shownAccount_, storedAccounts_.*)]]\"\u003e\n\nAlso, is |storedAccounts_.*| necassary? Could it simply be |storedAccounts_| instead? Does this array ever get splice()d in place? Or does it always gets reset to a new array object?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "b82ffa588c2bd39a771d0cec2b07326b6f96c185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
