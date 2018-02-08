@@ -88,6 +88,24 @@
       "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9550de6a_e5507918",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-02-08T00:25:46Z",
+      "side": 1,
+      "message": "Ended up getting the tests working.",
+      "parentUuid": "fa282bba_246cc89b",
+      "revId": "e224c1ade9b077aed87be0f0801ffee83b148d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
