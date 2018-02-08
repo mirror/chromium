@@ -138,6 +138,24 @@
       "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a69ff92_c04994eb",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-08T00:15:12Z",
+      "side": 1,
+      "message": "Windows suffers for no reason here, as it has no file descriptor limit.",
+      "parentUuid": "5d5c8c6f_9ec4f049",
+      "revId": "2798fb88c9e50e9b3a1a6bcb91efe1770c74f309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

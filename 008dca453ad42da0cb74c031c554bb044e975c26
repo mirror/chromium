@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7341c5ff_82d82511",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-08T00:15:12Z",
+      "side": 1,
+      "message": "Unfortunately I can\u0027t, as I no longer have a hook for when I\u0027m erased. If I save the position but then I\u0027m evicted, then this will be broken. Same thing on destruction.",
+      "parentUuid": "aa4f1ff2_b0325a80",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cca98025_1170703f",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-07T23:17:53Z",
       "side": 1,
       "message": "Doesn\u0027t access to the FileCache needs to be synchronized to prevent a (albeit unlikely) race condition?",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3eb6fa_e963e532",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2018-02-08T00:15:12Z",
+      "side": 1,
+      "message": "Are these accessed on different threads?",
+      "parentUuid": "cca98025_1170703f",
       "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
