@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "19ba4e58_e3d2c66f",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-02-08T00:31:43Z",
+      "side": 1,
+      "message": "\u003cdiv ...\u003e\n  $i18n{selectEncryption}\n\u003c/div\u003e",
+      "range": {
+        "startLine": 82,
+        "startChar": 55,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "26c22070d80ebd8e9483274b2c0278992f354359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0e1d3ce_58de5d64",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
         "patchSetId": 5
