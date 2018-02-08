@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be1114d5_5991d3b6",
+        "filename": "third_party/WebKit/public/web/WebSelection.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-08T02:03:36Z",
+      "side": 0,
+      "message": "#if INSIDE_BLINK\nmeans we prohibit chromium side to use this constructor\n so that chromium only use the copy constructor.\nThis is kind of API interfacing. Keep it. Same as WebSelectionBound",
+      "revId": "30c1392370b396d7642208c6bcbc0c76fd918cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
