@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05eecf2f_4cbd9562",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:15:54Z",
+      "side": 1,
+      "message": "nit: explain that ShelfLayoutManager is destroyed with its containers in the loop above, to give this comment more context/meaning",
+      "revId": "82b934f1c419f3ebb5a8320367efd30bb2d5bccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
