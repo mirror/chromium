@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e9c8ac9_cb30798b",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T00:11:46Z",
+      "side": 1,
+      "message": "please make resource_scheduler_client_ optional, so that we can pass nullptr if URLLoader doesn\u0027t need it (say on iOS).",
+      "revId": "c0e2e37b5099a1393d97790e5fda0093dae22555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
