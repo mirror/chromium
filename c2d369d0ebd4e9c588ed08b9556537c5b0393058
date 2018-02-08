@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2aa992_ebf66d25",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2018-02-08T00:40:53Z",
+      "side": 1,
+      "message": "nit: functionality",
+      "revId": "c2d369d0ebd4e9c588ed08b9556537c5b0393058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
