@@ -14,7 +14,6 @@
 #include "ui/views/widget/widget_observer.h"
 
 class CommandUpdater;
-class LocationBarBubbleDelegateView;
 
 namespace gfx {
 struct VectorIcon;
@@ -26,13 +25,13 @@ class BubbleDialogDelegateView;
 
 // Represents an icon on the omnibox that shows a bubble when clicked.
 // TODO(spqchan): Convert this to subclass Button.
-class BubbleIconView : public views::InkDropHostView,
-                       public views::WidgetObserver {
+class BubbleIconView : public views::InkDropHostView {
  public:
   void Init();
 
-  // Invoked when a bubble for this icon is created.
-  void OnBubbleCreated(LocationBarBubbleDelegateView* bubble);
+  // Invoked when a bubble for this icon is created. The BubbleIconView changes
+  // highlights based on this widget's visibility.
+  void OnBubbleWidgetCreated(views::Widget* bubble_widget);
 
   // Returns the bubble instance for the icon.
   virtual views::BubbleDialogDelegateView* GetBubble() const = 0;
@@ -88,10 +87,6 @@ class BubbleIconView : public views::InkDropHostView,
   // ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
 
-  // views::WidgetObserver:
-  void OnWidgetDestroying(views::Widget* widget) override;
-  void OnWidgetVisibilityChanged(views::Widget* widget, bool visible) override;
-
  protected:
   // Calls OnExecuting and runs |command_id_| with a valid |command_updater_|.
   virtual void ExecuteCommand(ExecuteSource source);
@@ -112,6 +107,25 @@ class BubbleIconView : public views::InkDropHostView,
   bool active() const { return active_; }
 
  private:
+  class WidgetObserver : public views::WidgetObserver {
+   public:
+    explicit WidgetObserver(BubbleIconView* parent);
+
+   private:
+    // views::WidgetObserver:
+    void OnWidgetDestroying(views::Widget* widget) override;
+    void OnWidgetVisibilityChanged(views::Widget* widget,
+                                   bool visible) override;
+
+    BubbleIconView* const parent_;
+  };
+
+  // Highlights the ink drop for the icon, used when the corresponding widget
+  // is visible.
+  void SetHighlighted(bool visible);
+
+  WidgetObserver widget_observer_;
+
   // The image shown in the button.
   views::ImageView* image_;
 

@@ -28,7 +28,8 @@ void BubbleIconView::Init() {
 }
 
 BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
-    : image_(new views::ImageView()),
+    : widget_observer_(this),
+      image_(new views::ImageView()),
       command_updater_(command_updater),
       command_id_(command_id),
       active_(false),
@@ -54,10 +55,19 @@ void BubbleIconView::SetTooltipText(const base::string16& tooltip) {
   image_->SetTooltipText(tooltip);
 }
 
-void BubbleIconView::OnBubbleCreated(LocationBarBubbleDelegateView* bubble) {
-  // This observer is removed when the bubble's widget is destroyed, by
-  // |OnWidgetDestroying|.
-  bubble->GetWidget()->AddObserver(this);
+void BubbleIconView::SetHighlighted(bool visible) {
+  if (visible && !GetInkDrop()->IsHighlightFadingInOrVisible())
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+
+  if (!visible)
+    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr /* event */);
+}
+
+void BubbleIconView::OnBubbleWidgetCreated(views::Widget* bubble_widget) {
+  bubble_widget->AddObserver(&widget_observer_);
+
+  if (bubble_widget->IsVisible())
+    SetHighlighted(true);
 }
 
 void BubbleIconView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
@@ -187,17 +197,6 @@ void BubbleIconView::OnGestureEvent(ui::GestureEvent* event) {
   }
 }
 
-void BubbleIconView::OnWidgetDestroying(views::Widget* widget) {
-  widget->RemoveObserver(this);
-}
-
-void BubbleIconView::OnWidgetVisibilityChanged(views::Widget* widget,
-                                               bool visible) {
-  // |widget| is a bubble that has just got shown / hidden.
-  if (!visible)
-    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr /* event */);
-}
-
 void BubbleIconView::ExecuteCommand(ExecuteSource source) {
   OnExecuting(source);
   if (command_updater_)
@@ -226,4 +225,18 @@ void BubbleIconView::SetActiveInternal(bool active) {
     return;
   active_ = active;
   UpdateIcon();
+}
+
+BubbleIconView::WidgetObserver::WidgetObserver(BubbleIconView* parent)
+    : parent_(parent) {}
+
+void BubbleIconView::WidgetObserver::OnWidgetDestroying(views::Widget* widget) {
+  widget->RemoveObserver(this);
+}
+
+void BubbleIconView::WidgetObserver::OnWidgetVisibilityChanged(
+    views::Widget* widget,
+    bool visible) {
+  // |widget| is a bubble that has just got shown / hidden.
+  parent_->SetHighlighted(visible);
 }
