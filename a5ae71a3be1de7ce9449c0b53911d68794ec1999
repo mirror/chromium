@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2667b7_33bb3dc1",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-08T00:47:12Z",
+      "side": 1,
+      "message": "This static_assert looks useless... It\u0027s the same as the definition.",
+      "revId": "a5ae71a3be1de7ce9449c0b53911d68794ec1999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
