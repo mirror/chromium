@@ -51,6 +51,7 @@ const base::FilePath::CharType* ExtensionForMimeType(
       {"application/xhtml+xml", FILE_PATH_LITERAL("xhtml")},
       {"text/plain", FILE_PATH_LITERAL("txt")},
       {"text/css", FILE_PATH_LITERAL("css")},
+      {"multipart/related", FILE_PATH_LITERAL("mhtml")},
   };
   for (const auto& extension : kExtensions) {
     if (contents_mime_type == extension.mime_type)
@@ -86,7 +87,8 @@ base::FilePath EnsureMimeExtension(const base::FilePath& name,
       ExtensionForMimeType(contents_mime_type);
   std::string mime_type;
   if (!suggested_extension.empty() &&
-      !net::GetMimeTypeFromExtension(ext, &mime_type)) {
+      !(net::GetMimeTypeFromExtension(ext, &mime_type) &&
+        contents_mime_type == mime_type)) {
     // Extension is absent or needs to be updated.
     return base::FilePath(name.value() + FILE_PATH_LITERAL(".") +
                           suggested_extension);
