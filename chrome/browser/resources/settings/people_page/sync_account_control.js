@@ -22,6 +22,12 @@ Polymer({
     /** @private {?settings.StoredAccount} */
     shownAccount_: Object,
 
+    /** @private {!Array<!settings.StoredAccount>} */
+    accountsInList_: {
+      type: Object,
+      computed: 'computeAccountsInList_(shownAccount_, storedAccounts_.*)'
+    },
+
     promoLabel: String,
 
     promoSecondaryLabel: String,
@@ -53,6 +59,16 @@ Polymer({
         'sync-status-changed', this.handleSyncStatus_.bind(this));
     this.addWebUIListener(
         'stored-accounts-updated', this.handleStoredAccounts_.bind(this));
+  },
+
+  /**
+   * @return {!Array<!settings.StoredAccount>}
+   * @private
+   */
+  computeAccountsInList_: function() {
+    return this.storedAccounts_.filter(account => {
+      return account.email != this.shownAccount_.email;
+    });
   },
 
   /**
