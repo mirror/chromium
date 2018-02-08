@@ -142,15 +142,16 @@ void ClearLegacyTemporaryPagesTask::Run() {
 }
 
 void ClearLegacyTemporaryPagesTask::OnClearLegacyTemporaryPagesDone(
-    bool result) {
+    bool pages_were_deleted) {
   // TODO(romax): https://crbug.com/772204. Replace the DVLOG with UMA
   // collecting. If there's a need, introduce more detailed local enums
   // indicating which part failed.
-  DVLOG(1) << "ClearLegacyTemporaryPagesTask returns with result: " << result;
+  DVLOG(1) << "ClearLegacyTemporaryPagesTask returns with result: "
+           << pages_were_deleted;
   TaskComplete();
   TRACE_EVENT_ASYNC_END1("offline_pages",
                          "ClearLegacyTemporaryPagesTask running", this,
-                         "result", result);
+                         "pages_were_deleted", pages_were_deleted);
 }
 
 }  // namespace offline_pages

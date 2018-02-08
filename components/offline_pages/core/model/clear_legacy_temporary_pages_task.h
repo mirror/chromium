@@ -31,7 +31,7 @@ class ClearLegacyTemporaryPagesTask : public Task {
   void Run() override;
 
  private:
-  void OnClearLegacyTemporaryPagesDone(bool result);
+  void OnClearLegacyTemporaryPagesDone(bool pages_were_deleted);
 
   // The store for clearing legacy pages. Not owned.
   OfflinePageMetadataStoreSQL* store_;
