@@ -46,6 +46,30 @@
       "revId": "13a80ea6d8ab77beb783ae4aa096b6656086f25f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0848b273_fb5198bc",
+        "filename": "ui/webui/resources/cr_components/cr_components_resources.grdp",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-02-08T00:57:29Z",
+      "side": 1,
+      "message": "Ok, please add a comment to that effect.",
+      "parentUuid": "9c26b0bb_910ec702",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "13a80ea6d8ab77beb783ae4aa096b6656086f25f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
