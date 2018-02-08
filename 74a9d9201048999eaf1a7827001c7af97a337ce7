@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddb111c9_d1d957ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "072a3939_829d43ac",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb50dea0_95f48fc7",
         "filename": "build/fuchsia/runner_v2/common_args.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a445ac_813f8c69",
+        "filename": "build/fuchsia/runner_v2/common_args.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "DEBUG is a superset of INFO, so -v will work for that.\n(https://docs.python.org/2/library/logging.html#logging-levels)\n\nThe point of this is to squelch the spawner\u0027s INFO output while preserving our INFO output on non-verbose runs. We use INFO for high level informational messages (e.g. \"i\u0027m connecting to ssh\", \"I\u0027m copying a binary\"). The spawner\u0027s logging output is much too fine grained at INFO.",
+      "parentUuid": "cb50dea0_95f48fc7",
+      "range": {
+        "startLine": 48,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 55
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "64d2d39e_ee84e7a5",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "637cfcfe_91ee727f",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad381fb_dfa7ddb2",
         "filename": "build/fuchsia/runner_v2/net_test_server.py",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff3559b_c3450808",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Great idea and thanks for pointing me to a solution.",
+      "parentUuid": "3ad381fb_dfa7ddb2",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9277a2ec_2447f211",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b403499_60d8c8cc",
+      "range": {
+        "startLine": 59,
+        "startChar": 61,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a777e51b_acc82c18",
         "filename": "build/fuchsia/runner_v2/net_test_server.py",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7597b62_8d7ba0bd",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a777e51b_acc82c18",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "a5adddb4_574fad33",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "735ba762_716ea39e",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69225ce6_2dec8064",
+        "filename": "build/fuchsia/runner_v2/net_test_server.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "This only accepts addresses, not hostnames. It fails for ::1. :(\n\nThe field will be obsolete anyway with cleanup from crbug.com/810209.",
+      "parentUuid": "b8b984ab_fc82b111",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc32b5e_b1560a7f",
         "filename": "build/util/lib/common/chrome_test_server_spawner.py",
         "patchSetId": 1
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "76743407_4fd7b959",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "Done for \"logger\".\n\nDIR_SOURCE_ROOT can\u0027t be changed; it\u0027s a name reserved by the Python interpreter.\n\nSERVER_TYPES is meant to be exported.",
+      "parentUuid": "2bc32b5e_b1560a7f",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "567ae41b_1ea3c36b",
         "filename": "build/util/lib/common/chrome_test_server_spawner.py",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af5a167_8bcc237a",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-02-08T01:07:00Z",
+      "side": 1,
+      "message": "This is called by BaseHTTPServer. The default implementation in BaseHTTPRequestHandler is to spew httpd logs to stdout.",
+      "parentUuid": "567ae41b_1ea3c36b",
+      "range": {
+        "startLine": 402,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 10
+      },
+      "revId": "74a9d9201048999eaf1a7827001c7af97a337ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
