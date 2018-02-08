@@ -54,7 +54,7 @@
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "components/viz/client/hit_test_data_provider.h"
-#include "components/viz/client/hit_test_data_provider_simple_bounds.h"
+#include "components/viz/client/hit_test_data_provider_draw_quad_renderer.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -1978,7 +1978,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       std::make_unique<RendererLocalSurfaceIdProvider>();
   if (features::IsVizHitTestingEnabled()) {
     params.hit_test_data_provider =
-        std::make_unique<viz::HitTestDataProviderSimpleBounds>();
+        std::make_unique<viz::HitTestDataProviderDrawQuadRenderer>();
   }
 
   // The renderer runs animations and layout for animate_only BeginFrames.
