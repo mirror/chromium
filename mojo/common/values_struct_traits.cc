@@ -119,4 +119,10 @@ CloneTraits<std::unique_ptr<base::Value>, false>::Clone(
   return input ? input->CreateDeepCopy() : nullptr;
 }
 
+std::unique_ptr<base::ListValue>
+CloneTraits<std::unique_ptr<base::ListValue>, false>::Clone(
+    const std::unique_ptr<base::ListValue>& input) {
+  return input ? input->CreateDeepCopy() : nullptr;
+}
+
 }  // namespace mojo
