@@ -39,18 +39,12 @@ class WebGLTransformFeedback : public WebGLContextObject {
   WebGLProgram* GetProgram() const { return program_; }
   void SetProgram(WebGLProgram*);
 
-  // This is the generic bind point for the transform feedback buffer.
-  void SetBoundTransformFeedbackBuffer(WebGLBuffer*);
-  WebGLBuffer* GetBoundTransformFeedbackBuffer() const;
-
   // These are the indexed bind points for transform feedback buffers.
   // Returns false if index is out of range and the caller should
   // synthesize a GL error.
   bool SetBoundIndexedTransformFeedbackBuffer(GLuint index, WebGLBuffer*);
   bool GetBoundIndexedTransformFeedbackBuffer(GLuint index,
                                               WebGLBuffer** outBuffer) const;
-
-  bool IsBufferBoundToTransformFeedback(WebGLBuffer*);
 
   void UnbindBuffer(WebGLBuffer*);
 
@@ -70,7 +64,6 @@ class WebGLTransformFeedback : public WebGLContextObject {
   TFType type_;
   GLenum target_;
 
-  TraceWrapperMember<WebGLBuffer> bound_transform_feedback_buffer_;
   HeapVector<TraceWrapperMember<WebGLBuffer>>
       bound_indexed_transform_feedback_buffers_;
 

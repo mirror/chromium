@@ -29,7 +29,7 @@ class TransformFeedbackManagerTest : public GpuServiceTest {
     const GLuint kMaxTransformFeedbackSeparateAttribs = 16;
     GpuServiceTest::SetUpWithGLVersion("4.1", "");
     manager_.reset(new TransformFeedbackManager(
-        kMaxTransformFeedbackSeparateAttribs, true));
+        kMaxTransformFeedbackSeparateAttribs, true, false));
   }
 
   void TearDown() override {

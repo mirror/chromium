@@ -43,9 +43,6 @@ WebGLTransformFeedback::~WebGLTransformFeedback() {
 }
 
 void WebGLTransformFeedback::DispatchDetached(gpu::gles2::GLES2Interface* gl) {
-  if (bound_transform_feedback_buffer_)
-    bound_transform_feedback_buffer_->OnDetached(gl);
-
   for (size_t i = 0; i < bound_indexed_transform_feedback_buffers_.size();
        ++i) {
     if (bound_indexed_transform_feedback_buffers_[i])
@@ -82,19 +79,6 @@ void WebGLTransformFeedback::SetProgram(WebGLProgram* program) {
   program_ = program;
 }
 
-void WebGLTransformFeedback::SetBoundTransformFeedbackBuffer(
-    WebGLBuffer* buffer) {
-  if (buffer)
-    buffer->OnAttached();
-  if (bound_transform_feedback_buffer_)
-    bound_transform_feedback_buffer_->OnDetached(Context()->ContextGL());
-  bound_transform_feedback_buffer_ = buffer;
-}
-
-WebGLBuffer* WebGLTransformFeedback::GetBoundTransformFeedbackBuffer() const {
-  return bound_transform_feedback_buffer_;
-}
-
 bool WebGLTransformFeedback::SetBoundIndexedTransformFeedbackBuffer(
     GLuint index,
     WebGLBuffer* buffer) {
@@ -107,8 +91,6 @@ bool WebGLTransformFeedback::SetBoundIndexedTransformFeedbackBuffer(
         Context()->ContextGL());
   }
   bound_indexed_transform_feedback_buffers_[index] = buffer;
-  // This also sets the generic binding point in the OpenGL state.
-  SetBoundTransformFeedbackBuffer(buffer);
   return true;
 }
 
@@ -121,24 +103,7 @@ bool WebGLTransformFeedback::GetBoundIndexedTransformFeedbackBuffer(
   return true;
 }
 
-bool WebGLTransformFeedback::IsBufferBoundToTransformFeedback(
-    WebGLBuffer* buffer) {
-  if (bound_transform_feedback_buffer_ == buffer)
-    return true;
-
-  for (size_t i = 0; i < bound_indexed_transform_feedback_buffers_.size();
-       ++i) {
-    if (bound_indexed_transform_feedback_buffers_[i] == buffer)
-      return true;
-  }
-  return false;
-}
-
 void WebGLTransformFeedback::UnbindBuffer(WebGLBuffer* buffer) {
-  if (bound_transform_feedback_buffer_ == buffer) {
-    bound_transform_feedback_buffer_->OnDetached(Context()->ContextGL());
-    bound_transform_feedback_buffer_ = nullptr;
-  }
   for (size_t i = 0; i < bound_indexed_transform_feedback_buffers_.size();
        ++i) {
     if (bound_indexed_transform_feedback_buffers_[i] == buffer) {
@@ -150,7 +115,6 @@ void WebGLTransformFeedback::UnbindBuffer(WebGLBuffer* buffer) {
 }
 
 void WebGLTransformFeedback::Trace(blink::Visitor* visitor) {
-  visitor->Trace(bound_transform_feedback_buffer_);
   visitor->Trace(bound_indexed_transform_feedback_buffers_);
   visitor->Trace(program_);
   WebGLContextObject::Trace(visitor);
@@ -158,7 +122,6 @@ void WebGLTransformFeedback::Trace(blink::Visitor* visitor) {
 
 void WebGLTransformFeedback::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
-  visitor->TraceWrappers(bound_transform_feedback_buffer_);
   for (auto& buf : bound_indexed_transform_feedback_buffers_) {
     visitor->TraceWrappers(buf);
   }
