@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0bba4d7_203dee55",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-02-08T00:51:33Z",
+      "side": 1,
+      "message": "Move to .cc",
+      "revId": "0ca8c83cdb0953ae32655dbea9b976c8972a85e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
