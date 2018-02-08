@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc118f2_f3696bb1",
+        "filename": "components/autofill/content/renderer/form_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2018-02-08T02:01:40Z",
+      "side": 1,
+      "message": "What does navigation_state-\u003eIsContentInitiated() mean?\nIf this thing works on Gmail, can\u0027t you just use \"document_loader-\u003eGetNavigationType() !\u003d blink::kWebNavigationTypeLinkClicked\" condition?",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "407fae6e57f96cae18e76018dba8be3510e34d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
