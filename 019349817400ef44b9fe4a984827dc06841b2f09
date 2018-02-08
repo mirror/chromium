@@ -16,6 +16,24 @@
       "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29672e70_87862261",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-08T00:01:18Z",
+      "side": 1,
+      "message": "Thank you for the comment. Yeah mojo::Binding can do that, but I noticed mojo::AssociatedBinding has not ReportBadMessage method, so I did such a way.",
+      "parentUuid": "4da1477c_1592e5ba",
+      "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
