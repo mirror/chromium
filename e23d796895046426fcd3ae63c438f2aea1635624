@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7a8108_bd3984f6",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:10:37Z",
+      "side": 1,
+      "message": "nit: clarify these sentences",
+      "revId": "e23d796895046426fcd3ae63c438f2aea1635624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db07dbdc_186ffc03",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:10:37Z",
+      "side": 1,
+      "message": "Is this local necessary? Why not just |delete window_to_delete_; window_to_delete_ \u003d nullptr;|",
+      "revId": "e23d796895046426fcd3ae63c438f2aea1635624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d906b2f4_b0ebf14c",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2768,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:10:37Z",
+      "side": 1,
+      "message": "nit: be consistent with |window_| prefix in these identifiers (and args/locals)",
+      "revId": "e23d796895046426fcd3ae63c438f2aea1635624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a4e8c5_a6beeb6c",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2774,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:10:37Z",
+      "side": 1,
+      "message": "q: Can\u0027t test fixtures also be in the anon local namespace?",
+      "revId": "e23d796895046426fcd3ae63c438f2aea1635624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c88659_d55bf730",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2787,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-02-08T01:10:37Z",
+      "side": 1,
+      "message": "q: What\u0027s the purpose of avoiding ownership by the parent and then explicitly deleting after Hide()?",
+      "revId": "e23d796895046426fcd3ae63c438f2aea1635624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
