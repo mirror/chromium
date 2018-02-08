@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "bbc68487_6a3bacdc",
+        "filename": "android_webview/browser/aw_renderer_manifest_overlay.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-02-08T00:33:36Z",
+      "side": 1,
+      "message": "It was in a WIP CL that I deleted (oops) but I think I\u0027ve replicated it in this CL - https://chromium-review.googlesource.com/c/chromium/src/+/907608. It fails the Safe Browsing tests for the trybot android_n5x_swarming_rel.\n\nThe error is \u0027The Service Manager prevented service \"content_browser\" from binding interface \"safe_browsing::mojom::ThreatReporter\" in target service \"content_renderer\"\u0027 -  which I think is what led me to look at the aw manifest.\n\nAlso I\u0027m getting 404s when trying to look at the output from the tests so I\u0027m getting this from e.g. https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fandroid%2Fswarming%2Flogcats%2F3b8b6c4538d0fb11%2F%2B%2Flogcat_logcat_org.chromium.android_webview.test.SafeBrowsingTest.testSafeBrowsingShowsInterstitialForSubresource_20180207T233520-UTC_01e8b7f60bd9a626.",
+      "parentUuid": "3ec75dfe_06583b28",
+      "revId": "98c360d40cd9826e1590709246c0e16a673d6c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae2f9fad_462efe77",
         "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
         "patchSetId": 5
