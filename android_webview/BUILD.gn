@@ -832,10 +832,10 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/permission/AwGeolocationCallback.java",
     "java/src/org/chromium/android_webview/permission/AwPermissionRequest.java",
     "java/src/org/chromium/android_webview/policy/AwPolicyProvider.java",
-    "java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
-    "java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
-    "java/src/org/chromium/android_webview/variations/AwVariationsSeedHandler.java",
-    "java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+    "java/src/org/chromium/android_webview/VariationsUtils.java",
+    "java/src/org/chromium/android_webview/variations/SeedFetcher.java",
+    "java/src/org/chromium/android_webview/variations/SeedHolder.java",
+    "java/src/org/chromium/android_webview/variations/SeedServer.java",
   ]
   deps = [
     ":android_webview_commandline_java",
@@ -870,10 +870,11 @@ android_library("android_webview_java") {
   }
 
   srcjar_deps = [
-    ":aw_permission_request_resource",
     ":android_webview_java_enums_srcjar",
     ":aw_error_ui",
+    ":aw_permission_request_resource",
     ":aw_safe_browsing_action",
+    ":aw_variations_seed_server_aidl",
     "//components/safe_browsing/db:sb_threat_values",
   ]
 
@@ -944,7 +945,9 @@ android_library("android_webview_platform_services_java") {
 }
 
 android_library("android_webview_commandline_java") {
-  java_files = [ "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java" ]
+  java_files = [
+    "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java",
+  ]
 
   deps = [
     "//base:base_java",
@@ -974,6 +977,13 @@ android_aidl("crash_receiver_aidl") {
   import_include = [ "java/src" ]
   sources = [
     "java/src/org/chromium/android_webview/crash/ICrashReceiverService.aidl",
+  ]
+}
+
+android_aidl("aw_variations_seed_server_aidl") {
+  import_include = [ "java/src" ]
+  sources = [
+    "java/src/org/chromium/android_webview/variations/ISeedServer.aidl",
   ]
 }
 

@@ -19,7 +19,6 @@ import android.os.Process;
 import android.os.StrictMode;
 import android.os.UserManager;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
@@ -50,12 +49,13 @@ import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
 import org.chromium.android_webview.HttpAuthDatabase;
 import org.chromium.android_webview.ResourcesContextWrapperFactory;
+import org.chromium.android_webview.VariationsUtils;
 import org.chromium.android_webview.WebViewChromiumRunQueue;
 import org.chromium.android_webview.command_line.CommandLineUtil;
-import org.chromium.android_webview.variations.AwVariationsSeedHandler;
 import org.chromium.base.BuildConfig;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.MemoryPressureListener;
 import org.chromium.base.PackageUtils;
 import org.chromium.base.PathService;
@@ -67,14 +67,20 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.NativeLibraries;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.components.autofill.AutofillProvider;
+import org.chromium.components.variations.firstrun.VariationsSeedBridge;
+import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
 import org.chromium.content.browser.input.LGEmailActionModeWorkaround;
 import org.chromium.net.NetworkChangeNotifier;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Entry point to the WebView. The system framework talks to this class to get instances of the
@@ -82,11 +88,12 @@ import java.util.concurrent.TimeUnit;
  */
 @SuppressWarnings("deprecation")
 public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
-    private static final String TAG = "WebViewChromiumFactoryProvider";
+    private static final String TAG = "WebViewCFP";
 
     private static final String CHROMIUM_PREFS_NAME = "WebViewChromiumPrefs";
     private static final String VERSION_CODE_PREF = "lastVersionCodeUsed";
     private static final String HTTP_AUTH_DATABASE_FILE = "http_auth.db";
+    private static final long SEED_LOAD_TIMEOUT_MILLIS = 20;
 
     private final WebViewChromiumRunQueue mRunQueue = new WebViewChromiumRunQueue(
             () -> { return WebViewChromiumFactoryProvider.this.hasStarted(); });
@@ -99,7 +106,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         mRunQueue.addTask(task);
         try {
             return task.get(4, TimeUnit.SECONDS);
-        } catch (java.util.concurrent.TimeoutException e) {
+        } catch (TimeoutException e) {
             throw new RuntimeException("Probable deadlock detected due to WebView API being called "
                             + "on incorrect thread while the UI thread is blocked.", e);
         } catch (Exception e) {
@@ -122,6 +129,111 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
     /* package */ void addTask(Runnable task) {
         mRunQueue.addTask(task);
     }
+
+    // SeedLoaderTask wraps FutureTask in order to, asynchronously:
+    // 1. Load the new seed file, if any.
+    // 2. If no new seed file, load the old seed file, if any.
+    // 3. Make the loaded seed available via get() (or null if there was no seed).
+    // 4. If there was a new seed file, replace the old with the new (but only after making the
+    //    loaded seed available, as the replace need not block startup).
+    // 5. If there was no seed, or the loaded seed was expired, request a new seed (but don't
+    //    request more often than MAX_REQUEST_PERIOD_MILLIS).
+    private static class SeedLoaderTask implements Runnable {
+        // The expiration time for an app's copy of the Finch seed, after which we'll still use it,
+        // but we'll request a new one from the Service.
+        private static final long SEED_EXPIRATION_MILLIS = TimeUnit.HOURS.toMillis(6);
+
+        // After requesting a new seed, wait at least this long before making a new request.
+        private static final long MAX_REQUEST_PERIOD_MILLIS = TimeUnit.HOURS.toMillis(1);
+
+        private static boolean isExpired(long seedFileTime) {
+            long expirationTime = seedFileTime + SEED_EXPIRATION_MILLIS;
+            long now = (new Date()).getTime();
+            return now > expirationTime;
+        }
+
+        // Is there a new seed file present (which should replace the old seed file)?
+        private boolean mFoundNewSeed;
+        // Should we request a new seed from the service?
+        private boolean mNeedNewSeed;
+
+        private FutureTask<SeedInfo> mTask = new FutureTask<SeedInfo>(new Callable<SeedInfo>() {
+            @Override
+            public SeedInfo call() {
+                File newSeedFile = VariationsUtils.getNewSeedFile();
+                File oldSeedFile = VariationsUtils.getSeedFile();
+
+                // The time (in milliseconds since epoch) the seed was last written.
+                long seedFileTime = 0;
+
+                // First check for a new seed.
+                SeedInfo seed = VariationsUtils.readSeedFile(newSeedFile);
+                if (seed != null) {
+                    // If a valid new seed was found, make a note to replace the old seed with
+                    // the new seed. (Don't do it now, to avaid delaying FutureTask.get().)
+                    mFoundNewSeed = true;
+
+                    seedFileTime = newSeedFile.lastModified();
+                } else {
+                    // If there is no new seed, check for an old seed.
+                    seed = VariationsUtils.readSeedFile(oldSeedFile);
+
+                    if (seed != null) {
+                        seedFileTime = oldSeedFile.lastModified();
+                    }
+                }
+
+                // Make a note to request a new seed if necessary. (Don't request it now, to
+                // avaid delaying FutureTask.get().)
+                mNeedNewSeed = (seed == null || isExpired(seedFileTime));
+
+                return seed;
+            }
+        });
+
+        @Override
+        public void run() {
+            mTask.run();
+
+            // The loaded seed is now available via get(). Tho following steps won't block startup.
+
+            if (mFoundNewSeed) {
+                // This happens synchronously.
+                VariationsUtils.replaceOldWithNewSeed();
+            }
+
+            if (mNeedNewSeed) {
+                // Rate-limit seed requests using an extra "stamp" file whose modification time is
+                // the time of the last request.
+                File seedRequestStamp =
+                        new File(PathUtils.getDataDirectory(), "variations_seed_stamp");
+
+                long now = (new Date()).getTime();
+                long lastRequestTime = seedRequestStamp.lastModified(); // 0 if file not found.
+                if (lastRequestTime != 0 && now < lastRequestTime + MAX_REQUEST_PERIOD_MILLIS)
+                    return;
+
+                try {
+                    if (!seedRequestStamp.createNewFile()) {
+                        // If the file already exists, update the time stamp.
+                        seedRequestStamp.setLastModified(now);
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to write " + seedRequestStamp);
+                    return;
+                }
+
+                // The new seed will arrive asynchronously; the new seed file is written by the
+                // service, and may complete after this app process has died.
+                VariationsUtils.requestSeedFromService();
+            }
+        }
+
+        public SeedInfo get(long timeout, TimeUnit unit)
+                throws ExecutionException, InterruptedException, TimeoutException {
+            return mTask.get(timeout, unit);
+        }
+    };
 
     // Guards accees to the other members, and is notifyAll() signalled on the UI thread
     // when the chromium process has been started.
@@ -371,6 +483,28 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
             return;
         }
 
+        // The WebView package name must be set early because:
+        // - It's used to locate the service to which we copy crash minidumps. The name must be set
+        //   before a render process has a chance to crash - otherwise we might try to copy a
+        //   minidump without knowing what process to copy it to.
+        // - It's used to locate the service from which we get the variations seed, so it must be
+        //   set before initializing variations.
+        // - It's used to determine channel for UMA, so it must be set before initializing UMA.
+        final PackageInfo webViewPackageInfo = WebViewFactory.getLoadedPackageInfo();
+        final String webViewPackageName = webViewPackageInfo.packageName;
+        AwBrowserProcess.setWebViewPackageName(webViewPackageName);
+
+        // TODO(paulmiller) AGSA switch
+        boolean enableVariations =
+                CommandLine.getInstance().hasSwitch(AwSwitches.ENABLE_WEBVIEW_VARIATIONS);
+        Log.d(TAG, "enableVariations=" + enableVariations);
+        SeedLoaderTask seedLoaderTask = null;
+        if (enableVariations) {
+            // Begin asynchronously loading the variations seed.
+            seedLoaderTask = new SeedLoaderTask();
+            (new Thread(seedLoaderTask)).start();
+        }
+
         try {
             LibraryLoader.get(LibraryProcessType.PROCESS_WEBVIEW).ensureInitialized();
         } catch (ProcessInitException e) {
@@ -381,18 +515,11 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         PathService.override(DIR_RESOURCE_PAKS_ANDROID, "/system/framework/webview/paks");
 
         // Make sure that ResourceProvider is initialized before starting the browser process.
-        final PackageInfo webViewPackageInfo = WebViewFactory.getLoadedPackageInfo();
-        final String webViewPackageName = webViewPackageInfo.packageName;
         final Context context = ContextUtils.getApplicationContext();
         setUpResources(webViewPackageInfo, context);
         initPlatSupportLibrary();
         doNetworkInitializations(context);
         final boolean isExternalService = true;
-        // The WebView package name is used to locate the separate Service to which we copy crash
-        // minidumps. This package name must be set before a render process has a chance to crash -
-        // otherwise we might try to copy a minidump without knowing what process to copy it to.
-        // It's also used to determine channel for UMA, so it must be set before initializing UMA.
-        AwBrowserProcess.setWebViewPackageName(webViewPackageName);
         AwBrowserProcess.configureChildProcessLauncher(webViewPackageName, isExternalService);
         AwBrowserProcess.start();
         AwBrowserProcess.handleMinidumpsAndSetMetricsConsent(
@@ -425,10 +552,19 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
         mRunQueue.drainQueue();
 
-        boolean enableVariations =
-                CommandLine.getInstance().hasSwitch(AwSwitches.ENABLE_WEBVIEW_VARIATIONS);
         if (enableVariations) {
-            AwVariationsSeedHandler.bindToVariationsService();
+            try {
+                SeedInfo seed = seedLoaderTask.get(SEED_LOAD_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+                if (seed != null) {
+                    VariationsSeedBridge.setVariationsFirstRunSeed(seed.seedData, seed.signature,
+                            seed.country, seed.date, seed.isGzipCompressed);
+                }
+            } catch (TimeoutException e) {
+                // TODO(paulmiller): Log seed load time and success rate in UMA.
+                Log.w(TAG, "Timeout out waiting for variations seed - variations disabled");
+            } catch (InterruptedException | ExecutionException e) {
+                Log.e(TAG, "Failed loading variations seed - variations disabled", e);
+            }
         }
     }
 
