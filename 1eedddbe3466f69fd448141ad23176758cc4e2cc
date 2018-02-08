@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "6dc52cdf_ca3b9e17",
+        "filename": "chrome/browser/chromeos/file_manager/path_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2018-02-08T01:13:57Z",
+      "side": 1,
+      "message": "Yes file_system_url.mount_type() should be kFileSystemTypeExternal. Thank you for catching this!",
+      "parentUuid": "221a724d_c8d87c42",
+      "range": {
+        "startLine": 147,
+        "startChar": 26,
+        "endLine": 147,
+        "endChar": 48
+      },
+      "revId": "1eedddbe3466f69fd448141ad23176758cc4e2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd35a6e4_0ccdd76c",
         "filename": "chrome/browser/chromeos/file_manager/path_util.h",
         "patchSetId": 11
