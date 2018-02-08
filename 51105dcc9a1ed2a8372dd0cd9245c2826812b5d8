@@ -16,6 +16,24 @@
       "revId": "51105dcc9a1ed2a8372dd0cd9245c2826812b5d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b089d8e0_3c1746ae",
+        "filename": "components/url_pattern_index/url_pattern.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-02-08T00:22:20Z",
+      "side": 1,
+      "message": "This is what I thought but I\u0027m mistaken! a...com canonicalized to a...com at least from GURLs perspective. I think the omnibox may have special rules for URLs that strips them though.\n\nThis isn\u0027t a huge deal here (we\u0027re talking really wacky rules), but for instance we could have a rule saying:\nMatch the pattern \".\" but make sure it is anchored to a sub-domain, then try to match it with a..com. This only works for patterns which start with \".\", which is very strange to do when you combine it with subdomain anchoring.\n\nIn any case, I\u0027ve updated it to remove the \"+ 1\", and added a test case exercising this weird case that we might as well support.",
+      "parentUuid": "c76e4261_3d004f7e",
+      "revId": "51105dcc9a1ed2a8372dd0cd9245c2826812b5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
