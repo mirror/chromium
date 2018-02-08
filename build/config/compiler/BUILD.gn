@@ -341,6 +341,10 @@ config("compiler") {
       ldflags += [ "-Wl,--build-id=sha1" ]
     }
 
+    # Omit the .hash section to save some binary size (linkers currently
+    # default to =both).
+    ldflags += [ "-Wl,--hash-style=gnu" ]
+
     if (!is_android) {
       defines += [
         # _FILE_OFFSET_BITS=64 should not be set on Android in order to maintain
