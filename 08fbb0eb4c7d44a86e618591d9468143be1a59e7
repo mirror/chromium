@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8802e3_a600eb44",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "Should we also set this?",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1add3c9_05047250",
+        "filename": "components/offline_pages/core/client_policy_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "Will IsUserRequestedDownload sound better?",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90584d1_039838dd",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "We\u0027ve already saved the page. So it is a bit confusing to call SavePageToDownloads. How about renaming it to PublishArchive?",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89782139_400f4aed",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "nit: save_page_callback can be passed as additional parameter to base::BindOnce(\u0026OfflinePageModelTaskified::PublishArchiveDone, ...)",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d1d6cd_2290fbc7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "I am still not seeing the early return on failure.",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6e0df7_163905ce",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "nit: This can be moved to private section.",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55f721c_08f7a0a9",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "This should be named as public_directory.",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4992e5e_6a5148a3",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "nit: const OfflinePageItem\u0026",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fb2fb1_d853624b",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "nit: better to put as a last parameter",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928f43da_5d2ccbf2",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "It is confusing to have 2 callbacks while one of them is not really a done callback. Could you please pass save_page_callback as parameter when publish_done_callback is instantiated?",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2256f0_2bf09ec8",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-02-08T02:12:26Z",
+      "side": 1,
+      "message": "This can be moved directly into anonymous namespace in the .cc file.",
+      "revId": "08fbb0eb4c7d44a86e618591d9468143be1a59e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
