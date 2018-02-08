@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "e9b7e1b2_293285e0",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:01:27Z",
+      "side": 1,
+      "message": "The thing is that rPH itself doesn\u0027t do double-escaping. There\u0027s simply no such thing as a URL with a U+001F in it, so GURL is \"correcting\" the invalid character. rPH itself is just single-escaping a \u0027%\u0027 character.\n\nSo I\u0027m still questionable about the value of this test, but it\u0027s fine to leave it in.",
+      "parentUuid": "996cc768_df85531a",
+      "range": {
+        "startLine": 1032,
+        "startChar": 63,
+        "endLine": 1032,
+        "endChar": 64
+      },
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c153a811_a37145d9",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
         "patchSetId": 5
@@ -176,6 +200,24 @@
       "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee3909e2_1abd5fb1",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:01:27Z",
+      "side": 1,
+      "message": "Maybe or maybe not. My understanding is that Blink\u0027s URL implementation is independent from GURL. I\u0027ll add a note to that bug that it also affects GURL.\n\nCan you add a TODO with that bug number here?",
+      "parentUuid": "736ec86a_c747d289",
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

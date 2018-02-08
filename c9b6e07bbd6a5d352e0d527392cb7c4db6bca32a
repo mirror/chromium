@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38435a97_e71c2bfb",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:01:27Z",
+      "side": 1,
+      "message": "nit: Drop the \"FYI\". It\u0027s a bit informal to be in the actual code.",
+      "range": {
+        "startLine": 1029,
+        "startChar": 20,
+        "endLine": 1029,
+        "endChar": 23
+      },
+      "revId": "c9b6e07bbd6a5d352e0d527392cb7c4db6bca32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
