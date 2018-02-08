@@ -3695,6 +3695,10 @@ split_static_library("ui") {
       ]
     }
 
+    if (is_win) {
+      deps += [ "//components/strings" ]
+    }
+
     if (enable_service_discovery) {
       sources += [
         "webui/print_preview/privet_printer_handler.cc",
