@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10503874_6b66f2a2",
+        "filename": "chrome/browser/resources/feedback/js/feedback.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-02-08T01:51:09Z",
+      "side": 1,
+      "message": "Also it\u0027s probably a good idea to make sure it\u0027s unchecked, so as not be confusing.",
+      "range": {
+        "startLine": 339,
+        "startChar": 10,
+        "endLine": 339,
+        "endChar": 34
+      },
+      "revId": "2951b113e6951b3ec8d8e5ff89b911bd9fe9aff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e42260a9_a1255db3",
         "filename": "chrome/browser/resources/feedback/js/feedback.js",
         "patchSetId": 2
