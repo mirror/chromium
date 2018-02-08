@@ -52,6 +52,24 @@
       "revId": "a5ae71a3be1de7ce9449c0b53911d68794ec1999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86186914_adb5503a",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-02-08T01:16:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "477b4de6_01b6a801",
+      "revId": "a5ae71a3be1de7ce9449c0b53911d68794ec1999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
