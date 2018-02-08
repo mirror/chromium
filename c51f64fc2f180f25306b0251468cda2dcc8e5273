@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "ae1d168a_79cbd5bf",
+        "filename": "chrome/android/java/res/layout/accessibility_tab_switcher_list_item.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:30:00Z",
+      "side": 1,
+      "message": "I just double checked the mocks and I think this should be the 20dp version to match history (which was original spec\u0027ed as 18dp). See conversation in crbug.com/799493.\n\nIn history, I achieved this with a style: https://cs.chromium.org/chromium/src/chrome/android/java/res/values-v17/styles.xml?type\u003dcs\u0026q\u003dhistorylistitemendicon\u0026sq\u003dpackage:chromium\u0026l\u003d649\n\nI think you should be able to re-use that style with a different name.. maybe HistoryListItemEndIconSmall to indicate that it\u0027s the style for a small end icon.",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "c51f64fc2f180f25306b0251468cda2dcc8e5273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81ce7515_5db3e60e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
         "patchSetId": 3
