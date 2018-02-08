@@ -34,6 +34,24 @@
       "revId": "50cf7f867c9445de38cfd3cff5f5b3210117b02c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90183ff0_89f32792",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-02-08T01:37:08Z",
+      "side": 1,
+      "message": "The proposal is to extract the logic to apply attributes to a separate method and call it. We could also call it from UpdateTextStyle() on current text.",
+      "parentUuid": "62218002_0f0c7ac7",
+      "revId": "50cf7f867c9445de38cfd3cff5f5b3210117b02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
