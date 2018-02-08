@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8774624c_ddd38652",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-02-08T00:57:05Z",
+      "side": 1,
+      "message": "Ah, I got it.\n\nIs it speced that the task is posted to the microtask task source? Otherwise you should not use kMicrotask. (In general, kMicrotask is intended to be used for resolving / rejecting promises.)\n\nJust help me understand:\n\n- Line 53 forces layout.\n- You want to avoid running a synchronous layout.\n\nThen would it be an option to use an idle task for OnTimerFired? Then the task will run at an idle time.",
+      "parentUuid": "418395c3_fc975d7c",
+      "revId": "ba6d4914035d94cb1127d1f86fc77292cbe21b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4246457_558b9e19",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 6
