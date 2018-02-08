@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46141af8_94249681",
+        "filename": "chrome/browser/extensions/api/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-02-08T02:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b3d0c7_99bb719f",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 40
+      },
+      "revId": "5e5feca166777b4e5a974dfb5c4766caed0e35fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4db7601_8276444a",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 6
