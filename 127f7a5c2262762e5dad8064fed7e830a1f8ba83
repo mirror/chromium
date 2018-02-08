@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00753db1_32535ca5",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-08T02:14:59Z",
+      "side": 1,
+      "message": "This was the root cause of the one remaining content_unittest failure with surface sync.",
+      "revId": "127f7a5c2262762e5dad8064fed7e830a1f8ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8536096a_766b66eb",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2018-02-08T02:14:59Z",
+      "side": 1,
+      "message": "Opportunistic bugfix.",
+      "revId": "127f7a5c2262762e5dad8064fed7e830a1f8ba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
