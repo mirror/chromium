@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38898570_246b4226",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-02-08T02:07:26Z",
+      "side": 0,
+      "message": "Per offline discussion, this seems dead code (it is never defined, and the code always used the fallback value).",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "31bbb8b1f07bcc51d64ff6c8913dc1ef48493c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
