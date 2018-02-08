@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4b0998a_e9081c79",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63c5ee9f_d30c420c",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cdf734b_be671572",
         "filename": "chrome/browser/themes/theme_service.cc",
         "patchSetId": 22
@@ -30,6 +48,24 @@
       "writtenOn": "2018-02-08T00:56:09Z",
       "side": 1,
       "message": "I believe putting in this conditional means people who use a theme with a custom toolbar color will still get default background tab colors (unless the theme also specifies those), or something like that?\n\nPretty sure rather than this, what you want is to specify an alternate set of tints for your HSL shift that convert the touch toolbar color into the touch background tab color in normal and incognito mode, respectively.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3791fc_db8934ec",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Should this be a CL blocker? As it only affects Touch Optimized Ui.\nWith a TODO, this can be updated once the non custom theme spec requirements are met.",
+      "parentUuid": "3cdf734b_be671572",
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0fa505c8_f491d40d",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9363d0_eacec6fe",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ab7156_6cf9b77b",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9e02d7_3fb62342",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ab7156_6cf9b77b",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "454db949_f647de40",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a550b0_723a8c9f",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d5e4e8f_ef010074",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 22
@@ -101,6 +191,24 @@
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2199aabb_234b006d",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d5e4e8f_ef010074",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e8c857f5_0bf19e9a",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92037e2e_c70e47d0",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2871b4f2_884dd439",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 22
@@ -135,6 +261,24 @@
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c5d6a8_2379a71e",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2871b4f2_884dd439",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6cbd32c3_6f999188",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9696f67a_25be65a8",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2caf5f1_19124760",
         "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
         "patchSetId": 22
@@ -169,6 +331,24 @@
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295c85d0_3616cc5e",
+        "filename": "chrome/browser/ui/views/tabs/tab_close_button.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2caf5f1_19124760",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "c48d2774_fe9ec582",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a7c05e_1295768a",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b19f7d75_d1b80c9b",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 22
@@ -203,6 +401,24 @@
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e06a7f_50824fef",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b19f7d75_d1b80c9b",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "532825fd_a9634980",
+        "filename": "ui/gfx/color_palette.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "I couldnt find the new color scheme values for shades less than 500 and greater than 100. So keeping the older ones for now.\nCrOS team UI did not have it as well.",
+      "parentUuid": "08864540_3f69bd4c",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4138c9fe_c91d101b",
         "filename": "ui/gfx/color_palette.h",
         "patchSetId": 22
@@ -234,6 +468,24 @@
       "writtenOn": "2018-02-08T00:56:09Z",
       "side": 1,
       "message": "Nit: I still don\u0027t think these two RedDark colors are real \"Google colors\" and should thus be in this file.",
+      "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f62e9f_44864e5a",
+        "filename": "ui/gfx/color_palette.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "They are a part of the new color scheme in Google colors.",
+      "parentUuid": "4138c9fe_c91d101b",
       "revId": "1bafabe7fe249e680f6df534be2ac7fcc2755186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

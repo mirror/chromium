@@ -183,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "8bcd753a_ec076160",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1de0f2f_2db35eec",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71a82a4c_2784642e",
         "filename": "chrome/browser/themes/theme_properties.cc",
         "patchSetId": 12
@@ -233,6 +251,24 @@
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2462bc_0c8e769a",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "This can be done by adding another switch and calling this function if that switch is active. Will do so in a subsequent CL.",
+      "parentUuid": "1b641466_44d6fc22",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1009,6 +1045,24 @@
       "side": 1,
       "message": "Right, it works, it\u0027s just cumbersome and redundant.\n\nThis is a cleanup suggestion rather than a functional bug suggestion; I\u0027m saying that the new system violates the old one\u0027s design assumptions, so shoehorning correct behavior into it is more problematic than simply refactoring the system to do what you want directly.\n\nI don\u0027t want to block your CL on cleanup that doesn\u0027t have to happen, and I might be OK with landing a cleanup to this as a followup.  But since it\u0027s this CL that\u0027s introducing the extra complexity, I wouldn\u0027t want to just treat it as a pre-existing issue to never be fixed.",
       "parentUuid": "2017c0a8_3cf00111",
+      "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45ae43e_86c711af",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-02-08T02:54:30Z",
+      "side": 1,
+      "message": "Replaced the IconCapacity() function with something that sets the values for |showing_icon_|, |showing_alert_indicator_| and |showing_close_button_| before layout.",
+      "parentUuid": "ffdaf59f_577be97f",
       "revId": "574ad910e3321edab652369c7466de2a4cefdfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
