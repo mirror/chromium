@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9c6ce160_8c10227d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-02-08T00:46:14Z",
+      "side": 1,
+      "message": "Yes, but extra parameters passed by the client won\u0027t affect results for app availability.",
+      "parentUuid": "6290f908_6225e996",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f764f6be_43b3bc08",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 2
