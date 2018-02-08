@@ -225,12 +225,14 @@ QuickViewController.prototype.onQuickViewKeyDown_ = function(event) {
         this.quickView_.close();
         break;
       case 'ArrowRight':
+      case 'ArrowDown':
         var index = this.fileListSelectionModel_.selectedIndex + 1;
         if (index >= this.fileListSelectionModel_.length)
           index = 0;
         this.fileListSelectionModel_.selectedIndex = index;
         break;
       case 'ArrowLeft':
+      case 'ArrowUp':
         var index = this.fileListSelectionModel_.selectedIndex - 1;
         if (index < 0)
           index = this.fileListSelectionModel_.length - 1;
