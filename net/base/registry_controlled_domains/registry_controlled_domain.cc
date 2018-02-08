@@ -388,8 +388,11 @@ size_t GetRegistryLength(
 }
 
 bool IsRegistry(const GURL& gurl, PrivateRegistryFilter private_filter) {
-  return GetRegistryLengthImpl(gurl.host(), EXCLUDE_UNKNOWN_REGISTRIES,
-                               private_filter)
+  return IsRegistry(gurl.host_piece(), private_filter);
+}
+
+bool IsRegistry(base::StringPiece host, PrivateRegistryFilter private_filter) {
+  return GetRegistryLengthImpl(host, EXCLUDE_UNKNOWN_REGISTRIES, private_filter)
       .second;
 }
 

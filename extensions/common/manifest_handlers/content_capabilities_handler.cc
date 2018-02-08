@@ -18,6 +18,7 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/permissions/permissions_info.h"
 #include "extensions/common/url_pattern.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
 namespace extensions {
 
@@ -81,10 +82,12 @@ bool ContentCapabilitiesHandler::Parse(Extension* extension,
     return false;
   }
 
-  // Filter wildcard URL patterns and emit warnings for them.
+  // Filter URL patterns that imply all hosts and emit warnings for them.
   std::set<URLPattern> valid_url_patterns;
   for (const URLPattern& pattern : potential_url_patterns) {
-    if (pattern.match_subdomains() || pattern.ImpliesAllHosts()) {
+    if (net::registry_controlled_domains::IsRegistry(
+            pattern.host(),
+            net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES)) {
       extension->AddInstallWarning(InstallWarning(
           errors::kInvalidContentCapabilitiesMatchOrigin));
     } else {
