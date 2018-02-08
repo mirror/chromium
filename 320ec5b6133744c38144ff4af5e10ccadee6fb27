@@ -69,6 +69,30 @@
       "revId": "320ec5b6133744c38144ff4af5e10ccadee6fb27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e0a7a9_9aa8e337",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/remote/RemoteMediaPlayerWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-02-08T00:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb70ffb8_cb20d8db",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 36
+      },
+      "revId": "320ec5b6133744c38144ff4af5e10ccadee6fb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
