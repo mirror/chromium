@@ -16,6 +16,24 @@
       "revId": "7f5dc3f1b8dbda409a9e8ddc01ff4ca2f19c3312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11d37e5_b3c91eaa",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-02-08T01:33:50Z",
+      "side": 1,
+      "message": "They constraint to zero size. Because there is no external constraints on the textfield when layoutIfNeeded is called. This is some autolayout internal mechanism which I\u0027m not familiar with, since I rarely layout views outside of windows. I\u0027m pretty sure this could change in next iOS SDK releases and is some sort of implementation detail. \nAll of our constraints are fine, by the way - but autolayout breaks our constraints at random instead of _UITemporaryLayoutXXX.\n\nDo you have any suggestions regarding how this could be improved?",
+      "parentUuid": "b83f218b_a12bef20",
+      "revId": "7f5dc3f1b8dbda409a9e8ddc01ff4ca2f19c3312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
