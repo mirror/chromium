@@ -34,6 +34,24 @@
       "revId": "0765fa273eb31224337afff09c4878fb119c9995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bcfa5f_91ff737e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-08T00:15:12Z",
+      "side": 1,
+      "message": "LGTM either way.",
+      "parentUuid": "fef570d4_eb5e543b",
+      "revId": "0765fa273eb31224337afff09c4878fb119c9995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
