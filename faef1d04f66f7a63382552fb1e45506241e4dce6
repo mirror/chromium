@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df5a3cdc_aad3502c",
+        "filename": "chrome/browser/safe_browsing/url_checker_delegate_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "I don\u0027t think it is the request that\u0027s being checked for being whitelisted here.\nAlternate name: ShouldSkipRequestCheck()",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 49
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703618b6_06bc0bce",
+        "filename": "components/safe_browsing/browser/mojo_safe_browsing_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "Nit: Do you want to DCHECK(resource_context) here since MaybeCreate will otherwise silently return?",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f1860f_a3189c5f",
+        "filename": "components/safe_browsing/browser/mojo_safe_browsing_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "use std::make_unique?",
+      "range": {
+        "startLine": 91,
+        "startChar": 40,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc3967c_17b1f89d",
+        "filename": "components/safe_browsing/browser/mojo_safe_browsing_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "Please add a comment about it being not owned by this MSBImpl object.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a477eb_4063f1ed",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "nit: alphabetical here too",
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1279c3b9_d85f15a8",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "nit: and here",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 31
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaca91c_b610c948",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "Please move this one also appropriately to maintain dictionary order. Thanks.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a4ccd7_e9cf1302",
+        "filename": "components/safe_browsing/features.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-02-08T00:37:01Z",
+      "side": 1,
+      "message": "Let\u0027s maintain this list in alphabetical order.",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "faef1d04f66f7a63382552fb1e45506241e4dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
