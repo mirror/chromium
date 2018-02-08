@@ -167,16 +167,6 @@ class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
     return AccessibilityManager::Get()->IsTapDraggingEnabled();
   }
 
-  void SetSelectToSpeakEnabled(bool enabled) override {
-    DCHECK(AccessibilityManager::Get());
-    AccessibilityManager::Get()->SetSelectToSpeakEnabled(enabled);
-  }
-
-  bool IsSelectToSpeakEnabled() const override {
-    DCHECK(AccessibilityManager::Get());
-    return AccessibilityManager::Get()->IsSelectToSpeakEnabled();
-  }
-
   void SetSwitchAccessEnabled(bool enabled) override {
     DCHECK(AccessibilityManager::Get());
     AccessibilityManager::Get()->SetSwitchAccessEnabled(enabled);

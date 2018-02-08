@@ -31,8 +31,6 @@ class ASH_EXPORT DefaultAccessibilityDelegate : public AccessibilityDelegate {
   bool IsStickyKeysEnabled() const override;
   void SetTapDraggingEnabled(bool enabled) override;
   bool IsTapDraggingEnabled() const override;
-  void SetSelectToSpeakEnabled(bool enabled) override;
-  bool IsSelectToSpeakEnabled() const override;
   void SetSwitchAccessEnabled(bool enabled) override;
   bool IsSwitchAccessEnabled() const override;
   bool ShouldShowAccessibilityMenu() const override;
@@ -47,10 +45,9 @@ class ASH_EXPORT DefaultAccessibilityDelegate : public AccessibilityDelegate {
   bool virtual_keyboard_enabled_ = false;
   bool caret_highlight_enabled_ = false;
   bool cursor_highlight_enabled_ = false;
-  bool focus_highligh_enabled_ = false;
+  bool focus_highlight_enabled_ = false;
   bool sticky_keys_enabled_ = false;
   bool tap_dragging_enabled_ = false;
-  bool select_to_speak_enabled_ = false;
   bool switch_access_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(DefaultAccessibilityDelegate);

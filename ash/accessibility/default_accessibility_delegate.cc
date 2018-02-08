@@ -48,11 +48,11 @@ bool DefaultAccessibilityDelegate::IsCursorHighlightEnabled() const {
 }
 
 void DefaultAccessibilityDelegate::SetFocusHighlightEnabled(bool enabled) {
-  focus_highligh_enabled_ = enabled;
+  focus_highlight_enabled_ = enabled;
 }
 
 bool DefaultAccessibilityDelegate::IsFocusHighlightEnabled() const {
-  return focus_highligh_enabled_;
+  return focus_highlight_enabled_;
 }
 
 void DefaultAccessibilityDelegate::SetStickyKeysEnabled(bool enabled) {
@@ -69,14 +69,6 @@ void DefaultAccessibilityDelegate::SetTapDraggingEnabled(bool enabled) {
 
 bool DefaultAccessibilityDelegate::IsTapDraggingEnabled() const {
   return tap_dragging_enabled_;
-}
-
-void DefaultAccessibilityDelegate::SetSelectToSpeakEnabled(bool enabled) {
-  select_to_speak_enabled_ = enabled;
-}
-
-bool DefaultAccessibilityDelegate::IsSelectToSpeakEnabled() const {
-  return select_to_speak_enabled_;
 }
 
 void DefaultAccessibilityDelegate::SetSwitchAccessEnabled(bool enabled) {
