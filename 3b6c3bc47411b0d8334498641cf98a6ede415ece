@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "3d444f71_63b6157c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:15:23Z",
+      "side": 1,
+      "message": "Nulling out the key listener feels like a bit of a hack, so I\u0027m brainstorming other ways we could do this.\n - Maybe we can setEnabled(true) and setFocusable(true) after setting editable to false?\n - Or we could try using a regular TextView with an EditText style.\n - Or setInputType(TYPE_NULL) + a code comment about why we\u0027re calling the method",
+      "parentUuid": "0f06b08d_c0a03b90",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b5d983_4cae4283",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7

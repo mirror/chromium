@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09739b33_c6d2de0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:15:23Z",
+      "side": 1,
+      "message": "super nit: ..if this is..",
+      "range": {
+        "startLine": 84,
+        "startChar": 52,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "92e65cd0cc07ac61770385d6c090957a83e8d657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
