@@ -32,9 +32,11 @@
               $i18n{resetTriggerDescription}
             </div>
           </div>
-          <button id="resetProfileArrow" is="paper-icon-button-light"
-              class="subpage-arrow" aria-label="$i18n{resetTrigger}"
-              aria-describedby="resetProfileSecondary"></button>
+          <paper-icon-button-light>
+            <button id="resetProfileArrow" class="subpage-arrow"
+                aria-label="$i18n{resetTrigger}"
+                aria-describedby="resetProfileSecondary"></button>
+          </paper-icon-button-light>
         </div>
         <!-- Keep a single instance of reset-profile-dialog on purpose, to
           preserve state across show/hide operations. -->
@@ -51,9 +53,11 @@
               $i18n{powerwashDescription}
             </div>
           </div>
-          <button id="powerwashArrow" is="paper-icon-button-light"
-              class="subpage-arrow" aria-label="$i18n{powerwashTitle}"
-              aria-describedby="powerwashSecondary"></button>
+          <paper-icon-button-light>
+            <button id="powerwashArrow" class="subpage-arrow"
+                aria-label="$i18n{powerwashTitle}"
+                aria-describedby="powerwashSecondary"></button>
+          </paper-icon-button-light>
         </div>
         <template is="dom-if" if="[[showPowerwashDialog_]]" restamp>
           <settings-powerwash-dialog on-close="onPowerwashDialogClose_">
@@ -70,10 +74,11 @@
                 $i18n{resetCleanupComputerTriggerDescription}
               </div>
             </div>
-            <button id="chromeCleanupArrow" is="paper-icon-button-light"
-                class="subpage-arrow"
-                aria-label="$i18n{resetCleanupComputerTrigger}"
-                aria-describedby="chromeCleanupSecondary"></button>
+            <paper-icon-button-light>
+              <button id="chromeCleanupArrow" class="subpage-arrow"
+                  aria-label="$i18n{resetCleanupComputerTrigger}"
+                  aria-describedby="chromeCleanupSecondary"></button>
+            </paper-icon-button-light>
           </div>
         </template>
 </if>

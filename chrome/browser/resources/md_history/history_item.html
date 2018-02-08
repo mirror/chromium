@@ -205,13 +205,15 @@
       <div id="item-container"
           on-mousedown="onItemMousedown_"
           on-click="onItemClick_">
-        <button is="paper-icon-button-light" id="checkbox"
-            hidden="[[selectionNotAllowed_]]"
-            role="checkbox"
-            aria-checked$="[[getAriaChecked_(selected)]]"
-            aria-label$="[[getEntrySummary_(item)]]">
-          <div id="checkmark"></div>
-        </button>
+        <paper-icon-button-light>
+          <button id="checkbox"
+              hidden="[[selectionNotAllowed_]]"
+              role="checkbox"
+              aria-checked$="[[getAriaChecked_(selected)]]"
+              aria-label$="[[getEntrySummary_(item)]]">
+            <div id="checkmark"></div>
+          </button>
+        </paper-icon-button-light>
         <span id="time-accessed">
           [[item.readableTimestamp]]
         </span>
@@ -227,19 +229,22 @@
         </div>
         <div id="star-container">
           <template is="dom-if" if="[[item.starred]]" notify-dom-change>
-            <button is="paper-icon-button-light" id="bookmark-star"
-                title="$i18n{removeBookmark}" on-click="onRemoveBookmarkTap_">
-              <iron-icon icon="cr:star"></iron-icon>
-            </button>
+            <paper-icon-button-light>
+              <button id="bookmark-star"
+                  title="$i18n{removeBookmark}" on-click="onRemoveBookmarkTap_">
+                <iron-icon icon="cr:star"></iron-icon>
+              </button>
+            </paper-icon-button-light>
           </template>
         </div>
-        <button is="paper-icon-button-light" id="menu-button"
-            class="more-vert-button" title="$i18n{moreActionsButton}"
-            on-click="onMenuButtonTap_">
-          <div></div>
-          <div></div>
-          <div></div>
-        </button>
+        <paper-icon-button-light>
+          <button id="menu-button" class="more-vert-button"
+              title="$i18n{moreActionsButton}" on-click="onMenuButtonTap_">
+            <div></div>
+            <div></div>
+            <div></div>
+          </button>
+        </paper-icon-button-light>
       </div>
       <div id="time-gap-separator" hidden="[[!hasTimeGap]]"></div>
     </div>

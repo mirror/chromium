@@ -66,7 +66,7 @@
         -webkit-margin-start: 0;
       }
 
-      button[is='paper-icon-button-light'].icon-external {
+      paper-icon-button-light.icon-external {
         /* The negative margin messes up the outline border. These are in an
            indented list so this looks fine until moved: crbug.com/708286. */
         -webkit-margin-end: 0;
@@ -132,10 +132,12 @@
                   </paper-button>
                 </template>
 </if>
-                <button is="paper-icon-button-light" title="$i18n{moreActions}"
-                    id="more-[[item.language.code]]" on-tap="onDotsTap_"
-                    class="icon-more-vert">
-                </button>
+                <paper-icon-button-light>
+                  <button title="$i18n{moreActions}"
+                      id="more-[[item.language.code]]" on-tap="onDotsTap_"
+                      class="icon-more-vert">
+                  </button>
+                </paper-icon-button-light>
               </div>
             </template>
             <div class="list-item">
@@ -181,19 +183,23 @@
                     $i18n{inputMethodEnabled}
                   </div>
                 </div>
-                <button class="icon-external" is="paper-icon-button-light"
-                    on-tap="onInputMethodOptionsTap_"
-                    hidden="[[!item.hasOptionsPage]]">
-                </button>
+                <paper-icon-button-light>
+                  <button class="icon-external"
+                      on-tap="onInputMethodOptionsTap_"
+                      hidden="[[!item.hasOptionsPage]]">
+                  </button>
+                </paper-icon-button-light>
               </div>
             </template>
             <div class="list-item" on-tap="onManageInputMethodsTap_" actionable>
               <div class="start" id="manageInputMethods">
                 $i18n{manageInputMethods}
               </div>
-              <button class="subpage-arrow" is="paper-icon-button-light"
-                  aria-label="$i18n{manageInputMethods}"
-                  aria-describedby="customSpelling"></button>
+              <paper-icon-button-light>
+                <button class="subpage-arrow"
+                    aria-label="$i18n{manageInputMethods}"
+                    aria-describedby="customSpelling"></button>
+              </paper-icon-button-light>
             </div>
           </div>
           <settings-toggle-button
@@ -254,9 +260,11 @@
               <div class="start" id="customSpelling">
                 $i18n{manageSpellCheck}
               </div>
-              <button class="subpage-arrow" is="paper-icon-button-light"
-                  aria-label="$i18n{manageSpellCheck}"
-                  aria-describedby="customSpelling"></button>
+              <paper-icon-button-light>
+                <button class="subpage-arrow"
+                    aria-label="$i18n{manageSpellCheck}"
+                    aria-describedby="customSpelling"></button>
+              </paper-icon-button-light>
             </div>
           </div>
         </iron-collapse>

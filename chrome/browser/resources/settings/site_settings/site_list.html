@@ -78,9 +78,11 @@
               </div>
               <template is="dom-if" if="[[enableSiteSettings_]]">
                 <div on-tap="onOriginTap_" actionable>
-                  <button class="subpage-arrow" is="paper-icon-button-light"
-                      aria-label$="[[item.displayName]]"
-                      aria-describedby="siteDescription"></button>
+                  <paper-icon-button-light>
+                    <button class="subpage-arrow"
+                        aria-label$="[[item.displayName]]"
+                        aria-describedby="siteDescription"></button>
+                  </paper-icon-button-light>
                 </div>
                 <div class="separator"></div>
               </template>
@@ -90,16 +92,19 @@
                   icon-aria-label="[[label]]">
               </cr-policy-pref-indicator>
             </template>
-            <button is="paper-icon-button-light" id="resetSite"
-                class="icon-delete-gray" on-tap="onResetButtonTap_"
-                hidden="[[shouldHideResetButton_(item, readOnlyList)]]"
-                alt="$i18n{siteSettingsActionReset}">
-            </button>
-            <button is="paper-icon-button-light" id="actionMenuButton"
-                class="icon-more-vert" on-tap="onShowActionMenuTap_"
-                hidden="[[shouldHideActionMenu_(item, readOnlyList)]]"
-                title="$i18n{moreActions}">
-            </button>
+            <paper-icon-button-light>
+              <button id="resetSite" class="icon-delete-gray"
+                  on-tap="onResetButtonTap_"
+                  hidden="[[shouldHideResetButton_(item, readOnlyList)]]"
+                  alt="$i18n{siteSettingsActionReset}">
+              </button>
+            </paper-icon-button-light>
+            <paper-icon-button-light>
+              <button id="actionMenuButton" class="icon-more-vert"
+                  on-tap="onShowActionMenuTap_" title="$i18n{moreActions}"
+                  hidden="[[shouldHideActionMenu_(item, readOnlyList)]]">
+              </button>
+            </paper-icon-button-light>
           </div>
         </template>
       </div>

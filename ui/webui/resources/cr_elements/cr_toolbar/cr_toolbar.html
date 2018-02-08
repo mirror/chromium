@@ -130,12 +130,13 @@
       <div id="leftSpacer">
         <!-- Note: showing #menuPromo relies on this dom-if being [restamp]. -->
         <template is="dom-if" if="[[showMenu]]" restamp>
-          <button id="menuButton" is="paper-icon-button-light"
-              class="icon-menu-white no-overlap"
-              on-tap="onMenuTap_"
-              title="[[titleIfNotShowMenuPromo_(menuLabel, showMenuPromo)]]"
-              aria-label$="[[menuLabel]]">
-          </button>
+          <paper-icon-button-light>
+            <!-- TODO(hcarmona): Why is aria-label overriding title here? -->
+            <button id="menuButton" class="icon-menu-white no-overlap"
+                on-tap="onMenuTap_" aria-label$="[[menuLabel]]"
+                title="[[titleIfNotShowMenuPromo_(menuLabel, showMenuPromo)]]">
+            </button>
+          </paper-icon-button-light>
           <template is="dom-if" if="[[showMenuPromo]]">
             <div id="menuPromo" role="tooltip">
               [[menuPromo]]
