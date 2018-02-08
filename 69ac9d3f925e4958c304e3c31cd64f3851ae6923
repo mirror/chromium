@@ -22,6 +22,30 @@
       "revId": "69ac9d3f925e4958c304e3c31cd64f3851ae6923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8544531_17043882",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-02-08T03:00:40Z",
+      "side": 1,
+      "message": "How about a function of a line box fragment? The logic relies on internals of line box very much that I think it\u0027s better place.",
+      "parentUuid": "853c5bc1_f016b088",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 22
+      },
+      "revId": "69ac9d3f925e4958c304e3c31cd64f3851ae6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
