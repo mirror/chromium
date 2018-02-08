@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a989f6fd_1b8f62a4",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "I ended up removing this part per JianLi\u0027s comment below, so that should not be an issue.",
+      "parentUuid": "8860d857_ad9ff469",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e29401e_2ae09dd6",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98764e6d_6d24bb09",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e29401e_2ae09dd6",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "50ea3eb1_b059226a",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Added a P4 asana task to fix this in the P2P sharers project.",
+      "parentUuid": "5612116d_4617cb27",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f57e8707_9e81218d",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38047b91_0f1cbc97",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "The synchronous part of the call uses the archiver, so it must still exist until after the call to SavePageToDownloads. (Look at the implemenation of SavePageToDownloads).",
+      "parentUuid": "f57e8707_9e81218d",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4991a536_58be09d0",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d720b17_eb60baae",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21dac6b6_67ed54dd",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17f8aa5_be1c71f1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Yes.  (done)",
+      "parentUuid": "21dac6b6_67ed54dd",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "865d6376_f758fa4a",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Nope, we get a compile error without including the full header.  We don\u0027t get the compile error for ArchiveManager, though.",
+      "parentUuid": "cc71cd92_f0ab882a",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381a5f2b_bdabb5f1",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d363b32_7b228446",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381a5f2b_bdabb5f1",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "33162745_de17658a",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cfd4ba_7df84b75",
+      "range": {
+        "startLine": 204,
+        "startChar": 40,
+        "endLine": 204,
+        "endChar": 41
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e02e8ecb_acd7829e",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
         "patchSetId": 6
@@ -187,6 +361,30 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0b7a69_714b0c79",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done  (The original implementation passed along a writeable offline_page so we could modify it, then write it to the OPM database, but the design changed since then).",
+      "parentUuid": "e02e8ecb_acd7829e",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 42
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "69e1e6af_293760a4",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f3e154_97c294ea",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fba5241_b9999b21",
         "filename": "components/offline_pages/core/offline_page_archiver.cc",
         "patchSetId": 6
@@ -227,6 +449,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7a7695_f271ae6f",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fba5241_b9999b21",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "e35f8a05_8e1a7cff",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Yes, done.  (We were updating the offline page item previously, so this was correct before I applied the const fix that Romax suggested, but it needs to be changed now that the offline page item is const.)",
+      "parentUuid": "fcecf24d_5e10bca8",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1638021b_1c9ec695",
         "filename": "components/offline_pages/core/offline_page_archiver.cc",
         "patchSetId": 6
@@ -261,6 +519,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61594b3f_12f07de7",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "My intention was to make the change to OPMTaskified smaller, since OPMTaskified is too large already.  It was requested that I move as much logic as possible out of there. However, it is a bit simpler to pass a file path instead of the archive manager, so I changed it as you suggest.",
+      "parentUuid": "1638021b_1c9ec695",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +563,30 @@
     },
     {
       "key": {
+        "uuid": "12e7a0bf_2614ddc5",
+        "filename": "components/offline_pages/core/offline_page_archiver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "This is the standard pattern with PostTaskAndReply, where the first task is on a different thread, and we need to ensure that the results can be safely moved between threads.  Using PostTaskAndReplyWithResult is more complicated in the unit test, since we need to use a scoped task environment, which does not interact well with some test task runners.",
+      "parentUuid": "45b90d45_028241d4",
+      "range": {
+        "startLine": 73,
+        "startChar": 42,
+        "endLine": 73,
+        "endChar": 43
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50158fe_a76b88e7",
         "filename": "components/offline_pages/core/offline_page_archiver.h",
         "patchSetId": 6
@@ -301,6 +601,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa131205_9b62c139",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "I went with making the static method private, and testing the public method, and renaming them as you suggested.  I chose to use a test simple task runner to be like most other tests in this directory, let me know if you prefer that I use the browser thread bundle.",
+      "parentUuid": "d50158fe_a76b88e7",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +639,24 @@
     },
     {
       "key": {
+        "uuid": "1e5ca9d2_95403447",
+        "filename": "components/offline_pages/core/offline_page_archiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "We can, it is just a matter of preference.  It seemed simpler to me to have a hardcoded call then to wrap up an argument bundle with several callbacks in it.  I have done as you suggest (just wanted to explain why it was that way in the first place).  I did have to make the callback non-const for base::BindOnce to do what I wanted it to do.",
+      "parentUuid": "27867599_f1e408bb",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d137c77_1ea204b6",
         "filename": "components/offline_pages/core/offline_page_types.h",
         "patchSetId": 6
@@ -338,6 +674,24 @@
     },
     {
       "key": {
+        "uuid": "baa30e53_a4fbc898",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d137c77_1ea204b6",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "471a7c08_8f4bbb17",
         "filename": "components/offline_pages/core/offline_page_types.h",
         "patchSetId": 6
@@ -352,6 +706,24 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99365332_3c6e122b",
+        "filename": "components/offline_pages/core/offline_page_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "471a7c08_8f4bbb17",
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +747,30 @@
       "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba123486_828534bf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31804,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-02-08T01:41:12Z",
+      "side": 1,
+      "message": "Good catch!  I wanted to change OfflinePagesSavepageResult, not OfflinePagesBackgroundSavepageResult.  Fixed.",
+      "parentUuid": "a302efd5_99e88b31",
+      "range": {
+        "startLine": 31803,
+        "startChar": 2,
+        "endLine": 31804,
+        "endChar": 3
+      },
+      "revId": "458609f86764b1ed682d721ab1fee08ba58fc06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
