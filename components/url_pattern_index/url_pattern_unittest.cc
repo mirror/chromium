@@ -110,6 +110,7 @@ TEST(SubresourceFilterUrlPatternTest, MatchesUrl) {
       {{"http", kSubdomain, kAnchorNone}, "http://http.com/", true},
       {{"/example.com", kSubdomain, kBoundary}, "http://example.com/", false},
       {{"/example.com/", kSubdomain, kBoundary}, "http://example.com/", false},
+      {{".", kSubdomain, kAnchorNone}, "http://a..com", true},
   };
 
   for (const auto& test_case : kTestCases) {
