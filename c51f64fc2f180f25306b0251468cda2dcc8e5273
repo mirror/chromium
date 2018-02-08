@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a95ccf1_2df2871e",
+        "filename": "chrome/android/java/res/layout/accessibility_tab_switcher.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:23:42Z",
+      "side": 1,
+      "message": "Is this -1 so that the tab selection indicator line will be at the top? Probably worth a code comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "c51f64fc2f180f25306b0251468cda2dcc8e5273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ce7515_5db3e60e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:23:42Z",
+      "side": 1,
+      "message": "Is this flipping the incognito icon at the bottom of the screen? Is it needed because of the -1 in the XML? If so, probably also worth a comment.",
+      "revId": "c51f64fc2f180f25306b0251468cda2dcc8e5273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
