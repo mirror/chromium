@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c563c142_18ebe900",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-02-08T00:55:42Z",
+      "side": 1,
+      "message": "We don\u0027t do any canonicalization of sources at the MR level though, so the sources DialMediaRouteProvider gets from MR will have these extra params. That means DialMediaRouteProvider or this class will be responsible for mapping them to the same app id. Currently this class does that using registered_media_sources_. Or maybe I am missing something?",
+      "parentUuid": "9c6ce160_8c10227d",
+      "revId": "d419dba304f41aaa17cf6b9730f24933b641d6b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f764f6be_43b3bc08",
         "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service.cc",
         "patchSetId": 2
