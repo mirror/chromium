@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8999be21_e3d633cc",
+        "filename": "components/bookmarks/browser/bookmark_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-08T00:02:32Z",
+      "side": 1,
+      "message": "Do you care in case deserialization fails?",
+      "revId": "2ac7ea8937b1b01fab2fb4a6236cf0aa3f42ccb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f815aaf8_30b89914",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8460,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-08T00:02:32Z",
+      "side": 1,
+      "message": "Did you mean to write KB here?",
+      "range": {
+        "startLine": 8460,
+        "startChar": 48,
+        "endLine": 8460,
+        "endChar": 50
+      },
+      "revId": "2ac7ea8937b1b01fab2fb4a6236cf0aa3f42ccb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcfccd7_bff1d19a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 8463,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2018-02-08T00:02:32Z",
+      "side": 1,
+      "message": "typo: recorded every time",
+      "range": {
+        "startLine": 8463,
+        "startChar": 62,
+        "endLine": 8463,
+        "endChar": 80
+      },
+      "revId": "2ac7ea8937b1b01fab2fb4a6236cf0aa3f42ccb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
