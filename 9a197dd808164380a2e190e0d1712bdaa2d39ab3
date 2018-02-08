@@ -22,6 +22,23 @@
       "revId": "9a197dd808164380a2e190e0d1712bdaa2d39ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10190c15_efea4a2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2018-02-08T00:41:43Z",
+      "side": 1,
+      "message": "Do we really need set forcecommit to true here?\nAccording to the API doc, editor.apply() should be pretty safe to use. https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply().\n\n\"You don\u0027t need to worry about Android component lifecycles and their interaction with apply() writing to disk. The framework makes sure in-flight disk writes from apply() complete before switching states.\"\n\nIMHO, the only thing that really needs commit is that for crash recovery. But if Android/Chrome really crashes, we don\u0027t really care about the notificationId, right? As long as the old notification still contains the information about the download, user can still resume it, i suppose?",
+      "revId": "9a197dd808164380a2e190e0d1712bdaa2d39ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
