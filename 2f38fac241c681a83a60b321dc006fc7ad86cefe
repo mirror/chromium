@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42d16022_8a3fb682",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/toolbar.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-02-08T00:31:14Z",
+      "side": 1,
+      "message": "Maybe this selector should also have `:not(.toolbar-blue-on-hover)` for consistency?",
+      "range": {
+        "startLine": 316,
+        "startChar": 1,
+        "endLine": 316,
+        "endChar": 4
+      },
+      "revId": "2f38fac241c681a83a60b321dc006fc7ad86cefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
