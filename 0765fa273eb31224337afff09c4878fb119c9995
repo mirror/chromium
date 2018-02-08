@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fdcb545_21b15951",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/acquire.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-08T00:11:46Z",
+      "side": 1,
+      "message": "Is it worth adding checking for the empty name too?\n\n(sorry if that\u0027s already covered somewhere and I\u0027m missing it)",
+      "revId": "0765fa273eb31224337afff09c4878fb119c9995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
