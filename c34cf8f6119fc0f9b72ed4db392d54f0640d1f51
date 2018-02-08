@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "452b5537_2026850a",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:39:42Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026",
+      "revId": "c34cf8f6119fc0f9b72ed4db392d54f0640d1f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f0c9f1_768cbe40",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLSync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-02-08T01:39:42Z",
+      "side": 1,
+      "message": "While it\u0027s kind of unfortunate to mix in-class member initializers with regular initializers, I kind of feel like that\u0027d more robust than hardcoding magic numbers here.",
+      "revId": "c34cf8f6119fc0f9b72ed4db392d54f0640d1f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
