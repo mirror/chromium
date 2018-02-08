@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00baf0f8_a9935469",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-08T02:17:44Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "452b5537_2026850a",
+      "revId": "c34cf8f6119fc0f9b72ed4db392d54f0640d1f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1f0c9f1_768cbe40",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLSync.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c34cf8f6119fc0f9b72ed4db392d54f0640d1f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbcefda_ae5ffa72",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLSync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-02-08T02:17:44Z",
+      "side": 1,
+      "message": "Sounds fine. Done.",
+      "parentUuid": "d1f0c9f1_768cbe40",
+      "revId": "c34cf8f6119fc0f9b72ed4db392d54f0640d1f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
