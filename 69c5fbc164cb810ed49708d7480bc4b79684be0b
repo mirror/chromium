@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd04ef2_821fd635",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "Might be helpful to indent here, for readability (inside the quote, so it makes clang-format happy).",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d623a8_63c7af0c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "Same here with indenting.",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1598364_9fdb9f7c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "Is it a problem if this never sends \"false\" nor \"true\" (which it can do if the location doesn\u0027t match, nor does a SecurityError get thrown)?",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e02223e_2ad76b75",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "Why is this an EXPECT now? If the server doesn\u0027t start, shouldn\u0027t that be fatal?",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 17
+      },
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914fb37d_1b01f53b",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "This is never read, only written to. I think it can be deleted.",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4190f4_2639d5fb",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1570,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "same",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b7e370_ed3da35b",
+        "filename": "chrome/browser/ui/extensions/app_launch_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "comma\n\nAlso add \"May be null.\" in between the two sentences.",
+      "range": {
+        "startLine": 86,
+        "startChar": 43,
+        "endLine": 86,
+        "endChar": 46
+      },
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d03642_98b11dd4",
+        "filename": "chrome/browser/ui/extensions/application_launch.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2018-02-08T00:38:01Z",
+      "side": 1,
+      "message": "Shame to duplicate this code just to add an opener. Is it possible to add an overload of AddSelectedTabWithURL that takes a content::RenderFrameHost* opener?",
+      "revId": "69c5fbc164cb810ed49708d7480bc4b79684be0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
