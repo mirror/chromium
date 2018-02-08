@@ -23,7 +23,6 @@ class CastResourceDelegate;
 namespace shell {
 
 class CastContentBrowserClient;
-class CastContentGpuClient;
 class CastContentRendererClient;
 class CastContentUtilityClient;
 
@@ -42,7 +41,6 @@ class CastMainDelegate : public content::ContentMainDelegate {
   void ZygoteForked() override;
 #endif  // defined(OS_LINUX)
   content::ContentBrowserClient* CreateContentBrowserClient() override;
-  content::ContentGpuClient* CreateContentGpuClient() override;
   content::ContentRendererClient* CreateContentRendererClient() override;
   content::ContentUtilityClient* CreateContentUtilityClient() override;
 
