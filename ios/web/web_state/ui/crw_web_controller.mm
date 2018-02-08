@@ -1709,6 +1709,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _loadPhase = web::PAGE_LOADED;
   if (loadSuccess) {
     // No DidFinishNavigation callback for displaying error page.
+    DCHECK(context->HasCommitted());
     _webStateImpl->OnNavigationFinished(context);
   }
 
@@ -1928,6 +1929,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     [self didStartLoading];
     self.navigationManagerImpl->CommitPendingItem();
     [self.nativeController reload];
+    navigationContext->SetHasCommitted(true);
     _webStateImpl->OnNavigationFinished(navigationContext.get());
     [self loadCompleteWithSuccess:YES forNavigation:nil];
   } else {
@@ -4327,8 +4329,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     }
     int64_t contentLength = navigationResponse.response.expectedContentLength;
     web::BrowserState* browserState = self.webState->GetBrowserState();
-    web::NavigationContext* context =
+    web::NavigationContextImpl* context =
         [self contextForPendingNavigationWithURL:responseURL];
+    context->SetIsDownload(true);
     web::DownloadController::FromBrowserState(browserState)
         ->CreateDownloadTask(_webStateImpl, [NSUUID UUID].UUIDString,
                              responseURL, contentDisposition, contentLength,
@@ -4551,6 +4554,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // |context| will be nil if this navigation has been already committed and
   // finished.
   if (context) {
+    context->SetHasCommitted(true);
     context->SetResponseHeaders(_webStateImpl->GetHttpResponseHeaders());
   }
 
@@ -4986,6 +4990,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
           [self registerLoadRequestForURL:webViewURL
                    sameDocumentNavigation:isSameDocumentNavigation];
       [self webPageChangedWithContext:newContext.get()];
+      if (!isSameDocumentNavigation)
+        newContext->SetHasCommitted(true);
       _webStateImpl->OnNavigationFinished(newContext.get());
       // TODO(crbug.com/792515): It is OK, but very brittle, to call
       // |didFinishNavigation:| here because the gating condition is mutually
@@ -5003,6 +5009,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
                                    : _webStateImpl->GetHttpResponseHeaders();
       existingContext->SetResponseHeaders(headers);
       existingContext->SetIsSameDocument(isSameDocumentNavigation);
+      if (!isSameDocumentNavigation)
+        existingContext->SetHasCommitted(true);
       _webStateImpl->OnNavigationFinished(existingContext);
     }
   }
