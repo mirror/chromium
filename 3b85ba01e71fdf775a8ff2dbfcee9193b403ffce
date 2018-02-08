@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30faa70a_875c9b11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:39:17Z",
+      "side": 1,
+      "message": "I think functionally this will be checking whether articles suggestions are disabled entirely, right?",
+      "range": {
+        "startLine": 363,
+        "startChar": 26,
+        "endLine": 363,
+        "endChar": 74
+      },
+      "revId": "3b85ba01e71fdf775a8ff2dbfcee9193b403ffce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b57b56_fdcaa69b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:39:17Z",
+      "side": 1,
+      "message": "nit: Encapsulate in a helper method since this logic is used in a couple of places?",
+      "range": {
+        "startLine": 265,
+        "startChar": 32,
+        "endLine": 265,
+        "endChar": 75
+      },
+      "revId": "3b85ba01e71fdf775a8ff2dbfcee9193b403ffce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8d25d4_0c01210b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:39:17Z",
+      "side": 1,
+      "message": "nit: updateSuggestionsVisibilityForExpandableHeader() to make it ultra clear in the method name that this is only valid for expandable sections?",
+      "range": {
+        "startLine": 635,
+        "startChar": 17,
+        "endLine": 635,
+        "endChar": 44
+      },
+      "revId": "3b85ba01e71fdf775a8ff2dbfcee9193b403ffce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
