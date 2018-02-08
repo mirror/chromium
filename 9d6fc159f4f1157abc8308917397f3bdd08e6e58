@@ -218,6 +218,24 @@
       "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e532e44_506c5567",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-02-08T01:22:47Z",
+      "side": 1,
+      "message": "ok, let me add a TODO with that bug number.",
+      "parentUuid": "ee3909e2_1abd5fb1",
+      "revId": "9d6fc159f4f1157abc8308917397f3bdd08e6e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
