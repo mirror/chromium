@@ -234,6 +234,30 @@
       "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1459d6_1d10e5ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-02-08T00:55:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dee47592_73ca61cf",
+      "range": {
+        "startLine": 471,
+        "startChar": 19,
+        "endLine": 471,
+        "endChar": 24
+      },
+      "revId": "c7817ee86b8153c7ddc571dbe01b6e9ffff86647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
