@@ -304,6 +304,21 @@ HacksAndPatchesCommon() {
   cp "${SCRIPT_DIR}/libdbus-1-3-symbols" \
     "${INSTALL_ROOT}/debian/libdbus-1-3/DEBIAN/symbols"
 
+  # Glibc 2.27 introduced some new optimizations to several math functions, but
+  # it will be a while before it makes it into all supported distros.  Luckily,
+  # glibc maintains ABI compatibility with previous versions, so the old symbols
+  # are still there.
+  # TODO(thomasanderson): Remove this once glibc 2.27 is available on all
+  # supported distros.
+  local mathcalls_h="${INSTALL_ROOT}/usr/include/${arch}-${os}/bits/mathcalls.h"
+  echo '// Chromium-specific hack.' >> "${mathcalls_h}"
+  echo '// See explanation in sysroot-creator.sh.' >> "${mathcalls_h}"
+  echo '__asm__(".symver expf, expf@GLIBC_2.2.5");' >> "${mathcalls_h}"
+  echo '__asm__(".symver powf, powf@GLIBC_2.2.5");' >> "${mathcalls_h}"
+  echo '__asm__(".symver logf, logf@GLIBC_2.2.5");' >> "${mathcalls_h}"
+  echo '__asm__(".symver log2f, log2f@GLIBC_2.2.5");' >> "${mathcalls_h}"
+  echo '__asm__(".symver exp2f, exp2f@GLIBC_2.2.5");' >> "${mathcalls_h}"
+
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
   SubBanner "Move pkgconfig scripts"
