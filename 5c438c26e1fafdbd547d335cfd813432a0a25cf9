@@ -16,6 +16,190 @@
       "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b37349_0b0cf583",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "I don\u0027t know exactly expected semantics, but have you tried\n(*.[pP][nN][gG])|(*.[jJ][pP][gG])|...\n\nalso, do you have to escape . (can you test these do not patch for example \"file.abcjpeg\")",
+      "parentUuid": "6d7adbe4_dc9b157d",
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58253851_429628cb",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "I assume we\u0027d want to show images that are nested inside Downloads directory?",
+      "range": {
+        "startLine": 912,
+        "startChar": 44,
+        "endLine": 912,
+        "endChar": 72
+      },
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2d9adc_2b5217ab",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be on blocking task runner? it seems to be doing file I/O",
+      "range": {
+        "startLine": 914,
+        "startChar": 25,
+        "endLine": 914,
+        "endChar": 49
+      },
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae16d732_19c498ef",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "this can be standalone function",
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429e4bee_b9aee4e9",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "this does not have to be a ptr:\nbase::Value image_name_list(base::Value::Type::LIST);",
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8d271f_8fb830c6",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "can we use PostTaskAndReply in RunAsync",
+      "range": {
+        "startLine": 931,
+        "startChar": 17,
+        "endLine": 931,
+        "endChar": 25
+      },
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147376d2_5a679a93",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "use std::move",
+      "range": {
+        "startLine": 935,
+        "startChar": 22,
+        "endLine": 935,
+        "endChar": 32
+      },
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf2ff17_360310ed",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "can you use UIThreadExtensionFunction\n\nAsyncExtensionFunction is deprecated",
+      "range": {
+        "startLine": 365,
+        "startChar": 13,
+        "endLine": 365,
+        "endChar": 35
+      },
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5446588b_e8cc4ce9",
+        "filename": "chrome/common/extensions/api/wallpaper_private.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-02-08T01:21:26Z",
+      "side": 1,
+      "message": "would it make sense to return FileEntries here? It might be more complex to implement this function, but it might be easier to use the results.\n(though, this depends on how you intend to use these results - do you have a design doc on thumbnail generation?)",
+      "revId": "5c438c26e1fafdbd547d335cfd813432a0a25cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
