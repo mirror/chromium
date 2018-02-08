@@ -86,6 +86,7 @@ void PipelineController::Seek(base::TimeDelta time, bool time_updated) {
 // TODO(sandersd): It may be easier to use this interface if |suspended_cb_| is
 // executed when Suspend() is called while already suspended.
 void PipelineController::Suspend() {
+  LOG(ERROR) << __func__ << ": " << static_cast<int>(state_);
   DCHECK(thread_checker_.CalledOnValidThread());
   pending_resume_ = false;
   if (state_ != State::SUSPENDING && state_ != State::SUSPENDED) {
@@ -95,6 +96,7 @@ void PipelineController::Suspend() {
 }
 
 void PipelineController::Resume() {
+  LOG(ERROR) << __func__ << ": " <<static_cast<int>(state_);
   DCHECK(thread_checker_.CalledOnValidThread());
   pending_suspend_ = false;
   if (state_ == State::SUSPENDING || state_ == State::SUSPENDED) {

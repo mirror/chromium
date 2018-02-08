@@ -522,7 +522,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
 }
 
 HTMLMediaElement::~HTMLMediaElement() {
-  BLINK_MEDIA_LOG << "~HTMLMediaElement(" << (void*)this << ")";
+  LOG(ERROR) << "~HTMLMediaElement(" << (void*)this << ")";
 
   // audio_source_node_ is explicitly cleared by AudioNode::dispose().
   // Since AudioNode::dispose() is guaranteed to be always called before
@@ -674,7 +674,7 @@ LayoutObject* HTMLMediaElement::CreateLayoutObject(const ComputedStyle&) {
 
 Node::InsertionNotificationRequest HTMLMediaElement::InsertedInto(
     ContainerNode* insertion_point) {
-  BLINK_MEDIA_LOG << "insertedInto(" << (void*)this << ", " << insertion_point
+  LOG(ERROR) << "insertedInto(" << (void*)this << ", " << insertion_point
                   << ")";
 
   HTMLElement::InsertedInto(insertion_point);
@@ -695,7 +695,7 @@ void HTMLMediaElement::DidNotifySubtreeInsertionsToDocument() {
 }
 
 void HTMLMediaElement::RemovedFrom(ContainerNode* insertion_point) {
-  BLINK_MEDIA_LOG << "removedFrom(" << (void*)this << ", " << insertion_point
+  LOG(ERROR) << "removedFrom(" << (void*)this << ", " << insertion_point
                   << ")";
 
   HTMLElement::RemovedFrom(insertion_point);
@@ -1667,7 +1667,7 @@ void HTMLMediaElement::MediaLoadingFailed(WebMediaPlayer::NetworkState error,
 }
 
 void HTMLMediaElement::SetNetworkState(WebMediaPlayer::NetworkState state) {
-  BLINK_MEDIA_LOG << "setNetworkState(" << (void*)this << ", "
+  LOG(ERROR) << "setNetworkState(" << (void*)this << ", "
                   << static_cast<int>(state) << ") - current state is "
                   << static_cast<int>(network_state_);
 
@@ -1751,8 +1751,8 @@ void HTMLMediaElement::SetReadyState(ReadyState state) {
       ready_state_ = kHaveCurrentData;
   }
 
-  if (old_state > ready_state_maximum_)
-    ready_state_maximum_ = old_state;
+  if (new_state > ready_state_maximum_)
+    ready_state_maximum_ = new_state;
 
   if (network_state_ == kNetworkEmpty)
     return;
@@ -3363,13 +3363,9 @@ TimeRanges* HTMLMediaElement::seekable() const {
 }
 
 bool HTMLMediaElement::PotentiallyPlaying() const {
-  // "pausedToBuffer" means the media engine's rate is 0, but only because it
-  // had to stop playing when it ran out of buffered data. A movie in this state
-  // is "potentially playing", modulo the checks in couldPlayIfEnoughData().
-  bool paused_to_buffer =
-      ready_state_maximum_ >= kHaveFutureData && ready_state_ < kHaveFutureData;
-  return (paused_to_buffer || ready_state_ >= kHaveFutureData) &&
-         CouldPlayIfEnoughData();
+  // Once we've reached the metadata state the WebMediaPlayer is ready to accept
+  // play state changes.
+  return ready_state_ >= kHaveMetadata && CouldPlayIfEnoughData();
 }
 
 bool HTMLMediaElement::CouldPlayIfEnoughData() const {
@@ -3417,7 +3413,7 @@ void HTMLMediaElement::UpdatePlayState() {
   bool is_playing = GetWebMediaPlayer() && !GetWebMediaPlayer()->Paused();
   bool should_be_playing = PotentiallyPlaying();
 
-  BLINK_MEDIA_LOG << "updatePlayState(" << (void*)this
+  LOG(ERROR) << "updatePlayState(" << (void*)this
                   << ") - shouldBePlaying = " << BoolString(should_be_playing)
                   << ", isPlaying = " << BoolString(is_playing);
 
@@ -3522,8 +3518,13 @@ void HTMLMediaElement::ContextDestroyed(ExecutionContext*) {
   // since otherwise this media element will simply leak.
   DCHECK(!HasPendingActivity());
 }
-
 bool HTMLMediaElement::HasPendingActivity() const {
+  bool a = HasPendingActivityInternal();
+  LOG(ERROR) << __func__ << ": " << (a ? "yes" : "no");
+  return a;
+}
+
+bool HTMLMediaElement::HasPendingActivityInternal() const {
   // The delaying-the-load-event flag is set by resource selection algorithm
   // when looking for a resource to load, before networkState has reached to
   // kNetworkLoading.

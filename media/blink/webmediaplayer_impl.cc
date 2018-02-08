@@ -265,7 +265,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       request_routing_token_cb_(params->request_routing_token_cb()),
       overlay_routing_token_(OverlayInfo::RoutingToken()),
       media_metrics_provider_(params->take_metrics_provider()) {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
   DCHECK(renderer_factory_selector_);
   DCHECK(client_);
@@ -317,7 +317,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
 }
 
 WebMediaPlayerImpl::~WebMediaPlayerImpl() {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   if (set_cdm_result_) {
@@ -393,11 +393,11 @@ void WebMediaPlayerImpl::DemuxerDestructionHelper(
 void WebMediaPlayerImpl::Load(LoadType load_type,
                               const blink::WebMediaPlayerSource& source,
                               CORSMode cors_mode) {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
   blink::WebURL url = source.GetAsURL();
-  DVLOG(1) << __func__ << "(" << load_type << ", " << GURL(url) << ", "
+  LOG(ERROR) << __func__ << "(" << load_type << ", " << GURL(url) << ", "
            << cors_mode << ")";
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
@@ -548,7 +548,7 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
                                 const blink::WebURL& url,
                                 CORSMode cors_mode) {
   TRACE_EVENT1("media", "WebMediaPlayerImpl::DoLoad", "id", media_log_->id());
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   GURL gurl(url);
@@ -607,7 +607,7 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
 }
 
 void WebMediaPlayerImpl::Play() {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // User initiated play unlocks background video playback.
@@ -648,7 +648,8 @@ void WebMediaPlayerImpl::Play() {
 }
 
 void WebMediaPlayerImpl::Pause() {
-  DVLOG(1) << __func__;
+  base::debug::StackTrace().Print();
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // We update the paused state even when casting, since we expect pause() to be
@@ -688,7 +689,7 @@ void WebMediaPlayerImpl::Pause() {
 }
 
 void WebMediaPlayerImpl::Seek(double seconds) {
-  DVLOG(1) << __func__ << "(" << seconds << "s)";
+  LOG(ERROR) << __func__ << "(" << seconds << "s)";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   media_log_->AddEvent(media_log_->CreateSeekEvent(seconds));
   DoSeek(base::TimeDelta::FromSecondsD(seconds), true);
@@ -758,7 +759,7 @@ void WebMediaPlayerImpl::DoSeek(base::TimeDelta time, bool time_updated) {
 }
 
 void WebMediaPlayerImpl::SetRate(double rate) {
-  DVLOG(1) << __func__ << "(" << rate << ")";
+  LOG(ERROR) << __func__ << "(" << rate << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   if (rate != playback_rate_) {
@@ -777,7 +778,7 @@ void WebMediaPlayerImpl::SetRate(double rate) {
 }
 
 void WebMediaPlayerImpl::SetVolume(double volume) {
-  DVLOG(1) << __func__ << "(" << volume << ")";
+  LOG(ERROR) << __func__ << "(" << volume << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   volume_ = volume;
   pipeline_controller_.SetVolume(volume_ * volume_multiplier_);
@@ -800,7 +801,7 @@ void WebMediaPlayerImpl::SetSinkId(
     const blink::WebSecurityOrigin& security_origin,
     blink::WebSetSinkIdCallbacks* web_callback) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
 
   media::OutputDeviceStatusCB callback =
       media::ConvertToOutputDeviceStatusCB(web_callback);
@@ -817,7 +818,7 @@ STATIC_ASSERT_ENUM(WebMediaPlayer::kPreloadMetaData,
 STATIC_ASSERT_ENUM(WebMediaPlayer::kPreloadAuto, MultibufferDataSource::AUTO);
 
 void WebMediaPlayerImpl::SetPreload(WebMediaPlayer::Preload preload) {
-  DVLOG(1) << __func__ << "(" << preload << ")";
+  LOG(ERROR) << __func__ << "(" << preload << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   preload_ = static_cast<MultibufferDataSource::Preload>(preload);
@@ -1202,7 +1203,7 @@ void WebMediaPlayerImpl::ComputeFrameUploadMetadata(
 void WebMediaPlayerImpl::SetContentDecryptionModule(
     blink::WebContentDecryptionModule* cdm,
     blink::WebContentDecryptionModuleResult result) {
-  DVLOG(1) << __func__ << ": cdm = " << cdm;
+  LOG(ERROR) << __func__ << ": cdm = " << cdm;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // Once the CDM is set it can't be cleared as there may be frames being
@@ -1321,7 +1322,7 @@ void WebMediaPlayerImpl::SetCdm(blink::WebContentDecryptionModule* cdm) {
 }
 
 void WebMediaPlayerImpl::OnCdmAttached(bool success) {
-  DVLOG(1) << __func__ << ": success = " << success;
+  LOG(ERROR) << __func__ << ": success = " << success;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   DCHECK(pending_cdm_context_ref_);
 
@@ -1382,6 +1383,7 @@ void WebMediaPlayerImpl::OnPipelineSeeked(bool time_updated) {
 }
 
 void WebMediaPlayerImpl::OnPipelineSuspended() {
+  LOG(ERROR) << __func__;
 #if defined(OS_ANDROID)
   if (IsRemote() && !IsNewRemotePlaybackPipelineEnabled()) {
     scoped_refptr<VideoFrame> frame = cast_impl_.GetCastingBanner();
@@ -1413,6 +1415,7 @@ void WebMediaPlayerImpl::OnBeforePipelineResume() {
 }
 
 void WebMediaPlayerImpl::OnPipelineResumed() {
+  LOG(ERROR) << __func__;
   is_pipeline_resuming_ = false;
 
   UpdateBackgroundVideoOptimizationState();
@@ -1456,7 +1459,7 @@ void WebMediaPlayerImpl::OnMemoryPressure(
 }
 
 void WebMediaPlayerImpl::OnError(PipelineStatus status) {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   DCHECK_NE(status, PIPELINE_OK);
 
@@ -1499,7 +1502,7 @@ void WebMediaPlayerImpl::OnError(PipelineStatus status) {
 void WebMediaPlayerImpl::OnEnded() {
   TRACE_EVENT2("media", "WebMediaPlayerImpl::OnEnded", "duration", Duration(),
                "id", media_log_->id());
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // Ignore state changes until we've completed all outstanding operations.
@@ -1520,7 +1523,7 @@ void WebMediaPlayerImpl::OnEnded() {
 }
 
 void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   const base::TimeDelta elapsed = base::TimeTicks::Now() - load_start_time_;
   media_metrics_provider_->SetTimeToMetadata(elapsed);
@@ -1616,7 +1619,7 @@ void WebMediaPlayerImpl::CreateVideoDecodeStatsReporter() {
 }
 
 void WebMediaPlayerImpl::OnProgress() {
-  DVLOG(4) << __func__;
+  LOG(ERROR) << __func__;
   if (highest_ready_state_ < ReadyState::kReadyStateHaveFutureData) {
     // Reset the preroll attempt clock.
     preroll_attempt_pending_ = true;
@@ -1651,7 +1654,7 @@ bool WebMediaPlayerImpl::CanPlayThrough() {
 }
 
 void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
-  DVLOG(1) << __func__ << "(" << state << ")";
+  LOG(ERROR) << __func__ << "(" << state << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // Ignore buffering state changes until we've completed all outstanding
@@ -2029,7 +2032,7 @@ void WebMediaPlayerImpl::RequestRemotePlaybackStop() {
 }
 
 void WebMediaPlayerImpl::OnRemotePlaybackEnded() {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   ended_ = true;
@@ -2090,7 +2093,7 @@ void WebMediaPlayerImpl::SetPoster(const blink::WebURL& poster) {
 }
 
 void WebMediaPlayerImpl::DataSourceInitialized(bool success) {
-  DVLOG(1) << __func__;
+  LOG(ERROR) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   if (observer_ && IsNewRemotePlaybackPipelineEnabled() && data_source_)
@@ -2116,7 +2119,7 @@ void WebMediaPlayerImpl::DataSourceInitialized(bool success) {
 }
 
 void WebMediaPlayerImpl::NotifyDownloading(bool is_downloading) {
-  DVLOG(1) << __func__ << "(" << is_downloading << ")";
+  LOG(ERROR) << __func__ << "(" << is_downloading << ")";
   if (!is_downloading && network_state_ == WebMediaPlayer::kNetworkStateLoading)
     SetNetworkState(WebMediaPlayer::kNetworkStateIdle);
   else if (is_downloading &&
@@ -2321,7 +2324,7 @@ void WebMediaPlayerImpl::StartPipeline() {
 }
 
 void WebMediaPlayerImpl::SetNetworkState(WebMediaPlayer::NetworkState state) {
-  DVLOG(1) << __func__ << "(" << state << ")";
+  LOG(ERROR) << __func__ << "(" << state << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   network_state_ = state;
   // Always notify to ensure client has the latest value.
@@ -2329,7 +2332,7 @@ void WebMediaPlayerImpl::SetNetworkState(WebMediaPlayer::NetworkState state) {
 }
 
 void WebMediaPlayerImpl::SetReadyState(WebMediaPlayer::ReadyState state) {
-  DVLOG(1) << __func__ << "(" << state << ")";
+  LOG(ERROR) << __func__ << "(" << state << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   if (state == WebMediaPlayer::kReadyStateHaveEnoughData && data_source_ &&
@@ -2519,6 +2522,11 @@ WebMediaPlayerImpl::UpdatePlayState_ComputePlayState(bool is_remote,
   // will be cleared when we receive data which may take us to HaveFutureData.
   bool can_stay_suspended =
       (is_stale || have_future_data) && is_suspended && paused_ && !seeking_;
+
+  LOG(ERROR) << "is_remote: " << is_remote << ", must_suspend: " << must_suspend
+             << "idle_suspended: " << idle_suspended
+             << ", background_suspended:" << background_suspended
+             << "can_stay_suspended: " << can_stay_suspended;
 
   // Combined suspend state.
   result.is_suspended = is_remote || must_suspend || idle_suspended ||

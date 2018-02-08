@@ -19,6 +19,10 @@ function suspendTest(t, video, src, eventName, expectedState) {
   var timeWatcher = t.step_func(function() {
     if (video.currentTime > 0) {
       assert_false(window.internals.isMediaElementSuspended(video));
+      // Mark the element as idle so that HTMLMediaElement::HasPendingActivity
+      // doesn't delay the end of the test indefinitely.
+      // TODO(dalecurtis): We shouldn't have to do this...
+      window.internals.setMediaElementNetworkState(video, 1);
       t.done();
     } else {
       window.requestAnimationFrame(timeWatcher);

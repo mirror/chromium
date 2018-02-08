@@ -15,7 +15,7 @@ async_test(function(t) {
   // limit is set just after metadata block to avoid test timeouts.
   var mediaFile = 'http://127.0.0.1:8000/media/video-throttled-load.cgi?' +
                   'nph=1&name=resources/media-source/webm/test.webm' +
-                  '&throttle=25&type=video/webm&limit=50000&avoidCache=' +
+                  '&throttle=25&type=video/webm&limit=65536&avoidCache=' +
                   Math.random();
   suspendTest(t, video, mediaFile, 'canplay',
               HTMLMediaElement.HAVE_FUTURE_DATA);

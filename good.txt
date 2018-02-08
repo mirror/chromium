@@ -1,0 +1,124 @@
+N: http://127.0.0.1:8000/media/media-src-suspend-after-have-future-data.html'--pixel-test\n
+ERR: [64555:775:0207/162119.728131:ERROR:HTMLMediaElement.cpp(677)] insertedInto(0x16225a3d58, BODY)\n
+ERR: [64555:775:0207/162119.737781:ERROR:webmediaplayer_impl.cc(268)] WebMediaPlayerImpl\n
+ERR: [64555:775:0207/162119.737927:ERROR:webmediaplayer_impl.cc(781)] SetVolume(1)\n
+ERR: [64555:775:0207/162119.738000:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162119.738030:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162119.738059:ERROR:webmediaplayer_impl.cc(821)] SetPreload(2)\n
+ERR: [64555:775:0207/162119.738087:ERROR:webmediaplayer_impl.cc(396)] Load\n
+ERR: [64555:775:0207/162119.738109:ERROR:webmediaplayer_impl.cc(400)] Load(0, http://127.0.0.1:8000/media/video-throttled-load.cgi?nph=1&name=resources/media-source/webm/test.webm&throttle=25&type=video/webm&limit=65536&avoidCache=0.32377093301842685, 0)\n
+ERR: [64555:775:0207/162119.738161:ERROR:webmediaplayer_impl.cc(551)] DoLoad\n
+ERR: [64555:775:0207/162119.738189:ERROR:webmediaplayer_impl.cc(2327)] SetNetworkState(2)\n
+ERR: [64555:775:0207/162119.738206:ERROR:webmediaplayer_impl.cc(2335)] SetReadyState(0)\n
+ERR: [64555:775:0207/162120.077591:ERROR:resource_multibuffer_data_provider.cc(270)] Did Cache? : 4\n
+ERR: [64555:775:0207/162120.077959:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162120.077987:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162120.078006:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162120.078022:ERROR:webmediaplayer_impl.cc(2122)] NotifyDownloading(1)\n
+ERR: [64555:775:0207/162120.411040:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162120.411090:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162120.411111:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162120.757510:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162120.757557:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162120.757579:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162121.102979:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162121.103032:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.103054:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162121.435756:ERROR:webmediaplayer_impl.cc(2122)] NotifyDownloading(1)\n
+ERR: [64555:775:0207/162121.435876:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162121.435901:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.435920:ERROR:pipeline_controller.cc(99)] Resume: 0\n
+ERR: [64555:775:0207/162121.436008:ERROR:webmediaplayer_impl.cc(2096)] DataSourceInitialized\n
+ERR: [64555:19715:0207/162121.436200:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:19715:0207/162121.436229:ERROR:multibuffer_data_source.cc(389)] Read: 0 offset, 32768 bytes, avail_at_0: 32768, at_pos: 32768\n
+ERR: [64555:19715:0207/162121.436251:ERROR:multibuffer_data_source.cc(394)] Read from cache...\n
+ERR: [64555:775:0207/162121.437493:ERROR:webmediaplayer_impl.cc(1526)] OnMetadata\n
+ERR: [64555:775:0207/162121.437579:ERROR:webmediaplayer_impl.cc(2335)] SetReadyState(1)\n
+ERR: [64555:775:0207/162121.437767:ERROR:HTMLMediaElement.cpp(3416)] updatePlayState(0x16225a3d58) - shouldBePlaying = false, isPlaying = false\n
+ERR: [64555:775:0207/162121.438017:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.438057:ERROR:pipeline_controller.cc(99)] Resume: 1\n
+ERR: [64555:37123:0207/162121.442982:ERROR:render_media_log.cc(30)] MediaEvent: MEDIA_ERROR_LOG_ENTRY {"error":"Failed to reconcile encoded audio times with decoded output."}\n
+ERR: [64555:775:0207/162121.446095:ERROR:webmediaplayer_impl.cc(1657)] OnBufferingStateChange(1)\n
+ERR: [64555:775:0207/162121.446158:ERROR:webmediaplayer_impl.cc(2335)] SetReadyState(3)\n
+ERR: [64555:775:0207/162121.446248:ERROR:HTMLMediaElement.cpp(3416)] updatePlayState(0x16225a3d58) - shouldBePlaying = false, isPlaying = false\n
+ERR: [64555:775:0207/162121.446364:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.446427:ERROR:pipeline_controller.cc(99)] Resume: 2\n
+ERR: [64555:775:0207/162121.447562:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 1, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.447610:ERROR:pipeline_controller.cc(89)] Suspend: 2\n
+ERR: [64555:775:0207/162121.449833:ERROR:webmediaplayer_impl.cc(1386)] OnPipelineSuspended\n
+ERR: [64555:775:0207/162121.451138:ERROR:webmediaplayer_impl.cc(821)] SetPreload(2)\n
+ERR: [64555:775:0207/162121.451189:ERROR:HTMLMediaElement.cpp(3416)] updatePlayState(0x16225a3d58) - shouldBePlaying = true, isPlaying = false\n
+ERR: [64555:775:0207/162121.451210:ERROR:webmediaplayer_impl.cc(762)] SetRate(1)\n
+ERR: [64555:775:0207/162121.451237:ERROR:webmediaplayer_impl.cc(781)] SetVolume(1)\n
+ERR: [64555:775:0207/162121.451284:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 1, background_suspended:0can_stay_suspended: 1\n
+ERR: [64555:775:0207/162121.451313:ERROR:pipeline_controller.cc(89)] Suspend: 5\n
+ERR: [64555:775:0207/162121.451336:ERROR:webmediaplayer_impl.cc(610)] Play\n
+ERR: [64555:775:0207/162121.451396:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.451466:ERROR:pipeline_controller.cc(99)] Resume: 5\n
+ERR: [64555:19715:0207/162121.451624:ERROR:blocking_url_protocol.cc(94)] SetPosition: 219186\n
+ERR: [64555:19715:0207/162121.451660:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:19715:0207/162121.451688:ERROR:multibuffer_data_source.cc(389)] Read: 219186 offset, 32768 bytes, avail_at_0: 32768, at_pos: 0\n
+ERR: [64555:775:0207/162121.452926:ERROR:multibuffer_data_source.cc(434)] ReadTask\n
+ERR: [64555:775:0207/162121.487804:ERROR:resource_multibuffer_data_provider.cc(270)] Did Cache? : 4\n
+ERR: [64555:775:0207/162121.488546:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162121.488673:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:775:0207/162121.488697:ERROR:webmediaplayer_impl.cc(2335)] SetReadyState(4)\n
+ERR: [64555:775:0207/162121.488738:ERROR:HTMLMediaElement.cpp(3416)] updatePlayState(0x16225a3d58) - shouldBePlaying = true, isPlaying = true\n
+ERR: [64555:775:0207/162121.790504:ERROR:multibuffer_data_source.cc(434)] ReadTask\n
+ERR: [64555:19715:0207/162121.790646:ERROR:blocking_url_protocol.cc(94)] SetPosition: 23085\n
+ERR: [64555:19715:0207/162121.791333:ERROR:blocking_url_protocol.cc(94)] SetPosition: 4357\n
+ERR: [64555:775:0207/162121.791468:ERROR:webmediaplayer_impl.cc(1622)] OnProgress\n
+ERR: [64555:19715:0207/162121.795921:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:19715:0207/162121.795988:ERROR:multibuffer_data_source.cc(389)] Read: 4357 offset, 32768 bytes, avail_at_0: 32768, at_pos: 28411\n
+ERR: [64555:19715:0207/162121.796024:ERROR:multibuffer_data_source.cc(394)] Read from cache...\n
+ERR: [64555:37123:0207/162121.797430:ERROR:render_media_log.cc(30)] MediaEvent: MEDIA_ERROR_LOG_ENTRY {"error":"Failed to reconcile encoded audio times with decoded output."}\n
+ERR: [64555:775:0207/162121.800741:ERROR:webmediaplayer_impl.cc(1418)] OnPipelineResumed\n
+ERR: [64555:775:0207/162121.801445:ERROR:webmediaplayer_impl.cc(1657)] OnBufferingStateChange(1)\n
+ERR: [64555:775:0207/162121.801523:ERROR:webmediaplayer_impl.cc(2335)] SetReadyState(4)\n
+ERR: [64555:775:0207/162121.801575:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 0, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.801622:ERROR:pipeline_controller.cc(99)] Resume: 2\n
+ERR: [64555:19715:0207/162121.803643:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:19715:0207/162121.803683:ERROR:multibuffer_data_source.cc(389)] Read: 32768 offset, 32768 bytes, avail_at_0: 32768, at_pos: 0\n
+ERR: [64555:775:0207/162121.804487:ERROR:multibuffer_data_source.cc(434)] ReadTask\n
+ERR: [64555:45099:0207/162121.823024:ERROR:audio_renderer_impl.cc(885)] Render delay:0.055941 s prior_frames_skipped:0 frames_requested:1024\n
+ERR: [64555:775:0207/162121.826959:ERROR:HTMLMediaElement.cpp(698)] removedFrom(0x16225a3d58, BODY)\n
+ERR: [64555:775:0207/162121.827085:ERROR:HTMLMediaElement.cpp(3416)] updatePlayState(0x16225a3d58) - shouldBePlaying = false, isPlaying = true\n
+ERR: 0   libbase.dylib                       0x000000010665dadc base::debug::StackTrace::StackTrace(unsigned long) + 28\n
+ERR: 1   libmedia_blink.dylib                0x000000011452dcc4 media::WebMediaPlayerImpl::Pause() + 36\n
+ERR: 2   libblink_core.dylib                 0x000000010eb770aa blink::HTMLMediaElement::UpdatePlayState() + 522\n
+ERR: 3   libblink_core.dylib                 0x000000010eb6ec50 blink::HTMLMediaElement::PauseInternal() + 416\n
+ERR: 4   libblink_core.dylib                 0x000000010eb6ea93 blink::HTMLMediaElement::RemovedFrom(blink::ContainerNode*) + 211\n
+ERR: 5   libblink_core.dylib                 0x000000010eb8f09e blink::HTMLVideoElement::RemovedFrom(blink::ContainerNode*) + 14\n
+ERR: 6   libblink_core.dylib                 0x000000010e5afddd blink::ContainerNode::NotifyNodeRemoved(blink::Node&) + 333\n
+ERR: 7   libblink_core.dylib                 0x000000010e5b023c blink::ContainerNode::RemoveChildren(blink::SubtreeModificationAction) + 428\n
+ERR: 8   libblink_core.dylib                 0x000000010e680410 blink::Node::setTextContent(WTF::String const&) + 592\n
+ERR: 9   libblink_core.dylib                 0x000000010f3df03d blink::V8Node::textContentAttributeSetterCallback(v8::FunctionCallbackInfo<v8::Value> const&) + 205\n
+ERR: 10  libv8.dylib                         0x000000010cfe5b06 v8::internal::FunctionCallbackArguments::Call(v8::internal::CallHandlerInfo*) + 502\n
+ERR: 11  libv8.dylib                         0x000000010d0f9663 v8::internal::MaybeHandle<v8::internal::Object> v8::internal::(anonymous namespace)::HandleApiCallHelper<false>(v8::internal::Isolate*, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::FunctionTemplateInfo>, v8::internal::Handle<v8::internal::Object>, v8::internal::BuiltinArguments) + 1427\n
+ERR: 12  libv8.dylib                         0x000000010d0f83ab v8::internal::Builtins::InvokeApiFunction(v8::internal::Isolate*, bool, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*, v8::internal::Handle<v8::internal::HeapObject>) + 1627\n
+ERR: 13  libv8.dylib                         0x000000010d717f19 v8::internal::Object::SetPropertyWithAccessor(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::ShouldThrow) + 1801\n
+ERR: 14  libv8.dylib                         0x000000010d7325c3 v8::internal::Object::SetPropertyInternal(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode, v8::internal::Object::StoreFromKeyed, bool*) + 435\n
+ERR: 15  libv8.dylib                         0x000000010d7322ba v8::internal::Object::SetProperty(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode, v8::internal::Object::StoreFromKeyed) + 58\n
+ERR: 16  libv8.dylib                         0x000000010d617712 v8::internal::StoreIC::Store(v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>, v8::internal::Object::StoreFromKeyed) + 1362\n
+ERR: 17  libv8.dylib                         0x000000010d61ea7d v8::internal::__RT_impl_Runtime_StoreIC_Miss(v8::internal::Arguments, v8::internal::Isolate*) + 301\n
+ERR: 18  ???                                 0x0000002624604264 0x0 + 163819045476\n
+ERR: [64555:775:0207/162121.829118:ERROR:webmediaplayer_impl.cc(652)] Pause\n
+ERR: [64555:775:0207/162121.829194:ERROR:webmediaplayer_impl.cc(2526)] is_remote: 0, must_suspend: 0idle_suspended: 1, background_suspended:0can_stay_suspended: 0\n
+ERR: [64555:775:0207/162121.829270:ERROR:pipeline_controller.cc(89)] Suspend: 2\n
+ERR: [64555:19715:0207/162121.830017:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:19715:0207/162121.830067:ERROR:multibuffer_data_source.cc(389)] Read: 32768 offset, 32768 bytes, avail_at_0: 32768, at_pos: 0\n
+ERR: [64555:775:0207/162121.833844:ERROR:webmediaplayer_impl.cc(1386)] OnPipelineSuspended\n
+ERR: [64555:775:0207/162121.833979:ERROR:multibuffer_data_source.cc(434)] ReadTask\n
+OUT: Content-Type: text/plain\n
+OUT: This is a testharness.js-based test.\n
+OUT: PASS Verify that a media element can be resumed after an idle suspend initiated during the HAVE_FUTURE_DATA ready state.\n
+OUT: Harness: the test ran to completion.\n
+OUT: \n
+OUT: #EOF\n
+OUT: #EOF\n
+ERR: [64555:775:0207/162121.858917:ERROR:webmediaplayer_impl.cc(320)] ~WebMediaPlayerImpl\n
+ERR: [64555:19715:0207/162121.859284:ERROR:blocking_url_protocol.cc(41)] Read: 32768\n
+ERR: [64555:775:0207/162121.859366:ERROR:pipeline_impl.cc(1102)] Stop: 0.000192 s\n
+ERR: [64544:775:0207/162121.870422:ERROR:layout_test_browser_main.cc(70)] Main run took: 2.16488 s\n
+ERR: #EOF\n
+[26/100] http/tests/media/media-src-suspend-after-have-future-data.html passed 2.1653s

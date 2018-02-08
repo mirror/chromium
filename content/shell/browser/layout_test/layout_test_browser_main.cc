@@ -20,6 +20,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/public/browser/browser_main_runner.h"
@@ -46,6 +47,7 @@ bool RunOneTest(
     const std::unique_ptr<content::BrowserMainRunner>& main_runner) {
   DCHECK(ran_at_least_once);
   DCHECK(blink_test_controller);
+  base::ElapsedTimer timer;
 
   if (!blink_test_controller->PrepareForLayoutTest(
           test_info.url, test_info.current_working_directory,
@@ -64,6 +66,8 @@ bool RunOneTest(
   main_runner->Run();
 #endif
 
+
+  LOG(ERROR) << "Main run took: " << timer.Elapsed();
   if (!blink_test_controller->ResetAfterLayoutTest())
     return false;
 
