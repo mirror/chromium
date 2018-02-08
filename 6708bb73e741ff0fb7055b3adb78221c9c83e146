@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "d58a5aad_4524cf22",
+        "filename": "device/bluetooth/bluetooth_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "We probably don\u0027t want to use base::PostTask. According to the docs[1]:\n\n// Tasks posted through functions below will run on threads owned by the\n// registered TaskScheduler (i.e. not on the main thread).\n\nThe Bluetooth code is not thread safe and should always run on the UI thread.\n\nAll subclasses have a ui_task_runner so I think it makes sense to just expose that and post a task to those runners.\n\n[1] https://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?l\u003d59",
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c658733d_b5c25644",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "Comment that this function handles the logic to run the callback or error callback for platforms that don\u0027t have a callback based API and that these platforms should instead override SetPoweredImpl. Platforms that do have a callback based API should override this method directly.",
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ad9545_c87b466f",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "Might want to remove this if we remove the other if.",
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a24ba69_ca4b171c",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "I feel like there is a comma missing. Maybe after APIs implementations?",
+      "range": {
+        "startLine": 549,
+        "startChar": 2,
+        "endLine": 551,
+        "endChar": 54
+      },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17968808_7ccb2a25",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "Let\u0027s make this pure virtual.",
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7508042d_f5255b97",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 3
@@ -13,6 +104,30 @@
       "writtenOn": "2018-02-06T18:01:02Z",
       "side": 1,
       "message": "I took this from the previous implementation, but technically this is not true. The power state function (which calls into IOBluetoothPreferenceSetControllerPowerState in production code) is not BLE specific. In test code we currently do depend on BLE APIs, but here we have a dedicated check anyway. Given this, does it make sense to keep this check around?",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 75
+      },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27da47cd_0697a589",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "Ah, I see we changed how the callback is called. This new implementation makes me a bit nervous because we would only be testing the cross-platform logic on macOS and not the platform specific code. All the platform specific logic is in bluetooth classic code which we won\u0027t run for macOS. Someone could accidentally remove the code in PollAdapter() and no tests would catch it.\n\nWhat do you think of the following:\n\n1. Introduce a function that gets the address and classic_powered from IOBluetoothHostController.\n2. Call this function inside PollAdapter() instead of calling into IOBluetooth directly.\n3. Override the function in tests so that we can control classic_powered.",
+      "parentUuid": "7508042d_f5255b97",
       "range": {
         "startLine": 309,
         "startChar": 0,
@@ -42,6 +157,47 @@
         "endLine": 729,
         "endChar": 50
       },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cb3c35_00b76428",
+        "filename": "device/bluetooth/bluetooth_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "See comment about base::PostTask in bluetooth_adapter.cc.\n\nDid you happen to run this test on mac locally? It wouldn\u0027t fail on the CQ because CQ bots don\u0027t run these tests but I\u0027m curious if there is something about mac that makes this not fail.",
+      "parentUuid": "45c3afff_263cd170",
+      "range": {
+        "startLine": 729,
+        "startChar": 22,
+        "endLine": 729,
+        "endChar": 50
+      },
+      "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f8ba78_7db9d2c4",
+        "filename": "device/bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2018-02-08T01:52:42Z",
+      "side": 1,
+      "message": "No need to go through the wrapper you can call nativePostTaskFromJava() directly.\n\nThe wrapper is there so that we can always post a task on tests as opposed to only posting a task if not on the UI thread which is what ThreadUtils#runOnUiThread does.",
       "revId": "6708bb73e741ff0fb7055b3adb78221c9c83e146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
