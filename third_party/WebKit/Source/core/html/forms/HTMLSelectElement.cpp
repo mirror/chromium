@@ -1877,7 +1877,9 @@ LayoutUnit HTMLSelectElement::ClientPaddingRight() const {
 }
 
 void HTMLSelectElement::PopupDidHide() {
+  LOG(ERROR) << "hiding pop up";
   popup_is_visible_ = false;
+  NOTREACHED();
   UnobserveTreeMutation();
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache()) {
     if (GetLayoutObject() && GetLayoutObject()->IsMenuList())

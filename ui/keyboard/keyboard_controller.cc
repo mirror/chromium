@@ -679,6 +679,9 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
   if (state_ == state)
     return;
 
+  LOG(ERROR) << "Changing state from " << (int)state_ << " to " << (int)state;
+  // if ((int)state_ == 5 && (int)state == 7)
+  // return;
   state_ = state;
 
   if (state != KeyboardControllerState::WILL_HIDE)

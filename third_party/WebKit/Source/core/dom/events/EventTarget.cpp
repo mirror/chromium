@@ -559,6 +559,7 @@ DispatchEventResult EventTarget::DispatchEvent(Event* event) {
 }
 
 DispatchEventResult EventTarget::DispatchEventInternal(Event* event) {
+  LOG(ERROR) << "dispatch event " << event->type();
   event->SetTarget(this);
   event->SetCurrentTarget(this);
   event->SetEventPhase(Event::kAtTarget);

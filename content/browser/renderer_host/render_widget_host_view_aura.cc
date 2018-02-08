@@ -802,6 +802,11 @@ gfx::Size RenderWidgetHostViewAura::GetVisibleViewportSize() const {
 }
 
 void RenderWidgetHostViewAura::SetInsets(const gfx::Insets& insets) {
+  LOG(ERROR) << "Set Insets: " << insets.top() << " " << insets.left() << " "
+             << insets.bottom() << " " << insets.right() << " ";
+  // base::debug::StackTrace st;
+  // st.Print();
+
   if (insets != insets_) {
     insets_ = insets;
     host_->WasResized(!insets_.IsEmpty());
