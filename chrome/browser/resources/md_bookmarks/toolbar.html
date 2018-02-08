@@ -48,16 +48,18 @@
         hidden$="[[showSelectionOverlay]]"
         narrow="{{narrow_}}"
         on-search-changed="onSearchChanged_">
-      <button is="paper-icon-button-light"
-          id="menuButton"
-          class="more-actions more-vert-button"
-          title="$i18n{organizeButtonTitle}"
-          on-tap="onMenuButtonOpenTap_"
-          aria-haspopup="menu">
-        <div></div>
-        <div></div>
-        <div></div>
-      </button>
+      <paper-icon-button-light>
+        <!-- TODO(hcarmona): Why these divs? -->
+        <button id="menuButton"
+            class="more-actions more-vert-button"
+            title="$i18n{organizeButtonTitle}"
+            on-tap="onMenuButtonOpenTap_"
+            aria-haspopup="menu">
+          <div></div>
+          <div></div>
+          <div></div>
+        </button>
+      </paper-icon-button-light>
     </cr-toolbar>
     <template is="dom-if" if="[[showSelectionOverlay]]">
       <cr-toolbar-selection-overlay delete-label="$i18n{delete}"

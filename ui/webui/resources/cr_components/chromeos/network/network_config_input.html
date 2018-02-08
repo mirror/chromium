@@ -36,11 +36,12 @@
       </paper-input-container>
       <div id="iconDiv">
         <template is="dom-if" if="[[password]]">
-          <button is="paper-icon-button-light"
-              on-tap="onShowPasswordTap_"
-              class$="[[getIconClass_(showPassword)]]"
-              title="[[getShowPasswordTitle_(showPassword)]]">
-          </button>
+          <paper-icon-button-light>
+            <button on-tap="onShowPasswordTap_"
+                class$="[[getIconClass_(showPassword)]]"
+                title="[[getShowPasswordTitle_(showPassword)]]">
+            </button>
+          </paper-icon-button-light>
         </template>
       </div>
     </div>

@@ -45,10 +45,11 @@
               <div class="secondary text-elide">[[item.displayEmail]]</div>
             </template>
           </div>
-          <button is="paper-icon-button-light" class="icon-clear"
-              on-tap="removeUser_"
-              hidden="[[shouldHideCloseButton_(disabled, item.isOwner)]]">
-          </button>
+          <paper-icon-button-light>
+            <button class="icon-clear" on-tap="removeUser_"
+                hidden="[[shouldHideCloseButton_(disabled, item.isOwner)]]">
+            </button>
+          </paper-icon-button-light>
         </div>
       </template>
     </div>
