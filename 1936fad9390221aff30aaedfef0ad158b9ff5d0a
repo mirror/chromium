@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6175f868_5c96b62a",
+        "filename": "content/common/cache_storage/cache_storage_mojom_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-08T00:23:08Z",
+      "side": 1,
+      "message": "It wasn\u0027t compiling with base::nullopt and I couldn\u0027t really understand why, but I found a method from NullableString16 that does the job without the conditional. :-)\n\nCompiler error:\n../../content/common/cache_storage/cache_storage_mojom_traits.h:48:48: error: returning reference to local temporary object [-Werror,-Wretur\nn-stack-address]\n    return query_params.cache_name.is_null() ? base::nullopt\n                                               ^~~~~~~~~~~~~",
+      "parentUuid": "0ce7e842_eaf22a2a",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 79
+      },
+      "revId": "1936fad9390221aff30aaedfef0ad158b9ff5d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd781df_58a9ac96",
         "filename": "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "1936fad9390221aff30aaedfef0ad158b9ff5d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b933b40_02559d62",
+        "filename": "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2018-02-08T00:23:08Z",
+      "side": 1,
+      "message": "Yeap, good point.",
+      "parentUuid": "4bd781df_58a9ac96",
+      "revId": "1936fad9390221aff30aaedfef0ad158b9ff5d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
