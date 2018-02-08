@@ -521,6 +521,16 @@ class MESSAGE_CENTER_PUBLIC_EXPORT Notification {
   scoped_refptr<NotificationDelegate> delegate_;
 };
 
+// Registering a vector icon allows it to later be looked up by name. This is
+// useful for vector icons sent over mojo: assuming the receiver has a known set
+// of icons it expects to see, this allows for icon lookup without
+// serialization/deserialization.
+void MESSAGE_CENTER_PUBLIC_EXPORT
+RegisterVectorIcon(const gfx::VectorIcon& vector_icon);
+
+const gfx::VectorIcon* MESSAGE_CENTER_PUBLIC_EXPORT
+GetRegisteredVectorIcon(const std::string& id);
+
 }  // namespace message_center
 
 #endif  // UI_MESSAGE_CENTER_PUBLIC_CPP_NOTIFICATION_H_

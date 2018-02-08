@@ -7,12 +7,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "ash/public/cpp/vector_icons/vector_icons.h"
 #include "base/files/file_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
-#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/download/download_crx_util.h"
@@ -473,7 +473,7 @@ void DownloadItemNotification::UpdateNotificationIcon() {
   if (item_->IsDangerous()) {
     DownloadItemModel model(item_);
     SetNotificationIcon(
-        kNotificationDownloadIcon,
+        ash::kNotificationDownloadIcon,
         model.MightBeMalicious()
             ? message_center::kSystemNotificationColorCriticalWarning
             : message_center::kSystemNotificationColorWarning);
@@ -483,13 +483,13 @@ void DownloadItemNotification::UpdateNotificationIcon() {
   switch (item_->GetState()) {
     case content::DownloadItem::IN_PROGRESS:
     case content::DownloadItem::COMPLETE:
-      SetNotificationIcon(kNotificationDownloadIcon,
+      SetNotificationIcon(ash::kNotificationDownloadIcon,
                           message_center::kSystemNotificationColorNormal);
       break;
 
     case content::DownloadItem::INTERRUPTED:
       SetNotificationIcon(
-          kNotificationDownloadIcon,
+          ash::kNotificationDownloadIcon,
           message_center::kSystemNotificationColorCriticalWarning);
       break;
 
