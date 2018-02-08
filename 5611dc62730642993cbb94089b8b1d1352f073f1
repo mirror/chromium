@@ -16,6 +16,24 @@
       "revId": "5611dc62730642993cbb94089b8b1d1352f073f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9a7f8a_37599350",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-02-08T01:45:41Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "3e97b1e8_f53d67f5",
+      "revId": "5611dc62730642993cbb94089b8b1d1352f073f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
