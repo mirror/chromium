@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6cb1f3_095f5e08",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2018-02-08T01:05:46Z",
+      "side": 1,
+      "message": "nit: let\u0027s remove SetSubpixelRenderingDisabled() and do this\n\n  NotificationHeaderView::SetSubpixelRenderingEnabled(bool enabled) {\n    app_name_view_-\u003eSetSubpixelRenderingEnabled(enabled);\n    summary_text_divider_-\u003eSetSubpixelRenderingEnabled(enabled);\n    ...\n  }",
+      "revId": "672130eeb36e33fb072ea1ceb5326bbaa0a0e094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
