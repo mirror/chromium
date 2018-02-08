@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "56d73066_56cb3c64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-08T01:47:15Z",
+      "side": 1,
+      "message": "So I just did setInputType(TYPE_NULL) but I noticed that I would have to click twice to get select the mFileLocation edit text, so I changed it from an onClickListener to an onFocusChangeListener. This doesn\u0027t seem terribly clean, but open to other suggestions!",
+      "parentUuid": "3d444f71_63b6157c",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "3b6c3bc47411b0d8334498641cf98a6ede415ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b5d983_4cae4283",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadLocationDialog.java",
         "patchSetId": 7
