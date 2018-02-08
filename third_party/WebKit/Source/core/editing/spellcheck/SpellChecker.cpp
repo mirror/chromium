@@ -496,8 +496,14 @@ void SpellChecker::ReplaceMisspelledRange(const String& text) {
 
   Document& current_document = *GetFrame().GetDocument();
 
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  current_document.UpdateStyleAndLayoutIgnorePendingStylesheets();
+
   // Dispatch 'beforeinput'.
-  Element* const target = GetFrame().GetEditor().FindEventTargetFromSelection();
+  Element* const target = GetFrame().GetEditor().FindEventTargetFrom(
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree());
+
   DataTransfer* const data_transfer = DataTransfer::Create(
       DataTransfer::DataTransferType::kInsertReplacementText,
       DataTransferAccessPolicy::kDataTransferReadable,
@@ -510,10 +516,6 @@ void SpellChecker::ReplaceMisspelledRange(const String& text) {
   // 'beforeinput' event handler may destroy target frame.
   if (current_document != GetFrame().GetDocument())
     return;
-
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (cancel)
     return;

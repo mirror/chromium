@@ -645,7 +645,8 @@ bool DragController::ConcludeEditDrag(DragData* drag_data) {
               : InsertMode::kSimple;
 
       if (!inner_frame->GetEditor().DeleteSelectionAfterDraggingWithEvents(
-              inner_frame->GetEditor().FindEventTargetFromSelection(),
+              inner_frame->GetEditor().FindEventTargetFrom(
+                  inner_frame->Selection().ComputeVisibleSelectionInDOMTree()),
               delete_mode, drag_caret.Base()))
         return false;
 
