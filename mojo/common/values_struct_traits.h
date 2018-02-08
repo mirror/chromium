@@ -264,6 +264,12 @@ struct CloneTraits<std::unique_ptr<base::Value>, false> {
       const std::unique_ptr<base::Value>& input);
 };
 
+template <>
+struct CloneTraits<std::unique_ptr<base::ListValue>, false> {
+  static std::unique_ptr<base::ListValue> Clone(
+      const std::unique_ptr<base::ListValue>& input);
+};
+
 }  // namespace mojo
 
 #endif  // MOJO_COMMON_VALUES_STRUCT_TRAITS_H_
