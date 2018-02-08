@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "88b554dc_a7110382",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-08T01:11:59Z",
+      "side": 1,
+      "message": "nit: I think you can also const the pointer (const UMALogger* const)",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cca98025_1170703f",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -72,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "038853f4_8f7d64cd",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-08T01:11:59Z",
+      "side": 1,
+      "message": "I think that we at least have Chrome\u0027s LevelDB thread and LevelDB\u0027s compaction thread.",
+      "parentUuid": "4b3eb6fa_e963e532",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37a070ee_991c9b24",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -83,6 +118,23 @@
       "writtenOn": "2018-02-07T23:17:53Z",
       "side": 1,
       "message": "base::GetMaxFds() returns a maximum of INT_MAX(2147483647), but std::numeric_limits\u003csize_t\u003e::max() \u003d\u003e 18446744073709551615",
+      "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95b73e3_bce8eeed",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-02-08T01:11:59Z",
+      "side": 1,
+      "message": "This check seems brittle to me.\n\nHow about defining a relatively threshold (10k? 100k?) above which we consider that FDs aren\u0027t scarce and don\u0027t need caching.",
       "revId": "008dca453ad42da0cb74c031c554bb044e975c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
