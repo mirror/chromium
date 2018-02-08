@@ -521,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "37104243_7ddcea1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:30:36Z",
+      "side": 1,
+      "message": "When I dismiss all suggested articles, I see a \"That\u0027s all for now\" card + a \"More button\". If I swipe that away, the section is dismissed.\n\nIn the expandable header world, if we set the header to collapsed, the next time the user comes to the NTP they won\u0027t see article suggestions (right)? I think this is an edge case we need to discuss with UX. I could see a reasonable alternative being making the \"That\u0027s all for now\" card undismissable, so that the section can stay \"expanded\".\n\nI think a TODO is fine for now to follow-up with UX.",
+      "parentUuid": "9740b1c1_72b98aab",
+      "range": {
+        "startLine": 280,
+        "startChar": 12,
+        "endLine": 282,
+        "endChar": 20
+      },
+      "revId": "d26cee01a29e84a657cd57062fbef551cfdf8c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "123aa453_bf0812cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1

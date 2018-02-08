@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "464d6f6d_7fcf6066",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:30:36Z",
+      "side": 1,
+      "message": "Sorry, by backend I mean do we make a JNI call to retrieve the articles from C++?",
+      "parentUuid": "4a391a48_680bb765",
+      "range": {
+        "startLine": 639,
+        "startChar": 13,
+        "endLine": 639,
+        "endChar": 32
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1064ad73_34b6ab9a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "If we need to update drawable here, we would need to keep this.",
       "parentUuid": "1064ad73_34b6ab9a",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a7d91f_5b905675",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:30:36Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to update the drawable here, since that\u0027s being handled in SectionHeaderViewHolder. My comment was a stylistic nit to collapse these two lines into one.",
+      "parentUuid": "0c13d56f_5088c521",
       "range": {
         "startLine": 81,
         "startChar": 7,
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "370b9046_d79b299a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:30:36Z",
+      "side": 1,
+      "message": "Okay, that makes sense. Let\u0027s expose an onHeaderToggled() method that updates the UI as needed in response to a change in whether the header is expanded or not. That helps encapsulate the details of what needs to happen visually when the header is \"toggled\" in this class that\u0027s controlling the UI.",
+      "parentUuid": "c66c7888_134909e8",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efda926d_032a4849",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
         "patchSetId": 5
@@ -219,6 +291,24 @@
       "side": 1,
       "message": "If header is expandable, we use the expandable_header xml. So yes, it is non-null.",
       "parentUuid": "efda926d_032a4849",
+      "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f668e6a_3eec6b0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SectionHeaderViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T00:30:36Z",
+      "side": 1,
+      "message": "Can we remove the null check in onBindViewHolder?",
+      "parentUuid": "e0b920e6_5d91f9da",
       "revId": "b2731696df52e9b20358ba339434f04c62e9d8a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
