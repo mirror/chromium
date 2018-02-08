@@ -81,6 +81,24 @@
       "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a192f2f1_4ee3982b",
+        "filename": "content/shell/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-02-08T02:03:35Z",
+      "side": 1,
+      "message": "\u003e the convention is to name the class as same as the component.\n\nI should have said the other way around: the component is named after the main class which is ContentView for this case.",
+      "parentUuid": "9160d366_a1ece7d8",
+      "revId": "f69e419a266c540bef5fc46e0d074eeb28884f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
