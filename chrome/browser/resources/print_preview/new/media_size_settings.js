@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-media-size-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     capability: Object,

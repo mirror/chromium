@@ -1,7 +1,6 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
-<link rel="import"
-    href="chrome://resources/cr_elements/cr_lazy_render/cr_lazy_render.html">
+<link rel="import" href="chrome://resources/cr_elements/cr_lazy_render/cr_lazy_render.html">
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/event_tracker.html">
 <link rel="import" href="../data/destination.html">
@@ -12,6 +11,7 @@
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="throbber_css.html">
 <link rel="import" href="settings_section.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-destination-settings">
   <template>
@@ -81,7 +81,8 @@
                 [[destination.connectionStatusText]]</div>
           </div>
         </div>
-        <button disabled$="[[!destinationStore]]" on-tap="onChangeButtonTap_">
+        <button disabled$="[[isButtonDisabled_(destinationStore, state)]]"
+          on-tap="onChangeButtonTap_">
           $i18n{changeDestination}
         </button>
       </div>

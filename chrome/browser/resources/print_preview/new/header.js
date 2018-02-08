@@ -5,52 +5,67 @@
 Polymer({
   is: 'print-preview-header',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @type {!print_preview.Destination} */
     destination: Object,
 
-    /** @type {!print_preview_new.State} */
-    state: {
-      type: Object,
-      notify: true,
+    /** @private {boolean} */
+    printButtonEnabled_: {
+      type: Boolean,
+      value: false,
     },
 
-    /**
-     * @private {?string} Null value indicates that there is no error or
-     *     state to display in the summary.
-     */
-    currentErrorOrState_: {
+    /** @private {?string} */
+    summary_: {
       type: String,
-      computed: 'computeErrorOrStateString_(state.*, ' +
-          'settings.copies.valid, settings.scaling.valid, ' +
-          'settings.pages.valid)'
+      notify: true,
+      value: null,
     },
 
-    /**
-     * @private {{numPages: number,
-     *            numSheets: number,
-     *            pagesLabel: string,
-     *            summaryLabel: string}}
-     */
-    labelInfo_: {
-      type: Object,
-      computed: 'getLabelInfo_(currentErrorOrState_, destination.id, ' +
-          'settings.copies.value, settings.pages.value, ' +
-          'settings.duplex.value)'
+    /** @private {?string} */
+    summaryLabel_: {
+      type: String,
+      notify: true,
+      value: null,
     },
+
+    errorMessage: String,
+  },
+
+  observers:
+      ['onSettingChanged_(settings.copies.value, settings.duplex.value)'],
+
+  /** @private */
+  onPrintTap_: function() {
+    if (this.state == print_preview_new.State.PREVIEW_LOADED)
+      this.transitTo(print_preview_new.State.PRINTING);
+    else
+      this.transitTo(print_preview_new.State.HIDDEN);
   },
 
   /** @private */
-  onPrintButtonTap_: function() {
-    this.set('state.printRequested', true);
+  onCancelTap_: function() {
+    this.transitTo(print_preview_new.State.CANCELLED);
   },
 
-  /** @private */
-  onCancelButtonTap_: function() {
-    this.set('state.cancelled', true);
+  /**
+   * @return {?string}
+   * @private
+   */
+  currentSummary_: function() {
+    return this.summary_;
   },
+
+  /**
+   * @return {?string}
+   * @private
+   */
+  currentLabel_: function() {
+    return this.summaryLabel_;
+  },
+
 
   /**
    * @return {boolean}
@@ -73,27 +88,12 @@ Polymer({
         this.isPdfOrDrive_() ? 'saveButton' : 'printButton');
   },
 
-  /**
-   * @return {?string}
-   * @private
-   */
-  computeErrorOrStateString_: function() {
-    if (this.state.printFailed)
-      return loadTimeData.getString('couldNotPrint');
-    if (this.state.cloudPrintError != '')
-      return this.state.cloudPrintError;
-    if (this.state.privetExtensionError != '')
-      return this.state.privetExtensionError;
-    if (this.state.invalidSettings || this.state.previewFailed ||
-        this.state.previewLoading || !this.getSetting('copies').valid ||
-        !this.getSetting('scaling').valid || !this.getSetting('pages').valid) {
-      return '';
-    }
-    if (this.state.printRequested && !this.state.previewLoading) {
-      return loadTimeData.getString(
-          this.isPdfOrDrive_() ? 'saving' : 'printing');
-    }
-    return null;
+  /** @private */
+  onSettingChanged_: function() {
+    if (!this.settings || !this.settings.pages)
+      return;
+    this.summary_ = this.getSummary_();
+    this.summaryLabel_ = this.getSummaryLabel_();
   },
 
   /**
@@ -103,7 +103,7 @@ Polymer({
    *           summaryLabel: string}}
    * @private
    */
-  getLabelInfo_: function() {
+  computeLabelInfo_: function() {
     const saveToPdfOrDrive = this.isPdfOrDrive_();
     let numPages = this.getSetting('pages').value.length;
     let numSheets = numPages;
@@ -134,12 +134,39 @@ Polymer({
     };
   },
 
-  /**
-   * @return {boolean}
-   * @private
-   */
-  printButtonDisabled_: function() {
-    return this.currentErrorOrState_ != null;
+  onStateChanged: function(error) {
+    switch (this.state) {
+      case (print_preview_new.State.PRINTING):
+        this.printButtonEnabled_ = false;
+        this.summary_ = loadTimeData.getString(
+            this.isPdfOrDrive_() ? 'saving' : 'printing');
+        this.summaryLabel_ = loadTimeData.getString(
+            this.isPdfOrDrive_() ? 'saving' : 'printing');
+        break;
+      case (print_preview_new.State.READY):
+        this.printButtonEnabled_ = this.destination.isLocal &&
+            !this.destination.isExtension && !this.destination.isPrivet &&
+            this.destination.id !=
+                print_preview.Destination.GooglePromotedId.SAVE_AS_PDF;
+        this.summary_ = this.getSummary_();
+        this.summaryLabel_ = this.getSummaryLabel_();
+        break;
+      case (print_preview_new.State.PREVIEW_LOADED):
+        this.printButtonEnabled_ = true;
+        this.summary_ = this.getSummary_();
+        this.summaryLabel_ = this.getSummaryLabel_();
+        break;
+      case (print_preview_new.State.FATAL_ERROR):
+        this.printButtonEnabled_ = false;
+        this.summary_ = this.errorMessage;
+        this.summaryLabel_ = this.errorMessage;
+        break;
+      default:
+        this.summary_ = null;
+        this.summaryLabel_ = null;
+        this.printButtonEnabled_ = false;
+        break;
+    }
   },
 
   /**
@@ -147,10 +174,8 @@ Polymer({
    * @private
    */
   getSummary_: function() {
-    let html = this.currentErrorOrState_;
-    if (html != null)
-      return html;
-    const labelInfo = this.labelInfo_;
+    let html = null;
+    const labelInfo = this.computeLabelInfo_();
     if (labelInfo.numPages != labelInfo.numSheets) {
       html = loadTimeData.getStringF(
           'printPreviewSummaryFormatLong',
@@ -174,9 +199,7 @@ Polymer({
    * @private
    */
   getSummaryLabel_: function() {
-    if (this.currentErrorOrState_ != null)
-      return this.currentErrorOrState_;
-    const labelInfo = this.labelInfo_;
+    const labelInfo = this.computeLabelInfo_();
     if (labelInfo.numPages != labelInfo.numSheets) {
       return loadTimeData.getStringF(
           'printPreviewSummaryFormatLong', labelInfo.numSheets.toLocaleString(),

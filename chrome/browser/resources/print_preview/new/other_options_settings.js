@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-other-options-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   observers: [
     'onHeaderFooterSettingChange_(settings.headerFooter.value)',

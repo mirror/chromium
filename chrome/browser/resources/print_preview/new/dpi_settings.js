@@ -24,7 +24,7 @@ print_preview_new.LabelledDpiOption;
 Polymer({
   is: 'print-preview-dpi-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   properties: {
     /** @type {{ option: Array<!print_preview_new.SelectOption> }} */

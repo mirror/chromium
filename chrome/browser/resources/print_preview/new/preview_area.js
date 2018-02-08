@@ -37,7 +37,7 @@ print_preview_new.PDFPlugin;
 Polymer({
   is: 'print-preview-preview-area',
 
-  behaviors: [WebUIListenerBehavior, SettingsBehavior],
+  behaviors: [WebUIListenerBehavior, SettingsBehavior, StateBehavior],
   properties: {
     /** @type {print_preview.DocumentInfo} */
     documentInfo: Object,
@@ -45,10 +45,16 @@ Polymer({
     /** @type {print_preview.Destination} */
     destination: Object,
 
-    /** @type {print_preview_new.State} */
-    state: {
-      type: Object,
-      notify: true,
+    /** @private {boolean} */
+    invalidSettings_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /** @private {boolean} */
+    previewFailed_: {
+      type: Boolean,
+      value: false,
     },
   },
 
@@ -58,9 +64,7 @@ Polymer({
         'settings.layout.value, settings.margins.value, ' +
         'settings.mediaSize.value, settings.ranges.value,' +
         'settings.selectionOnly.value, settings.scaling.value, ' +
-        'destination.id, destination.capabilities, state.initialized)',
-    'onPreviewStateChanged_(state.previewLoading, state.invalidSettings, ' +
-        'state.previewFailed)',
+        'destination.id, destination.capabilities)',
   ],
 
   /** @private {print_preview.NativeLayer} */
@@ -68,6 +72,9 @@ Polymer({
 
   /** @private {number} */
   inFlightRequestId_: -1,
+
+  /** @private {boolean} */
+  previewRequestPending_: false,
 
   /** @private {HTMLEmbedElement|print_preview_new.PDFPlugin} */
   plugin_: null,
@@ -92,35 +99,49 @@ Polymer({
         this.$$('.preview-area-compatibility-object-out-of-process');
     const isOOPCompatible = oopCompatObj.postMessage;
     oopCompatObj.parentElement.removeChild(oopCompatObj);
-    if (!isOOPCompatible)
-      this.set('state.previewFailed', true);
-    else
-      this.set('state.previewLoading', true);
+    if (!isOOPCompatible) {
+      this.previewFailed_ = true;
+      this.transitTo(print_preview_new.State.FATAL_ERROR);
+    } else {
+      this.previewRequestPending_ = true;
+    }
   },
 
   /** @private */
   onSettingsChanged_: function() {
-    if (!this.state.initialized || !this.getSetting('scaling').valid ||
-        !this.getSetting('pages').valid || !this.getSetting('copies').valid ||
-        !this.destination || !this.destination.capabilities) {
+    if (this.state == print_preview_new.State.READY) {
+      this.startPreview_();
       return;
     }
+    this.previewRequestPending_ = true;
+    if (this.state == print_preview_new.State.PREVIEW_LOADED)
+      this.transitTo(print_preview_new.State.READY);
+  },
+
+  /** @private */
+  setPreviewLoaded_: function() {
+    if (this.state == print_preview_new.State.READY)
+      this.transitTo(print_preview_new.State.PREVIEW_LOADED);
+    else if (this.state == print_preview_new.State.HIDDEN)
+      this.transitTo(print_preview_new.State.PRINTING);
+  },
+
+  /** @private */
+  startPreview_: function() {
     this.documentReady_ = false;
-    this.set('state.previewLoading', true);
     this.getPreview_().then(
         previewUid => {
           if (!this.documentInfo.isModifiable)
             this.onPreviewStart_(previewUid, -1);
           this.documentReady_ = true;
           if (this.pluginLoaded_)
-            this.set('state.previewLoading', false);
+            this.setPreviewLoaded_();
         },
         type => {
           if (/** @type{string} */ (type) == 'SETTINGS_INVALID')
-            this.set('state.invalidSettings', true);
+            this.invalidSettings_ = true;
           else if (/** @type{string} */ (type) != 'CANCELLED')
-            this.set('state.previewFailed', true);
-          this.set('state.previewLoading', false);
+            this.previewFailed_ = true;
         });
   },
 
@@ -135,16 +156,43 @@ Polymer({
     overlayEl.setAttribute('aria-hidden', !visible);
   },
 
-  /** @private */
-  onPreviewStateChanged_: function() {
-    // update the appearance here.
-    const visible = this.state.previewLoading || this.state.previewFailed ||
-        this.state.invalidSettings;
-    this.setOverlayVisible_(visible);
-
-    // Disable jumping animation to conserve cycles.
+  onStateChanged: function(error) {
     const jumpingDotsEl = this.$$('.preview-area-loading-message-jumping-dots');
-    jumpingDotsEl.classList.toggle('jumping-dots', this.state.previewLoading);
+    jumpingDotsEl.classList.toggle('jumping-dots', false);
+    switch (this.state) {
+      case (print_preview_new.State.NOT_READY):
+        // Resetting the destination clears the invalid settings error.
+        this.invalidSettings_ = false;
+        break;
+      case (print_preview_new.State.READY):
+        // Request a new preview.
+        if (this.previewRequestPending_) {
+          this.setOverlayVisible_(true);
+          jumpingDotsEl.classList.toggle('jumping-dots', true);
+          this.startPreview_();
+        } else {
+          this.setPreviewLoaded_();
+        }
+        break;
+      case (print_preview_new.State.INVALID_PRINTER):
+        this.invalidSettings_ = true;
+        this.setOverlayVisible_(true);
+        break;
+      case (print_preview_new.State.INVALID_TICKET):
+        this.setOverlayVisible_(false);
+        break;
+      case (print_preview_new.State.FATAL_ERROR):
+        this.previewFailed_ = error == 'previewFailed';
+        this.setOverlayVisible_(true);
+        break;
+      case (print_preview_new.State.PREVIEW_LOADED):
+        // New preview resets preview failed.
+        this.setOverlayVisible_(false);
+        this.previewFailed_ = false;
+        break;
+      default:
+        break;
+    }
   },
 
   /**
@@ -231,7 +279,7 @@ Polymer({
   onPluginLoad_: function() {
     this.pluginLoaded_ = true;
     if (this.documentReady_)
-      this.set('state.previewLoading', false);
+      this.setPreviewLoaded_();
   },
 
   /**

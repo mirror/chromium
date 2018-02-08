@@ -3,6 +3,7 @@
 <link rel="import" href="button_css.html">
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="settings_section.html">
+<link rel="import" href="state_behavior.html">
 
 <dom-module id="print-preview-advanced-options-settings">
   <template>
@@ -15,7 +16,9 @@
     <print-preview-settings-section>
       <span slot="title">$i18n{advancedOptionsLabel}</span>
       <div slot="controls">
-        <button>$i18n{showAdvancedOptions}</button>
+        <button disabled$="[[getDisabled(state)]]">
+          $i18n{showAdvancedOptions}
+        </button>
       </div>
     </print-preview-settings-section>
   </template>

@@ -5,7 +5,7 @@
 Polymer({
   is: 'print-preview-color-settings',
 
-  behaviors: [SettingsBehavior],
+  behaviors: [SettingsBehavior, StateBehavior],
 
   observers: ['onColorSettingChange_(settings.color.value)'],
 
