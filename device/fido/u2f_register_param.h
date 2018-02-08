@@ -7,9 +7,11 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <vector>
 
 #include "base/optional.h"
+#include "components/apdu/apdu_command.h"
 #include "device/fido/fido_request_param.h"
 
 namespace device {
@@ -21,7 +23,11 @@ class U2fRegisterParam : public FidoRequestParam {
                    bool is_individual_attestation);
   ~U2fRegisterParam() override;
 
-  // Returns APDU formatted request to send to U2F authenticators.
+  // Creates Apdu command with format specified in the U2F spec.
+  // https://fidoalliance.org/specs/fido-u2f-v1.0-nfc-bt-amendment-20150514/fido-u2f-raw-message-formats.html
+  std::unique_ptr<apdu::ApduCommand> CreateU2fRegisterApduCommand() const;
+
+  // Returns serialized APDU formatted request to send to U2F authenticators.
   base::Optional<std::vector<uint8_t>> Encode() const override;
 
   const std::vector<uint8_t>& app_id_digest() const { return app_id_digest_; }

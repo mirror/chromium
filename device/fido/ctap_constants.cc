@@ -22,4 +22,16 @@ const size_t kHidContinuationPacketDataSize =
 const uint8_t kHidMaxLockSeconds = 10;
 const size_t kHidMaxMessageSize = 7609;
 
+const uint8_t kInsU2fEnroll = 0x01;
+const uint8_t kInsU2fSign = 0x02;
+const uint8_t kInsU2fVersion = 0x03;
+const uint8_t kP1TupRequired = 0x01;
+const uint8_t kP1TupConsumed = 0x02;
+const uint8_t kP1TupRequiredConsumed = kP1TupRequired | kP1TupConsumed;
+const uint8_t kP1CheckOnly = 0x07;
+const uint8_t kP1IndividualAttestation = 0x80;
+const size_t kMaxKeyHandleLength = 255;
+const size_t kChallengeDigestLen = 32;
+const size_t kAppIdDigestLen = 32;
+
 }  // namespace device

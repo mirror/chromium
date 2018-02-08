@@ -4,9 +4,11 @@
 
 #include "device/fido/u2f_register_param.h"
 
+#include <memory>
 #include <utility>
 
-#include "device/fido/u2f_apdu_command.h"
+#include "components/apdu/apdu_command.h"
+#include "device/fido/ctap_constants.h"
 
 namespace device {
 
@@ -19,9 +21,25 @@ U2fRegisterParam::U2fRegisterParam(std::vector<uint8_t> app_id_digest,
 
 U2fRegisterParam::~U2fRegisterParam() = default;
 
+std::unique_ptr<apdu::ApduCommand>
+U2fRegisterParam::CreateU2fRegisterApduCommand() const {
+  if (app_id_digest_.size() != kAppIdDigestLen ||
+      challenge_digest_.size() != kChallengeDigestLen) {
+    return nullptr;
+  }
+
+  auto command = std::make_unique<apdu::ApduCommand>();
+  std::vector<uint8_t> data(challenge_digest_.begin(), challenge_digest_.end());
+  data.insert(data.end(), app_id_digest_.begin(), app_id_digest_.end());
+  command->set_ins(kInsU2fEnroll);
+  command->set_p1(kP1TupRequiredConsumed |
+                  (is_individual_attestation_ ? kP1IndividualAttestation : 0));
+  command->set_data(data);
+  return command;
+}
+
 base::Optional<std::vector<uint8_t>> U2fRegisterParam::Encode() const {
-  auto register_cmd = U2fApduCommand::CreateRegister(
-      app_id_digest_, challenge_digest_, is_individual_attestation_);
+  auto register_cmd = CreateU2fRegisterApduCommand();
   if (!register_cmd) {
     return base::nullopt;
   }
