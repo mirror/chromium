@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55225767_19d634af",
+        "filename": "third_party/WebKit/LayoutTests/editing/deleting/5099303.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-08T01:50:57Z",
+      "side": 1,
+      "message": "Please write general description here as comment.",
+      "revId": "5f144772ee8fce6b90cddba6846632dc8663a4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdeb20c_6b8bfdba",
+        "filename": "third_party/WebKit/LayoutTests/editing/deleting/5099303.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-08T01:50:57Z",
+      "side": 1,
+      "message": "Plz indent with 4 spaces.",
+      "revId": "5f144772ee8fce6b90cddba6846632dc8663a4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ae1f9a_b873f639",
+        "filename": "third_party/WebKit/LayoutTests/editing/deleting/5099303.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-08T01:50:57Z",
+      "side": 1,
+      "message": "It is better to indent following element nest.",
+      "revId": "5f144772ee8fce6b90cddba6846632dc8663a4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0bfe75_551a15c5",
+        "filename": "third_party/WebKit/LayoutTests/editing/deleting/5099303.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2018-02-08T01:50:57Z",
+      "side": 1,
+      "message": "For editing test, whether element has text or not is important.\nPlease keep it. \"foo\" or \"bar\",,, is O.K insteadly.",
+      "revId": "5f144772ee8fce6b90cddba6846632dc8663a4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
