@@ -6,6 +6,8 @@
 
 #include <algorithm>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
@@ -14,6 +16,7 @@
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
+#include "chrome/browser/ui/views/omnibox/omnibox_result_color.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_result_view.h"
 #include "chrome/browser/ui/views/theme_copying_widget.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
@@ -263,7 +266,7 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     // hook the underlying window creation methods and use SendMessage to
     // synchronously change focus/activation, resulting in the popup being
     // destroyed by the time control returns here.  Bail out in this case to
-    // avoid a NULL dereference.
+    // avoid a nullptr dereference.
     if (!popup_)
       return;
     popup_->SetVisibilityAnimationTransition(views::Widget::ANIMATE_NONE);
@@ -522,8 +525,9 @@ void OmniboxPopupContentsView::PaintChildren(
       paint_info.paint_recording_scale_y()));
   {
     ui::PaintRecorder recorder(paint_info.context(), size());
-    SkColor background_color = result_view_at(0)->GetColor(
-        OmniboxResultView::NORMAL, OmniboxResultView::BACKGROUND);
+    SkColor background_color = OmniboxResultColor::GetColor(
+        OmniboxResultColor::NORMAL, OmniboxResultColor::BACKGROUND,
+        result_view_at(0));
     recorder.canvas()->DrawColor(background_color);
   }
   View::PaintChildren(paint_info);
