@@ -4,8 +4,8 @@
 
 package org.chromium.android_webview.test.variations;
 
-import static org.chromium.android_webview.variations.AwVariationsUtils.SEED_DATA_FILENAME;
-import static org.chromium.android_webview.variations.AwVariationsUtils.SEED_PREF_FILENAME;
+import static org.chromium.android_webview.variations.VariationsUtils.SEED_DATA_FILENAME;
+import static org.chromium.android_webview.variations.VariationsUtils.SEED_PREF_FILENAME;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -23,8 +23,8 @@ import org.junit.runner.RunWith;
 import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.android_webview.variations.AwVariationsConfigurationService;
 import org.chromium.android_webview.variations.AwVariationsSeedHandler;
-import org.chromium.android_webview.variations.AwVariationsUtils;
-import org.chromium.android_webview.variations.AwVariationsUtils.SeedPreference;
+import org.chromium.android_webview.variations.VariationsUtils;
+import org.chromium.android_webview.variations.VariationsUtils.SeedPreference;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.PathUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
@@ -85,7 +85,7 @@ public class AwVariationsConfigurationServiceTest {
         File variationsDir = AwVariationsConfigurationService.getOrCreateVariationsDirectory();
         SeedPreference expect = new SeedPreference(mSeedInfo);
         AwVariationsConfigurationService.storeSeedPrefToFile(expect, variationsDir);
-        SeedPreference actual = AwVariationsUtils.readSeedPreference(variationsDir);
+        SeedPreference actual = VariationsUtils.readSeedPreference(variationsDir);
         Assert.assertNotNull(expect);
         Assert.assertNotNull(actual);
         Assert.assertEquals(expect.signature, actual.signature);
@@ -105,7 +105,7 @@ public class AwVariationsConfigurationServiceTest {
         ParcelFileDescriptor seedDataFileDescriptor =
                 AwVariationsConfigurationService.getSeedFileDescriptor(SEED_DATA_FILENAME);
         File appDir = AwVariationsSeedHandler.getOrCreateVariationsDirectory();
-        AwVariationsUtils.copyFileToVariationsDirectory(
+        VariationsUtils.copyFileToVariationsDirectory(
                 seedDataFileDescriptor, appDir, SEED_DATA_FILENAME);
 
         String seedDataInServiceDir =
@@ -128,11 +128,11 @@ public class AwVariationsConfigurationServiceTest {
         ParcelFileDescriptor seedPrefFileDescriptor =
                 AwVariationsConfigurationService.getSeedFileDescriptor(SEED_PREF_FILENAME);
         File appDir = AwVariationsSeedHandler.getOrCreateVariationsDirectory();
-        AwVariationsUtils.copyFileToVariationsDirectory(
+        VariationsUtils.copyFileToVariationsDirectory(
                 seedPrefFileDescriptor, appDir, SEED_PREF_FILENAME);
 
-        SeedPreference seedPrefInServiceDir = AwVariationsUtils.readSeedPreference(serviceDir);
-        SeedPreference seedPrefInAppDir = AwVariationsUtils.readSeedPreference(appDir);
+        SeedPreference seedPrefInServiceDir = VariationsUtils.readSeedPreference(serviceDir);
+        SeedPreference seedPrefInAppDir = VariationsUtils.readSeedPreference(appDir);
         Assert.assertNotNull(seedPrefInServiceDir);
         Assert.assertNotNull(seedPrefInAppDir);
         Assert.assertEquals(seedPrefInServiceDir.signature, seedPrefInAppDir.signature);
