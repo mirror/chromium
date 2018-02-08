@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa4b846_cd5ef7da",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T01:24:38Z",
+      "side": 1,
+      "message": "Could you use |FS::ComputeVisibleSelectionInDOMTree()| instead of\n|FS::ComputeVisibleSelectionInDOMTreeDeprecated()|?\n\nWe don\u0027t want to have deprecated version in new code.\n\nPlease add following fragment if we are not sure layout tree is clean.\n\n  // TODO(editing-dev): Hoist updateStyleAndLayoutIgnorePendingStylesheets\n  // to caller. See http://crbug.com/590369 for more details.\n  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();",
+      "range": {
+        "startLine": 817,
+        "startChar": 26,
+        "endLine": 817,
+        "endChar": 68
+      },
+      "revId": "e9f3c9e911fcd599894bf1e616308d2a7903c2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbb6e48_82c6db2c",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2018-02-08T01:24:38Z",
+      "side": 1,
+      "message": "BTW, it is our mistake that, we should check whether \n|TextSuggestionController| is available or not.\n\nI\u0027m aware of this because we use FrameSelection before this call revealed\nby this patch. Thanks!\n\nFollowing patch should change this function to check |IsAvaiable()| like\nL611.",
+      "range": {
+        "startLine": 595,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 69
+      },
+      "revId": "e9f3c9e911fcd599894bf1e616308d2a7903c2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
