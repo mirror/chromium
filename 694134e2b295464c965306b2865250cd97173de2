@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c378ed5_ab77af6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-02-08T01:53:27Z",
+      "side": 0,
+      "message": "Is this no longer true because date headers are represented with TimedItem\u0027s?",
+      "range": {
+        "startLine": 586,
+        "startChar": 44,
+        "endLine": 587,
+        "endChar": 65
+      },
+      "revId": "694134e2b295464c965306b2865250cd97173de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
