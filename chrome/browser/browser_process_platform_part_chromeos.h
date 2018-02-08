@@ -18,29 +18,33 @@ class ChromeSessionManager;
 class ChromeUserManager;
 class ProfileHelper;
 class TimeZoneResolver;
-}
+}  // namespace chromeos
 
 namespace chromeos {
+namespace assistant {
+class AssistantBrowserPart;
+}  // namespace assistant
+
 namespace system {
 class AutomaticRebootManager;
 class DeviceDisablingManager;
 class DeviceDisablingManagerDefaultDelegate;
 class SystemClock;
 class TimeZoneResolverManager;
-}
-}
+}  // namespace system
+}  // namespace chromeos
 
 namespace policy {
 class BrowserPolicyConnectorChromeOS;
-}
+}  // namespace policy
 
 namespace ui {
 class InputDeviceControllerClient;
-}
+}  // namespace ui
 
 namespace component_updater {
 class CrOSComponentManager;
-}
+}  // namespace component_updater
 
 class ScopedKeepAlive;
 
@@ -143,6 +147,11 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   std::unique_ptr<component_updater::CrOSComponentManager>
       cros_component_manager_;
+
+#if defined(ENABLE_CROS_ASSISTANT)
+  std::unique_ptr<chromeos::assistant::AssistantBrowserPart>
+      assistant_browser_part_;
+#endif
 
 #if defined(USE_OZONE)
   std::unique_ptr<ui::InputDeviceControllerClient>

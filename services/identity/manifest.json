@@ -5,6 +5,9 @@
     "service_manager:connector": {
       "provides": {
         "identity_manager" : [ "identity::mojom::IdentityManager" ]
+      },
+      "requires": {
+        "service_manager": [ "service_manager:all_users" ]
       }
     }
   }

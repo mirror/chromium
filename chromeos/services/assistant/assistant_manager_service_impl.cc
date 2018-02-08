@@ -4,8 +4,6 @@
 
 #include "chromeos/services/assistant/assistant_manager_service_impl.h"
 
-#include <memory>
-#include <string>
 #include <utility>
 
 #include "base/logging.h"
@@ -16,10 +14,8 @@
 namespace chromeos {
 namespace assistant {
 
-AssistantManagerServiceImpl::AssistantManagerServiceImpl(
-    AuthTokenProvider* auth_token_provider)
-    : auth_token_provider_(auth_token_provider),
-      platform_api_(kDefaultConfigStr),
+AssistantManagerServiceImpl::AssistantManagerServiceImpl()
+    : platform_api_(kDefaultConfigStr),
       assistant_manager_(
           assistant_client::AssistantManager::Create(&platform_api_,
                                                      kDefaultConfigStr)),
@@ -28,7 +24,7 @@ AssistantManagerServiceImpl::AssistantManagerServiceImpl(
 
 AssistantManagerServiceImpl::~AssistantManagerServiceImpl() {}
 
-void AssistantManagerServiceImpl::Start() {
+void AssistantManagerServiceImpl::Start(const std::string& token) {
   auto* internal_options =
       assistant_manager_internal_->CreateDefaultInternalOptions();
   SetAssistantOptions(internal_options);
@@ -46,9 +42,14 @@ void AssistantManagerServiceImpl::Start() {
   // since we do not support multi-user in this example we can set it to a
   // dummy value like "0".
   assistant_manager_->SetAuthTokens({std::pair<std::string, std::string>(
-      /* user_id: */ "0", auth_token_provider_->GetAccessToken())});
+      /* user_id: */ "0", token)});
 
   assistant_manager_->Start();
+}
+
+void AssistantManagerServiceImpl::SetAccessToken(const std::string& token) {
+  assistant_manager_->SetAuthTokens({std::pair<std::string, std::string>(
+      /* user_id: */ "0", token)});
 }
 
 }  // namespace assistant

@@ -109,6 +109,9 @@ specific_include_rules = {
   "touch_transformer_controller\.*": [
     "+ash/host"
   ],
+  "voice_interaction_controller\.*": [
+    "+chromeos/services/assistant/public",
+  ],
   "window_manager.cc": [
     "+ash/host/ash_window_tree_host.h"
   ],

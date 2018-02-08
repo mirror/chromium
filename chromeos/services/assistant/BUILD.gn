@@ -16,6 +16,13 @@ source_set("lib") {
     "service.h",
   ]
 
+  deps = [
+    "//chromeos/services/assistant/public/interfaces",
+    "//services/identity/public/interfaces",
+  ]
+
+  defines = []
+
   if (enable_cros_libassistant) {
     sources += [
       "assistant_manager_service_impl.cc",
@@ -24,7 +31,7 @@ source_set("lib") {
       "platform_api_impl.h",
     ]
 
-    deps = [
+    deps += [
       "//chromeos/assistant/internal",
       "//libassistant/contrib/core",
       "//libassistant/contrib/platform/audio",
@@ -44,6 +51,8 @@ source_set("lib") {
       "//libassistant/contrib",
       "//libassistant/shared",
     ]
+
+    defines += [ "ENABLE_CROS_LIBASSISTANT" ]
   } else {
     sources += [
       "fake_assistant_manager_service_impl.cc",
@@ -64,6 +73,7 @@ service("assistant") {
 
   deps = [
     ":lib",
+    ":manifest",
     "//services/service_manager/public/cpp",
   ]
 }

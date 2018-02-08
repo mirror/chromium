@@ -4,6 +4,8 @@
 
 #include "chrome/browser/browser_process_platform_part_chromeos.h"
 
+#include <utility>
+
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -11,6 +13,9 @@
 #include "base/time/tick_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/ash_config.h"
+#if defined(ENABLE_CROS_ASSISTANT)
+#include "chrome/browser/chromeos/assistant/assistant_browser_part.h"
+#endif
 #include "chrome/browser/chromeos/chrome_service_name.h"
 #include "chrome/browser/chromeos/login/session/chrome_session_manager.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h"
@@ -30,6 +35,10 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chromeos/geolocation/simple_geolocation_provider.h"
+#if defined(ENABLE_CROS_ASSISTANT)
+#include "chromeos/services/assistant/public/interfaces/assistant.mojom.h"
+#include "chromeos/services/assistant/service.h"
+#endif
 #include "chromeos/timezone/timezone_resolver.h"
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "components/keep_alive_registry/scoped_keep_alive.h"
@@ -187,6 +196,23 @@ void BrowserProcessPlatformPart::RegisterInProcessServices(
     services->insert(
         std::make_pair(ash::mojom::kPrefConnectorServiceName, info));
   }
+
+#if defined(ENABLE_CROS_ASSISTANT)
+  {
+    assistant_browser_part_ =
+        std::make_unique<chromeos::assistant::AssistantBrowserPart>();
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::BindOnce(
+        [](chromeos::assistant::AssistantBrowserPart* delegate) {
+          return std::unique_ptr<service_manager::Service>(
+              base::MakeUnique<chromeos::assistant::Service>(delegate));
+        },
+        assistant_browser_part_.get());
+    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    services->insert(std::make_pair(
+        chromeos::assistant::mojom::kAssistantServiceName, info));
+  }
+#endif
 
   if (!ash_util::IsRunningInMash()) {
     service_manager::EmbeddedServiceInfo info;
