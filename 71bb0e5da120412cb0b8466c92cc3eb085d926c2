@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c866e3d2_af6b2102",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-02-08T00:51:10Z",
+      "side": 1,
+      "message": "nit: _FeatureFlageEnabled can be removed for these, that\u0027s the default. Also (nit) technically this is testing NoPrimaryUser (same above).",
+      "revId": "71bb0e5da120412cb0b8466c92cc3eb085d926c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
