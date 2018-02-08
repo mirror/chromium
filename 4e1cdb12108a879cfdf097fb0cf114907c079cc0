@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b205c3d6_5fa1facc",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-08T00:57:56Z",
+      "side": 1,
+      "message": "Use \"title\" instead of \"headline\" (optional: you can change the string ID too).",
+      "range": {
+        "startLine": 1063,
+        "startChar": 67,
+        "endLine": 1063,
+        "endChar": 76
+      },
+      "revId": "4e1cdb12108a879cfdf097fb0cf114907c079cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac7651c_41819cef",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-08T00:57:56Z",
+      "side": 1,
+      "message": "I was expecting you to update the descriptions for the dialog\u0027s other strings too, with the additional context. In particular, I wouldn\u0027t require a translator know what the \"critical notification\" is or what an \"onbeforeunload handler\" is.",
+      "range": {
+        "startLine": 1068,
+        "startChar": 77,
+        "endLine": 1068,
+        "endChar": 86
+      },
+      "revId": "4e1cdb12108a879cfdf097fb0cf114907c079cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7e73ab_9fe3824a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 3399,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-02-08T00:57:56Z",
+      "side": 1,
+      "message": "Update these string descriptions too.",
+      "range": {
+        "startLine": 3399,
+        "startChar": 66,
+        "endLine": 3399,
+        "endChar": 74
+      },
+      "revId": "4e1cdb12108a879cfdf097fb0cf114907c079cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
