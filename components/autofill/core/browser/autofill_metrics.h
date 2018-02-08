@@ -942,7 +942,7 @@ class AutofillMetrics {
       is_context_secure_ = is_context_secure;
     }
 
-    void OnDidInteractWithAutofillableForm();
+    void OnDidInteractWithAutofillableForm(const AutofillField& autofill_field);
 
     void OnDidPollSuggestions(const FormFieldData& field);
 
@@ -970,6 +970,7 @@ class AutofillMetrics {
    private:
     void Log(FormEvent event) const;
     void Log(BankNameDisplayedFormEvent event) const;
+    void LogInteractedField(const AutofillField& autofill_field) const;
 
     bool is_for_credit_card_;
     size_t server_record_type_count_;
