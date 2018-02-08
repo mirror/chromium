@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d449da_e2d00bb3",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2018-02-08T01:02:00Z",
+      "side": 1,
+      "message": "+Roger\n\nWhat is right field to represent field type here? I see multiple variants, but found this to be as generic as possible. Also is this Ok that I am logging so many fields at once.",
+      "range": {
+        "startLine": 1521,
+        "startChar": 10,
+        "endLine": 1521,
+        "endChar": 24
+      },
+      "revId": "51a336b0a520c5acb048072ea8a0affebb872ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
