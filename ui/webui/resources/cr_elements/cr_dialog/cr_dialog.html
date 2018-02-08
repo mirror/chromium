@@ -136,10 +136,12 @@
         <div class="title-container" tabindex="-1">
           <slot name="title"></slot>
         </div>
-        <button is="paper-icon-button-light" class="icon-clear" id="close"
-            aria-label$="[[closeText]]" hidden$="[[noCancel]]" on-tap="cancel"
-            on-keypress="onCloseKeypress_">
-        </button>
+        <paper-icon-button-light>
+          <button class="icon-clear" id="close" aria-label$="[[closeText]]"
+              hidden$="[[noCancel]]" on-tap="cancel"
+              on-keypress="onCloseKeypress_">
+          </button>
+        </paper-icon-button-light>
       </div>
       <slot name="header"></slot>
       <div class="body-container">

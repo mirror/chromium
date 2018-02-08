@@ -34,10 +34,11 @@
         <span>[[engine.displayName]]</span>
       </div>
       <div class="keyword-column">[[engine.keyword]]</div>
-      <button is="paper-icon-button-light" class="icon-more-vert"
-          on-tap="onDotsTap_" title="$i18n{moreActions}" focus-row-control
-          focus-type="menu">
-      </button>
+      <paper-icon-button-light>
+        <button class="icon-more-vert" on-tap="onDotsTap_"
+            title="$i18n{moreActions}" focus-row-control focus-type="menu">
+        </button>
+      </paper-icon-button-light>
       <dialog is="cr-action-menu">
         <button slot="item" class="dropdown-item" on-tap="onManageTap_"
             id="manage">

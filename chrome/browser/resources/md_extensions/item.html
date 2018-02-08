@@ -325,10 +325,12 @@
           </template>
         </div>
         <template is="dom-if" if="[[!computeDevReloadButtonHidden_(data.*)]]">
-          <button id="dev-reload-button" is="paper-icon-button-light"
-              aria-label="$i18n{itemReload}" aria-describedby="a11yAssociation"
-              class="icon-refresh no-overlap" on-tap="onReloadTap_">
-          </button>
+          <paper-icon-button-light>
+            <button id="dev-reload-button" aria-label="$i18n{itemReload}"
+                aria-describedby="a11yAssociation"
+                class="icon-refresh no-overlap" on-tap="onReloadTap_">
+            </button>
+          </paper-icon-button-light>
         </template>
         <template is="dom-if" if="[[data.disableReasons.corruptInstall]]">
           <paper-button id="repair-button" class="action-button"

@@ -73,10 +73,11 @@
           on-input="onSearchTermInput" aria-label$="[[label]]" incremental
           autofocus$="[[autofocus]]" placeholder="[[label]]" slot="input">
       <!-- TODO(hcarmona): remove "suffix" when paper-input is v2. -->
-      <button suffix is="paper-icon-button-light" id="clearSearch"
-          class="icon-cancel" on-tap="onTapClear_" title="[[clearLabel]]"
-          hidden$="[[!hasSearchText]]" slot="suffix">
-      </button>
+      <paper-icon-button-light>
+        <button suffix id="clearSearch" class="icon-cancel" on-tap="onTapClear_"
+            title="[[clearLabel]]" hidden$="[[!hasSearchText]]" slot="suffix">
+        </button>
+      </paper-icon-button-light>
     </paper-input-container>
   </template>
   <script src="settings_subpage_search.js"></script>

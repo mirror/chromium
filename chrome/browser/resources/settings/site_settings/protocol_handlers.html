@@ -49,9 +49,11 @@
               </div>
             </div>
 
-            <button is="paper-icon-button-light" on-tap="showMenu_"
-                class="icon-more-vert" title="$i18n{moreActions}">
-            </button>
+            <paper-icon-button-light>
+              <button on-tap="showMenu_"
+                  class="icon-more-vert" title="$i18n{moreActions}">
+              </button>
+            </paper-icon-button-light>
           </div>
 
         </template>
@@ -76,7 +78,9 @@
       <div class="start">
         <div>$i18n{androidAppsManageAppLinks}</div>
       </div>
-      <button class="icon-external" is="paper-icon-button-light"></button>
+      <paper-icon-button-light>
+        <button class="icon-external"></button>
+      </paper-icon-button-light>
     </div>
   </template>
 </if>

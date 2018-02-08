@@ -33,9 +33,11 @@
               style$="[[computeSiteIcon(item.origin)]]"></div>
           <div class="middle">[[item.origin]]</div>
 
-          <button is="paper-icon-button-light" on-tap="showMenu_"
-              class="icon-more-vert" title="$i18n{moreActions}">
-          </button>
+          <paper-icon-button-light>
+            <button on-tap="showMenu_" class="icon-more-vert"
+                title="$i18n{moreActions}">
+            </button>
+          </paper-icon-button-light>
         </div>
       </div>
     </template>
