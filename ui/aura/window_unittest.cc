@@ -32,6 +32,7 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_tracker.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/class_property.h"
 #include "ui/base/hit_test.h"
@@ -2735,6 +2736,58 @@ TEST_P(WindowTest, DeleteWindowFromOnWindowDestroyed) {
   parent->AddChild(c2);
   delegate.SetOwnedWindow(c2);
   parent.reset();
+}
+
+namespace {
+
+// WindowObserver implementation that deletes a window in
+// OnWindowVisibilityChanged().
+class DeleteOnVisibilityChangedObserver : public WindowObserver {
+ public:
+  // |to_observe| the window add |this| as an observer too.
+  // |window_to_delete| the Window to delete in OnWindowVisibilityChanged().
+  explicit DeleteOnVisibilityChangedObserver(Window* to_observe,
+                                             Window* window_to_delete)
+      : to_observe_(to_observe), window_to_delete_(window_to_delete) {
+    to_observe_->AddObserver(this);
+  }
+  ~DeleteOnVisibilityChangedObserver() override {
+    // OnWindowVisibilityChanged() should have been called.
+    DCHECK(!window_to_delete_);
+  }
+
+  // WindowObserver:
+  void OnWindowVisibilityChanged(Window* window, bool visible) override {
+    to_observe_->RemoveObserver(this);
+    Window* to_delete = window_to_delete_;
+    window_to_delete_ = nullptr;
+    delete to_delete;
+  }
+
+ private:
+  Window* to_observe_;
+  Window* window_to_delete_;
+
+  DISALLOW_COPY_AND_ASSIGN(DeleteOnVisibilityChangedObserver);
+};
+
+}  // namespace
+
+TEST_P(WindowTest, DeleteParentWindowFromOnWindowVisibiltyChanged) {
+  WindowTracker tracker;
+  Window* root = CreateTestWindowWithId(0, nullptr);
+  tracker.Add(root);
+  Window* child1 = CreateTestWindowWithId(0, root);
+  tracker.Add(child1);
+  tracker.Add(CreateTestWindowWithId(0, root));
+
+  // This deletes |root| (the parent) when OnWindowVisibilityChanged() is
+  // received by |child1|.
+  DeleteOnVisibilityChangedObserver deletion_observer(child1, root);
+  child1->set_owned_by_parent(false);
+  root->Hide();
+  delete child1;
+  EXPECT_TRUE(tracker.windows().empty());
 }
 
 namespace {
