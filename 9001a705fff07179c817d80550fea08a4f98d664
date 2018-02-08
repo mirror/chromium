@@ -22,6 +22,30 @@
       "revId": "9001a705fff07179c817d80550fea08a4f98d664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbe951b_dff15329",
+        "filename": "extensions/common/manifest_handlers/content_capabilities_manifest_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2018-02-08T02:02:36Z",
+      "side": 1,
+      "message": "Gah, copy-paste fail.  Good catch!  Fixed this, and updated the content capabilities check to address the eTLD issue.",
+      "parentUuid": "1d385d1c_3b597d7e",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "9001a705fff07179c817d80550fea08a4f98d664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
