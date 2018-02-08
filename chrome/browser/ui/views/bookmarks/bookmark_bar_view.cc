@@ -1516,8 +1516,8 @@ void BookmarkBarView::ButtonPressed(views::Button* sender,
       node->url(), Referrer(), disposition_from_event_flags,
       ui::PAGE_TRANSITION_AUTO_BOOKMARK, false);
   page_navigator_->OpenURL(params);
-
-  RecordBookmarkLaunch(node, GetBookmarkLaunchLocation());
+  RecordBookmarkLaunch(browser_->tab_strip_model()->GetActiveWebContents(),
+                       node, GetBookmarkLaunchLocation());
 }
 
 void BookmarkBarView::ShowContextMenuForView(views::View* source,

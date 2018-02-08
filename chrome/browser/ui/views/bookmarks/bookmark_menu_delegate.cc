@@ -163,8 +163,8 @@ void BookmarkMenuDelegate::ExecuteCommand(int id, int mouse_event_flags) {
   const BookmarkNode* node = menu_id_to_node_map_[id];
   std::vector<const BookmarkNode*> selection;
   selection.push_back(node);
-
-  RecordBookmarkLaunch(node, location_);
+  RecordBookmarkLaunch(browser_->tab_strip_model()->GetActiveWebContents(),
+                       node, location_);
   chrome::OpenAll(parent_->GetNativeWindow(), page_navigator_, selection,
                   ui::DispositionFromEventFlags(mouse_event_flags),
                   profile_);

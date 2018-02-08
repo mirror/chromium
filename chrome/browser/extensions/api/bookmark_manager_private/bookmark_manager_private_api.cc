@@ -659,7 +659,8 @@ bool BookmarkManagerPrivateCanEditFunction::RunOnReady() {
 }
 
 bool BookmarkManagerPrivateRecordLaunchFunction::RunOnReady() {
-  RecordBookmarkLaunch(NULL, BOOKMARK_LAUNCH_LOCATION_MANAGER);
+  // WebContents and BookmarkNode cannot be determined here.
+  RecordBookmarkLaunch(NULL, NULL, BOOKMARK_LAUNCH_LOCATION_MANAGER);
   return true;
 }
 

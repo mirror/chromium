@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_BOOKMARKS_BOOKMARK_STATS_H_
 #define CHROME_BROWSER_BOOKMARKS_BOOKMARK_STATS_H_
 
+#include "content/public/browser/web_contents.h"
+
 namespace bookmarks {
 class BookmarkNode;
 }
@@ -38,11 +40,18 @@ enum BookmarkLaunchLocation {
   // Autocomplete suggestion.
   BOOKMARK_LAUNCH_LOCATION_OMNIBOX,
 
+  // If New Tab Page state can be determined, indicates whether or not the
+  // bookmark was launched while on the NTP. These two launch locations may be
+  // coincident with the other locations listed above.
+  BOOKMARK_LAUNCH_LOCATION_NTP,
+  BOOKMARK_LAUNCH_LOCATION_NOT_NTP,
+
   BOOKMARK_LAUNCH_LOCATION_LIMIT  // Keep this last.
 };
 
 // Records the launch of a bookmark for UMA purposes.
-void RecordBookmarkLaunch(const bookmarks::BookmarkNode* node,
+void RecordBookmarkLaunch(const content::WebContents* contents,
+                          const bookmarks::BookmarkNode* node,
                           BookmarkLaunchLocation location);
 
 // Records the user opening a folder of bookmarks for UMA purposes.
