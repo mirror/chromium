@@ -16,6 +16,24 @@
       "revId": "10be84c55826ff341f7f6a2d091ee41436285930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ed0780_e9821d31",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2018-02-08T01:21:41Z",
+      "side": 1,
+      "message": "I believe this behaviour would be unspecified by the API, and therefore we would not want to support it. bajones@, please confirm.",
+      "parentUuid": "b5e60090_ed6681a2",
+      "revId": "10be84c55826ff341f7f6a2d091ee41436285930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
