@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b41362f0_82f19d8c",
+        "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2018-02-08T00:17:07Z",
+      "side": 1,
+      "message": "Ah, yeah, makes more sense.",
+      "parentUuid": "0db03573_ad62dc39",
+      "range": {
+        "startLine": 1169,
+        "startChar": 8,
+        "endLine": 1171,
+        "endChar": 0
+      },
+      "revId": "1518d8d394702272814adfe1dda6e18dc505c3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58c9efb_460f71e9",
         "filename": "media/gpu/vaapi/vaapi_wrapper.cc",
         "patchSetId": 13
