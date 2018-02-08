@@ -52,6 +52,24 @@
       "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302cd81b_e31c9706",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-02-08T02:11:58Z",
+      "side": 1,
+      "message": "Aha, got it \\o/",
+      "parentUuid": "57079e65_397e4c27",
+      "revId": "019349817400ef44b9fe4a984827dc06841b2f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
