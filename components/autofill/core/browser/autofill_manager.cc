@@ -543,9 +543,11 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
     if (autofill_field->Type().group() == CREDIT_CARD) {
       is_filling_credit_card = true;
       driver()->DidInteractWithCreditCardForm();
-      credit_card_form_event_logger_->OnDidInteractWithAutofillableForm();
+      credit_card_form_event_logger_->OnDidInteractWithAutofillableForm(
+          *autofill_field);
     } else {
-      address_form_event_logger_->OnDidInteractWithAutofillableForm();
+      address_form_event_logger_->OnDidInteractWithAutofillableForm(
+          *autofill_field);
     }
   }
 

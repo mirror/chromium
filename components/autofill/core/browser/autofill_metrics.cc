@@ -1313,13 +1313,15 @@ AutofillMetrics::FormEventLogger::FormEventLogger(
       logged_suggestion_filled_was_masked_server_card_(false),
       form_interactions_ukm_logger_(form_interactions_ukm_logger) {}
 
-void AutofillMetrics::FormEventLogger::OnDidInteractWithAutofillableForm() {
+void AutofillMetrics::FormEventLogger::OnDidInteractWithAutofillableForm(
+    const AutofillField& autofill_field) {
   if (!has_logged_interacted_) {
     has_logged_interacted_ = true;
     form_interactions_ukm_logger_->LogInteractedWithForm(
         is_for_credit_card_, local_record_type_count_,
         server_record_type_count_);
     Log(AutofillMetrics::FORM_EVENT_INTERACTED_ONCE);
+    LogInteractedField(autofill_field);
   }
 }
 
@@ -1506,6 +1508,19 @@ void AutofillMetrics::FormEventLogger::OnFormSubmitted(
 
 void AutofillMetrics::FormEventLogger::SetBankNameAvailable() {
   has_logged_bank_name_available_ = true;
+}
+
+void AutofillMetrics::FormEventLogger::LogInteractedField(
+    const AutofillField& autofill_field) const {
+  DCHECK_LT(AutofillMetrics::FORM_EVENT_INTERACTED_ONCE, NUM_FORM_EVENTS);
+  std::string name("Autofill.FormEvents.");
+  if (is_for_credit_card_)
+    name += "CreditCard";
+  else
+    name += "Address";
+  name += autofill_field.Type().ToString();
+  LogUMAHistogramEnumeration(name, AutofillMetrics::FORM_EVENT_INTERACTED_ONCE,
+                             NUM_FORM_EVENTS);
 }
 
 void AutofillMetrics::FormEventLogger::Log(FormEvent event) const {
