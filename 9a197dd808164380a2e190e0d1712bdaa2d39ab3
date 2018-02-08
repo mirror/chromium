@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6615336c_a7c0ae20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-08T01:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c887c3_8b7f61e9",
+      "range": {
+        "startLine": 579,
+        "startChar": 94,
+        "endLine": 579,
+        "endChar": 95
+      },
+      "revId": "9a197dd808164380a2e190e0d1712bdaa2d39ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10190c15_efea4a2c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "9a197dd808164380a2e190e0d1712bdaa2d39ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cad7b6_e0e278e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-02-08T01:03:54Z",
+      "side": 1,
+      "message": "So the entire solution to the problem hinges on the use of commit.\n\n- On \u003c\u003d L devices, swiping away the task causes the service to crash immediately as the process is being completed, thus not in time for us to do our normal completion processing.\n- This is manifested in the fact that a lot of the things that were supposed to be written to SharedPreferences were not written properly (including the calls to addOrReplaceSharedPreferenceEntry by both getNextNotificationIdFor and even by notifyDownloadSuccessful as well as the call to clearPinnedNotificationId).\n- I am only adding commit here (as opposed to all of the above locations I listed) because even if the other ones are incorrect, having the correct, up-to-date information at this point is self-correcting (ie. even if the pinned notification is not cleared, it won\u0027t be matched with any of the DownloadSharedPreferenceEntry\u0027s, which is fine and the extra notification won\u0027t be launched).\n\nI can also explain this more in depth in person!",
+      "parentUuid": "10190c15_efea4a2c",
+      "revId": "9a197dd808164380a2e190e0d1712bdaa2d39ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
