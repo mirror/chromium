@@ -153,8 +153,10 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
 
   void GetScreenInfo(ScreenInfo* screen_info) override;
 
-  void ResizeDueToAutoResize(const gfx::Size& new_size,
-                             uint64_t sequence_number) override;
+  void ResizeDueToAutoResize(
+      const gfx::Size& new_size,
+      uint64_t sequence_number,
+      const viz::LocalSurfaceId& local_surface_id) override;
 
  private:
   friend class RenderWidgetHostView;

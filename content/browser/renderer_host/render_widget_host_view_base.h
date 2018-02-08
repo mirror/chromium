@@ -21,6 +21,7 @@
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
+#include "content/browser/renderer_host/scoped_allocation_pending_lock.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/common/input_event_ack_state.h"
@@ -169,8 +170,15 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // Informs the view that the renderer has resized to |new_size| because auto-
   // resize is enabled.
-  virtual void ResizeDueToAutoResize(const gfx::Size& new_size,
-                                     uint64_t sequence_number);
+  virtual void ResizeDueToAutoResize(
+      const gfx::Size& new_size,
+      uint64_t sequence_number,
+      const viz::LocalSurfaceId& local_surface_id);
+
+  virtual bool IsAllocationPending() const;
+  ScopedAllocationPendingLock GetAllocationPendingLock() {
+    return ScopedAllocationPendingLock(this);
+  }
 
   base::WeakPtr<RenderWidgetHostViewBase> GetWeakPtr();
 
@@ -563,6 +571,12 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                           int embed_id,
                           const base::UnguessableToken& token);
 #endif
+
+  // These functions should not be called directly. They are used by
+  // ScopedAllocationPendingLock.
+  virtual void SetAllocationPendingFlag() const;
+  virtual void ClearAllocationPendingFlag() const;
+  friend class ScopedAllocationPendingLock;
 
   // Called when display properties that need to be synchronized with the
   // renderer process changes. This method is called before notifying

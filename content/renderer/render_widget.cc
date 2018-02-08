@@ -4,6 +4,7 @@
 
 #include "content/renderer/render_widget.h"
 
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -638,6 +639,19 @@ void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
 }
 #endif
 
+void RenderWidget::HandlePotentialLocalSurfaceIdConflict(
+    const viz::LocalSurfaceId& parent_generated_local_surface_id) {
+  // A new LocalSurfaceId should have increased either the parent or child
+  // sequence number.
+  if (parent_generated_local_surface_id.parent_sequence_number() >
+      local_surface_id_.parent_sequence_number()) {
+    local_surface_id_ =
+        child_local_surface_id_allocator_.UpdateParentSequenceAndNonce(
+            parent_generated_local_surface_id.parent_sequence_number(),
+            parent_generated_local_surface_id.nonce());
+  }
+}
+
 void RenderWidget::SetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
     const content::ScreenInfo& screen_info,
@@ -662,10 +676,12 @@ void RenderWidget::SetLocalSurfaceIdForAutoResize(
 
   // If the given LocalSurfaceId was generated before navigation, don't use it.
   // We should receive a new LocalSurfaceId later.
-  if (content_source_id != current_content_source_id_)
+  if (content_source_id != current_content_source_id_) {
     AutoResizeCompositor(viz::LocalSurfaceId());
-  else
-    AutoResizeCompositor(local_surface_id);
+  } else {
+    HandlePotentialLocalSurfaceIdConflict(local_surface_id);
+    AutoResizeCompositor(local_surface_id_);
+  }
 }
 
 void RenderWidget::OnShowHostContextMenu(ContextMenuParams* params) {
@@ -1395,7 +1411,7 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // LocalSurfaceId until the right one comes.
   if (params.local_surface_id &&
       params.content_source_id == current_content_source_id_) {
-    local_surface_id_ = *params.local_surface_id;
+    HandlePotentialLocalSurfaceIdConflict(*params.local_surface_id);
   }
 
   if (compositor_) {
@@ -2353,6 +2369,7 @@ void RenderWidget::UpdateSelectionBounds() {
 }
 
 void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
+  std::cout << "inside RenderWidget::DidAutoResize" << std::endl;
   WebRect new_size_in_window(0, 0, new_size.width(), new_size.height());
   ConvertViewportToWindow(&new_size_in_window);
   if (size_.width() != new_size_in_window.width ||
@@ -2366,7 +2383,10 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       window_screen_rect_ = new_pos;
     }
 
-    AutoResizeCompositor(viz::LocalSurfaceId());
+    std::cout << "Child allocating" << std::endl;
+    viz::LocalSurfaceId local_surface_id =
+        child_local_surface_id_allocator_.GenerateId();
+    AutoResizeCompositor(local_surface_id);
 
     if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_resize_ack_for_auto_resize_ = true;
@@ -2718,6 +2738,8 @@ void RenderWidget::DidResizeOrRepaintAck() {
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
+  if (local_surface_id_.is_valid())
+    params.child_allocated_local_surface_id = local_surface_id_;
 
   Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
   next_paint_flags_ = 0;
