@@ -217,9 +217,12 @@ suite('CrActionMenu', function() {
 
   test('positioning', function() {
     // A 40x10 box at (100, 250).
-    const config = {
+    const position = {
       left: 100,
       top: 250,
+    };
+
+    const config = {
       width: 40,
       height: 10,
       maxX: 1000,
@@ -227,14 +230,14 @@ suite('CrActionMenu', function() {
     };
 
     // Show right and bottom aligned by default.
-    menu.showAtPosition(config);
+    menu.showAtPosition(position, config);
     assertTrue(menu.open);
     assertEquals('100px', menu.style.left);
     assertEquals('250px', menu.style.top);
     menu.close();
 
     // Center the menu horizontally.
-    menu.showAtPosition(Object.assign({}, config, {
+    menu.showAtPosition(position, Object.assign({}, config, {
       anchorAlignmentX: AnchorAlignment.CENTER,
     }));
     const menuWidth = menu.offsetWidth;
@@ -244,7 +247,7 @@ suite('CrActionMenu', function() {
     menu.close();
 
     // Center the menu in both axes.
-    menu.showAtPosition(Object.assign({}, config, {
+    menu.showAtPosition(position, Object.assign({}, config, {
       anchorAlignmentX: AnchorAlignment.CENTER,
       anchorAlignmentY: AnchorAlignment.CENTER,
     }));
@@ -253,7 +256,7 @@ suite('CrActionMenu', function() {
     menu.close();
 
     // Left and top align the menu.
-    menu.showAtPosition(Object.assign({}, config, {
+    menu.showAtPosition(position, Object.assign({}, config, {
       anchorAlignmentX: AnchorAlignment.BEFORE_END,
       anchorAlignmentY: AnchorAlignment.BEFORE_END,
     }));
@@ -262,43 +265,52 @@ suite('CrActionMenu', function() {
     menu.close();
 
     // Being left and top aligned at (0, 0) should anchor to the bottom right.
-    menu.showAtPosition(Object.assign({}, config, {
-      anchorAlignmentX: AnchorAlignment.BEFORE_END,
-      anchorAlignmentY: AnchorAlignment.BEFORE_END,
-      left: 0,
-      top: 0,
-    }));
+    menu.showAtPosition(
+        {
+          left: 0,
+          top: 0,
+        },
+        Object.assign({}, config, {
+          anchorAlignmentX: AnchorAlignment.BEFORE_END,
+          anchorAlignmentY: AnchorAlignment.BEFORE_END,
+        }));
     assertEquals(`0px`, menu.style.left);
     assertEquals(`0px`, menu.style.top);
     menu.close();
 
     // Being aligned to a point in the bottom right should anchor to the top
     // left.
-    menu.showAtPosition({
-      left: 1000,
-      top: 2000,
-      maxX: 1000,
-      maxY: 2000,
-    });
+    menu.showAtPosition(
+        {
+          left: 1000,
+          top: 2000,
+        },
+        {
+          maxX: 1000,
+          maxY: 2000,
+        });
     assertEquals(`${1000 - menuWidth}px`, menu.style.left);
     assertEquals(`${2000 - menuHeight}px`, menu.style.top);
     menu.close();
 
     // If the viewport can't fit the menu, align the menu to the viewport.
-    menu.showAtPosition({
-      left: menuWidth - 5,
-      top: 0,
-      width: 0,
-      height: 0,
-      maxX: menuWidth * 2 - 10,
-    });
+    menu.showAtPosition(
+        {
+          left: menuWidth - 5,
+          top: 0,
+        },
+        {
+          width: 0,
+          height: 0,
+          maxX: menuWidth * 2 - 10,
+        });
     assertEquals(`${menuWidth - 10}px`, menu.style.left);
     assertEquals(`0px`, menu.style.top);
     menu.close();
 
     // Alignment is reversed in RTL.
     document.body.style.direction = 'rtl';
-    menu.showAtPosition(config);
+    menu.showAtPosition(position, config);
     assertTrue(menu.open);
     assertEquals(140 - menuWidth, menu.offsetLeft);
     assertEquals('250px', menu.style.top);

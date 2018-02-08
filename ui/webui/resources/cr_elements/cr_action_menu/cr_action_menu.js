@@ -6,6 +6,12 @@
  * @typedef {{
  *   top: number,
  *   left: number,
+ * }}
+ */
+var ShowPosition;
+
+/**
+ * @typedef {{
  *   width: (number|undefined),
  *   height: (number|undefined),
  *   anchorAlignmentX: (number|undefined),
@@ -86,8 +92,6 @@ function getStartPointWithAnchor(
 function getDefaultShowConfig() {
   var doc = document.scrollingElement;
   return {
-    top: 0,
-    left: 0,
     height: 0,
     width: 0,
     anchorAlignmentX: AnchorAlignment.AFTER_START,
@@ -265,16 +269,19 @@ Polymer({
     this.anchorElement_.scrollIntoViewIfNeeded();
 
     var rect = this.anchorElement_.getBoundingClientRect();
-    this.showAtPosition(/** @type {ShowConfig} */ (Object.assign(
+    this.showAtPosition(
         {
           top: rect.top,
           left: rect.left,
-          height: rect.height,
-          width: rect.width,
-          // Default to anchoring towards the left.
-          anchorAlignmentX: AnchorAlignment.BEFORE_END,
-        },
-        opt_config)));
+        }, /** @type {ShowConfig} */
+        (Object.assign(
+            {
+              height: rect.height,
+              width: rect.width,
+              // Default to anchoring towards the left.
+              anchorAlignmentX: AnchorAlignment.BEFORE_END,
+            },
+            opt_config)));
   },
 
   /**
@@ -302,9 +309,10 @@ Polymer({
    * (BEFORE_END, AFTER_START), whereas centering the menu below the bottom
    * edge of the anchor would use (CENTER, AFTER_END).
    *
-   * @param {!ShowConfig} config
+   * @param {!ShowPosition} position
+   * @param {ShowConfig=} config
    */
-  showAtPosition: function(config) {
+  showAtPosition: function(position, config) {
     // Save the scroll position of the viewport.
     var doc = document.scrollingElement;
     var scrollLeft = doc.scrollLeft;
@@ -316,17 +324,19 @@ Polymer({
     this.resetStyle_();
     this.showModal();
 
-    config.top += scrollTop;
-    config.left += scrollLeft;
+    position.top += scrollTop;
+    position.left += scrollLeft;
 
-    this.positionDialog_(/** @type {ShowConfig} */ (Object.assign(
-        {
-          minX: scrollLeft,
-          minY: scrollTop,
-          maxX: scrollLeft + doc.clientWidth,
-          maxY: scrollTop + doc.clientHeight,
-        },
-        config)));
+    this.positionDialog_(
+        position, /** @type {ShowConfig} */
+        (Object.assign(
+            {
+              minX: scrollLeft,
+              minY: scrollTop,
+              maxX: scrollLeft + doc.clientWidth,
+              maxY: scrollTop + doc.clientHeight,
+            },
+            config)));
 
     // Restore the scroll position.
     doc.scrollTop = scrollTop;
@@ -344,14 +354,15 @@ Polymer({
   /**
    * Position the dialog using the coordinates in config. Coordinates are
    * relative to the top-left of the viewport when scrolled to (0, 0).
-   * @param {!ShowConfig} config
+   * @param {!ShowPosition} position
+   * @param {ShowConfig=} config
    * @private
    */
-  positionDialog_: function(config) {
-    var c = Object.assign(getDefaultShowConfig(), config);
+  positionDialog_: function(position, config) {
+    var c = Object.assign(getDefaultShowConfig(), config || {});
 
-    var top = c.top;
-    var left = c.left;
+    var top = position.top;
+    var left = position.left;
     var bottom = top + c.height;
     var right = left + c.width;
 
