@@ -502,6 +502,10 @@ CORE_EXPORT v8::Local<v8::Value> FromJSONString(v8::Isolate*,
                                                 const String& stringified_json,
                                                 ExceptionState&);
 
+// Returns a V8 value which is usable in the script state.
+CORE_EXPORT v8::Local<v8::Value> GetV8ValueFor(ScriptState* target_script_state,
+                                               v8::Local<v8::Value>);
+
 // Ensure that a typed array value is not backed by a SharedArrayBuffer. If it
 // is, an exception will be thrown. The return value will use the NotShared
 // wrapper type.

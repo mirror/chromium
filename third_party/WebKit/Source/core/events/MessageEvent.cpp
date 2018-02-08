@@ -61,23 +61,28 @@ MessageEvent::V8GCAwareString& MessageEvent::V8GCAwareString::operator=(
   return *this;
 }
 
-MessageEvent::MessageEvent() : data_type_(kDataTypeScriptValue) {}
+MessageEvent::MessageEvent() : data_type_(kDataTypeV8Value) {}
 
-MessageEvent::MessageEvent(const AtomicString& type,
+MessageEvent::MessageEvent(ScriptState* script_state,
+                           const AtomicString& type,
                            const MessageEventInit& initializer)
-    : Event(type, initializer),
-      data_type_(kDataTypeScriptValue),
-      source_(nullptr) {
-  if (initializer.hasData())
-    data_as_script_value_ = initializer.data();
-  if (initializer.hasOrigin())
+    : Event(type, initializer), data_type_(kDataTypeV8Value), source_(nullptr) {
+  if (initializer.hasData()) {
+    data_as_v8_value_.Set(script_state->GetIsolate(),
+                          initializer.data().V8Value());
+  }
+  if (initializer.hasOrigin()) {
     origin_ = initializer.origin();
-  if (initializer.hasLastEventId())
+  }
+  if (initializer.hasLastEventId()) {
     last_event_id_ = initializer.lastEventId();
-  if (initializer.hasSource() && IsValidSource(initializer.source()))
+  }
+  if (initializer.hasSource() && IsValidSource(initializer.source())) {
     source_ = initializer.source();
-  if (initializer.hasPorts())
+  }
+  if (initializer.hasPorts()) {
     ports_ = new MessagePortArray(initializer.ports());
+  }
   DCHECK(IsValidSource(source_.Get()));
 }
 
@@ -87,7 +92,7 @@ MessageEvent::MessageEvent(const String& origin,
                            MessagePortArray* ports,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
-      data_type_(kDataTypeScriptValue),
+      data_type_(kDataTypeV8Value),
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
@@ -156,7 +161,8 @@ MessageEvent::MessageEvent(DOMArrayBuffer* data,
 
 MessageEvent::~MessageEvent() = default;
 
-MessageEvent* MessageEvent::Create(const AtomicString& type,
+MessageEvent* MessageEvent::Create(ScriptState* script_state,
+                                   const AtomicString& type,
                                    const MessageEventInit& initializer,
                                    ExceptionState& exception_state) {
   if (initializer.source() && !IsValidSource(initializer.source())) {
@@ -164,13 +170,14 @@ MessageEvent* MessageEvent::Create(const AtomicString& type,
         "The optional 'source' property is neither a Window nor MessagePort.");
     return nullptr;
   }
-  return new MessageEvent(type, initializer);
+  return new MessageEvent(script_state, type, initializer);
 }
 
 void MessageEvent::initMessageEvent(const AtomicString& type,
                                     bool can_bubble,
                                     bool cancelable,
-                                    ScriptValue data,
+                                    v8::Isolate* isolate,
+                                    v8::Local<v8::Value> data,
                                     const String& origin,
                                     const String& last_event_id,
                                     EventTarget* source,
@@ -180,8 +187,8 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
 
   initEvent(type, can_bubble, cancelable);
 
-  data_type_ = kDataTypeScriptValue;
-  data_as_script_value_ = data;
+  data_type_ = kDataTypeV8Value;
+  data_as_v8_value_.Set(isolate, data);
   origin_ = origin;
   last_event_id_ = last_event_id;
   source_ = source;
@@ -274,7 +281,7 @@ v8::Local<v8::Object> MessageEvent::AssociateWithWrapper(
   // how much memory is used via the wrapper. To keep the wrapper alive, it's
   // set to the wrapper of the MessageEvent as a private value.
   switch (GetDataType()) {
-    case MessageEvent::kDataTypeScriptValue:
+    case MessageEvent::kDataTypeV8Value:
     case MessageEvent::kDataTypeSerializedScriptValue:
       break;
     case MessageEvent::kDataTypeString:
