@@ -401,26 +401,32 @@ def DoMain():
                       help='Path to write the list of full results to.')
   parser.add_argument('--config', metavar='FILENAME',
                       help='Path to test configuration file')
+  parser.add_argument('--filename', default='mini_installer.exe',
+                      help='The filename of the installer.')
+  parser.add_argument('--next_version_filename',
+                      default='next_version_mini_installer.exe',
+                      help='The filename of the next version installer.')
   parser.add_argument('test', nargs='*',
                       help='Name(s) of tests to run.')
   args = parser.parse_args()
+
   if not args.config:
     parser.error('missing mandatory --config FILENAME argument')
 
-  mini_installer_path = os.path.join(args.build_dir, args.target,
-                                     'mini_installer.exe')
-  assert os.path.exists(mini_installer_path), ('Could not find file %s' %
-                                               mini_installer_path)
+  installer_path = os.path.join(args.build_dir, args.target, args.filename)
+  assert os.path.exists(installer_path), ('Could not find file %s' %
+                                          installer_path)
 
-  next_version_mini_installer_path = os.path.join(
-      args.build_dir, args.target, 'next_version_mini_installer.exe')
-  assert os.path.exists(next_version_mini_installer_path), (
-      'Could not find file %s' % next_version_mini_installer_path)
+  next_version_installer_path = os.path.join(
+      args.build_dir, args.target, args.next_version_filename)
+  assert os.path.exists(next_version_installer_path), (
+      'Could not find file %s' % next_version_installer_path)
 
   suite = unittest.TestSuite()
 
-  variable_expander = VariableExpander(mini_installer_path,
-                                       next_version_mini_installer_path)
+  variable_expander = VariableExpander(installer_path,
+                                       next_version_installer_path,
+                                       args.target)
   config = ParseConfigFile(args.config, variable_expander)
 
   RunCleanCommand(args.force_clean, variable_expander)
