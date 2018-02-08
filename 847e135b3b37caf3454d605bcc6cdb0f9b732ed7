@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c399d61d_7a8396b3",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "this isn\u0027t used?",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44c0393_e348060f",
+        "filename": "chrome/browser/ui/login/login_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "|source| is a NavigationController which has a GetBrowserContext() method that returns the profile. prefer to use that instead of storing that member again.\n\nthen you can compare it with requesting_contents-\u003eGetBrowserContext()",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41011482_96a9b164",
+        "filename": "chrome/browser/ui/login/login_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba21f0a_dada879f",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "nit: content:: not required",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fc7b84_72532905",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2634,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "how would this ever happen since it\u0027s bound at line 613 when it\u0027s not null?",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd821fa_313d6927",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "!rfh will always be false, since the call on line 232 ensured that the RFH is alive. So this should just be \nbool is_main_frame \u003d !rfh-\u003eGetParent();",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6de0c86_2d1457c4",
+        "filename": "content/public/browser/resource_dispatcher_host_login_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "the Content API is composed of interfaces or structs. So pass this callback to the new ContentBrowserClient interface, and each implementation can store it\n\nsee https://www.chromium.org/developers/content-module/content-api",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375dd20e_b8ac5fd5",
+        "filename": "content/shell/browser/shell_resource_dispatcher_host_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "since this class has no overridden methods now, you can delete it entirely",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e4327f_449c34ae",
+        "filename": "services/network/url_loader.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-02-08T01:33:56Z",
+      "side": 1,
+      "message": "Why are you storing auth attempt count in a separate object and not on URLLoader as a member variable?",
+      "revId": "847e135b3b37caf3454d605bcc6cdb0f9b732ed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
